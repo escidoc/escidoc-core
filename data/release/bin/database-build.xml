@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<project name="eSciDoc infrastructure - database build file" basedir=".." default="init_UnitTests">
+
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+	<property name="escidoc.jdbc.url" value="jdbc:${jdbc.database.identifier}://${database.server.name}:${database.server.port}/${escidoc.database.name}" />
+	<property name="sql.dir" value="data/sql" description="The directory holding the sql scripts" />
+
+	<path id="database.classpath">
+		<pathelement location="${jdbc.driver.jar}" />
+	</path>
+
+	<target name="init_UnitTests" depends="init_MPDL">
+		<echo level="info">Initializing databases for JUnit tests.</echo>
+
+		<!-- AA UserAccounts for testing -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="test.aa.init.users.sql" />
+		</antcall>
+
+		<!-- AA Roles for testing -->
+        <antcall target="execute-sql">
+            <param name="script" value="test.aa.init.roles.sql" />
+        </antcall>
+
+		<!-- AA Grants for testing -->
+
+		<!-- AA Handles for testing -->
+
+		<!-- AA Groups for testing -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="test.aa.init.groups.sql" />
+		</antcall>
+
+		<!-- Test data for sm -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="test.sm.create.sql" />
+		</antcall>
+	</target>
+
+	<target name="init_MPDL" depends="init">
+		<echo level="info">Initializing databases for MPDL.</echo>
+
+		<!-- AA UserAccounts for MPDL -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.user-accounts.MPDL.sql" />
+		</antcall>
+
+		<!-- AA Roles for MPDL -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.collaborator-modifier-container-add-remove-members.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.collaborator-modifier-container-update-direct-members.sql" />
+		</antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.collaborator-modifier-container-add-remove-any-members.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.collaborator-modifier-container-update-any-members.sql" />
+        </antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.privileged-viewer.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.collaborator.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.collaborator-modifier.sql" />
+		</antcall>
+
+		<!-- AA Grants for MPDL -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.grants.MPDL.sql" />
+		</antcall>
+
+		<!-- AA Handles for MPDL -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.handles.MPDL.sql" />
+		</antcall>
+
+		<!-- AA Groups for MPDL -->
+
+	</target>
+
+	<target name="init" depends="renew" description="Initialization of eSciDoc Infrastructure. Required databases are newly created and common actions, policies, roles, and users are created.">
+		<echo level="info">Initializing databases for common use.</echo>
+
+		<!-- Actions and Method Mappings -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.actions.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.aa.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.adm.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.cmm.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.container.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.context.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.item.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.content-relation.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.fedora-deviation.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.oai.set-definition.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.ingest.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.semantic-store.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.oum.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.sb.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.sm.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.st.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.tme.jhove.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.wm.sql" />
+		</antcall>
+
+		<!-- AA UserAccounts -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.user-accounts.common.sql" />
+		</antcall>
+
+		<!-- AA Roles -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.system-administrator.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.system-inspector.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.administrator.sql" />
+		</antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.ou-administrator.sql" />
+        </antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.default-user.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.depositor.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.md-editor.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.moderator.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.ingester.sql" />
+		</antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-group-administrator.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-group-inspector.sql" />
+        </antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.workflow-manager.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.statistics-editor.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.roles.statistics-reader.sql" />
+		</antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.content-relation-manager.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.content-relation-modifier.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.audience.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.context-administrator.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-account-inspector.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.context-modifier.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-account-administrator.sql" />
+        </antcall>
+
+		<!-- AA Grants -->
+
+		<antcall target="execute-sql">
+			<param name="script" value="aa.init.grants.common.sql" />
+		</antcall>
+
+		<!-- AA Groups -->
+
+	</target>
+
+	<target name="renew" depends="drop_all, create_all" description="All databases of the eSciDoc Infrastructure are droped and recreated.">
+		<echo level="info">All escidoc-databases removed and recreated.</echo>
+	</target>
+
+	<target name="create_all" description="Creates every database of eSciDoc Infrastructure.">
+		<echo level="info">Creating databases/scheams on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.user}/${escidoc.database.password})</echo>
+
+		<!-- Create Database for Security (AA) -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}aa.create.sql" />
+		</antcall>
+		<!-- create database for version information -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}adm.create.sql" />
+		</antcall>
+
+		<!-- Create Database for Staging Area -->
+		<antcall target="execute-sql">
+			<param name="script" value="st.create.sql" />
+		</antcall>
+
+		<!-- Create Database for OM -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}om.create.sql" />
+		</antcall>
+
+		<!-- Create Database for OAI -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}oai.create.sql" />
+		</antcall>
+
+		<!-- Create Database for Statistic Manager -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}sm.create.sql" />
+		</antcall>
+
+		<!-- Create Database for Workflow Manager -->
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}jbpm.create.sql" />
+		</antcall>
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}wm.create.sql" />
+		</antcall>
+
+	</target>
+
+	<target name="drop_all" description="Drops every database of eSciDoc Infrastructure. In postgres only the schemas of database 'escidoc-core' are droped.">
+		<echo level="info">Droping databases/schemas on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.user}/${escidoc.database.password})</echo>
+
+		<!-- Drop Licences/Policies-Database for Security -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}aa.drop.sql" />
+		</antcall>
+
+		<!-- drop database for version information -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}adm.drop.sql" />
+		</antcall>
+
+		<!-- Drop Database for Workflow Manager -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}jbpm.drop.sql" />
+		</antcall>
+
+		<!-- Drop Database for OAI -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}oai.drop.sql" />
+		</antcall>
+
+		<!-- Drop Database for OM -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}om.drop.sql" />
+		</antcall>
+
+		<!-- Drop Database for Statistic Manager -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}sm.drop.sql" />
+		</antcall>
+
+		<!-- Drop Database for Staging Area -->
+		<antcall target="execute-sql-continue-on-error">
+			<param name="script" value="${script.prefix}st.drop.sql" />
+		</antcall>
+
+		<!-- wm is no itself a database but just adds tables to jbpm. Must not be droped. -->
+
+	</target>
+
+	<!-- 
+		SQL execution targets. Called with param "script".
+	-->
+
+	<target name="execute-sql-continue-on-error" description="Executes given 'script'. Coninues if an error occurs.">
+		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.user}" password="${escidoc.database.password}" onerror="continue" expandProperties="true">
+			<fileset dir="${basedir}">
+				<include name="${sql.dir}/${script}" />
+			</fileset>
+		</sql>
+	</target>
+
+	<target name="execute-sql" description="Executes given 'script'.">
+		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.user}" password="${escidoc.database.password}" expandProperties="true">
+			<fileset dir="${basedir}">
+				<include name="${sql.dir}/${script}" />
+			</fileset>
+		</sql>
+	</target>
+
+</project>

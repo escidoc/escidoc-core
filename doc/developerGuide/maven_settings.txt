@@ -1,0 +1,99 @@
+
+What's to set for Maven
+
+Use Maven 3.
+
+Maven install does -beside compiling, etc.- install a new JBoss, Fedora and ingests test data to Fedora. All required databases are 
+dropped and re-created! 
+
+You can call Maven with following parameter to influence the behavior:
+
+	mvn install 
+		-P!install-jboss 			- does not install JBoss
+		-P!install-fedora			- does not install Fedora and skips ingesting test data
+  		-DskipTests					- skip running unit tests
+  		-DskipITs					- skip running integration tests (IT)
+ 
+
+- increase memory via MAVEN_OPTS
+
+
+Changes in mavens settings.xml file:
+
+- set HTTP/HTTPS proxy in proxies section 
+   <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.fiz-karlsruhe.de</host>
+      <port>8888</port>
+      <nonProxyHosts>localhost|*.escidoc.org|*.fiz-karlsruhe.de|escidev1|escidev2|escidev3|escidev4|escidev5</nonProxyHosts>
+    </proxy>
+    <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host>proxy.fiz-karlsruhe.de</host>
+      <port>8888</port>
+      <nonProxyHosts>localhost|*.escidoc.org|*.fiz-karlsruhe.de|escidev1|escidev2|escidev3|escidev4|escidev5</nonProxyHosts>
+    </proxy>
+ 
+
+- set account details
+     <server>
+      <id>org.escidoc.core</id>
+      <username>USERNAME</username>
+      <password>PASSWORD</password>
+    </server>
+
+- SuperUser Account for your Oracle/PostgreSQL database (because database and user are created/dropped during tests)
+    <profile>
+      <id>inject-variables</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <escidoc.oracle.database.admin.user>USERNAME</escidoc.oracle.database.admin.user>
+        <escidoc.oracle.database.admin.password>PASSWORD</escidoc.oracle.database.admin.password>
+        <fedora.oracle.database.admin.user>USERNAME</fedora.oracle.database.admin.user>
+        <fedora.oracle.database.admin.password>PASSWORD</fedora.oracle.database.admin.password>
+        <escidoc.postgres.database.admin.user>USERNAME</escidoc.postgres.database.admin.user>
+        <escidoc.postgres.database.admin.password>PASSWORD</escidoc.postgres.database.admin.password>
+      </properties>
+    </profile>
+
+
+- build variables for eSciDoc Core
+    <profile>
+      <id>escidoc-build</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <escidoc.database.host>localhost</escidoc.database.host>
+        <escidoc.database.port>5432</escidoc.database.port>
+        <escidoc.database.user>escidoc</escidoc.database.user>
+        <escidoc.database.password>escidoc</escidoc.database.password>
+        <escidoc.database.name>escidoc-core</escidoc.database.name>
+        <escidoc.server.name>localhost</escidoc.server.name>
+        <escidoc.server.port>8080</escidoc.server.port>
+        <escidoc.xsd.path>/xsd/</escidoc.xsd.path>
+        <escidoc.schemaLocation.base>http://www.escidoc.org/schemas/</escidoc.schemaLocation.base>
+      </properties>
+    </profile>
+
+
+Set mirror for artifacts
+
+    <mirror>
+      <mirrorOf>maven2-repository.dev.java.net</mirrorOf>
+      <id>maven2-remote-repos</id>
+      <name>maven2-remote-repos</name>
+      <url>https://www.escidoc.org/artifactory/remote-repos</url>
+    </mirror>
+    <mirror>
+      <mirrorOf>MVNSearch</mirrorOf>
+      <id>mvnsearch-remote-repos</id>
+      <name>mvnsearch-remote-repos</name>
+      <url>https://www.escidoc.org/artifactory/remote-repos</url>
+    </mirror>

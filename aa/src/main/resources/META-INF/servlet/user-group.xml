@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <define>
+        <var name="USER-GROUP-ID" regexp="/([^/?]*)" />
+        <var name="USER-KEY" regexp="/([^/?]*)" />
+        <var name="GRANT-ID" regexp="/([^/?]*)" />
+        <var name="ROLE-ID" regexp="/([^/?]*)" />
+        <var name="OBJ-ID" regexp="/([^/?]*)" />
+    </define>
+
+    <!--#########################################################
+        # User Group list
+        # -->
+    <resource name="UserGroup" base-uri="/aa/user-groups/">
+        <descriptor uri="/aa/user-groups">
+            <invoke http="GET" method="retrieveUserGroups" param1="${PARAMETERS}"/>
+        </descriptor>
+    </resource>
+    <!--#
+        # Resource UserGroup
+        # -->
+    <resource name="UserGroup" base-uri="/aa/user-group/">
+        <descriptor uri="/aa/user-group">
+            <invoke http="PUT" method="create" param1="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}">
+            <invoke http="DELETE" method="delete" param1="${USER-GROUP-ID}">
+            </invoke>
+            <invoke http="GET" method="retrieve" param1="${USER-GROUP-ID}">
+            </invoke>
+            <invoke http="PUT" method="update" param1="${USER-GROUP-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}/activate">
+            <invoke http="POST" method="activate" param1="${USER-GROUP-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}/deactivate">
+            <invoke http="POST" method="deactivate" param1="${USER-GROUP-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+
+        <!--#
+            # Subresources of User Group
+            # -->
+        <!--#
+            # Resources
+            # -->
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}/resources">
+            <invoke http="GET" method="retrieveResources" param1="${USER-GROUP-ID}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Selectors
+            # -->
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}/selectors/add">
+            <invoke http="POST" method="addSelectors" param1="${USER-GROUP-ID}" param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-group/${USER-GROUP-ID}/selectors/remove">
+            <invoke http="POST" method="removeSelectors" param1="${USER-GROUP-ID}" param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Current Grants
+            # -->
+        <descriptor
+            uri="/aa/user-group/${USER-GROUP-ID}/resources/current-grants">
+            <invoke http="GET" method="retrieveCurrentGrants"
+                param1="${USER-GROUP-ID}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Grant
+            # -->
+        <descriptor
+            uri="/aa/user-group/${USER-GROUP-ID}/resources/grants/grant">
+            <invoke http="PUT" method="createGrant" param1="${USER-GROUP-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-group/${USER-GROUP-ID}/resources/grants/grant/${GRANT-ID}">
+            <invoke http="GET" method="retrieveGrant"
+                param1="${USER-GROUP-ID}" param2="${GRANT-ID}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-group/${USER-GROUP-ID}/resources/grants/grant/${GRANT-ID}/revoke-grant">
+            <invoke http="POST" method="revokeGrant" param1="${USER-GROUP-ID}"
+                param2="${GRANT-ID}" param3="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-group/${USER-GROUP-ID}/resources/grants/revoke-grants">
+            <invoke http="POST" method="revokeGrants" param1="${USER-GROUP-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+
+    </resource>
+
+</mapping>
+

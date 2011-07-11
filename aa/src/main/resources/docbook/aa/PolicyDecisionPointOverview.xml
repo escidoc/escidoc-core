@@ -1,0 +1,47 @@
+<chapter>
+	<title>Policy Decision Point (PDP)</title>
+	<section >
+		<title>General Information</title>
+		<para>
+			In the following sections only the filenames of the related
+			schemas are specified.
+		</para>
+		<para>These are the existing XML-schemas for PDP methods:</para>
+		<itemizedlist mark="opencircle" spacing="compact">
+			<listitem>
+				<para>
+					<ulink
+						url="http://www.escidoc.de/schemas/pdp/0.2/requests.xsd">
+						requests.xsd
+					</ulink>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<ulink
+						url="http://www.escidoc.de/schemas/pdp/0.2/results.xsd">
+						results.xsd
+					</ulink>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<ulink
+						url="http://www.oasis-open.org/committees/download.php/919/cs-xacml-schema-context-01.xsd">
+						cs-xacml-schema-context-01.xsd
+					</ulink>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<ulink
+						url="http://www.escidoc.de/schemas/common/0.1/xml.xsd">
+						xml.xsd
+					</ulink>
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+</chapter>

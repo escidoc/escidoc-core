@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scope xmlns="http://www.escidoc.de/schemas/scope/0.4"
+    xmlns:prop="http://escidoc.de/core/01/properties/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <properties>
+        <prop:name><![CDATA[
+            test  < scope
+        ]]></prop:name>
+        <type>normal</type>
+    </properties>
+</scope>

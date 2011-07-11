@@ -1,0 +1,98 @@
+<langpack>
+  <str id="installOrUpgrade" txt="Installation / Upgrade"/>
+  <str id="installOrUpgradeQuestion" txt="M&#246;chten Sie eine neue eSciDoc-Infrastruktur installieren oder eine vorhandene aktualisieren?"/>
+  <str id="installOrUpgradeChoiceInstall" txt="neue eSciDoc-Infrastruktur installieren"/>
+  <str id="installOrUpgradeChoiceUpgrade" txt="vorhandene eSciDoc-Infrastruktur aktualisieren"/>
+
+  <str id="escidocHostAndPort" txt="eSciDoc-Rechnername und Portnummer"/>
+  <str id="escidocHost" txt="Rechnername des Servers, auf dem die eSciDoc-Infrastruktur installiert werden soll. Sie k&#246;nnen einen 'fully qualified host name' verwenden. Bitte h&#228;ngen Sie keine Portnummer an den Rechnernamen an."/>
+  <str id="escidocHostAlternative" txt="Alternativ k&#246;nnen Sie die IP-Adresse statt des Rechnernamens verwenden. Wenn Sie den voreingestellten Wert 'localhost' behalten, dann verbieten Sie damit Zugriffe von entfernten Rechnern."/>
+  <str id="escidocHostText" txt="Rechnername:"/>
+  <str id="escidocHostValidator" txt="Der Rechnername darf nicht leer sein."/>
+  <str id="escidocPort" txt="Portnummer des Servers, auf dem die eSciDoc-Infrastruktur installiert werden soll."/>
+  <str id="escidocPortText" txt="Portnummer:"/>
+  <str id="escidocPortValidator" txt="Die Portnummer mu&#223; ein freier Port auf dem lokalen Rechner sein."/>
+
+  <str id="RelationalDatabase" txt="Relationale Datenbank"/>
+  <str id="RelationalDatabaseDescription" txt="eSciDoc ben&#246;tigt eine relationale Datenbank. Im Moment werden nur Oracle und PostgreSQL unterst&#252;tzt. Die Datenbank wird nur Verwaltungsdaten (z.B. Benutzerrechte) beinhalten, aber nicht den eigentlichen Content."/>
+
+  <str id="OracleDriver" txt="Oracle-Treiber-Auswahl"/>
+  <str id="OracleDriverDescription" txt="Sie m&#246;chten Oracle als Datenbank benutzen. Bitte geben Sie den Pfad zum Oracle-JDBC-Treiber an."/>
+  <str id="OracleDriverText" txt="Oracle-JDBC-Treiber:"/>
+
+  <str id="PostgresDatabase" txt="PostgreSQL-Datenbankverbindung"/>
+  <str id="DatabaseHost"  txt="Datenbankrechnername:"/>
+  <str id="DatabaseHostValidator" txt="Der Datenbankrechnername darf nicht leer sein."/>
+  <str id="DatabasePort"  txt="Datenbankportnummer:"/>
+  <str id="DatabasePortValidator" txt="Die Datenbankportnummer darf nicht leer sein."/>
+  <str id="DatabaseDriver"  txt="Datenbanktreiberklasse:"/>
+  <str id="DatabaseDriverValidator" txt="Die Datenbanktreiberklasse darf nicht leer sein."/>
+  <str id="PostgresRootDatabase" txt="W&#228;hrend der Installation von PostgreSQL m&#252;ssen Sie den Namen f&#252;r eine Root-Datenbank ausw&#228;hlen. Wenn Sie den Standardwert benutzt haben, m&#252;ssen Sie hier nichts &#228;ndern."/>
+  <str id="PostgresRootDatabaseText" txt="Root-Datenbankname:"/>
+  <str id="DatabaseNameValidator" txt="Der Datenbankname darf nicht leer sein."/>
+
+  <str id="OracleDatabase" txt="Oracle-Datenbankverbindung"/>
+  <str id="OracleRootDatabase" txt="W&#228;hrend der Installation von Oracle m&#252;ssen Sie den Namen f&#252;r die Datenbank-SID ausw&#228;hlen. Wenn Sie den Standardwert benutzt haben, m&#252;ssen Sie hier nichts &#228;ndern."/>
+  <str id="OracleRootDatabaseText" txt="Datenbank-SID:"/>
+
+  <str id="UserCredentials" txt="Berechtigungen f&#252;r das Anlegen der Datenbanken und Benutzerrollen"/>
+  <str id="UserCredentialsText" txt="Der Installer wird die notwendigen Datenbanken und Benutzerrollen f&#252;r Sie anlegen. Normalerweise wird daf&#252;r ein privilegierter Datenbankbenutzer ben&#246;tigt."/>
+  <str id="UserCredentialsText2" txt="Bitte geben Sie die Daten eines Datenbankbenutzers mit ausreichenden Rechten an. Diese Daten werden nirgends gespeichert und nicht weiter verwendet, nachdem die notwendigen Datenbanken und Benutzerrollen angelegt wurden."/>
+  <str id="DatabaseAdminUsername" txt="Datenbank-Admin-Benutzername:"/>
+  <str id="UsernameValidator" txt="Benutzername darf nicht leer sein."/>
+  <str id="DatabaseAdminPassword" txt="Datenbank-Admin-Pa&#223;wort:"/>
+  <str id="RetypePassword" txt="Pa&#223;wort wiederholen:"/>
+  <str id="PasswordValidator" txt="Pa&#223;wort darf nicht leer sein."/>
+  <str id="PasswordEqualityValidator" txt="Beide Pa&#223;w&#246;rter m&#252;ssen &#252;bereinstimmen."/>
+
+  <str id="EscidocDatabaseUser" txt="eSciDoc-Datenbankbenutzer"/>
+  <str id="EscidocDatabaseUserText" txt="Der hier angegebene Datenbankbenutzer wird bei der Erstinstallation erzeugt und zur Laufzeit von eSciDoc benutzt. Dieser Benutzer sollte keine Administrationsrechte besitzen."/>
+
+  <str id="TablespaceValidator" txt="Tablespace darf nicht leer sein."/>
+
+  <str id="DatabaseUsername" txt="Datenbankbenutzername:"/>
+  <str id="DatabasePassword" txt="Datenbankpa&#223;wort:"/>
+
+  <str id="DatabaseDefaultTablespace" txt="Default-Datenbank-Tablespace:"/>
+  <str id="DatabaseTemporaryTablespace" txt="tempor&#228;rer Datenbank-Tablespace:"/>
+
+  <str id="FedoraUsername" txt="Fedora-Benutzername:"/>
+  <str id="FedoraPassword" txt="Fedora-Pa&#223;wort:"/>
+
+  <str id="EmailAddress" txt="eMail-Adresse:"/>
+  <str id="EmailValidator" txt="eMail-Adresse darf nicht leer sein."/>
+
+  <str id="FedoraAdminUser" txt="Fedora-Admin-Benutzer"/>
+  <str id="FedoraAdminUserText" txt="Der Fedora- Admin-Benutzer wird zum Einloggen in Fedora und als zus&#228;tzlicher Datenbankbenutzer für Fedora-spezifische Tabellen benutzt."/>
+  <str id="FedoraAdminUserText2" txt="Typischerweise werden Sie diesen Benutzer nie direkt verwenden. Der Fedora-Admin-Benutzer wird haupts&#228;chlich innerhalb der eSciDoc-Infrastruktur verwendet. Die eMail-Adresse kann von Fedora zum Versenden von Fehlermeldungen benutzt werden."/>
+
+  <str id="TriplestoreDatabaseUser" txt="Triplestore-Datenbankbenutzer"/>
+  <str id="TriplestoreDatabaseUserText" txt="Dieser Datenbankbenutzer wird vom Installer angelegt und zur Laufzeit f&#252;r die Zugriffe auf die riTriples-Datenbank benutzt. Bitte achten Sie darauf, keinen schon vorhandenen Benutzer anzugeben, da der Installer den Benutzer zuerst l&#246;scht und dann neu anlegt!"/>
+
+  <str id="SystemAdministratorCredentials" txt="Berechtigungen f&#252;r den Systemadministrator"/>
+  <str id="SystemAdministratorCredentialsText" txt="Der Systemadministrator hat Zugriff auf alle Ressourcen in der eSciDoc-Infrastruktur. Er kann andere Benutzer anlegen sowie Rechte und Rollen zuweisen."/>
+  <str id="SystemAdministratorUsername" txt="Systemadministrator-Benutzername:"/>
+  <str id="SystemAdministratorPassword" txt="Systemadministrator-Pa&#223;wort:"/>
+
+  <str id="SystemInspectorCredentials" txt="Berechtigungen f&#252;r den Systeminspector"/>
+  <str id="SystemInspectorCredentialsText" txt="Der Systeminspector besitzt nur Leserechte, darf aber auf alle Ressourcen im System zugreifen. Der Systeminspector wird f&#252;r interne Dienste wie z.B. Indexierung ben&#246;tigt."/>
+  <str id="SystemInspectorUsername" txt="Systeminspector-Benutzername:"/>
+  <str id="SystemInspectorPassword" txt="Systeminspector-Pa&#223;wort:"/>
+
+  <str id="DepositorCredentials" txt="Berechtigungen f&#252;r den Depositor"/>
+  <str id="DepositorCredentialsText" txt="Der Depositor darf neue Ressourcen innerhalb der eSciDoc-Infrastruktur erzeugen. Das ist der Benutzer für die t&#228;gliche Arbeit."/>
+  <str id="DepositorUsername" txt="Depositor-Benutzername:"/>
+  <str id="DepositorPassword" txt="Depositor-Pa&#223;wort:"/>
+
+  <str id="Backup" txt="Backup"/>
+  <str id="BackupText" txt="Wenn Sie noch kein aktuelles Backup Ihrer Datenbank und Ihrer Fedora-Dateien besitzen, empfehlen wir Ihnen dringend, hier anzuhalten und ein Backup zu erzeugen. Das stellt sicher, da&#223; Sie keine Daten verlieren, falls die Migration fehlschl&#228;gt."/>
+
+  <str id="Migration" txt="Migration"/>
+  <str id="MigrationText" txt=""/>
+  <str id="MigrationText" txt="Nun k&#246;nnen Sie die Migration starten. Bitte stoppen Sie dazu die Infrastruktur."/>
+  <str id="MigrationText2" txt="Beobachten Sie die Ausgaben des Programms um zu sehen, ob die Migration erfolgreich war."/>
+  <str id="StartMigration" txt="Migration jetzt starten"/>
+  <str id="CreatorText" txt="Einige Datenbankskripte enthalten einen Platzhalter für die ID des Benutzers, der den Datensatz erzeugt hat."/>
+  <str id="CreatorId" txt="Erzeuger-Benutzer-ID:"/>
+  <str id="UseridValidator" txt="Benutzer-ID darf nicht leer sein."/>
+</langpack>

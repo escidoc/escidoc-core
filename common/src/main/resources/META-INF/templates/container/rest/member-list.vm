@@ -1,0 +1,5 @@
+<${memberListNamespacePrefix}:member-list #virtualResourceRootForResourceList($memberListNamespacePrefix $memberListNamespace $memberListTitle)>
+#foreach( $entry in $containerMembers )
+${entry}
+#end
+</${memberListNamespacePrefix}:member-list>

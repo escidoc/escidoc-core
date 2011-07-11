@@ -1,0 +1,30 @@
+<${resourceNamespacePrefix}:properties #versionReleaseRootNsDecls (${isRootProperties}) #restInsertConditionalRoot(${isRootProperties} "true" "true" ${resourceNamespacePrefix} ${resourceNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>
+#xmlElement(${escidocPropertiesNamespacePrefix} "name" "" ${TITLE})
+#if(${DESCRIPTION})
+#xmlElement(${escidocPropertiesNamespacePrefix} "description" "" ${DESCRIPTION})
+#end
+#creationDate(${resourceCreationDate})
+#set($unescapedCreator="#unesc(${resourceCreatedByTitle})")
+#restCreatedBy("#escA(${unescapedCreator})" ${resourceCreatedByHref})
+#if(${resourceObjectPid})#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${resourceObjectPid})#end
+<${escidocPropertiesNamespacePrefix}:version #restLinkAttributes (${resourceCurrentVersionTitle} ${resourceCurrentVersionHref})>
+#xmlElement(${versionNamespacePrefix} "number" "" ${resourceCurrentVersionNumber})
+#xmlElement(${versionNamespacePrefix} "date" "" ${resourceCurrentVersionDate})
+#xmlElement(${versionNamespacePrefix} "status" "" ${resourceCurrentVersionStatus})
+#set($unescapedModifiedByTitle="#unesc(${resourceCurrentVersionModifiedByTitle})")
+#restModifiedBy("#escA(${unescapedModifiedByTitle})" ${resourceCurrentVersionModifiedByHref})
+#xmlElement(${versionNamespacePrefix} "comment" "" ${resourceCurrentVersionComment})
+#if(${resourceCurrentVersionPid})#xmlElement(${versionNamespacePrefix} "pid" "" ${resourceCurrentVersionPid})#end
+</${escidocPropertiesNamespacePrefix}:version>
+<${escidocPropertiesNamespacePrefix}:latest-version #restLinkAttributes(${resourceLatestVersionTitle} ${resourceLatestVersionHref})>
+#xmlElement(	${versionNamespacePrefix} "number" "" ${resourceLatestVersionNumber})
+#xmlElement(	${versionNamespacePrefix} "date" "" ${resourceLatestVersionDate})
+</${escidocPropertiesNamespacePrefix}:latest-version>
+#if( ${resourceLatestReleaseNumber} )
+<${escidocPropertiesNamespacePrefix}:latest-release #restLinkAttributes(${resourceLatestReleaseTitle} ${resourceLatestReleaseHref})>
+#xmlElement(${releaseNamespacePrefix} "number" "" ${resourceLatestReleaseNumber})
+#xmlElement(${releaseNamespacePrefix} "date" "" ${resourceLatestReleaseDate})
+#if(${resourceLatestReleasePid})#xmlElement(${releaseNamespacePrefix} "pid" "" ${resourceLatestReleasePid})#end
+</${escidocPropertiesNamespacePrefix}:latest-release>
+#end
+</${resourceNamespacePrefix}:properties>

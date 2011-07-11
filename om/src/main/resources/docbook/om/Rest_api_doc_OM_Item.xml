@@ -1,0 +1,78 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
+[
+<!ENTITY chapter1Overview        SYSTEM "chapter1Overview.xml">
+<!ENTITY chapter1Introduction    SYSTEM "chapter1IntroductionRest.xml">
+<!ENTITY chapter1Authentication  SYSTEM "chapter1AuthenticationRest.xml">
+<!ENTITY chapter1Roles           SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
+<!ENTITY chapter1Specifications  SYSTEM "chapter1Specifications.xml">
+<!ENTITY OmOverviewAll           SYSTEM "OmOverviewAll.xml">
+<!ENTITY Resource1               SYSTEM "ResourceItem_Properties.xml">
+<!ENTITY Resource2               SYSTEM "ResourceItem_BinaryContent.xml">
+<!ENTITY Resource3               SYSTEM "ResourceItem_Schemas.xml">
+<!ENTITY Resource4               SYSTEM "ResourceItem_VirtualResources.xml">
+<!ENTITY Resource5               SYSTEM "ResourceContainerItem_Pid.xml">
+<!ENTITY chapter4                SYSTEM "RestItemXsd.xml">
+<!ENTITY ObjectApi               SYSTEM "RestItemApi.xml">
+<!ENTITY XslApi                  SYSTEM "RestXslApi.xml">
+<!ENTITY XslXsd                  SYSTEM "RestXslXsd.xml">
+<!ENTITY Bibliography            SYSTEM "Bibliography.xml">
+]>
+
+<book>
+	<bookinfo>
+		<title>API Documentation Item Service</title>
+		<subtitle>Object Manager (OM)</subtitle>
+		<subtitle>REST Interface</subtitle>
+		<mediaobject  id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg" format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject  id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png" format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<!--  Chapter 1 -->
+	<chapter>
+		<title>Overview</title>
+		&chapter1Overview;
+		&chapter1Introduction;
+		&chapter1Authentication;
+		&chapter1Roles;
+		&chapter1Filters;
+		&chapter1Specifications;
+	</chapter>
+	<!--  Chapter 2 -->
+		&OmOverviewAll;
+	<!--  Chapter 3 -->
+	<chapter>
+ 		<title>Resource Item</title>
+		<para>This chapter describes the properties of the object "item" the
+		  related XML-schemas, additional virtual resources, up- and download of binary content
+		  and the impact on PID.
+		</para>
+		&Resource1;
+		&Resource2;
+		&Resource3;
+		&Resource4;
+		&Resource5;
+	</chapter>
+	<!--  Chapter 4 -->
+	    &chapter4;
+	<!--  &ObjectXsd; -->
+	<!--  Chapter 5 -->
+	<!--  &ObjectApi; -->
+	<!--  Chapter 6 -->
+	<!-- Generated from JavaDoc --> 
+		&XslApi;
+	<!--  Appendix -->
+<!--		&AdminDescriptor; -->
+	<!--  Bibliography -->
+		&Bibliography;
+</book>

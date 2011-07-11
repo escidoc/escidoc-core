@@ -1,0 +1,164 @@
+----------------------------------------------------
+ChangeLog
+
+	changes which affects the API 
+----------------------------------------------------
+
+changes since version 1.3
+--------------------------
+	May 2011:
+		-change escidoc-login.xml:
+			-upgrade spring-security schema to version 3.0
+			-always surround authentication-provider-element with authentication-manager-element
+			-change package-names of LDAP-classes
+			-reorganize authentication-manager elements
+			
+	June 2011:
+		-change escidoc-core.properties:
+			-add property escidoc-core.compressionIsAccepted
+			 defines if content (not binary) will be delivered gzip compressed
+			-remove aa.cache properties as we now use eh-cache
+			-remove property escidoc-core.om.indexer.cache.size as indexer-cache was removed
+
+changes since version 1.2
+--------------------------
+    December 2009:
+        - change field length of table aa.invocation_mappings.path from 100 to 255.
+        - Change sm table structure + sm-schemas (use objid or href, dependent on request).
+    January 2010:
+        -Upgrade to Lucene 3.0. Changes:
+            -score is not calculated when searching with wildcard or range-query (<,>,<=,>=)
+             due to performance-reasons. Anyway, it is configurable if scores are required.
+            -Use quotes when searching for words starting with a digit.
+
+        -Configuration for Search + Indexing externalized. Please see docu of Search + Browse Component.
+        -Logging changed. 
+        -Copy all files located in jboss-patch.zip into your jboss
+        -Role-Schema and Role-List-Schema changed to 0.5. Attribute relation-attribute-object-type added to element scope-def.
+         This is done to be able to decide if a grant that is created 
+         for a role has scope on object-type that is allowed by the role.
+        -Methods UserAccount.- and UserGroup.createGrant throw InvalidScopeException 
+         if provided scope-object-type is not allowed for role.
+        -Include CQL 2.0 sorting into search
+
+    May 2010:
+        -Add method retrieveParents to ItemHandler + ContainerHandler
+        -Add virtual resource parents to item and container.
+        --> change version of item and item-list to 0.10
+        --> change version of container and container-list to 0.9
+        --> change version of member-list to 0.10
+        --> change version of srw-types to 0.4
+
+    December 2010:
+    	-New admin-indexes implemented, used by the filter-methods.
+    	-Always index REST-Representation of eSciDoc-Object.
+    		--> Adapt your stylesheets, REST-Representation has xlink:href and no objid-attribute!!
+        -Always return REST-Representation of eSciDoc-Object when searching.
+        --> REST-representation is written in Lucene-Field that contains search-result-xml.
+        --> When searching, REST-Representation is returned
+        --> Filter-Methods access new admin-indexes and return SOAP or REST-representation
+        --> Either reindexing of old non-admin indexes required, or, 
+            if you want to stick to get back SOAP-Representation when searching, 
+            transform REST to SOAP before writing Lucene-Field
+            --> use stylesheet searchResult2Soap, template convertXml
+            --> example:
+                formerly: <xsl:copy-of select="/*[local-name()='item']"/>
+                new:      <xsl:include href="index/searchResult2Soap.xslt"/>
+                          <xsl:for-each select="/*[local-name()='item']">
+    						<xsl:call-template name="convertXml"/>
+    					  </xsl:for-each>
+    	    --> Example Stylesheets provided for 
+    	        escidoc_all: escidocXmlToLuceneSoap.xslt
+    	        escidocou_all: escidocOuXmlToLuceneSoap.xslt
+
+    January 2011:
+    	-Add Filter-Names of Filters for Resources:
+    		-UserAccount
+    		-UserGroup
+    		-Role
+    		-SetDefinition
+    		-Grant
+    	 for each URI-Like name a Path-like name
+    	 eg: http://purl.org/dc/elements/1.1/identifier --> /id
+    	 	http://escidoc.de/core/01/properties/name -->, /properties/name
+    	-Deprecate URI-Like Filter-Names
+    	-Surround object-xml in SRW-Search-Result of Filters with element search-result-record
+    	
+    March 2011:
+    	-remove Interface-Method UserGrouphandler.retrieveGroupsForUser 
+    	 (use filter-method with filter /structural-relations/user/id)
+    	-Search-Indexing: Always set PositionIncrementGap of 1 with EscidocAnalyzer.
+    	 If doing a phrase-search over multiple fields with same name (eg complete-name of author)
+    	 the phrase-search now doesnt go over field boundaries.
+    	 EG: 2 fields complete-name: Hoppe, Michael and Wagner, Steffen. Search for "Michael Wagner"
+    	 returned a hit. With PositionIncrementGap of 1, this search doesnt return a hit anymore.
+    	 
+    March 2011:
+    	-change escidoc-login.xml:
+    		-upgrade spring schema to 3.0
+    		-include x509-elements for SSL-auth
+    		-execute db-query with 1 instead of "true" for oracle-support
+    		-always integrate authentication-provider with jdbc-user-service
+    	
+    	
+changes since version 1.1
+--------------------------
+    October 2009:
+    	- Added Content Model. First incomplete implementation supporting list of metadata records,
+    	  simple behavior, and setting of DC-transformation XSLT.
+    	- The content of the element 'resources' in the XML representation of eSciDoc Resources is
+    	  no longer inline. The complete 'resources' section is retrievable separately as before.
+
+    September 2009:
+        - XSD search-result to 0.8 (element score added)
+	    - XSD User group to 0.6 (renamed user group selector type from "external" into "user-attribute")
+        - Modification of logic how to retrieve xml for search-result from Lucene:
+          Dont write the surrounding search-result-record-element into lucene
+          but just the xml you want to retrieve with the search-result.
+          SRW adds surrounding search-result-record-element, containing the xml you wrote
+          into the lucene-index plus highlighting-information and score.
+          So please change your local stylesheets accordingly.
+          (see https://www.escidoc.org/jira/browse/INFR-675)
+        - Reindexing is required to change from former framework-version to 1.2
+        - added configuration what to do if error occurs while extracting text from pdf while indexing.
+          If you want to index the objects even if error occurs while extracting text from pdf,
+          make sure you have gsearch.ignoreTextExtractionErrors = true in your escidoc-core.properties.
+        - XSD User Account to 0.7 (organizational-units element and email element removed)
+        - Database Table aa.user_account_ous removed. OUs of user now is stored as user-attribute
+        - Added property escidoc-core.aa.attribute-name.ou that defines the user-attribute-name 
+          holding the escidoc-organizational unit. This is used to resolve the hierarchy of org-units the user belongs to.
+          default is 'o'. Can get overwritten in escidoc-core.properties. 
+          Value of the user-attribute has to be the unique escidoc-id and not the name of the organizational-unit!
+        - Added property escidoc-core.aa.attribute-name.common-name that holds the name 
+          of the Shibboleth-Attribute containing the common-name of the user. 
+          This is important for creation of the userProxy if logging in via Shibboleth.
+          default is 'cn'. Can get overwritten in escidoc-core.properties.
+        - Added property escidoc-core.aa.attribute-name.persistent-id that holds the name 
+          of the Shibboleth-Attribute containing the persistent id of the user. Has to be unique.
+          This is important for creation of the userProxy if logging in via Shibboleth.
+          default is 'eduPersonPrincipalName'. Can get overwritten in escidoc-core.properties.
+          --> for login via Shibboleth, the Shibboleth-SP has to deliver 2 Attributes: cn and eduPersonPrincipalName
+              otherwise login will not work properly!!
+
+    August 2009:
+        - because of the unification of primary keys of fedora and our internal database 
+          we had to change the keys of the default scopes, 
+          aggregation-definitions, report-definitions and aggregation-tables 
+          that ship with the escidoc framework. see https://www.escidoc.org/jira/browse/INFR-751
+		- ReportDefinitionHandler.retrieveReportDefinitions: switched to SRU, filters are given as CQL query, response is a SRW response now
+		- All other filters exist in two versions now: The old version with XML filter parameter and a new SRU like version with CQL query and SRW response.
+
+    July 2009:
+		- removed member-refs from resources in XML Schema of Container and Context
+		  TODO: change schema version
+		- added SRU like filter methods
+           
+changes since version 1.0
+--------------------------
+	23.04.2009:
+		- fixed identifier prefix to lower case
+	April 2009:
+		- add predecessors/successors to OU
+	March 2009:
+		- XSD Item to 0.7
+		- XSD Organizational Unit to 0.7

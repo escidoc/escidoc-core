@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+<organizational-unit:organizational-unit xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:base="http://localhost:8080" xlink:type="simple" xlink:title="Department Research and Development" xlink:href="/oum/organizational-unit/escidoc:ex3" last-modification-date="2007-11-20T09:57:44.656Z">
+	<organizational-unit:properties xlink:type="simple" xlink:title="Properties" xlink:href="/oum/organizational-unit/escidoc:ex3/properties">
+		<organizational-unit:creation-date>2007-11-20T09:57:44.656Z</organizational-unit:creation-date>
+		<organizational-unit:created-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:exuser1" />
+		<organizational-unit:modified-by xlink:type="simple" xlink:title="roland" xlink:href="/aa/user-account/escidoc:exuser1" />
+		<organizational-unit:public-status>opened</organizational-unit:public-status>
+		<organizational-unit:has-children>false</organizational-unit:has-children>
+	</organizational-unit:properties>
+	<organizational-unit:resources xlink:type="simple" xlink:title="Virtual Resources" xlink:href="/oum/organizational-unit/escidoc:ex3/resources">
+		<organizational-unit:parents xlink:type="simple" xlink:title="Parents" xlink:href="/oum/organizational-unit/escidoc:ex3/resources/parents" />
+		<organizational-unit:children xlink:type="simple" xlink:title="Children" xlink:href="/oum/organizational-unit/escidoc:ex3/resources/children" />
+		<organizational-unit:path-list xlink:type="simple" xlink:title="Path-list" xlink:href="/oum/organizational-unit/escidoc:ex3/resources/path-list" />
+	</organizational-unit:resources>
+	<organizational-unit:organization-details xlink:type="simple" xlink:title="Data" xlink:href="/oum/organizational-unit/escidoc:ex3/organization-details">
+		<organizational-unit:abbreviation>RnD</organizational-unit:abbreviation>
+		<organizational-unit:name>Department Research and Development</organizational-unit:name>
+		<organizational-unit:uri />
+		<organizational-unit:organization-type>institute</organizational-unit:organization-type>
+		<organizational-unit:description>The department for Research and Development will research and develop.</organizational-unit:description>
+		<organizational-unit:external-id />
+		<organizational-unit:postcode />
+		<organizational-unit:country />
+		<organizational-unit:region />
+		<organizational-unit:address />
+		<organizational-unit:city />
+		<organizational-unit:telephone />
+		<organizational-unit:fax />
+		<organizational-unit:email />
+		<organizational-unit:geo-coordinate>
+			<organizational-unit:location-longitude />
+			<organizational-unit:location-latitude />
+		</organizational-unit:geo-coordinate>
+	</organizational-unit:organization-details>
+</organizational-unit:organizational-unit>

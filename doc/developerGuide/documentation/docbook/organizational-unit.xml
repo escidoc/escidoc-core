@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<mapping>
+	<define>
+		<var name="OU-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-unit/">
+		<descriptor uri="/oum/organizational-unit">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-unit/${OU-ID}">
+			<invoke http="DELETE" method="delete" param1="${OU-ID}">				
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${OU-ID}">				
+			</invoke>			
+			<invoke http="PUT" method="update" param1="${OU-ID}"
+				param2="${BODY}">				
+			</invoke>
+		</descriptor>
+		<!--#
+			# Resources
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources">
+			<invoke http="GET" method="retrieveResources"
+				param1="${OU-ID}">
+				<documentation available="REST" />
+			</invoke>
+		</descriptor>
+		<!--#
+			# properties
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/properties">
+			<invoke http="GET" method="retrieveProperties"
+				param1="${OU-ID}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<!--#
+			# data
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/organization-details">
+			<invoke http="GET" method="retrieveOrganizationDetails"
+				param1="${OU-ID}">
+				<documentation visible="false"/>
+			</invoke>
+		</descriptor>	
+		<!--#
+			# parent-ous
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/parent-ous">
+			<invoke http="GET" method="retrieveParentOus"
+				param1="${OU-ID}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>			
+		<!--#
+			# Parents
+			#  -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/parents">
+			<invoke http="GET" method="retrieveParents"
+				param1="${OU-ID}">
+			</invoke>
+		</descriptor>
+		<!--#
+			# Children
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/children">
+			<invoke http="GET" method="retrieveChildren"
+				param1="${OU-ID}">
+				<documentation visible="false"/>
+			</invoke>
+		</descriptor>
+		<!--#
+			# path-list
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources/path-list">
+			<invoke http="GET" method="retrievePathList"
+				param1="${OU-ID}"><documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		</resource>
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-units/">
+		<!--#
+			# Filtered retrieval of OrganizationalUnits
+			# -->
+		<descriptor uri="/oum/organizational-units/filter">
+			<invoke http="POST" method="retrieveOrganizationalUnits"
+				param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-units/filter/refs">
+			<invoke http="POST" method="retrieveOrganizationalUnitRefs"
+				param1="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+
+</mapping>
+

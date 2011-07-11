@@ -1,0 +1,97 @@
+<langpack>
+  <str id="installOrUpgrade" txt="Install / Upgrade"/>
+  <str id="installOrUpgradeQuestion" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?"/>
+  <str id="installOrUpgradeChoiceInstall" txt="Install new eSciDoc infrastructure"/>
+  <str id="installOrUpgradeChoiceUpgrade" txt="Upgrade existing eSciDoc infrastructure"/>
+
+  <str id="escidocHostAndPort" txt="eSciDoc host name and port number"/>
+  <str id="escidocHost" txt="The host name of the server you are about to install the eSciDoc Infrastructure onto. You may use a fully qualified host name. Please make sure not to append a port."/>
+  <str id="escidocHostAlternative" txt="Alternativly, you may provide the IP address instead of host name and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts."/>
+  <str id="escidocHostText" txt="Host name:"/>
+  <str id="escidocHostValidator" txt="Host name must not be empty string."/>
+  <str id="escidocPort" txt="The port number of the server you are about to install the eSciDoc Infrastructure onto."/>
+  <str id="escidocPortText" txt="Port number:"/>
+  <str id="escidocPortValidator" txt="Port number must be a free port on localhost."/>
+
+  <str id="RelationalDatabase" txt="Relational Database Management System"/>
+  <str id="RelationalDatabaseDescription" txt="eSciDoc requires a relational database system. Currently, only Oracle and PostgreSQL are supported. The database will only hold internal data (e.g. user rights), but not the actual content."/>
+
+  <str id="OracleDriver" txt="Oracle Driver Selection"/>
+  <str id="OracleDriverDescription" txt="You have chosen to use an Oracle database. Please configure where to find the Oracle JDBC driver."/>
+  <str id="OracleDriverText" txt="Oracle JDBC driver"/>
+
+  <str id="PostgresDatabase" txt="PostgreSQL Database Connection"/>
+  <str id="DatabaseHost"  txt="Database host:"/>
+  <str id="DatabaseHostValidator" txt="Database host must not be empty string."/>
+  <str id="DatabasePort"  txt="Database port:"/>
+  <str id="DatabasePortValidator" txt="Database port must not be empty string."/>
+  <str id="DatabaseDriver"  txt="Database driver class:"/>
+  <str id="DatabaseDriverValidator" txt="Database driver class must not be empty string."/>
+  <str id="PostgresRootDatabase" txt="During the installation of PostgreSQL, you have set a name for the root database. If you accepted the default value, you do not need to edit this field."/>
+  <str id="PostgresRootDatabaseText" txt="Root Database Name:"/>
+  <str id="DatabaseNameValidator" txt="Database name must not be empty string."/>
+
+  <str id="OracleDatabase" txt="Oracle Database Connection"/>
+  <str id="OracleRootDatabase" txt="During the installation of Oracle, you have set a name for the database (SID). If you accepted the default value, you do not need to edit this field."/>
+  <str id="OracleRootDatabaseText" txt="Database SID:"/>
+
+  <str id="UserCredentials" txt="User Credentials for Database and Role Creation"/>
+  <str id="UserCredentialsText" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user."/>
+  <str id="UserCredentialsText2" txt="Please provide the user credentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created."/>
+  <str id="DatabaseAdminUsername" txt="Database Admin Username:"/>
+  <str id="UsernameValidator" txt="Username must not be an empty string."/>
+  <str id="DatabaseAdminPassword" txt="Database Admin Password:"/>
+  <str id="RetypePassword" txt="Retype Password:"/>
+  <str id="PasswordValidator" txt="Password must not be an empty string."/>
+  <str id="PasswordEqualityValidator" txt="Both database passwords must match."/>
+
+  <str id="EscidocDatabaseUser" txt="eSciDoc Database User"/>
+  <str id="EscidocDatabaseUserText" txt="The datebase user specified here will be created by the installer during the first installation and will be used at runtime for eSciDoc. This user should not have administrative privileges."/>
+
+  <str id="TablespaceValidator" txt="Tablespace must not be empty string."/>
+
+  <str id="DatabaseUsername" txt="Database Username:"/>
+  <str id="DatabasePassword" txt="Database Password:"/>
+
+  <str id="DatabaseDefaultTablespace" txt="Database Default Tablespace:"/>
+  <str id="DatabaseTemporaryTablespace" txt="Database Temporary Tablespace:"/>
+
+  <str id="FedoraUsername" txt="Fedora Username:"/>
+  <str id="FedoraPassword" txt="Fedora Password:"/>
+
+  <str id="EmailAddress" txt="eMail Address:"/>
+  <str id="EmailValidator" txt="eMail address must not be an empty string."/>
+
+  <str id="FedoraAdminUser" txt="Fedora Administration User"/>
+  <str id="FedoraAdminUserText" txt="The Fedora Administration User will be used to directly log on to Fedora and as an additional database user for Fedora-specific tables."/>
+  <str id="FedoraAdminUserText2" txt="Typically, you will never need this user. The Fedora Administration User is mainly used within the eSciDoc Infrastructure. The email address may be used by Fedora to send error messages."/>
+
+  <str id="TriplestoreDatabaseUser" txt="Triplestore Database User"/>
+  <str id="TriplestoreDatabaseUserText" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!"/>
+
+  <str id="SystemAdministratorCredentials" txt="User Credentials for System Administrator User"/>
+  <str id="SystemAdministratorCredentialsText" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them."/>
+  <str id="SystemAdministratorUsername" txt="System Administrator Username:"/>
+  <str id="SystemAdministratorPassword" txt="System Administrator Password:"/>
+
+  <str id="SystemInspectorCredentials" txt="User Credentials for System Inspector User"/>
+  <str id="SystemInspectorCredentialsText" txt="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing."/>
+  <str id="SystemInspectorUsername" txt="System Inspector Username:"/>
+  <str id="SystemInspectorPassword" txt="System Inspector Password:"/>
+
+  <str id="DepositorCredentials" txt="User Credentials for Depositor User"/>
+  <str id="DepositorCredentialsText" txt="The Depositor user is entitled to create new resources within the eSciDoc Infrastructure. This is the user for most of the day-to-day work."/>
+  <str id="DepositorUsername" txt="Depositor Username:"/>
+  <str id="DepositorPassword" txt="Depositor Password:"/>
+
+  <str id="Backup" txt="Backup"/>
+  <str id="BackupText" txt="If you don't have a recent backup of your database and Fedora files we strongly recommend to stop here and make a backup now. This ensures you will not loose data if the migration fails."/>
+
+  <str id="Migration" txt="Migration"/>
+  <str id="MigrationText" txt="Now you may run the migration. Please stop the infrastructure for this."/>
+  <str id="MigrationText2" txt="Keep an eye on the tool's output to see if the migration run successfully."/>
+  <str id="StartMigration" txt="Run the migration now."/>
+  <str id="CreatorText" txt="Some database scripts contain a placeholder for the id of the creator's user account."/>
+  <str id="CreatorId" txt="Creator Userid:"/>
+  <str id="UseridValidator" txt="Userid must not be an empty string."/>
+</langpack>

@@ -1,0 +1,39 @@
+<${itemNamespacePrefix}:properties #versionReleaseRootNsDecls (${isRootProperties}) #restInsertConditionalRoot(${isRootProperties} "true" "true" ${itemNamespacePrefix} ${itemNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>
+#creationDate(${itemCreationDate})
+#set($unescapedCreator="#unesc(${itemCreatedByTitle})")
+#restCreatedBy("#escA(${unescapedCreator})" ${itemCreatedByHref})
+#publicStatus(${itemStatus})
+#xmlElement(${escidocPropertiesNamespacePrefix} "public-status-comment" "" ${itemStatusComment})
+#restContext(	${itemContextTitle} ${itemContextHref})
+#restContentModel(${itemContentModelTitle} ${itemContentModelHref})
+#if (${ORIGIN})
+#restOrigin(${itemOriginTitle} ${itemOriginHref})
+#end
+#xmlElement(	${escidocPropertiesNamespacePrefix} "lock-status" "" ${itemLockStatus})
+#if( $!{itemLockStatus} != "unlocked" )
+#xmlElement(${escidocPropertiesNamespacePrefix} "lock-date" "" ${itemLockDate})
+#restLink(${structuralRelationsNamespacePrefix} "lock-owner" ${itemLockOwnerTitle} ${itemLockOwnerHref})
+#end
+#if(${itemObjectPid})#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${itemObjectPid})#end
+<${escidocPropertiesNamespacePrefix}:version #restLinkAttributes (${itemVersionTitle} ${itemVersionHref})>
+#xmlElement(${versionNamespacePrefix} "number" "" ${itemVersionNumber})
+#xmlElement(${versionNamespacePrefix} "date" "" ${itemVersionDate})
+#xmlElement(${versionNamespacePrefix} "status" "" ${itemVersionStatus})
+#set($unescapedModifiedByTitle="#unesc(${itemVersionModifiedByTitle})")
+#restModifiedBy("#escA(${unescapedModifiedByTitle})" ${itemVersionModifiedByHref})
+#xmlElement(${versionNamespacePrefix} "comment" "" ${itemVersionComment})
+#if(${itemVersionPid})#xmlElement(${versionNamespacePrefix} "pid" "" ${itemVersionPid})#end
+</${escidocPropertiesNamespacePrefix}:version>
+<${escidocPropertiesNamespacePrefix}:latest-version #restLinkAttributes(${itemLatestVersionTitle} ${itemLatestVersionHref})>
+#xmlElement(	${versionNamespacePrefix} "number" "" ${itemLatestVersionNumber})
+#xmlElement(	${versionNamespacePrefix} "date" "" ${itemLatestVersionDate})
+</${escidocPropertiesNamespacePrefix}:latest-version>
+#if( ${itemLatestReleaseNumber} )
+<${escidocPropertiesNamespacePrefix}:latest-release #restLinkAttributes(${itemLatestReleaseTitle} ${itemLatestReleaseHref})>
+#xmlElement(${releaseNamespacePrefix} "number" "" ${itemLatestReleaseNumber})
+#xmlElement(${releaseNamespacePrefix} "date" "" ${itemLatestReleaseDate})
+#if(${itemLatestReleasePid})#xmlElement(${releaseNamespacePrefix} "pid" "" ${itemLatestReleasePid})#end
+</${escidocPropertiesNamespacePrefix}:latest-release>
+#end
+#if(${itemContentModelSpecific})${itemContentModelSpecific}#end
+</${itemNamespacePrefix}:properties>

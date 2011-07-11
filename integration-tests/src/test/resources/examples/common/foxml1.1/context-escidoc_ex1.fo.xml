@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject PID="escidoc:ex1" VERSION="1.1" xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Context Example 1"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2008-02-22T09:31:59.625Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2008-02-22T09:31:59.984Z"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="descriptor_for_book" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ALT_IDS="admin-descriptor" CREATED="2008-02-22T09:31:59.625Z" ID="descriptor_for_book.0"
+      LABEL="descriptor_for_book" MIMETYPE="text/xml" SIZE="230">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <allowed-content-types xmlns="http://www.escidoc.de/schemas/context/0.4">
+				unknown content - unknown content
+				Descriptor for Book				
+			</allowed-content-types>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="descriptor_example" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ALT_IDS="admin-descriptor" CREATED="2008-02-22T09:31:59.625Z" ID="descriptor_example.0"
+      LABEL="descriptor_example" MIMETYPE="text/xml" SIZE="1297">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <admin-descriptor-example xmlns="http://www.escidoc.de/schemas/context/0.4">
+          <allowed-content-types>
+            <allowed-content-type>
+              <allowed-md-schema/>
+            </allowed-content-type>
+          </allowed-content-types>
+          <webservices>
+            <webservice>
+              <description>ws1-desc</description>
+              <service>ws1-service</service>
+              <parameters>ws1-param</parameters>
+            </webservice>
+            <webservice>
+              <description>ws2-desc</description>
+              <service>ws2-service</service>
+              <parameters>ws2-param</parameters>
+            </webservice>
+          </webservices>
+          <authority-files>
+            <authority-file/>
+            <authority-file/>
+          </authority-files>
+          <submission-methods>
+            <method>ingestion</method>
+            <method>single-submission</method>
+            <method>multiple-submission</method>
+          </submission-methods>
+          <relation-types>
+            <relation-type/>
+            <relation-type/>
+            <relation-type/>
+          </relation-types>
+          <component-visibility>public</component-visibility>
+          <visibility-of-references/>
+          <visibility-of-annotations/>
+        </admin-descriptor-example>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="descriptor_for_something" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ALT_IDS="admin-descriptor" CREATED="2008-02-22T09:31:59.625Z"
+      ID="descriptor_for_something.0" LABEL="descriptor_for_something" MIMETYPE="text/xml" SIZE="193">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <allowed-content-types xmlns="http://www.escidoc.de/schemas/context/0.4">
+				Descriptor for Something
+			</allowed-content-types>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2008-02-22T09:31:59.625Z" ID="DC.0" LABEL="" MIMETYPE="text/xml" SIZE="307">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <dc:title>Context Example 1</dc:title>
+          <dc:description>Context Description</dc:description>
+          <dc:identifier>escidoc:ex1</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2008-02-22T09:31:59.625Z" ID="RELS-EXT.0" LABEL="" MIMETYPE="text/xml" SIZE="2182">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+          <rdf:Description rdf:about="info:fedora/escidoc:ex1">
+		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
+            <prop:public-status>opened</prop:public-status>
+            <prop:public-status-comment>Context escidoc:ex1 opened.</prop:public-status-comment>
+            <prop:description>Context Description</prop:description>
+            <prop:name>Context Example 1</prop:name>
+            <prop:created-by-title>roland</prop:created-by-title>
+            <prop:modified-by-title>roland</prop:modified-by-title>
+            <prop:type>TestType</prop:type>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/Context"/>
+            <srel:organizational-unit rdf:resource="info:fedora/escidoc:persistent1"/>
+            <srel:organizational-unit rdf:resource="info:fedora/escidoc:persistent13"/>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

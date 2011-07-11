@@ -1,0 +1,26 @@
+        <${aggregationDefinitionNamespacePrefix}:field>
+#if($fieldTypeId == "1")
+            <${aggregationDefinitionNamespacePrefix}:info-field feed="${fieldFeed}">
+                <${aggregationDefinitionNamespacePrefix}:name>#escT(${fieldName})</${aggregationDefinitionNamespacePrefix}:name>
+                <${aggregationDefinitionNamespacePrefix}:type>${fieldDataType}</${aggregationDefinitionNamespacePrefix}:type>
+                <${aggregationDefinitionNamespacePrefix}:xpath>#escT(${fieldXpath})</${aggregationDefinitionNamespacePrefix}:xpath>
+            </${aggregationDefinitionNamespacePrefix}:info-field>
+#end
+#if($fieldTypeId == "2")
+            <${aggregationDefinitionNamespacePrefix}:time-reduction-field feed="${fieldFeed}">
+                <${aggregationDefinitionNamespacePrefix}:name>#escT(${fieldName})</${aggregationDefinitionNamespacePrefix}:name>
+                <${aggregationDefinitionNamespacePrefix}:reduce-to>${fieldReduceTo}</${aggregationDefinitionNamespacePrefix}:reduce-to>
+            </${aggregationDefinitionNamespacePrefix}:time-reduction-field>
+#end
+#if($fieldTypeId == "3")
+            <${aggregationDefinitionNamespacePrefix}:count-cumulation-field>
+                <${aggregationDefinitionNamespacePrefix}:name>#escT(${fieldName})</${aggregationDefinitionNamespacePrefix}:name>
+            </${aggregationDefinitionNamespacePrefix}:count-cumulation-field>
+#end
+#if($fieldTypeId == "4")
+            <${aggregationDefinitionNamespacePrefix}:difference-cumulation-field feed="${fieldFeed}">
+                <${aggregationDefinitionNamespacePrefix}:name>#escT(${fieldName})</${aggregationDefinitionNamespacePrefix}:name>
+                <${aggregationDefinitionNamespacePrefix}:xpath>#escT(${fieldXpath})</${aggregationDefinitionNamespacePrefix}:xpath>
+            </${aggregationDefinitionNamespacePrefix}:difference-cumulation-field>
+#end
+        </${aggregationDefinitionNamespacePrefix}:field>

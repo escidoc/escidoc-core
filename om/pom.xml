@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.escidoc.core</groupId>
+	<artifactId>om</artifactId>
+	<name>eSciDoc Core - Object Service Impl.</name>
+	<version>trunk-SNAPSHOT</version>
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>org.escidoc.core</groupId>
+		<version>trunk-SNAPSHOT</version>
+	</parent>
+
+	<description>Object Service package of eSciDoc Core</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>common</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aa</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aspects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aspects</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>om-spec</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>cmm-spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aa</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,17 @@
+<${containerNamespacePrefix}:container
+#set($unescapedTitle="#unesc(${containerName})")
+ 		   #if($items || $containers)
+	    #namespaceDecl(${structmapNamespacePrefix} ${structmapNamespace})
+	    #end
+	    #namespaceDecl(${contentRelationsNamespacePrefix} ${contentRelationsNamespace})
+	    #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+    #versionReleaseRootNsDecls("true")
+	    #restInsertConditionalRoot("true" "true" "true" ${containerNamespacePrefix} ${containerNamespace} "#escA($unescapedTitle)" ${containerHref} ${LAST_MODIFICATION_DATE})>
+    #parse("container/rest/properties.vm")
+    #parse("common/rest/md-records.vm")
+    #if($items || $containers)
+    #parse("container/rest/struct-map.vm")
+    #end
+    #parse("common/rest/relations.vm")
+    #restLink(${containerNamespacePrefix} "resources" ${resourcesTitle} ${resourcesHref})
+</${containerNamespacePrefix}:container>

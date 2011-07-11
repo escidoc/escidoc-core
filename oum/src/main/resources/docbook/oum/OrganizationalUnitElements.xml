@@ -1,0 +1,109 @@
+<chapter>
+	<title>Elements and Attributes</title>
+	<section>
+		<title>Required or Optional Elements and Attributes</title>
+		<para>
+			Information about "required" or "optional" elements and
+			attributes can be found in the corresponding XSDs.
+		</para>
+	</section>
+	<section>
+		<title>Predecessor(s)/Successor(s)</title>
+		<para>
+			An Organizational Unit can have one or more predecessors which
+			is to reflect through predecessor elements. Please use
+			organizational-unit.xsd as parameter reference.
+		</para>
+		<para>A predecessors relation is created and updated by pointing from
+			a Organizational Unit to it predecessor. Each Organizational Unit has
+			as virtual resource an XML representation of the backwards relation.
+			This relation --from predecessors to the successor-- is automatically
+			managed by the framework and is not directly alterable.
+		</para>
+		<para>
+			Different scenarios define predecessor relations. The kind of
+			scenario is reflected through the attribute &quot;form&quot;. 
+			Depending on predecessor form can an Organizational Unit have exactly 
+			one or multiple predecessors.
+			
+			It is required to define the form of predecessor relation. Each form is 
+			coevally combined with a set of rules to prevent wrong relations. 
+		</para>
+				<para>
+			Following types of predecessor relations are defined:    
+			<itemizedlist mark="predecessor_forms">
+				<listitem>
+					<para>
+						<emphasis role="bold">fusion</emphasis>
+							Use &quot;fusion&quot; as from if the new Organizational Unit is founded 
+							by a fusion of it's predecessors. This means simultaneously 
+							that at least two predecessors has to exist. All predecessors 
+							should be closed (real Organizations usually not exists as 
+							separate Organization after a fusion and should therefore be
+							in status closed).     
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">replacement</emphasis>
+							A &quot;replacement&quot; is to use if the Organizational Unit 
+							follows directly from one predecessor and the 
+							predecessor not exists any longer. Using replacement as 
+							predecessor form means also that only one predecessor relation 
+							can exists. The predecessor should have status closed.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">splitting</emphasis>
+							A &quot;splitting&quot; is to use if an Organizational Unit has more than one 
+							successor. The predecessor itself not longer exists. This form 
+							reflects a splitting of an Organizational Units into multiple new 
+							Organizational Units (e.g. each former department of an 
+							Organizational Unit without own	id and representation is to 
+							defined as separate Organizational Unit).  
+							A predecessor relation with form &quot;splitting&quot; can only consist 
+							of one relation. The predecessor should have status closed.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">spin-off</emphasis>
+							A &quot;spin-off&quot; is to use if an department of an Organizational Unit is
+							founded as new separate Organizational Unit and the predecessor 
+							is still active (with the rest of the departments). Only one predecessor
+							relation with form &quot;spin-off&quot; is allowed. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">affiliation</emphasis>
+							A &quot;affiliation&quot; is to use if an independent Organizational Unit is
+							going to be part of another already existing Organizational Unit.
+							The predecessor, the affiliated Organizational Unit, not exists as 
+							separate Organization afterwards. Only one predecessor
+							relation with form &quot;affiliation&quot; is allowed. 
+					</para>
+				</listitem>
+		</itemizedlist>
+		</para>		
+		<para>
+			Predecessor elements are
+			set or updated with an update of the
+			whole Organizational Unit XML
+			representation. A special method for
+			this values is not supported.
+		</para>
+		<para>
+		The following snippet give an example for SOAP how predecessors with form &quot;fusion&quot; 
+		are to define. For the REST representation is the objid to replace against xlink:href.  
+		<programlisting>
+			&lt;predecessors&gt;
+			&lt;predecessor form=&quot;fusion&quot; objid=&quot;escidoc:123&quot; /&gt;
+			&lt;predecessor form=&quot;fusion&quot; objid=&quot;escidoc:124&quot; /&gt;
+			&lt;/predecessors&gt;
+		</programlisting>
+		</para>
+	</section>
+
+</chapter>

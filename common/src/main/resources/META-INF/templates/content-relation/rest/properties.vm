@@ -1,0 +1,24 @@
+<${contentRelationNamespacePrefix}:properties#restInsertConditionalRoot(${isRootProperties} "true" "true" ${contentRelationNamespacePrefix} ${contentRelationNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>
+    #creationDate(${CREATION_DATE})
+
+    #set($unescapedCreator="#unesc(${CREATED_BY_TITLE})")
+    #restCreatedBy("#escA(${unescapedCreator})" ${CREATED_BY_HREF})
+
+    #set($unescapedModifiedByTitle="#unesc(${MODIFIED_BY_TITLE})")
+    #restModifiedBy("#escA(${unescapedModifiedByTitle})" ${MODIFIED_BY_HREF})
+
+	#xmlElement(${escidocPropertiesNamespacePrefix} "description" "" ${CONTENT_RELATION_DESCRIPTION})
+
+    #publicStatus(${PUBLIC_STATUS})
+
+    #xmlElement(${escidocPropertiesNamespacePrefix} "public-status-comment" "" ${PUBLIC_STATUS_COMMENT})
+
+  #xmlElement(${escidocPropertiesNamespacePrefix} "lock-status" "" ${LOCK_STATUS})
+#if(${LOCK_STATUS} != "unlocked" )
+  #xmlElement(${escidocPropertiesNamespacePrefix} "lock-date" "" ${resourceLockDate})
+  #restLink(${structuralRelationsNamespacePrefix} "lock-owner" ${resourceLockOwnerTitle} ${resourceLockOwnerHref})
+#end
+
+ #if(${objectPid})#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${objectPid})#end
+
+</${contentRelationNamespacePrefix}:properties>

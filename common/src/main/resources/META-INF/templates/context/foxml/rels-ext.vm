@@ -1,0 +1,17 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${structuralRelationsNamespacePrefix}="${structRelationsNamespace}" xmlns:system=	"http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/$id">
+<system:build>$BUILD_NUMBER</system:build>
+#foreach( $key in $properties.keySet() )
+<${escidocPropertiesNamespacePrefix}:$key>#escT($properties.get($key))</${escidocPropertiesNamespacePrefix}:$key>
+#end
+#foreach( $key in $propertiesAsReferences.keySet())
+<${structuralRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
+#end
+<rdf:type rdf:resource="${resourcesOntologiesNamespace}Context"/>
+#if( ${organizational-units} )
+#foreach( $organizational-unit in $organizational-units )
+<${structuralRelationsNamespacePrefix}:organizational-unit rdf:resource="info:fedora/$organizational-unit" />
+#end
+#end
+</rdf:Description>
+</rdf:RDF>

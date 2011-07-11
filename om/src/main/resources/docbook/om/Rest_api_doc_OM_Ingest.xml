@@ -1,0 +1,124 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
+[
+<!ENTITY chapter1Authentication  SYSTEM "chapter1AuthenticationRest.xml">
+<!ENTITY XslApi                  SYSTEM "RestXslApi.xml">
+]>
+
+<book>
+	<bookinfo>
+		<title>API Documentation Ingest Handler</title>
+		<subtitle>Object Manager (OM)</subtitle>
+		<subtitle>REST Interface</subtitle>
+		<mediaobject id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg"
+					format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png"
+					format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<!--  Chapter 1 -->
+	<chapter>
+		<title>Overview</title>
+		<para>
+			The ingest handler provides an interface for the fast creation of 
+			resources independent of their type.
+		</para>
+		<para>
+			Currently resources of type Item, Container, Organizational Unit and Context 
+			are allowed to be ingested using this interface. The interface automatically determines
+			the resource to be ingested by successively trying to validate against the 
+			XSD of the allowed resources. Should no XSD match - which means that the 
+			resource is either invalid or not known - an error is generated.
+		</para>
+		<para>
+			The typical use case for the ingest handler is for repository setup or
+			migration, leveraging the advantage of a fast and resource-independent ingest process. 
+			It is not intended for the resource creation or management process.
+		</para>
+		<para>
+			The create and ingest operations are similar.
+			In a nutshell, the difference between them is threefold:
+          <orderedlist>
+            <listitem><para><emphasis>Result object id:</emphasis> When a resource is
+            created, the object manager returns the created resource. When 
+            the resource is ingested, the object manager merely returns
+            a short XML document containing the object id and the type of the resource. 
+            Effectively, this can be used to conveniently interlink resources outside of eSciDoc.
+            For example, Items can be ingested and their object ids used to
+            create the struct map of a Container. Once the struct map is complete,
+            the Container in turn can be ingested.
+            The XML document resulting from the ingest looks as follows:
+            <programlisting>
+            <![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<result xmlns="http://www.escidoc.de/schemas/result/0.1>
+  <objid resourceType="ITEM">escidoc:123</objid>
+</result>
+             ]]>
+      		</programlisting>
+      		As indicated, the XML document must conform to the result.xsd schema. 
+            </para></listitem>
+            <listitem>
+            <para><emphasis>Performance:</emphasis> The ingest
+            operation will typically take only a fraction of the time compared to 
+            the create operation. This is mainly due to the fact that resources
+            will be retrieved immediately after creation, resulting in two
+            successive operations (create, then retrieve). The ingest on the other hand
+            does not retrieve the entire resource, but only the assigned object id and the resource type.
+            </para>
+            </listitem>
+            <listitem>
+            <para><emphasis>State:</emphasis> Items can be ingested directly with 
+            public-status released, thereby bypassing the otherwise mandatory status 
+            transition needed with the create operation. This again helps improve performance,
+            but also brings with it the danger of introducing inconsistencies or compromising security. 
+            </para>
+            </listitem>
+          </orderedlist>
+        </para>
+		<para>
+			The following paragraphs refer to the term <emphasis>ingester</emphasis> 
+			unambiguously as a <emphasis>tool or person controlling the ingest process</emphasis>. 
+		</para>
+		<para>
+			ATTENTION: In order to speed up the ingest some validations
+			and logical checks are skipped. Consequently the ingester
+			is responsible for delivering valid and consistent resources. Should it			
+			not be possible to guarantee a consistent resource
+			transformation to the valid base storage format, the use of the
+			standard create methods is recommended.
+		</para>
+		<para>
+			Role/Access: Only the role ingester is set by default with
+			ingest permissions.
+		</para>
+		<para>
+			Dependencies on other resources are to be resolved by the
+			ingester, the framework's ingest interface provides no
+			support. This relates to resource dependencies like the Items
+			of an Container. The ingester is responsible to ingest the
+			Items <emphasis>before</emphasis> the Container.
+		</para>
+		<para>
+		<mediaobject id="ingest-process">
+			<imageobject>
+				<imagedata align="center"
+					fileref="om/gen/documentation/docbook/ingest/ingest-process.jpeg"
+					format="JPEG" />
+			</imageobject>
+		</mediaobject>
+		
+		</para>
+	 	&chapter1Authentication;
+	</chapter>
+		&XslApi;
+</book>

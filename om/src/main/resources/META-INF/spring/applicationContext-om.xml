@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-lazy-init="false">
+
+    <bean id="performance.statisticsInterceptor"
+          class="de.escidoc.core.om.performance.PerformanceStatisticsInterceptor">
+        <property ref="performance.statistics" name="statistics"/>
+    </bean>
+
+    <!-- Advisor with pointcut
+    NOTE:
+    - only methods that are public and nonfinal will be proxied
+    - only classes that are nonfinal will be proxied
+    - for all proxies cglib is used because it is much faster than the jdk proxy mechanism.
+    - be careful not to include the Statistics class in the pointcut expression, otherwise unwanted side effects may happen.
+    -->
+
+    <!-- TODO: Make compile time aspect!
+
+    aop:config proxy-target-class="true">
+        <aop:advisor pointcut="execution(!final * de.escidoc.core.om.business..*.*(..))"
+                     advice-ref="performance.statisticsInterceptor"/>
+    </aop:config-->
+
+    <bean id="omCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>classpath:ehcache-om.xml</value>
+        </property>
+    </bean>
+
+    <bean id="resourcesCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager" ref="omCacheManager"/>
+        <property name="cacheName">
+            <value>resourcesCache</value>
+        </property>
+    </bean>
+
+    <bean id="business.resourceMapperDao" class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperDao">
+        <property name="resourceMappers">
+            <list>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="ITEM"/>
+                    <property name="resource" ref="business.FedoraItemHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="CONTEXT"/>
+                    <property name="resource" ref="business.FedoraContextHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="CONTENT_RELATION"/>
+                    <property name="resource" ref="business.FedoraContentRelationHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="CONTAINER"/>
+                    <property name="resource" ref="business.FedoraContainerHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="OU"/>
+                    <property name="resource" ref="service.OrganizationalUnitHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="CONTENT_MODEL"/>
+                    <property name="resource" ref="service.ContentModelHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

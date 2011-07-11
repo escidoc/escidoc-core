@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.escidoc.core</groupId>
+	<artifactId>sm</artifactId>
+    <version>trunk-SNAPSHOT</version>
+	<name>eSciDoc Core - Statistic Manager Spec.</name>
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>org.escidoc.core</groupId>
+		<version>trunk-SNAPSHOT</version>
+	</parent>
+
+    <description>Policy &amp; Rule package of eSciDoc Core</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- execute maven with hibernate3:hbm2java to generate Hibernate classes -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>hbm2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>common</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aa</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aspects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aspects</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>sm-spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aa</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

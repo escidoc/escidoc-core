@@ -1,0 +1,35 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>${userGroups.size()}</zs:numberOfRecords>
+#if (${userGroups.size()} > 0)
+  <zs:records>
+#foreach($userGroup in ${userGroups})
+    <zs:record>
+      <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $userGroupName = ${userGroup.userGroupName} )
+#set( $userGroupHref = ${userGroup.userGroupHref} )
+#set( $userGroupLastModificationDate = ${userGroup.userGroupLastModificationDate} )
+#set( $userGroupCreationDate = ${userGroup.userGroupCreationDate} )
+#set( $userGroupCreatedByTitle = ${userGroup.userGroupCreatedByTitle} )
+#set( $userGroupCreatedByHref = ${userGroup.userGroupCreatedByHref} )
+#set( $userGroupModifiedByTitle = ${userGroup.userGroupModifiedByTitle} )
+#set( $userGroupModifiedByHref = ${userGroup.userGroupModifiedByHref} )
+#set( $userGroupEmail = ${userGroup.userGroupEmail} )
+#set( $userGroupLabel = ${userGroup.userGroupLabel} )
+#set( $userGroupDescription = ${userGroup.userGroupDescription} )
+#set( $userGroupActive = ${userGroup.userGroupActive} )
+#set( $userGroupSelectors = ${userGroup.userGroupSelectors} )
+#set( $userGroupType = ${userGroup.userGroupType} )
+#set( $resourcesHref = ${userGroup.resourcesHref} )
+#set( $currentGrantsHref = ${userGroup.currentGrantsHref} )
+#searchResultRecord("user-group/rest/user-group.vm")
+      </zs:recordData>
+      <zs:recordPosition>${velocityCount}</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

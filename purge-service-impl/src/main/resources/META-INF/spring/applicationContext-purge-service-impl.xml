@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"
+       default-lazy-init="false">
+
+    <camelContext id="purgeServiceCamelContext" xmlns="http://camel.apache.org/schema/spring">
+
+        <dataFormats>
+            <jaxb id="purgeServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.purge.internal" />
+        </dataFormats>
+
+        <onException>
+            <exception>java.lang.Throwable</exception>
+            <to uri="direct:de.escidoc.core.purge.PurgeService.error"/>
+        </onException>
+
+        <route>
+            <from uri="jms:queue:de.escidoc.core.purge.PurgeService.input?disableReplyTo=true&amp;concurrentConsumers=1"/>
+            <convertBodyTo type="java.lang.String"/>
+            <doTry>
+                <to uri="validator:xsd/purge-service-1.0.xsd"/>
+                <to uri="direct:de.escidoc.core.purge.PurgeService.valid"/>
+                <doCatch>
+                    <exception>org.apache.camel.ValidationException</exception>
+                    <to uri="direct:de.escidoc.core.purge.PurgeService.invalid"/>
+                </doCatch>
+            </doTry>
+        </route>
+
+        <route>
+            <from uri="direct:de.escidoc.core.purge.PurgeService.valid"/>
+            <unmarshal ref="purgeServiceJaxb"/>
+            <to uri="bean:de.escidoc.core.purge.internal.PurgeServiceImpl?method=purge"/>
+        </route>
+
+        <route>
+            <from uri="direct:de.escidoc.core.purge.PurgeService.invalid"/>
+            <to uri="log:de.escidoc.core.purge.PurgeService.invalid?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.purge.PurgeService.invalid"/>
+        </route>
+
+        <route>
+            <from uri="direct:de.escidoc.core.purge.PurgeService.error"/>
+            <to uri="log:de.escidoc.core.purge.PurgeService.error?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.purge.PurgeService.error"/>
+        </route>
+
+    </camelContext>
+
+</beans>

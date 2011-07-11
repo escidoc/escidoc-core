@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <section>
+    <title>Description of Properties</title>
+
+    <section>
+      <title>Container</title>
+
+      <section>
+        <title>General Properties of a Container</title>
+
+        <table frame="all">
+          <title>General Properties</title>
+
+          <tgroup align="left" cols="2" colsep="1" rowsep="1">
+            <colspec colname="c1" />
+
+            <colspec colname="c2" />
+
+            <thead>
+              <row>
+                <entry>Property</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>objid</entry>
+
+                <entry>A unique identifier of the Container within the system.
+                Has to be given at creation time.</entry>
+              </row>
+
+              <row>
+                <entry>creation-date</entry>
+
+                <entry>This date is created by the framework when the
+                framework stores the object the first time.</entry>
+              </row>
+
+              <row>
+                <entry>created-by</entry>
+
+                <entry>Link to the user who created the object, the framework
+                adds this property.</entry>
+              </row>
+
+              <row>
+                <entry>public-status</entry>
+
+                <entry>The state of the Item. <para> Valid status values are:
+                </para> 
+                   <itemizedlist mark="opencircle" spacing="compact">
+                    <listitem>pending</listitem>
+                    <listitem>submitted</listitem>
+                    <listitem>released</listitem>
+                    <listitem>withdrawn</listitem>
+                  </itemizedlist>
+                </entry>
+              </row>
+
+              <row>
+                <entry>name</entry>
+
+                <entry>The name of that Container</entry>
+              </row>
+
+              <row>
+                <entry>description</entry>
+
+                <entry>The description of that Container</entry>
+              </row>
+
+              <row>
+                <entry>context</entry>
+
+                <entry>Every Container has to reference exactly one Context. Please provide either 
+                the xlink:href (REST) objid (SOAP) of the Context in this property. The reference
+                to the Context resource is mandatory.</entry>
+              </row>
+
+              <row>
+                <entry>content-model</entry>
+
+                <entry>Link to the "content model" object of that
+                object.</entry>
+              </row>
+
+              <row>
+                <entry>lock-status</entry>
+
+                <entry>A user may lock an object. Valid status values are:
+                <itemizedlist mark="opencircle" spacing="compact">
+                    <listitem>
+                       locked 
+                    </listitem>
+
+                    <listitem>
+                       unlocked 
+                    </listitem>
+                  </itemizedlist></entry>
+              </row>
+
+              <row>
+                <entry>lock-date</entry>
+
+                <entry>The date the lock-status was set to "locked".</entry>
+              </row>
+
+              <row>
+                <entry>lock-owner</entry>
+
+                <entry>The user who set the lock status to "locked".</entry>
+              </row>
+
+              <row>
+                <entry>pid</entry>
+
+                <entry>The persistent identifier of the Container.</entry>
+              </row>
+
+              <row>
+                <entry>version</entry>
+
+                <entry>for elements see below</entry>
+              </row>
+
+              <row>
+                <entry>latest-version</entry>
+
+                <entry>for elements see below</entry>
+              </row>
+
+              <row>
+                <entry>latest-release</entry>
+
+                <entry>for elements see below</entry>
+              </row>
+
+              <row>
+                <entry>content-model-specific</entry>
+
+                <entry>Properties set by the user or application</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <table>
+          <title>version</title>
+
+          <tgroup cols="2">
+            <colspec align="left" />
+
+            <thead>
+              <row>
+                <entry align="left">Property</entry>
+
+                <entry align="left">Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry align="left">number</entry>
+
+                <entry>The current version number of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">date</entry>
+
+                <entry>The date of the current version of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">version-status</entry>
+
+                <entry>The status of the current version of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">valid-status</entry>
+
+                <entry></entry>
+              </row>
+
+              <row>
+                <entry align="left">modified-by</entry>
+
+                <entry>Link to the user who changed this version</entry>
+              </row>
+
+              <row>
+                <entry align="left">comment</entry>
+
+                <entry>Comment to the change of that version</entry>
+              </row>
+
+              <row>
+                <entry align="left">pid</entry>
+
+                <entry>The persistent identifier of this version of the Item.
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <table>
+          <title>latest-version</title>
+
+          <tgroup cols="2">
+            <colspec align="left" />
+
+            <thead>
+              <row>
+                <entry align="left">Property</entry>
+
+                <entry align="left">Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry align="left">number</entry>
+
+                <entry>The current version number of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">date</entry>
+
+                <entry>The date of the current version of the Container</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <table>
+          <title>latest-release</title>
+
+          <tgroup cols="2">
+            <colspec align="left" />
+
+            <thead>
+              <row>
+                <entry align="left">Property</entry>
+
+                <entry align="left">Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry align="left">number</entry>
+
+                <entry>The current version number of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">date</entry>
+
+                <entry>The date of the current version of the Container</entry>
+              </row>
+
+              <row>
+                <entry align="left">pid</entry>
+
+                <entry>The persistent identifier of this released version of 
+                the Item.</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </section>
+
+      <section>
+        <title>Additional Elements of a Container</title>
+
+        <table frame="all">
+          <title>Elements of a Container</title>
+
+          <tgroup align="left" cols="2" colsep="1" rowsep="1">
+            <colspec colname="c1" />
+
+            <colspec colname="c2" />
+
+            <thead>
+              <row>
+                <entry>Element</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>md-record</entry>
+
+                <entry>The content specific metadata of the object.</entry>
+              </row>
+
+              <row>
+                <entry>struct-map</entry>
+
+                <entry>List of all Items and Containers related to this
+                Container (only one level)</entry>
+              </row>
+
+              <row>
+                <entry>toc</entry>
+
+                <entry>Table of content (created and maintained by the
+                application, the framework checks that its entries
+                exist)</entry>
+              </row>
+
+<!-- 
+              <row>
+                <entry>admin-descriptor</entry>
+
+                <entry>Please refer to <xref
+                linkend="AdminDescriptor" /></entry>
+              </row>
+-->
+            </tbody>
+          </tgroup>
+        </table>
+      </section>
+    </section>
+  </section>

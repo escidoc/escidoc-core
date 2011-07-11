@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section>
+  <title>Filter</title>
+
+  <section>
+    <title>Filters compared to Searches</title>
+
+    <para>The eSciDoc Infrastructure provides two ways to select lists of
+    objects: filters and searches. They differ in their functionality and the
+    data they consider for query execution.</para>
+
+    <para><emphasis role="bold">Searches</emphasis> are configurable via configuration-files
+    and can contain configurable search-fields. 
+    Search can be configured for all resources stored in Fedora. 
+    If configured, access policies are evaluated for each resource in the
+    answer set. The answer set will only contain those resources the user has
+    access to.
+    The Search Service implements the SRW/U standard, thus
+    queries are formulated in CQL (Common Query Language). Result sets consist
+    of configurable representations, and support hit-term highlighting,
+    scoring, sorting, and paging. Searches are provided by a dedicated search
+    service.</para>
+
+    <para><emphasis role="bold">Filters</emphasis> work on all resources,
+    independent from their status in object lifecycle. Access policies are evaluated
+    for each resource in the answer set. The answer set will only contain those resources
+    the user has access to. Result sets consist of full object representations, support
+    paging and sorting of results. Similar to searches, filter methods are
+    based on the SRU standard, so queries are formulated in CQL. Filter
+    methods are not provided by a dedicated service. Instead, they belong to
+    the APIs of the respective resource services. They always retrieve
+    resources of the same type, i.e. the filter method of the Item service
+    will always retrieve Item representations exclusively. An exception to
+    this rule are the <code>retrieveMembers()</code> methods in the
+    Context and Container service: the result list may contain both Items and
+    Containers.</para>
+
+    <para>The following services provide filter methods: <informaltable
+        frame="all">
+        <tgroup cols="3">
+         <colspec colwidth="4.1cm" />
+         <colspec colwidth="7.4cm" />
+         <colspec colwidth="3.3cm" />
+         <thead>
+            <row>
+              <entry>Service</entry>
+
+              <entry>Filter Methods</entry>
+
+              <entry>Service Group</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>Context</entry>
+
+              <entry>
+                <code>
+                  <literallayout>retrieveContexts()
+retrieveMembers()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>ir</code></entry>
+            </row>
+
+            <row>
+              <entry>Container</entry>
+
+              <entry>
+                <code>
+                  <literallayout>retrieveContainers()
+retrieveMembers()
+retrieveTocs()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>ir</code></entry>
+            </row>
+
+            <row>
+              <entry>Item</entry>
+
+              <entry>
+                <code>
+            	  <literallayout>retrieveItems()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>ir</code></entry>
+            </row>
+
+            <row>
+              <entry>Organizational Unit</entry>
+
+              <entry>
+                <code>
+                  <literallayout>retrieveOrganizationalUnits()
+retrieveParentObjects()
+retrieveChildObjects()
+retrieveContentRelations()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>oum</code></entry>
+            </row>
+
+            <row>
+              <entry>User Account</entry>
+
+              <entry>
+                <code>
+                  <literallayout>retrieveUserAccounts()
+retrieveGrants()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>aa</code></entry>
+            </row>
+
+            <row>
+              <entry>User Group</entry>
+
+              <entry><code>retrieveUserGroups()</code></entry>
+
+              <entry><code>aa</code></entry>
+            </row>
+
+            <row>
+              <entry>Role</entry>
+
+              <entry><code>retrieveRoles()</code></entry>
+
+              <entry><code>aa</code></entry>
+            </row>
+
+            <row>
+              <entry>Content Relation</entry>
+
+              <entry><code>retrieveContentRelations()</code></entry>
+
+              <entry><code>ir</code></entry>
+            </row>
+
+            <row>
+              <entry>Set Definition</entry>
+
+              <entry><code>retrieveSetDefinitions()</code></entry>
+
+              <entry><code>oai</code></entry>
+            </row>
+
+            <row>
+              <entry>Statistics</entry>
+
+              <entry>
+                <code>
+                  <literallayout>retrieveScopes()
+retrieveReportDefinitions()
+retrieveAggregationDefinitions()</literallayout>
+                </code>
+              </entry>
+
+              <entry><code>sm</code></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable></para>
+
+    <para>
+    	<informaltable frame="topbot" colsep="0">
+        <tgroup cols="2">
+        <colspec colwidth="2.5cm"/>
+        <colspec colwidth="12.3cm"/>
+          <tbody>
+            <row rowsep="0">
+              <entry>
+              	<inlinemediaobject>
+                  <imageobject>
+                    <imagedata depth="2.0cm" fileref="note.png" />
+                  </imageobject>
+                </inlinemediaobject>
+              </entry>
+
+              <entry>
+              	<para><emphasis role="bold">Hint</emphasis></para>
+              	<para>Previous versions of the eSciDoc Infrastructure (&lt;
+              1.2) came with an alternative implementation of filter methods,
+              based on XML snippets. These methods do not exist any-more,
+              so if you use them in your code, you have to refactor it.</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+  </section>
+
+  <section>
+    <title>Filter Queries</title>
+
+    <para>Filter queries consist of the actual CQL query and additional
+    metadata, provided as parameters. Queries are executed as SRU Search
+    Retrieve Request. The following example shows a query to retrieve an Item
+    with the object identifier <code>escidoc:5</code> (using the
+    REST-style API):</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;query="/id"=escidoc:5</programlisting></para>
+
+    <para>This example consists of three parts: <itemizedlist
+        mark="opencircle" spacing="compact">
+        <listitem>
+           method (<code>/ir/items</code>) 
+        </listitem>
+
+        <listitem>
+           operation (<code>operation=searchRetrieve</code>) 
+        </listitem>
+
+        <listitem>
+           parameter (<code>query="/id"=escidoc:5</code>) 
+        </listitem>
+      </itemizedlist></para>
+
+    <para>In a more formal way, this could be expressed in EBNF as
+    follows:</para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+filter-query  = method , "?" , operation , { "&amp;" , parameter } ;
+
+method        = "/" , service-group , "/" , method-name ;
+
+service-group = "aa" | "ir" | "oai" | "oum" | "sm" ;
+
+operation     = "operation" , "=" , "searchRetrieve" | "explain" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>The <code>method-name</code> may be any of the filter 
+      method names (see table in the previous section). Please refer to the API 
+      documentation for the exact spelling of the filter method names.
+    </para>
+
+    <para>For a list of valid method names and the correct combination with
+    service groups, please refer to the table in the previous section.</para>
+
+    <para>The <code>explain</code> operation will be described in the
+    following section. For the rest of this section, we will focus on the
+    <code>searchRetrieve</code> operation, which is used for expressing
+    filter queries. The <code>searchRetrieve</code> operation takes up
+    to four parameters:</para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+operation     = "operation" , "=" , "searchRetrieve" | "explain" ;
+
+parameter     = key , "=" , value
+
+key           = "query" | "version" | "maximumRecords" |
+                "startRecord" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+    <para>The definition of <code>value</code> differs for each
+    of the parameters: 
+      <itemizedlist mark="opencircle">
+        <listitem>
+          <para><code>query:</code> the actual query with a filter name
+          and a search term.</para>
+
+          <para>
+          	Example: <code>query="/id"=escidoc:5</code>
+          </para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = filter-criteria ;
+
+filter-criteria = filter-name , relation , search-term , 
+                  { operator , filter-name , relation , 
+                  search-term } ;
+                  
+filter-name     = ( '"/' , local-name , { "/" , local-name , } , 
+                  '"') | ? special-filter-name ? ;
+                  
+local-name      = LOWERCHAR , { CHAR | DIGIT | ZERO | "-" } ;
+
+relation        = "&lt;" | "&lt;=" | "=" | "&gt;=" | "&gt;" | "&lt;&gt;" ;
+
+search-term     = { CHAR | DIGIT | ZERO } ;
+
+operator        = "and" | "or" ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+          <para>For a more extensive explaination of filter names, please
+          refer to the following section <xref linkend="Filter.FilterNames" />. 
+          The EBNF extension expression <code>? special-filter-name ?</code> 
+          will be explained in section <xref linkend="Filter.SpecialFilterNames" />.
+          </para>
+
+        </listitem>
+
+        <listitem>
+          <para><literal>version:</literal> the version of SRU; currently
+          always 1.1.</para>
+
+          <para>Example: <literal>version=1.1</literal></para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = major-version , "." , minor-version ;
+
+major-version   = DIGIT , { DIGIT | ZERO } ;
+
+minor-version   = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+
+        </listitem>
+
+        <listitem>
+          <para><literal>maximumRecords:</literal> the maximum number of
+          records you want to retrieve with your request (combined with
+          <literal>startRecord</literal>, this verb allows for paging through
+          a large result set). The default value is 20. Please be aware that increasing
+          this value may lead to problems with too large result sets, causing out-of-memory
+          conditions.</para>
+
+          <para>Example: <literal>maximumRecords=10</literal></para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+        </listitem>
+
+        <listitem>
+          <para><literal>startRecord:</literal> the offset for the first
+          record in the result set to be retrieved. The offset starts with 1.
+          Setting <literal>startRecord</literal> to 10 means to skip the first
+          9 hits in the result set. The default value is 1.</para>
+
+          <para>Example: <literal>startRecord=20</literal></para>
+
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+value           = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>The SRU standard defines the <literal>searchRetrieve</literal>
+    operation as default operation. Thus, it may be omitted in filter queries.
+    SRU requires <literal>version</literal> as mandatory parameter. All filter
+    methods substitute this parameter if not given explicitly. Thus, all
+    parameters are optional. A filter query with no operation and no
+    parameters will retrieve all accessible resources. The following two
+    examples show a filter query with no parameters and a fully-qualified
+    filter query:</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items</programlisting></para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=searchRetrieve&amp;version=1.1
+&amp;query="/id"=escidoc:5&amp;maximumRecords=20&amp;startRecord=100</programlisting></para>
+
+  </section>
+
+  <section id="Filter.FilterNames">
+    <title>Filter Names</title>
+
+    <para>Every literal value inside the XML representation of an object can
+    be matched by a search term. The appropriate filter name is a path
+    concatenation of the local names of the elements leading to that value.
+    The path concatenation starts with a slash ('/') and does not include the
+    root element of the XML representation. An example may help to understand
+    the general concept: the XML representation of an Item has an
+    <literal>&lt;item&gt;</literal> root element. It contains a
+    <literal>&lt;properties&gt;</literal> section with an element
+    <literal>&lt;public-status&gt;</literal>. In order to match the value of
+    the element <literal>&lt;public-status&gt;</literal>, the filter name
+    should be set to
+    <literal>"/properties/public-status"</literal>. Filter names
+    constructed from local names always include at least one slash, which has
+    a special meaning in CQL. Therefore, such filter names must be enclosed by
+    quotation marks when used in a query.</para>
+
+    <para>SRU defines a simple operation for retrieving all valid filter
+    names: the explain operation. The result is a list of all available filter
+    names for the given service API method. The following example shows the
+    explain operation for the Item service (using the REST-style API):</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?operation=explain</programlisting></para>
+
+    <para>The resulting explain response is an XML document, which lists all
+    filter names as literal values of the element
+    <literal>&lt;name&gt;</literal> within the
+    <literal>&lt;indexInfo&gt;</literal> element. The following example shows
+    an excerpt of the explain plan for the Item resource, with filter names
+    highlighted in bold face:</para>
+
+    <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;sru:explainResponse xmlns:sru="http://www.loc.gov/zing/srw/"&gt;
+  &lt;sru:version&gt;1.1&lt;/sru:version&gt;
+  &lt;sru:record&gt;
+    &lt;sru:recordSchema&gt;
+      http://explain.z3950.org/dtd/2.0/
+    &lt;/sru:recordSchema&gt;
+    &lt;sru:recordPacking&gt;XML&lt;/sru:recordPacking&gt;
+    &lt;sru:recordData&gt;
+      &lt;zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.0/"&gt;
+        &lt;zr:serverInfo protocol="SRU" version="1.2" method="GET"&gt;
+          &lt;zr:host&gt;localhost&lt;/zr:host&gt;
+          &lt;zr:port&gt;8080&lt;/zr:port&gt;
+          &lt;zr:database&gt;ir/items&lt;/zr:database&gt;
+        &lt;/zr:serverInfo&gt;
+        &lt;zr:databaseInfo&gt;
+          &lt;title lang="en" primary="true"&gt;
+            eSciDoc database for Items
+          &lt;/title&gt;
+        &lt;/zr:databaseInfo&gt;
+        &lt;zr:indexInfo&gt;
+          &lt;zr:index&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/base</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
+          &lt;/zr:index&gt;
+          &lt;zr:index&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/components/component/content/id</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
+          &lt;/zr:index&gt;
+[...]
+          &lt;zr:index&gt;
+            &lt;zr:map&gt;
+              &lt;zr:name set=""&gt;
+                <emphasis role="bold">/resources/id</emphasis>
+              &lt;/zr:name&gt;
+            &lt;/zr:map&gt;
+          &lt;/zr:index&gt;
+        &lt;/zr:indexInfo&gt;
+      &lt;/zr:explain&gt;
+    &lt;/sru:recordData&gt;
+  &lt;/sru:record&gt;
+&lt;/sru:explainResponse&gt;   </programlisting></para>
+  </section>
+
+  <section id="Filter.SpecialFilterNames">
+    <title>Special Filter Names</title>
+
+    <para>There are a number of filter names which are not directly derived from the
+      XML representation of resources. Two examples are the user account and 
+      the role of that user. 
+    </para>
+    
+    <para>If you want to search for the resource identifier, you may use the 
+    	following special filter name:
+    	
+      <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <code>"/id"</code>: the resource identifier 
+          (e.g., <code>escidoc:4</code>). 
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+    <para>Typically, only the access rights of the user invoking the filter methods 
+      are considered for retrieving the accessible resources. In certain cases 
+      (e.g., if the invoking user is an administrator), it might be interesting 
+      to retrieve resources based on the access rights of another user: 
+    
+      <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <code>user</code>: the user id of the user whose access rights 
+          should be considered additionally by the filter method. 
+        </listitem>
+        <listitem>
+          <code>role</code>: the role id; can only be used in combination
+           with <code>user</code>. If this filter name is omitted, the 
+           user filter will consider all roles granted to the user specified in 
+           the user filter. 
+        </listitem>
+      </itemizedlist>
+    </para>
+
+    <para>Supplying a user or role id with the user and role filter names will
+    only narrow down the number of retrieved objects. If the provided user id
+    has access to more objects than the user invoking the filter method, the
+    result set will not include additional resources.</para>
+
+    <para>Two filter methods (<literal>retrieveMembers</literal> in Context
+    and Container service) may retrieve resources of different types (Items
+    and Containers). If you want to limit your filter query to a specific
+    resource type, you can use the type filter name: 
+
+      <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <literal>type</literal> : the resource type of the resource the filter query should be limited to.
+          <para>
+            <itemizedlist mark="bullet" spacing="compact">
+              <listitem>
+                <literal>container</literal> : Container
+              </listitem>
+              <listitem>
+                <literal>item</literal> : Item
+              </listitem>
+              <listitem>
+                <literal>organizational-unit</literal> : Organizational Unit
+              </listitem>
+            </itemizedlist>
+          </para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=type=container</programlisting></para>
+
+    <para>Several filter methods define additional filter names, which are
+    specific to them. You will find these filter names described in API
+    documentation of the respective service.</para>
+  </section>
+
+  <section>
+    <title>Filter Criteria</title>
+
+    <para>The combination of the filter name, the relation, and the search
+    term is called "filter criteria". Each filter request may
+    contain several filter criteria, combined by the Boolean operators
+    "and" and "or". Allowed relations are
+    "&lt;", "&lt;=", "=",
+    "&gt;=", "&gt;" and "&lt;&gt;". You
+    may use parentheses to ensure the correct evaluation order of the logical
+    expression in your query. The following example searches for Items with
+    either the term ‘cat’ in the title or the term ‘all my dogs’ in the
+    description:</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query="/md-records/md-record/dc-md/title"=cat or
+    "/properties/description"="all my dogs"</programlisting></para>
+
+    <para>Please note that you should URL-encode your query, especially when
+    using a web browser as front-end. However, for better readability, we show
+    here the un-encoded version.</para>
+  </section>
+
+  <section>
+    <title>Sorting Filter Results</title>
+
+    <para>The CQL syntax includes a specification for sorting result lists.
+    This behavior is controlled by the sortby operator. The operator takes two
+    parameters: the sort key, which may be any filter name, and the sort
+    order: <literal>/sort.ascending</literal> (which is the default value) or
+    <literal>/sort.descending</literal>. The general template for the sort
+    operator is the following:</para>
+
+    <para><programlisting>sortby &lt;sort key&gt;&lt;sort order&gt;</programlisting></para>
+
+    <para>The following example shows the sort operator in the context of a
+    complete filter request:</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query="/md-records/md-record/dc-md/title"=cat
+    sortby "/id"
+    /sort.descending</programlisting></para>
+  </section>
+
+  <section>
+    <title>Paging Filter Results</title>
+
+    <para>For larger result lists with many hits, it is often convenient to
+    retrieve only subsets of the result list. This is often called ‘paging’.
+    The filter methods enable paging with two request parameters:
+    <literal>startRecord</literal> and <literal>maximumRecords</literal>. Both
+    parameters take (positive) integers as values.</para>
+
+    <para>The value of <literal>startRecord</literal> specifies the number of
+    the hit in the result list that should be the first one to be returned by
+    the system. The sequence number of the first hit in the result list is 1,
+    which is as well the default value for this parameter. The value of
+    <literal>maximumRecords</literal> specifies the number of hits to be
+    retrieved by the system, starting from the hit number specified
+    <literal>startRecord</literal> value. The default value for
+    <literal>maximumRecords</literal> is 20.</para>
+
+    <para>For paging, the first request should set
+    <literal>maximumRecords</literal> to a manageable size, e.g. 20.
+    Subsequent requests should then set the value of
+    <literal>startRecord</literal> to a multiple of
+    <literal>maximumRecords</literal> + 1 and keep the value of
+    <literal>maximumRecords</literal> fix. By doing so, you navigate through
+    the complete result list "page by page".</para>
+
+    <para>All filter methods return an XML document, complying to the SRW/U
+    schema. The XML document includes the SRW/U version
+    (<literal>version</literal> element), the number of hits in the result set
+    (<literal>numberOfRecords</literal> element), and the list of matching
+    resources (<literal>records</literal> element). Each hit is listed as a
+    <literal>record</literal> element within <literal>records</literal>,
+    including its full resource representation.</para>
+  </section>
+
+  <section>
+    <title>Examples</title>
+
+    <para>The CQL query is embedded in the parameter query of the filter
+    request. The request string should always be URL-encoded. For reasons of
+    readability, the following examples are not URL-encoded. All examples use
+    the REST-style API.</para>
+
+    <para>Generic template for filter requests:</para>
+
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/&lt;service-group&gt;/&lt;method&gt;?version=1.1
+    &amp;operation=searchRetrieve&amp;query="&lt;CQL&gt;"&amp;maximumRecords=20
+    &amp;startRecord=1</programlisting></para>
+
+    <para>In the following, we will just focus on the actual query, which is
+    represented as <literal>&lt;CQL&gt;</literal> in the above generic
+    template for filter requests.</para>
+
+    <para>Get a list of all submitted resources with the permissions of user
+    "escidoc:42":</para>
+
+    <para><programlisting>"/properties/public-status"=submitted and user=escidoc:42</programlisting></para>
+
+    <para>Get a list of all resources in status ‘pending’ or ‘submitted’,
+    sorted by their ID:</para>
+
+    <para><programlisting>"/properties/public-status"=pending or
+"/properties/public-status"=submitted
+sortby "/id"/sort.ascending</programlisting></para>
+
+  </section>
+</section>

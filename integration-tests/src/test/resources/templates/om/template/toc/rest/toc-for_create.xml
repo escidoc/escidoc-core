@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocToc:toc xmlns:escidocToc="http://www.escidoc.de/schemas/toc/0.6"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xml:base="http://localhost:8080"
+	prefix-xlink:title="the two ä mystic scans?"
+	prefix-xlink:type="simple">
+	<escidocToc:properties
+		xmlns:prop="http://escidoc.de/core/01/properties/"
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<srel:context prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/context/escidoc:persistent3" />
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:TOC" />
+		<prop:content-model-specific>
+			<nix></nix>
+		</prop:content-model-specific>
+	</escidocToc:properties>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.4">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.4"
+			name="escidoc"
+			schema="http://www.escidoc-project.de/metadata/schema/0.1"
+			prefix-xlink:title="eSciDoc internal MD Record"
+			prefix-xlink:type="simple">
+			<set>
+				<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">
+					Test TOC
+				</dc:title>
+			</set>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<toc:toc ID="meins" TYPE="LOGICAL" LABEL="A minimal TOC (Label)"
+		xml:base="http://localhost:8080"
+		xmlns:toc="http://www.escidoc.de/schemas/tableofcontent/0.1"
+		xmlns:xlink="http://www.w3.org/1999/xlink">
+		<toc:div ID="rootNode" LABEL="[the containers title]"
+			TYPE="monograph">
+			<toc:ptr ID="rootNodePtr" USE="DEFAULT" LOCTYPE="URL"
+				xlink:href="/ir/container/escidoc:10"
+				xlink:title="[the containers title]" />
+		</toc:div>
+	</toc:toc>
+	<relations:relations />
+	<escidocToc:resources
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+		prefix-xlink:href="/ir/item/escidoc:198/resources"
+		prefix-xlink:title="Virtual Resources">
+		<escidocToc:version-history />
+	</escidocToc:resources>
+</escidocToc:toc>

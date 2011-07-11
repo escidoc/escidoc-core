@@ -1,0 +1,1729 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!DOCTYPE part PUBLIC "-//OASIS//DTD DocBook V5.0//EN" "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd">
+<part lang="en">
+  <partinfo>
+    <date>December 5, 2007</date>
+    <abstract>
+      <para></para>
+    </abstract>
+  </partinfo>
+  <title>Reference Handbook</title>
+  <chapter id="PACKAGE-de.escidoc.core.oum.SERVICE.INTERFACES" xreflabel="de.escidoc.core.oum.service.interfaces">
+    <title>Package de.escidoc.core.oum.service.interfaces</title>
+    <para>This package contains the Service interface of the Organizational Unit Manager (OUM) component.</para>
+    <sect1 id="CLASS-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE" xreflabel="de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface">
+      <title>Interface OrganizationalUnitHandlerInterface</title>
+      <indexterm>
+        <primary>OrganizationalUnitHandlerInterface</primary>
+      </indexterm>
+      <indexterm>
+        <primary>Interfaces</primary>
+        <secondary>OrganizationalUnitHandlerInterface</secondary>
+      </indexterm>
+      <para>The interface for access to an OrganizationalUnitHandler Service.</para>
+      <sect2>
+        <title>Synopsis</title>
+        <classsynopsis class="interface" language="java">
+          <ooclass>
+            <modifier>public</modifier>
+            <modifier>interface</modifier>
+            <classname>de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface</classname>
+          </ooclass>
+          <classsynopsisinfo role="comment">// Public Methods</classsynopsisinfo>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>create</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>xml</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>InvalidXmlException</exceptionname>
+            <exceptionname>MissingAttributeValueException</exceptionname>
+            <exceptionname>MissingElementValueException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>void</type>
+            <methodname>delete</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>InvalidStatusException</exceptionname>
+            <exceptionname>OrganizationalUnitHasChildrenException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieve</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveChildren</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveOrganizationDetails</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveOrganizationalUnitRefs</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>filter</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>InvalidXmlException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveOrganizationalUnits</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>filter</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>InvalidXmlException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveParentOus</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveParents</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrievePathList</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveProperties</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>retrieveResources</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+          <methodsynopsis language="java">
+            <modifier>public</modifier>
+            <type>String</type>
+            <methodname>update</methodname>
+            <methodparam>
+              <type>String</type>
+              <parameter>id</parameter>
+            </methodparam>
+            <methodparam>
+              <type>String</type>
+              <parameter>xml</parameter>
+            </methodparam>
+            <exceptionname>AuthenticationException</exceptionname>
+            <exceptionname>AuthorizationException</exceptionname>
+            <exceptionname>InvalidXmlException</exceptionname>
+            <exceptionname>MissingMethodParameterException</exceptionname>
+            <exceptionname>OptimisticLockingException</exceptionname>
+            <exceptionname>OrganizationalUnitHierarchyViolationException</exceptionname>
+            <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+            <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            <exceptionname>MissingElementValueException</exceptionname>
+            <exceptionname>SystemException</exceptionname>
+          </methodsynopsis>
+        </classsynopsis>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <formalpara>
+          <title>Inheritance Path</title>
+          <para>
+            <xref linkend="CLASS-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE"/>
+          </para>
+        </formalpara>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.CREATE-JAVA.LANG.STRING-" xreflabel="create(java.lang.String)">
+        <title>create(String)
+          <indexterm>
+            <primary>create</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>create</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>create</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>xml</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>InvalidXmlException</exceptionname>
+          <exceptionname>MissingAttributeValueException</exceptionname>
+          <exceptionname>MissingElementValueException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>xml</varname>
+            </term>
+            <listitem>
+              <para> The xml representation of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the created organizational unit.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>InvalidXmlException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the schema validation fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingAttributeValueException</exceptionname>
+            </term>
+            <listitem>
+              <para>If a mandatory attribute is not set in xml data.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingElementValueException</exceptionname>
+            </term>
+            <listitem>
+              <para>If a mandatory element is not found in xml data.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the name of the created organizational unit is not unique within the scope of its parents.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If any of the included references to a parent is not valid.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Create an Organizational Unit.</para>
+        <para> See chapter 4 for detailed information about input and output data elements</para>
+        <para>
+          <emphasis role="bold">Tasks:</emphasis>
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>  The XML data is validated against the XML-Schema of an OrganizationalUnit. </para>
+          </listitem>
+          <listitem>
+            <para>  The following consistency checks are made: </para>
+            <itemizedlist>
+              <listitem>
+                <para>  The name is unique in relation to the name of every other sibling OrganizationalUnit. </para>
+              </listitem>
+              <listitem>
+                <para>  The links to the parent ous are referencing OrganizationalUnits. </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para>  An OrganizationalUnit is created from the provided data including a generated internal id. </para>
+          </listitem>
+          <listitem>
+            <para>  The status of the new OrganizationalUnit is set to &quot;opened&quot;. </para>
+          </listitem>
+          <listitem>
+            <para>  Creator and creation date are added to the new OrganizationalUnit. </para>
+          </listitem>
+          <listitem>
+            <para>  The new OrganizationalUnit is stored. </para>
+          </listitem>
+          <listitem>
+            <para>   The XML representation for the stored OrganizationalUnit is created. </para>
+          </listitem>
+          <listitem>
+            <para>  The XML data is returned. </para>
+          </listitem>
+        </itemizedlist>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.DELETE-JAVA.LANG.STRING-" xreflabel="delete(java.lang.String)">
+        <title>delete(String)
+          <indexterm>
+            <primary>delete</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>delete</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>void</type>
+          <methodname>delete</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>InvalidStatusException</exceptionname>
+          <exceptionname>OrganizationalUnitHasChildrenException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the id is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>InvalidStatusException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the organizational has an invalid status.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitHasChildrenException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the organizational unit has children.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Delete an organizational unit. By now the state of the organizational unit is not checked because there are only organizational units in state &apos;created&apos;, but the organizational unit must not have any children.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVE-JAVA.LANG.STRING-" xreflabel="retrieve(java.lang.String)">
+        <title>retrieve(String)
+          <indexterm>
+            <primary>retrieve</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieve</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieve</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve an organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVECHILDREN-JAVA.LANG.STRING-" xreflabel="retrieveChildren(java.lang.String)">
+        <title>retrieveChildren(String)
+          <indexterm>
+            <primary>retrieveChildren</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveChildren</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveChildren</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The XML representation of a list of references to the child organizational units.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the organizational units that are subordinated to this organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEORGANIZATIONALUNITREFS-JAVA.LANG.STRING-" xreflabel="retrieveOrganizationalUnitRefs(java.lang.String)">
+        <title>retrieveOrganizationalUnitRefs(String)
+          <indexterm>
+            <primary>retrieveOrganizationalUnitRefs</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveOrganizationalUnitRefs</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveOrganizationalUnitRefs</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>filter</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>InvalidXmlException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>filter</varname>
+            </term>
+            <listitem>
+              <para> The filter criteria to select the organizational units.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> A list of references to organizational unit objects.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>InvalidXmlException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the schema validation fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Filtered retrieval of references to organizational unit objects.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEORGANIZATIONALUNITS-JAVA.LANG.STRING-" xreflabel="retrieveOrganizationalUnits(java.lang.String)">
+        <title>retrieveOrganizationalUnits(String)
+          <indexterm>
+            <primary>retrieveOrganizationalUnits</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveOrganizationalUnits</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveOrganizationalUnits</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>filter</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>InvalidXmlException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>filter</varname>
+            </term>
+            <listitem>
+              <para> The filter criteria to select the organizational units.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> A list of organizational unit objects.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>InvalidXmlException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the schema validation fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Filtered retrieval of organizational unit objects.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEORGANIZATIONDETAILS-JAVA.LANG.STRING-" xreflabel="retrieveOrganizationDetails(java.lang.String)">
+        <title>retrieveOrganizationDetails(String)
+          <indexterm>
+            <primary>retrieveOrganizationDetails</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveOrganizationDetails</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveOrganizationDetails</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the organization-details sub resource.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the organization-details subresource of the organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEPARENTOUS-JAVA.LANG.STRING-" xreflabel="retrieveParentOus(java.lang.String)">
+        <title>retrieveParentOus(String)
+          <indexterm>
+            <primary>retrieveParentOus</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveParentOus</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveParentOus</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the parent-ous sub resource.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the parent-ous subresource of the organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEPARENTS-JAVA.LANG.STRING-" xreflabel="retrieveParents(java.lang.String)">
+        <title>retrieveParents(String)
+          <indexterm>
+            <primary>retrieveParents</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveParents</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveParents</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The XML representation of a list of references to the parent organizational units.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the organizational units to that this organizational unit is subordinated.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEPATHLIST-JAVA.LANG.STRING-" xreflabel="retrievePathList(java.lang.String)">
+        <title>retrievePathList(String)
+          <indexterm>
+            <primary>retrievePathList</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrievePathList</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrievePathList</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The list of pathes.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the organizational unit correponding to the id was not found.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the list of pathes of an organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVEPROPERTIES-JAVA.LANG.STRING-" xreflabel="retrieveProperties(java.lang.String)">
+        <title>retrieveProperties(String)
+          <indexterm>
+            <primary>retrieveProperties</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveProperties</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveProperties</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the properties sub resource.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the properties of an organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.RETRIEVERESOURCES-JAVA.LANG.STRING-" xreflabel="retrieveResources(java.lang.String)">
+        <title>retrieveResources(String)
+          <indexterm>
+            <primary>retrieveResources</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>retrieveResources</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>retrieveResources</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the resources sub resource.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Retrieve the list of virtual Resources of the organizational unit.</para>
+      </sect2>
+      <sect2 id="METHOD-de.escidoc.core.oum.SERVICE.INTERFACES.ORGANIZATIONALUNITHANDLERINTERFACE.UPDATE-JAVA.LANG.STRING-JAVA.LANG.STRING-" xreflabel="update(java.lang.String, java.lang.String)">
+        <title>update(String, String)
+          <indexterm>
+            <primary>update</primary>
+          </indexterm>
+          <indexterm>
+            <primary>Methods</primary>
+            <secondary>update</secondary>
+          </indexterm>
+        </title>
+        <methodsynopsis language="java">
+          <modifier>public</modifier>
+          <type>String</type>
+          <methodname>update</methodname>
+          <methodparam>
+            <type>String</type>
+            <parameter>id</parameter>
+          </methodparam>
+          <methodparam>
+            <type>String</type>
+            <parameter>xml</parameter>
+          </methodparam>
+          <exceptionname>AuthenticationException</exceptionname>
+          <exceptionname>AuthorizationException</exceptionname>
+          <exceptionname>InvalidXmlException</exceptionname>
+          <exceptionname>MissingMethodParameterException</exceptionname>
+          <exceptionname>OptimisticLockingException</exceptionname>
+          <exceptionname>OrganizationalUnitHierarchyViolationException</exceptionname>
+          <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+          <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+          <exceptionname>MissingElementValueException</exceptionname>
+          <exceptionname>SystemException</exceptionname>
+        </methodsynopsis>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Parameters</title>
+          <varlistentry>
+            <term>
+              <varname>id</varname>
+            </term>
+            <listitem>
+              <para> The id of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <varname>xml</varname>
+            </term>
+            <listitem>
+              <para> The xml representation of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <emphasis>return</emphasis>
+            </term>
+            <listitem>
+              <para> The xml representation of the updated organizational unit.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist><?dbfo list-presentation="blocks"?>
+          <title>Exceptions</title>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthenticationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authentication fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>AuthorizationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If authorization fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>InvalidXmlException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the schema validation fails.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingMethodParameterException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the xml data is not provided.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OptimisticLockingException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the organitzational unit was changed in the meantime.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitHierarchyViolationException</exceptionname>
+            </term>
+            <listitem>
+              <para>If a parent is already a child of the organizational unit.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNameNotUniqueException</exceptionname>
+            </term>
+            <listitem>
+              <para>If the name of the updated organizational unit is not unique within the scope of its parents.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>OrganizationalUnitNotFoundException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an organizational unit with the provided id does not exist.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>MissingElementValueException</exceptionname>
+            </term>
+            <listitem>
+              <para>If required element value is missing.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <exceptionname>SystemException</exceptionname>
+            </term>
+            <listitem>
+              <para>If an internal error occured.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <emphasis>Oum</emphasis>
+            </term>
+            <listitem>
+              <para>
+                <simplelist type="inline">
+                  <member></member>
+                </simplelist>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>Update an organizational unit.</para>
+      </sect2>
+    </sect1>
+  </chapter>
+  <index/>
+</part>
+

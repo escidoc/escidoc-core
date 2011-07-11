@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>org.escidoc.core</groupId>
+		<version>trunk-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>purge-service-impl</artifactId>
+	<name>eSciDoc Core - Purge Service Impl.</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+				<artifactId>maven-java-formatter-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aspects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>purge-service-spec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>adm-impl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

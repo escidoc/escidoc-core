@@ -1,0 +1,16 @@
+
+		<dsCompositeModel
+        	xmlns="info:fedora/fedora-system:def/dsCompositeModel#"
+        	xmlns:schema="http://ecm.sourceforge.net/types/dscompositeschema/0/1/#">
+        	#foreach( ${entry} in ${MD_RECORDS})
+ 			<dsTypeModel ID="${entry.name}">
+        		<form MIME="text/xml"/>
+       			#if(${entry.schemaHref})
+        		<extensions name="SCHEMA">
+					<!-- the retrieved schema is stored in datastream with id "escidoc_xsd" -->
+	    	        <schema:schema type="xsd" datastream="${entry.name}_xsd"/>
+        		</extensions>
+    	        #end
+    		</dsTypeModel>
+    		#end
+		</dsCompositeModel>

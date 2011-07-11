@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="sm"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.sm.business.persistence.hibernate.ReportDefinitionRole" 
+    table="report_definition_roles"
+    lazy="false"
+>
+    <meta attribute="class-description" inherit="false">
+       @hibernate.class
+        table="report_definition_roles"
+       @hibernate.mapping
+        schema="sm"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="roleId"
+        type="java.lang.String"
+        column="role_id"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="role_id"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="listIndex"
+        type="int"
+        column="list_index"
+        not-null="true"
+        length="2"
+    >
+        <meta attribute="field-description">
+           @hibernate.property
+            column="list_index"
+            length="2"
+            not-null="true"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to ReportDefinition -->
+    <many-to-one
+        name="reportDefinition"
+        class="de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition"
+        not-null="true"
+    >
+        <meta attribute="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="report_definition_id"         
+        </meta>
+        <column name="report_definition_id" />
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

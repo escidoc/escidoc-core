@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <define>
+        <var name="USER-ID" regexp="/([^/?]*)" />
+        <var name="USER-KEY" regexp="/([^/?]*)" />
+        <var name="GRANT-ID" regexp="/([^/?]*)" />
+        <var name="ROLE-ID" regexp="/([^/?]*)" />
+        <var name="PREF-NAME" regexp="/([^/?]*)" />
+        <var name="ATT-ID" regexp="/([^/?]*)" />
+        <var name="ATT-NAME" regexp="/([^/?]*)" />
+        <var name="OBJ-ID" regexp="/([^/?]*)" />
+    </define>
+
+    <!--#########################################################
+        # User Account list
+        # -->
+    <resource name="UserAccount" base-uri="/aa/user-accounts/">
+        <descriptor uri="/aa/user-accounts">
+            <invoke http="GET" method="retrieveUserAccounts" param1="${PARAMETERS}"/>
+        </descriptor>
+    </resource>
+    <!--#
+        # Resource UserAccount
+        # -->
+    <resource name="UserAccount" base-uri="/aa/user-account/">
+        <descriptor uri="/aa/user-account">
+            <invoke http="PUT" method="create" param1="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/${USER-ID}">
+            <invoke http="DELETE" method="delete" param1="${USER-ID}">
+            </invoke>
+            <invoke http="GET" method="retrieve" param1="${USER-ID}">
+            </invoke>
+            <invoke http="PUT" method="update" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/current">
+            <invoke http="GET" method="retrieveCurrentUser">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/retrievePermissionFilterQuery">
+            <invoke http="GET" method="retrievePermissionFilterQuery" param1="${PARAMETERS}">
+                <documentation visible="false"/>
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/${USER-ID}/activate">
+            <invoke http="POST" method="activate" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/${USER-ID}/deactivate">
+            <invoke http="POST" method="deactivate" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor uri="/aa/user-account/${USER-ID}/update-password">
+            <invoke http="POST" method="updatePassword" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+
+        <!--#
+            # Subresources of User
+            # -->
+        <!--#
+            # Resources
+            # -->
+        <descriptor uri="/aa/user-account/${USER-ID}/resources">
+            <invoke http="GET" method="retrieveResources"
+                param1="${USER-ID}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Preferences
+            # -->
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/preferences/preference">
+            <invoke http="PUT" method="createPreference" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/preferences/preference/${PREF-NAME}">
+            <invoke http="GET" method="retrievePreference" param1="${USER-ID}" param2="${PREF-NAME}">
+            </invoke>
+            <invoke http="PUT" method="updatePreference" param1="${USER-ID}"
+                param2="${PREF-NAME}" param3="${BODY}">
+            </invoke>
+            <invoke http="DELETE" method="deletePreference" param1="${USER-ID}"
+                param2="${PREF-NAME}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/preferences">
+            <invoke http="GET" method="retrievePreferences" param1="${USER-ID}">
+            </invoke>
+            <invoke http="PUT" method="updatePreferences" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        
+        <!--#
+            # Attributes
+            # -->
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/attributes/attribute">
+            <invoke http="PUT" method="createAttribute" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/attributes/attribute/${ATT-ID}">
+            <invoke http="GET" method="retrieveAttribute" param1="${USER-ID}" param2="${ATT-ID}">
+            </invoke>
+            <invoke http="PUT" method="updateAttribute" param1="${USER-ID}"
+                param2="${ATT-ID}" param3="${BODY}">
+            </invoke>
+            <invoke http="DELETE" method="deleteAttribute" param1="${USER-ID}"
+                param2="${ATT-ID}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/attributes">
+            <invoke http="GET" method="retrieveAttributes" param1="${USER-ID}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/attributes/${ATT-NAME}">
+            <invoke http="GET" method="retrieveNamedAttributes" param1="${USER-ID}"
+                param2="${ATT-NAME}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Current Grants
+            # -->
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/current-grants">
+            <invoke http="GET" method="retrieveCurrentGrants"
+                param1="${USER-ID}">
+            </invoke>
+        </descriptor>
+        <!--#
+            # Grant
+            # -->
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/grants/grant">
+            <invoke http="PUT" method="createGrant" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/grants/grant/${GRANT-ID}">
+            <invoke http="GET" method="retrieveGrant"
+                param1="${USER-ID}" param2="${GRANT-ID}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/grants/grant/${GRANT-ID}/revoke-grant">
+            <invoke http="POST" method="revokeGrant" param1="${USER-ID}"
+                param2="${GRANT-ID}" param3="${BODY}">
+            </invoke>
+        </descriptor>
+        <descriptor
+            uri="/aa/user-account/${USER-ID}/resources/grants/revoke-grants">
+            <invoke http="POST" method="revokeGrants" param1="${USER-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+
+    </resource>
+
+    <!--#
+        # Resource Grant
+        # -->
+    <resource name="UserAccount" base-uri="/aa/grants/">
+        <descriptor uri="/aa/grants">
+            <invoke http="GET" method="retrieveGrants" param1="${PARAMETERS}"/>
+        </descriptor>
+    </resource>
+</mapping>
+

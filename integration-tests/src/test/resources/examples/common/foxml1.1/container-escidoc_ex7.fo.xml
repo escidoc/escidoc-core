@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject PID="escidoc:ex7" VERSION="1.1" xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Container escidoc:ex7"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE=""/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2010-04-26T09:50:54.308Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-04-26T09:50:54.873Z"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="AUDIT" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.308Z"
+      FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit" ID="AUDIT.0" LABEL="Audit Trail for this object" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+          <audit:record ID="AUDREC1">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>ingest</audit:action>
+            <audit:componentID/>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-04-26T09:50:54.308Z</audit:date>
+            <audit:justification>eSciDoc object created</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC2">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>ESCIDOC_RELS_EXT</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-04-26T09:50:54.543Z</audit:date>
+            <audit:justification>created</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC3">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>version-history</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-04-26T09:50:54.761Z</audit:date>
+            <audit:justification>created</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC4">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>RELS-EXT</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-04-26T09:50:54.873Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+        </audit:auditTrail>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="content-model-specific" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.376Z" ID="content-model-specific.0" LABEL=""
+      MIMETYPE="text/xml" SIZE="182">
+      <foxml:xmlContent>
+        <prop:content-model-specific xmlns:prop="http://escidoc.de/core/01/properties/">
+          <xxx xmlns="http://www.escidoc.de/schemas/container/0.9"/>
+        </prop:content-model-specific>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.376Z" ID="DC.0" LABEL="" MIMETYPE="text/xml" SIZE="374">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>the title</dc:title>
+          <dc:identifier>escidoc:ex7</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="escidoc" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ALT_IDS="metadata unknown http://www.escidoc-project.de/metadata/schema/0.1"
+      CREATED="2010-04-26T09:50:54.376Z" ID="escidoc.0" LABEL="md-record" MIMETYPE="text/xml" SIZE="189">
+      <foxml:xmlContent>
+        <collection xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/">
+          <prefix-dc:title xmlns:prefix-dc="http://purl.org/dc/elements/1.1/">the title</prefix-dc:title>
+        </collection>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="M" ID="ESCIDOC_RELS_EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.543Z" ID="ESCIDOC_RELS_EXT.0"
+      LABEL="ESCIDOC_RELS_EXT Datastream" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+      <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:release="http://escidoc.de/core/01/properties/release/"
+  xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:version="http://escidoc.de/core/01/properties/version/">
+  <rdf:Description rdf:about="info:fedora/escidoc:ex7">
+    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
+    <prop:public-status>pending</prop:public-status>
+    <prop:context-title>Test Collection</prop:context-title>
+    <prop:public-status-comment>Object escidoc:ex7 created.</prop:public-status-comment>
+    <prop:pid>hdl:123/container456</prop:pid>
+    <prop:content-model-title>Persistent Content Model</prop:content-model-title>
+    <fs:hasModel rdf:resource="info:fedora/escidoc:persistent4" xmlns:fs="info:fedora/fedora-system:def/model#"/>
+    <srel:content-model rdf:resource="info:fedora/escidoc:persistent4"/>
+    <srel:context rdf:resource="info:fedora/escidoc:persistent3"/>
+    <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+    <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+    <rdf:type rdf:resource="http://escidoc.de/core/01/resources/Container"/>
+    <version:date>bla</version:date>
+    <version:number>1</version:number>
+    <version:status>pending</version:status>
+    <prop:created-by-title>Test System Administrator User</prop:created-by-title>
+    <prop:modified-by-title>Test System Administrator User</prop:modified-by-title>
+    <version:comment>Object escidoc:ex7 created.</version:comment>
+  </rdf:Description>
+</rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="M" ID="version-history" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.761Z" ID="version-history.0"
+      LABEL="whole object versioning datastream" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+<escidocVersions:version-history xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3">
+  <escidocVersions:version objid="escidoc:ex7:1" timestamp="2010-04-26T09:50:54.543Z"
+    xlink:href="/ir/container/escidoc:ex7:1" xlink:title="Version 1" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <escidocVersions:version-number>1</escidocVersions:version-number>
+    <escidocVersions:timestamp>2010-04-26T09:50:54.543Z</escidocVersions:timestamp>
+    <escidocVersions:version-status>pending</escidocVersions:version-status>
+    <escidocVersions:comment>Object escidoc:ex7 created.</escidocVersions:comment>
+    <escidocVersions:events>
+      <premis:event xmlID="v1e1272275454728" xmlns:premis="http://www.loc.gov/standards/premis/v1">
+        <premis:eventIdentifier>
+          <premis:eventIdentifierType>URL</premis:eventIdentifierType>
+          <premis:eventIdentifierValue>/ir/container/escidoc:ex7/resources/version-history#v1e1272275454728</premis:eventIdentifierValue>
+        </premis:eventIdentifier>
+        <premis:eventType>create</premis:eventType>
+        <premis:eventDateTime>2010-04-26T09:50:54.543Z</premis:eventDateTime>
+        <premis:eventDetail>Object escidoc:ex7 created.</premis:eventDetail>
+        <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:testsystemadministrator"
+          xlink:title="Test System Administrator User" xlink:type="simple">
+          <premis:linkingAgentIdentifierType>escidoc-internal</premis:linkingAgentIdentifierType>
+          <premis:linkingAgentIdentifierValue>escidoc:testsystemadministrator</premis:linkingAgentIdentifierValue>
+        </premis:linkingAgentIdentifier>
+        <premis:linkingObjectIdentifier>
+          <premis:linkingObjectIdentifierType>escidoc-internal</premis:linkingObjectIdentifierType>
+          <premis:linkingObjectIdentifierValue>escidoc:ex7</premis:linkingObjectIdentifierValue>
+        </premis:linkingObjectIdentifier>
+      </premis:event>
+    </escidocVersions:events>
+  </escidocVersions:version>
+</escidocVersions:version-history>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.873Z" ID="RELS-EXT.1" LABEL="RELS_EXT Datastream"
+      MIMETYPE="text/xml" SIZE="1835">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+          xmlns:release="http://escidoc.de/core/01/properties/release/"
+          xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:system="http://escidoc.de/core/01/system/" xmlns:version="http://escidoc.de/core/01/properties/version/">
+          <rdf:Description rdf:about="info:fedora/escidoc:ex7">
+            <system:build>1.2-buildHEAD</system:build>
+            <prop:public-status>pending</prop:public-status>
+            <prop:context-title>Test Collection</prop:context-title>
+            <prop:public-status-comment>Object escidoc:ex7 created.</prop:public-status-comment>
+            <prop:pid>hdl:123/container456</prop:pid>
+            <prop:content-model-title>Persistent Content Model</prop:content-model-title>
+            <fs:hasModel rdf:resource="info:fedora/escidoc:persistent4" xmlns:fs="info:fedora/fedora-system:def/model#"/>
+            <srel:content-model rdf:resource="info:fedora/escidoc:persistent4"/>
+            <srel:context rdf:resource="info:fedora/escidoc:persistent3"/>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/Container"/>
+            <version:date>2010-04-26T09:50:54.543Z</version:date>
+            <version:number>1</version:number>
+            <version:status>pending</version:status>
+            <prop:created-by-title>Test System Administrator User</prop:created-by-title>
+            <prop:modified-by-title>Test System Administrator User</prop:modified-by-title>
+            <version:comment>Object escidoc:ex7 created.</version:comment>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

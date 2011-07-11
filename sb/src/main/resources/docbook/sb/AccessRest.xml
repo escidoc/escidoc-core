@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Access</title>
+    <section>
+      <title>REST</title>
+
+      <para>The REST Interface of the SRW Server is accessable via an http GET
+      request and returns an XML document. The mandatory parameter ‘operation’
+      defines which operation gets executed. Possible values for the operation
+      parameter are</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>‘searchRetrieve’ for the search retrieve operation</para>
+        </listitem>
+
+        <listitem>
+          <para>‘scan’ for the scan operation.</para>
+        </listitem>
+
+        <listitem>
+          <para>'explain’ for the explain operation.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Example requests (parameter values have to be URL encoded):</para>
+
+      <programlisting>http://www.escidoc.de/srw/search/escidoc_all?operation=explain
+
+http://www.escidoc.de/srw/search/escidoc_all?operation=searchRetrieve&amp;query=escidoc.fulltext%3Dmedicin
+http://www.escidoc.de/srw/search/escidoc_all?operation=scan&amp;scanClause=escidoc.fulltext%3Dmedicin</programlisting>
+
+      <para>Result is an XML document with the response data (described below
+      for each operation).</para>
+    </section>
+    <section>
+      <title>Explain via REST</title>
+
+      <table>
+        <title>Explain via REST</title>
+
+        <tgroup cols="2">
+          <tbody>
+            <row>
+              <entry>HTTP Request</entry>
+
+              <entry>GET /srw/search/escidoc_all</entry>
+            </row>
+
+            <row>
+              <entry>Input from URI</entry>
+
+              <entry>operation=explain</entry>
+            </row>
+
+            <row>
+              <entry>Output</entry>
+
+              <entry>xml document in ZeeRex Schema that contains the explain
+              plan</entry>
+            </row>
+
+            <row>
+              <entry>Possible errors</entry>
+
+              <entry>http 400 or 500</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+</chapter>

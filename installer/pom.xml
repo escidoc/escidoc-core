@@ -1,0 +1,382 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>org.escidoc.core</groupId>
+		<version>trunk-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.escidoc.core</groupId>
+	<artifactId>installer</artifactId>
+	<name>Installer</name>
+	<version>trunk-SNAPSHOT</version>
+	<description>Installer of eSciDoc Infrastructure</description>
+
+	<properties>
+		<staging.dir>${project.build.directory}/staging</staging.dir>
+		<izpack.standalone.compiler.version>4.3.3</izpack.standalone.compiler.version>
+		<ant.version>1.8.2</ant.version>
+		<ant-nodeps.version>1.8.1</ant-nodeps.version>
+		<ant-launcher.version>1.8.2</ant-launcher.version>
+		<ant-contrib.version>1.0b3</ant-contrib.version>
+		<jboss.version>4.2.3.GA</jboss.version>
+		<mptstore.version>0.9.4</mptstore.version>
+		<admin-tool.version>1.1.1-SNAPSHOT</admin-tool.version>
+		<migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc</groupId>
+			<artifactId>fcrepo-installer</artifactId>
+			<version>${fcrepo.version}.oracle</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>mptstore</groupId>
+			<artifactId>mptstore-oracle</artifactId>
+			<version>${mptstore.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.izpack</groupId>
+			<artifactId>izpack-standalone-compiler</artifactId>
+			<version>${izpack.standalone.compiler.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${escidoc.postgres.jdbc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>${ant.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-nodeps</artifactId>
+			<version>${ant-nodeps.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-launcher</artifactId>
+			<version>${ant-launcher.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ant-contrib</groupId>
+			<artifactId>ant-contrib</artifactId>
+			<version>${ant-contrib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.escidoc.admintool</groupId>
+			<artifactId>AdminTool</artifactId>
+			<version>${admin-tool.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>migration-tool</artifactId>
+			<version>${migration-tool.version}</version>
+			<type>zip</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>install-fedora</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-jar</argument>
+								<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}.oracle/fcrepo-installer-${fcrepo.version}.oracle.jar</argument>
+								<argument>src/main/resources/fedora/install.properties</argument>
+							</arguments>
+							<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>com.oopsconsultancy</groupId>
+						<artifactId>xmltask</artifactId>
+						<version>1.14</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>prepare-fedora-configs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo message="Preparing Fedora Configuration" />
+								<taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="maven.plugin.classpath" />
+
+								<!-- fedora.fcfg -->
+								<xmltask source="${project.build.directory}/fedora/server/config/fedora.fcfg" dest="${project.build.directory}/fedora.fcfg"
+									failWithoutMatch="true">
+									<!-- general settings -->
+									<attr path="//*[@name='adminEmailList']" attr="value" value="${FedoraAdminMailAddress}" />
+
+									<!-- database settings -->
+									<attr path="//*[@name='storagePool']" attr="value" value="local${Database}Pool" />
+									<attr path="//*[@name='connectionPool']" attr="value" value="local${Database}Pool" />
+									<attr path="//*[@name='defaultPoolName']" attr="value" value="local${Database}Pool" />
+									<attr path="//*[@name='poolNames']" attr="value" value="local${Database}Pool" />
+									<attr path="//*[@name='dbUsername']" attr="value" value="${FedoraUsername}" />
+									<attr path="//*[@name='dbPassword']" attr="value" value="${FedoraPassword}" />
+									<attr path="//*[@name='jdbcURL']" attr="value" value="${DatabaseURL}${DatasourceFedora}" />
+									<attr path="//*[@name='jdbcDriverClass']" attr="value" value="${DatabaseDriverClass}" />
+
+									<!-- triplestore settings -->
+									<attr
+										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='ddlGenerator']"
+										attr="value" value="${DDLGeneratorClass}" />
+									<attr
+										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcDriver']"
+										attr="value" value="${DatabaseDriverClass}" />
+									<attr
+										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='jdbcURL']"
+										attr="value" value="${DatabaseURL}${DatasourceTriplestore}" />
+									<attr
+										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='username']"
+										attr="value" value="${TriplestoreUsername}" />
+									<attr
+										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='password']"
+										attr="value" value="${TriplestorePassword}" />
+								</xmltask>
+
+								<!-- fedora-users.xml -->
+								<xmltask source="${project.build.directory}/fedora/server/config/fedora-users.xml" dest="${project.build.directory}/fedora-users.xml"
+									failWithoutMatch="true">
+									<attr path="/users/user[@name='fedoraAdmin']" attr="password" value="${FedoraPassword}" />
+									<attr path="/users/user[@name='fedoraAdmin']" attr="name" value="${FedoraUsername}" />
+								</xmltask>
+
+								<!-- web.xml -->
+								<xmltask source="${project.build.directory}/fedora/install/fedorawar/WEB-INF/web.xml" dest="${project.build.directory}/web.xml"
+									failWithoutMatch="true">
+									<replace path="//*[local-name()='param-name' and text()='fedora.home']/following-sibling::*[1]/text()"
+										withText="${INSTALL_PATH}${FILE_SEPARATOR}fedora" />
+								</xmltask>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/fedora.xml</descriptor>
+					</descriptors>
+					<finalName>fedora</finalName>
+					<attach>false</attach>
+					<outputDirectory>${staging.dir}</outputDirectory>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>**/*Validator*</include>
+							</includes>
+							<finalName>escidoc-validators</finalName>
+							<outputDirectory>${staging.dir}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${staging.dir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/filtered-resources</directory>
+									<filtering>true</filtering>
+								</resource>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>postgresql</groupId>
+									<artifactId>postgresql</artifactId>
+									<version>${escidoc.postgres.jdbc.version}</version>
+									<type>jar</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.apache.ant</groupId>
+									<artifactId>ant</artifactId>
+									<version>${ant.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.apache.ant</groupId>
+									<artifactId>ant-nodeps</artifactId>
+									<version>${ant-nodeps.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.apache.ant</groupId>
+									<artifactId>ant-launcher</artifactId>
+									<version>${ant-launcher.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>ant-contrib</groupId>
+									<artifactId>ant-contrib</artifactId>
+									<version>${ant-contrib.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.jboss</groupId>
+									<artifactId>jboss</artifactId>
+									<type>zip</type>
+									<version>${jboss.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/packages/jboss</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>de.escidoc.admintool</groupId>
+									<artifactId>AdminTool</artifactId>
+									<type>war</type>
+									<version>${admin-tool.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/packages/admin-tool</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>mptstore</groupId>
+									<artifactId>mptstore-oracle</artifactId>
+									<type>jar</type>
+									<version>${mptstore.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/lib</outputDirectory>
+								</artifactItem>
+
+								<artifactItem>
+									<groupId>org.escidoc.core</groupId>
+									<artifactId>migration-tool</artifactId>
+									<type>zip</type>
+									<version>${migration-tool.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${staging.dir}/packages/migration-tool</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<!-- other configurations here -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Used to configure IzPack installer -->
+			<plugin>
+				<groupId>org.codehaus.izpack</groupId>
+				<artifactId>izpack-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>izpack</goal>
+						</goals>
+						<configuration>
+							<izpackBasedir>${staging.dir}</izpackBasedir>
+							<!-- overwrite default package jar -->
+							<fileExtension>jar</fileExtension>
+							<installerFile>${project.build.directory}/${project.build.finalName}</installerFile>
+							<attach>false</attach>
+							<descriptorEncoding>UTF-8</descriptorEncoding>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.izpack</groupId>
+						<artifactId>izpack-standalone-compiler</artifactId>
+						<version>${izpack.standalone.compiler.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

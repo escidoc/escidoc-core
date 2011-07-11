@@ -1,0 +1,6 @@
+#parse("common/macros.vm")<${reportDefinitionNamespacePrefix}:report-definition #restInsertConditionalRoot(${isRootReportDefinition} "false" "false" ${reportDefinitionNamespacePrefix} ${reportDefinitionNamespace} "#escA(${reportDefinitionName})" ${reportDefinitionHref})>
+    <${reportDefinitionNamespacePrefix}:name>#escT(${reportDefinitionName})</${reportDefinitionNamespacePrefix}:name>
+    #restLink(${reportDefinitionNamespacePrefix} "scope" ${reportDefinitionScopeTitle} ${reportDefinitionScopeHref})
+    <${reportDefinitionNamespacePrefix}:sql>#escT(${reportDefinitionSql})</${reportDefinitionNamespacePrefix}:sql>
+#parse("report-definition/rest/report-definition-allowed-roles.vm")
+</${reportDefinitionNamespacePrefix}:report-definition>

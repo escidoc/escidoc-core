@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+          version="2.1">
+    <bindings>
+        <globalBindings>
+            <javaType name="org.joda.time.DateTime" xmlType="xs:date"
+                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+            <javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
+                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+            <serializable/>
+        </globalBindings>
+    </bindings>
+    <bindings schemaLocation="access-1.0.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.access"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="datastreamProfile-1.0.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.management"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="foxml-1.1.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+        <bindings node="//xs:complexType[@name='digitalObjectType']">
+            <class name="DigitalObjectTypeTO"
+                   implClass="org.escidoc.core.services.fedora.DigitalObjectTypeTOExtension"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='datastreamType']">
+            <class name="DatastreamTypeTO"
+                   implClass="org.escidoc.core.services.fedora.DatastreamTypeTOExtension"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='xmlContentType']">
+            <class name="XmlContentTypeTO"
+                   implClass="org.escidoc.core.services.fedora.XmlContentTypeDatastreamHolderTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="pidList-1.0.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="oai_dc-2.0.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.dc"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="simpledc20021212.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.dc"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="rdf.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.rdf"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="common-types.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.common"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="properties.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.properties"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="structural-relations.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.relations"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="release.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.release"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="version.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.version"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="xlink.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.xlink"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+</bindings>

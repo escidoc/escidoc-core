@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+		<title>Context</title>
+		<para>A context is an administrative entity that defines a work space,
+			in
+			which you can store and organize your content. Every
+			content-holding
+			resource (Item) and every aggregation resource
+			(Container) must
+			belong to
+			exactly one Context. The scope of such a
+			workspace varies. It might be
+			related to an application, or be related
+			to a project. A Context has
+			three
+			main tasks:</para>
+
+		<orderedlist>
+			<listitem>
+				<para>A Context describes who is responsible for the resources
+					within
+					this workspace by referencing one or more Organizational
+					Units, which
+					define the overall ownership of all resources that
+					belong to this
+					Context.</para>
+			</listitem>
+
+			<listitem>
+				<para>It may hold configuration information that pertains to all
+					resources administrated by the Context. This may include workflow
+					setups, applicable licenses, and so on.</para>
+			</listitem>
+
+			<listitem>
+				<para>Contexts are often handy for writing policies to control
+					access
+					to resources, as you may conveniently express rules for all
+					objects
+					belonging to the Context, even for those that are added at a
+					later
+					point in time.</para>
+			</listitem>
+		</orderedlist>
+
+		<para>The necessary number of Contexts per installation varies and is
+			strongly dependent of your use case. You might want to create just a
+			single Context for your whole organization, create a Context for each
+			institute within your organization, or even more fine-granular with a
+			context on working group or team level. If you need to support
+			different
+			workflows or share responsibility for the resources across
+			your
+			organization, this is a strong indicator to create more than one
+			Context.
+			However, you should separate between Organizational Units and
+			Contexts.
+			Contexts should not act as the ‘leaves’ in your
+			organizational
+			structure,
+			e.g. representing a working group. Instead,
+			it is recommended to model
+			the
+			complete organizational structure of
+			your organization using
+			Organizational Units, and then create the
+			necessary Contexts and relate
+			them to the appropriate Organizational
+			Units.</para>
+
+		<para>Contexts are not publishable, because they do not represent
+			content.
+			Therefore, they are not persistently identifiable and thus
+			not citable as
+			well. If you are looking for citable and persistently
+			identifiable
+			aggregations, please refer to Containers.</para>
+
+		<para>The representation of Context resources consist of three
+			sections:</para>
+
+		<informaltable>
+			<tgroup cols="2">
+				<colspec colwidth='4.0cm' />
+				<colspec colwidth='11.5cm' />
+				<tbody>
+					<row>
+						<entry>
+							<literal>properties</literal>
+						</entry>
+
+						<entry>A set of properties describing the Context</entry>
+					</row>
+
+					<row>
+						<entry>
+							<literal>admin-descriptors</literal>
+						</entry>
+
+						<entry>Any number of configuration information sections, each
+							stored as a valid XML document (may be based on a self-defined
+							schema)</entry>
+					</row>
+
+					<row>
+						<entry>
+							<literal>resources</literal>
+						</entry>
+
+						<entry>Available alternative representations of the
+							Context</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</section>
+
+	<section>
+		<title>Object Lifecycle</title>
+
+		<para>The eSciDoc resources Organizational Units, Contexts,
+			Containers,
+			and Items support a basic object lifecycle. The lifecycle
+			for each
+			resource type has several statuses, which can be used for
+			simple
+			workflows, access policies, roles, and business rules. The APIs
+			provide a
+			dedicated method for each status transition, which makes the
+			integration
+			of the object lifecycle into applications simple and
+			straight-forward.</para>
+
+		<para>
+			Contexts feature three statuses:
+			<literal>created</literal>
+			for
+			newly created Contexts, which are not yet publically visible,
+			<literal>open</literal>
+			for those in active use, and
+			<literal>closed</literal>
+			for outdated Contexts.
+		</para>
+
+		<para>
+			The status of the resource influences allowed actions (i.e., which
+			methods a user may invoke). Additionally, allowed actions are
+			controlled
+			by policies and roles. The following description of allowed
+			and
+			disallowed
+			actions is based on the default policies and roles that
+			come with a
+			standard eSciDoc Infrastructure installation. Please keep
+			in mind that you
+			may change both policies and roles, thus changing the
+			behavior of the
+			Context service in this respect. Please refer to the
+			Authentication
+			and
+			Authorization API documentation for a list of
+			pre-defined roles and their
+			default behavior.
+			<xref linkend="figure-lifecycle-context" />
+			shows the full object lifecycle.
+		</para>
+
+		<figure id="figure-lifecycle-context">
+			<title>
+<!--
+				<xref linkend="figure-lifecycle-context" />
+-->				
+				: Context lifecycle with statuses and behavior based on
+				default
+				policies
+			</title>
+
+			<mediaobject>
+				<imageobject>
+					<imagedata depth="7.55cm" fileref="lifecycle-context.png"
+						id="context-lifecycle" width="8.91cm" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>
+			Only a user with the role
+			<literal>system-administrator</literal>
+			(for the sake of readability, this user is called from now on
+			‘administrator’) may create Contexts. New Contexts are in status
+			<literal>created</literal>
+			. In this status, only administrators may
+			access, modify, or delete
+			the resource. Contexts in status
+			<literal>created</literal>
+			may not be referenced when creating or updating
+			Items or Containers.
+		</para>
+
+		<para>
+			If an administrator opens a Context, the status is changed to
+			<literal>open</literal>
+			. Opened Contexts are publicly accessible, i.e.
+			users with the role
+			<literal>default</literal>
+			may access the Context. The
+			role
+			<literal>default</literal>
+			is automatically granted to every user.
+			The Context may now be
+			referenced when creating new Items or Containers,
+			User Groups, and
+			Contexts. A Context in status
+			<literal>open</literal>
+			may
+			still be updated by administrators. However, it cannot be deleted
+			any
+			longer. It may now be referenced when creating or updating Items
+			and
+			Containers.
+		</para>
+
+		<para>
+			If a Context gets outdated (e.g., because an application using the
+			Context is not supported any longer or a project has ended),
+			administrators may close the Context, changing its status to
+			<literal>closed</literal>
+			. Closed Contexts are still retrievable, but they
+			may not be
+			referenced any longer when creating or updating Containers
+			and
+			Items.
+			Existing resources that reference a closed Context remain valid and
+			accessible. Closed Contexts cannot be deleted.
+		</para>
+
+		<para>
+			<informaltable frame="topbot">
+				<tgroup cols="2">
+					<colspec colwidth="2.5cm" />
+					<colspec colwidth="13.0cm" />
+					<tbody>
+						<row rowsep="0">
+							<entry>
+								<inlinemediaobject>
+									<imageobject>
+										<imagedata depth="2.0cm" fileref="note.png" format="PNG" />
+									</imageobject>
+								</inlinemediaobject>
+							</entry>
+
+							<entry>
+								<para>
+									<emphasis role="bold">Hint</emphasis>
+								</para>
+								<para>
+									If you absolutely need to get rid of opened or closed
+									Context
+									resources, use the Admin Tool that is accessible from
+									the start
+									page of your eSciDoc Infrastructure installation
+									(usually
+									<literal>http://&lt;yourhostname&gt;:8080/</literal>
+									).
+									Please note that deleting resources via the Admin Tool may
+									lead
+									to inconsistencies in your repository.
+								</para>
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</para>
+
+		<para>Relevant methods for Context lifecycle management:</para>
+
+		<informaltable>
+			<tgroup cols="2">
+				<colspec colwidth='4.0cm' />
+				<colspec colwidth='11.5cm' />
+				<tbody>
+					<row>
+						<entry>
+							<literal>open()</literal>
+						</entry>
+
+						<entry>
+							Opens a created Context by setting the status from
+							<literal>created</literal>
+							to
+							<literal>open</literal>
+						</entry>
+					</row>
+
+					<row>
+						<entry>
+							<literal>close()</literal>
+						</entry>
+
+						<entry>
+							Closes an open Context by setting the status from
+							<literal>open</literal>
+							to
+							<literal>closed</literal>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</section>
+
+	<section>
+		<title>Versioning</title>
+
+		<para>Contexts are non-versionable resources. Consequently, they have
+			no
+			version history.</para>
+	</section>
+	<section>
+		<title>Description of Properties</title>
+		<section>
+			<title>General Properties of an Context</title>
+			<table frame="all">
+				<title>General Properties</title>
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<thead>
+						<row>
+							<entry>Property</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>objid</entry>
+							<entry>
+								An unique identifier of the OrganizationalUnit within the
+								eSciDoc
+								system.
+							</entry>
+						</row>
+						<row>
+							<entry>creation-date</entry>
+
+							<entry>
+								This date is created by the infrastructure when the
+								infrastructure
+								stores the object the first time.
+							</entry>
+						</row>
+						<row>
+							<entry>created-by</entry>
+
+							<entry>
+								Link to the user who created the object, the infrastructure
+								maintain this element.
+							</entry>
+						</row>
+						<row>
+							<entry>modified-by</entry>
+
+							<entry>
+								Link to the user who changed to the object last time.
+						</entry>
+						</row>
+						<row>
+							<entry>last-modification-date (attribute)</entry>
+
+							<entry>
+								This date is updated by the infrastructure whenever the
+								object is
+								stored.
+							</entry>
+						</row>
+						<row>
+							<entry>public-status</entry>
+
+							<entry>
+								The status of the Organizational Unit: Opened (for now).
+								<para>
+									Valid status values are:
+									</para>
+								<itemizedlist mark="opencircle" spacing="compact">
+									<listitem>created</listitem>
+									<listitem>opened</listitem>
+									<listitem>closed</listitem>
+								</itemizedlist>
+							</entry>
+						</row>
+						<row>
+							<entry>name</entry>
+							<entry>
+								Name of Context, must be unique which in the system</entry>
+						</row>
+						<row>
+							<entry>description</entry>
+							<entry>
+								Description of the context
+							</entry>
+						</row>
+						<row>
+							<entry>type</entry>
+							<entry>
+								The type of the Context. These are solution controlled
+								strings.
+						</entry>
+						</row>
+						<row>
+							<entry>organizational-unit</entry>
+							<entry>
+								organizational-unit is owner of the context
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		<section>
+			<title>Additional Elements of a Context</title>
+			<table frame="all">
+				<title>Elements of a Context</title>
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<thead>
+						<row>
+							<entry>Element</entry>
+							<entry>Description</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>admin-descriptor</entry>
+							<entry>Admin Descriptor contains solution specific entries.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+	</section>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+
+<context:context
+	xmlns:context="http://www.escidoc.de/schemas/context/0.6"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xml:base="http://localhost:8080" xlink:type="simple"
+	xlink:title="Context Example 1"
+	xlink:href="/ir/context/escidoc:ex1"
+	last-modification-date="2008-02-22T09:39:01.250Z">
+
+	<context:properties xlink:type="simple" xlink:title="Properties"
+		xlink:href="/ir/context/escidoc:ex1/properties">
+
+		<prop:creation-date>
+			2008-02-22T09:31:59.625Z
+		</prop:creation-date>
+		<srel:created-by xlink:type="simple" xlink:title="roland"
+			xlink:href="/aa/user-account/escidoc:exuser1" />
+		<srel:modified-by xlink:type="simple" xlink:title="roland"
+			xlink:href="/aa/user-account/escidoc:exuser1" />
+		<prop:public-status>created</prop:public-status>
+		<prop:name>Context Example 1</prop:name>
+		<prop:description>Context Description</prop:description>
+		<prop:type>TestType</prop:type>
+
+		<prop:organizational-units>
+			<srel:organizational-unit xlink:type="simple"
+				xlink:title="Max Planck Society"
+				xlink:href="/oum/organizational-unit/escidoc:persistent13" />
+			<srel:organizational-unit xlink:type="simple"
+				xlink:title="Department Research and Development"
+				xlink:href="/oum/organizational-unit/escidoc:persistent1" />
+		</prop:organizational-units>
+
+	</context:properties>
+	<context:resources xlink:type="simple"
+		xlink:title="Virtual Resources"
+		xlink:href="/ir/context/escidoc:ex1/resources">
+
+		<context:members xlink:type="simple" xlink:title="Members "
+			xlink:href="/ir/context/escidoc:ex1/resources/members/filter" />
+		<context:member-refs xlink:type="simple"
+			xlink:title="Members (References)"
+			xlink:href="/ir/context/escidoc:ex1/resources/members/filter/refs" />
+	</context:resources>
+
+	<context:admin-descriptors xlink:type="simple"
+		xlink:title="Admin Descriptors"
+		xlink:href="/ir/context/escidoc:ex1/admin-descriptors">
+
+		<context:admin-descriptor name="descriptor_for_book"
+			xlink:type="simple"
+			xlink:title="descriptor_for_book admin descriptor."
+			xlink:href="/ir/context/escidoc:ex1/admin-descriptor/descriptor_for_book">
+
+			<allowed-content-types
+				xmlns="http://www.escidoc.de/schemas/context/0.6">
+				unknown content - unknown content Descriptor for Book
+			</allowed-content-types>
+		</context:admin-descriptor>
+
+		<context:admin-descriptor name="descriptor_example"
+			xlink:type="simple"
+			xlink:title="descriptor_example admin descriptor."
+			xlink:href="/ir/context/escidoc:ex1/admin-descriptor/descriptor_example">
+
+			<admin-descriptor-example
+				xmlns="http://www.escidoc.de/schemas/context/0.6">
+
+				<allowed-content-types>
+					<allowed-content-type>
+						<allowed-md-schema></allowed-md-schema>
+					</allowed-content-type>
+				</allowed-content-types>
+				<webservices>
+					<webservice>
+						<description>ws1-desc</description>
+
+						<service>ws1-service</service>
+						<parameters>ws1-param</parameters>
+					</webservice>
+					<webservice>
+						<description>ws2-desc</description>
+						<service>ws2-service</service>
+						<parameters>ws2-param</parameters>
+
+					</webservice>
+				</webservices>
+				<authority-files>
+					<authority-file></authority-file>
+					<authority-file></authority-file>
+				</authority-files>
+				<submission-methods>
+					<method>ingestion</method>
+
+					<method>single-submission</method>
+					<method>multiple-submission</method>
+				</submission-methods>
+				<relation-types>
+					<relation-type></relation-type>
+					<relation-type></relation-type>
+					<relation-type></relation-type>
+				</relation-types>
+
+				<component-visibility>public</component-visibility>
+				<visibility-of-references></visibility-of-references>
+				<visibility-of-annotations></visibility-of-annotations>
+			</admin-descriptor-example>
+		</context:admin-descriptor>
+
+		<context:admin-descriptor name="descriptor_for_something"
+			xlink:type="simple"
+			xlink:title="descriptor_for_something admin descriptor."
+			xlink:href="/ir/context/escidoc:ex1/admin-descriptor/descriptor_for_something">
+			<allowed-content-types
+				xmlns="http://www.escidoc.de/schemas/context/0.6">
+				Descriptor for Something
+			</allowed-content-types>
+		</context:admin-descriptor>
+
+	</context:admin-descriptors>
+</context:context>
+

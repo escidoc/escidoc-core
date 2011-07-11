@@ -1,0 +1,47 @@
+<${componentsNamespacePrefix}:properties #restInsertConditionalRoot(${isRootProperties} ${isRootProperties} ${isRootProperties} ${componentsNamespacePrefix} ${componentsNamespace} ${componentPropertiesTitle} ${componentPropertiesHref} ${LAST_MODIFICATION_DATE})>
+
+	#creationDate(	${componentCreationDate})
+	#set($unescapedCreator="#unesc(${componentCreatedByTitle})")
+    #restCreatedBy("#escA(${unescapedCreator})" ${componentCreatedByHref})
+
+	#if( ${componentDescription} )
+	#set($escComponentDescription="#escT(${componentDescription})")
+	#xmlElement(${escidocPropertiesNamespacePrefix} "description" "" ${escComponentDescription})
+	#end
+	
+	#if( ${componentLastModificationDate} )
+	#xmlElement(${escidocPropertiesNamespacePrefix} "last-modification-date" "" ${componentLastModificationDate})
+	#end
+
+#if( ${componentValidStatus} )
+	#xmlElement(${escidocPropertiesNamespacePrefix} "valid-status" "" ${componentValidStatus})
+	#end
+
+	#xmlElement(${escidocPropertiesNamespacePrefix} "visibility" "" ${componentVisibility})
+
+	#if( ${componentPid} )
+	#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${componentPid})
+	#end
+
+	#xmlElement(${escidocPropertiesNamespacePrefix} "content-category" "" ${componentContentCategory})
+
+	#if(${componentFileName})
+	#set($escComponentFileName="#escT(${componentFileName})")
+	#xmlElement(${escidocPropertiesNamespacePrefix} "file-name" "" ${escComponentFileName})
+	#end
+
+    #if(${componentMimeType})
+    #xmlElement(${escidocPropertiesNamespacePrefix} "mime-type" "" ${componentMimeType})
+    #end
+    
+#if(${CHECKSUM})
+#set($escCHECKSUM="#escT(${CHECKSUM})")
+#xmlElement(${escidocPropertiesNamespacePrefix} "checksum" "" ${escCHECKSUM})
+#end
+
+#if(${CHECKSUM_ALGORITHM})
+#set($escCHECKSUM_ALGORITHM="#escT(${CHECKSUM_ALGORITHM})")
+#xmlElement(${escidocPropertiesNamespacePrefix} "checksum-algorithm" "" ${escCHECKSUM_ALGORITHM})
+#end
+
+</${componentsNamespacePrefix}:properties>

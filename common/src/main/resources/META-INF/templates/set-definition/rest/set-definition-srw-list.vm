@@ -1,0 +1,30 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$setDefinitions.size()</zs:numberOfRecords>
+#if ($setDefinitions.size() > 0)
+  <zs:records>
+#foreach($setDefinition in $setDefinitions)
+    <zs:record>
+      <zs:recordSchema>${setDefinitionNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $setDefinitionName = ${setDefinition.setDefinitionName} )
+#set( $setDefinitionHref = ${setDefinition.setDefinitionHref} )
+#set( $setDefinitionLastModificationDate = ${setDefinition.setDefinitionLastModificationDate} )
+#set( $setDefinitionCreationDate = ${setDefinition.setDefinitionCreationDate} )
+#set( $setDefinitionCreatedByTitle = ${setDefinition.setDefinitionCreatedByTitle} )
+#set( $setDefinitionCreatedByHref = ${setDefinition.setDefinitionCreatedByHref} )
+#set( $setDefinitionModifiedByTitle = ${setDefinition.setDefinitionModifiedByTitle} )
+#set( $setDefinitionModifiedByHref = ${setDefinition.setDefinitionModifiedByHref} )
+#set( $setDefinitionDescription = ${setDefinition.setDefinitionDescription} )
+#set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
+#set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
+#searchResultRecord("set-definition/rest/set-definition.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

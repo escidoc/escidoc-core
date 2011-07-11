@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+                  xmlns:prop="http://escidoc.de/core/01/properties/"
+                  xmlns:metadata="http://www.escidoc.de/metadata/schema/0.1"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+                  xlink:type="simple"
+                  xml:base="http://localhost:8080"
+                  xlink:title="Vergurtungssystem zur Spondylodese der Lendenwirbelsäule sowie Pedikelschraube und Gegenhalter zur Verwendung bei einem solchen">
+   <escidocItem:properties xlink:type="simple">
+      <srel:context xlink:type="simple" xlink:href="/ir/context/escidoc:persistent3"/>
+      <srel:content-model xlink:type="simple" xlink:href="/cmm/content-model/escidoc:persistent4"/>
+      <properties:content-model-specific xmlns:properties="http://escidoc.de/core/01/properties/">
+         <element1>cms-test1</element1>
+         <element2>cms-test2</element2>
+      </properties:content-model-specific>
+   </escidocItem:properties>
+   <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+      <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                        xlink:title="eSciDoc internal MD Record"
+                                        xlink:type="simple">
+         <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                             xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                             xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                             xmlns:dcterms="http://purl.org/dc/terms/"
+                                             xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                             xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                             type="article"
+                                             xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Copf jun.</e:family-name>
+                  <e:given-name>Franz</e:given-name>
+                  <e:complete-name>Copf jun., Franz</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Copf jun.</e:family-name>
+                  <e:given-name>Franz</e:given-name>
+                  <e:complete-name>Copf jun., Franz</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:person>
+                  <e:family-name>Ostertag</e:family-name>
+                  <e:given-name>Ulrich, Dr.</e:given-name>
+                  <e:complete-name>Ostertag, Ulrich, Dr.</e:complete-name>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="artist">
+               <e:person>
+                  <e:complete-name>Hans Meier</e:complete-name>
+                  <e:family-name>Meier</e:family-name>
+                  <e:given-name>Hans</e:given-name>
+                  <e:organization>
+                     <e:organization-name>Test Organization</e:organization-name>
+                     <e:address>Max-Planck-Str. 1</e:address>
+                     <e:identifier>escidoc:persistent26</e:identifier>
+                  </e:organization>
+               </e:person>
+            </publication:creator>
+            <publication:creator role="author">
+               <e:organization>
+                  <e:organization-name>Standalone Org</e:organization-name>
+                  <e:address>Hermann-von-Helmholtz Platz 1</e:address>
+                  <e:identifier>escidoc:persistent37</e:identifier>
+               </e:organization>
+            </publication:creator>
+            <dc:title xml:lang="DE">Vergurtungssystem zur Spondylodese der Lendenwirbelsäule sowie Pedikelschraube und Gegenhalter zur Verwendung bei einem solchen titleappendi'x titleappendi/x ' /</dc:title>
+            <dc:language>DE</dc:language>
+            <dc:identifier xsi:type="eidt:ISSN">1269927</dc:identifier>
+            <dcterms:alternative xml:lang="EN">Connection system for the spinal fusion of the lumbar column, pedicle screw and counter holder for use in such a case alternativeappendix' alternativeappendix/</dcterms:alternative>
+            <dcterms:created>1980-01-16T07:00:00.000+01:00</dcterms:created>
+            <dcterms:modified>1980-01-16T08:00:00.000+01:00</dcterms:modified>
+            <dcterms:dateSubmitted>1980-01-16T09:00:00.000+01:00</dcterms:dateSubmitted>
+            <dcterms:dateAccepted>1980-01-16T10:00:00.000+01:00</dcterms:dateAccepted>
+            <publication:published-online>1980-01-16T11:00:00.000+01:00</publication:published-online>
+            <dcterms:issued>1980-01-16T12:00:00.000+01:00</dcterms:issued>
+            <publication:source type="articlesource">
+               <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+            </publication:source>
+            <publication:source type="articlesource1">
+               <dc:title>TitelSourceVO</dc:title>
+            </publication:source>
+            <publication:event>
+               <dc:title>TitelEventVO</dc:title>
+            </publication:event>
+         </escidocMetadataProfile:publication>
+      </escidocMetadataRecords:md-record>
+   </escidocMetadataRecords:md-records>
+   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+                                 xlink:type="simple"
+                                 xlink:href="/ir/item/escidoc:198/components"
+                                 xlink:title="Components of Item"
+                                 xml:base="http://localhost:8080">
+      <escidocComponents:component>
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+                                       xlink:type="simple">
+            <properties:description>XML File</properties:description>
+            <properties:valid-status>valid</properties:valid-status>
+            <properties:visibility>public</properties:visibility>
+            <properties:content-category>pre-print</properties:content-category>
+            <properties:file-name>EPFull_1269927.xml</properties:file-name>
+            <properties:mime-type>text/xml</properties:mime-type>
+         </escidocComponents:properties>
+         <escidocComponents:content xlink:type="simple"
+                                    xlink:href="http://localhost:8082/ir/xml/EPFull_1269927.xml"
+                                    storage="internal-managed"/>
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+            <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                              xlink:title="eSciDoc internal MD Record"
+                                              xlink:type="simple">
+               <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                   xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                                   xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                                   xmlns:dcterms="http://purl.org/dc/terms/"
+                                                   xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                                   xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                                   type="article"
+                                                   xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Copf jun.</e:family-name>
+                        <e:given-name>Franz</e:given-name>
+                        <e:complete-name>compCopf jun., Franz</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Copf jun.</e:family-name>
+                        <e:given-name>Franz</e:given-name>
+                        <e:complete-name>compCopf jun., Franz</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Ostertag</e:family-name>
+                        <e:given-name>Ulrich, Dr.</e:given-name>
+                        <e:complete-name>compOstertag, Ulrich, Dr.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <dc:title xml:lang="DE">compVergurtungssystem zur Spondylodese der Lendenwirbelsäule sowie Pedikelschraube und Gegenhalter zur Verwendung bei einem solchen titleappendi'x titleappendi/x ' /</dc:title>
+                  <dc:language>DE</dc:language>
+                  <dc:identifier xsi:type="eidt:ISSN">comp1269927</dc:identifier>
+                  <dcterms:alternative xml:lang="EN">compConnection system for the spinal fusion of the lumbar column, pedicle screw and counter holder for use in such a case alternativeappendix' alternativeappendix/</dcterms:alternative>
+                  <dcterms:created>1980-01-16T07:00:00.000+01:00</dcterms:created>
+                  <dcterms:modified>1980-01-16T08:00:00.000+01:00</dcterms:modified>
+                  <dcterms:dateSubmitted>1980-01-16T09:00:00.000+01:00</dcterms:dateSubmitted>
+                  <dcterms:dateAccepted>1980-01-16T10:00:00.000+01:00</dcterms:dateAccepted>
+                  <publication:published-online>1980-01-16T11:00:00.000+01:00</publication:published-online>
+                  <dcterms:issued>1980-01-16T12:00:00.000+01:00</dcterms:issued>
+                  <publication:source type="articlesource">
+                     <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+                  </publication:source>
+                  <publication:source type="articlesource1">
+                     <dc:title>compTitelSourceVO</dc:title>
+                  </publication:source>
+                  <publication:event>
+                     <dc:title>compTitelEventVO</dc:title>
+                  </publication:event>
+               </escidocMetadataProfile:publication>
+            </escidocMetadataRecords:md-record>
+         </escidocMetadataRecords:md-records>
+      </escidocComponents:component>
+      <escidocComponents:component>
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+                                       xlink:type="simple">
+            <properties:description>PDF File</properties:description>
+            <properties:valid-status>valid</properties:valid-status>
+            <properties:visibility>private</properties:visibility>
+            <properties:content-category>pre-print</properties:content-category>
+            <properties:file-name>EPFull_1269927.pdf</properties:file-name>
+            <properties:mime-type>application/pdf</properties:mime-type>
+         </escidocComponents:properties>
+         <escidocComponents:content xlink:type="simple"
+                                    xlink:href="http://localhost:8082/ir/pdf/EPFull_1269927.pdf"
+                                    storage="internal-managed"/>
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+            <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                              xlink:title="eSciDoc internal MD Record"
+                                              xlink:type="simple">
+               <escidocMetadataProfile:publication xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                                                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                   xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+                                                   xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                                   xmlns:dcterms="http://purl.org/dc/terms/"
+                                                   xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+                                                   xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+                                                   type="article"
+                                                   xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication ../escidoc_publication_profile.xsd">
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Copf jun.</e:family-name>
+                        <e:given-name>Franz</e:given-name>
+                        <e:complete-name>compCopf jun., Franz</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Copf jun.</e:family-name>
+                        <e:given-name>Franz</e:given-name>
+                        <e:complete-name>compCopf jun., Franz</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <publication:creator role="author">
+                     <e:person>
+                        <e:family-name>Ostertag</e:family-name>
+                        <e:given-name>Ulrich, Dr.</e:given-name>
+                        <e:complete-name>compOstertag, Ulrich, Dr.</e:complete-name>
+                     </e:person>
+                  </publication:creator>
+                  <dc:title xml:lang="DE">compVergurtungssystem zur Spondylodese der Lendenwirbelsäule sowie Pedikelschraube und Gegenhalter zur Verwendung bei einem solchen titleappendi'x titleappendi/x ' /</dc:title>
+                  <dc:language>DE</dc:language>
+                  <dc:identifier xsi:type="eidt:ISSN">comp1269927</dc:identifier>
+                  <dcterms:alternative xml:lang="EN">compConnection system for the spinal fusion of the lumbar column, pedicle screw and counter holder for use in such a case alternativeappendix' alternativeappendix/</dcterms:alternative>
+                  <dcterms:created>1980-01-16T07:00:00.000+01:00</dcterms:created>
+                  <dcterms:modified>1980-01-16T08:00:00.000+01:00</dcterms:modified>
+                  <dcterms:dateSubmitted>1980-01-16T09:00:00.000+01:00</dcterms:dateSubmitted>
+                  <dcterms:dateAccepted>1980-01-16T10:00:00.000+01:00</dcterms:dateAccepted>
+                  <publication:published-online>1980-01-16T11:00:00.000+01:00</publication:published-online>
+                  <dcterms:issued>1980-01-16T12:00:00.000+01:00</dcterms:issued>
+                  <publication:source type="articlesource">
+                     <dc:title>兡也包因沘氓侷柵苗孫孫財</dc:title>
+                  </publication:source>
+                  <publication:source type="articlesource1">
+                     <dc:title>compTitelSourceVO</dc:title>
+                  </publication:source>
+                  <publication:event>
+                     <dc:title>compTitelEventVO</dc:title>
+                  </publication:event>
+               </escidocMetadataProfile:publication>
+            </escidocMetadataRecords:md-record>
+         </escidocMetadataRecords:md-records>
+      </escidocComponents:component>
+   </escidocComponents:components>
+</escidocItem:item>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-organizational-unit:organizational-unit
+	xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" 
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<md-records:md-records
+		xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+		xmlns:ou="http://www.escidoc.de/metadata/organizational-unit"
+		xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns:dcterms="http://purl.org/dc/terms/">
+		<md-records:md-record name="escidoc">
+			<ou:ou>
+				<dc:title>title</dc:title>
+				<dcterms:alternative>alternative</dcterms:alternative>
+				<dc:description>description</dc:description>
+				<dc:identifier></dc:identifier>
+				<ou:organization-type>institute</ou:organization-type>
+				<ou:country>DE</ou:country>
+				<ou:city>Munich</ou:city>
+				<ou:start-date></ou:start-date>
+				<ou:end-date></ou:end-date>
+				<georss:point xmlns:georss="http://www.georss.org/">45.256 -71.92</georss:point>
+			</ou:ou>
+		</md-records:md-record>
+	</md-records:md-records>
+	<prefix-organizational-unit:parents>
+	   <prefix-srel:parent xlink:href="/oum/organizational-unit/escidoc:persistent33" />
+       <prefix-srel:parent xlink:href="/oum/organizational-unit/escidoc:persistent34" />
+	</prefix-organizational-unit:parents>
+</prefix-organizational-unit:organizational-unit>

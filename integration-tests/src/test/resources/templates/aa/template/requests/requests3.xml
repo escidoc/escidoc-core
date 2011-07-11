@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requests:requests
+	xmlns:requests="http://www.escidoc.de/schemas/pdp/0.3/requests"
+	xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context">
+	<xacml-context:Request>
+		<xacml-context:Subject
+			SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject">
+			<xacml-context:Attribute
+				AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<xacml-context:AttributeValue>
+					escidoc:testsystemadministrator
+				</xacml-context:AttributeValue>
+			</xacml-context:Attribute>
+		</xacml-context:Subject>
+		<xacml-context:Resource>
+			<xacml-context:Attribute
+				AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<xacml-context:AttributeValue>
+					escidoc:persistent1
+				</xacml-context:AttributeValue>
+			</xacml-context:Attribute>
+		</xacml-context:Resource>
+		<xacml-context:Action>
+			<xacml-context:Attribute
+				AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+				DataType="http://www.w3.org/2001/XMLSchema#string">
+				<xacml-context:AttributeValue>
+					info:escidoc/names:aa:1.0:action:retrieve-organizational-unit-invalid
+				</xacml-context:AttributeValue>
+			</xacml-context:Attribute>
+		</xacml-context:Action>
+	</xacml-context:Request>
+</requests:requests>

@@ -1,0 +1,67 @@
+-create Oracle Database with character encoding UTF-8
+-create Tablespace for escidoc-tables
+-configure 
+	escidoc.oracle.host
+	escidoc.oracle.port
+	escidoc.oracle.database
+	escidoc.database.user
+	escidoc.database.password
+	escidoc.oracle.database.admin.user
+	escidoc.oracle.database.admin.password
+	escidoc.database.default.tablespace
+	escidoc.database.temp.tablespace
+	
+-add escidoc-core.custom.properties to jboss-conf directory, containing configuration for oracle db.
+
+fedora:
+-adapt datastore with id localOraclePool -> jdbcURL in fedora.fcfg to Oracle Database
+-adapt module with role org.fcrepo.server.storage.DOManager:
+	-adapt param with name storagePool to value localOraclePool in fedora.fcfg
+-adapt module with role org.fcrepo.server.search.FieldSearch:
+	-adapt param with name connectionPool to value localOraclePool in fedora.fcfg
+-adapt module with role org.fcrepo.server.storage.ConnectionPoolManager to value localOraclePool in fedora.fcfg
+
+triplestore:
+add datastore to fedora.fcfg:
+  <datastore id="localOracleMPTTriplestore">
+    <param name="connectorClassName" value="org.trippi.impl.mpt.MPTConnector"/>
+    <param name="ddlGenerator" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator"/>
+    <param name="jdbcDriver" value="oracle.jdbc.OracleDriver"/>
+    <param name="jdbcURL" value="jdbc:oracle:thin:@escidev5:1521:oraesci01"/>
+    <param name="username" value="riTriples"/>
+    <param name="password" value="riTriples"/>
+    <param name="poolInitialSize" value="3"/>
+    <param name="poolMaxSize" value="10"/>
+    <param name="backslashIsEscape" value="true"/>
+    <param name="fetchSize" value="1000"/>
+    <param name="autoFlushDormantSeconds" value="5"/>
+    <param name="autoFlushBufferSize" value="1000"/>
+    <param name="bufferFlushBatchSize" value="1000"/>
+    <param name="bufferSafeCapacity" value="2000"/>
+  </datastore>
+
+-adapt module with role org.fcrepo.server.resourceIndex.ResourceIndex:
+	-adapt param with name datastore to value localOracleMPTTriplestore in fedora.fcfg
+	
+	
+-use MPTStore with OracleDDLGenerator
+
+-Oracle-Treiber in fedora.war integrieren
+-MPTStore mit OracleDDL-Klasse in fedora.war integrieren
+
+
+
+Installer:
+sql-skripte
+variablen
+gepatchter MPTStore
+OJDBC-Treiber
+escidoc.core.custom.properties
+
+Angepasste Configdateien: 
+/installer/src/main/resources/fedora/oracle/install.properties
+/integration-tests/src/test/resources/configuration/oracle/jboss/server/default/conf/escidoc-core.custom.proeprties
+/integration-tests/src/test/resources/fedora/oracle/fedora.fcfg + install.properties
+
+
+-put ojdbc-treiber in local repository of each machine

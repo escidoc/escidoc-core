@@ -1,0 +1,1357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Search and Browse (SB)</title>
+
+  <section>
+    <title>Overview</title>
+    <para>To provide search, we have to index the objects stored in eSciDoc. 
+    This is done automatically whenever a new object is added or an existing object changes.</para>
+    <para>The underlying index-database is Lucene.</para>
+    <para>It is  possible to recreate the Index by
+    using the Admin-Tool.</para>
+    <para>The Index can get deleted by Hand. Just remove all Subdirectories in
+    the following path:</para>
+    <para>&lt;jboss.home&gt;/server/default/data/index/lucene. (First stop the
+    Application-Server before deleting the Subdirectories)</para>
+    <para>There are by default two searchable databases in
+    eSciDoc:</para>
+
+    <section>
+        <title>escidoc_all</title>
+
+        <para>database that contains indices for all searchable elements in
+        released escidoc-items and escidoc-containers. </para>
+        <para>escidoc_all database is language-independent, so there
+        is no automatic stemming or normalization done. English and German Stopwords are removed.
+        Only exact matches or wildcard-matches are found.</para>
+        </section>
+        
+        <section>
+          <title>escidocou_all</title>
+
+        <para>database that contains indices for all searchable fields in escidoc-organizational-units.</para>
+        <para>This database is language-independent, so there
+        is no automatic stemming or normalization done. Only exact matches or
+        wildcard-matches are found.</para>
+    </section>
+    <section>
+         <title>item_container_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-items and escidoc-containers. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ItemHandler.retrieveItems + ContainerHandler.retrieveContainers)</para>
+    </section>
+    <section>
+         <title>content_model_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-content-models. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContentModelHandler.retrieveContentModels)</para>
+    </section>
+    <section>
+         <title>content_relation_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-content-relations. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContentRelationHandler.retrieveContentRelations)</para>
+    </section>
+    <section>
+         <title>context_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-contexts. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContextHandler.retrieveContexts)</para>
+    </section>
+     <section>
+         <title>ou_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-organizational-units. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (OrganizationalUnitHandler.retrieveOrganizationalUnits)</para>
+    </section>
+        
+    
+  </section>
+
+  <section>
+    <title>Indexing</title>
+
+    <para>For indexing, the eSciDoc-Project uses the fedoragsearch of the
+    Technical University of Denmark that builds upon fedora. 
+    Whenever an item or a container gets released, a messaging-system is triggered, 
+    that handles the request to the fedoragsearch. 
+    The indexing-process runs asynchronously. 
+    Errors that occur while indexing are written into a seperate logfile 
+    indexer-errors.log that is located in your jboss-log-directory. 
+    So please chack this logfile from time to time.</para>
+
+    <section>
+    	<title>The fedoragsearch workflow</title>
+    	<itemizedlist>
+      	<listitem>
+        	<para>trigger fedoragsearch with pid of escidoc-object</para>
+      	</listitem>
+     	<listitem>
+        	<para>fedoragsearch accesses the escidoc-core-framework to get the escidoc-xml for specific escidoc-pid.</para>
+      	</listitem>
+      	<listitem>
+        	<para>fedoragsearch transforms escidoc-xml to a document that contains index-information</para>
+        	<para>(transformation is done by customizable xslt-stylesheet.)</para>
+      	</listitem>
+      	<listitem>
+        	<para>Index-information-document is taken to write Lucene-Index.</para>
+     	</listitem>
+    	</itemizedlist>
+    </section>
+
+    <section>
+    	<title>Customizations of the fedoragsearch for eSciDoc</title>
+    	<itemizedlist>
+      	<listitem>
+        	<para>eSciDoc fakes fedora-interface for security-reasons. 
+        	So fedoragsearch does not access fedora directly to get the object to index, but accesses the eSciDoc-Interface.</para>
+      	</listitem>
+      	<listitem>
+        	<para>poi-libraries were included into the fedoragsearch to be able to extract text from word-documents.</para>
+      	</listitem>
+      	<listitem>
+        	<para>customized analyzers were included into the fedoragsearch.</para>
+      	</listitem>
+        <listitem>
+            <para>possibility to load stylesheets from a url.</para>
+        </listitem>
+    	</itemizedlist>
+    </section>
+
+    <section>
+    	<title>Important configuration to allow gsearch to access eSciDoc-ObjectMananger</title>
+
+    	<para>One User with a persistent handle that does not expire is needed in the system
+    		to enable the gsearch to access the eSciDoc-ObjectManager.
+    	</para>
+   		<itemizedlist>
+      		<listitem>
+        		<para>either create a new user or use an existing user.</para>
+      		</listitem>
+      		<listitem>
+        		<para>insert a new record in the table aa.user_login_data that contains the user_id (primary_key id from table user_account), the name of the persistent handle (just choose one) and the expiry-timestamp that should be set to 1999999999999.</para>
+      		</listitem>
+            <listitem>
+                <para>Grant role system-administrator to the user.</para>
+            </listitem>
+      		<listitem>
+        		<para>Configure the persistent handle into the escidoc-core.properties:
+					escidoc-core.properties is located in your jboss: &lt;jboss_home;gt;/server/default/conf/escidoc-core.properties.
+					put one entry into this file:
+					gsearch.fedoraPass = &lt;name of handle&gt;
+        		</para>
+      		</listitem>
+   		</itemizedlist>
+    </section>
+
+    <section>
+    	<title>The Index-information-document</title>
+        <para>The Index-Information document defines what has to get indexed how and has one root-element 
+        with name IndexDocument and a mandatory attribute PID, 
+        which contains the objectId of the eSciDoc-object without version-identifier. 
+        Additionally you can define an attribute boost which sets the boost for the whole document.
+        The Index-Information document also has to contain an IndexField with name=PID, 
+        containing the objectId of the eSciDoc-object without version-identifier.
+        This gets important when an object that is already indexed, gets reindexed because of changes.</para>
+        <para>NOTE: The PID has to be the eSciDoc objectId without version-identifier!!!</para>
+        <para>NOTE: Better include the stylesheet index/gsearchAttributes.xslt to write PID!!!</para>
+        <para>Below the root-element can be one or more elements with name IndexField, 
+        that hold information about the data to index. 
+        The data within the element is the data that gets indexed.</para>
+    	<para><emphasis role="bold">Attributes of element IndexField:</emphasis></para>
+    	<itemizedlist>
+      	<listitem>
+        	<para><emphasis role="bold">termVector (YES|NO):</emphasis>
+        	If lucene sould write a term-vector for the field. 
+        	term-vector holds information about the frequency of a specific term in each document</para>
+      	</listitem>
+      	<listitem>
+        	<para><emphasis role="bold">index (TOKENIZED|UN_TOKENIZED|NO):</emphasis>
+        	How Lucene should index the field. If more than one word is indexed, 
+        	use TOKENIZED if you want to search for single words. Use UN_TOKENIZED only for identifiers etc.</para>
+      	</listitem>
+      	<listitem>
+        	<para><emphasis role="bold">store (YES|NO):</emphasis>
+        	If Lucene should store the content of this field unchanged and untokenized.
+        	This is needed if sorting is provided for that field.</para>
+      	</listitem>
+      	<listitem>
+        	<para><emphasis role="bold">boost:</emphasis>
+        	The higher the boost factor, the more relevant the field will be when sorted by relevance.
+        	default is 1.0</para>
+      	</listitem>
+      	<listitem>
+        	<para><emphasis role="bold">IFName:</emphasis>
+        	Name of the index-field.</para>
+      	</listitem>
+      	<listitem>
+        	<para><emphasis role="bold">dsId:</emphasis>
+        	Optional. Holds the id of the datastream in fedora that has to get written into this field. 
+        	Fedorgsearch then requests the datasource from fedora.
+        	Because of the modifications for eSciDoc, this attribute contains the REST-URL to the content of the component (Fulltext).</para>
+      	</listitem>
+    	</itemizedlist>
+    	<para>&lt;IndexDocument PID="escidoc:2132"&gt;</para>
+        <para>  &lt;IndexField termVector="NO" index="UN_TOKENIZED" store="NO" boost="1.0" IFname="PID"&gt;escidoc:2132&lt;IndexField&gt;</para>
+    	<para>	&lt;IndexField termVector="NO" index="UN_TOKENIZED" store="YES" boost="1.0" IFname="escidoc.objid"&gt;escidoc:6875&lt;IndexField&gt;</para>
+    	<para>	&lt;IndexField termVector="NO" index="TOKENIZED" store="YES" boost="1.0" IFname="escidoc.fulltext" dsId="ir/item/escidoc:6875/components/component/escidoc:6876/content"/&gt;</para>
+    	<para>&lt;/IndexDocument&gt;</para>
+    </section>
+
+    <section>
+        <title>The stylesheet that creates the Index-information-document</title>
+        <para>gsearch uses a stylesheet to transform the xml of the escidoc-object into the Index-information-document.
+        We can configure one stylesheet per database. There are internal stylesheets that create the Index-information-document
+        with some default-fields (Description see below).</para><para>
+        If this is not sufficient for you, you can use your own stylesheet for indexing. 
+        The stylesheet has to be compatible to XSLT version 1.0 and has to create a valid index-information-document out of the object-xml.
+        The stylesheet has to be accessable via an url. The url where the stylesheet is located can 
+        be configured in the index.properties that is located in your index-configuration directory.
+        
+        <para>download http://&lt;your host&gt;/xsl/indexing/smallEscidocXmlToLucene.xslt 
+        to see a minimal stylesheet for database escidoc_all</para>
+        
+        <section><title>Important internally used index-fields that must be in the index:</title>
+        <para><emphasis role="bold">Field that is used for search-hit-display:</emphasis></para>
+        <itemizedlist>
+        <listitem>xml_representation
+        <para>stored field, not indexed, no termVector. 
+        Has to be xml-conform, must be surrounded by [CDATA[...]]
+        Used by SRW for display of search-hit. 
+        In search-hit, the xml will be surrounded by an element search-result-record
+        that contains the xml you indexed in the field xml_representation 
+        plus an element score containing the lucene-score for the hit
+        plus eventually an element highlight containing the highlight-information for the hit.</para>
+        <para>Example:
+        <programlisting>
+&lt;IndexField IFname="xml_representation" index="NO" store="YES" termVector="NO"&gt;
+&lt;xsl:text disable-output-escaping="yes"&gt;
+&amp;lt;![CDATA[
+&lt;/xsl:text&gt;
+  &lt;xsl:copy-of select="/*[local-name()='item']"/&gt;
+&lt;xsl:text disable-output-escaping="yes"&gt;
+]]&amp;gt;
+&lt;/xsl:text&gt;
+&lt;/IndexField&gt;
+        </programlisting>
+        </para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Fields that are used for highlighting:</emphasis></para>
+        <para>The Search-Application provides 2 preconfigured Highlighters: Normal Highlighter and FastVectorHighlighter which seems to be a bit faster.
+        The Highlighter-Class to use is configurable. If normal Highlighter is used, the Fields to highlight 
+        have to be written as stored fields in the index, not indexed and not tokenized.
+        If FastVectorHighlighter is used, the Fields to highlight have to be written as stored fields 
+        and additionally indexed TOKENIZED and TermVector=WITH_POSITIONS_OFFSETS.</para>
+        <para>If you want the have highlight-information in your search result, you have to write the following fields into the index (each field only may occur once):</para>
+        <para>For highlighting of metadata:</para>
+        <itemizedlist>
+        <listitem>xml_metadata
+        <para>stored field, not indexed, no termVector. If xml, then has to be surrounded by [CDATA[...]]. Contains metadata-xml.</para>
+        <para>Example:
+        <programlisting>
+&lt;IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO"&gt;
+&lt;xsl:text disable-output-escaping="yes"&gt;
+&amp;lt;![CDATA[
+&lt;/xsl:text&gt;
+&lt;xsl:copy-of select="."/&gt;
+&lt;xsl:text disable-output-escaping="yes"&gt;
+]]&amp;gt;
+&lt;/xsl:text&gt;
+&lt;/IndexField&gt;
+        </programlisting>
+        </para>
+        </listitem>
+        </itemizedlist>
+        <para>For highlighting of fulltext:</para>
+        <itemizedlist>
+        <listitem>stored_fulltext1 .... stored_fulltext100
+        <para>stored field, not indexed, no termVector. one field per fulltext. Contains complete text of content.</para>
+        <para>Example:
+        <programlisting>
+&lt;IndexField index="NO" store="YES" termVector="NO"&gt;
+&lt;xsl:attribute name="dsId"&gt;
+&lt;xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/&gt;
+&lt;/xsl:attribute&gt;
+&lt;xsl:attribute name="IFname"&gt;
+&lt;xsl:value-of select="concat('stored_fulltext',$matchNum)"/&gt;
+&lt;/xsl:attribute&gt;
+&lt;/IndexField&gt;
+        </programlisting>
+        </para>
+        </listitem>
+        <listitem>stored_filename1 .... stored_filename100
+        <para>stored field, not indexed, no termVector. one field per fulltext. Contains objectId of fulltext-content.</para>
+        <para>
+        <programlisting>
+&lt;IndexField index="NO" store="YES" termVector="NO"&gt;
+&lt;xsl:attribute name="IFname"&gt;
+&lt;xsl:value-of select="concat('stored_filename',$matchNum)"/&gt;
+&lt;/xsl:attribute&gt;
+&lt;xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/&gt;
+&lt;/IndexField&gt;
+        </programlisting>
+        </para>
+        </listitem>
+        </itemizedlist>
+
+        <section><title>Naming rules for index-fields:</title>
+        <para>To be able to deliver a valid srw explain-plan, please use the following naming-rules for your index-fields:
+        <itemizedlist>
+        <listitem>fields that are used for sorting are prefixed with "sort" or "/sort"
+        </listitem>
+        </itemizedlist>
+        If you do not follow these naming-rules, srw is not able to deliver a valid explain-plan, but searching still works!
+        </para>
+        </section>
+        
+        <section><title>Use of Java-Classes while transforming:</title>
+        <para>gsearch uses the Xalan XSLT-processor. Xalan allows to call methods of java-classes while transforming.
+        You have to import the xalan-namespace in the root-element of your stylesheet.
+        Then you have to bind the java-classes to use to a namespace.</para>
+        <para>Example:<emphasis>xmlns:escidoc-core-accessor="xalan://de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor".</emphasis>
+        These namespaces have to get registered as extension-element-prefixes. This is also done in the root-element of the stylesheet.
+        Example-root-element to use the class de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor:
+          <programlisting>
+&lt;xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:xalan="http://xml.apache.org/xalan"
+xmlns:escidoc-core-accessor=
+  "xalan://de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor" 
+extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
+        </section>
+        
+        <para><emphasis role="bold">In eSciDoc implemented classes:</emphasis>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor</emphasis></para>
+                <para>Methods:</para>
+                <itemizedlist>
+                    <listitem>getObjectAttribute
+                        <para>Use this method to get values of elements or attributes of other eSciDoc-Objects</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>restUri
+                                <para>URI to the eSciDoc-object without host. eg: /ir/item/escidoc:123</para>
+                            </listitem>
+                            <listitem>elementPath
+                                <para>xpath to element of the eSciDoc-object</para>
+                            </listitem>
+                            <listitem>attributeName
+                                <para>name of the attribute that has to get resolved, without namespace (may be empty)</para>
+                            </listitem>
+                            <listitem>attributeNamespaceUri
+                                <para>namespace-uri of the attribute</para>
+                            </listitem>
+                            <listitem>accessAsAnonymousUser
+                                <para>true or false (default is false)</para>
+                            </listitem>
+                            <listitem>getObjidFromHref
+                                <para>true or false. (default is false) Attribute href contains whole rest-uri. If you just want to have the object-id, set this to true</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns value(s) as String, values are separated with whitespace</para>
+                        <para>Examples:</para>
+                        <para>get name of content-model:</para>
+                        <para>  <programlisting>
+&lt;xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+  '/cmm/content-model/escidoc:123',
+  '/content-model/properties/name','','','false','false')"/&gt;</programlisting>
+                        </para>
+                        <para>get ids of all parent org-units:</para>
+                        <para>  <programlisting>
+&lt;xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+  '/oum/organizational-unit/escidoc:455/resources/path-list'),
+  '/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref',
+  'href','http://www.w3.org/1999/xlink','false','true')"/&gt;
+                        </programlisting>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">de.escidoc.sb.gsearch.xslt.ElementTypeHelper</emphasis></para>
+                <para>Methods:</para>
+                <itemizedlist>
+                    <listitem>isDateOrDecimal
+                        <para>Use this method to check if given term is xs:date or decimal</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>term
+                                <para>term</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns boolean true or false</para>
+                        <para>Example:</para>
+                        <para>  <programlisting>
+&lt;xsl:variable name="isDateOrDecimal" 
+  select="element-type-helper:isDateOrDecimal($fieldvalue)"/&gt;
+  &lt;xsl:when test="$isDateOrDecimal = true()"&gt; ...
+                        </programlisting>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">de.escidoc.sb.gsearch.xslt.SortFieldHelper</emphasis></para>
+                <para>Methods:</para>
+                <itemizedlist>
+                    <listitem>checkSortField
+                        <para>checks if sortfield with given name was already indexed</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>sortFieldName
+                                <para>name of sortfield</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns boolean true or false</para>
+                        <para>Example:</para>
+                        <para>  <programlisting>
+&lt;xsl:if test="string($fieldvalue) 
+  and normalize-space($fieldvalue)!=''
+  and sortfield-helper:checkSortField(
+  concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)) = false()"&gt;
+     ... write sortfield
+                        </programlisting>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">de.escidoc.sb.gsearch.xslt.StringHelper</emphasis></para>
+                <para>Methods:</para>
+                <itemizedlist>
+                    <listitem>getSubstringAfterLast
+                        <para>gets Substring of term after last occurence of term1</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>term
+                                <para>term</para>
+                            </listitem>
+                            <listitem>term1
+                                <para>term1</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns substring</para>
+                        <para>Example:</para>
+                        <para>  <programlisting>
+&lt;xsl:variable name="idtype" 
+  select="string-helper:getSubstringAfterLast(
+  ./@*[local-name()='type'],':')" /&gt;
+                        </programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>getNormalizedString
+                        <para>converts given String to lower-case and replaces ä,ö,ü with ae, oe, ue</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>input
+                                <para>input-string</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns normalized string</para>
+                        <para>Example:</para>
+                        <para>  <programlisting>
+&lt;xsl:value-of select="string-helper:getNormalizedString($fieldvalue)"/&gt;
+                        </programlisting>
+                        </para>
+                    </listitem>
+                    <listitem>removeVersionIdentifier
+                        <para>removes version-identifier of given escidoc-object-id</para>
+                        <para>Parameters:</para>
+                        <itemizedlist>
+                            <listitem>input
+                                <para>escidoc-object-id</para>
+                            </listitem>
+                        </itemizedlist>
+                        <para>Returns escidoc-object-id without version-identifier</para>
+                        <para>Example:</para>
+                        <para>  <programlisting>
+&lt;xsl:value-of 
+  select="string-helper:removeVersionIdentifier(
+  /*[local-name()='item']/@objid)"/&gt;
+                        </programlisting>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+        </para>
+        <section><title>Default index fields</title>
+        <para>There are default-fields that are used for SRW-Queries if no index is mentioned when searching via cql</para>
+        <para>default-field for escidoc_all database is: escidoc.fulltext.</para>
+        <para>This fieldname is also used to determine if fulltext-highlighting should be done. 
+        So it is recommended to index the fulltext into the field escidoc.fulltext</para>
+        <para>default-field for database escidocou_all is escidoc.metadata</para>
+        </section>
+        
+    </section>
+
+    <section>
+        <title>Problems with indexing</title>
+        <para>The extraction of text from pdf-files sometimes does not work correctly and produces an exception. 
+        For that reason, the whole escidoc-object is not indexed at all. To workaround this problem, 
+        we decided to make it configurable if an Exception should be thrown or if the String 
+        'textfrompdffilenotextractable' should get written into the
+        index-field where the fulltext is indexed. Then the escidoc-object is indexed, but without the text from the pdf. 
+        If you want to find the escidoc-objects where pdf is not indexed, just search for 'textfrompdffilenotextractable'.</para>
+    </section>
+
+	
+	<section>
+		<title>Sorting</title>
+    	<para>Sorting can only be done for index-fields that are untokenized and that occur only
+    	once per index-document. The default escidoc indexing writes one extra index-field for sorting per index-field.
+    	The names of fields that can be sorted for are prefixed with sort. Example: index-field with name=escidoc.title
+    	can be used for searching. Extra field with name sort.escidoc.title can be used for sorting. 
+    	You can see the sorting-fields in the explain plan of SRW.
+    	If you want to write your own stylesheet to generate the index-information-document, be carefull that the index-fields 
+    	you want to sort for are untokenized and occur only once per index-document.
+    	</para>
+    	<para>additional custom sort-fields:</para>
+    </section>
+ </para>
+  </section>
+</section>
+  <section>
+    <title>Searching</title>
+
+    <para>For searching, the eSciDoc-Project uses the OCLC SRW-Server of the
+    OCLC Online Computer Library Center.</para>
+
+    <para>The OCLC SRW-Server is an open source software that implements both
+    the SRW Web Service and the SRU REST model interface to databases
+    (http://www.loc.gov/standards/sru/), using the cql query-language to query search-databases.</para>
+
+    <para>The WSDL-File for SOAP-requests is available under &lt;your-application-server&gt;/srw/services/SRW?wsdl</para>
+
+    <para>The SRW Server holds connections to databases that can get searched.</para>
+    <section>
+        <title>Operations</title>
+
+    <para>A client that sends a request to the SRW Server always has to send
+    the name of the requested database within the url.</para>
+
+    <para>Example:</para>
+
+    <programlisting>http://www.escidoc.de/srw/search/escidoc_all</programlisting>
+
+    <para>The following operations are supported on a database:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>explain operation (used by clients to self-configure)</para>
+      </listitem>
+
+      <listitem>
+        <para>searchRetrieve operation (searches for a specific term within a
+        list of indexed terms).</para>
+      </listitem>
+
+      <listitem>
+        <para>scan operation (request a range of the available terms at a
+        given point within that list)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The following Extra-data parameters are supported for Search:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>x-info5-userId: Search as another user (escidoc userId).
+        Only supported when permission-filtering is used.</para>
+      </listitem>
+
+      <listitem>
+        <para>x-info5-roleId: Search with a specific role (escidoc roleId).
+        Only supported when permission-filtering is used.</para>
+      </listitem>
+
+      <listitem>
+        <para>x-info5-omitHighlighting=true|false: If true, omit generation Highlight-Snippets</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>See documentation at http://www.loc.gov/standards/sru/ for more
+    details.</para>
+
+    <para>Note: you always have to define the index-fields you want to search in your cql-query.
+    If no index-field is defined, the default index-field is searched. 
+    The name of the default index-field is: escidoc.fulltext</para>
+    <para>Note: you can sort for all fields that are indexed untokenized and that occur only
+        once per index-document. If you do not define sort-fields in your cql-query,
+        the result is sorted by relevance 
+        (formula: http://lucene.apache.org/java/2_4_0/api/org/apache/lucene/search/Similarity.html).
+        if you want to sort for relevance and additional fields you have to use 
+        _relevance_ as sortfield-name in your cql-query.</para>
+    
+    <para><emphasis role="bold">Limitation:</emphasis> It is not possible to put wildcards into a phrase-search, because this is not supported by the underlying lucene-software.</para>
+    </section>
+
+  </section>
+  <section>
+  <title>Database Description</title>
+    <section>
+        <title>escidoc_all</title>
+
+        <para>database that contains indices for all searchable elements in
+        released escidoc-items and escidoc-containers. </para>
+        <para>escidoc_all database is language-independent, so there
+        is no automatic stemming or normalization done. English and German Stopwords are removed.
+        Only exact matches or wildcard-matches are found.</para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">All elements of the md-record with attribute name=escidoc.</emphasis> 
+            Name of the resulting index is escidoc.&lt;md-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All elements of the properties</emphasis> 
+            Name of the resulting index is escidoc.&lt;property-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All elements of all md-records of all components with attribute name=escidoc.</emphasis>
+            Name of the resulting index is escidoc.component.&lt;md-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All properties of all components.</emphasis>
+            Name of the resulting index is escidoc.component.&lt;property-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (item or container).</emphasis>
+            Name of the resulting index is escidoc.objecttype.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The id of the object.</emphasis>
+            Name of the resulting index is escidoc.objid.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The content of all components that have the following mime-types:</emphasis>
+            application/pdf application/msword text/xml application/xml text/plain.
+            fulltexts are not indexed if component-type is correspondence or copyright transfer agreement.
+            Name of the resulting index is escidoc.fulltext.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.metadata:</emphasis>
+            contains data of all md-elements of md-record with name=escidoc (item/container and components)
+            contains data of indexed properties (item/container and components)
+            contains data extracted an concatenated out of dc.identifier-element: eg ISSN and ISSN:12343.
+            contains id of object, pids of object and all components.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.context.objid:</emphasis>
+            contains id of the context object belongs to.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.content-model.objid:</emphasis>
+            contains id of the content-model object belongs to.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.publication.type:</emphasis>
+            contains the type of the publication if internal metadata contains publication metadata.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.most-recent-date:</emphasis>
+            contains most recent date out of metadata (MPDL-Schema): issued, published-online, dateAccepted, dateSubmitted, modified, created.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.most-recent-date.status:</emphasis>
+            contains name of element with most recent date (MPDL-Schema): issued, published-online, dateAccepted, dateSubmitted, modified, created.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.creator.role:</emphasis>
+            contains value of attribute role from element creator from MPDL-Metadata-schema.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.content-model.name:</emphasis>
+            contains name of content-model object belongs to.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.context.name:</emphasis>
+            contains name of context object belongs to.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.created-by.name:</emphasis>
+            contains name of the creator of the object.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.component.created-by.name:</emphasis>
+            contains name of the creator of a component of the object.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.last-modification-date:</emphasis>
+            contains value of attribute last-modification-date of root-element (item/container).</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.member-count:</emphasis>
+            contains number of released members of the container (if object is container).</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-title:</emphasis>
+            contains data of elements title and alternative from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-topic:</emphasis>
+            contains data of elements title, tableOfContents, abstract and subject from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-persons:</emphasis>
+            contains data of elements creator/person/complete-name from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-organizations:</emphasis>
+            contains data of elements organization-name from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-organization-pids:</emphasis>
+            contains data of elements creator/person/organization/identifier from md-record plus all parent-OUs of this OU.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-genre:</emphasis>
+            contains data of attribute type of md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-dates:</emphasis>
+            contains data of elements created, modified, dateSubmitted, dateAccepted and issued from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-event:</emphasis>
+            contains data of elements event/title, event/alternative and event/place from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-source:</emphasis>
+            contains data of elements source/title and source/alternative from md-record.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-identifier:</emphasis>
+            contains id of object, pids of object and all components, values of elements identifier out of MPDL-metadata
+            (values are prefixed with the value of attribute type from identifier-element and indexed twice , once with prefix:identifier and once with prefix identifier).</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">xml_metadata:</emphasis>
+            contains metadata as xml. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_fulltext&lt;1-n&gt;:</emphasis>
+            contains all fulltexts. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_filename&lt;1-n&gt;:</emphasis>
+            contains all filenames of fulltexts. Used for highlighting.</para>
+        </listitem>
+        </itemizedlist>
+        </section>
+        
+        <section>
+          <title>escidocou_all</title>
+
+        <para>database that contains indices for all searchable fields in escidoc-organizational-units.</para>
+        <para>This database is language-independent, so there
+        is no automatic stemming or normalization done. Only exact matches or
+        wildcard-matches are found.</para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">All elements of the md-record with attribute name=escidoc.</emphasis> 
+            Name of the resulting index is escidoc.&lt;md-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The following elements of the properties-section:</emphasis>
+            creation-date, public-status, has-children.
+            Name of the resulting index is escidoc.&lt;property-elementname&gt;.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The objid of all parents of the parents-section.</emphasis>
+            Name of the resulting index is escidoc.parent.objid.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.metadata:</emphasis>
+            contains data of all md-elements of md-record with name=escidoc
+            contains data extracted an concatenated out of dc.identifier-element: eg ISSN and ISSN:12343.
+            contains object-id of fedora-object.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.ancestor-organization-pid:</emphasis>
+            contains pids of all organizational-units that are hierarchically located 
+            below the organizational-unit plus the organizational unit itself. 
+            Used to find all children of a particular org-unit.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name escidoc.any-identifier:</emphasis>
+            contains object-id of fedora-object, pids of object.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with sort.</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>item_container_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-items and escidoc-containers. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (item or container)..</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All properties-elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All metadata-elements and attributes of elements</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /md-records/md-record/publication/creator/role.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All component-properties-elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /components/component/properties/latest-release/number</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All component-metadata-elements and attributes of elements</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /components/component/md-records/md-record/publication/creator/role.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The content of all components that have the following mime-types:</emphasis>
+            application/pdf application/msword text/xml application/xml text/plain.
+            fulltexts are not indexed if component-type is correspondence or copyright transfer agreement.
+            Name of the resulting index is /fulltext.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name /resources/parent</emphasis>
+            contains ids of parent-objects.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains metadata as xml. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_fulltext&lt;1-n&gt;:</emphasis>
+            contains all fulltexts. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_filename&lt;1-n&gt;:</emphasis>
+            contains all filenames of fulltexts. Used for highlighting.</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>content_model_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-content-models. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (content-model).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>content_relation_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-content-relations. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (content-relation).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number
+            or /md-records/md-record/...</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains md-records as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>context_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-contexts. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (context).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>ou_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-organizational-units. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (organizational-unit).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number
+            or /md-records/md-record/...</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains md-records as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+        
+    
+  </section>
+
+  <section>
+    <title>Custom configuration + Integration of new indexes</title>
+    <para>The eSciDocCore Framework allows the configuration of existing indexes and the creation of new indexes.
+    If an existing index is reconfigured, reindexing of the whole index is required.
+    NOTE: Configuration-changes require a restart of the JBoss-Application-Server.
+    The configuration-directories are delivered with the jboss-patch.zip. 
+    You have to unpack them to the jboss-conf directory. directories are located below &lt;jboss-conf-dir&gt;/search/config</para>
+    <para>The config-directory contains 3 files:</para>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">fedoragsearch.properties:</emphasis> overall-configuration of indexing.
+                In fedoragsearch.properties, state the names of the indexes that should be written 
+                separated with whitespace as property with name fedoragsearch.indexNames.</para>
+            <para>For each index create a subdirectory ./index/&lt;indexname&gt; for the search + indexing configuration of this index.</para>
+            <para>Indexes that are not stated in the fedoragsearch.properties are not written, even if a configuration-directory exists.</para>
+            <para>Following properties can be set in fedoragsearch.properties:</para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">fedoragsearch.indexNames:</emphasis> names of the indexes, whitespace-separated</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fedoragsearch.pdfTextExtractorCommand:</emphasis>
+                	If pdfBox (internally used by gsearch to extract text from pdfs) is not working well for your pdfs,
+					use a command-line tool.
+					If you want to use a command-line tool,
+					define command-line-command to custom pdf-text-extractor (has to get installed seperately)
+					define command with full path, define inputfile with &lt;inputfile&gt; and outputfile with &lt;outputfile&gt;
+					example: C:/Programme/xpdf-3.02pl2-win32/pdftotext -cfg C:/Programme/xpdf-3.02pl2-win32/xpdfrc &lt;inputfile&gt; &lt;outputfile&gt;
+					</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fedoragsearch.ignoreTextExtractionErrors</emphasis>
+                true|false Defines what happenes if an Exception occurs while extracting the text from an pdf for indexing
+                if set to true, Exception is ignored and object is indexed without the fulltext.
+                if set to false, Exception is thrown and object is not indexed at all.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fedoragsearch.cacheUrlResources</emphasis>
+         		true|false Defines if resources retrieved from an URL (eg indexing-stylesheet) are cached after first retrieve.
+         		If set to true, remember to flush cache when resource behind url is changed (operation=flushUrlResources)</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fedoragsearch.soapBase</emphasis>
+                points to the host where the Fedoragsearch runs. 
+                Change it if Fedoragsearch runs on a different machine as eSciDoc-Core Framework.</para>
+                </listitem>
+            </itemizedlist>
+        </listitem>
+    </itemizedlist>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">SRWServer.props:</emphasis> overall-configuration of search.</para>
+            <para>In SRWServer.props, for each index that is searchable, state the search-interface to use
+            and the path to the configuration-file.</para> 
+     
+            <para>Path to the configuration should be index/&lt;indexname&gt;/&lt;config-file-name&gt;
+                so the index-configuration and the search-configuration files for one index are located in one Directory.</para>
+     
+            <para>Poperty-names must contain the name of the index, 
+            eg db.escidoc_all.configuration, where escidoc_all is the indexname.</para>
+     
+            <para>The search-interface (property db.&lt;indexname&gt;.class) always must be de.escidoc.sb.srw.EscidocSRWDatabaseImpl !!</para>
+            
+        </listitem>
+    </itemizedlist>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">readme.txt:</emphasis> explanation of configuration.</para>
+        </listitem>
+    </itemizedlist>
+
+    <para>The subdirectory index contains xslt-files which may not be changed or deleted
+    and subdirectories for the configuration of the particular indexes. 
+    The subdirectories are named according to the indexnames stated in fedoragsearch.properties 
+    and to the indexnames stated in SRWServer.props. 
+    One subdirectory has to contain the following files 
+    (you can copy files from an existing index-configuration and modify):</para>
+    <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">indexInfo.xml:</emphasis> contains basic information about the index.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">index.properties:</emphasis> contains properties for the index, used for indexing. Properties are:</para>
+            <itemizedlist>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.indexName:</emphasis> name of the index, according to name stated in fedoragsearch.properties.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.defaultUpdateIndexDocXslt:</emphasis> Name of the stylesheet used to 
+                    transform the escidoc-object-xml into the index-information-document.
+                    NOTE: stylesheet-file has to end with .xslt, property is name of the file without .xslt !!!
+                    Alternatively an URL to the stylesheet can be used. 
+                    Then you dont need to put a stylesheet in the config-directory.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.indexDir:</emphasis> Directory where the index-files should get written.
+                    Specify absolute path.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.analyzer:</emphasis> The Analyzer to use for indexing 
+                    (normally please use de.escidoc.sb.common.lucene.analyzer.EscidocAnalyzer).</para>
+                </listitem>
+            </itemizedlist>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">index.object-types.properties:</emphasis></para>
+            <para>Holds properties to configure which types of eSciDoc-Objects should get indexed 
+            or deleted from the index under which conditions.</para>
+            <para>Example: If eSciDoc-items should get written into the index, 
+            your properties for the item-indexing should start with the prefix Resource.Item.
+            Object-Types that can get indexed are:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Item</para>
+                </listitem>
+                <listitem>
+                    <para>Container</para>
+                </listitem>
+                <listitem>
+                    <para>Context</para>
+                </listitem>
+                <listitem>
+                    <para>OrganizationalUnit</para>
+                </listitem>
+                <listitem>
+                    <para>ContentModel</para>
+                </listitem>
+                <listitem>
+                    <para>ContentRelation</para>
+                </listitem>
+            </itemizedlist>
+            <para>For each Object-Type that shall get indexed in this index you can define the following properties:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>Define if indexing should be done synchronously or asynchronously
+                        Resource.&lt;objecttype&gt;.indexAsynchronous=true|false</para>
+                </listitem>
+                <listitem>
+                    <para>Optionally define a property Resource.&lt;objecttype&gt;.indexingPrerequisiteXpath
+                        if you only want to index the item if it meets some conditions.
+                        This property expects an XPath-Expression</para>
+                </listitem>
+                <listitem>
+                    <para>Optionally define a property Resource.&lt;objecttype&gt;.deletePrerequisiteXpath
+                        if you want to delete the object from the index when it meets some conditions.
+                        This property expects an XPath-Expression</para>
+                </listitem>
+                <listitem>
+                    <para>Optionally define a property Resource.&lt;objecttype&gt;.indexReleasedVersion=true or =both</para>
+                        <para>Set value to true:</para>
+                        <para>if you only want to index the last released version of an object.
+                        If this option is set, always the last released version of an object is indexed.
+                        If no last released version exists, nothing is indexed.</para>
+                        <para>Set value to both:</para>
+                        <para>if you want to index the last released version of an object additionally 
+                        to the last version of an object.
+                        If this option is set, always the last released version and the last version of an object is indexed.
+                        If no last released version exists, only the last version is indexed.
+                        NOTE: if value is both you have to set the property cqlTranslator.filterLatestRelease 
+                        in the srw-properties file to true!!
+                        </para>
+                </listitem>
+                <listitem>
+                    <para>Optionally for resource Item, you can define a property Resource.Item.indexFulltextVisibilities 
+                    where you can define fulltexts of which visibility shall get indexed. (whitespace-separated) 
+                    eg Resource.Item.indexFulltextVisibilities=private audience public</para>
+                    <para>This is just a variable with name INDEX_FULLTEXT_VISIBILITIES that gets passed to the indexing-stylesheet. 
+                    So you have to handle fulltext-indexing dependent on this variable in your indexing-stylesheet.</para>
+                </listitem>
+            </itemizedlist>
+            <para>You can define properties for more than one objectType in one configuration-file.</para>
+        </listitem>
+        <listitem>
+            <para>eventually a stylesheet that is used by the indexer 
+        to transform the escidoc-object-xml into the index-information-document.</para>
+        </listitem>
+        <listitem>
+            <para>A configuration-file for the search, name of file has to be according to the name stated in SRWServer.props</para>
+            <para>Mandatory properties in this file are:</para>
+            <itemizedlist>
+                <listitem>
+                   <para><emphasis role="bold">databaseInfo.title, databaseInfo.description, databaseInfo.contact:</emphasis>
+                    descriptive information about the database.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.indexPath:</emphasis>
+                    Path to the index, must match property fgsindex.indexDir defined in index.properties!</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.identifierTerm:</emphasis>
+                    Stored field in the index that is used for display.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">numberOfRecords:</emphasis>
+                    default number of records to return per page.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">maximumRecords:</emphasis>
+                    highest possible maximum of records to retrun per page. 
+                    this overwrites the maximum that was given in request if it is above maximumRecords.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.defaultIndexField:</emphasis>
+                    default Index field to search if no field is provided in search.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.analyzer:</emphasis>
+                    Analyzer to use for search. 
+                    this must be the same Analyzer as used for indexing!</para>
+                </listitem>
+            </itemizedlist>
+            <para>Optional properties in this file are:</para>
+            <itemizedlist>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.forceScoring:</emphasis>
+                    Flag indicating if scoring has to get forced even for wildcard query or range query. 
+                    Slows down the search if set to true.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.permissionFiltering:</emphasis>
+                    Flag indicating if query has to get expanded by a permission filterQuery
+                    because the index contains objects not everybody may see.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.filterLatestRelease:</emphasis>
+                    Flag indicating if index contains both latestReleased version and latestVersion of an Object.
+                    If so, we have to filter duplicates.
+                    This only works if database contains the following indexes for each document:
+                    -rootPid: Field containing the rootPid of the object, without version-identifier
+                    -type: Field containing the type (0: latestVersion, 1:latestRelease)
+                    NOTE: Also set the property indexReleasedVersion in the file index.object-types.properties
+                    to index both latestReleased version and latestVersion of an Object.</para>
+                </listitem>
+            </itemizedlist>
+            <para>Highlighter-Configuration (Optional):</para>
+            <itemizedlist>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlighterClass:</emphasis>
+                    must be set to de.escidoc.sb.srw.lucene.highlighting.EscidocHighlighter
+                     or de.escidoc.sb.srw.lucene.highlighting.EscidocFastVectorHighlighter
+                    otherwise no highlighting is done.
+                    The Search-Application provides 2 preconfigured Highlighters: 
+                    Normal Highlighter and FastVectorHighlighter which seems to be a bit faster.
+        			The Highlighter-Class to use is configurable. If normal Highlighter is used, the Fields to highlight 
+        			have to be written as stored fields in the index, not indexed and not tokenized.
+        			If FastVectorHighlighter is used, the Fields to highlight have to be written as stored fields 
+        			and additionally indexed TOKENIZED and TermVector=WITH_POSITIONS_OFFSETS in the index.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightXmlizerClass:</emphasis></para>
+                     <para>2 predefined Xmlizers available: </para>
+                    <para>(if property is not set, de.escidoc.sb.srw.lucene.highlighting.EscidocSimpleHighlightXmlizer is used)</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para><emphasis role="bold">de.escidoc.sb.srw.lucene.highlighting.EscidocHighlightXmlizer:</emphasis>
+                            generates one xml-snippet per text-fragment with 
+                            text to highlight + extra section containing positions of highlight-terms within the text.</para>
+                        </listitem>
+                        <listitem>
+                            <para><emphasis role="bold">de.escidoc.sb.srw.lucene.highlighting.EscidocSimpleHighlightXmlizer:</emphasis>
+                            generates one xml-snippet with text to highlight, 
+                            containing all text-fragmentss, including tags around terms to highlight (eg &lt;B&gt;).</para>
+                        </listitem>
+                    </itemizedlist>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightFragmentSize, default: 100:</emphasis>
+                    length of one text-fragment containing terms to highlight</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightMaxFragments, default: 4:</emphasis>
+                    maximum number of text-fragments containing highlight-terms to display.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightFragmentSeparator, default: &lt;escidoc-fragment-separator&gt;:</emphasis>
+                    separator between 2 text-fragments.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightStartMarker, default:&lt;escidoc-highlight-start&gt;:</emphasis>
+                    used by EscidocSimpleHighlightXmlizer, tag that is set before start of term to highlight (eg &lt;B&gt;).</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightEndMarker, default:&lt;escidoc-highlight-end&gt;:</emphasis>
+                    used by EscidocSimpleHighlightXmlizer, tag that is set after end of term to highlight (eg &lt;/B&gt;).</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.fulltextIndexField:</emphasis>
+                    name of the fulltext index field.
+                    Used to determine if fulltext was searched and therefore fulltext has to get highlighted.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightTermFulltext:</emphasis>
+                    name of the field containing the fulltext to highlight (field must be STORED and UN_TOKENIZED).</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightTermFilename:</emphasis>
+                    name of the field containing the name of the fulltext-file.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightTermFulltextIterable (true or false, default is false):</emphasis>
+                    if more than one fulltext is indexed, you need one STORED,UN_TOKENIZED field containing the fulltext for each fulltext.
+                    if eg cqlTranslator.highlightTermFulltext is "fulltext" and cqlTranslator.highlightTermFulltextIterable is set to true,
+                    you need to have fields fulltext1 to fulltext&lt;n&gt; in your index, each containing text for one fulltext.
+                    if additionally cqlTranslator.highlightTermFilename is set to eg fulltext-file-name 
+                    and cqlTranslator.highlightTermFulltextIterable is set to true,
+                    you need to have fields fulltext-file-name1 to fulltext-file-name&lt;n&gt; in your index, each containing filename for one fulltext.</para>
+                    <para>If cqlTranslator.highlightTermFulltextIterable is set to false, you need to have 1 field with name defined in cqlTranslator.highlightTermFulltext
+                    containing the fulltext STORED, UN_TOKENIZED and if cqlTranslator.highlightTermFulltextIterable is set to false, one field with 
+                    name defined in cqlTranslator.highlightTermFilename, containing the filename of the fulltext.</para>
+                </listitem>
+                <listitem>
+                   <para><emphasis role="bold">cqlTranslator.highlightTermMetadata:</emphasis>
+                    name of the field containing the metadata-text to highlight (field must be STORED and UN_TOKENIZED).</para>
+                </listitem>
+            </itemizedlist>
+        </listitem>
+    </itemizedlist>
+    
+    <para>The subdirectory repository contains files which may not be changed or deleted</para>
+    
+    <para>The subdirectory rest contains files which may not be changed or deleted</para>
+    
+  </section>
+
+</chapter>

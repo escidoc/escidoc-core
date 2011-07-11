@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject FEDORA_URI="info:fedora/escidoc:schema1"
+	PID="escidoc:schema1"
+	fedoraxsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-0.xsd"
+	xmlns:audit="info:fedora/fedora-system:def/audit#"
+	xmlns:fedoraxsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+	<foxml:objectProperties>
+		<foxml:property
+			NAME="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+			VALUE="FedoraObject" />
+		<foxml:property NAME="info:fedora/fedora-system:def/model#state"
+			VALUE="Active" />
+		<foxml:property NAME="info:fedora/fedora-system:def/model#label"
+			VALUE="Example XMLSchema" />
+	</foxml:objectProperties>
+	<foxml:datastream CONTROL_GROUP="X"
+		FEDORA_URI="info:fedora/escidoc:schema1/datastream" ID="datastream"
+		STATE="A" VERSIONABLE="true">
+		<foxml:datastreamVersion ID="datastream.0" LABEL="datastream"
+			MIMETYPE="text/xml">
+			<foxml:xmlContent>
+				<schema:xml-schema xmlns:schema="http://www.escidoc.de/schemas/xml-schema/0.1" objid="escidoc:schema1"
+					prefix-xlink:title="example schema" prefix-xlink:href="/ir/xml-schema/escidoc:schema1"
+					prefix-xlink:type="simple"
+					xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+				<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					targetNamespace="http://www.escidoc.de/schemas/xml-schema/0.1"
+					xmlns="http://www.escidoc.de/schemas/xml-schema/0.1"
+					xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+					elementFormDefault="qualified"
+					attributeFormDefault="unqualified">
+					<xs:import namespace="http://www.w3.org/1999/xlink"
+						schemaLocation="http://localhost:8080/xsd/common/0.1/xlink.xsd" />
+					<xs:import
+						namespace="http://www.w3.org/2001/XMLSchema"
+						schemaLocation="http://www.w3.org/2001/XMLSchema.xsd" />
+					<xs:element name="xml-schema">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="xs:schema" />
+							</xs:sequence>
+							<xs:attribute name="objid" type="xs:string" />
+							<xs:attribute ref="prefix-xlink:title" />
+							<xs:attribute ref="prefix-xlink:href" />
+							<xs:attribute ref="prefix-xlink:type" />
+						</xs:complexType>
+					</xs:element>
+				</xs:schema>
+				</schema:xml-schema>
+			</foxml:xmlContent>
+		</foxml:datastreamVersion>
+	</foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:schema1/RELS-EXT" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="Enter a label here."
+      MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:escidocItem="http://www.escidoc.de/schemas/xml-schema/0.1/"
+          xmlns:myNamespace="http://www.nsdl.org/ontologies/relationships/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:prefix-xlink="http://www.w3.org/1999/xlink/">
+          <rdf:Description rdf:about="info:fedora/escidoc:schema1">
+            <myNamespace:title>example schema</myNamespace:title>
+            <myNamespace:objectType>xml-schema</myNamespace:objectType>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role:role xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:role="http://www.escidoc.de/schemas/role/0.5" xmlns:xacml-policy="urn:oasis:names:tc:xacml:1.0:policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.escidoc.de/schemas/role/0.5 https://www.escidoc.org/schemas/rest/role/0.5/role.xsd">
+    <role:properties>
+        <prop:name>escidoc:role-cone-test-role-2</prop:name>
+        <prop:description>Testing role for CoNE</prop:description>
+    </role:properties>
+    <role:scope unlimited="false">
+        <role:scope-def resource-type="staging-file"/>
+    </role:scope>
+
+    <xacml-policy:Policy PolicyId="testing-policy" RuleCombiningAlgId="testing-algorithm">
+        <xacml-policy:Target>
+            <xacml-policy:Subjects>
+                <xacml-policy:Subject>
+                    <xacml-policy:SubjectMatch MatchId="cone-vocabulary">
+                        <xacml-policy:AttributeValue DataType="test-type"></xacml-policy:AttributeValue>
+                        <xacml-policy:SubjectAttributeDesignator DataType="test-type" AttributeId="no-attribute"></xacml-policy:SubjectAttributeDesignator>
+                    </xacml-policy:SubjectMatch>
+                </xacml-policy:Subject>
+
+            </xacml-policy:Subjects>
+            <xacml-policy:Resources>
+                <xacml-policy:Resource>
+                    <xacml-policy:ResourceMatch MatchId="matching">
+                        <xacml-policy:AttributeValue DataType="test-type"></xacml-policy:AttributeValue>
+                        <xacml-policy:ResourceAttributeDesignator DataType="test-type" AttributeId="no-attribute"></xacml-policy:ResourceAttributeDesignator>
+                    </xacml-policy:ResourceMatch>
+                </xacml-policy:Resource>
+            </xacml-policy:Resources>
+
+            <xacml-policy:Actions>
+                <xacml-policy:Action>
+                    <xacml-policy:ActionMatch MatchId="test-type">
+                        <xacml-policy:AttributeValue DataType="test-type"></xacml-policy:AttributeValue>
+                        <xacml-policy:ActionAttributeDesignator DataType="test-type" AttributeId="no-attribute"></xacml-policy:ActionAttributeDesignator>
+                    </xacml-policy:ActionMatch>
+                </xacml-policy:Action>
+            </xacml-policy:Actions>
+        </xacml-policy:Target>
+
+    </xacml-policy:Policy>
+</role:role>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xml:base="http://localhost:8080"
+	prefix-xlink:title="Test Image"
+	prefix-xlink:type="simple">
+	<escidocItem:properties
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<prop:public-status>released</prop:public-status>
+		<srel:context prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/context/escidoc:persistent3"/>
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4" />
+		<prop:pid>somePid</prop:pid>
+		<prop:content-model-specific><nix></nix></prop:content-model-specific>
+	</escidocItem:properties>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			 name="escidoc"
+			schema="http://www.escidoc-project.de/metadata/schema/0.1"
+			prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:type="simple">
+			<publication type="book-item"
+				prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+				xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+				xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+				xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+				xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<e:creator role="author">
+					<e:person>
+						<e:complete-name>
+							Arno Schindlmayr \a
+						</e:complete-name>
+						<e:family-name>Schindlmayr</e:family-name>
+						<e:given-name>Arno</e:given-name>
+						<e:organization>
+							<e:organization-name>
+								Forschungszentrum
+							</e:organization-name>
+							<e:address>52425 ch, Germany</e:address>
+							<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+							escidoc:persistent1
+							</e:identifier>
+						</e:organization>
+					</e:person>
+				</e:creator>
+				<e:creator role="author">
+					<e:person>
+						<e:complete-name>
+							Matthias Scheffler
+						</e:complete-name>
+						<e:family-name>Scheffler</e:family-name>
+						<e:given-name>Matthias</e:given-name>
+						<e:organization>
+							<e:organization-name>
+								Fritz-Haber-Institut/Theory
+							</e:organization-name>
+							<e:address>
+								Faradayweg 4-6, 14195 Berlin
+							</e:address>
+							<e:identifier prefix-xsi:type="eidt:ESCIDOC">
+								escidoc:persistent1
+							</e:identifier>
+						</e:organization>
+					</e:person>
+				</e:creator>
+				<prefix-dc:title xml:lang="en-US">
+					Image with 4200x3000 pixel.
+				</prefix-dc:title>
+				<prefix-dc:language prefix-xsi:type="prefix-dcterms:RFC3066">en</prefix-dc:language>
+				<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+					10.1007/11690320_8
+				</prefix-dc:identifier>
+				<prefix-dc:identifier prefix-xsi:type="eidt:EDOC">
+					290886
+				</prefix-dc:identifier>
+				<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+					http://www.springerlink.com/content/4877p75301w53364/fulltext.pdf
+				</prefix-dc:identifier>
+				<prefix-dcterms:issued prefix-xsi:type="prefix-dcterms:W3CDTF">
+					2006-11-13
+				</prefix-dcterms:issued>
+				<e:review-method>peer</e:review-method>
+				<e:source>
+					<prefix-dc:title>
+						Test Image
+					</prefix-dc:title>
+					<e:creator role="editor">
+						<e:person>
+							<e:complete-name>
+								David A. Drabold
+							</e:complete-name>
+						</e:person>
+					</e:creator>
+					<e:creator role="editor">
+						<e:person>
+							<e:complete-name>
+								Stefan K. Estreicher
+							</e:complete-name>
+						</e:person>
+					</e:creator>
+					<e:volume>104</e:volume>
+					<e:start-page>165</e:start-page>
+					<e:end-page>192</e:end-page>
+					<prefix-dc:identifier prefix-xsi:type="eidt:ISBN">
+						978-3-540-33400-2
+					</prefix-dc:identifier>
+					<prefix-dc:identifier prefix-xsi:type="eidt:DOI">
+						10.1007/11690320
+					</prefix-dc:identifier>
+					<prefix-dc:identifier prefix-xsi:type="prefix-dcterms:URI">
+						http://www.springerlink.com/content/978-3-540-33400-2/
+					</prefix-dc:identifier>
+					<e:source>
+						<prefix-dc:title>Test Image</prefix-dc:title>
+						<prefix-dc:identifier prefix-xsi:type="eidt:ISSN">
+							1437-0859
+						</prefix-dc:identifier>
+					</e:source>
+				</e:source>
+				<prefix-dcterms:abstract xml:lang="en-US">
+					Some content
+				</prefix-dcterms:abstract>
+				<prefix-dc:subject>Image; Test</prefix-dc:subject>
+			</publication>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<escidocComponents:components
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		<escidocComponents:component>
+			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>image</prop:content-category>
+				<prop:file-name>2.jpeg</prop:file-name>
+				<prop:mime-type>image/jpeg</prop:mime-type>
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:href="http://localhost:8080/DigilibClient/samples/images/2.jpeg" />
+		</escidocComponents:component>
+
+	</escidocComponents:components>
+	<escidocItem:resources
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+		prefix-xlink:href="/ir/item/escidoc:198/resources"
+		prefix-xlink:title="Virtual Resources">
+		<escidocItem:version-history />
+	</escidocItem:resources>
+</escidocItem:item>

@@ -1,0 +1,27 @@
+<chapter id="Report">
+	<title>Resource Report</title>
+	<para>
+		The Statistic Manager Component provides an interface to generate 
+		statistics out of a report-definition. The interface-call requires 
+		an xml-structure according to report-parameters-schema containing 
+		the report-definition-id and parameters that fill the placeholders 
+		in the sql-statement of the report-definition.		
+	</para>
+	<para>
+		The generated statistic-report is an xml-document according to the report-schema.
+		The xml-document has one or more report-record-elements that each represent 
+		one row of the result-set of the sql-statement that was executed.
+		One report-record-element has one or more elements
+		'parameter' with an attribute 'name' 
+		and a subelement 'stringvalue', 'decimalvalue' or 'datevalue' that 
+		represent the fields of one record of the result-set.
+	</para>
+	<para>
+		The user that calls the interface has to have permissions to 
+		see content of the statistic-scope defined in 
+		the report-definition-xml. (see chapter ‘security concept’)		
+	</para>
+	<para>
+		The request returns an xml according to the statistics-report-schema.		
+	</para>
+</chapter>

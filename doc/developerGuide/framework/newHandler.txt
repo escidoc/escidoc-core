@@ -1,0 +1,15 @@
+Insert new HandlerInterface in OM-Package:
+-create Interface in de.fiz.escidoc.om.service.interfaces
+-create Implementation in in de.fiz.escidoc.om.service
+-create businessInterface in de.fiz.escidoc.om.business.interfaces
+-create Implementation in in de.fiz.escidoc.om.business
+
+-Register for REST:
+/om/servlet/item.xml definiert die Resource mit Uri + Methoden
+
+escidoc-core.ear/escidoc-core.war/WEB-INF/web.xml:
+	Servlet eintragen mit Pfad zum resource-deskriptor
+	Servlet-mapping eintragen
+	in AABeanInitServlet die services eintragen
+
+-Policies updaten: neue Methoden in actions, method-mappings, invocation-mappings + policies eintragen

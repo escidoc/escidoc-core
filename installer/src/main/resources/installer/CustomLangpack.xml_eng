@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<langpack>
+  <str id="data.validation.error.title" txt="Validation error"/>
+
+  <!-- packs -->
+  <str id="escidoc.package" txt="eSciDoc"/>
+  <str id="escidoc.package.description" txt="Necessary installation scripts and configuration files"/>
+
+  <str id="scripts.package" txt="Install Scripts"/>
+  <str id="scripts.package.description" txt="Necessary installation scripts and configuration files"/>
+
+  <str id="jboss.package" txt="JBoss Application Server"/>
+  <str id="jboss.package.description" txt="JBoss Application Server ${JBossVersion}"/>
+
+  <str id="fedora.package" txt="Fedora Repository"/>
+  <str id="fedora.package.description" txt="Fedora Commons ${FedoraVersion}"/>
+
+  <str id="core.package" txt="eSciDoc Infrastructure"/>
+  <str id="core.package.description" txt="Required services of the eSciDoc Infrastructure"/>
+
+  <str id="examples.package" txt="Examples"/>
+  <str id="examples.package.description" txt="Example objects for the eSciDoc Core services"/>
+
+  <str id="tools.package" txt="Additional Services and Tools"/>
+  <str id="tools.package.description" txt="Additional Services and Tools complementing the eSciDoc Infrastructure Core Services"/>
+
+  <str id="digilib.package" txt="Digilib"/>
+  <str id="digilib.package.description" txt="Digilib Image Manipulation and Display Service"/>
+
+  <str id="duplication.package" txt="Duplication Check"/>
+  <str id="duplication.package.description" txt="Service calculating the probability of a document to be a duplicate of one or more documents within the repository, based on the full-text and/or metadata."/>
+
+  <str id="pidmanager.package" txt="PID Manager"/>
+  <str id="pidmanager.package.description" txt="Persistent Identifier Service, defaulting to use Handle(tm) System"/>
+
+  <str id="admintool.package" txt="Admin Tool"/>
+  <str id="admintool.package.description" txt="Administration Client for the eSciDoc Infrastructure"/>
+
+  <str id="migrationtool.package" txt="Migration Tool"/>
+  <str id="migrationtool.package.description" txt="Migration Tool for the eSciDoc Infrastructure"/>
+
+  <str id="doc.package" txt="Documentation"/>
+  <str id="doc.package.description" txt="eSciDoc Infrastructure Documentation"/>
+
+  <str id="apidoc.package" txt="API Documentation"/>
+  <str id="apidoc.package.description" txt="eSciDoc Infrastructure API Documentation"/>
+
+  <str id="source.package" txt="Sources"/>
+  <str id="source.package.description" txt="Java source code for eSciDoc Infrastructure services"/>
+
+  <str id="configuration.package" txt="Configuration and Initialization"/>
+  <str id="configuration.package.description" txt="Scripts and procedures to configure the system, initialize the database, and a first set of user accounts."/>
+
+  <str id="databasecreation.package" txt="Database Creation"/>
+  <str id="databasecreation.package.description" txt="Creates the necessary databases and system roles"/>
+
+  <str id="databaseinitialization.package" txt="Database Initialization"/>
+  <str id="databaseinitialization.package.description" txt="Creates the necessary databases tables"/>
+
+  <str id="roles.package" txt="Roles and Users Creation"/>
+  <str id="roles.package.description" txt="Creates basic user accounts and necessary roles"/>
+</langpack>

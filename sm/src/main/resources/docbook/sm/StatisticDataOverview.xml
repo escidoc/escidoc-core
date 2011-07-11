@@ -1,0 +1,24 @@
+<chapter id="StatisticData">
+	<title>Resource StatisticData</title>
+	<para>
+		The Statistic Manager provides an Interface to write statistic records. 
+	</para>
+	<para>
+		Parameter of the interface-call is an xml-record, according to 
+		the statistic-data-schema. The xml-record contains one or more elements
+		'parameter' with an attribute 'name' 
+		and a subelement 'stringvalue', 'decimalvalue' or 'datevalue'.
+		This allows to be very flexible and write whatever data the caller wants to write.
+	</para>
+	<para>
+		The user that calls the interface has to have permissions to 
+		write content for the scope defined in 
+		the statistic-data-xml. (see chapter ‘security concept’)		
+	</para>
+	<para>
+		The statistic-record is written into 
+		a database-table, further referenced as statistics-table.  
+		Additionally the timestamp is written into 
+		the statistics-table.
+	</para>
+</chapter>

@@ -1,0 +1,8 @@
+##
+## obsolete - moved to Component(.vm)
+##
+<foxml:datastream CONTROL_GROUP="${STORAGE}" ID="content">
+<foxml:datastreamVersion ID="content.0" MIMETYPE="${MIME_TYPE}" LABEL="">
+<foxml:contentLocation REF="#escA(${REF})" TYPE="${REF_TYPE}" />
+</foxml:datastreamVersion>
+</foxml:datastream>

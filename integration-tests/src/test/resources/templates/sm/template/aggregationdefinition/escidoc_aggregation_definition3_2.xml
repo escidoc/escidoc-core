@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aggregation-definition 
+    xmlns="http://www.escidoc.de/schemas/aggregationdefinition/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<name>Statistics for Report Test</name>
+	<scope xlink:href="/statistic/scope/32" />
+	<aggregation-table>
+		<name>Report_test</name>
+		<field>
+			<info-field feed="statistics-data">
+				<name>Page</name>
+				<type>text</type>
+				<xpath><![CDATA[
+					//parameter[@name="page"]/stringvalue
+				]]></xpath>
+			</info-field>
+		</field>
+		<field>
+			<time-reduction-field feed="statistics-data">
+				<name>month</name>
+				<reduce-to>month</reduce-to>
+			</time-reduction-field>
+		</field>
+		<field>
+			<time-reduction-field feed="statistics-data">
+				<name>year</name>
+				<reduce-to>year</reduce-to>
+			</time-reduction-field>
+		</field>
+		<field>
+			<count-cumulation-field>
+				<name>requests</name>
+			</count-cumulation-field>
+		</field>
+		<field>
+			<difference-cumulation-field feed="statistics-data">
+				<name>sessions</name>
+				<xpath>//parameter[@name="session_id"]/stringvalue</xpath>
+			</difference-cumulation-field>
+		</field>
+		<index>
+			<name>time_idx</name>
+			<field>month</field>
+			<field>year</field>
+		</index>
+	</aggregation-table>
+	<aggregation-table>
+		<name>Report_Test1</name>
+		<field>
+			<info-field feed="statistics-data">
+				<name>date_field</name>
+				<type>date</type>
+				<xpath>//parameter[@name="time"]/datevalue</xpath>
+			</info-field>
+		</field>
+		<field>
+			<time-reduction-field feed="statistics-data">
+				<name>year</name>
+				<reduce-to>month</reduce-to>
+				<xpath>//parameter[@name="time"]/datevalue</xpath>
+			</time-reduction-field>
+		</field>
+		<field>
+			<count-cumulation-field>
+				<name>requests</name>
+			</count-cumulation-field>
+		</field>
+		<field>
+			<difference-cumulation-field feed="statistics-data">
+				<name>sessions</name>
+				<xpath>//parameter[@name="session_id"]/stringvalue</xpath>
+			</difference-cumulation-field>
+		</field>
+		<index>
+			<name>time_idx1</name>
+			<field>sessions</field>
+			<field>year</field>
+		</index>
+	</aggregation-table>
+	<statistic-data>
+		<statistic-table>
+			<xpath>//parameter[@name=&quot;reporttest&quot;]/* = '1' AND //parameter[@name=&quot;reporttest1&quot;]/* = '1' </xpath>
+		</statistic-table>
+	</statistic-data>
+</aggregation-definition>

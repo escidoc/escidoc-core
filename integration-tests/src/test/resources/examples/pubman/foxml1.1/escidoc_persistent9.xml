@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" FEDORA_URI="info:fedora/escidoc:persistent9" PID="escidoc:persistent9"
+  fedoraxsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd"
+  xmlns:audit="info:fedora/fedora-system:def/audit#" xmlns:fedoraxsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <foxml:objectProperties>
+    
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Persistent Content Model"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-09-14T14:21:02.671Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2009-09-14T14:21:02.671Z"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:persistent9/RELS-EXT" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="RELS-EXT" CREATED="2009-09-14T14:21:02.671Z"
+      MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+          <rdf:Description rdf:about="info:fedora/escidoc:persistent9" xmlns:prop="http://escidoc.de/core/01/properties/"
+            xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:version="http://escidoc.de/core/01/properties/version/">
+		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/ContentModel"/>
+            <hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0" xmlns="info:fedora/fedora-system:def/model#"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:exuser1"/>
+            <prop:public-status>pending</prop:public-status>
+            <prop:public-status-comment>Object created. Content Model escidoc:persistent4 created.</prop:public-status-comment>
+            <prop:created-by-title>System Administrator User</prop:created-by-title>
+            <version:number>1</version:number>
+            <version:date>2009-09-14T14:21:02.671Z</version:date>
+            <version:status>pending</version:status>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:exuser1"/>
+            <prop:modified-by-title>System Administrator User</prop:modified-by-title>
+            <version:comment>Object created. Content Model escidoc:persistent4 created.</version:comment>
+          
+            <escidocRelations:title>Content Model Language-Feature</escidocRelations:title>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/ContentModel"/>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:persistent9/DC" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="DC.0" LABEL="Dublin Core Metadata" CREATED="2009-09-14T14:21:02.671Z"
+      MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <dc:title>Content Model Language-Feature</dc:title>
+          <dc:identifier>escidoc:persistent9</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DS-COMPOSITE-MODEL" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2009-09-14T14:21:02.671Z" ID="DS-COMPOSITE-MODEL.0" LABEL="" MIMETYPE="text/xml" SIZE="426">
+      <foxml:xmlContent>
+        <dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#" xmlns:schema="http://ecm.sourceforge.net/types/dscompositeschema/0/1/#">
+        </dsCompositeModel>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="version-history" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2009-09-14T14:21:02.828Z" ID="version-history.0"
+      LABEL="whole object versioning datastream" MIMETYPE="text/xml" SIZE="1989">
+      <foxml:xmlContent>
+        <escidocVersions:version-history xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3">
+          <escidocVersions:version objid="escidoc:persistent4:1" timestamp="2009-09-14T14:21:02.671Z"
+            xlink:href="/ir/item/escidoc:persistent4:1" xlink:title="Persistent Content Model" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <escidocVersions:version-number>1</escidocVersions:version-number>
+            <escidocVersions:timestamp>2009-09-14T14:21:02.671Z</escidocVersions:timestamp>
+            <escidocVersions:version-status>pending</escidocVersions:version-status>
+            <escidocVersions:comment>Object created.</escidocVersions:comment>
+            <escidocVersions:events>
+              <premis:event xmlID="v1e1" xmlns:premis="http://www.loc.gov/standards/premis/v1">
+                <premis:eventIdentifier>
+                  <premis:eventIdentifierType>URL</premis:eventIdentifierType>
+                  <premis:eventIdentifierValue>/ir/item/escidoc:persistent4:1/version-history#v1e1</premis:eventIdentifierValue>
+                </premis:eventIdentifier>
+                <premis:eventType>create</premis:eventType>
+                <premis:eventDateTime>2009-09-14T14:21:02.671Z</premis:eventDateTime>
+                <premis:eventDetail>Object created.</premis:eventDetail>
+                <premis:linkingAgentIdentifier xlink:href="/aa/user-account/escidoc:exuser1"
+                  xlink:title="System Administrator User" xlink:type="simple">
+                  <premis:linkingAgentIdentifierType>escidoc-internal</premis:linkingAgentIdentifierType>
+                  <premis:linkingAgentIdentifierValue>escidoc:exuser1</premis:linkingAgentIdentifierValue>
+                </premis:linkingAgentIdentifier>
+                <premis:linkingObjectIdentifier>
+                  <premis:linkingObjectIdentifierType>escidoc-internal</premis:linkingObjectIdentifierType>
+                  <premis:linkingObjectIdentifierValue>escidoc:persistent4</premis:linkingObjectIdentifierValue>
+                </premis:linkingObjectIdentifier>
+              </premis:event>
+            </escidocVersions:events>
+          </escidocVersions:version>
+        </escidocVersions:version-history>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

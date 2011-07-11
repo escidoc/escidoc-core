@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test>
+  <abcd name="abc">lalalaä</abcd>
+  <abcd>lalalassöü</abcd>
+  <abcd>lalalassöüß§$$§/4</abcd>
+</test>

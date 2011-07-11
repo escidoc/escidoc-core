@@ -1,0 +1,43 @@
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<${RDF_NAMESPACE_PREFIX}:RDF xmlns:${RDF_NAMESPACE_PREFIX}="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"	xmlns:${CONTAINER_NAMESPACE_PREFIX}="${CONTAINER_NAMESPACE}" xmlns:xlink="http://www.w3.org/1999/xlink/" xmlns:${RELATIONS_NAMESPACE_PREFIX}="${RELATIONS_NAMESPACE}">
+<${RDF_NAMESPACE_PREFIX}:Description ${RDF_NAMESPACE_PREFIX}:about="info:fedora/${OBJID}">
+<${CONTAINER_NAMESPACE_PREFIX}:name>${NAME}</${CONTAINER_NAMESPACE_PREFIX}:name>
+<${CONTAINER_NAMESPACE_PREFIX}:description>${DESCRIPTION}</${CONTAINER_NAMESPACE_PREFIX}:description>
+<${RELATIONS_NAMESPACE_PREFIX}:title>${TITLE}</${RELATIONS_NAMESPACE_PREFIX}:title>
+<${RELATIONS_NAMESPACE_PREFIX}:objectType>${OBJECT_TYPE}</${RELATIONS_NAMESPACE_PREFIX}:objectType>
+<${CONTAINER_NAMESPACE_PREFIX}:creator ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CREATOR_ID}" />
+<${CONTAINER_NAMESPACE_PREFIX}:creator-title>${CREATOR_TITLE}</${CONTAINER_NAMESPACE_PREFIX}:creator-title>
+<${CONTAINER_NAMESPACE_PREFIX}:context ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CONTEXT_ID}" />
+<${CONTAINER_NAMESPACE_PREFIX}:context-title>${CONTEXT_TITLE}</${CONTAINER_NAMESPACE_PREFIX}:context-title>
+<${CONTAINER_NAMESPACE_PREFIX}:content-type ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CONTENT_TYPE_ID}" />
+<${CONTAINER_NAMESPACE_PREFIX}:content-type-title>${CONTENT_TYPE_TITLE}</${CONTAINER_NAMESPACE_PREFIX}:content-type-title>
+<${CONTAINER_NAMESPACE_PREFIX}:status>${STATUS}</${CONTAINER_NAMESPACE_PREFIX}:status>
+<${RELATIONS_NAMESPACE_PREFIX}:hasAdminDescriptor ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${ADMIN_DESCRIPTOR_ID}"/>
+<${CONTAINER_NAMESPACE_PREFIX}:latest-version.number>${LATEST_VERSION_NUMBER}</${CONTAINER_NAMESPACE_PREFIX}:latest-version.number>
+<${CONTAINER_NAMESPACE_PREFIX}:latest-version.date>${LATEST_VERSION_DATE}</${CONTAINER_NAMESPACE_PREFIX}:latest-version.date>
+<${CONTAINER_NAMESPACE_PREFIX}:latest-version.status>${LATEST_VERSION_STATUS}</${CONTAINER_NAMESPACE_PREFIX}:latest-version.status>
+<${CONTAINER_NAMESPACE_PREFIX}:latest-version.valid-status>${LATEST_VERSION_VALID_STATUS}</${CONTAINER_NAMESPACE_PREFIX}:latest-version.valid-status>
+<${CONTAINER_NAMESPACE_PREFIX}:latest-version.user>${LATEST_VERSION_USER}</${CONTAINER_NAMESPACE_PREFIX}:latest-version.user>
+${MEMBERS}
+</${RDF_NAMESPACE_PREFIX}:Description>
+</${RDF_NAMESPACE_PREFIX}:RDF>
+

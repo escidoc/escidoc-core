@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+	<display-name>eSciDoc Infrastructure</display-name>
+
+	<!--
+		############################ # Context Params
+		############################
+	-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+            classpath:/META-INF/spring/applicationContext-task-executor.xml
+            classpath:/META-INF/spring/applicationContext-cxf.xml
+            classpath:/META-INF/spring/applicationContext-cache.xml
+            classpath:/META-INF/spring/applicationContext-jms-server.xml
+            classpath:/META-INF/spring/applicationContext-fedora-service-jaxrs-consumer.xml
+            classpath:/META-INF/spring/applicationContext-fedora-client.xml
+            classpath:/META-INF/spring/applicationContext-common.xml
+            classpath:/META-INF/spring/applicationContext-statistic-service-spec.xml
+            classpath:/META-INF/spring/applicationContext-statistic-service-impl.xml
+            classpath:/META-INF/spring/applicationContext-index-service-spec.xml
+            classpath:/META-INF/spring/applicationContext-index-service-impl.xml
+            classpath:/META-INF/spring/applicationContext-purge-service-spec.xml
+            classpath:/META-INF/spring/applicationContext-purge-service-impl.xml
+            classpath:/META-INF/spring/applicationContext-sm.xml
+            classpath:/META-INF/spring/applicationContext-om.xml
+            classpath:/META-INF/spring/applicationContext-aa.xml
+            classpath:/META-INF/spring/applicationContext-adm.xml
+            classpath:/META-INF/spring/applicationContext-cmm.xml
+            classpath:/META-INF/spring/applicationContext-oai.xml
+            classpath:/META-INF/spring/applicationContext-oum.xml
+            classpath:/META-INF/spring/applicationContext-sb.xml
+            classpath:/META-INF/spring/applicationContext-st.xml
+            classpath:/META-INF/spring/applicationContext-tme.xml
+            classpath:applicationContext-persistence.xml
+            classpath:applicationContext-webapp.xml
+            classpath:escidoc-login.xml
+		</param-value>
+	</context-param>
+
+	<!--
+		############################ # Filter ############################
+	-->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>de.escidoc.core.common.persistence.hibernate.CustomHibernateSessionFilter</filter-class>
+        <init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>escidoc-core.SessionFactory</param-value>
+        </init-param>
+    </filter>
+
+	<!--
+		############################ # Filter Mapping ############################
+	-->
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/aa/login/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/aa/j_spring_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/aa/j_spring_openid_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/aa/spring_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/aa/spring_security_login/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/j_spring_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/j_spring_openid_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/spring_security_check/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/spring_security_login/*</url-pattern>
+	</filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+	<!--
+		############################ # Listener ############################
+	-->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<!--
+		############################ # Servlets ############################
+	-->
+
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>de.escidoc.core.aa.servlet.Login</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ActionServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/action.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>OrganizationalUnitServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/organizational-unit.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/admin.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ContextServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/context.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>JhoveServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/jhove.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ContainerServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/container.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ItemServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/item.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>IngestServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/ingest.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SemanticStoreServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/semanticstore.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ContentModelServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/content-model.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ContentRelationServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/content-relation.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>OuServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/organizational-unit.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AccountServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/user-account.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UserGroupServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/user-group.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>SetDefinitionServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/set-definition.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>PdpServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/pdp.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+
+
+	<servlet>
+		<servlet-name>RoleServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/role.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>StagingFileServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/stagingfile.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>StatisticDataServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/statistic-data.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>AggregationDefinitionServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/aggregation-definition.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ReportDefinitionServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/report-definition.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ReportServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/report.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ScopeServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+		</servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/scope.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>PreprocessingServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/preprocessing.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>FedoraRestDeviationServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/fedoradeviation.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<!--
+		############################ # Servlet Mappings
+		############################
+	-->
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ActionServlet</servlet-name>
+		<url-pattern>/aa/unsecured-actions/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<url-pattern>/adm/admin/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OrganizationalUnitServlet</servlet-name>
+		<url-pattern>/ir/organizational-unit/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContextServlet</servlet-name>
+		<url-pattern>/ir/context/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContextServlet</servlet-name>
+		<url-pattern>/ir/contexts/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>JhoveServlet</servlet-name>
+		<url-pattern>/tme/jhove/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContainerServlet</servlet-name>
+		<url-pattern>/ir/container/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContainerServlet</servlet-name>
+		<url-pattern>/ir/containers/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ItemServlet</servlet-name>
+		<url-pattern>/ir/item/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>IngestServlet</servlet-name>
+		<url-pattern>/ir/ingest/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ItemServlet</servlet-name>
+		<url-pattern>/ir/items/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SemanticStoreServlet</servlet-name>
+		<url-pattern>/ir/semantic-store/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContentModelServlet</servlet-name>
+		<url-pattern>/cmm/content-model/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContentModelServlet</servlet-name>
+		<url-pattern>/cmm/content-models/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ContentRelationServlet</servlet-name>
+		<url-pattern>/ir/content-relation/*</url-pattern>
+	</servlet-mapping>
+
+        <servlet-mapping>
+                <servlet-name>ContentRelationServlet</servlet-name>
+                <url-pattern>/ir/content-relations/*</url-pattern>
+        </servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OuServlet</servlet-name>
+		<url-pattern>/oum/organizational-unit/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OuServlet</servlet-name>
+		<url-pattern>/oum/organizational-units/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AccountServlet</servlet-name>
+		<url-pattern>/aa/user-account/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AccountServlet</servlet-name>
+		<url-pattern>/aa/user-accounts/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AccountServlet</servlet-name>
+		<url-pattern>/aa/grants/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserGroupServlet</servlet-name>
+		<url-pattern>/aa/user-group/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserGroupServlet</servlet-name>
+		<url-pattern>/aa/user-groups/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>PdpServlet</servlet-name>
+		<url-pattern>/aa/pdp/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>RoleServlet</servlet-name>
+		<url-pattern>/aa/role/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>RoleServlet</servlet-name>
+		<url-pattern>/aa/roles/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>StagingFileServlet</servlet-name>
+		<url-pattern>/st/staging-file/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>StatisticDataServlet</servlet-name>
+		<url-pattern>/statistic/statistic-data/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AggregationDefinitionServlet</servlet-name>
+		<url-pattern>/statistic/aggregation-definition/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AggregationDefinitionServlet</servlet-name>
+		<url-pattern>/statistic/aggregation-definitions/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ReportDefinitionServlet</servlet-name>
+		<url-pattern>/statistic/report-definition/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ReportDefinitionServlet</servlet-name>
+		<url-pattern>/statistic/report-definitions/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ReportServlet</servlet-name>
+		<url-pattern>/statistic/report/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ScopeServlet</servlet-name>
+		<url-pattern>/statistic/scope/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ScopeServlet</servlet-name>
+		<url-pattern>/statistic/scopes/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>PreprocessingServlet</servlet-name>
+		<url-pattern>/statistic/preprocessing/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SetDefinitionServlet</servlet-name>
+		<url-pattern>/oai/set-definition/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SetDefinitionServlet</servlet-name>
+		<url-pattern>/oai/set-definitions/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FedoraRestDeviationServlet</servlet-name>
+		<url-pattern>/fedoradeviation/*</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<!-- Default to 5 minute session timeouts -->
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+	<!--
+		currently the W3C havent settled on a media type for WSDL;
+		http://www.w3.org/TR/2003/WD-wsdl12-20030303/#ietf-draft for now we go
+		with the basic 'it's XML' response
+	-->
+	<mime-mapping>
+		<extension>wsdl</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>xsd</extension>
+		<mime-type>text/xml</mime-type>
+	</mime-mapping>
+
+	<welcome-file-list id="WelcomeFileList">
+		<welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

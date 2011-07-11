@@ -1,0 +1,43 @@
+<xs:schema xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:prop="http://escidoc.de/core/01/properties/"
+           xmlns:version="http://escidoc.de/core/01/properties/version/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/" attributeFormDefault="qualified"
+           elementFormDefault="qualified">
+    <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
+    <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd"/>
+    <xs:import namespace="http://escidoc.de/core/01/properties/version/" schemaLocation="version.xsd"/>
+    <xs:element name="RDF">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Description" type="Description"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Description">
+        <xs:sequence>
+            <xs:element name="type" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:attribute name="resource" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="srel:component"/>
+            <xs:element ref="srel:context"/>
+            <xs:element ref="prop:context-title" minOccurs="0"/>
+            <xs:element ref="srel:content-model"/>
+            <xs:element ref="prop:content-model-title" minOccurs="0"/>
+            <xs:element ref="srel:created-by"/>
+            <xs:element ref="prop:created-by-title" minOccurs="0"/>
+            <xs:element ref="srel:modified-by"/>
+            <xs:element ref="prop:modified-by-title" minOccurs="0"/>
+            <xs:element ref="prop:public-status" minOccurs="0"/>
+            <xs:element ref="prop:public-status-comment" minOccurs="0"/>
+            <xs:element ref="version:number" minOccurs="0"/>
+            <xs:element ref="version:date" minOccurs="0"/>
+            <xs:element ref="version:status" minOccurs="0"/>
+            <xs:element ref="version:comment" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="about" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>

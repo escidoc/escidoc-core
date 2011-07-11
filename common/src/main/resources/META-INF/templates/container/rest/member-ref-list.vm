@@ -1,0 +1,22 @@
+<${memberRefListNamespacePrefix}:member-ref-list #namespaceDecl(${memberRefListNamespacePrefix} ${memberRefListNamespace}) #if( $!{isRootMemberRefs} == "true" ) #commonRootNsDecls()#end>
+#foreach( $entry in $items )
+#if ($entry.message)
+${entry.message}
+#else
+<${memberRefListNamespacePrefix}:member>
+#set($unescapedMemberTitle="#unesc(${entry.memberTitle})")
+<${memberRefListNamespacePrefix}:${entry.elementName} #restLinkAttributes ("#escA($unescapedMemberTitle)" ${entry.memberHref})/>
+</${memberRefListNamespacePrefix}:member>
+#end
+#end
+#foreach( $entry in $containers )
+#if ($entry.message)
+${entry.message}
+#else
+<${memberRefListNamespacePrefix}:member>
+#set($unescapedMemberTitle="#unesc(${entry.memberTitle})")
+<${memberRefListNamespacePrefix}:${entry.elementName} #restLinkAttributes ("#escA($unescapedMemberTitle)" ${entry.memberHref})/>
+</${memberRefListNamespacePrefix}:member>
+#end
+#end
+</${memberRefListNamespacePrefix}:member-ref-list>

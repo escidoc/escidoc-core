@@ -1,0 +1,27 @@
+#parse("common/macros.vm")<${userGroupNamespacePrefix}:user-group #restInsertConditionalRoot(${isRootUserGroup} "true" "true" ${userGroupNamespacePrefix} ${userGroupNamespace} "#escA(${userGroupName})" ${userGroupHref} ${userGroupLastModificationDate}) #if(${isRootUserGroup} == "false") last-modification-date="${userGroupLastModificationDate}"#end>
+<${userGroupNamespacePrefix}:properties>
+    #creationDate(${userGroupCreationDate})
+    #restCreatedBy("#escA(${userGroupCreatedByTitle})" ${userGroupCreatedByHref})
+    #restModifiedBy("#escA(${userGroupModifiedByTitle})" ${userGroupModifiedByHref})
+#if(${userGroupEmail} )
+<${escidocPropertiesNamespacePrefix}:email>#escT(${userGroupEmail})</${escidocPropertiesNamespacePrefix}:email>
+#end
+<${escidocPropertiesNamespacePrefix}:name>#escT(${userGroupName})</${escidocPropertiesNamespacePrefix}:name>
+
+<${escidocPropertiesNamespacePrefix}:label>#escT(${userGroupLabel})</${escidocPropertiesNamespacePrefix}:label>
+
+#if(${userGroupDescription} )
+<${escidocPropertiesNamespacePrefix}:description>#escT(${userGroupDescription})</${escidocPropertiesNamespacePrefix}:description>
+#end
+#if(${userGroupType} )
+<${escidocPropertiesNamespacePrefix}:type>#escT(${userGroupType})</${escidocPropertiesNamespacePrefix}:type>
+#end
+<${escidocPropertiesNamespacePrefix}:active>${userGroupActive}</${escidocPropertiesNamespacePrefix}:active>
+</${userGroupNamespacePrefix}:properties>
+<${userGroupNamespacePrefix}:selectors>
+#foreach( $userGroupSelector in $userGroupSelectors )
+<${userGroupNamespacePrefix}:selector #restLinkAttributes("Selector" ${userGroupSelector.href}) name="${userGroupSelector.name}" type="${userGroupSelector.type}">${userGroupSelector.value}</${userGroupNamespacePrefix}:selector>
+#end
+</${userGroupNamespacePrefix}:selectors>
+#parse("user-group/rest/resources.vm")
+</${userGroupNamespacePrefix}:user-group>

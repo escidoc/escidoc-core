@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<!--
+
+  CDDL HEADER START
+
+  The contents of this file are subject to the terms of the
+  Common Development and Distribution License, Version 1.0 only
+  (the "License").  You may not use this file except in compliance
+  with the License.
+
+  You can obtain a copy of the license at license/ESCIDOC.LICENSE
+  or http://www.escidoc.org/license.
+  See the License for the specific language governing permissions
+  and limitations under the License.
+
+  When distributing Covered Code, include this CDDL HEADER in each
+  file and include the License file at license/ESCIDOC.LICENSE.
+  If applicable, add the following below this CDDL HEADER, with the
+  fields enclosed by brackets "[]" replaced with your own identifying
+  information: Portions Copyright [yyyy] [name of copyright owner]
+
+  CDDL HEADER END
+
+
+  Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+  fuer wissenschaftlich-technische Information mbH and Max-Planck-
+  Gesellschaft zur Foerderung der Wissenschaft e.V.  
+  All rights reserved.  Use is subject to license terms.
+
+-->
+
+<installation version="1.0">
+
+    <!-- 
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>eSciDoc Infrastructure</appname>
+        <appversion>${project.version}</appversion>
+        <appsubpath>escidoc</appsubpath>
+        <authors>
+            <author name="eSciDoc Dev Team" email="infrastructure-users@escidoc.org"/>
+        </authors>
+        <url>http://www.escidoc.org/</url>
+        <javaversion>1.6</javaversion>
+        <summarylogfilepath>${INSTALL_PATH}${FILE_SEPARATOR}install.log${FILE_SEPARATOR}install.log</summarylogfilepath>
+        <uninstaller name="uninstall-escidoc.jar" />
+    </info>
+
+    <!-- 
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="480" resizable="yes">
+      <modifier key="useButtonIcons" value="no" />
+      <modifier key="labelGap" value="2"/>
+      <modifier key="layoutAnchor" value="NORTHWEST"/>
+      <modifier key="useHeadingPanel" value="yes"/>
+      <modifier key="headingImageOnLeft" value="yes"/>
+      <modifier key="headingLineCount" value="1"/>
+      <modifier key="headingFontSize" value="1.5"/>
+      <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+      <modifier key="headingPanelCounter" value="text"/>
+      <modifier key="headingPanelCounterPos" value="inHeading"/>
+    </guiprefs>
+
+    <!-- 
+        The locale section.
+        Asks here to include the English and German langpacks.
+    -->
+    <locale>
+        <langpack iso3="eng"/>
+        <langpack iso3="deu"/>
+    </locale>
+
+    <!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="HTMLHelloPanel.info" src="installer/welcome.html" />
+        <res id="HTMLLicencePanel.licence" src="installer/license.html" />
+
+        <res id="HTMLInfoPanel.info_eng" src="installer/prerequisites.html_eng" />
+        <res id="HTMLInfoPanel.info_deu" src="installer/prerequisites.html_deu" />
+
+        <res id="HTMLInfoPanel.installInfo_eng" src="installer/nextstepsAfterInstall.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.installInfo_deu" src="installer/nextstepsAfterInstall.html_deu" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfo_eng" src="installer/nextstepsAfterUpgrade.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfo_deu" src="installer/nextstepsAfterUpgrade.html_deu" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfoWithoutMigration_eng" src="installer/nextstepsAfterUpgradeWithoutMigration.html_eng" parse="yes" type="plain" />
+        <res id="HTMLInfoPanel.upgradeInfoWithoutMigration_deu" src="installer/nextstepsAfterUpgradeWithoutMigration.html_deu" parse="yes" type="plain" />
+
+        <res id="Heading.image" src="installer/escidoc-logo-small.jpg" />
+        <res id="Splash.image" src="installer/splash.jpg" />
+        <res id="installer.langsel.img" src="installer/splash.jpg" />
+
+        <res id="userInputSpec.xml" src="installer/userInputSpec.xml" />
+        <res id="userInputLang.xml_eng" src="installer/userInputLang.xml_eng" />
+        <res id="userInputLang.xml_deu" src="installer/userInputLang.xml_deu" />
+
+        <res id="CustomLangpack.xml_eng" src="installer/CustomLangpack.xml_eng"/>
+        <res id="CustomLangpack.xml_deu" src="installer/CustomLangpack.xml_deu"/>
+
+        <res id="AntActionsSpec.xml" src="installer/EscidocAntActionSpec.xml" />
+        <res id="ProcessPanel.Spec.xml" src="installer/EscidocProcessPanelSpec.xml" />
+        <res id="TargetPanel.dir.windows" src="installer/TargetDir.windows" />
+    </resources>
+
+    <variables>
+      <!-- Short Installer uses form-based authentication as default -->
+      <variable name="ShortInstaller" value="true" />
+
+      <!-- Show dialog that asks for install or update? -->
+      <variable name="AskForUpgrade" value="true" />
+
+      <!-- Run migration during upgrade -->
+      <variable name="RunMigration" value="false" />
+
+      <!-- Don't show warning in TargetPanel that directory doesn't exist. -->
+      <variable name="ShowCreateDirectoryMessage" value="false" />
+
+      <!-- Hostname of the installation server -->
+      <variable name="EscidocHost" value="localhost" />
+      <!-- Bind port for JBoss Application Server -->
+      <variable name="EscidocPort" value="8080" />
+      <!-- eSciDoc version and build -->
+      <!-- make sure to add the appropriate separator as prefix (usually a dot) if needed, e.g. a ".build345" -->
+      <variable name="EscidocVersion" value="${project.version}" />
+     
+      <variable name="JBossVersion" value="${jboss.version}" />
+      <variable name="FedoraVersion" value="${fcrepo.version}" />
+
+      <variable name="AdminToolVersion" value="${admin-tool.version}" />
+      <variable name="MigrationToolVersion" value="${migration-tool.version}" />
+
+      <!-- JDK checks -->
+      <variable name="JDKPathPanel.minVersion" value="1.6.0" />
+      <variable name="JDKPathPanel.maxVersion" value="1.6.99" />
+      <variable name="JDKPathPanel.skipIfValid" value="yes" />
+
+      <!-- database connection -->
+      <!-- Postgres -->
+      <variable name="jdbc.driver.postgres" value="lib/postgresql-${escidoc.postgres.jdbc.version}.jar" />
+      <variable name="DatabaseAdminUsernamePostgres" value="postgres" />
+      <variable name="DatabaseDriverClassPostgres" value="org.postgresql.Driver" />
+      <variable name="DatabasePortPostgres" value="5432" />
+      <variable name="SqlScriptDelimiterPostgres" value=";" />
+      <variable name="SqlScriptDelimiterTypePostgres" value="normal" />
+      <variable name="SqlScriptKeepFormatPostgres" value="false" />
+      <variable name="RootDatabaseNamePostgres" value="postgres" />
+
+      <!-- MySQL -->
+      <variable name="jdbc.driver.mysql" value="" />
+      <variable name="DatabaseAdminUsernameMySQL" value="root" />
+      <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
+      <variable name="DatabasePortMySQL" value="3306" />
+      <variable name="SqlScriptDelimiterMySQL" value=";" />
+      <variable name="SqlScriptDelimiterTypeMySQL" value="normal" />
+      <variable name="SqlScriptKeepFormatMySQL" value="false" />
+
+      <!-- Oracle -->
+      <variable name="DatabaseAdminUsernameOracle" value="oraesci_adm" />
+      <variable name="DatabaseDriverClassOracle" value="oracle.jdbc.driver.OracleDriver" />
+      <variable name="DatabasePortOracle" value="1521" />
+      <variable name="SqlScriptDelimiterOracle" value="/" />
+      <variable name="SqlScriptDelimiterTypeOracle" value="row" />
+      <variable name="SqlScriptKeepFormatOracle" value="true" />
+      <variable name="OracleDDLGenerator" value="mptstore-oracle-0.9.4.jar" />
+      <variable name="RootDatabaseNameOracle" value="oraesci01" />
+
+      <variable name="DatabaseAdminPassword" value="" />
+      <variable name="DatabaseUsername" value="escidoc" />
+      <variable name="DatabasePassword" value="escidoc" />
+      <variable name="DatabaseDefaultTablespace" value="escidoc" />
+      <variable name="DatabaseTempTablespace" value="TEMP" />
+      <variable name="DatabaseHost" value="localhost" />
+      <!-- spring security -->
+      <!-- default to form-based. For MySQL support, remove "form-based" from value (see line below) --> 
+      <variable name="AuthenticationMethod" value="form-based" />
+      <!-- variable name="AuthenticationMethod" value="" /-->
+      <!-- Fedora admin user -->
+      <variable name="FedoraUsername" value="fedoraAdmin" />
+      <variable name="FedoraPassword" value="fedoraAdmin" />
+      <variable name="FedoraAdminMailAddress" value="" />
+      <variable name="FedoraDefaultTablespace" value="fedora" />
+      <variable name="FedoraTempTablespace" value="TEMP" />
+      <!-- triplestore database user -->
+      <variable name="TriplestoreUsernameOracle" value="riTriples" />
+      <variable name="TriplestorePasswordOracle" value="riTriples" />
+      <variable name="TriplestoreDefaultTablespace" value="triples" />
+      <variable name="TriplestoreTempTablespace" value="TEMP" />
+      <!-- Identifier prefix -->
+      <variable name="sid-prefix" value="escidoc" />
+      <!-- Infrastructure administrator user -->
+      <variable name="AdminUsername" value="sysadmin" />
+      <variable name="AdminPassword" value="" />
+      <!-- variable name="AdminEmail" value="" / -->
+      <!-- Infrastructure inspector user -->
+      <variable name="InspectorUsername" value="inspector" />
+      <variable name="InspectorPassword" value="" />
+      <!-- Infrastructure depositor user -->
+      <variable name="DepositorUsername" value="depositor" />
+      <variable name="DepositorPassword" value="" />
+      <!-- Creator Id used in migration SQL scripts -->
+      <variable name="CreatorUserid" value="escidoc:exuser1" />
+    </variables>
+    
+    <dynamicvariables>
+      <!-- JBoss Configuration -->
+      <variable name="java.io.tmpdir" value=" -Djava.io.tmpdir=/tmp" condition="izpack.macinstall" />
+      <variable name="java.io.tmpdir" value="" condition="!izpack.macinstall" />
+      <!-- JDBC jar (absolute path) -->
+      <variable name="DatabaseDriver" value="${jdbc.driver.postgres}" condition="databaseIsPostgres" />
+      <variable name="DatabaseDriver" value="${jdbc.driver.mysql}" condition="databaseIsMySQL" />
+      <variable name="DatabaseDriver" value="${jdbc.driver.oracle}" condition="databaseIsOracle" />
+      <!-- database driver class -->
+      <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
+      <variable name="DatabaseDriverClass" value="${DatabaseDriverClassMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseDriverClass" value="${DatabaseDriverClassOracle}" condition="databaseIsOracle" />
+      <!-- database identifier for JDBC URL -->
+      <variable name="DatabaseIdentifier" value="postgresql" condition="databaseIsPostgres" />
+      <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
+      <variable name="DatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}://${DatabaseHost}:${DatabasePortPostgres}/" condition="databaseIsPostgres" />
+      <variable name="DatabaseURL" value="jdbc:${DatabaseIdentifier}:thin:@${DatabaseHost}:${DatabasePortOracle}:" condition="databaseIsOracle" />
+      <variable name="DatabasePort" value="${DatabasePortPostgres}" condition="databaseIsPostgres" />
+      <variable name="DatabasePort" value="${DatabasePortMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabasePort" value="${DatabasePortOracle}" condition="databaseIsOracle" />
+      <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernamePostgres}" condition="databaseIsPostgres" />
+      <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameOracle}" condition="databaseIsOracle" />
+      <!-- PostgreSQL requires a root database to which one needs to connected to be able to create databaes and roles -->
+      <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
+      <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
+      <variable name="DatabaseAccessor" value="DirectOracleDatabaseAccessor" condition="databaseIsOracle" />
+      <!-- PostgreSQL requires autocommit to be switched on, MySQL doesn't understand this parameter -->
+      <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsPostgres" />
+      <variable name="DatabaseAutocommit" value="" condition="databaseIsMySQL" />
+      <variable name="DatabaseAutocommit" value="autocommit=&quot;true&quot;" condition="databaseIsOracle" />
+      <!-- name of the subdirectory containing the SQL scripts -->
+      <variable name="DatabaseScriptPrefix" value="postgres" condition="databaseIsPostgres" />
+      <variable name="DatabaseScriptPrefix" value="mysql" condition="databaseIsMySQL" />
+      <variable name="DatabaseScriptPrefix" value="oracle" condition="databaseIsOracle" />
+      <variable name="DatasourceEscidoc" value="escidoc-core" condition="databaseIsPostgres" />
+      <variable name="DatasourceEscidoc" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceEscidoc" value="${RootDatabaseName}" condition="databaseIsOracle" />
+      <variable name="DatasourceFedora" value="fedora3" condition="databaseIsPostgres" />
+      <variable name="DatasourceFedora" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceFedora" value="${RootDatabaseName}" condition="databaseIsOracle" />
+      <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
+      <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
+      <variable name="DatasourceTriplestore" value="${RootDatabaseName}" condition="databaseIsOracle" />
+      <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
+      <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
+      <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
+      <variable name="TriplestoreUsername" value="${FedoraUsername}" condition="databaseIsPostgres" />
+      <variable name="TriplestorePassword" value="${FedoraPassword}" condition="databaseIsPostgres" />
+      <variable name="TriplestoreUsername" value="${FedoraUsername}" condition="databaseIsMySQL" />
+      <variable name="TriplestorePassword" value="${FedoraPassword}" condition="databaseIsMySQL" />
+      <variable name="TriplestoreUsername" value="${TriplestoreUsernameOracle}" condition="databaseIsOracle" />
+      <variable name="TriplestorePassword" value="${TriplestorePasswordOracle}" condition="databaseIsOracle" />
+      <!-- DDLGenerator for MPTStore -->
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator" condition="databaseIsPostgres" />
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.mysql.MysqlDDLGenerator" condition="databaseIsMySQL" />
+      <variable name="DDLGeneratorClass" value="org.nsdl.mptstore.impl.oracle.OracleDDLGenerator" condition="databaseIsOracle" />
+      <!-- format of SQL scripts -->
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterPostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptDelimiter" value="${SqlScriptDelimiterOracle}" condition="databaseIsOracle" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypePostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypeMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptDelimiterType" value="${SqlScriptDelimiterTypeOracle}" condition="databaseIsOracle" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatPostgres}" condition="databaseIsPostgres" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatMySQL}" condition="databaseIsMySQL" />
+      <variable name="SqlScriptKeepFormat" value="${SqlScriptKeepFormatOracle}" condition="databaseIsOracle" />
+      <!-- Oracle doesn't know about a "boolean" datatype -->
+      <variable name="SqlTrue" value="true" condition="databaseIsPostgres" />
+      <variable name="SqlTrue" value="true" condition="databaseIsMySQL" />
+      <variable name="SqlTrue" value="1" condition="databaseIsOracle" />
+      <!-- Authentication Configuration -->
+      <variable name="FormBasedIn" value="&lt;!--" condition="!authMethodIsFormBased" />
+      <variable name="FormBasedIn" value="" condition="authMethodIsFormBased" />
+      <variable name="FormBasedOut" value="-->" condition="!authMethodIsFormBased" />
+      <variable name="FormBasedOut" value="" condition="authMethodIsFormBased" />
+      <variable name="LDAPIn" value="&lt;!--" condition="!authMethodIsLDAP" />
+      <variable name="LDAPIn" value="" condition="authMethodIsLDAP" />
+      <variable name="LDAPOut" value="-->" condition="!authMethodIsLDAP" />
+      <variable name="LDAPOut" value="" condition="authMethodIsLDAP" />
+      <variable name="ShibbolethIn" value="&lt;!--" condition="!authMethodIsShibboleth" />
+      <variable name="ShibbolethIn" value="" condition="authMethodIsShibboleth" />
+      <variable name="ShibbolethOut" value="-->" condition="!authMethodIsShibboleth" />
+      <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
+      <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
+      <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
+    </dynamicvariables>
+    
+    <conditions>
+      <condition type="variable" id="askForUpgrade">
+        <name>AskForUpgrade</name>
+        <value>true</value>
+      </condition>
+      <condition type="variable" id="runMigration">
+        <name>RunMigration</name>
+        <value>true</value>
+      </condition>
+      <condition type="variable" id="upgradeEscidoc">
+        <name>InstallationType</name>
+        <value>upgrade</value>
+      </condition>
+      <condition type="not" id="installEscidoc">
+        <condition type="ref" refid="upgradeEscidoc" />
+      </condition>
+      <condition type="and" id="fullDialog">
+        <condition type="ref" refid="installEscidoc" />
+        <condition type="variable">
+          <name>ShortInstaller</name>
+          <value>false</value>
+        </condition>
+      </condition>
+      <condition type="variable" id="databaseIsPostgres">
+        <name>Database</name>
+        <value>PostgreSQL</value>
+      </condition>
+      <condition type="variable" id="databaseIsMySQL">
+        <name>Database</name>
+        <value>MySQL</value>
+      </condition>
+      <condition type="variable" id="databaseIsOracle">
+        <name>Database</name>
+        <value>Oracle</value>
+      </condition>
+      <condition type="variable" id="authMethodIsFormBased">
+        <name>AuthenticationMethod</name>
+        <value>form-based</value>
+      </condition>
+      <condition type="variable" id="authMethodIsLDAP">
+        <name>AuthenticationMethod</name>
+        <value>ldap</value>
+      </condition>
+      <condition type="variable" id="authMethodIsShibboleth">
+        <name>AuthenticationMethod</name>
+        <value>shibboleth</value>
+      </condition>
+    </conditions>
+    <!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="HTMLHelloPanel" />
+        <panel classname="HTMLLicencePanel" id="HTMLLicencePanel.licence" />
+        <panel classname="HTMLInfoPanel" id="info" />
+        <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
+        <panel classname="UserInputPanel" id="UserInputPanel.1" />
+        <panel classname="UserInputPanel" id="UserInputPanel.2" />
+        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
+          <validator classname="JDBCValidator" />
+        </panel>
+        <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.8" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.9" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
+        <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.12" condition="databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" />
+        <panel classname="JDKPathPanel" id="CommonJDKPath" />
+        <panel classname="TargetPanel" id="EscidocTarget" />
+        <panel classname="TreePacksPanel" id="EscidocPacks" />
+        <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
+        <!-- panel classname="DataCheckPanel" id="Debug" / -->
+        <panel classname="InstallPanel" id="EscidocInstall" />
+        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc+runMigration" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc+runMigration" />
+        <panel classname="ProcessPanel" condition="upgradeEscidoc+runMigration" />
+        <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
+        <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc+runMigration" />
+        <panel classname="HTMLInfoPanel" id="upgradeInfoWithoutMigration" condition="upgradeEscidoc+!runMigration" />
+        <panel classname="FinishPanel" id="CommonFinish" />
+    </panels>
+
+    <!-- 
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <pack name="eSciDoc" id="escidoc.package" required="yes">
+            <description/>
+            <file src="installer/readme.html" targetdir="$INSTALL_PATH" />
+            <parsable targetfile="$INSTALL_PATH/readme.html" />
+        </pack>
+        
+        <pack name="Install Scripts" id="scripts.package" parent="escidoc.package" required="yes">
+            <description/>
+            <!-- Ant scripts, need to be in the first pack under "eSciDoc" to be availble for "afterpack" actions -->
+            <singlefile src="installer/unpack-core.xml" target="$INSTALL_PATH/install.tmp/unpack-core.xml" override="true" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/unpack-core.xml" />
+            <!-- Configuration files -->
+            <file src="config/escidoc/core/escidoc-core.custom.properties" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/escidoc-core.custom.properties" />
+        </pack>
+        
+        <pack name="JBoss Application Server" id="jboss.package" parent="escidoc.package" required="yes">
+            <description/>
+            <file src="packages/jboss/jboss-${JBossVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="installEscidoc+databaseIsPostgres" />
+            <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" /-->
+            <file src="config/jboss/run.conf" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/run.conf" />
+            <file src="config/jboss/run.bat" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/run.bat" />
+            <file src="config/jboss/shutdown.bat" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/shutdown.bat" />
+            <file src="config/jboss/shutdown.sh" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/shutdown.sh" />
+        </pack>
+        
+        <pack name="Fedora Repository" id="fedora.package" parent="escidoc.package" required="yes">
+            <description/>
+            <file src="fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="lib/${OracleDDLGenerator}" targetdir="$INSTALL_PATH/install.tmp/WEB-INF/lib" />
+            <!-- Configuration files -->
+            <!--file src="fedora/mpt-mysql.jar" targetdir="$INSTALL_PATH/fedora/WEB-INF/lib" / -->
+            <file src="../web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
+            <!-- file src="fedora/RISearchServlet.class" targetdir="$INSTALL_PATH/fedora/WEB-INF/classes/fedora/server/access" / -->
+            <parsable targetfile="$INSTALL_PATH/install.tmp/WEB-INF/web.xml" />
+            <file src="../fedora-users.xml" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora-users.xml" />
+            <file src="../fedora.fcfg" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora.fcfg" />
+            <file src="config/fedora/log4j.properties" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="config/fedora/deny-everything-if-not-administrator.xml" targetdir="$INSTALL_PATH/install.tmp" />
+        </pack>
+        
+        <pack name="eSciDoc Infrastructure" id="core.package" parent="escidoc.package" required="yes">
+            <description/>
+            <file src="../../../assembly/target/escidoc-core-${project.version}-bin.zip" targetdir="$INSTALL_PATH/install.tmp" />
+        </pack>
+        
+        <!-- pack name="Examples" id="examples.package" parent="escidoc.package" required="yes">
+            <description/>
+            <file src="packages/escidoc/core/escidoc-examples-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="config/escidoc/core/readme.txt" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/readme.txt" />
+        </pack -->
+        
+        <pack name="Additional Services and Tools" id="tools.package" required="no">
+            <description/>
+        </pack>
+        
+        <!--pack name="Digilib" id="digilib.package" parent="tools.package" required="no">
+            <description/>
+            <file src="packages/escidoc/services/DigilibClient.war" targetdir="$INSTALL_PATH/install.tmp" />
+            <file src="packages/escidoc/services/DigilibServer.war" targetdir="$INSTALL_PATH/install.tmp" />
+        </pack>
+        
+        <pack name="Duplication Check" id="duplication.package" parent="tools.package" required="no">
+            <description/>
+            <file src="tools/docsim.zip" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+        
+        <pack name="PID Manager" id="pidmanager.package" parent="tools.package" required="no">
+            <description/>
+            <file src="tools/escidoc-pid-manager-release.zip" targetdir="$INSTALL_PATH/tools" />
+        </pack-->
+
+        <pack name="Admin Tool" id="admintool.package" parent="tools.package" required="no">
+            <description/>
+            <file src="packages/admin-tool/AdminTool-${AdminToolVersion}.war" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+
+        <pack name="Migration Tool" id="migrationtool.package" parent="tools.package" required="yes" condition="upgradeEscidoc">
+            <description/>
+            <file src="packages/migration-tool/migration-tool-${MigrationToolVersion}.zip" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+
+        <!--pack name="Documentation" id="doc.package" required="no">
+          <description/>
+        </pack>
+        
+        <pack name="API Documentation" id="apidoc.package" parent="doc.package" required="no">
+            <description/>
+            <file src="doc/escidoc-core-doc-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/doc/api" />
+        </pack>
+        
+        <pack name="Sources" id="source.package" required="no">
+            <description/>
+            <file src="packages/escidoc/core/escidoc-core-src-${EscidocVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
+        </pack-->
+        
+        <pack name="Configuration and Initialization" id="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
+        </pack>
+        
+        <pack name="Database Creation" id="databasecreation.package" parent="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
+            <file src="config/escidoc/core/database.properties" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/database.properties" />
+            <file src="config/escidoc/core/database-init.xml" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/database-init.xml" />
+            <file src="config/escidoc/core/aa.init.user-accounts.common.sql" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/aa.init.user-accounts.common.sql" />
+            <file src="config/escidoc/core/aa.init.grants.common.sql" targetdir="$INSTALL_PATH/install.tmp" />
+        </pack>
+        
+        <pack name="Database Initialization" id="databaseinitialization.package" parent="configuration.package" required="yes" condition="installEscidoc">
+            <description/>
+            <depends packname="Database Creation" />
+        </pack>
+        
+        <pack name="Roles and Users Creation" id="roles.package" parent="configuration.package" required="yes" condition="authMethodIsFormBased+installEscidoc">
+            <description/>
+            <depends packname="Database Creation" />
+            <depends packname="Database Initialization" />
+        </pack>
+    </packs>
+    
+    <listeners>
+        <listener installer="SummaryLoggerInstallerListener" />
+        <listener installer="AntActionInstallerListener" />
+    </listeners>
+    
+    <jar src="lib/ant-${ant.version}.jar" stage="install" />
+    <jar src="lib/ant-nodeps-${ant-nodeps.version}.jar" stage="install" />
+    <jar src="lib/ant-launcher-${ant-launcher.version}.jar" stage="install" />
+    <jar src="lib/ant-contrib-${ant-contrib.version}.jar" stage="install" />
+    <jar src="lib/postgresql-${escidoc.postgres.jdbc.version}.jar" stage="install" />
+    <jar src="escidoc-validators.jar" stage="install" />
+
+    <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+        <os family="windows"/>
+    </native>
+</installation>

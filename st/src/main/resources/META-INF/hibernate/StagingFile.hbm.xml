@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping schema="st">
+
+	<class name="de.escidoc.core.st.business.StagingFile" table="staging_file"
+		lazy="false">
+		<meta attribute="generated-class">
+			de.escidoc.core.st.business.persistence.StagingFile </meta>
+		<meta attribute="class-description" inherit="false">
+			@hibernate.class
+			table="staging_file"
+			@hibernate.mapping
+			schema="st"
+	    </meta>
+
+		<id name="token" type="java.lang.String" column="token">
+			<meta attribute="generated-class">
+				de.escidoc.core.st.business.persistence.StagingFile </meta>
+			<meta attribute="field-description">
+				@hibernate.id
+				generator-class="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator"
+				type="java.lang.String"
+				column="token"
+
+    	    </meta>
+			<generator
+				class="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator" />
+		</id>
+
+		<property name="expiryTs" type="long" column="expiry_ts"
+			not-null="true" length="19">
+			<meta attribute="generated-class">
+				de.escidoc.core.st.business.persistence.StagingFile </meta>
+			<meta attribute="field-description">
+				@hibernate.property
+				column="expiry_ts"
+				length="19"
+				not-null="true"
+        	</meta>
+		</property>
+
+		<property name="reference" type="java.lang.String" column="reference"
+			length="2147483647">
+			<meta attribute="generated-class">
+				de.escidoc.core.st.business.persistence.StagingFile </meta>
+			<meta attribute="field-description">
+				@hibernate.property
+				column="reference"
+				length="2147483647"
+        	</meta>
+		</property>
+
+		<property name="mimeType" type="java.lang.String" column="mime_type"
+			length="255">
+			<meta attribute="generated-class">
+				de.escidoc.core.st.business.persistence.StagingFile </meta>
+			<meta attribute="field-description">
+				@hibernate.property
+				column="mime_type"
+				length="255"
+        	</meta>
+		</property>
+
+		<property name="upload" type="boolean" column="upload"
+			not-null="true" length="1">
+			<meta attribute="generated-class">
+				de.escidoc.core.st.business.persistence.StagingFile </meta>
+			<meta attribute="field-description">
+				@hibernate.property
+				column="upload"
+				length="1"
+				not-null="true"
+        	</meta>
+		</property>
+
+		<!-- Associations -->
+
+
+	</class>
+</hibernate-mapping>

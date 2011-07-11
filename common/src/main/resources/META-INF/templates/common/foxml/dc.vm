@@ -1,0 +1,7 @@
+<foxml:datastream CONTROL_GROUP="X" ID="DC">
+<foxml:datastreamVersion ID="DC.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+${DC}
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>

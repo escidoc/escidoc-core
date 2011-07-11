@@ -1,0 +1,51 @@
+SM Schema-change:
+
+Core-Projekt:
+de.escidoc.core.common.util.xml.XmlUtility:
+Methoden
+getAggregationDefinitionSchemaLocation
+getReportDefinitionSchemaLocation
+getScopeSchemaLocation
+getReportSchemaLocation
+getReportParametersSchemaLocation:
+Pfad zum Schema anpassen
+
+
+Im package de.escidoc.core.common.util.xml.factory. in den Provider-Klassen
+AggregationDefinitionXmlProvider
+ReportDefinitionXmlProvider
+ScopeXmlProvider
+ReportXmlProvider
+Variable ..._PATH anpassen auf location der velocity-templates
+
+Datenbank:
+aa.init.method-mappings.sm.sql
+extractObjid:...
+Pfade anpasssen an Schema
+
+Test-Projekt:
+de.escidoc.core.test.EscidocTestBase:
+TEMPLATE_AGG_DEF_PATH
+TEMPLATE_REP_DEF_PATH
+TEMPLATE_REPORT_PATH
+TEMPLATE_SCOPE_PATH
+TEMPLATE_REP_PARAMETERS_PATH
+auf Pfad zu templates anpassen
+
+XPATH_AGGREGATION_DEFINITION_SCOPE
+XPATH_REPORT_DEFINITION_SCOPE
+Pfad anpassen
+
+ReportDefinitionTest.testSMRD16
+Pfad zum name-Attribut anpassen
+
+Methoden
+assertXmlValidAggregationDefinitionList
+assertXmlValidAggregationDefinition
+assertXmlValidReportDefinitionList
+assertXmlValidReportDefinition
+assertXmlValidScopeList
+assertXmlValidScope
+assertXmlValidReport
+Pfad zum Schema anpassen
+

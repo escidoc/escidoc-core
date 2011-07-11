@@ -1,0 +1,93 @@
+<chapter>
+	<title>Technical Metadata Extraction (TME)</title>
+
+	<para>
+		In this release the Technical Metadata Extraction (TME) offers
+		services in the following areas:
+	</para>
+	<itemizedlist mark="opencircle">
+		<listitem>
+			<para>
+				<emphasis role="bold">
+					Jhove metadata extraction
+				</emphasis>
+			</para>
+			<para>
+				The eSciDoc infrastructure offers a service to extract
+				technical metadata using the detection libraries of the
+				Jhove project. The version 1.1 of the Jhove project is
+				used, please refer to
+				http://hul.harvard.edu/jhove/distribution.html to get
+				more information on the capabilities of Jhove.
+			</para>
+			<para>
+				The technical metadata extraction works on a list of
+				files. The files must be specified by a parameter
+				according to the schema
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						http://www.escidoc.de/schemas/rest/tme/0.1/request.xsd
+						resp.
+					</listitem>
+					<listitem>
+						http://www.escidoc.de/schemas/soap/tme/0.1/request.xsd
+					</listitem>
+				</itemizedlist>
+				in a call to the extract method of the Jhove service.
+				The eSciDoc infrastructure must be able to access all
+				referenced files.
+			</para>
+			<programlisting>
+				<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<request xmlns:xlink="http://www.w3.org/1999/xlink">
+	<file xlink:type="simple" xlink:title="" 
+	      xlink:href="http://www.escidoc-project.de/images/escidoc-logo.jpg" />
+	<file xlink:type="simple" xlink:title="" 
+	      xlink:href="http://www.escidoc-project.de/documentation/Soap_api_doc_OUM_OrganizationalUnit.pdf" />	
+</request>					
+]]>
+			</programlisting>
+			<para>
+				The eSciDoc infrastructure invokes the Jhove metadata
+				extraction using the following modules (as you can see
+				in the given configuration file) .
+			</para>
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.AiffModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.WaveModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.PdfModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.Jpeg2000Module
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.JpegModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.GifModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.TiffModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.XmlModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.HtmlModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.AsciiModule
+				</listitem>
+				<listitem>
+					edu.harvard.hul.ois.jhove.module.Utf8Module
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</itemizedlist>
+</chapter>

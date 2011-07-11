@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test:scope xmlns="http://www.escidoc.de/schemas/scope/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:prop="http://escidoc.de/core/01/properties/" xlink:href="/statistic/scope/0">
+    <test:properties>
+        <prop:name>updated test scope</prop:name>
+        <test:type>normal</test:type>
+    </test:properties>
+</test:scope>

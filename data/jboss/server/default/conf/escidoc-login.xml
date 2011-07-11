@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!--
+        eSciDoc Login Configuration
+        ===========================
+        
+        This file defines the login mechanism(s) that shall be used for the
+        login of eSciDoc users.
+        The eSciDoc login is based on spring security. For detailed information
+        about spring security, see 
+        http://static.springframework.org/spring-security/site/index.html.
+        Currently, login and authentication of the user is supported for
+            - LDAP
+            - Shibboleth
+            - Login using the eSciDoc UserAccount resource (deprecated: this
+              will be removed in one of the following versions.)
+        This file has to be placed in the classpath, e.g. in jboss it should be
+        placed in the server's "conf" folder (<jboss_dir>/server/<server name>/conf/)
+ -->
+
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:aop="http://www.springframework.org/schema/aop"
+      xmlns:security="http://www.springframework.org/schema/security"
+      xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+default-lazy-init="false">
+ 
+    <!--######FORM-BASED-LOGIN#####################################################################################################################-->
+    <!-- Uncomment this to enable form-based login using the internal 
+         UserAccount resource -->
+
+    <security:http auto-config="false" access-denied-page="/aa/login/login-repeated.html"
+        path-type="regex" entry-point-ref="authenticationProcessingFilterEntryPoint">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:form-login
+            authentication-failure-url="/aa/login/login-repeated.html"
+            default-target-url="/aa/login/missing-target.html" />
+    </security:http>
+    
+    <bean id="authenticationProcessingFilterEntryPoint" 
+            class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint">
+      <property name="loginFormUrl" value="/aa/login/login.html"/>
+    </bean>
+    
+    <security:authentication-manager>
+	    <security:authentication-provider>
+	        <security:jdbc-user-service
+	            id="jdbcUserService"
+	            data-source-ref="escidoc-core.DataSource"
+	            users-by-username-query="select loginname, password, 1 as active from aa.user_account where loginname = ?"
+	            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+	    </security:authentication-provider>
+    </security:authentication-manager>
+    
+    <!--###########################################################################################################################-->
+    <!--#######LDAP-LOGIN####################################################################################################################-->
+
+    <!-- Uncomment this and fill in the appropriate values to enable login using 
+         LDAP.
+         Define url of your LDAP-Server in bean contextSource
+         In bean=userSearch, {0} is a placeholder for the login name of the
+         user. 
+         In DefaultLdapAuthoritiesPopulator, adapt constructor-arg 2 and properties:
+         in property groupSearchFilter {0} is a placeholder for dn and {1} is a placeholder for uid-->
+
+    <!--
+    <security:http auto-config="false" access-denied-page="/aa/login/login-repeated.html"
+        path-type="regex" entry-point-ref="authenticationProcessingFilterEntryPoint">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:form-login
+            authentication-failure-url="/aa/login/login-repeated.html"
+            default-target-url="/aa/login/missing-target.html" />
+    </security:http>
+        
+    <bean id="authenticationProcessingFilterEntryPoint" 
+            class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint">
+      <property name="loginFormUrl" value="/aa/login/login.html"/>
+    </bean>
+    
+    <bean id="contextSource"
+        class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <constructor-arg value="ldap://141.66.11.51/dc=fiz-karlsruhe,dc=de"/>
+    </bean>
+
+    <bean id="userSearch"
+        class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <constructor-arg index="0" value="ou=people"/>
+        <constructor-arg index="1" value="(uid={0})"/>
+        <constructor-arg index="2" ref="contextSource" />
+    </bean>
+
+    <bean id="ldapAuthProvider"
+        class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <constructor-arg ref="contextSource"/>
+                <property name="userSearch" ref="userSearch" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+                <constructor-arg ref="contextSource"/>
+                <constructor-arg value="ou=group"/>
+                <property name="groupRoleAttribute" value="cn"/>
+                <property name="groupSearchFilter" value="(member={0})"/>
+                <property name="rolePrefix" value=""/>
+                <property name="convertToUpperCase" value="false"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDetailsContextMapper">
+            <bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/>
+        </property>
+    </bean>
+
+	<security:authentication-manager>
+    	<security:authentication-provider ref="ldapAuthProvider" />
+	    <security:authentication-provider>
+	        <security:jdbc-user-service
+	            id="jdbcUserService"
+	            data-source-ref="escidoc-core.DataSource"
+	            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+	            authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+	    </security:authentication-provider>
+    </security:authentication-manager>
+    -->
+
+    <!--###########################################################################################################################-->
+    <!--########SHIBBOLETH-LOGIN###################################################################################################################-->
+    
+    <!-- Uncomment this to enable login using shibboleth 
+        Replace property serviceProviderBaseUrl with the url of your Shibboleth service provider
+    -->
+    <!-- 
+    <security:http auto-config="false" entry-point-ref="entryPoint"
+        path-type="regex">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:custom-filter ref="shibFilter" before="CAS_FILTER"/>
+    </security:http>
+    
+	<security:authentication-manager>
+    	<security:authentication-provider ref="shibProvider" />
+	</security:authentication-manager>    
+	
+    <bean id="shibFilter" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"/>
+
+    <bean id="entryPoint" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint">
+        <property name="serviceProviderBaseUrl" value="https://esfedrep5.fiz-karlsruhe.de:8545" />
+        <property name="sessionInitiatorPath" value="/Shibboleth.sso/DS" />
+    </bean>
+
+    <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider" />
+
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
+    -->
+    
+    <!--###########################################################################################################################-->
+    <!--########OPENID-LOGIN###################################################################################################################-->
+    
+    <!-- Uncomment this to enable login using openId.-->
+    <!-- 
+    <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" />
+    <security:http auto-config="false"
+        path-type="regex">
+		<security:session-management session-fixation-protection="none"/>
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:openid-login 
+        	user-service-ref="openidUserDetailsService" 
+        	login-page="/aa/login/openidlogin.jsp"
+        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true" />
+        <security:custom-filter ref="openidFilter" before="CAS_FILTER"/>
+    </security:http>
+
+	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />
+    <bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
+    	<property name="authenticationManager" ref="authenticationManager"/>
+		<property name="consumer" ref="myOpenID4JavaConsumer" />
+		<property name="openidProviderRegex" value=".*" />
+		<property name="providerRegexFailureUrl" value="/aa/login/openidlogin.jsp?login_error=true" />
+	</bean>
+ 	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
+  		<property name="userDetailsService" ref="openidUserDetailsService" />
+ 	</bean>
+	 <bean id="myOpenID4JavaConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer">
+	  <constructor-arg index="0">
+	  	<bean class="org.openid4java.consumer.ConsumerManager"/>
+	  </constructor-arg>
+	  <constructor-arg index="1">
+	   <list value-type="org.springframework.security.openid.OpenIDAttribute">
+	    <bean class="org.springframework.security.openid.OpenIDAttribute">
+	     <constructor-arg index="0" value="email"/>
+	     <constructor-arg index="1" value="http://axschema.org/contact/email"/>
+	     <property name="required" value="true"/>
+	     <property name="count" value="1"/>
+	    </bean>
+	    <bean class="org.springframework.security.openid.OpenIDAttribute">
+	     <constructor-arg index="0" value="fullname"/>
+	     <constructor-arg index="1" value="http://axschema.org/namePerson"/>
+	     <property name="required" value="true"/>
+	     <property name="count" value="1"/>
+	    </bean>
+	   </list>
+	  </constructor-arg>
+	 </bean>
+	  
+	<security:authentication-manager alias="authenticationManager">
+    	<security:authentication-provider ref="openIDAuthenticationProvider"/>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
+    -->
+    
+    <!--###########################################################################################################################-->
+    <!--########HTTP-AUTH-LOGIN###################################################################################################################-->
+
+    <!-- Uncomment this to enable http basic auth. login using the internal 
+         UserAccount resource (Deprecated) -->
+    <!--
+    <security:http auto-config="false" access-denied-page="/aa/login/login-repeated.html"
+        path-type="regex">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:http-basic />
+    </security:http>
+    
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
+        -->
+    
+
+    <!--###########################################################################################################################-->
+
+</beans>

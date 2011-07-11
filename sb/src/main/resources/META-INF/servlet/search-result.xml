@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="SB-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#
+		# Resource Search and Browse
+		# -->
+</mapping>
+

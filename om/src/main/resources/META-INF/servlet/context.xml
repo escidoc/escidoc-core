@@ -1,0 +1,242 @@
+<mapping>
+	<define>
+		<var name="CONTEXT-ID" regexp="/([^/?]*)" />
+		<var name="CONTAINER-ID" regexp="/([^/?]*)" />
+		<var name="ITEM-ID" regexp="/([^/?]*)" />
+		<var name="ADMIN-DESCRIPTOR-ID" regexp="/([^/?]*)" />
+                <var name="RESOURCE_NAME" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#########################################################
+		# Context
+		# -->
+	<resource name="Context" base-uri="/ir/contexts/">
+		<!-- 
+			Filter methods on contexts
+		 -->		
+        <descriptor uri="/ir/contexts">
+        	<invoke http="GET" method="retrieveContexts" param1="${PARAMETERS}"/>
+        </descriptor>
+	</resource>
+
+	<resource name="Context" base-uri="/ir/context/">
+		<descriptor uri="/ir/context">
+			<invoke http="PUT" method="create" param1="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/context/${CONTEXT-ID}/properties">
+			<invoke http="GET" method="retrieveProperties"
+				param1="${CONTEXT-ID}"/>
+		</descriptor>
+		<descriptor uri="/ir/context/${CONTEXT-ID}">
+			<invoke http="DELETE" method="delete"
+				param1="${CONTEXT-ID}"/>
+			<invoke http="GET" method="retrieve"
+				param1="${CONTEXT-ID}"/>
+			<invoke http="PUT" method="update" param1="${CONTEXT-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+
+		<!--#
+			# Members
+			# -->		
+        <descriptor uri="/ir/context/${CONTEXT-ID}/resources/members">
+        	<invoke http="GET" method="retrieveMembers" param1="${CONTEXT-ID}" param2="${PARAMETERS}"/>
+        </descriptor>
+
+        <!--#
+            # Relations
+            # -->
+        <descriptor uri="/ir/context/${CONTEXT-ID}/resources/${RESOURCE_NAME}">
+        	<invoke http="GET" method="retrieveResource" param1="${CONTEXT-ID}" param2="${RESOURCE_NAME}" param3="${PARAMETERS}"/>
+        </descriptor>
+        
+		<!--#
+			# Subresource Admin Descriptors
+			# -->
+		<descriptor uri="/ir/context/${CONTEXT-ID}/admin-descriptors">
+			<invoke http="GET" method="retrieveAdminDescriptors"
+				param1="${CONTEXT-ID}"/>
+			<invoke http="PUT" method="updateAdminDescriptors"
+				param1="${CONTEXT-ID}" param2="${BODY}"/>
+		</descriptor>
+		
+		<!--#
+			# Subresource Admin Descriptor
+			# -->
+		<descriptor uri="/ir/context/${CONTEXT-ID}/admin-descriptors/admin-descriptor/${ADMIN-DESCRIPTOR-ID}">
+			<invoke http="GET" method="retrieveAdminDescriptor"
+				param1="${CONTEXT-ID}" param2="${ADMIN-DESCRIPTOR-ID}"/>
+			<invoke http="PUT" method="updateAdminDescriptor"
+				param1="${CONTEXT-ID}" param2="${BODY}"/>
+		</descriptor>
+		
+<!--#
+	# Organizational Units
+	# -->
+<!-- 	removed: 18.01.2007, Teammeeting
+		<descriptor
+			uri="/ir/context/${CONTEXT-ID}/organizational-units">
+			<invoke http="GET" method="retrieveOrganizationalUnits"
+				param1="${CONTEXT-ID}">
+				<documentation visible="false">
+					<title>retrieveOrganizationalUnits</title>
+					<description>
+						<![CDATA[ 
+						<para>
+							Retrieve the organizational unit of a context
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The context must exist.
+						</para>
+						<para>
+							The organizational unit must exist.
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The context is accessed using the
+									provided reference.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The organizational unit is accessed.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation of the organizational unit corresponding
+									to XML-schema is returned as output.
+								</para>
+							</listitem>
+						</itemizedlist>
+					]]>
+					</description>
+					<param>
+						<param1 name="id">
+							The id of the context.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the retrieved organizational unit corresponding to XML-schema "organizationalunits.xsd".
+					</result>
+				</documentation>
+			</invoke>
+			<invoke http="PUT" method="updateOrganizationalUnits"
+				param1="${CONTEXT-ID}" param2="${BODY}">
+				<documentation visible="false">
+					<title>updateOrganizationalUnits</title>
+					<description>
+						<![CDATA[ 
+						<para><emphasis role="bold">!!!!!!!!!!!!!!!!!!!!!! MethodenName ist verwirrend !!!!!!!!!!!!!!!!!!!!!!
+						statt: updateOrganizationalUnits besser: updateOrganizationalUnitRef </emphasis></para>
+						<para>
+							Update the subresource organizational unit of a context
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The provided XML data in the body is only
+							accepted if the size is less than
+							ESCIDOC_MAX_XML_SIZE.
+						</para>
+						<para>
+							The context must exist.
+						</para>
+						<para>
+						   The the public-status of the context is not "closed".
+						</para>
+						<para>
+						   The the newly referenced organizational unit must exist.
+						</para>
+						<para><emphasis role="bold">Required input data:</emphasis></para>
+						<para>
+							All sections, elements and attributes which are required in method "create"
+							are required here, too.	 
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The XML data is validated against
+									the XML-Schema of a admin descriptor.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Optimistic Locking criteria is checked.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								   It is checked whether the newly referenced organizational unit exist.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML input data is updated and some new data is added (see below)
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation of the organizational unit entry corresponding
+									to XML-schema is returned as output.
+								</para>
+							</listitem>
+						</itemizedlist>
+
+						<para>
+							<emphasis role="bold">Updated and new data in XML representation:</emphasis>
+						</para>
+						<itemizedlist mark="dash" spacing="compact">
+							<listitem>
+								<para>
+								context (attribute "last-modification-date" in root element)
+								</para>
+							</listitem>
+						</itemizedlist>
+						<para>
+							Note: Removing the entrie of an
+							organizational unit might result in
+							conflicts with existing objects in this
+							context.
+						</para>
+					]]>
+					</description>
+					<param>
+						<param1 name="id">
+							The id of the context.
+						</param1>
+						<param2 name="metadata">
+						The XML representation of the organizational unit entry to be updated corresponding to XML-schema "????.xsd".
+						</param2>
+					</param>
+					<result type="String">
+						The XML representation of the updated organizational unit entry corresponding to XML-schema "????.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+-->
+ 		
+<!--#
+	# Resources
+	# -->
+		<descriptor uri="/ir/context/${CONTEXT-ID}/resources">
+			<invoke http="GET" method="retrieveResources"
+				param1="${CONTEXT-ID}"/>
+		</descriptor>
+<!--#
+			# Tasks
+# -->
+		<descriptor uri="/ir/context/${CONTEXT-ID}/open">
+			<invoke http="POST" method="open" param1="${CONTEXT-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+		<descriptor uri="/ir/context/${CONTEXT-ID}/close">
+			<invoke http="POST" method="close" param1="${CONTEXT-ID}"
+				param2="${BODY}"/>
+		</descriptor>
+	</resource>
+</mapping>

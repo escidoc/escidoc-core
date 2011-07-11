@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:technical-metadata="http://www.escidoc.de/schemas/technicalmetadata/0.5"
+	xmlns:components="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prefix-metadata="http://www.escidoc.de/metadata/schema/0.2"
+	xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xml:base="http://localhost:8080"
+	prefix-xlink:title="Monoklonaler Antikörper, mbAb 1E8, welcher für die zwei ersten N-terminalen Aminosäuren von Amyloid-beta-Peptiden spezifisch ist und dessen Verwendung zum Nachweis von Amyloid-beta Peptiden und/oder sAPPa">
+	<escidocItem:properties>
+		<escidocItem:context objid="escidoc:persistent3"
+			prefix-xlink:href="/ir/context/escidoc:persistent3"
+			prefix-xlink:type="simple" />
+		<escidocItem:content-type objid="escidoc:persistent4"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4"
+			prefix-xlink:type="simple" />
+		<escidocItem:content-type-specific>
+			<nix />
+		</escidocItem:content-type-specific>
+	</escidocItem:properties>
+
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		<escidocMetadataRecords:md-record prefix-xlink:type="simple"
+			prefix-xlink:title="eSciDoc internal MD Record"
+			schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+			name="escidoc">
+			<escidoc
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+				xmlns:ec="http://escidoc.mpg.de/metadataprofile/schema/0.1/collection"
+				xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+				prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ escidocprofile.xsd">
+				<publication type="article">
+					<prefix-dcterms:created>
+						1980-01-23T12:00:00.000+01:00
+					</prefix-dcterms:created>
+					<prefix-dc:language>DE</prefix-dc:language>
+					<prefix-dc:title xml:lang="DE">
+						Monoklonaler Antikörper, mbAb 1E8, welcher für
+						die zwei ersten N-terminalen Aminosäuren von
+						Amyloid-beta-Peptiden spezifisch ist und dessen
+						Verwendung zum Nachweis von Amyloid-beta
+						Peptiden und/oder sAPPa
+					</prefix-dc:title>
+					<prefix-dcterms:alternative xml:lang="EN">
+						Monoclonal antibody, mAb 1E8, which is specific
+						for the first 2 amino-terminal amino acids of
+						beta-amyloid peptides and its use in the
+						detection of beta-amyloid peptides or sAPPs
+					</prefix-dcterms:alternative>
+					<e:creator role="author">
+						<e:person>
+							<e:completeName>
+								Wiltfang, Jens
+							</e:completeName>
+							<e:identifier type="PND">4711</e:identifier>
+						</e:person>
+					</e:creator>
+					<e:creator role="author">
+						<e:person>
+							<e:completeName>
+								Wiltfang, Jens, Dr.
+							</e:completeName>
+							<e:identifier type="PND">4712</e:identifier>
+						</e:person>
+					</e:creator>
+					<e:creator role="author">
+						<e:person>
+							<e:completeName>
+								Dyrks, Thomas,c/o Schering
+								Aktiengesellschaft
+							</e:completeName>
+						</e:person>
+					</e:creator>
+					<e:creator role="author">
+						<e:person>
+							<e:completeName>
+								Mönning, Ursula, Dr.,c/o Schering
+								Aktiengesell.
+							</e:completeName>
+						</e:person>
+					</e:creator>
+					<e:creator role="author">
+						<e:person>
+							<e:completeName>
+								Patentanwälte Rehberg + Hüppe
+							</e:completeName>
+						</e:person>
+					</e:creator>
+				</publication>
+			</escidoc>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9" xml:base="http://localhost:8080" prefix-xlink:type="simple">
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<escidocComponents:description>XML File</escidocComponents:description>
+				<escidocComponents:status>valid</escidocComponents:status>
+				<escidocComponents:visibility>public</escidocComponents:visibility>
+				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
+				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
+				<escidocComponents:mime-type>application/pdf</escidocComponents:mime-type>
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple" prefix-xlink:href="XXX_CONTENT_REF_XXX" />
+		</escidocComponents:component>
+	</escidocComponents:components>
+</escidocItem:item>

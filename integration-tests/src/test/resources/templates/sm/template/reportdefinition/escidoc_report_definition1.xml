@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report-definition 
+    xmlns="http://www.escidoc.de/schemas/reportdefinition/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<name>Page Statistics for PubMan</name>
+	<scope xlink:href="/statistic/scope/escidoc:scope1"/>
+	<sql>
+		select 
+		day, month 
+		from escidocaggdef1_request_stats;
+	</sql> 
+</report-definition>

@@ -1,0 +1,4 @@
+<${contentRelationNamespacePrefix}:resources 
+	#restInsertConditionalRoot(	${isRootProperties} "false" "false" ${contentRelationNamespacePrefix} ${contentRelationNamespace} ${resourcesTitle} ${resourcesHref} ${LAST_MODIFICATION_DATE})>#foreach( ${methodName} in ${resourceOperationNames} )
+#set($methodHref="${resourcesHref}/${methodName}")
+#restLink("" ${methodName} "" ${methodHref} )#end</${contentRelationNamespacePrefix}:resources>

@@ -1,0 +1,1304 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_18" class="java.beans.XMLDecoder"> 
+ <object class="de.escidoc.core.common.util.db.Fingerprint"> 
+  <void property="schemas"> 
+   <array class="de.escidoc.core.common.util.db.Schema" length="6"> 
+    <void index="0"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>aa</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>actions</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/actions_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>role_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>xml/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/escidoc_policies/role_id/1/null/1/fk_escidoc_policies_role/pk_escidoc_role/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>escidoc_policies</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_escidoc_policies</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>description/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>role_name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/escidoc_role/creator_id/1/null/1/fk_role_created_by/pk_user_account/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/escidoc_role/modified_by_id/1/null/1/fk_role_modified_by/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>escidoc_role</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_escidoc_role</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>attribute_id/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>attribute_type/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>mapping_type/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>method_mapping/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>multi_value/3/number/1/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>path/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>position/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>value/12/varchar2/100/0/null/10/1/null/null/0/0/100/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/invocation_mappings/method_mapping/1/null/1/invocation_mappings_fkey/method_mappings_pkey/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>invocation_mappings</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/invocation_mappings_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>action_name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>class_name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>exec_before/3/number/1/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>method_name/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>resource_not_found_exception/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>single_resource/3/number/1/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>method_mappings</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/method_mappings_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>grant_remark/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>granted_from/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>granted_to/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>group_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>object_href/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>object_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>object_title/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>revocation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>revocation_remark/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>revoker_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>role_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>user_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/role_grant/creator_id/1/null/1/fk_grantor_grant/pk_user_account/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/role_grant/group_id/1/null/1/fk_grant_group/pk_user_group/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/role_grant/revoker_id/1/null/1/fk_revoker_grant/pk_user_account/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/role_grant/role_id/1/null/1/fk_role_grant/pk_escidoc_role/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/role_grant/user_id/1/null/1/fk_grant_user/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>role_grant</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_role_grant</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>attribute_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>attribute_object_type/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>object_type/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>role_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/scope_def/role_id/1/null/1/fk_scope_def/pk_escidoc_role/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>scope_def</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_scope_def</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>action_ids/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>context_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>unsecured_action_list</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_unsecured_actions</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>active/3/number/1/0/0/10/1/null/null/0/0/22/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>loginname/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>password/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_account/creator_id/1/null/1/fk_ua_creator/pk_user_account/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/user_account/modified_by_id/1/null/1/fk_ua_modified_by/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_account</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_account</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>internal/3/number/1/0/0/10/1/null/null/0/0/22/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>user_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>value/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_attribute/user_id/1/null/1/fk_attribute_user/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_attribute</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_attribute</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>active/3/number/1/0/0/10/1/null/null/0/0/22/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>description/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>email/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>label/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>type/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_group/creator_id/1/null/1/fk_ug_creator/pk_user_account/7</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/null/aa/user_group/modified_by_id/1/null/1/fk_ug_modified_by/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_group</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_group</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>type/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>user_group_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>value/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_group_member/user_group_id/1/null/1/fk_group_id/pk_user_group/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_group_member</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_group_member</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>expiryts/3/number/19/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>handle/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>user_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_login_data/user_id/1/null/1/fk_user_login_data/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_login_data</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_login_data</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>user_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>value/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/aa/user_preference/user_id/1/null/1/fk_preference_user/pk_user_account/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>user_preference</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_user_preference</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="1"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>adm</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>date/93/timestamp(6)/11/0/6/10/0/null/null/0/0/11/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>major_number/3/number/10/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>minor_number/3/number/10/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>revision_number/3/number/10/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>version</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="2"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>oai</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_title/12/varchar2/1020/0/null/10/1/null/null/0/0/1020/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>description/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_title/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>query/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>specification/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>set_definition</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_set_definition</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="3"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>om</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>lock_timestamp/93/timestamp(6)/11/0/6/10/0/null/sysdate /0/0/11/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>locked/3/number/1/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>objid/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>owner/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>ownertitle/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>lockstatus</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>objid/1/lockstatus_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="4"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>sm</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_definition_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>selector_type/12/varchar2/50/0/null/10/0/null/null/0/0/50/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>xpath/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/agg_stat_data_selectors/aggregation_definition_id/1/null/0/fk_asds_agg_def/pk_agg_defs/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>agg_stat_data_selectors</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_stat_data_selectors</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>scope_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_definitions/scope_id/1/null/0/fk_ad_scope_id/pk_scopes/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_definitions</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_defs</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_table_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>data_type/12/varchar2/10/0/null/10/1/null/null/0/0/10/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>feed/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>field_type_id/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>reduce_to/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>xpath/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_table_fields/aggregation_table_id/1/null/0/fk_atf_agg_table/pk_agg_tables/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_table_fields</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_tables_fields</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_table_index_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>field/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_table_index_fields/aggregation_table_index_id/1/null/0/fk_atif_agg_table_index/pk_agg_tables_idx/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_table_index_fields</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_tables_idx_flds</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_table_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_table_indexes/aggregation_table_id/1/null/0/fk_ati_agg_table/pk_agg_tables/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_table_indexes</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_tables_idx</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_definition_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/aggregation_tables/aggregation_definition_id/1/null/0/fk_at_agg_def/pk_agg_defs/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>aggregation_tables</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_agg_tables</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>aggregation_definition_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>has_error/3/number/1/0/0/10/1/null/null/0/0/22/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>log_entry/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>processing_date/91/date/7/0/null/10/0/null/null/0/0/7/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/preprocessing_logs/aggregation_definition_id/1/null/0/fk_aggregation_definition_id/pk_agg_defs/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>preprocessing_logs</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_preproc_logs</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>list_index/3/number/2/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>report_definition_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>role_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/report_definition_roles/report_definition_id/1/null/0/fk_repdef_id/pk_rep_defs/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>report_definition_roles</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_rep_def_roles</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>scope_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>sql/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/report_definitions/scope_id/1/null/0/fk_rd_scope_id/pk_scopes/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>report_definitions</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_rep_defs</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>creation_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>creator_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>last_modification_date/93/timestamp(6)/11/0/6/10/1/null/null/0/0/11/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>modified_by_id/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>name/12/varchar2/1020/0/null/10/0/null/null/0/0/1020/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>scope_type/12/varchar2/20/0/null/10/0/null/null/0/0/20/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>scopes</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_scopes</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>scope_id/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>timemarker/93/timestamp(6)/11/0/6/10/0/null/null/0/0/11/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>xml_data/2005/clob/4000/0/null/10/0/null/null/0/0/4000/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/null/sm/statistic_data/scope_id/1/null/0/fk_sd_scope_id/pk_scopes/7</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="name"> 
+           <string>statistic_data</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>id/1/pk_statistic_data</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+    <void index="5"> 
+     <object class="de.escidoc.core.common.util.db.Schema"> 
+      <void property="name"> 
+       <string>st</string> 
+      </void> 
+      <void property="tables"> 
+       <object class="java.util.TreeSet"> 
+        <void method="add"> 
+         <object class="de.escidoc.core.common.util.db.Table"> 
+          <void property="columns"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>expiry_ts/3/number/19/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>mime_type/12/varchar2/255/0/null/10/1/null/null/0/0/255/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>reference/2005/clob/4000/0/null/10/1/null/null/0/0/4000/yes</string> 
+            </void> 
+            <void method="add"> 
+             <string>token/12/varchar2/255/0/null/10/0/null/null/0/0/255/no</string> 
+            </void> 
+            <void method="add"> 
+             <string>upload/3/number/1/0/0/10/0/null/null/0/0/22/no</string> 
+            </void> 
+           </object> 
+          </void> 
+          <void property="foreignKeys"> 
+           <object class="java.util.TreeSet"/> 
+          </void> 
+          <void property="name"> 
+           <string>staging_file</string> 
+          </void> 
+          <void property="primaryKeys"> 
+           <object class="java.util.TreeSet"> 
+            <void method="add"> 
+             <string>token/1/files_pkey</string> 
+            </void> 
+           </object> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </array> 
+  </void> 
+ </object> 
+</java> 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="AGGREGATION-DEFINITION-ID" regexp="/([^/?]*)" />
+	</define>
+
+    <!--#########################################################
+        # Aggregation Definition List
+        # -->
+    <resource name="AggregationDefinition" base-uri="/statistic/aggregation-definitions/">
+		<descriptor uri="/statistic/aggregation-definitions">
+			<invoke http="GET" method="retrieveAggregationDefinitions" param1="${PARAMETERS}"/>
+		</descriptor>
+    </resource>
+
+	<!--#########################################################
+		# Aggregation Definition
+		# -->
+	<resource name="AggregationDefinition" base-uri="/statistic/aggregation-definition/">
+		<descriptor uri="/statistic/aggregation-definition">
+			<invoke http="PUT" method="create" param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/statistic/aggregation-definition/${AGGREGATION-DEFINITION-ID}">
+			<invoke http="DELETE" method="delete"
+				param1="${AGGREGATION-DEFINITION-ID}">
+			</invoke>
+			<invoke http="GET" method="retrieve"
+				param1="${AGGREGATION-DEFINITION-ID}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

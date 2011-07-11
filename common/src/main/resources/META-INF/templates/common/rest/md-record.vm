@@ -1,0 +1,6 @@
+#set($unescapedName="#unesc(${MD_RECORD_NAME})")
+#set($unescapedTitle="#unesc(${mdRecordTitle})")
+<${mdRecordsNamespacePrefix}:md-record name="#escA($unescapedName)"
+#insertConditionalAttribute( ${MD_RECORD_TYPE} "md-type") #insertConditionalAttribute( ${ORIGIN} "inherited")
+ #insertConditionalAttribute( ${MD_RECORD_SCHEMA} "schema")
+ #restInsertConditionalRoot( ${isRootMdRecord} "false" "false" ${mdRecordsNamespacePrefix} ${mdRecordsNamespace} "#escA(${unescapedTitle})" ${mdRecordHref} ${LAST_MODIFICATION_DATE})>${MD_RECORD_CONTENT}</${mdRecordsNamespacePrefix}:md-record>

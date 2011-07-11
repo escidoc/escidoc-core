@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="SET-DEFINITION-ID" regexp="/([^/?]*)" />
+	</define>
+		<resource name="SetDefinition" base-uri="/oai/set-definition/">
+			<description/>
+		<descriptor uri="/oai/set-definition">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation/>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oai/set-definition/${SET-DEFINITION-ID}">
+			<invoke http="DELETE" method="delete" param1="${SET-DEFINITION-ID}">
+				<documentation/>
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${SET-DEFINITION-ID}">
+				<documentation/>
+			</invoke>
+			<invoke http="PUT" method="update" param1="${SET-DEFINITION-ID}"
+				param2="${BODY}">
+				<documentation/>
+			</invoke>
+		</descriptor>
+		</resource>
+		<resource name="SetDefinition" base-uri="/oai/set-definitions/">
+		<descriptor uri="/oai/set-definitions">
+			<invoke http="GET" method="retrieveSetDefinitions" param1="${PARAMETERS}"/>
+		</descriptor>
+	</resource>
+</mapping>

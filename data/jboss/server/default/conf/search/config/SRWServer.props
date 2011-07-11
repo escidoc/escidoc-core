@@ -1,0 +1,57 @@
+#For each index that is searchable, define the search-Interface 
+#(always de.escidoc.sb.srw.EscidocSRWDatabaseImpl)
+#and the path to the configuration-file (relative to this directory)
+#(search-configuration-files must be located in a subdirectory index/<indexname>)
+
+#ESCIDOC Lucene database for released items and containers
+db.escidoc_all.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.escidoc_all.configuration=index/escidoc_all/escidoc_all.SRWDatabase.properties
+
+#ESCIDOC Lucene database for Organizational Units
+db.escidocou_all.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.escidocou_all.configuration=index/escidocou_all/escidocou_all.SRWDatabase.properties
+
+#ESCIDOC Lucene database for all items and containers
+db.item_container_admin.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.item_container_admin.configuration=index/item_container_admin/item_container_admin.SRWDatabase.properties
+
+#ESCIDOC Lucene database for all contexts
+db.context_admin.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.context_admin.configuration=index/context_admin/context_admin.SRWDatabase.properties
+
+#ESCIDOC Lucene database for all organizational units
+db.ou_admin.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.ou_admin.configuration=index/ou_admin/ou_admin.SRWDatabase.properties
+
+#ESCIDOC Lucene database for all content models
+db.content_model_admin.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.content_model_admin.configuration=index/content_model_admin/content_model_admin.SRWDatabase.properties
+
+#ESCIDOC Lucene database for all content relations
+db.content_relation_admin.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.content_relation_admin.configuration=index/content_relation_admin/content_relation_admin.SRWDatabase.properties
+
+####################### DO NOT CHANGE BELOW THIS LINE !!!###########################################
+
+#ESCIDOC Lucene database for OAI-PMH
+#DO NOT REMOVE THIS ENTRY AND THE ASSOCIATED CONFIG-FILES !!
+db.escidocoaipmh_all.class=de.escidoc.sb.srw.EscidocSRWDatabaseImpl
+db.escidocoaipmh_all.configuration=index/escidocoaipmh_all/escidocoaipmh_all.SRWDatabase.properties
+
+default.database=escidocoaipmh_all
+resultSetIdleTime=0
+makeIndex.html=false
+extension.x-info-5-restrictorSummary=restrictorSummary
+extension.restrictorSummary.namespace=info:srw/extension/5/restrictorSummary
+
+#Usage: x-info5-userId=<userId> to search as another user
+extension.x-info5-userId=x-info5-userId
+extension.x-info5-userId.namespace=info:srw/extension/5/extraData
+
+#Usage: x-info5-roleId=<roleId> to search with a specific role
+extension.x-info5-roleId=x-info5-roleId
+extension.x-info5-roleId.namespace=info:srw/extension/5/extraData
+
+#Usage: x-info5-omitHighlighting=true|false to omit Highlighting for a search
+extension.x-info5-omitHighlighting=x-info5-omitHighlighting
+extension.x-info5-omitHighlighting.namespace=info:srw/extension/5/extraData

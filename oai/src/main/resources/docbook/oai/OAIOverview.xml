@@ -1,0 +1,41 @@
+<chapter>
+	<title>Open Archives Initiative Component (OAI)</title>
+	<section>
+		<title>Overview of the Open Archives Initiative Component (OAI)</title>
+		<para>
+			the Open Archives Initiative Component (OAI)
+			offers services in the following areas:
+		</para>
+		<para>
+			<itemizedlist mark="opencircle">
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							Set Definition
+						</emphasis>
+					</para>
+					<para>In order to enable a selective harvesting the meta data of
+						Items and Containers of eSciDoc repository via OAI-PMH
+						[http://www.openarchives.org/OAI/openarchivesprotocol.html],
+						Escidoc repository can be divided into sets composed of released
+						and withdrawn Items and Containers. A set is not static: a set membership is defined by
+						a CQL-query to the eSciDoc search service http://host:port/srw/search/escidocoaipmh_all. 
+						Therefore a set composition changes over time according to changes on Items and Containers
+					    and release of new Items and Containers.
+					</para>
+					<para>
+						A Set Definition
+						represents a description of a set and
+						contains its CQL-query. Escidoc
+						OAI-Provider builds Escidoc sets for existing set definitions
+						from results of their CQL-queries.
+					</para>
+					<para>
+						There are services, which support creation, updating and
+						retrieval of Set Definitions.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</section>
+</chapter>

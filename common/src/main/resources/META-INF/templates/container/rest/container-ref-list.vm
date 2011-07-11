@@ -1,0 +1,6 @@
+<${containerRefListNamespacePrefix}:container-ref-list #virtualResourceRoot($containerRefListNamespacePrefix $containerRefListNamespace $containerRefListTitle)>
+#foreach( $entry in $containerRefs )
+#set($unescapedContainerTitle="#unesc(${entry.containerTitle})")
+<${containerRefListNamespacePrefix}:container-ref #restLinkAttributes ("#escA($unescapedContainerTitle)" ${entry.containerHref})/>
+#end
+</${containerRefListNamespacePrefix}:container-ref-list>

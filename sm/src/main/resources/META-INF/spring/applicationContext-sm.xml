@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-lazy-init="false">
+
+    <bean id="persistence.SmScopesDao" class="de.escidoc.core.sm.business.persistence.hibernate.SmScopesHibernateDao">
+        <property name="mySessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="persistence.SmStatisticDataDao"
+          class="de.escidoc.core.sm.business.persistence.hibernate.SmStatisticDataHibernateDao">
+        <property name="mySessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="persistence.SmReportDefinitionsDao"
+          class="de.escidoc.core.sm.business.persistence.hibernate.SmReportDefinitionsHibernateDao">
+        <property name="mySessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="persistence.SmPreprocessingLogsDao"
+          class="de.escidoc.core.sm.business.persistence.hibernate.SmPreprocessingLogsHibernateDao">
+        <property name="mySessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="persistence.SmAggregationDefinitionsDao"
+          class="de.escidoc.core.sm.business.persistence.hibernate.SmAggregationDefinitionsHibernateDao">
+        <property name="idProvider">
+            <ref bean="escidoc.core.business.EscidocIdProvider"/>
+        </property>
+        <property name="mySessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="escidoc-core.txProxyTemplate"
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true"
+          lazy-init="true">
+        <property name="transactionManager">
+            <ref bean="escidoc-core.transactionManager"/>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="executeReadOnly*">PROPAGATION_REQUIRED,+EscidocException, readOnly</prop>
+                <prop key="*">PROPAGATION_REQUIRED,+EscidocException</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="sm.persistence.DirectDatabaseAccessor" parent="escidoc-core.txProxyTemplate">
+        <property name="target">
+            <bean class="de.escidoc.core.sm.business.persistence.sql.${escidoc-core.sm.DirectDatabaseAccessor}">
+                <property name="myDataSource">
+                    <ref bean="escidoc-core.DataSource"/>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

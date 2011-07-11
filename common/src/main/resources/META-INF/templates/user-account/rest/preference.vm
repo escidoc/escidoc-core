@@ -1,0 +1,4 @@
+#parse("common/macros.vm")
+<${preferencesNamespacePrefix}:preference 
+ #restInsertConditionalRoot(${isRootPreference} "false" "false" ${preferencesNamespacePrefix} ${preferencesNamespace} false false ${userAccountLastModificationDate})
+ name="${userAccountPreferenceName}">${userAccountPreferenceValue}</${preferencesNamespacePrefix}:preference>

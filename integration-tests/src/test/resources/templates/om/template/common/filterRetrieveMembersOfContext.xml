@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<param>
+	<filter name="members">
+		<id>escidoc:23232</id>
+		<id>escidoc:23233</id>
+		<id>escidoc:23234</id>
+		<id>escidoc:23235</id>
+		<id>escidoc:23236</id>
+	</filter>
+	<filter name="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">http://escidoc.de/core/01/resources/Item</filter>
+	<filter name="user">escidoc:14141</filter>
+	<filter name="role">Depositor</filter>
+	<filter name="http://escidoc.de/core/01/properties/public-status">submitted</filter>
+	<filter name="http://escidoc.de/core/01/structural-relations/content-model">PubItem</filter>
+</param>

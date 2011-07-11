@@ -1,0 +1,3 @@
+<${mdRecordsNamespacePrefix}:md-records #restInsertConditionalRoot(${isRootSubResource} "false" "false" ${mdRecordsNamespacePrefix} ${mdRecordsNamespace} ${mdRecordsTitle} ${mdRecordsHref} ${LAST_MODIFICATION_DATE})>
+${mdRecordsContent}
+</${mdRecordsNamespacePrefix}:md-records>

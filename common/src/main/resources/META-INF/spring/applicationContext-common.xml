@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-lazy-init="false">
+
+    <!--
+		This will automatically locate any and all property files you have within your classpath, provided they fall
+		under the META-INF/spring directory. The located property files are parsed and their values can then be used
+		within application context files in the form of ${propertyKey}.
+	-->
+    <context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
+
+    <!--
+		Turn on AspectJ @Configurable support. As a result, any time you instantiate an object, Spring will attempt to
+		perform dependency injection on that object. This occurs for instantiation via the "new" keyword, as well as via
+		reflection. This is possible because AspectJ is used to "weave" applications at compile time. In effect this
+		feature allows dependency injection of any object at all in your system, which is a very useful feature
+		(without @Configurable you'd only be able to dependency inject objects acquired from Spring or subsequently
+		presented to a specific Spring dependency injection method). This application use this useful feature in a
+		number of areas, such as @PersistenceContext injection into entities.
+	-->
+    <context:spring-configured/>
+
+    <!--
+		This declaration will cause Spring to locate every @Component, @Repository and @Service in your application.
+		In practical terms this allows you to write a POJO and then simply annotate the new POJO as an @Service and
+		Spring will automatically detect, instantiate and dependency inject your service at startup time. Importantly,
+		you can then also have your new service injected into any other class that requires it simply by declaring a
+		field for your service inside the relying class and Spring will inject it. Refer to web.xml for more details
+		about the web tier application context setup services.
+
+		Furthermore, this turns on @Autowired, @PostConstruct etc support. These annotations allow you to use common
+		Spring and Java Enterprise Edition annotations in your classes without needing to do any special configuration.
+		The most commonly used annotation is @Autowired, which instructs Spring to dependency inject an object into your
+		class.
+	-->
+    <context:component-scan base-package="de.escidoc"/>
+
+    <bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"
+          factory-method="aspectOf" lazy-init="false">
+        <property name="statisticService" ref="de.escidoc.core.statistic.StatisticService"/>
+    </bean>
+
+    <bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
+          factory-method="aspectOf" lazy-init="false">
+        <property name="xmlUtility">
+            <ref bean="common.xml.XmlUtility"/>
+        </property>
+    </bean>
+
+    <bean id="escidoc.core.business.EscidocIdProvider" class="de.escidoc.core.common.persistence.EscidocIdProvider">
+        <property name="numberPrefetchedIds">
+            <value>${escidoc-core.identifier.numberPrefetched}</value>
+        </property>
+        <property name="resourceIdentifierDao">
+            <ref bean="escidoc.core.business.FedoraResourceIdentifierDao"/>
+        </property>
+    </bean>
+
+    <bean id="persistence.HibernateRequestMappingDao"
+          class="de.escidoc.core.common.util.security.persistence.hibernate.HibernateRequestMappingDao">
+        <property name="requestMappingSessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="business.TripleStoreUtility"
+          class="de.escidoc.core.common.business.fedora.mptstore.MPTTripleStoreUtility">
+        <property name="myDataSource">
+            <ref bean="fedora.triplestore.DataSource"/>
+        </property>
+    </bean>
+
+    <bean id="business.LockHandler" class="de.escidoc.core.common.business.LockHandler" init-method="init">
+        <property name="myDataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="sessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+    </bean>
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:${catalina.home}/conf/escidoc-core.properties</value>
+                <value>file:${catalina.home}/conf/escidoc-core.custom.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+    <bean id="common.CommonMethodMapper" class="de.escidoc.core.common.servlet.invocation.MethodMapper">
+        <property name="descriptorFilenames">
+            <list>
+                <value>/META-INF/servlet/container.xml</value>
+                <value>/META-INF/servlet/content-relation.xml</value>
+                <value>/META-INF/servlet/context.xml</value>
+                <value>/META-INF/servlet/item.xml</value>
+                <value>/META-INF/servlet/ingest.xml</value>
+                <value>/META-INF/servlet/content-model.xml</value>
+                <value>/META-INF/servlet/organizational-unit.xml</value>
+                <value>/META-INF/servlet/user-account.xml</value>
+                <value>/META-INF/servlet/admin.xml</value>
+                <value>/META-INF/servlet/stagingfile.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Eposing spring beans as MBeans that are annotated (using appropriate JAVA5 annotations). If a MBean with
+    the same name has been exposed before, the new exposal is skipped (ignoreExisting)  -->
+    <bean id="eSciDoc.core.common.MBeanExporter"
+          class="org.springframework.jmx.export.annotation.AnnotationMBeanExporter" lazy-init="false">
+        <property name="autodetect" value="true"/>
+        <property name="registrationBehaviorName" value="REGISTRATION_IGNORE_EXISTING"/>
+    </bean>
+</beans>

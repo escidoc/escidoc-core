@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="oai"
+>
+
+<class 
+    name="de.escidoc.core.oai.business.persistence.SetDefinition" 
+    table="set_definition"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="set_definition"
+       @hibernate.mapping
+        schema="oai"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+           @hibernate.generator-param
+	        name="sequence"
+	        value=""
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator">
+            <param name="sequence"></param>
+        </generator>
+    </id>
+
+    <property
+        name="specification"
+        type="java.lang.String"
+        column="specification"
+        not-null="true"
+        unique="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="specification"
+            unique="true"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="name"
+        type="java.lang.String"
+        column="name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="query"
+        type="java.lang.String"
+        column="query"
+        not-null="true"
+        length="2147483647"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="query"
+            length="2147483647"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="description"
+        type="java.lang.String"
+        column="description"
+        length="2147483647"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="description"
+            length="2147483647"
+            not-null="false"
+        </meta>    
+    </property>
+    <property
+        name="creatorId"
+        type="java.lang.String"
+        column="creator_id"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="creator_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="creatorTitle"
+        type="java.lang.String"
+        column="creator_title"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="creator_title"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="creationDate"
+        type="java.sql.Timestamp"
+        column="creation_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="creation_date"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="modifiedById"
+        type="java.lang.String"
+        column="modified_by_id"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="modified_by_id"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="modifiedByTitle"
+        type="java.lang.String"
+        column="modified_by_title"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="modified_by_title"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="lastModificationDate"
+        type="java.sql.Timestamp"
+        column="last_modification_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="last_modification_date"
+            length="29"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+
+</class>
+</hibernate-mapping>

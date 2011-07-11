@@ -1,0 +1,265 @@
+<chapter>
+	<title>Statistic Manager (SM)</title>
+	<section>
+		<title>Overview of Statistic Manager (SM)</title>
+		<para>
+			Usage- and Webstatistics are a very important part of 
+			every application to see how the system is used, if new features 
+			are used, where the users come from and many other reasons.		
+		</para>
+		<para>
+			Applications usually collect statistic data at runtime per request. 
+			That means that with every request of a user to the application, 
+			many statistical informations can be written at many points of the 
+			application and the background systems that are used by the application. 
+			Each component of a software-system should be able to write their own 
+			statistical informations, containing the data that the special 
+			component is interested in. We should define statistic-scopes, 
+			so each component can write its statistic-data within its own scope 
+			and it is distinguishable witch data belogs to which scope.		
+		</para>
+		<para>
+			Afterwards, the Application-Administrators, Users etc want to 
+			access the statistical data to get different kinds of information 
+			out of it. Usually, only parts of the big pool of statistic 
+			data have to get aggregated to get the required information. 
+			This potentially leads to performance problems because the pool 
+			of statistic data may be a very large database-table or a very 
+			big logfile etc where it takes a lot of time to gather the information 
+			that is needed for one particular kind of statistical information.		
+		</para>
+		<para>
+			This leads to the thought that if we would know what kinds of aggregated 
+			informations shall be delivered to the administrator or the end user, 
+			we could preprocess the large datapool and aggregate the data into 
+			many smaller pools, ie database tables. These database tables then 
+			can get queried much faster to get the desired different 
+			kinds of statistics. Again, each of these tables with aggregated data 
+			would belong to a specific statistic-scope.	
+		</para>
+		<para>
+			To manage the different database tables with aggregated data, 
+			we should have so called aggregation-definitions in the system. 
+			With these aggregation-definitions we could define:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					the database-table where we want to write the aggregated 
+					data in.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					what kind of data is needed from the big pool for 
+					this aggregation.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					how to aggregate the data.
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			These database-tables containing the aggregated data then 
+			could get queried very performant to produce a statistic-report.		
+		</para>
+		<para>
+			Queries to these tables again don’t have to return 
+			the whole data, they just might want to return parts of 
+			it or again aggregate the data for the report. We even could 
+			think about querying different tables containing aggregated 
+			data at one time to get a special kind of statistic.		
+		</para>
+		<para>
+			To manage the different queries to the tables with aggregated 
+			data, we should have report-definitions that hold this 
+			information and that are kept in a persistence layer of 
+			the framework. Within these report-definitions, the name 
+			of the statistic (eg PubMan Page Statistic) and the query 
+			is kept. These report-definitions again would belog to one 
+			specific statistic-scope.		
+		</para>
+		<para>
+			This leads to the following duties for the Statistic 
+			Manager Component:		
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					writing statistic records during runtime of the 
+					system by providing an interface to the applications.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					aggregating the raw statistic data for different 
+					kinds of statistics in a nightly process depending 
+					on aggregation-definitions that are held by the framework. 
+					These aggregation-definitions are creatable, retrievable 
+					and deletable by interface-calls to the framework.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					creating, modifying, retrieving 
+					and deleting report-definitions.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					delivering online statistics based on a report-definition.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+	<section>
+		<title>Technical Prerequisites</title>
+        <para>
+            The preprocessing of statistic data selects the statistic-data records 
+            dependent of an xpath defined in the aggregation-definition.
+        </para>
+		<para>
+			The processing of statistic data must not disturb the regular 
+			business of the framework. For this reason, the Statistic Manager 
+			Component can get separated from the rest of the framework-services 
+			and run on a different machine. Requests are still sent to the 
+			same host where the other framework-services run, 
+			the request for the statistic manger will get redirected 
+			to another machine by a webserver on that host.		
+		</para>
+		<para>
+			For Performance-issues, the request to the statistic-data resource 
+			will be put into a Message Queue so the response will come 
+			very quickly, even if there are lots of requests at the same 
+			time, all trying to access the database.		
+		</para>
+		<para>
+			The nightly preprocessing of the statistic data requires 
+			a scheduler, that runs on the JBoss-Application-Server.		
+		</para>
+	</section>
+	<section>
+		<title>Security Concept</title>
+		<para>
+			The system is able to manage ‘statistic-scopes’. 
+			A statistic-scope for example might be ‘PubMan statistic scope’.		
+		</para>
+		<para>
+			The system holds 2 roles for statistics:		
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>
+					Statistics-Editor
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Statistics-Reader
+				</para>
+			</listitem>
+		</itemizedlist>
+		<section>
+			<title>Writing of statistic records</title>
+			<para>
+				To write statistic-records for a specific scope, 
+				the caller has to be in role Statistics-Editor 
+				and has to have a grant to the scope.		
+			</para>
+		</section>
+		<section>
+			<title>Creating aggregation definitions</title>
+			<para>
+				When creating an aggregation-definition, 
+				the scope of the aggregation-definition has 
+				to be defined within the aggregation-definition. 
+				The user that creates the aggregation-definition 
+				has to have the role Statistics-Editor for 
+				this scope, otherwise the request gets rejected.		
+			</para>
+			<para>
+				The aggregation-definition aggregates the statistic records 
+				from the statistics-table once a night and only can access 
+				statistic records that belong to the same scope than the 
+				aggregation-definition. 		
+			</para>
+		</section>
+		<section>
+			<title>Retrieving aggregation definitions</title>
+			<para>
+				When retrieving an aggregation definition or a list of 
+				aggregation definitions, the scope of the aggregation-definition(s) 
+				is crosschecked against the roles the user has. Only these 
+				aggregation-definition(s) are delivered where the user has 
+				the role Statistics-Editor for the scope.		
+			</para>
+			<para>
+				Example: If user has role ‘Statistics-Editor’ 
+				for scope ‘PubMan statistic scope’, only the aggregation-definitions 
+				of scope ‘PubMan statistic scope’ are delivered.		
+			</para>
+		</section>
+		<section>
+			<title>Creating report definitions</title>
+			<para>
+				When creating a report-definiton, the scope of the report-definition 
+				has to be defined within the report-definition. The user that 
+				creates the report-definition has to have the role ‘Statistics-Editor’ 
+				for this scope, otherwise the request gets rejected.
+				Within the report-definition there can be defined which 
+				roles may retrieve reports for this report-definition.
+				This is done via an xml-element &lt;allowed-roles&gt; 
+				where the names of the roles can be defined.
+				To allow anonymous users to retrieve reports for this report-definition
+				the role name has to be 'default-user'.	
+			</para>
+		</section>
+		<section>
+			<title>Retrieving report definitions</title>
+			<para>
+				When retrieving a report definition or a list of 
+				report definitions, the scope of the report-definition(s) 
+				is crosschecked against the roles the user has. Only these 
+				report-definition(s) are delivered where the user has the 
+				role ‘Statistics-Editor’ for the scope.		
+			</para>
+			<para>
+				Example: If user has role ‘Statistics-Editor’ for scope 
+				‘PubMan statistic scope’, only the report-definitions of scope 
+				‘PubMan statistic scope’ are delivered. 		
+			</para>
+		</section>
+		<section>
+			<title>Creating reports</title>
+			<para>
+				When retrieving a statistic report, one input-parameter is the 
+				report-definition-id on which the report is based. 
+				The user calling the request has to have either 
+			</para>
+			<itemizedlist mark="opencircle">
+				<listitem>
+					<para>
+						The role Statistics-Reader 
+						for the scope defined in the report-definition.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				or
+			</para>
+			<itemizedlist mark="opencircle">
+				<listitem>
+					<para>
+						One of the roles that is defined in the report-definition 
+						for which the user wants to create the report.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				otherwise the request gets rejected.	
+			</para>
+		</section>
+	</section>
+</chapter>

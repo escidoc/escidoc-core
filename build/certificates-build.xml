@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<!--
+Targets: 
+    -generateAll:
+        -generates 3 keystores: server.keystore, server.truststore an client.keystore
+            server.keystore holds the certificate used for SSL-communication
+            client.keystore holds the client-certificate used for client-auth by a client
+            server.truststore holds the client-certificate used for client-auth by the server
+               and the server-certificate
+        -all certificates are unsigned.
+    -generateAllSigned:
+        -generates 3 keystores: server.keystore, server.truststore an client.keystore
+            server.keystore holds the cetificate used for SSL-communication
+            client.keystore holds the client-certificate used for client-auth by a client
+            server.truststore holds the client-certificate used for client-auth by the server
+               and the server-certificate
+        -all certificates are self-signed (untrusted) by OpenSSL-CA (must be configured on the machine where this build-script runs)
+    -generatePkcs12ClientCertificate:
+        -generates a pkcs12-certificate-file from the client-certificate in client.keystore
+        -only runs if client-certificate was generated before with one of the targets described above
+        
+Keystores and certificates are written in the directory specified by ${certificate.output.directory} 
+
+If you want to use signed certificates from a Certification Authority, for eSciDoc you will need 1 server-certificate
+and 1 client-certificate per user you want to authorize via SSL. 
+The cn of the client-certificate has to match the loginname
+of an existing user in the internal database.
+-Put the certificates on the machine this buildfile run on.
+-Configure properties server.cert.path and client.cert.path to path of the certificates.
+-Execute targets importExistingServerCert and importExistingClientCert
+
+-->
+<project name="Certificates Build" basedir="." default="generateAll">
+
+    <property file="escidoc-certificates.properties" />
+
+    <path id="private.key.extractor.classpath">
+        <pathelement location="lib/PrivateKeyExtractor.jar" />
+    </path>
+
+	<!-- Generates self-signed (untrusted) certificates for client and server. 
+           Generated files are: ${server.keystore.name}, ${server.truststore.name} and ${client.keystore.name}
+	       keytool and OpenSSL with the configured the certificate authority application is needed.
+	       Please configure password of ca in properties-file.
+	       cacert.pem from OpenSSL is imported in all three keystores.
+	-->
+	<target name="generateAllSigned" depends="generateSignedClientCertificate, generateSignedServerCertificate, exportSignedClientCertificateToServerTruststore, exportSignedServerCertificateToServerTruststore" />
+
+	<!-- Generates unsigned certificates for client and server. 
+	       Generated files are: ${server.keystore.name}, ${server.truststore.name} and ${client.keystore.name}
+	       only keytool is needed 
+	       -->
+    <target name="generateAll" depends="generateClientCertificate, generateServerCertificate, exportClientCertificateToServerTruststore, exportServerCertificateToServerTruststore" />
+
+    <!-- imports purchased certificate in ${server.keystore} -->
+    <target name="importExistingServerCert">
+        <antcall target="keytoolimport">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="infile" value="${server.cert.file}" />
+        </antcall>
+    </target>
+
+    <!-- imports purchased certificate in ${client.keystore} and ${server.truststore} -->
+    <target name="importExistingClientCert">
+        <antcall target="keytoolimport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="infile" value="${client.cert.file}" />
+        </antcall>
+        <antcall target="exportClientCertificateToServerTruststore" />
+    </target>
+
+    <!-- Generates a PKCS12-certificate file from a client-certificate. 
+           Generated file is: ${client.pkcs12.file} and has password ${client.keystore.pass}
+           keytool and OpenSSL is needed.
+    -->
+    <target name="generatePkcs12ClientCertificate">
+        <antcall target="keytoolexport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="outfile" value="${certificate.output.directory}/client.cer" />
+        </antcall>
+        <antcall target="opensslpkcs12">
+            <param name="infile" value="${certificate.output.directory}/client.cer" />
+            <param name="outfile" value="${certificate.output.directory}/${client.pkcs12.file}" />
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+        </antcall>
+        <delete file="${certificate.output.directory}/client.cer"/>
+    </target>
+
+    <!-- Generates a unsigned certificate for client. 
+           Generated file is: ${client.keystore.name}
+           only keytool is needed 
+           -->
+	<target name="generateClientCertificate">
+        <antcall target="keytoolgenerate">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="validity" value="${client.cert.validity}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="dname" value="cn=${client.cert.cn},o=${client.cert.o},ou=${client.cert.ou}" />
+        </antcall>
+    </target>
+
+    <!-- Generates self-signed (untrusted) certificate for client. 
+           Generated file is: ${client.keystore.name}
+           keytool and OpenSSL with the configured the certificate authority application is needed.
+           Please configure password of ca in properties-file.
+           cacert.pem from OpenSSL is imported in ${client.keystore.name}.
+    -->
+    <target name="generateSignedClientCertificate">
+        <!-- Import CA Certificate -->
+        <antcall target="caimport">
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="alias" value="${client.ca-cert.name}" />
+        </antcall>
+    	<!-- Generate Signed Certificate -->
+        <antcall target="keytoolgeneratesignedrequest">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="validity" value="${client.cert.validity}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="dname" value="cn=${client.cert.cn},o=${client.cert.o},ou=${client.cert.ou}" />
+        </antcall>
+    </target>
+
+    <!-- Generates a unsigned certificate for server. 
+           Generated file is: ${server.keystore.name}
+           only keytool is needed 
+           -->
+    <target name="generateServerCertificate">
+        <antcall target="keytoolgenerate">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="validity" value="${server.cert.validity}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="dname" value="cn=${server.cert.cn},o=${server.cert.o},ou=${server.cert.ou}" />
+        </antcall>
+    </target>
+
+    <!-- Generates self-signed certificate for server. 
+           Generated file is: ${server.keystore.name}
+           keytool and OpenSSL with the configured the certificate authority application is needed.
+           Please configure password of ca in properties-file.
+           cacert.pem from OpenSSL is imported in ${server.keystore.name}.
+    -->
+    <target name="generateSignedServerCertificate">
+        <!-- Import CA Certificate -->
+        <antcall target="caimport">
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="alias" value="${server.ca-cert.name}" />
+        </antcall>
+        <!-- Generate Signed Certificate -->
+        <antcall target="keytoolgeneratesignedrequest">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="validity" value="${server.cert.validity}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="dname" value="cn=${server.cert.cn},o=${server.cert.o},ou=${server.cert.ou}" />
+        </antcall>
+    </target>
+
+    <!-- Exports unsigned client-certificate to ${server.truststore.name}. 
+           Generated file is: ${server.truststore.name}
+           only keytool is needed 
+    -->
+    <target name="exportClientCertificateToServerTruststore">
+        <antcall target="keytoolexport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="outfile" value="${certificate.output.directory}/client.cer" />
+        </antcall>
+        <antcall target="keytoolimport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="infile" value="${certificate.output.directory}/client.cer" />
+        </antcall>
+        <delete file="${certificate.output.directory}/client.cer"/>
+    </target>
+
+    <!-- Exports self-signed client-certificate to server.truststore. 
+           Generated file is: ${server.truststore.name}
+           keytool and OpenSSL is needed.
+           cacert.pem from OpenSSL is imported in ${server.truststore.name}.
+    -->
+    <target name="exportSignedClientCertificateToServerTruststore">
+        <!-- Import CA Certificate -->
+        <antcall target="caimport">
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="alias" value="${client.ca-cert.name}" />
+        </antcall>
+        <antcall target="keytoolexport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${client.keystore.name}" />
+            <param name="keystore.pass" value="${client.keystore.pass}" />
+            <param name="outfile" value="${certificate.output.directory}/client.cer" />
+        </antcall>
+        <antcall target="keytoolimport">
+            <param name="alias" value="${client.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="infile" value="${certificate.output.directory}/client.cer" />
+        </antcall>
+        <delete file="${certificate.output.directory}/client.cer"/>
+    </target>
+
+    <!-- Exports unsigned server-certificate to ${server.truststore.name}. 
+           Generated file is: ${server.truststore.name}
+           only keytool is needed 
+    -->
+    <target name="exportServerCertificateToServerTruststore">
+        <antcall target="keytoolexport">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="outfile" value="${certificate.output.directory}/server.cer" />
+        </antcall>
+        <antcall target="keytoolimport">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="infile" value="${certificate.output.directory}/server.cer" />
+        </antcall>
+        <delete file="${certificate.output.directory}/server.cer"/>
+    </target>
+
+    <!-- Exports signed server-certificate to ${server.truststore.name}. 
+           Generated file is: ${server.truststore.name}
+           only keytool is needed 
+    -->
+    <target name="exportSignedServerCertificateToServerTruststore">
+        <!-- Import CA Certificate -->
+        <antcall target="caimport">
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="alias" value="${client.ca-cert.name}" />
+        </antcall>
+        <antcall target="keytoolexport">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.keystore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="outfile" value="${certificate.output.directory}/server.cer" />
+        </antcall>
+        <antcall target="keytoolimport">
+            <param name="alias" value="${server.cert.name}" />
+            <param name="keystore.name" value="${certificate.output.directory}/${server.truststore.name}" />
+            <param name="keystore.pass" value="${server.keystore.pass}" />
+            <param name="infile" value="${certificate.output.directory}/server.cer" />
+        </antcall>
+        <delete file="${certificate.output.directory}/server.cer"/>
+    </target>
+
+    <!-- Generates a new unsigned certificate in keystore. -->
+	<target name="keytoolgenerate">
+        <exec dir="." executable="keytool" failonerror="true">
+    	    <arg value="-genkey"/>
+		    <arg value="-alias" />
+	        <arg value="${alias}" />
+	        <arg value="-keyalg" />
+	        <arg value="RSA" />
+	        <arg value="-validity" />
+            <arg value="${validity}" />
+		    <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+		    <arg value="-keypass" />
+            <arg value="${keystore.pass}" />
+		    <arg value="-dname" />
+            <arg value="${dname}" />
+		    <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+        </exec>
+    </target>
+
+    <!-- Generates a new ca-self-signed certificate in keystore. -->
+    <target name="keytoolgeneratesignedrequest">
+    	<!-- Generate certificate in keystore -->
+        <exec dir="." executable="keytool" failonerror="true">
+            <arg value="-genkey"/>
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-keyalg" />
+            <arg value="RSA" />
+            <arg value="-validity" />
+            <arg value="${validity}" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-keypass" />
+            <arg value="${keystore.pass}" />
+            <arg value="-dname" />
+            <arg value="${dname}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+        </exec>
+
+        <!-- Generate certificate signing request -->
+    	<exec dir="." executable="keytool" failonerror="true">
+            <arg value="-certreq"/>
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-file" />
+            <arg value="${certificate.output.directory}/${alias}.csr" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-keypass" />
+            <arg value="${keystore.pass}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+        </exec>
+
+        <!-- sign certificate -->
+    	<exec dir="." executable="openssl" failonerror="true">
+            <arg value="ca"/>
+            <arg value="-batch"/>
+            <arg value="-passin"/>
+            <arg value="pass:${openssl.ca.password}"/>
+            <arg value="-config" />
+            <arg value="${openssl.config.path}" />
+            <arg value="-in" />           
+            <arg value="${certificate.output.directory}/${alias}.csr" />           
+            <arg value="-out" />           
+            <arg value="${certificate.output.directory}/${alias}.pem" />           
+            <arg value="-days" />           
+    	    <arg value="${validity}" />           
+        </exec>
+        <delete file="${certificate.output.directory}/${alias}.csr"/>
+        <delete file=".rnd"/>
+
+        <!-- convert signed certificate to DER -->
+    	<exec dir="." executable="openssl" failonerror="false">
+            <arg value="x509"/>
+            <arg value="-outform" />
+            <arg value="DER" />
+            <arg value="-in" />           
+            <arg value="${certificate.output.directory}/${alias}.pem" />           
+            <arg value="-out" />           
+            <arg value="${certificate.output.directory}/${alias}.cer" />           
+        </exec>
+        <delete file="${certificate.output.directory}/${alias}.pem"/>
+
+    	<!-- put signed certificate in keystore -->
+        <exec dir="." executable="keytool" failonerror="true">
+            <arg value="-import"/>
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-file" />
+            <arg value="${certificate.output.directory}/${alias}.cer" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-keypass" />
+            <arg value="${keystore.pass}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+        </exec>
+        <delete file="${certificate.output.directory}/${alias}.cer"/>
+    </target>
+
+    <!-- Exports a certificate from a keystore. -->
+    <target name="keytoolexport">
+        <exec dir="." executable="keytool" failonerror="true">
+            <arg value="-export"/>
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+            <arg value="-file" />           
+            <arg value="${outfile}" />           
+        </exec>
+    </target>
+
+    <!-- Imports a certificate into a keystore. -->
+    <target name="keytoolimport">
+        <exec dir="." executable="keytool" failonerror="true">
+            <arg value="-import"/>
+            <arg value="-noprompt" />
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+            <arg value="-file" />           
+            <arg value="${infile}" />           
+        </exec>
+    </target>
+
+    <!-- Imports the ca-certificate from OpenSSL. -->
+    <target name="caimport">
+    	<!-- Convert Certificate to DER -->
+        <exec dir="." executable="openssl" failonerror="false">
+            <arg value="x509"/>
+            <arg value="-outform" />
+            <arg value="DER" />
+            <arg value="-in" />
+            <arg value="${openssl.cacert.path}" />
+            <arg value="-out" />
+            <arg value="${certificate.output.directory}/cacert.cer" />           
+        </exec>
+
+        <!-- Import Certificate to Keystore -->
+    	<exec dir="." executable="keytool" failonerror="false">
+            <arg value="-import"/>
+            <arg value="-noprompt" />
+            <arg value="-alias" />
+            <arg value="${alias}" />
+            <arg value="-keystore" />
+            <arg value="${keystore.name}" />
+            <arg value="-storepass" />           
+            <arg value="${keystore.pass}" />           
+            <arg value="-file" />           
+            <arg value="${certificate.output.directory}/cacert.cer" />           
+        </exec>
+        <delete file="${certificate.output.directory}/cacert.cer"/>
+    </target>
+    	
+    <!-- Generates a PKCS12-certificate-file from a certificate. 
+        The jar-file PrivateKeyExtractor.jar has to be in classpath.
+    -->
+    <target name="opensslpkcs12">
+        <exec dir="." executable="openssl" failonerror="true">
+            <arg value="x509"/>
+            <arg value="-out" />
+            <arg value="${certificate.output.directory}/pem.cer" />
+            <arg value="-outform" />
+            <arg value="pem" />
+            <arg value="-text" />
+            <arg value="-in" />           
+            <arg value="${infile}" />           
+            <arg value="-inform" />           
+            <arg value="der" />           
+        </exec>
+        <java fork="true" failonerror="yes" classname="ExportPriv" 
+        	classpathref="private.key.extractor.classpath" output="${certificate.output.directory}/key.8">  
+          <arg line="${keystore.name} ${alias} ${keystore.pass}"/>
+        </java>
+        <exec dir="." executable="openssl" failonerror="true">
+            <arg value="pkcs12"/>
+            <arg value="-export" />
+            <arg value="-out" />
+            <arg value="${outfile}" />
+            <arg value="-inkey" />
+            <arg value="${certificate.output.directory}/key.8" />
+            <arg value="-in" />
+            <arg value="${certificate.output.directory}/pem.cer" />           
+            <arg value="-passout" />           
+            <arg value="pass:${keystore.pass}" />           
+        </exec>
+        <delete file="${certificate.output.directory}/pem.cer"/>
+        <delete file="${certificate.output.directory}/key.8"/>
+    </target>
+
+</project>

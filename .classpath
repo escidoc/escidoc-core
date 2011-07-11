@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="common-spec/target/classes" path="common-spec/src/main/java"/>
+	<classpathentry kind="src" output="common-spec/target/test-classes" path="common-spec/src/test/java"/>
+    <classpathentry kind="src" output="om-spec/target/classes" path="om-spec/src/main/java"/>
+	<classpathentry kind="src" output="om-spec/target/test-classes" path="om-spec/src/test/java"/>
+	<classpathentry kind="src" output="st-spec/target/classes" path="st-spec/src/main/java"/>
+	<classpathentry kind="src" output="st-spec/target/test-classes" path="st-spec/src/test/java"/>
+	<classpathentry kind="src" output="sm-spec/target/classes" path="sm-spec/src/main/java"/>
+	<classpathentry kind="src" output="sm-spec/target/test-classes" path="sm-spec/src/test/java"/>
+    <classpathentry kind="src" output="oum-spec/target/classes" path="oum-spec/src/main/java"/>
+	<classpathentry kind="src" output="oum-spec/target/test-classes" path="oum-spec/src/test/java"/>
+	<classpathentry kind="src" output="oai-spec/target/classes" path="oai-spec/src/main/java"/>
+	<classpathentry kind="src" output="oai-spec/target/test-classes" path="oai-spec/src/test/java"/>
+	<classpathentry kind="src" output="tme-spec/target/classes" path="tme-spec/src/main/java"/>
+	<classpathentry kind="src" output="tme-spec/target/test-classes" path="tme-spec/src/test/java"/>
+	<classpathentry kind="src" output="adm-spec/target/classes" path="adm-spec/src/main/java"/>
+	<classpathentry kind="src" output="adm-spec/target/test-classes" path="adm-spec/src/test/java"/>
+	<classpathentry kind="src" output="cmm-spec/target/classes" path="cmm-spec/src/main/java"/>
+	<classpathentry kind="src" output="cmm-spec/target/test-classes" path="cmm-spec/src/test/java"/>
+	<classpathentry kind="src" output="aa-spec/target/classes" path="aa-spec/src/main/java"/>
+	<classpathentry kind="src" output="aa-spec/target/test-classes" path="aa-spec/src/test/java"/>
+	<classpathentry kind="src" output="jaxrs-framework/target/test-classes" path="jaxrs-framework/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/resources"/>
+	<classpathentry kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/target/generated-sources/java"/>
+	<classpathentry excluding="**" kind="src" output="utilities/target/test-classes" path="utilities/src/test/resources"/>
+	<classpathentry kind="src" output="utilities/target/test-classes" path="utilities/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="utilities/target/classes" path="utilities/src/main/resources"/>
+	<classpathentry kind="src" output="utilities/target/classes" path="utilities/src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/test-classes" path="fedora-service-rest/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/src/main/resources"/>
+	<classpathentry kind="src" output="fedora-service-rest/target/classes" path="fedora-service-rest/src/main/java"/>
+	<classpathentry kind="src" output="fedora-service-client/target/test-classes" path="fedora-service-client/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/resources"/>
+	<classpathentry kind="src" output="fedora-service-client/target/classes" path="fedora-service-client/src/main/java"/>
+	<classpathentry kind="src" path="aa/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="common/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="oai/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="sm/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="st/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="integration-tests/target/generated-sources"/>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="common/target/classes" path="common/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/resources"/>
+	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/filtered-resources"/>
+	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
+	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
+	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
+	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="cmm/target/classes" path="cmm/src/main/resources"/>
+	<classpathentry kind="src" output="oai/target/classes" path="oai/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="oai/target/classes" path="oai/src/main/resources"/>
+	<classpathentry kind="src" output="om/target/classes" path="om/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="om/target/classes" path="om/src/main/resources"/>
+	<classpathentry kind="src" output="oum/target/classes" path="oum/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="oum/target/classes" path="oum/src/main/resources"/>
+	<classpathentry kind="src" output="sb/target/classes" path="sb/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="sb/target/classes" path="sb/src/main/resources"/>
+	<classpathentry kind="src" output="sm/target/classes" path="sm/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="sm/target/classes" path="sm/src/main/resources"/>
+	<classpathentry kind="src" output="st/target/classes" path="st/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="st/target/classes" path="st/src/main/resources"/>
+	<classpathentry kind="src" output="tme/target/classes" path="tme/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="tme/target/classes" path="tme/src/main/resources"/>
+	<classpathentry kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="integration-tests/target/test-classes" path="integration-tests/src/test/resources"/>
+	<classpathentry kind="src" output="jms-server/target/classes" path="jms-server/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="jms-server/target/classes" path="jms-server/src/main/resources"/>
+	<classpathentry kind="src" output="jms-server/target/test-classes" path="jms-server/src/test/java"/>
+	<classpathentry kind="src" output="index-service-spec/target/classes" path="index-service-spec/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="index-service-spec/target/classes" path="index-service-spec/src/main/resources"/>
+	<classpathentry kind="src" output="index-service-spec/target/test-classes" path="index-service-spec/src/test/java"/>
+	<classpathentry kind="src" output="index-service-impl/target/classes" path="index-service-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="index-service-impl/target/classes" path="index-service-impl/src/main/resources"/>
+	<classpathentry kind="src" output="index-service-impl/target/test-classes" path="index-service-impl/src/test/java"/>
+	<classpathentry kind="src" output="statistic-service-spec/target/classes" path="statistic-service-spec/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="statistic-service-spec/target/classes" path="statistic-service-spec/src/main/resources"/>
+	<classpathentry kind="src" output="statistic-service-spec/target/test-classes" path="statistic-service-spec/src/test/java"/>
+	<classpathentry kind="src" output="statistic-service-impl/target/classes" path="statistic-service-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="statistic-service-impl/target/classes" path="statistic-service-impl/src/main/resources"/>
+	<classpathentry kind="src" output="statistic-service-impl/target/test-classes" path="statistic-service-impl/src/test/java"/>
+	<classpathentry kind="src" output="purge-service-spec/target/classes" path="purge-service-spec/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="purge-service-spec/target/classes" path="purge-service-spec/src/main/resources"/>
+	<classpathentry kind="src" output="purge-service-spec/target/test-classes" path="purge-service-spec/src/test/java"/>
+	<classpathentry kind="src" output="purge-service-impl/target/classes" path="purge-service-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="purge-service-impl/target/classes" path="purge-service-impl/src/main/resources"/>
+	<classpathentry kind="src" output="purge-service-impl/target/test-classes" path="purge-service-impl/src/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

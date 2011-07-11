@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report-definition 
+    xmlns="http://www.escidoc.de/schemas/reportdefinition/0.4"
+    xmlns:prop="http://escidoc.de/core/01/properties/"
+    xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <properties>
+        <prop:name>Report Definition for Report Test2</prop:name>
+        <srel:scope xlink:href="/statistic/scope/1"/>
+    </properties>
+	<sql>
+		select 
+		date, year, requests, sessions   
+		from Report_Test1
+		where requests = {placeholder} order by date desc;
+	</sql> 
+</report-definition>

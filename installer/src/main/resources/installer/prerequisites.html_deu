@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Installationsvoraussetzungen</title>
+    <style type="text/css">
+      h1, h2, h3 { font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+      p, li, td { font-size: 12pt; font-family: 'trebuchet ms', verdana, helvetica, sans-serif; }
+    </style>
+  </head>
+  
+  <body>
+    <h1>Installationsvoraussetzungen</h1>
+    <h2>Einleitung</h2>
+    <p>eSciDoc ist ein komplexes Softwarepaket, bestehend aus verschiedenen Softwarekomponenten. Der installer wird Sie Schritt f&uuml;r Schritt
+       durch den Installationsproze&szlig; f&uuml;hren. Trotzdem ist es notwendig, vor dem Starten des Installers bestimmte Programme zu installieren, die der Installer zur Laufzeit ben&ouml;tigt.
+       Diese Laufzeitumgebung besteht aus zwei Komponenten:
+    </p>
+    <ul>
+      <li>Java JDK</li>
+      <li>Relationale Datenbank</li>
+    </ul>
+    <p>Bitte stellen Sie sicher, da&szlig; beide Softwarekomponenten auf dem Rechner installiert sind, auf dem die eSciDoc-Infrastruktur installiert werden soll.
+    </p>
+    <h2>Java JDK</h2>
+    <p>Die eSciDoc-Infrastruktur ben&ouml;tigt ein Java-Software-Development-Kit (JDK). Eine Java-Laufzeitumgebung (JRE)
+      ist zwar f&uuml;r den Installer ausreichend, aber das System wird trotz einer erfolgreichen Installation nicht starten. Bitte stellen Sie sicher, da&szlig; Sie ein
+      JDK Version 1.6 oder neuer auf Ihrem System installiert haben.
+    </p>
+    <p>Sie k&ouml;nnen das neueste JDK kostenlos von 
+    <a href="http://java.sun.com/javase/downloads/">http://java.sun.com/javase/downloads/</a> herunterladen.</p>
+    <h2>Relationale Datenbank</h2>
+    <p>Die eSciDoc-Infrastruktur unterst&uuml;tzt zur Zeit Oracle als kommerzielle und PostgreSQL als Open-Source-Datenbank.</p> 
+    <ul>
+      <li>Oracle 10g oder neuer</li>
+      <li>PostgreSQL 8.4 oder neuer</li>
+      <!--li>MySQL 5.0 or newer</li-->
+    </ul>
+    <p>Die Datenbank mu&szlig; w&auml;hrend des Installationsprozesses laufen. Sie werden nach Zugangsdaten f&uuml;r einen Datenbankbenutzer
+       mit Rechten zum Anlegen von Datenbanken und Benutzerrollen gefragt. Dieser privilegierte Datenbankbenutzer wird nur zum Anlegen von 2 Rollen
+       (typischerweise "fedoraAdmin" und "escidoc") und von drei Datenbanken ("fedora3", "escidoc-core", "riTriples") ben&ouml;tigt.  
+    </p>  
+    <p>
+      Falls Sie eine existierende Instanz von PostgreSQL (welche sich auf einem entfernten Rechner befinden kann) benutzen wollen, 
+      dann stellen Sie bitte folgendes sicher:
+    </p>
+    <h3>PostgreSQL</h3>
+    <table>
+      <tr><td>Softwareversion:</td><td>&ge; 8.4</td></tr>
+      <tr><td>Datenbankkodierung:</td><td>UTF-8</td></tr>
+    </table>  
+    <!--h3>MySQL 5.0</h3>
+    <table>
+      <tr><td>Software version:</td><td>&gt; 8.3</td></tr>
+      <tr><td>XML support:</td><td><b>to be specified</b></td></tr>
+      <tr><td>Database encoding:</td><td>UTF-8</td></tr>
+      <tr><td>Storage engine:</td><td>InnoDB</td></tr>
+    </table--> 
+  </body>
+</html>

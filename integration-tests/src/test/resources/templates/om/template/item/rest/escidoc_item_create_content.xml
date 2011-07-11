@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item
+	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:escidocContentStreams="http://www.escidoc.de/schemas/contentstreams/0.7"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:version="http://escidoc.de/core/01/properties/version/"
+	xmlns:release="http://escidoc.de/core/01/properties/release/"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xml:base="http://localhost:8080">
+
+	<escidocItem:properties>
+		<srel:context xlink:type="simple" xlink:title="A simple Context"
+			xlink:href="/ir/context/escidoc:ex1" />
+		<srel:content-model xlink:type="simple"
+			xlink:title="Generic Content Model"
+			xlink:href="/cmm/content-model/escidoc:ex4" />
+
+		<prop:content-model-specific
+			xmlns:prop="http://escidoc.de/core/01/properties/">
+			<cms-prop test="1" />
+		</prop:content-model-specific>
+	</escidocItem:properties>
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record name="escidoc">
+			<metadata />
+		</escidocMetadataRecords:md-record>
+
+	</escidocMetadataRecords:md-records>
+
+
+	<escidocComponents:components>
+
+		<escidocComponents:component>
+			<escidocComponents:properties>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+				<prop:file-name>eSciDoc Banner 2008</prop:file-name>
+				<prop:mime-type>image/jpeg</prop:mime-type>
+			</escidocComponents:properties>
+
+			<escidocComponents:content
+				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				storage="internal-managed" />
+		</escidocComponents:component>
+
+	</escidocComponents:components>
+
+</escidocItem:item>
+

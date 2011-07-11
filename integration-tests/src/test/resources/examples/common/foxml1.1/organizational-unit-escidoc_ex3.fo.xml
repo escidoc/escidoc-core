@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="escidoc:ex3"
+  xmlns:audit="info:fedora/fedora-system:def/audit#" xmlns:fedoraxsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Generic Organizational Unit"/>
+     
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="" MIMETYPE="text/xml" SIZE="931">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
+          <rdf:Description rdf:about="info:fedora/escidoc:ex3">
+		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
+            <rdf:type rdf:resource="http://escidoc.de/core/01/resources/OrganizationalUnit"/>
+            <srel:created-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <prop:created-by-title>roland</prop:created-by-title>
+            <srel:modified-by rdf:resource="info:fedora/escidoc:testsystemadministrator"/>
+            <prop:modified-by-title>roland</prop:modified-by-title> 
+            <prop:public-status>opened</prop:public-status>
+            <prop:public-status-comment>Organizational unit escidoc:ex3 opened.</prop:public-status-comment>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+ <foxml:datastream CONTROL_GROUP="X" ID="escidoc" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ALT_IDS="metadata unknown unknown" CREATED="2008-02-11T16:24:39.998Z" ID="escidoc.0"
+      LABEL="" MIMETYPE="text/xml" SIZE="1225">
+      <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
+      <foxml:xmlContent>   
+          <ou:organization-details xmlns:ou="http://escidoc.mpg.de/metadataprofile/schema/0.1/organization">
+            <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Generic Organizational Unit</dc:title>
+            <dcterms:alternative xmlns:dcterms="http://purl.org/dc/terms/">GenOU</dcterms:alternative>
+            <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Just a generic organizational unit.</dc:description>
+            <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+            <ou:organization-type>institute</ou:organization-type>
+            <ou:country>DE</ou:country>
+            <ou:city></ou:city>
+            <kml:coordinates xmlns:kml="http://www.opengis.net/kml/2.2">10,20,0</kml:coordinates>
+            <ou:start-date/>
+            <ou:end-date/>
+          </ou:organization-details>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="DC.0" LABEL="Dublin Core Metadata"
+      MIMETYPE="text/xml" SIZE="243">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <dc:title>Generic Organizational Unit</dc:title>
+          <dc:description>Just a generic organizational unit.</dc:description>
+          <dc:identifier>escidoc:ex3</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

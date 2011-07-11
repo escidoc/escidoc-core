@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- item: 12121 Version 0.6, updated: 21.11.2006-->
+<escidocItem:item xml:base="http://www.escidoc.de/"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.2"
+	xmlns:escidocProperties="http://www.escidoc.de/schemas/properties/0.2"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:escidocLicenseinformations="http://www.escidoc.de/schemas/licenseinformations/0.2"
+	xmlns:escidocRelations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:escidocResources="http://www.escidoc.de/schemas/resources/0.2"
+	xmlns:escidocMetadata="http://www.escidoc-project.de/metadata/schema/0.2"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
+	xmlns:escidocLicenses="http://www.escidoc.de/schemas/licenses/0.2"
+	xmlns:escidocTechnicalMetadata="http://www.escidoc.de/schemas/technicalmetadata/0.2"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.0/"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	prefix-xlink:type="simple" prefix-xlink:title="page scan 21"
+	prefix-xlink:href="/ir/item/escidoc:12121" objid="escidoc:12121">
+	<!-- if version is retrieved by VersionNumber:         prefix-xlink:href="/ir/item/escidoc:12121:3"  -->
+		<!--  escidocItem:properties  -->
+	<escidocItem:properties prefix-xlink:type="simple" prefix-xlink:title="Properties" prefix-xlink:href="/ir/item/escidoc:12121/properties">
+		<escidocItem:creation-date>2006-06-21T12:00:00.000+01:00</escidocItem:creation-date>
+		<escidocItem:context prefix-xlink:type="simple" prefix-xlink:title="MPIWG Collection" prefix-xlink:href="/ir/context/escidoc:12345"/>
+		<escidocItem:content-type prefix-xlink:type="simple" prefix-xlink:title="SWB Scan" prefix-xlink:href="/ir/content-type/escidoc:65487"/>
+		<escidocItem:status>released</escidocItem:status> <!-- allowed status values: pending, submitted, released, withdrawn, deleted -->
+		<escidocItem:creator prefix-xlink:type="simple" prefix-xlink:title="creator" prefix-xlink:href="/ir/account/escidoc:14141"/>
+		<escidocItem:lock-status>unlocked</escidocItem:lock-status>
+		<escidocItem:content-type-specific>
+		<prop1>dfdfdf</prop1>
+		<prop2>aaaaaaa</prop2>
+		</escidocItem:content-type-specific>
+		<escidocItem:current-version prefix-xlink:type="simple" prefix-xlink:title="current version" prefix-xlink:href="/ir/item/escidoc:12121/properties/current-version">
+			<escidocItem:number>7</escidocItem:number>
+			<escidocItem:date>2006-11-23T12:00:00.000+01:00</escidocItem:date> 
+			<escidocItem:version-status>released</escidocItem:version-status><!-- allowed status values: pending, submitted, released, withdrawn, deleted -->
+			<escidocItem:valid-status/>
+		</escidocItem:current-version>
+		<escidocItem:latest-version prefix-xlink:type="simple" prefix-xlink:title="latest version" prefix-xlink:href="/ir/item/escidoc:12121/properties/latest-version">
+			<escidocItem:number>7</escidocItem:number>
+			<escidocItem:date>2006-11-23T12:00:00.000+01:00</escidocItem:date> 
+		</escidocItem:latest-version>
+		<escidocItem:latest-revision prefix-xlink:type="simple" prefix-xlink:title="latest revision" prefix-xlink:href="/ir/item/escidoc:12121/properties/latest-revision">
+			<escidocItem:number>2</escidocItem:number>
+			<escidocItem:date>2006-11-23T12:00:00.000+01:00</escidocItem:date> 
+			<escidocItem:pid prefix-xlink:type="simple" prefix-xlink:title="infouri">info:escidoc/escidoc:12121:7></escidocItem:pid>
+		</escidocItem:latest-revision>
+	</escidocItem:properties>
+	<escidocResources:resources prefix-xlink:type="simple" prefix-xlink:title="virtual resources" prefix-xlink:href="/ir/item/escidoc:12121/resources">
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="METS-representation of this item" prefix-xlink:href="/ir/item/escidoc:12121/resources/mets"/>
+		<escidocResources:resource prefix-xlink:type="simple" prefix-xlink:title="List of all versions" prefix-xlink:href="/ir/item/escidoc:12121/resources/versions"/>
+	</escidocResources:resources>
+		<!--  escidocMetadataRecords:md-records   -->
+	<escidocMetadataRecords:md-records prefix-xlink:type="simple" prefix-xlink:title="available metadata" prefix-xlink:href="/ir/item/escidoc:12121/md-records">
+		<escidocMetadataRecords:md-record prefix-xlink:type="simple" prefix-xlink:title="Dublin Core MD Record" prefix-xlink:href="/ir/item/escidoc:12121/md-records/dc" schema="http://dublincore.org/schemas/xmls/qdc/2006/01/06/dc.xsd" name="dc">
+			<prefix-dc:dc>
+				<prefix-dc:title> 333 New vistas in Neotropical stream ecology-Preface</prefix-dc:title>
+				<prefix-dc:creator>Karl M. Wantzen and Happy</prefix-dc:creator>
+				<prefix-dc:creator>Alonso Ramirez</prefix-dc:creator>
+				<prefix-dc:creator>Kirk O. Winemiller</prefix-dc:creator>
+				<prefix-dc:subject>blahblah</prefix-dc:subject>
+				<prefix-dc:publisher> Dublin Core Metadata Initiative </prefix-dc:publisher>
+				<prefix-dc:contributor> Dublin Core Data Model Working Group </prefix-dc:contributor>
+				<prefix-dc:date>2006-08-25T12:00:00.000+01:00</prefix-dc:date>
+				<prefix-dc:format>text/html </prefix-dc:format>
+				<prefix-dc:language>en</prefix-dc:language>
+			</prefix-dc:dc>
+		</escidocMetadataRecords:md-record>
+		<escidocMetadataRecords:md-record prefix-xlink:type="simple" prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:href="/ir/item/escidoc:12121/md-records/escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1" name="escidoc">
+			<escidocMetadata:escidoc>
+				<escidocMetadata:genre>Article</escidocMetadata:genre>
+				<escidocMetadata:identifier>
+					<escidocMetadata:id>10.1899/0885-3593(2006)25[61:NVINSE]2.0.CO;2</escidocMetadata:id>
+					<escidocMetadata:id-type>DOI</escidocMetadata:id-type>
+				</escidocMetadata:identifier>
+				<escidocMetadata:identifier>
+					<escidocMetadata:id>2458/S 38472444</escidocMetadata:id>
+					<escidocMetadata:id-type>LOCALID</escidocMetadata:id-type>
+				</escidocMetadata:identifier>
+				<escidocMetadata:creator>
+					<escidocMetadata:person>
+						<escidocMetadata:identifier>
+							<escidocMetadata:id>115885390</escidocMetadata:id>
+							<escidocMetadata:id-type>PND</escidocMetadata:id-type>
+						</escidocMetadata:identifier>
+						<escidocMetadata:complete-name>Karl M. Wantzen and Happy</escidocMetadata:complete-name>
+						<escidocMetadata:given-name>Karl Matthias</escidocMetadata:given-name>
+						<escidocMetadata:family-name>Wantzen und Happy</escidocMetadata:family-name>
+						<escidocMetadata:title/>
+						<escidocMetadata:pseudonym/>
+						<escidocMetadata:initials/>
+					</escidocMetadata:person>
+					<escidocMetadata:role>Author</escidocMetadata:role>
+				</escidocMetadata:creator>
+				<escidocMetadata:creator>
+					<escidocMetadata:person>
+						<escidocMetadata:identifier>
+							<escidocMetadata:id/>
+							<escidocMetadata:id-type/>
+						</escidocMetadata:identifier>
+						<escidocMetadata:complete-name>Alonso Ramirez</escidocMetadata:complete-name>
+						<escidocMetadata:given-name>Alonso</escidocMetadata:given-name>
+						<escidocMetadata:family-name>Ramirez</escidocMetadata:family-name>
+						<escidocMetadata:title/>
+						<escidocMetadata:pseudonym/>
+						<escidocMetadata:initials/>
+					</escidocMetadata:person>
+					<escidocMetadata:role>Author</escidocMetadata:role>
+				</escidocMetadata:creator>
+				<escidocMetadata:creator>
+					<escidocMetadata:person>
+						<escidocMetadata:identifier>
+							<escidocMetadata:id/>
+							<escidocMetadata:id-type/>
+						</escidocMetadata:identifier>
+						<escidocMetadata:complete-name>Kirk O. Winemiller</escidocMetadata:complete-name>
+						<escidocMetadata:given-name>Kirk O.</escidocMetadata:given-name>
+						<escidocMetadata:family-name>Winemiller</escidocMetadata:family-name>
+						<escidocMetadata:title/>
+						<escidocMetadata:pseudonym/>
+						<escidocMetadata:initials/>
+					</escidocMetadata:person>
+					<escidocMetadata:role>Author</escidocMetadata:role>
+				</escidocMetadata:creator>
+				<escidocMetadata:file>
+					<escidocMetadata:file-name>String</escidocMetadata:file-name>
+					<escidocMetadata:file-extension>String</escidocMetadata:file-extension>
+					<escidocMetadata:file-id>String</escidocMetadata:file-id>
+					<escidocMetadata:owner>String</escidocMetadata:owner>
+					<escidocMetadata:owner-id>String</escidocMetadata:owner-id>
+					<escidocMetadata:size>2147483647</escidocMetadata:size>
+					<escidocMetadata:mime-type>application</escidocMetadata:mime-type>
+					<escidocMetadata:import-date>1967-08-13T12:00:00.000+01:00</escidocMetadata:import-date>
+					<escidocMetadata:last-access-date>1967-08-13T12:00:00.000+01:00</escidocMetadata:last-access-date>
+					<escidocMetadata:last-modification-date>1967-08-13T12:00:00.000+01:00</escidocMetadata:last-modification-date>
+					<escidocMetadata:file-type>abstract</escidocMetadata:file-type>
+					<escidocMetadata:file-type>abstract</escidocMetadata:file-type>
+				</escidocMetadata:file>
+				<escidocMetadata:date>
+					<escidocMetadata:date>2005-02-25T12:00:00.000+01:00</escidocMetadata:date>
+					<escidocMetadata:type>published</escidocMetadata:type>
+				</escidocMetadata:date>
+				<escidocMetadata:title>333 New vistas in Neotropical stream ecology-Preface</escidocMetadata:title>
+				<escidocMetadata:original-language/>
+				<escidocMetadata:original-title/>
+				<escidocMetadata:edition/>
+				<escidocMetadata:review-type>reviewed</escidocMetadata:review-type>
+				<escidocMetadata:publication-status>published</escidocMetadata:publication-status>
+				<escidocMetadata:relation>
+					<escidocMetadata:relation-type>Is Original Of</escidocMetadata:relation-type>
+					<escidocMetadata:relation-identifier type="eSciDoc">String</escidocMetadata:relation-identifier>
+					<escidocMetadata:relation-identifierType>eSciDoc</escidocMetadata:relation-identifierType>
+					<escidocMetadata:short-description>String</escidocMetadata:short-description>
+				</escidocMetadata:relation>
+				<escidocMetadata:table-of-contents/>
+				<escidocMetadata:audience>popular</escidocMetadata:audience>
+				<escidocMetadata:custom/>
+				<escidocMetadata:subject>blahblah</escidocMetadata:subject>
+				<escidocMetadata:source>
+					<escidocMetadata:title>Nature</escidocMetadata:title>
+					<escidocMetadata:title-abbreviation>NATURE</escidocMetadata:title-abbreviation>
+					<escidocMetadata:title-abbreviation>NAT</escidocMetadata:title-abbreviation>
+					<escidocMetadata:alternate-title>String</escidocMetadata:alternate-title>
+					<escidocMetadata:creator>
+						<escidocMetadata:person>
+							<escidocMetadata:identifier>
+								<escidocMetadata:id>String</escidocMetadata:id>
+								<escidocMetadata:id-type>uri</escidocMetadata:id-type>
+							</escidocMetadata:identifier>
+							<escidocMetadata:complete-name>String</escidocMetadata:complete-name>
+							<escidocMetadata:given-name>String</escidocMetadata:given-name>
+							<escidocMetadata:family-name>String</escidocMetadata:family-name>
+							<escidocMetadata:title>String</escidocMetadata:title>
+							<escidocMetadata:pseudonym>String</escidocMetadata:pseudonym>
+							<escidocMetadata:initials>String</escidocMetadata:initials>
+						</escidocMetadata:person>
+						<escidocMetadata:role>Publisher</escidocMetadata:role>
+					</escidocMetadata:creator>
+					<escidocMetadata:volume>27</escidocMetadata:volume>
+					<escidocMetadata:issue>5</escidocMetadata:issue>
+					<escidocMetadata:start-page>40</escidocMetadata:start-page>
+					<escidocMetadata:end-page>80</escidocMetadata:end-page>
+					<escidocMetadata:sequence-number>String</escidocMetadata:sequence-number>
+					<escidocMetadata:place>String</escidocMetadata:place>
+					<escidocMetadata:edition/>
+					<escidocMetadata:identifier>
+						<escidocMetadata:id>0887-3594</escidocMetadata:id>
+						<escidocMetadata:id-type>ISSN</escidocMetadata:id-type>
+					</escidocMetadata:identifier>
+				</escidocMetadata:source>
+			</escidocMetadata:escidoc>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+		<!--  escidocRelations:relations  -->
+	<escidocRelations:relations prefix-xlink:type="simple" prefix-xlink:title="The Relations" prefix-xlink:href="/ir/item/escidoc:12121/relations"><!-- will be defined later --></escidocRelations:relations>
+		<!--  escidocComponents:components    -->
+	<escidocComponents:components prefix-xlink:type="simple" prefix-xlink:title="Content Components of this Item" prefix-xlink:href="/ir/item/escidoc:12121/components">
+		<escidocComponents:component prefix-xlink:type="simple" prefix-xlink:title="Fulltext of this Item" prefix-xlink:href="/ir/item/escidoc:12121/components/escidoc:56566" type="fulltext" objid="111">
+			<escidocComponents:properties prefix-xlink:type="simple" prefix-xlink:title="Properties" prefix-xlink:href="/ir/item/escidoc:12121/components/escidoc:56566/properties">
+				<escidocComponents:description>this is the first file in PubMan</escidocComponents:description>
+				<escidocComponents:creation-date>2006-06-21T12:00:00.000+01:00</escidocComponents:creation-date>
+				<escidocComponents:modified-date>2006-06-25T12:00:00.000+01:00</escidocComponents:modified-date>
+				<escidocComponents:status>valid</escidocComponents:status>
+				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
+				<escidocTechnicalMetadata:mime-type>image/jpg</escidocTechnicalMetadata:mime-type>
+				<escidocTechnicalMetadata:file-size>234</escidocTechnicalMetadata:file-size>
+				<escidocComponents:visibility>public</escidocComponents:visibility>
+				<escidocComponents:creator prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:31313"/>
+				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
+				<escidocComponents:upload-status>uploaded</escidocComponents:upload-status>
+				<escidocComponents:upload-method>manual</escidocComponents:upload-method>
+			</escidocComponents:properties>
+				<!-- This is supposed to be the Link to the binary content -->
+			<escidocComponents:content prefix-xlink:type="simple" prefix-xlink:title="Content" prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg"/>
+			
+				
+			
+		</escidocComponents:component>
+		
+		
+	</escidocComponents:components>
+</escidocItem:item>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="SCOPE-ID" regexp="/([^/?]*)" />
+	</define>
+
+    <!--#########################################################
+        # Scope List
+        # -->
+    <resource name="Scope" base-uri="/statistic/scopes/">
+		<descriptor uri="/statistic/scopes">
+			<invoke http="GET" method="retrieveScopes" param1="${PARAMETERS}"/>
+		</descriptor>
+    </resource>
+
+	<!--#########################################################
+		# Scope
+		# -->
+	<resource name="Scope" base-uri="/statistic/scope/">
+		<descriptor uri="/statistic/scope">
+			<invoke http="PUT" method="create" param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/statistic/scope/${SCOPE-ID}">
+			<invoke http="DELETE" method="delete"
+				param1="${SCOPE-ID}">
+			</invoke>
+			<invoke http="GET" method="retrieve"
+				param1="${SCOPE-ID}">
+			</invoke>
+			<invoke http="PUT" method="update" param1="${SCOPE-ID}"
+				param2="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

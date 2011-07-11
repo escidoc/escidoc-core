@@ -1,0 +1,12 @@
+## #if( ${components} )
+<${componentsNamespacePrefix}:components #insertConditionalAttribute( ${ORIGIN} "inherited")
+ #if(${isRootSubResource})
+	 #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+	#end
+ #restInsertConditionalRoot(${isRootSubResource} "true" "true" ${componentsNamespacePrefix} ${componentsNamespace} ${componentsTitle} ${componentsHref} ${LAST_MODIFICATION_DATE})>
+
+#if(${components})
+	${components}
+	#end
+</${componentsNamespacePrefix}:components>
+## #end

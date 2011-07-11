@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="OU-ID" regexp="/([^/?]*)" />
+		<var name="MD-RECORD-NAME" regexp="/([^/?]*)" />
+                <var name="RESOURCE_NAME" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-unit/">
+		<descriptor uri="/oum/organizational-unit">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation></documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-unit/${OU-ID}">
+			<invoke http="DELETE" method="delete" param1="${OU-ID}">
+				<documentation visible="true"></documentation>
+			</invoke>
+
+			<invoke http="GET" method="retrieve" param1="${OU-ID}">
+				<documentation></documentation>
+			</invoke>
+
+
+			<invoke http="PUT" method="update" param1="${OU-ID}"
+				param2="${BODY}">
+				<documentation></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# Resources
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources">
+			<invoke http="GET" method="retrieveResources"
+				param1="${OU-ID}">
+				<documentation available="REST"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# properties
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/properties">
+			<invoke http="GET" method="retrieveProperties"
+				param1="${OU-ID}">
+				<documentation visible="true"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# md-records
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/md-records">
+			<invoke http="GET" method="retrieveMdRecords"
+				param1="${OU-ID}">
+				<documentation visible="true"></documentation>
+			</invoke>
+			<invoke http="PUT" method="updateMdRecords"
+				param1="${OU-ID}" param2="${BODY}">
+				<documentation visible="false"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# md-record
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/md-records/md-record/${MD-RECORD-NAME}">
+			<invoke http="GET" method="retrieveMdRecord"
+				param1="${OU-ID}" param2="${MD-RECORD-NAME}">
+				<documentation visible="true"></documentation>
+			</invoke>
+			<invoke http="PUT" method="updateMdRecord"
+				param1="${OU-ID}" param2="${MD-RECORD-NAME}" param3="${BODY}">
+				<documentation visible="false"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# parents
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/parents">
+			<invoke http="GET" method="retrieveParents"
+				param1="${OU-ID}">
+				<documentation visible="true"></documentation>
+			</invoke>
+			<invoke http="PUT" method="updateParents"
+				param1="${OU-ID}"  param2="${BODY}">
+				<documentation visible="false"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# Parents
+			#  -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/parent-objects">
+			<invoke http="GET" method="retrieveParentObjects"
+				param1="${OU-ID}">
+				<documentation></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# Successors
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/successors">
+			<invoke http="GET" method="retrieveSuccessors"
+				param1="${OU-ID}">
+				<documentation visible="true"></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# Children
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/child-objects">
+			<invoke http="GET" method="retrieveChildObjects"
+				param1="${OU-ID}">
+				<documentation></documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+			# path-list
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/path-list">
+			<invoke http="GET" method="retrievePathList"
+				param1="${OU-ID}">
+				<documentation visible="true">
+					<title>retrievePathList</title>
+					<description>
+						<![CDATA[
+						<para>
+							Retrieve the pathList of an
+							OrganizationalUnit. This is a list of all paths 
+							from a given organizational unit to all its top 
+							level organizational units. Each path contains references 
+							to all organizational units of that path.
+						</para>
+ 							<programlisting>
+A simple example:
+Following organizational unit structure is given:
+OrgA
+    |_ OrgC
+OrgB
+    |_ OrgD
+            |_ OrgC
+
+The service would return the following result in an appropriate xml
+structure when called with the id of OrgC
+-Path:
+    -OrgA  
+    -OrgC
+-Path:
+    -OrgB
+    -OrgD
+    -OrgC
+ 							</programlisting>
+					]]>
+					</description>
+					<param>
+						<param1 name="ouId">
+							The identifier of the Organizational Unit.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the pathlist of that
+						OrganizationalUnit corresponding to XMLschema
+						"organizational-unit-path-list.xsd"
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/open">
+			<invoke http="POST" method="open" param1="${OU-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>open</title>
+					<description>
+						<![CDATA[
+						<para>Change the state of an organizational unit to "opened".</para>
+						<para>
+							<emphasis role="bold">Prerequisites:</emphasis>
+						</para>
+						<para>
+							The OrganizationalUnit must exist and must be in state "created".
+						</para>
+						<para>
+							The OrganizationalUnit must not have any children.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed 
+									using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The state of the OrganizationalUnit is set to "opened".
+								</para>
+							</listitem>
+						</itemizedlist>
+						<para><emphasis role="bold">Example:</emphasis>
+						<programlisting>]]>
+						<![CDATA[
+							<![CDATA[
+<param last-modification-date="1967-08-13T12:00:00.000+01:00">
+</param>]]]>]><![CDATA[</programlisting>
+						</para>
+						]]>
+					</description>
+					<param>
+						<param1 name="id">
+							The id of the organizational unit to be
+							opened.
+						</param1>
+						<param2 name="taskParam">
+							The timestamp of the last modification of
+							the organizational unit (see example above).
+						</param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML result representation 
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/close">
+			<invoke http="POST" method="close" param1="${OU-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>close</title>
+					<description>
+						<![CDATA[
+						<para>Change the state of an organizational unit to "closed".</para>
+						<para>
+							<emphasis role="bold">Prerequisites:</emphasis>
+						</para>
+						<para>
+							The OrganizationalUnit must exist and must be in state "opened".
+						</para>
+						<para>
+							The OrganizationalUnit must not have any children.
+						</para>
+						<para>
+						    <emphasis role="bold">Tasks:</emphasis>
+						</para>
+						<itemizedlist mark="opencircle">
+							<listitem>
+								<para>
+									The OrganizationalUnit is accessed 
+									using the provided id.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The state of the OrganizationalUnit is set to "closed".
+								</para>
+							</listitem>
+						</itemizedlist>
+						<para><emphasis role="bold">Example:</emphasis>
+						<programlisting>]]>
+						<![CDATA[
+							<![CDATA[
+<param last-modification-date="1967-08-13T12:00:00.000+01:00">
+</param>]]]>]><![CDATA[</programlisting>
+						</para>
+						]]>
+					</description>
+					<param>
+						<param1 name="id">
+							The id of the organizational unit to be
+							closed.
+						</param1>
+						<param2 name="taskParam">
+							The timestamp of the last modification of
+							the organizational unit (see example above).
+						</param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML result representation 
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+		    # Relations
+		    # -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources/${RESOURCE_NAME}">
+			<invoke http="GET" method="retrieveResource" param1="${OU-ID}" param2="${RESOURCE_NAME}"/>
+		</descriptor>
+	</resource>
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-units/">
+		<!--#
+			# Filtered retrieval of OrganizationalUnits
+			# -->
+                <descriptor uri="/oum/organizational-units">
+                        <invoke http="GET" method="retrieveOrganizationalUnits" param1="${PARAMETERS}"/>
+                </descriptor>
+	</resource>
+
+</mapping>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-user-group:user-group
+    xmlns:prefix-user-group="http://www.escidoc.de/schemas/usergroup/0.6"
+    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+    <prefix-user-group:properties>
+        <prefix-prop:email>bla@bla.de</prefix-prop:email>
+        <prefix-prop:name>Newname</prefix-prop:name>
+        <prefix-prop:label>test_dep_scientist</prefix-prop:label>
+        
+        <prefix-prop:description>°^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description> 
+        <prefix-prop:type>type</prefix-prop:type>
+        <prefix-prop:active>true</prefix-prop:active>
+    </prefix-user-group:properties>
+    <prefix-user-group:selectors>
+        <prefix-user-group:selector name="o" type="user-attribute">escidoc:123</prefix-user-group:selector>
+        <prefix-user-group:selector name="user-account" type="internal">escidoc:123</prefix-user-group:selector>
+        <prefix-user-group:selector name="user-group" type="internal">escidoc:123</prefix-user-group:selector>
+    </prefix-user-group:selectors>
+</prefix-user-group:user-group>

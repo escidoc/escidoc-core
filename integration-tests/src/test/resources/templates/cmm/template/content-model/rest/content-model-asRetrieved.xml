@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+<escidocContentModel:content-model
+	xmlns:escidocContentStreams="http://www.escidoc.de/schemas/contentstreams/0.7"
+	xmlns:version="http://escidoc.de/core/01/properties/version/"
+	xmlns:release="http://escidoc.de/core/01/properties/release/"
+	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.1"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xml:base="http://localhost:8080"
+	xlink:type="simple" xlink:title="Test all for create CM" xlink:href="/cmm/content-model/escidoc:64002"
+	last-modification-date="2009-10-07T12:41:44.937Z">
+	<escidocContentModel:properties
+		xlink:type="simple" xlink:title="Properties"
+		xlink:href="/cmm/content-model/escidoc:64002/properties">
+		<prop:name>Test as retrieved for create CM</prop:name>
+		<prop:description>for test purpose</prop:description>
+		<prop:creation-date>2009-10-07T12:41:44.89Z</prop:creation-date>
+		<srel:created-by xlink:type="simple"
+			xlink:title="Test System Administrator User" xlink:href="/aa/user-account/escidoc:testsystemadministrator" />
+		<prop:version xlink:type="simple" xlink:title="This Version"
+			xlink:href="/cmm/content-model/escidoc:64002:1">
+			<version:number>1</version:number>
+			<version:date>2009-10-07T12:41:44.937Z</version:date>
+			<version:status>pending</version:status>
+			<srel:modified-by xlink:type="simple"
+				xlink:title="Test System Administrator User" xlink:href="/aa/user-account/escidoc:testsystemadministrator" />
+			<version:comment>Object created. Content Model escidoc:64002 created.</version:comment>
+		</prop:version>
+		<prop:latest-version xlink:type="simple"
+			xlink:title="Latest Version" xlink:href="/cmm/content-model/escidoc:64002:1">
+			<version:number>1</version:number>
+			<version:date>2009-10-07T12:41:44.937Z</version:date>
+		</prop:latest-version>
+	</escidocContentModel:properties>
+
+	<escidocContentModel:md-record-definitions>
+		<escidocContentModel:md-record-definition
+			name="escidoc">
+			<escidocContentModel:schema xlink:type="simple"
+				xlink:title="escidoc"
+				xlink:href="http://localhost:8080/xsd/rest/content-model/0.1/content-model.xsd" />
+		</escidocContentModel:md-record-definition>
+	</escidocContentModel:md-record-definitions>
+
+	<escidocContentModel:resource-definitions>
+		<escidocContentModel:resource-definition
+			name="trans">
+			<escidocContentModel:xslt xlink:type="simple"
+				xlink:title="trans"
+				xlink:href="http://localhost:8080/xsl/resultCheck.xsl" />
+			<escidocContentModel:md-record-name>escidoc</escidocContentModel:md-record-name>
+		</escidocContentModel:resource-definition>
+	</escidocContentModel:resource-definitions>
+
+	<escidocContentStreams:content-streams
+		xlink:type="simple" xlink:title="Content streams of Item escidoc:64002"
+		xlink:href="/cmm/content-model/escidoc:64002/content-streams">
+		<escidocContentStreams:content-stream
+			name="DC-MAPPING" xlink:type="simple" xlink:title=""
+			xlink:href="/cmm/content-model/escidoc:64002/content-streams/content-stream/DC-MAPPING/content"
+			mime-type="text/xml" storage="external-managed" />
+	</escidocContentStreams:content-streams>
+
+	<escidocContentModel:resources
+		xlink:type="simple" xlink:title="Resources"
+		xlink:href="/cmm/content-model/escidoc:64002/resources">
+		<escidocContentModel:version-history
+			xlink:type="simple" xlink:title="Version History"
+			xlink:href="/cmm/content-model/escidoc:64002/resources/version-history" />
+	</escidocContentModel:resources>
+</escidocContentModel:content-model>

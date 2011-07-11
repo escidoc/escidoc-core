@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+	<section id="Overview.Identifier">
+		<title>eSciDoc Resource Identifier</title>
+
+		<para>eSciDoc resource identifiers are based on Fedora identifiers. Each
+			eSciDoc resource identifier is obtained from the underlying Fedora 
+			repository. Whereas Fedora is relatively relaxed regarding valid identifier
+			prefixes, eSciDoc only accepts the prefix declared in the 
+			<literal>escidoc.core.properties</literal> configuration file. The use 
+			of a non-matching prefix raises an exception.  
+	   </para>
+		<para>
+			eSciDoc identifiers consist of a prefix, a sequencial number, and an
+			optional version identifier. The following formal definition in 
+			EBNF <footnote id="EBNF"><para>Extended Backus–Naur Form (EBNF) is a 
+			family of metasyntax  notations used for expressing context-free 
+			grammars: that is, a formal way to describe computer programming 
+			languages and other formal languages. They are extensions of the 
+			basic Backus–Naur Form (BNF) metasyntax notation. For more details,
+			please refer to EBNF on Wikipedia (http://en.wikipedia.org/wiki/EBNF)
+		  or other online resources.</para></footnote>
+		</para>
+		
+    <para>
+    	<informaltable frame="all">
+        <tgroup cols="1">
+          <thead><row><entry>EBNF</entry></row></thead>
+          <tbody><row><entry><programlisting>
+DIGIT       = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"´;
+
+ZERO        = "0" ;
+
+LOWERCHAR   = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" |
+              "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | 
+              "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+               
+UPPERCHAR   = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" |
+              "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | 
+              "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;
+
+CHAR        = LOWERCHAR | UPPERCHAR ;
+
+escidoc-id  = prefix , ":" , sequence-no , [ ":" , version-id ] ;
+        
+prefix      = LOWERCHAR , { LOWERCHAR | DIGIT | ZERO | "." | "-" } ;
+
+sequence-no = DIGIT , { DIGIT | ZERO } ;
+
+version-id  = DIGIT , { DIGIT | ZERO } ;
+          </programlisting></entry></row></tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+		
+		<para>The prefix may be any string. It must contain only lower-case 
+			letters, hyphens, and digits. The first character of the prefix 
+			must be a letter.
+		</para>
+		<para>
+			The sequence-number is a positive natural number of varying length
+			and is maintained by the eSciDoc Infrastructure. The user has no 
+			way of influencing the number.
+		</para>
+		<para>
+			The optional version identifier is a positive natural number of 
+			varying length and is maintained by the eSciDoc Infrastructure. 
+			The version identifier of every new version of a resource is 
+			incremented by one compared to the version identifer of the 
+			previous version.  
+		</para>
+		<para>
+			Version identifiers only apply to Item and Container resources. Please
+			refer to the sections on Versioning in the respective API documentation
+			to learn more about this feature.
+		</para>
+	</section>
+
+	<section id="OptimisticLocking">
+    <title>Optimistic Locking</title>
+
+    <para>Optimistic locking pertains to update operations for all resources
+    of the services of the eSciDoc Infrastructure. It is automatically 
+    enforced by the services without any user interaction. The main 
+    goal is to avoid conflicts
+    between two concurrent update operations on the same resource. Optimistic
+    locking acts on the assumption that conflicts occur rarely. Typical
+    locking strategies necessitate the locking of a resource for retrieve
+    (read) operations as well, which can impair many users, especially in
+    scenarios with a high read-to-write ratio. Optimistic locking always
+    allows retrieving resources. However, it cannot avoid that a concurrent
+    user overwrites a resource while another user is still modifying it
+    locally; it just can detect the conflict and notify users. The typical
+    flow of actions for an update operation with optimistic locking is as
+    follows:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>The user retrieves a resource. Its representation contains a
+        <literal>last-modification-date</literal> attribute automatically set
+        by the eSciDoc Infrastructure service.</para>
+      </listitem>
+
+      <listitem>
+        <para>The user modifies the resource representation locally.</para>
+      </listitem>
+
+      <listitem>
+        <para>The user stores the modified resource back to the originating 
+        	service by invoking the <literal>update()</literal> method.
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>The invoked service of the eSciDoc Infrastructure compares the 
+        	<literal>last-modification-date</literal> attribute in the 
+        	representation with the <literal>last-modification-date</literal> 
+        	of the latest version of the object stored in the repository. If 
+        	the latter date is newer, the originally retrieved version has 
+        	been meanwhile overwritten by a concurrent user. To avoid a 
+        	conflict, the eSciDoc Infrastructure service will not execute the 
+        	update, but raise an exception to inform the user about the 
+        	conflict.
+        </para>
+      </listitem>
+    </itemizedlist>
+
+    <para>Optimistic locking is only relevant for update operations. Create
+      operations are by definition not affected by concurrency. Delete
+      operations have the ultimate goal to remove a resource, so an 
+      intermediate update of the resource by a concurrent user should not 
+      block the deletion. Retrieve operations are always possible.
+    </para>
+
+    <!--para>When updating sub-resources, optimistic locking works on resource
+    level. This means that independent updates of different sub-resources
+    within the same object are not possible. As a consequence it is necessary
+    that the input data for the infrastructure contains the timestamp of the
+    object to update which is contained in the attribute
+    <literal>last-modification-date</literal> of the root element of the
+    retrieved object.</para>
+
+    <para>If only a sub-resource is updated, the original timestamp of the
+    surrounding object has to be included as an attribute in the root element
+    of the sub-resource representation before sending it back to the Object
+    Manager. If the representation has already been retrieved as sub-resource
+    via one of the appropriate methods, the last-modification-date attribute
+    is already included in the root element of the sub-resource
+    representation.</para-->
+  </section>
+
+	<section id="Overview.XmlHandling3">
+		<title>XML Handling</title>
+
+		<section>
+			<title>XML Schemas</title>
+
+			<para>An XML schema is a description of a type of XML document,
+				typically
+				expressed in terms of constraints on the structure and content of
+				documents of that type, above and beyond the basic syntactical constraints
+				imposed by XML itself. An XML schema provides a view of the document
+				type
+				at a relatively high level of abstraction.</para>
+
+			<para>Nearly all XML documents that are used within the eSciDoc
+				Infrastructure, mostly resource representations, are described by 
+				XML schemas. All schemas are written in
+				W3C’s XML schema language.</para>
+
+			<para>Typically, a resource representation is defined by a nested set
+				of
+				schemas. Many schemas include other schemas with shared definitions, so
+				getting the whole picture may be a little cumbersome if following
+				the
+				references manually.</para>
+
+			<para>Schemas in eSciDoc are versioned. Every time the representation
+				or
+				the format of a method parameter changes, a new version of the affected
+				schema is published. Schema version numbers are uncoupled from the
+				software release versions and from version numbers of other schemas.
+				Exceptions are the schemas for properties and structural relations,
+				which
+				are just lists of unrelated elements and therefore not versioned.
+			</para>
+
+			<para>All schemas are part of the eSciDoc Infrastructure
+				software distribution packages. Additionally, they are published 
+				online on the eSciDoc website<footnote id="schemas"><para>see 
+				<ulink url="https://www.escidoc.org/schemas/">https://www.escidoc.org/schemas/</ulink>
+				</para></footnote>. The URL of an XML schema document can be 
+				deduced from the resource type name and namespace/schema version in 
+				the following form:
+			</para>
+
+			<para>
+				REST: https://www.escidoc.org/schemas/rest/<literal>&lt;type-name&gt;</literal>/<literal>&lt;version&gt;</literal>/<literal>&lt;type-name&gt;</literal>.xsd
+			</para>
+
+			<para>The type name and version can be found in the namespace
+				declaration
+				at the beginning of each XML representation of an eSciDoc resource,
+				e.g.
+				for an Item:</para>
+
+			<informaltable>
+				<tgroup cols="2">
+					<colspec colwidth="4.0cm" />
+
+					<colspec colwidth="10.8cm" />
+
+					<tbody>
+						<row>
+							<entry>Namespace:</entry>
+
+							<entry>http://www.escidoc.de/schemas/item/0.10</entry>
+						</row>
+
+						<row>
+							<entry>Type name:</entry>
+
+							<entry>item</entry>
+						</row>
+
+						<row>
+							<entry>Version:</entry>
+
+							<entry>0.10</entry>
+						</row>
+
+						<row>
+							<entry>Schema URL:</entry>
+
+							<entry><simplelist columns="1" type="vert">
+                <member>https://www.escidoc.org/schemas/rest/item/0.10/item.xsd</member>
+              </simplelist></entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</section>
+
+		<section>
+			<title>Handling of Special Character Entities in XML</title>
+
+			<para>All XML data passed as parameters to any eSciDoc Infrastructure
+				API
+				method are internally handled as XML. The respective service will always
+				parse and validate the XML structure first before processing it. It
+				is
+				therefore recommended to escape special characters (see below for a listing)
+				in your XML before sending it to an Infrastructure method. Likewise,
+				the
+				API will return all XML with special characters encoded as entities.
+				Internally, the XML is transformed into a data object before the
+				business
+				logic is applied. If the result of the method invocation includes parts
+				of
+				the original XML (e.g., when updating an Item), the XML is serialized
+				once
+				again from the data object. This may lead to differences between received
+				and returned XML structures, including:</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>changes to namespace prefixes</para>
+				</listitem>
+
+				<listitem>
+					<para>the position of namespace declarations within the XML
+						structure</para>
+				</listitem>
+
+				<listitem>
+					<para>the replacement of optional entity references by their
+						replacement text and vice versa</para>
+				</listitem>
+
+				<listitem>
+					<para>ignorable white spaces</para>
+				</listitem>
+
+				<listitem>
+					<para>ordering of attributes</para>
+				</listitem>
+			</itemizedlist>
+
+			<para>Escaping characters is a common operation in XML handling, as
+				is the
+				conversion of white space and line breaks. The XML structure returned by
+				the eSciDoc Infrastructure always represents semantically exactly the same
+				content
+				as originally passed to the eSciDoc Infrastructure, but not necessarily
+				bitwise.</para>
+		</section>
+
+		<section>
+			<title>Optional Entity References</title>
+
+			<para>
+				The XML specification <footnote id="XmlSpec"><para>online 
+				available at http://www.w3.org/TR/REC-xml/</para></footnote> 
+				declares entity references for the following characters:
+			</para>
+
+     <informaltable frame="all">
+        <tgroup cols="3">
+         <colspec colwidth="4.5cm" />
+         <colspec colwidth="5.8cm" />
+         <colspec colwidth="4.5cm" />
+         <thead>
+            <row>
+              <entry>Character</entry>
+
+              <entry>Description</entry>
+
+              <entry>Entity</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry><code>&amp;</code></entry>
+              <entry>ampersand</entry>
+              <entry><code>&amp;amp;</code></entry>
+            </row>
+
+            <row>
+              <entry><code>&lt;</code></entry>
+              <entry>lesser-than</entry>
+              <entry><code>&amp;lt;</code></entry>
+            </row>
+
+            <row>
+              <entry><code>&gt;</code></entry>
+              <entry>greater-than</entry>
+              <entry><code>&amp;gt;</code></entry>
+            </row>
+
+            <row>
+              <entry><code>&apos;</code></entry>
+              <entry>single-quote</entry>
+              <entry><code>&amp;apos;</code></entry>
+            </row>
+
+            <row>
+              <entry><code>&quot;</code></entry>
+              <entry>double-quote</entry>
+              <entry><code>&amp;quot;</code></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      
+			<para>
+				When used within an XML entity – e.g., element, attribute etc. – the
+				ampersand and lesser-than characters must be replaced by their
+				entity references <code>&amp;amp;</code> and <code>&amp;lt;</code>.
+				The replacement of greater-than, single-quote, and double-quote
+				characters
+				by their entity references is optional, unless required in special
+				contexts.
+			</para>
+
+			<para>
+				If the eSciDoc Infrastructure receives an XML structure as a
+				parameter, it will always interpret it as XML and not as bitstream.
+				All
+				embedded entity references are replaced by their corresponding replacement
+				text (for example, <code>&amp;quot;</code> is always replaced by ").
+				Because greater-than, single-quote, and double-quote do not need to be
+				escaped, they might appear unescaped in the XML structure received.
+				At
+				this time, the internal representation contains only the replacement
+				text
+				and no entity references. Thus, it is impossible for the business logic
+				to
+				reconstruct which occurrence of any of these three characters was
+				originally escaped. Therefore, it is possible that a returned XML
+				structure contains a different representation of a character than the
+				originally received XML structure. However, this behavior is within
+				the
+				XML specification and does not change the semantics of the XML
+				structure.
+				Please see section 2.4, Character Data and Markup, of the XML
+				specification<footnoteref linkend="XmlSpec" />.
+			</para>
+
+			<para>Currently, the eSciDoc Infrastructure always replaces all five
+				characters with their corresponding entity reference. If an XML
+				structure
+				contains an entity reference, the leading ampersand must be escaped.
+				Typically, XML authoring tools do this automatically. If the XML
+				structure
+				is generated manually, however, programmers need to be careful to
+				provide
+				valid XML.</para>
+
+			<para>Examples:</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						If the string <code>&amp;quot;</code> appears in an XML	
+						structure, it is an entity reference and it represents a 
+						double quote (").
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						If the string <code>&amp;amp;quot;</code>	appears in an
+						XML structure, only the beginning <code>&amp;amp;</code>
+						is an entity reference representing an ampersand (&amp;). 
+						The meaning of the entire string is the entity reference 
+						for a double-quote (<code>&amp;quot;</code>).
+					</para>
+				</listitem>
+			</itemizedlist>
+		</section>
+
+		<section>
+			<title>Date Format</title>
+
+			<para>
+				All dates within resource representations are formatted according to
+				<code>xs:dateTime</code>. The time zone is mandatory and must be
+				given either in the form <code>[+|-]hh:mm</code> or in the
+				short-hand form <code>Z</code> for UTC (Universal Time Code). This 
+				is equally true for all other dates, especially the
+				<code>last-modification-date</code> often used as method parameter.
+			</para>
+
+			<para>
+				Each date must include three digits with fractions of seconds. If
+				your operating environment does not provide such fine-grained time
+				measurements, please use instead <code>000</code> (three zeros)
+				consistently throughout your code.
+			</para>
+
+			<para>Example:</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						<code>last-modification-date="2007-03-13T12:29:17.000+01:00"
+						</code>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</section>
+	</section>

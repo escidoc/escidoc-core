@@ -1,0 +1,35 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>${userAccounts.size()}</zs:numberOfRecords>
+#if (${userAccounts.size()} > 0)
+  <zs:records>
+#foreach(${userAccount} in ${userAccounts})
+    <zs:record>
+      <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+#set( $userAccountName = ${userAccount.userAccountName} )
+#set( $userAccountHref = ${userAccount.userAccountHref} )
+#set( $userAccountLastModificationDate = ${userAccount.userAccountLastModificationDate} )
+#set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+#set( $userAccountCreatedByTitle = ${userAccount.userAccountCreatedByTitle} )
+#set( $userAccountCreatedByHref = ${userAccount.userAccountCreatedByHref} )
+#set( $userAccountModifiedByTitle = ${userAccount.userAccountModifiedByTitle} )
+#set( $userAccountModifiedByHref = ${userAccount.userAccountModifiedByHref} )
+#set( $userAccountEmail = ${userAccount.userAccountEmail} )
+#set( $userAccountLoginName = ${userAccount.userAccountLoginName} )
+#set( $userAccountActive = ${userAccount.userAccountActive} )
+#set( $userAccountOus = ${userAccount.userAccountOus} )
+#set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+#set( $resourcesHref = ${userAccount.resourcesHref} )
+#set( $currentGrantsHref = ${userAccount.currentGrantsHref} )
+#set( $preferencesHref = ${userAccount.preferencesHref} )
+#searchResultRecord("user-account/rest/user-account.vm")
+      </zs:recordData>
+      <zs:recordPosition>${velocityCount}</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

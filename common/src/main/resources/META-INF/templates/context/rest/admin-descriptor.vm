@@ -1,0 +1,5 @@
+#set($unescapedName="#unesc(${admName})")
+#set($unescapedTitle="#unesc(${admRecordTitle})")
+<${contextNamespacePrefix}:admin-descriptor name="#escA($unescapedName)" #restInsertConditionalRoot( ${isRootResources} "false" "false" ${contextNamespacePrefix} ${contextNamespace} "#escA(${unescapedTitle})" ${admHref} ${LAST_MODIFICATION_DATE})>
+${admRecordContent}
+</${contextNamespacePrefix}:admin-descriptor>

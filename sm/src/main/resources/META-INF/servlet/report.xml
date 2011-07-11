@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="REPORT-DESCRIPTION-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#########################################################
+		# Report
+		# -->
+	<resource name="Report" base-uri="/statistic/report/">
+		<descriptor uri="/statistic/report">
+			<invoke http="POST" method="retrieve"
+				param1="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

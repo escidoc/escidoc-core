@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+       xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd"
+       default-lazy-init="false">
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+    <cxf:bus>
+        <cxf:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </cxf:features>
+    </cxf:bus>
+
+    <http-conf:conduit name="*.http-conduit">
+        <http-conf:client AutoRedirect="true"/>
+    </http-conf:conduit>
+
+    <!--bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/-->
+
+    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
+
+    <bean name="jaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
+        <property name="enableBuffering" value="true"/>
+    </bean>
+
+    <bean id="cachedOutputStreamMessageBodyReader"
+          class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>
+
+    <bean id="cachedOutputStreamMessageBodyWriter"
+          class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyWriter"/>
+
+
+</beans>

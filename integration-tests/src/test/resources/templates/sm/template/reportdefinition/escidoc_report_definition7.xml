@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<esci:report-definition 
+    xmlns:escidoc="http://www.escidoc.de/schemas/reportdefinition/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<escidoc:name>Page Statistics for PubMan</escidoc:name>
+	<escidoc:scope xlink:href="/statistic/scope/escidoc:scope1"/>
+	<escidoc:sql><![CDATA[
+		select 
+		request,year,sum(requests) as requests 
+		from escidocaggdef1_request_stats 
+		group by request,year;
+	]]></escidoc:sql> 
+</esci:report-definition>

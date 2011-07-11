@@ -1,0 +1,6 @@
+#parse("common/macros.vm")#set($unescapedTitle="#unesc(${listTitle})")
+<${organizationalUnitsNamespacePrefix}:organizational-unit-list #restInsertConditionalRoot(${isRootList} "false" "false" ${organizationalUnitsNamespacePrefix} ${organizationalUnitsNamespace} "#escA($unescapedTitle)" ${listHref} ${LAST_MODIFICATION_DATE})>
+#foreach( $entry in $entries )
+$entry
+#end
+</${organizationalUnitsNamespacePrefix}:organizational-unit-list>

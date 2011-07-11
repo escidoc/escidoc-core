@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test:aggregation-definition 
+    xmlns:test="http://www.escidoc.de/schemas/aggregationdefinition/0.4"
+    xmlns:prop="http://escidoc.de/core/01/properties/"
+    xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <test:properties>
+        <prop:name>Page Statistics for PubMan</prop:name>
+        <srel:scope xlink:href="/statistic/scope/escidoc:scope2" />
+    </test:properties>
+	<test:aggregation-table>
+		<test:name>Page_Statistics</test:name>
+		<test:field>
+			<test:info-field feed="statistics-data">
+				<test:name>page</test:name>
+				<test:type>text</test:type>
+				<test:xpath><![CDATA[
+				//parameter[@name="page"]/stringvalue > 3
+				]]></test:xpath>
+			</test:info-field>
+		</test:field>
+		<test:field>
+			<test:time-reduction-field feed="statistics-data">
+				<test:name>month</test:name>
+				<test:reduce-to>month</test:reduce-to>
+			</test:time-reduction-field>
+		</test:field>
+		<test:field>
+			<test:time-reduction-field feed="statistics-data">
+				<test:name>year</test:name>
+				<test:reduce-to>year</test:reduce-to>
+			</test:time-reduction-field>
+		</test:field>
+		<test:field>
+			<test:count-cumulation-field>
+				<test:name>requests</test:name>
+			</test:count-cumulation-field>
+		</test:field>
+		<test:field>
+			<test:difference-cumulation-field feed="statistics-data">
+				<test:name>sessions</test:name>
+				<test:xpath>//parameter[@name="session_id"]/stringvalue</test:xpath>
+			</test:difference-cumulation-field>
+		</test:field>
+		<test:index>
+			<test:name>time_idx</test:name>
+			<test:field>month</test:field>
+			<test:field>year</test:field>
+		</test:index>
+	</test:aggregation-table>
+	<test:statistic-data>
+		<test:statistic-table>
+			<test:xpath>//parameter[@name="page"]</test:xpath>
+		</test:statistic-table>
+	</test:statistic-data>
+</test:aggregation-definition>

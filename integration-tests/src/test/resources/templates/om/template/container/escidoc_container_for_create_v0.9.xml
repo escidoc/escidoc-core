@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Container:  23233 Version 0.8, updated: 11.12.2006-->
+<prefix-container:container 
+xml:base="http://www.escidoc.de/" 
+xmlns="http://www.escidoc.de/schemas/container/0.5/" 
+xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.5/" 
+xmlns:prefix-properties="http://www.escidoc.de/schemas/properties" 
+xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3/"
+xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.3/" 
+xmlns:prefix-metadata="http://www.escidoc.de/metadata/schema/0.3/" 
+xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.3" 
+xmlns:prefix-struct-map="http://www.escidoc.de/schemas/structmap/0.3/" 
+xmlns:prefix-member-ref-list="http://www.escidoc.de/schemas/memberreflist/0.3"
+
+xmlns:prefix-dc="http://purl.org/dc/elements/1.0/" 
+xmlns:prefix-admin-descriptor="http://www.escidoc.de/schemas/admindescriptor/0.3/" 
+xmlns:prefix-xlink="http://www.w3.org/1999/xlink" 
+prefix-xlink:type="simple" prefix-xlink:title="SWB scanned book">
+	<!--  container:properties  -->
+	<prefix-container:properties prefix-xlink:type="simple">
+	<prefix-container:name>Container1</prefix-container:name>
+	<prefix-container:description>Description of Container1</prefix-container:description>
+	<prefix-container:context prefix-xlink:type="simple" prefix-xlink:href="/ir/context/escidoc:persistent3" objid="escidoc:persistent3"/>
+	<prefix-container:content-type prefix-xlink:type="simple" prefix-xlink:href="/ir/content-type/escidoc:persistent4" objid="escidoc:persistent4"/>
+	<prefix-container:content-type-specific>
+	dfsdfgdsggsdg
+	</prefix-container:content-type-specific>
+	</prefix-container:properties>
+	
+	
+	
+	
+	<!-- metadata-records:md-records  -->
+	<prefix-metadata-records:md-records prefix-xlink:type="simple">
+		<prefix-metadata-records:md-record prefix-xlink:type="simple" prefix-xlink:title="Title for metadata" schema="http://www.escidoc-project.de/metadata/schema/0.1/" name="escidoc" modified-date="">
+			<prefix-metadata:escidoc>
+				<prefix-metadata:genre>Scholary Workbench Collection</prefix-metadata:genre>
+				<prefix-metadata:identifier>
+					<prefix-metadata:id/>
+					<prefix-metadata:id-type/>
+				</prefix-metadata:identifier>
+				<prefix-metadata:creator>
+					<prefix-metadata:person>
+						<prefix-metadata:identifier>
+							<prefix-metadata:id/>
+							<prefix-metadata:id-type/>
+						</prefix-metadata:identifier>
+						<prefix-metadata:complete-name>Brian Fuchs</prefix-metadata:complete-name>
+						<prefix-metadata:given-name>Brian</prefix-metadata:given-name>
+						<prefix-metadata:family-name>Fuchs</prefix-metadata:family-name>
+						<prefix-metadata:title/>
+						<prefix-metadata:pseudonym/>
+						<prefix-metadata:initials/>
+					</prefix-metadata:person>
+					<prefix-metadata:role>Editor</prefix-metadata:role>
+				</prefix-metadata:creator>
+				<prefix-metadata:creator>
+					<prefix-metadata:person>
+						<prefix-metadata:identifier>
+							<prefix-metadata:id/>
+							<prefix-metadata:id-type/>
+						</prefix-metadata:identifier>
+						<prefix-metadata:complete-name/>
+						<prefix-metadata:given-name/>
+						<prefix-metadata:family-name/>
+						<prefix-metadata:title/>
+						<prefix-metadata:pseudonym/>
+						<prefix-metadata:initials/>
+					</prefix-metadata:person>
+					<prefix-metadata:role>Publisher</prefix-metadata:role>
+				</prefix-metadata:creator>
+				<prefix-metadata:file>
+					<prefix-metadata:file-name>String</prefix-metadata:file-name>
+					<prefix-metadata:file-extension>String</prefix-metadata:file-extension>
+					<prefix-metadata:file-id>String</prefix-metadata:file-id>
+					<prefix-metadata:owner>String</prefix-metadata:owner>
+					<prefix-metadata:owner-id>String</prefix-metadata:owner-id>
+					<prefix-metadata:size>2147483647</prefix-metadata:size>
+					<prefix-metadata:mime-type>application</prefix-metadata:mime-type>
+					<prefix-metadata:import-date>1967-08-13</prefix-metadata:import-date>
+					<prefix-metadata:last-access-date>1967-08-13</prefix-metadata:last-access-date>
+					<prefix-metadata:last-modification-date>1967-08-13</prefix-metadata:last-modification-date>
+					<prefix-metadata:file-type>abstract</prefix-metadata:file-type>
+				</prefix-metadata:file>
+				<prefix-metadata:date>
+					<prefix-metadata:date>2006-06-21T12:00:00.00+01:00</prefix-metadata:date>
+					<prefix-metadata:type>published</prefix-metadata:type>
+				</prefix-metadata:date>
+				<prefix-metadata:title>Archimedes Collection of Mechanics</prefix-metadata:title>
+				<prefix-metadata:original-language>EN</prefix-metadata:original-language>
+				<prefix-metadata:original-title>Archimedes Collection of Mechanics</prefix-metadata:original-title>
+				<prefix-metadata:edition>first</prefix-metadata:edition>
+				<prefix-metadata:review-type/>
+				<prefix-metadata:publication-status>published</prefix-metadata:publication-status>
+				<prefix-metadata:relation>
+					<prefix-metadata:relation-type/>
+					<prefix-metadata:relation-identifier type="eSciDoc"/>
+					<prefix-metadata:relation-identifier-type/>
+					<prefix-metadata:short-description/>
+				</prefix-metadata:relation>
+				<prefix-metadata:table-of-contents/>
+				<prefix-metadata:audience/>
+				<prefix-metadata:custom/>
+				<prefix-metadata:subject/>
+				<prefix-metadata:source>
+					<prefix-metadata:title/>
+					<prefix-metadata:title-abbreviation/>
+					<prefix-metadata:alternate-title/>
+					<prefix-metadata:volume/>
+					<prefix-metadata:issue/>
+					<prefix-metadata:start-page/>
+					<prefix-metadata:end-page/>
+					<prefix-metadata:sequence-number/>
+					<prefix-metadata:place/>
+					<prefix-metadata:edition/>
+					<prefix-metadata:identifier/>
+				</prefix-metadata:source>
+			</prefix-metadata:escidoc>
+		</prefix-metadata-records:md-record>
+	</prefix-metadata-records:md-records>
+	
+	
+	
+	<!--  struct-map:struct-map  (or "members")-->
+	<prefix-struct-map:struct-map prefix-xlink:type="simple">
+	<prefix-member-ref-list:member-ref-list>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2001" objid="escidoc:2001"/>
+		</prefix-member-ref-list:member>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2004" objid="escidoc:2004"/>
+		</prefix-member-ref-list:member>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2007" objid="escidoc:2007"/>
+		</prefix-member-ref-list:member>
+		</prefix-member-ref-list:member-ref-list>
+	</prefix-struct-map:struct-map>
+
+	<!--  tocs:tocs  -->
+	<prefix-toc:toc prefix-xlink:type="simple" prefix-xlink:title="Title of this toc">
+	<prefix-toc:description>description of this toc</prefix-toc:description>
+	<prefix-member-ref-list:member-ref-list>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2001" objid="escidoc:2001"/>
+		</prefix-member-ref-list:member>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2004" objid="escidoc:2004"/>
+		</prefix-member-ref-list:member>
+		<prefix-member-ref-list:member>
+		<prefix-member-ref-list:item-ref  prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:2007" objid="escidoc:2007"/>
+		</prefix-member-ref-list:member>
+		</prefix-member-ref-list:member-ref-list>
+		</prefix-toc:toc>
+
+</prefix-container:container>

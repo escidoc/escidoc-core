@@ -1,0 +1,18 @@
+<processor>
+    <modify>
+        <name>cmm.Item.objectPid.releaseWithoutPid</name>
+        <value>false</value>
+    </modify>
+    <modify>
+        <name>cmm.Item.versionPid.releaseWithoutPid</name>
+        <value>false</value>
+    </modify>
+    <modify>
+        <name>cmm.Container.objectPid.releaseWithoutPid</name>
+        <value>false</value>
+    </modify>
+    <modify>
+        <name>cmm.Container.versionPid.releaseWithoutPid</name>
+        <value>false</value>
+    </modify>
+</processor>

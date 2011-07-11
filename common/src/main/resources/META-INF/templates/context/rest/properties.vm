@@ -1,0 +1,36 @@
+#parse("common/macros.vm")
+<${contextNamespacePrefix}:properties #restInsertConditionalRoot(${isRootProperties} "true" "true" ${contextNamespacePrefix} ${contextNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>
+#creationDate(${contextCreationDate})
+## set empty xlink:title if null
+#if(${contextCreatedByTitle})
+ #set($unescapedCreator="#unesc(${contextCreatedByTitle})")
+#else
+ #set($unescapedCreator="")
+#end
+#restCreatedBy("#escA(${unescapedCreator})" ${contextCreatedByHref})
+## set empty xlink:title if null
+#if(${contextCurrentVersionModifiedByTitle})
+ #set($unescapedModifiedByTitle="#unesc(${contextCurrentVersionModifiedByTitle})")
+#else
+ #set($unescapedModifiedByTitle="")
+#end
+#restModifiedBy("#escA(${unescapedModifiedByTitle})" ${contextCurrentVersionModifiedByHref})
+<${escidocPropertiesNamespacePrefix}:public-status>${contextStatus}</${escidocPropertiesNamespacePrefix}:public-status>
+#if (${contextStatusComment})
+<${escidocPropertiesNamespacePrefix}:public-status-comment>${contextStatusComment}</${escidocPropertiesNamespacePrefix}:public-status-comment>
+#end
+#set($unescapedName="#unesc(${contextName})")
+<${escidocPropertiesNamespacePrefix}:name>#escT(${unescapedName})</${escidocPropertiesNamespacePrefix}:name>
+#if($contextDescription)
+#set($unescapedDescription="#unesc(${contextDescription})")
+<${escidocPropertiesNamespacePrefix}:description>#escT($unescapedDescription)</${escidocPropertiesNamespacePrefix}:description>
+#end
+#set($unescapedType="#unesc(${contextType})")
+<${escidocPropertiesNamespacePrefix}:type>#escT(${unescapedType})</${escidocPropertiesNamespacePrefix}:type>
+<${escidocPropertiesNamespacePrefix}:organizational-units>
+#foreach ( $entry in ${organizational-units} )
+#set($unescapedTargetTitle="#unesc(${entry.title})")
+<${structuralRelationsNamespacePrefix}:organizational-unit #restLinkAttributes("#escA($unescapedTargetTitle)" ${entry.href}) />
+#end
+</${escidocPropertiesNamespacePrefix}:organizational-units>
+</${contextNamespacePrefix}:properties>

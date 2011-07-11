@@ -1,0 +1,20 @@
+#parse("common/macros.vm")<${reportNamespacePrefix}:report #namespaceDecl(  ${reportNamespacePrefix} ${reportNamespace}) #namespaceDecl("xlink" "http://www.w3.org/1999/xlink") #xmlBase()>
+    #restLink(${reportNamespacePrefix} "report-definition" ${reportDefinitionName} ${reportDefinitionHref})
+    #foreach($record in $records)
+    <${reportNamespacePrefix}:report-record>
+    #foreach($field in $record)
+    <${reportNamespacePrefix}:parameter name="#escA(${field.fieldname})">
+    #if (${field.datevalue})
+    <${reportNamespacePrefix}:datevalue>${field.datevalue}</${reportNamespacePrefix}:datevalue>
+       #end
+    #if (${field.stringvalue})
+    <${reportNamespacePrefix}:stringvalue>#escT(${field.stringvalue})</${reportNamespacePrefix}:stringvalue>
+    #end
+    #if (${field.decimalvalue})
+    <${reportNamespacePrefix}:decimalvalue>${field.decimalvalue}</${reportNamespacePrefix}:decimalvalue>
+    #end
+    </${reportNamespacePrefix}:parameter>
+    #end
+    </${reportNamespacePrefix}:report-record>
+    #end
+</${reportNamespacePrefix}:report>

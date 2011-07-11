@@ -1,0 +1,11 @@
+#parse("common/macros.vm")#set($unescapedTitle="#unesc(${listTitle})")
+<${organizationalUnitPathListNamespacePrefix}:organizational-unit-path-list #restInsertConditionalRoot(${isRootList} "false" "false" ${organizationalUnitPathListNamespacePrefix} ${organizationalUnitPathListNamespace} "#escA($unescapedTitle)" ${listHref} ${LAST_MODIFICATION_DATE}) #namespaceDecl(${organizationalUnitRefNamespacePrefix} ${organizationalUnitRefNamespace})>
+#foreach( $path in $pathes )
+<${organizationalUnitPathListNamespacePrefix}:organizational-unit-path>
+#foreach( $entry in $path )
+#set($unescapedTitle="#unesc(${entry.title})")
+#restLink(${organizationalUnitRefNamespacePrefix} "organizational-unit-ref" "#escA($unescapedTitle)" $entry.href )
+#end
+</${organizationalUnitPathListNamespacePrefix}:organizational-unit-path>
+#end
+</${organizationalUnitPathListNamespacePrefix}:organizational-unit-path-list>

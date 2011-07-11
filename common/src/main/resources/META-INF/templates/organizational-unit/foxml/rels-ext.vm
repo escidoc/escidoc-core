@@ -1,0 +1,22 @@
+#parse("common/macros.vm") <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${structuralRelationsNamespacePrefix}="${structRelationsNamespace}" xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/$ID">
+<system:build>${BUILD_NUMBER}</system:build>
+<rdf:type rdf:resource="${resourcesOntologiesNamespace}OrganizationalUnit"/>
+<${escidocPropertiesNamespacePrefix}:public-status>${PUBLIC_STATUS}</${escidocPropertiesNamespacePrefix}:public-status>
+<${structuralRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}" />
+<${escidocPropertiesNamespacePrefix}:created-by-title>#escT(${CREATED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:created-by-title>
+<${structuralRelationsNamespacePrefix}:modified-by rdf:resource="info:fedora/${MODIFIED_BY_ID}" />
+<${escidocPropertiesNamespacePrefix}:modified-by-title>#escT(${MODIFIED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:modified-by-title>
+#if( ${parents} )
+#foreach( $parent in $parents )
+<${structuralRelationsNamespacePrefix}:parent rdf:resource="info:fedora/$parent" />
+#end#end
+#*
+  Predecessors
+*#
+#if( ${PREDECESSORS} )
+#foreach( ${PREDECESSOR} in ${PREDECESSORS} )
+<${structuralRelationsNamespacePrefix}:${PREDECESSOR.FORM} rdf:resource="info:fedora/${PREDECESSOR.OBJID}" />
+#end#end
+</rdf:Description>
+</rdf:RDF>

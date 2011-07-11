@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <section>
+    <title>Virtual Resources</title>
+
+    <para>In additon to the resources and related sub resources the eSciDoc
+    framework supports "virtual" resources. An item supports the following
+    virtual resources:</para>
+
+    <itemizedlist mark="opencircle" spacing="compact">
+      <listitem>
+        <para>relations</para>
+        <para>version-history</para>
+      </listitem>
+    </itemizedlist>
+  </section>

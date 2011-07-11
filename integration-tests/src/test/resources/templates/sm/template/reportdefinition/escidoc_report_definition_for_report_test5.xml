@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report-definition 
+    xmlns="http://www.escidoc.de/schemas/reportdefinition/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<name>Report Definition for Report Test2</name>
+	<scope xlink:href="/statistic/scope/1"/>
+	<sql>
+        select 
+        date_field, year, requests, sessions   
+        from Report_Test1
+        where requests = {placeholder} order by date_field desc;
+	</sql> 
+</report-definition>

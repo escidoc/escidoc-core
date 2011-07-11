@@ -1,0 +1,44 @@
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	 xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	 prefix-xlink:type="simple"
+	 prefix-xlink:title="Object title"
+	>
+	<escidocItem:properties prefix-xlink:type="simple"
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<srel:context prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/context/escidoc:persistent3"  />
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4"  />
+		<prop:content-model-specific/>
+	</escidocItem:properties>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple"
+			prefix-xlink:title="MD-record title" name="escidoc">
+			<escidocMetadataProfile:publication
+				xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				type="book">
+				<escidoc:creator
+					xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+					role="author">
+					<escidoc:person>
+						<escidoc:complete-name>
+							Hans Meier
+						</escidoc:complete-name>
+						<escidoc:family-name>Meier</escidoc:family-name>
+						<escidoc:given-name>Hans</escidoc:given-name>
+					</escidoc:person>
+				</escidoc:creator>
+				<prefix-dc:title xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+					xml:lang="en">
+					The title
+				</prefix-dc:title>
+			</escidocMetadataProfile:publication>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+</escidocItem:item>

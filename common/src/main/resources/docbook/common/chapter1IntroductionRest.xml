@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section id="Overview.RestAPI">
+  <title>REST Application Programming Interface</title>
+<section id="Overview.RestIntroduction">
+  <title>Introduction to REST</title>
+
+      <para>REST (Representational State Transfer) is a style of software
+      architecture for distributed hypermedia systems such as the World Wide
+      Web. As such, it is not strictly a method for building "web services."
+      The terms "representational state transfer" and "REST" were introduced
+      in 2000 in the doctoral dissertation of Roy Fielding<footnote id="RestSpec">
+      <para>Architectural Styles and the Design of Network-based Software 
+      Architectures, online available at
+      http://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf
+      </para></footnote>, one of the principal authors of the Hypertext 
+      Transfer Protocol (HTTP) specification.</para>
+
+      <para>REST refers in the strictest sense to a collection of network
+      architecture principles which outline how resources are defined and
+      addressed. The term is often used more loosely to describe any simple
+      interface which transmits domain-specific data over HTTP without an
+      additional messaging layer such as SOAP or session tracking via HTTP
+      cookies. These two meanings can conflict as well as overlap. It is
+      possible to design a software system in accordance with Fielding's REST
+      architectural style without using HTTP and without interacting with the
+      World Wide Web. It is also possible to design simple XML+HTTP interfaces
+      which do not conform to REST principles, and instead follow a model of
+      remote procedure call. The difference between the uses of the term
+      "REST" therefore causes some confusion in technical discussions.</para>
+</section>
+
+<section id="Overview.BasicResourceOperations">
+  <title>Basic Resource Operations</title>
+  <para>Each eSciDoc resource is identifiable by its URI represented as an 
+  XLink<footnote id="XLinkSpec"><para>XML Linking Language (XLink) Version 1.0,
+  see http://www.w3.org/TR/xlink/</para></footnote> and is accessible 
+  via the Hyper Text Transfer Protocol (HTTP). HTTP verbs are used to
+  distinguish between create (HTTP verb <literal>PUT</literal>), update 
+  (HTTP verb <literal>PUT</literal>), retrieve (HTTP verb <literal>GET</literal>), 
+  and delete (HTTP verb <literal>DELETE</literal>) operations. The four basic 
+  operations are often referred to as CRUD operations (Create, Retrieve, Update,
+  and Delete).
+  </para>
+  <para>In order to create or update a resource, the representation of
+  that resource has to be sent as a valid XML document in the request body. The 
+  eSciDoc Infrastructure imposes a restriction on the total size of that body
+  (currently 5 MB). This size limitation is not strictly enforced. You may be
+  able to transfer larger messages, but this is not a recommended approach, as 
+  it may cause problems in high-traffic situations.</para>
+
+  <formalpara>
+    <title>Retrieve a resource</title>
+
+    <para>Send a HTTP GET request to the URI of the resource. The response to
+    a HTTP GET request contains the HTTP status code 200 ("OK") and the XML
+    representation of the resource in the response body.</para>
+  </formalpara>
+
+  <formalpara>
+    <title>Create or update a resource</title>
+
+    <para>Send a HTTP PUT request to the URI of the resource. The body of the
+    request must contain the XML representation of the resource, and the value
+    of the content type header of the HTTP PUT request must be "text/xml." The
+    HTTP status code of the response to a HTTP PUT request is 200 ("OK"). The
+    response body contains the new or updated XML representation of the
+    resource.</para>
+  </formalpara>
+
+  <formalpara>
+    <title>Delete a resource</title>
+
+    <para>Send a HTTP DELETE request to the URI of the resource. If
+    successful, the response to the HTTP DELETE request contains the HTTP
+    status code 204 ("NO CONTENT") and no body.</para>
+  </formalpara>
+</section>
+
+<section id="Overview.RestErrorHandling">
+    <title>Error handling</title>
+      <para>
+  			The communication between the REST APIs of the eSciDoc
+  			Infrastructure and the invoking application is based on the 
+  			Hypertext Transfer Protocol (HTTP). If the execution of
+  		  a method invocation via the REST API fails, the service raises 
+  		  an exception. In this case, the HTTP response has a status code
+  		  indicating the root cause of the exception, e.g. 404 if a resource 
+  		  was not found. The body of the HTTP response includes the XML
+  			representation of the underlying Java exception. All possible 
+  			status codes, in combination with the underlying Java exception, are
+  			listed in the documentaion of each REST method call.</para> 
+  		<para>If a service of the eSciDoc Infrastructure is not able to 
+  			map a request to a specific API method, a <literal>MethodNotFoundException</literal>
+  			(404, "Method Not Found") is thrown and sent back in the
+  			HTTP response.
+  </para>
+</section>
+
+<section id="Overview.ResourceAndTaskOrientedMethods">
+    <title>Resource and Task Oriented Methods</title>
+
+      <para>The REST APIs of the services of the eSciDoc Infrastructure try to follow the
+      stricter sense of the network architecture principles, in that they
+      expose objects as resources and modify these resources instead of
+      objects. There are some limitations to this approach, mainly in the form
+      of methods that could not be mapped properly to the resource-oriented
+      paradigm. eSciDoc therefore differentiates between resource-oriented and
+      task-oriented methods.</para>
+
+    <para>Most services of the eSciDoc Infrastructure work with resources -
+    for example, when updating an Item, you will retrieve the whole Item
+    resource, modify it, and then send back the modified resource to the Item
+    service. The <literal>update()</literal> method identifies the respective 
+    resource by its ID. The XML representation of the modified resource includes all
+    necessary information to perform the update. As opposed to more 
+    fine-granular methods typically found in object-oriented 
+    environments, this approach requires to send back the whole resource, 
+    even if only small portions have been modified.</para>
+
+    <para>In contrast to the resource oriented-methods, there are some
+    operations which are difficult to perform on the resource level. These
+    methods are named task-oriented methods and follow the remote procedure
+    paradigm. Examples for such task-oriented
+    methods include submitting or releasing a resource, or assigning 
+    persistent identifiers to a resource. To be able to perform a task-oriented 
+    method, additional parameters are necessary. Examples are an externally 
+    managed persistent identifier for the <code>assignObjectPid()</code> method
+    or the optional comment text for <code>submit()</code> 
+    and <code>release()</code> methods. These parameters are encoded as an XML 
+    document with the root element <code>param</code>.
+    The XML document is transferred to the methods of the eSciDoc 
+    Infrastructure via the HTTP POST verb with the XML document as message
+    body. Examples are given in the REST API documentation of task-oriented
+    methods of the eSciDoc Infrastructure.</para>
+  </section>
+  </section>
+
+  <section id="Overview.SubResources">
+    <title>Sub-Resources</title>
+
+    <para>The standard representations of resources are sometimes cumbersome
+    	to handle and may contain more information than needed in the 
+    	current context of the application. If, for example, a
+      user is interested in just one metadata record, there is no need to
+      retrieve the representation of the entire resource. It is therefore possible
+      to work with just a selected part of the representation, a so-called
+      'sub-resource'. Such a part of a resource may be its properties, one
+      of the metadata records, or a component.
+    </para>
+
+    <para>
+    	The REST API provides an XLink Simple Pointer to each retrievable
+      part of a resource. If you look at the representation of a resource, you
+      will find several places with resource identifiers (the combination of an
+      <literal>xlink:title</literal>, an <literal>xlink:type</literal>, and an
+      <literal>xlink:href</literal> attribute), e.g. for metadata records. If
+      you are requesting such a part of a resource via the URI declared in the
+      <literal>xlink:href</literal> attribute, the invoked service returns 
+      just this part of the resource.
+    </para>
+  </section>
+
+  <section id="Overview.VirtualResources">
+    <title>Virtual Resources</title>
+
+    <para>In addition to resources and related sub-resources, several services
+    of the eSciDoc Infrastructure support "virtual" resources. Virtual
+    resources pertain to parts of an object that are not part of the standard
+    representation. The <literal>resources</literal> section of the standard 
+    representation includes a reference to the list of available virtual 
+    resources:</para>
+    
+    <para><programlisting>&lt;item:resources 
+    xlink:type="simple" 
+    xlink:title="Resources" 
+    xlink:href="/ir/item/escidoc:1004/resources" /&gt;</programlisting></para>
+
+    <para>If you follow this link by invoking <code>GET /ir/item/escidoc:1004/resources</code>,
+    you will get back a list similar to this example (namespace declarations are omitted for better readability):</para>
+    
+    <para>
+    	<programlisting>&lt;item:resources 
+    xml:base="http://localhost:8080" 
+    xlink:type="simple" 
+    xlink:title="Resources" 
+    xlink:href="/ir/item/escidoc:1004/resources" 
+    last-modification-date="2010-06-19T09:47:43.170Z" &gt;
+  &lt;item:version-history  
+  	  xlink:type="simple" 
+  	  xlink:title="Version History" 
+  	  xlink:href="/ir/item/escidoc:1004/resources/version-history" /&gt;
+  &lt;item:relations  
+  	  xlink:type="simple" 
+  	  xlink:title="Content Relations related to this Item" 
+  	  xlink:href="/ir/item/escidoc:1004/resources/relations" /&gt;
+&lt;/item:resources&gt;</programlisting>
+    </para>
+    
+    <para>One example of a virtual resource is the version history of an Item
+    or a Container. Each modification of a resource will be tracked
+    as an event in the version history, which as a result may become rather 
+    lengthy. In normal application contexts, this information is rarely needed. 
+    Therefore, the Container and Item services provide access to the version
+    history by means of a virtual resource.</para>
+
+    <para>Via the REST API, you can retrieve the version history by requesting
+    the respective URL listed in the above shown list: <code>GET
+    /ir/item/escidoc:1004/resources/version-history</code></para>
+  </section>

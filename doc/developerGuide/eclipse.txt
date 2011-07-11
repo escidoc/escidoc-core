@@ -1,0 +1,31 @@
+Eclipse Java VM Args
+
+-Xmx1024m 
+-Xms312m
+-XX:MaxPermSize=256m 
+-Dhttp.proxyHost="proxy.fiz-karlsruhe.de"
+-Dhttp.proxyPort="8888"
+-Dhttp.nonProxyHosts="localhost|127.0.0.1|*.fiz-karlsruhe.de"
+
+
+CheckStyle
+Files unter /etc
+Um die geänderte Checkstyle-Konfiguration zu verwenden, unter
+Window->Preferences->Checkstyle->Neu die Datei
+eSciDoc_checkstyle.xml importieren und dann unter
+Escidoc->Properties->Checkstyle auswählen.
+
+Um die geänderte Code-Formattierung zu verwenden, unter
+Window->Preferences->Java->Code Style->Formatter->Import die
+Datei eSciDoc_codestyle importieren und verwenden.
+
+
+Das nachfolgende sollte im CodeTemplate für 
+"overriding methods" verwendet werden 
+(Eclipse) Window->Preferences->Java->Code Style->Code Templates->Comments
+
+/** See Interface for functional description.
+  * ${tags}
+  * ${see_to_overridden}
+  */
+

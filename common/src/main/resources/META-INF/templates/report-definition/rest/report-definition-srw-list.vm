@@ -1,0 +1,32 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$reportDefinitions.size()</zs:numberOfRecords>
+#if ($reportDefinitions.size() > 0)
+  <zs:records>
+#foreach($reportDefinition in $reportDefinitions)
+    <zs:record>
+      <zs:recordSchema>${reportDefinitionNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+    #set( $reportDefinitionRoles = ${reportDefinition.reportDefinitionRoles} )
+    #set( $reportDefinitionName = ${reportDefinition.reportDefinitionName} )
+    #set( $reportDefinitionHref = ${reportDefinition.reportDefinitionHref} )
+    #set( $reportDefinitionCreationDate = ${reportDefinition.reportDefinitionCreationDate} )
+    #set( $reportDefinitionCreatedByTitle = ${reportDefinition.reportDefinitionCreatedByTitle} )
+    #set( $reportDefinitionCreatedByHref = ${reportDefinition.reportDefinitionCreatedByHref} )
+    #set( $reportDefinitionLastModificationDate = ${reportDefinition.reportDefinitionLastModificationDate} )
+    #set( $reportDefinitionModifiedByTitle = ${reportDefinition.reportDefinitionModifiedByTitle} )
+    #set( $reportDefinitionModifiedByHref = ${reportDefinition.reportDefinitionModifiedByHref} )
+    #set( $reportDefinitionScopeTitle = ${reportDefinition.reportDefinitionScopeTitle} )
+    #set( $reportDefinitionScopeHref = ${reportDefinition.reportDefinitionScopeHref} )
+    #set( $reportDefinitionSql = ${reportDefinition.reportDefinitionSql} )
+	#set( $isRootReportDefinition = "true")
+    #searchResultRecord("report-definition/rest/report-definition.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

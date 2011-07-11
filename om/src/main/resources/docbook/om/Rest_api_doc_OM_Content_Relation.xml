@@ -1,0 +1,76 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
+[
+<!ENTITY chapter1Overview        SYSTEM "chapter1Overview.xml">
+<!ENTITY chapter1Introduction    SYSTEM "chapter1IntroductionRest.xml">
+<!ENTITY chapter1Authentication  SYSTEM "chapter1AuthenticationRest.xml">
+<!ENTITY chapter1Roles           SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
+<!ENTITY chapter1Specifications  SYSTEM "chapter1Specifications.xml">
+<!ENTITY OmOverviewAll           SYSTEM "OmOverviewAll.xml">
+<!ENTITY Resource1         SYSTEM "ResourceContent_Relation_Properties.xml">
+<!ENTITY Resource2         SYSTEM "ResourceContent_Relation_Schemas.xml">
+<!ENTITY Resource3         SYSTEM "ResourceContent_Relation_VirtualResources.xml">
+<!ENTITY chapter4                SYSTEM "RestContentRelationXsd.xml">
+<!ENTITY Api              SYSTEM "RestContentRelationApi.xml">
+<!ENTITY XslApi                  SYSTEM "RestXslApi.xml">
+<!ENTITY AdminDescriptor         SYSTEM "AdminDescriptorOverview.xml">
+<!ENTITY Bibliography            SYSTEM "Bibliography.xml">
+]>
+
+<book>
+	<bookinfo>
+		<title>API Documentation Content Relation Service</title>
+		<subtitle>Object Manager (OM)</subtitle>
+		<subtitle>REST Interface</subtitle>
+		<mediaobject  id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg" format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject  id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png" format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<!--  Chapter 1 -->
+	<chapter>
+		<title>Overview</title>
+		&chapter1Overview;
+		&chapter1Introduction;
+		&chapter1Authentication;
+		&chapter1Roles;
+		&chapter1Filters;
+		&chapter1Specifications;
+	</chapter>
+	<!--  Chapter 2 -->
+		&OmOverviewAll;
+	<!--  Chapter 3 -->
+<chapter> 
+ 	<title>Resource Content Relation</title>
+	<section>
+		<title>General Information</title>
+		<para>
+			This documentation describes the different methods for creating and modifying of Content Relations.
+		</para>
+	</section>
+		&Resource1;
+		&Resource2;
+		&Resource3;
+</chapter> 
+	<!--  Chapter 4 -->
+	    &chapter4;
+	<!--	&ContextXsd; -->
+	<!--  Chapter 5 -->
+	<!--  	&Api; -->
+	<!--  Chapter 6 -->
+	<!-- Generated from JavaDoc --> 
+		&XslApi;
+	<!--  Appendix -->
+	<!-- 	&AdminDescriptor; -->
+	<!--  Bibliography -->
+		&Bibliography;
+</book>

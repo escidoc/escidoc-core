@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grants:grant
+	xmlns:grants="http://www.escidoc.de/schemas/grants/0.5"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+    xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<grants:properties>
+		<prop:grant-remark>remark</prop:grant-remark>
+		<srel:role
+			xlink:href="/aa/role/escidoc:role-content-relation-manager" />
+	</grants:properties>
+</grants:grant>

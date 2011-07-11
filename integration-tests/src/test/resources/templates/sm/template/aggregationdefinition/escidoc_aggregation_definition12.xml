@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aggregation-definition 
+    xmlns="http://www.escidoc.de/schemas/aggregationdefinition/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/statistic/aggregation-definition/99999">
+	<name>Page Statistics for PubMan</name>
+	<scope xlink:href="/statistic/scope/32" />
+	<aggregation-table>
+		<name>Page_Statistics</name>
+		<field>
+			<info-field feed="statistics-data">
+				<name>page's</name>
+				<type>text</type>
+				<xpath>//parameter[@name="page"]/stringvalue</xpath>
+			</info-field>
+		</field>
+		<field>
+			<time-reduction-field feed="statistics-data">
+				<name>month</name>
+				<reduce-to>month</reduce-to>
+			</time-reduction-field>
+		</field>
+		<field>
+			<time-reduction-field feed="statistics-data">
+				<name>year</name>
+				<reduce-to>year</reduce-to>
+			</time-reduction-field>
+		</field>
+		<field>
+			<count-cumulation-field>
+				<name>requests</name>
+			</count-cumulation-field>
+		</field>
+		<field>
+			<difference-cumulation-field feed="statistics-data">
+				<name>sessions</name>
+				<xpath>//parameter[@name="session_id"]/stringvalue</xpath>
+			</difference-cumulation-field>
+		</field>
+		<index>
+			<name>time_idx</name>
+			<field>month</field>
+			<field>year</field>
+		</index>
+	</aggregation-table>
+	<statistic-data>
+		<statistic-table>
+			<xpath>//parameter[@name="page"]</xpath>
+		</statistic-table>
+	</statistic-data>
+</aggregation-definition>

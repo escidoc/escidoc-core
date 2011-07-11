@@ -1,0 +1,535 @@
+<chapter>
+	<title>AaComponent</title>
+	<section>
+		<title>Database Tables</title>
+		<para>
+
+		</para>
+	</section>
+	<section>
+		<title>Database scripts</title>
+		<para>
+			The database SQL scripts are found in the folder
+			<emphasis>/data/sql</emphasis>
+			of the Escidoc project. .
+		</para>
+		<section>
+			<title>Schema Create</title>
+			<subtitle>aa.create.sql</subtitle>
+			<para>
+				This script creates the
+				<emphasis>aa</emphasis>
+				schema and all database tables used by the AA component,
+				but does not initialize any table.
+			</para>
+		</section>
+		<section>
+			<title>Schema Drop</title>
+			<subtitle>aa.drop.sql</subtitle>
+			<para>
+				This script drops the complete
+				<emphasis>aa</emphasis>
+				schema.
+			</para>
+		</section>
+		<section>
+			<title>Initialize Actions</title>
+			<subtitle>aa.init.actions.sql</subtitle>
+			<para>
+				This script initializes the actions defined for the
+				eSciDoc authorization.
+			</para>
+			<para>
+				This script has to be updated if any new action is
+				needed to secure a (new) service method.
+			</para>
+		</section>
+		<section>
+			<title>Initialize Method Mappings</title>
+			<subtitle>
+				aa.init.method-mappings.&lt;component&gt;[.&lt;resource-name&gt;].sql
+			</subtitle>
+			<para>
+				These scripts initialize the method mappings used to
+				secure the service methods. To define a mapping, two
+				database tables have to be updated:
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						<para>
+							The table
+							<emphasis>method_mappings</emphasis>
+							to define which actions shall be checked for
+							a specific method.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The table
+							<emphasis>invocation_mappings</emphasis>
+							to define which values of the incoming
+							request have to be forwarded to the
+							authorization component to enable it to
+							evaluate the policies for the action defined
+							in the related method mapping.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				A new method mapping initialization script has to be
+				created in case of adding a new resource to the system.
+				Otherwise the authorization could not find a method
+				mapping while securing the access to the new resource
+				and fails with a
+				<emphasis>SystemException</emphasis>
+				reporting the missing method mapping.
+			</para>
+			<para>
+				These scripts have to be updated in case of:
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						<para>
+							A new method is added to the system.
+							Otherwise the authorization could not find a
+							method mapping while securing the access to
+							it and fails with a
+							<emphasis>SystemException</emphasis>
+							reporting the missing method mapping.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Another or an additional action has to be
+							checked for securing the method.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							A policy has been changed or added that
+							needs additional data from the incoming
+							request to be evaluated. In this case, the
+							invocation mappings have to be changed.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		<section>
+			<title>Initialize Roles</title>
+			<subtitle>aa.init.roles.&lt;role-name&gt;.sql</subtitle>
+			<para>
+				These scripts initialize the roles defined in eSciDoc.
+				To define a role and its policies, up to 4 tables have
+				to be updated:
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						<para>
+							The table
+							<emphasis>escidoc_role</emphasis>
+							defines the name of the role and its
+							internal identifier.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The table
+							<emphasis>
+								role_limitation_condition
+							</emphasis>
+							defines for each role its role limitation
+							conditions. If a role is an unlimited role,
+							of course no role limitation is defined for
+							it in this table.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The table
+							<emphasis>flat_policies</emphasis>
+							defines for each role its policies,
+							including the condition of the policies.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							The table
+							<emphasis>policy_actions</emphasis>
+							defines for each policy, which actions
+							belongs to the policy, i.e. for which
+							actions this policy has to be evaluated.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				A new role initialization script has to be created in
+				case of adding a role to the system.
+			</para>
+			<para>
+				These scripts have to be updated in case of:
+				<itemizedlist mark="opencircle" spacing="compact">
+					<listitem>
+						<para>
+							The scope of a role has to be changed, i.e.
+							the role limitation conditions have to be
+							updated.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							A policy of a role has to be changed.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							A new action has been defined and shall be
+							performed by a role.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+	</section>
+	<section>
+		<title>eSciDoc attributes</title>
+		<para>
+			In the polices and in the request to the policy definition
+			point of the AA component, attributes of the subject (i.e.
+			the user perfoming the request), the resource, and the
+			action are used.
+		</para>
+		<section>
+			<title>Action attributes</title>
+			<para>
+				The one and only attribute id that is supported is the
+				unique action identifier. This attribute has to be
+				provided in the request to the policy decision point. It
+				is extracted from the method mapping during handling the
+				method.
+			</para>
+		</section>
+		<section>
+			<title>Resource attributes</title>
+			<para>
+				The eSciDoc authorization component supports the
+				resource id attribute
+				<emphasis>
+					urn:oasis:names:tc:xacml:1.0:resource:resource-id
+				</emphasis>
+				that is used and expected by the XACML engine. In most
+				cases, this id has to be provided in the request to the
+				policy decision point and should point to the addressed
+				main resource, e.g. to the item in case of a
+				retrieveComponent request. The invocation mapping of the
+				method mappings have to assure this in all cases except
+				in requests for creating a new resource, as in this case
+				no resource id can exist.
+			</para>
+			<para>
+				Additionally, eSciDoc specific resource attributes are
+				defined. These have attribute ids starting with the
+				common prefix
+				<emphasis>info:escidoc/names:aa:1.0:resource:</emphasis>
+				and are resolved by two
+				<emphasis>resource attribute finder modules</emphasis>
+				, if they have not been provided within the decision
+				request to the policy decision point.
+			</para>
+			<para>
+				The eSciDoc specific resource attributes are defined in
+				a generic way. Their attribute ids define some kind of a
+				path to the requested attribute value. Besides the
+				common prefix, this path consists of (overlapping) path
+				segments describing a property of a resource. The value
+				for such a path segment is fetched by one of the finder
+				modules. If another path segment exists, the finder
+				modules are recusively called to fetch the value of the
+				next segment using the previously fetched data, until
+				all path segments are resolved.
+			</para>
+			<para>
+				All path elements start with the name of a resource type
+				(in lower letters) and ends with a property of a
+				resource or the name of a related resource-type. In the
+				latter case, the next segment starts with the
+				resource-type of the previous segment.
+			</para>
+			<para>
+				For example, the following attribute id refers to the
+				public-status of the context to that an item belongs to.
+				<programlisting>
+					<![CDATA[
+info:escidoc/names:aa:1.0:resource:item:context:public-status]]>
+				</programlisting>
+				To resolve this attribute, first the item's context (id)
+				is fetched (using the segment
+				<emphasis>item:context</emphasis>
+				and the provided resource id identifying the item).
+				Next, as the path has not been finished, the public status of
+				the context is fetched (using the segment
+				<emphasis>context:public-status</emphasis>
+				and the previously identified context id).
+			</para>
+			<para>
+				The value of the visibility of an item's component is
+				addressed by the following attribute id.
+				<programlisting>
+					<![CDATA[
+info:escidoc/names:aa:1.0:resource:item:component:visibility]]>
+				</programlisting>
+				To resolve this attribute, first, the segment
+				<emphasis>item:component</emphasis>
+				is resolved. An item may have a set of components,
+				therefore, the resolved value is a set of ids. In this
+				case, additional information is needed to complete the
+				path to the visibility status of a specific component. Therefore
+				besides the resource id (referencing to the item) the id
+				of the component has to be defined within the decision
+				request to the policy decision point. In this case, the
+				finder modules evaluate weather the provided component
+				id is contained in the set of the fetched component ids.
+				Then, the segment
+				<emphasis>component:visibility</emphasis>
+				is resolved using the component id and the retrieved
+				data is returned as the attribute value.
+			</para>
+			<para>
+				The supported path segments are listed in the following
+				table:
+				<table frame="all">
+					<title>Supported Resource Attribute Segments</title>
+					<tgroup cols="2" align="left" colsep="1"
+						rowsep="1">
+						<colspec colname="c1" />
+						<colspec colname="c2" />
+						<thead>
+							<row>
+								<entry>Segment</entry>
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>object-type</entry>
+								<entry>
+									The resource type (object type) of a
+									resource
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>component:created-by,</para>
+									<para>component:created-by-id</para>
+								</entry>
+								<entry>
+									The id of the creator of a component
+								</entry>
+							</row>
+							<row>
+								<entry>component:valid-status</entry>
+								<entry>The valid status of a component</entry>
+							</row>
+							<row>
+								<entry>component:visibility</entry>
+								<entry>
+									The visibility of a component
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>container:context,</para>
+									<para>container:context-id</para>
+								</entry>
+								<entry>
+									The id of the context to that a
+									container belongs to
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>container:created-by,</para>
+									<para>container:created-by-id</para>
+								</entry>
+								<entry>
+									The id of the creator of a container
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>container:container-id,</para>
+									<para>container:container,</para>
+									<para>
+										container:container.&lt;content-type-name&gt;
+									</para>
+								</entry>
+								<entry>
+									The id of the parent container(s) of
+									a container. If the content type is
+									defined in the segment, only ids of
+									containers of that content type are
+									fetched.
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>container:content-type,</para>
+									<para>
+										container:content-type-id
+									</para>
+								</entry>
+								<entry>
+									The id of the content type of a
+									container
+								</entry>
+							</row>
+							<row>
+								<entry>container:public-status</entry>
+								<entry>The public status of a container</entry>
+							</row>
+							<row>
+								<entry>container:members</entry>
+								<entry>
+									The ids of the members of a
+									container (containers and items)
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>content-type:created-by,</para>
+									<para>content-type:created-by-id</para>
+								</entry>
+								<entry>
+									The id of the creator of a content
+									type
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>context:created-by,</para>
+									<para>context:created-by-id</para>
+								</entry>
+								<entry>
+									The id of the creator of a context
+								</entry>
+							</row>
+							<row>
+								<entry>context:public-status</entry>
+								<entry>The public status of a context</entry>
+							</row>
+							<row>
+								<entry>
+									<para>item:component,</para>
+									<para>item:component-id</para>
+								</entry>
+								<entry>
+									The ids of the components of an item
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>item:context,</para>
+									<para>item:context-id</para>
+								</entry>
+								<entry>
+									The id of the contextto that an item
+									belongs to
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>item:created-by,</para>
+									<para>item:created-by-id</para>
+								</entry>
+								<entry>
+									The id of the creator of an item
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>item:container,</para>
+									<para>item:container-id,</para>
+									<para>
+										item:container.&lt;content-type-name&gt;
+									</para>
+								</entry>
+								<entry>
+									The ids of the containers to that an
+									item belongs to. If the content type
+									is defined in the segment, only ids
+									of containers of that content type
+									are fetched.
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>item:content-type,</para>
+									<para>item:content-type-id</para>
+								</entry>
+								<entry>
+									The id of the content type of an
+									item
+								</entry>
+							</row>
+							<row>
+								<entry>item:public-status</entry>
+								<entry>The public status of an item</entry>
+							</row>
+							<row>
+								<entry>
+									<para>
+										organizational-unit:created-by,
+									</para>
+									<para>
+										organizational-unit:created-by-id
+									</para>
+								</entry>
+								<entry>
+									The id of the creator of an
+									organizational unit
+								</entry>
+							</row>
+							<row>
+								<entry>
+									organizational-unit:public-status
+								</entry>
+								<entry>
+									The public status of an organizational unit
+								</entry>
+							</row>
+							<row>
+								<entry>
+									<para>user-account:id,</para>
+									<para>user-account-id</para>
+								</entry>
+								<entry>
+									The id of an user account.
+								</entry>
+							</row>
+							<row>
+								<entry>
+									user-account:grant:object
+								</entry>
+								<entry>
+									The object referenced by a grant of
+									an user account (grant-id and
+									resource-id must be specified)
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+		</section>
+		<section>
+			<title>Subject attributes</title>
+			<para>
+				Currently, only the subject id is used. The attribute id
+				is
+				<emphasis>
+					urn:oasis:names:tc:xacml:1.0:subject:subject-id
+				</emphasis>
+				.
+			</para>
+		</section>
+	</section>
+</chapter>

@@ -1,0 +1,29 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$aggregationDefinitions.size()</zs:numberOfRecords>
+#if ($aggregationDefinitions.size() > 0)
+  <zs:records>
+#foreach($aggregationDefinition in $aggregationDefinitions)
+    <zs:record>
+      <zs:recordSchema>${aggregationDefinitionNamespace}</zs:recordSchema>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
+      <zs:recordData>
+    #set( $aggregationStatisticDataSelectors = ${aggregationDefinition.aggregationStatisticDataSelectors} )
+    #set( $aggregationTables = ${aggregationDefinition.aggregationTables} )
+    #set( $aggregationDefinitionName = ${aggregationDefinition.aggregationDefinitionName} )
+    #set( $aggregationDefinitionHref = ${aggregationDefinition.aggregationDefinitionHref} )
+    #set( $aggregationDefinitionCreationDate = ${aggregationDefinition.aggregationDefinitionCreationDate} )
+    #set( $aggregationDefinitionCreatedByTitle = ${aggregationDefinition.aggregationDefinitionCreatedByTitle} )
+    #set( $aggregationDefinitionCreatedByHref = ${aggregationDefinition.aggregationDefinitionCreatedByHref} )
+    #set( $aggregationDefinitionScopeTitle = ${aggregationDefinition.aggregationDefinitionScopeTitle} )
+    #set( $aggregationDefinitionScopeHref = ${aggregationDefinition.aggregationDefinitionScopeHref} )
+	#set( $isRootAggregationDefinition = "true")
+    #searchResultRecord("aggregation-definition/rest/aggregation-definition.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

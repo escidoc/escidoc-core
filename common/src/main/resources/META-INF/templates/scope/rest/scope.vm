@@ -1,0 +1,4 @@
+#parse("common/macros.vm")<${scopeNamespacePrefix}:scope #restInsertConditionalRoot(${isRootScope} "false" "false" ${scopeNamespacePrefix} ${scopeNamespace} "#escA(${scopeName})" ${scopeHref})>
+        <${scopeNamespacePrefix}:name>#escT(${scopeName})</${scopeNamespacePrefix}:name>
+        <${scopeNamespacePrefix}:type>${scopeType}</${scopeNamespacePrefix}:type>
+</${scopeNamespacePrefix}:scope>

@@ -1,0 +1,7 @@
+#if ($reportDefinitionRoles)
+    <${reportDefinitionNamespacePrefix}:allowed-roles>
+#foreach( $reportDefinitionRole in $reportDefinitionRoles )
+        #restLink(${reportDefinitionNamespacePrefix} "allowed-role" ${reportDefinitionRole.title} ${reportDefinitionRole.href})
+#end
+    </${reportDefinitionNamespacePrefix}:allowed-roles>
+#end

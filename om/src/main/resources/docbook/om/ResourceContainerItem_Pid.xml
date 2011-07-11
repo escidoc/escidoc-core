@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+	<title>PID Assignment Method Behavior</title>
+
+	<para>
+		The behavior of the methods assignObjectPid(), assignVersionPid() and 
+		assignContentPid() depends currently on the infrastructure configuration. 
+		For objects and versions is the point of time - in relation to the 
+		public-status - when a PID has to be assigned 
+		independent configurable. 
+	</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				PID assignment methods add only the persistent identifier to the 
+				object and do not alter it otherwise. Especially version number 
+				or public-status leaved untouched.  
+			</para>
+		</listitem>
+
+		<listitem>
+			<para>
+				Even if the assignment creates no new version the process creates
+				a new event entry in the version history of the object.
+			</para>
+		</listitem>
+
+		<listitem>
+			<para>
+				Each object and each version of an object can only have one
+				PID.
+			</para>
+		</listitem>
+
+
+		<listitem>
+			<para>
+				The point of time when a PID is to assign to an object
+				or version could be configured via the
+				escidoc-core.properties. If it is required that every
+				released version of an Item has a PID so than is it
+				configurable. See therefore the later description of the
+				properties parameter.
+			</para>
+			<para>
+				In general is it possible to assign a PID for an object
+				or version during the whole object lifetime, except the
+				objects public-status is withdrawn.
+			</para>
+		</listitem>
+
+	</itemizedlist>
+	<section>
+		<title>Behavior Configuration</title>
+		<para>
+			The behavior in which status of an Item or Container a PID
+			could be assigned is currently configurable via
+			escidoc-core[.custom].properties. (This is an interim
+			solution an will probably be integrated in the upcoming Content
+			Model.)
+		</para>
+		<para>
+			The properties influence the behavior globally, therefore is
+			an object individual configuration currently not possible.
+		</para>
+		<para>
+			Three types of keys are defined in
+			escidoc-core[.custom].properties to control PID
+			assignments: setPidBeforeRelease, setPidAfterRelease and
+			releaseWithoutPid.
+		</para>
+		<para>
+			These parameters are hierarchically grouped to address the
+			corresponding object and the PID for a versionPid or object.
+		</para>
+		<para>
+			To define the behavior for the versions of Items is the full
+			parameter name cmm.Item.versionPid.releaseWithoutPid to use.
+			In comparing is the definition for the whole Item object to
+			set via cmm.Item.objectPid.releaseWithoutPid.
+		</para>
+		<para>
+			cmm.[Container|Item].[objectPid|versionPid].
+			[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
+
+			cmm.Item.contentPid.[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
+		</para>
+	</section>
+
+	<section>
+		<title>Object PID</title>
+
+		<para>
+			PID assigned to objects in public-status withdrawn is
+			forbidden.
+		</para>
+
+		<para>
+			The behavior of the PID assignment is currently defined via the 
+			escidoc-core[.custom].properties.
+			Depending on the configuration it is either possible to force that 
+			each release object/version is assigned with an objectPid. It is also
+			possible to allow PID assignment after an object is set to status 
+			'released'. 
+		</para>
+		<table>
+			<title>
+				Behavior configuration for assignObjectPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">Key</entry>
+						<entry align="left">Value</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">cmm.[Container|Item].objectPid.
+						releaseWithoutPid</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if Item or Container could set to public-status 'released' without 
+							persistent identifier for the object.
+							</para>
+							<para>	
+							<emphasis role="bold">false</emphasis>
+							Set false if each Item or Container must have an persistent identifier if it 
+							is set to 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.[Container|Item].objectPid.
+						setPidBeforeRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if Item or Container could assigned with an persistent identifier 
+							before the object is set to public-status 'released'.
+							</para>
+							<para>	
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to Item or Container
+							if the public status is not 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.[Container|Item].objectPid.
+						setPidAfterRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if Item or Container could assigned with an persistent identifier 
+							after the object is set to public-status 'released'.
+							</para>
+							<para>	
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to Item or Container
+							if the public status is 'released'.
+							</para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			A right to assign a PID is currently bounded to the common
+			rights of a granted role to alter an object in the
+			corresponding version-status.
+		</para>
+		<para>
+			If, for example, only the depositor is allowed to change
+			objects in status 'submitted' then is an PID assignment also
+			only for user with at least depositor role possible.
+		</para>
+
+		<table>
+			<title>
+				Required permissions depending on version status for
+				assignObjectPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">version status</entry>
+
+						<entry align="left">Role</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">pending</entry>
+
+						<entry align="left">
+							Depositor of Object, System Administrator
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">submitted</entry>
+
+						<entry align="left">
+							MD-Editor of Object, System Administrator
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">in-revision</entry>
+
+						<entry align="left">
+							Depositor of Object, System Administrator
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">released</entry>
+
+						<entry align="left">System Administrator</entry>
+					</row>
+
+					<row>
+						<entry align="left">
+							withdrawn (public-status)
+						</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+
+	<section>
+		<title>Version PID</title>
+
+		<para>
+			If the assignment of PID for certain object versions is
+			possible depends on the public-status of the version and the
+			configuration for the PID assignment behavior.
+		</para>
+
+		<table>
+			<title>
+				Behavior configuration for assignVersionPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">Key</entry>
+
+						<entry align="left">Value</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">cmm.[Container|Item].versionPid.
+						releaseWithoutPid</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if the version of Item or Container could set to public-status 'released' without 
+							persistent identifier for the object.
+							
+							<emphasis role="bold">false</emphasis>
+							Set false if each version of Item or Container must have an persistent identifier if it 
+							is set to 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.[Container|Item].versionPid.
+						setPidBeforeRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if a version of Item or Container could assigned with an persistent identifier 
+							before the object is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to a version of Item or Container
+							if the public status is not 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.[Container|Item].versionPid.
+						setPidAfterRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if the version of Item or Container could assigned with an persistent identifier 
+							after the object is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to a version of Item or Container
+							if the public status is 'released'.
+							</para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			If PID assignment is possible after a version has reached
+			pubic-status released then could only user with the role of
+			the System Administrator use assignVersionPid(). Because
+			only the System Administrator has the right to alter
+			versions in status released.
+		</para>
+
+		<table>
+			<title>
+				Required permissions depending on version-status for
+				assignVersionPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">version-status</entry>
+
+						<entry align="left">Role</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">pending</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">submitted</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">in-revision</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">released</entry>
+
+						<entry align="left">System Administrator</entry>
+					</row>
+
+					<row>
+						<entry align="left">
+							withdrawn (public-status)
+						</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+
+	<section>
+		<title>Content PID</title>
+
+		<para>
+			If the assignment of PID for certain Item content is
+			possible depends on the public-status of the Item version and the
+			configuration for the PID assignment behavior.
+		</para>
+
+		<table>
+			<title>
+				Behavior configuration for assignContentPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">Key</entry>
+
+						<entry align="left">Value</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">cmm.Item.contentPid.releaseWithoutPid</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if the version of Item could set to public-status 'released' without 
+							persistent identifier for all Item contents.
+							
+							<emphasis role="bold">false</emphasis>
+							Set false if each version of Item must have an persistent identifier if it 
+							is set to 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.Item.contentPid.setPidBeforeRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if an Item content could be assigned with a persistent identifier 
+							before the Item is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to an Item content
+							if the public status is not 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.Item.contentPid.setPidAfterRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if the Item content could be assigned with a persistent identifier 
+							after the Item is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to an Item content
+							if the public status is 'released'.
+							</para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			If PID assignment is possible after an Item version has reached
+			pubic-status released then could only user with the role of
+			the System Administrator use assignContentPid(). Because
+			only the System Administrator has the right to alter
+			versions in status released.
+		</para>
+
+		<table>
+			<title>
+				Required permissions depending on version-status for
+				assignContentPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">version-status</entry>
+
+						<entry align="left">Role</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">pending</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">submitted</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">in-revision</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">released</entry>
+
+						<entry align="left">System Administrator</entry>
+					</row>
+
+					<row>
+						<entry align="left">
+							withdrawn (public-status)
+						</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+</section>

@@ -1,0 +1,53 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
+[
+<!ENTITY chapter1Overview       SYSTEM "chapter1Overview.xml">
+<!ENTITY chapter1Introduction   SYSTEM "chapter1IntroductionRest.xml">
+<!ENTITY chapter1Authentication SYSTEM "chapter1AuthenticationRest.xml">
+<!ENTITY chapter1Roles          SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
+<!ENTITY chapter1Specifications SYSTEM "chapter1Specifications.xml">
+<!ENTITY AaOverview 			SYSTEM "AaOverview.xml">
+<!ENTITY RoleOverview 			SYSTEM "RoleOverview.xml">
+<!ENTITY RoleXsd 				SYSTEM "RestRoleXsd.xml">
+<!ENTITY RoleApi 				SYSTEM "RestRoleApi.xml">
+<!ENTITY XslApi                 SYSTEM "RestXslApi.xml">
+]>
+
+<book xmlns:xi="http://www.w3.org/2001/XInclude">
+	<bookinfo>
+		<title>API Documentation Role Service</title>
+		<subtitle>Authentication and Authorization (AA)</subtitle>
+		<subtitle>REST Interface</subtitle>
+		<mediaobject  id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg" format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject  id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png" format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<!--  Chapter 1 -->
+	<chapter>
+		<title>Overview</title>
+		&chapter1Overview;
+		&chapter1Introduction;
+		&chapter1Authentication;
+		&chapter1Roles;
+		&chapter1Filters;
+		&chapter1Specifications;
+	</chapter>
+	&AaOverview;
+	<!-- 
+	&RoleXsd;
+	 -->
+	<!-- 	&RoleApi; -->
+	<!-- Generated from JavaDoc --> 
+	&XslApi;
+
+</book>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report-parameters 
+    xmlns="http://www.escidoc.de/schemas/reportparameters/0.4"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+	<report-definition xlink:href="/statistic/report-definition/escidoc:repdef3" />
+	<parameter name="userid">
+		<stringvalue>escidoc:3434</stringvalue>
+	</parameter>
+	<parameter name="itemid">
+			<stringvalue>escidoc:4421</stringvalue>
+	</parameter>
+</report-parameters>

@@ -1,0 +1,233 @@
+<chapter>
+	<title>Resource Organizational Unit</title>
+	<section>
+		<title>General Information</title>
+		<para>
+			The resource Organizational Unit holds the properties of an
+			organizational unit and describes the structural relations to
+			other organizational units by referencing parent/child
+			Organizational Unit objects.
+		</para>
+<!--  
+		<para>
+			Every Organizational Unit is identified in the eSciDoc
+			system by an internal system identifier (ID) and
+			by a persistent identifier (PID).
+		</para>
+-->
+		<para>
+			The details about the data stored in an Organizational Unit
+			can be found in
+			<xref linkend="XML.OrganizationalUnit" />
+			.
+		</para>
+	</section>
+    <section>
+		<title>Description of Properties</title>
+		<section id="XML.OrganizationalUnit">
+			<title>Organizational Unit</title>
+                       <section><title>General Properties of an Organizational Unit</title>
+
+			<table frame="all">
+				<title>Elements of Organizational Unit</title>
+				<tgroup cols="2" align="left" colsep="1" rowsep="1">
+					<colspec colname="c1" />
+					<colspec colname="c2" />
+					<thead>
+						<row>
+							<entry>Element</entry>
+							<entry>Desription</entry>
+						</row>
+					</thead>
+					<tbody>
+						<row>
+							<entry>objid</entry>
+							<entry>
+								A unique identifier of the Organizational Unit within the eSciDoc system.
+							</entry>
+						</row>
+						<row>
+							<entry>creation-date</entry>
+
+							<entry>
+								This date is created by the Infrastructure when the Infrastructure stores the object the first time.
+							</entry>
+						</row>
+						<row>
+							<entry>created-by</entry>
+
+							<entry>
+								Link to the user who created the object. The Infrastructure maintains this element.
+							</entry>
+						</row>
+						<row>
+							<entry>modified-by</entry>
+
+							<entry>
+								Link to the user who changed to the object last time.
+							</entry>
+						</row>
+						<row>
+							<entry>last-modification-date (attribute)</entry>
+
+							<entry>
+								This date is updated by the Infrastructure whenever the object is stored.
+							</entry>
+						</row>
+						<row>
+							<entry>public-status</entry>
+
+							<entry>
+								The status of the Organizational Unit.
+							</entry>
+						</row>
+						<row>
+							<entry>public-status-comment</entry>
+
+							<entry>
+								The comment while changing the public-status.
+							</entry>
+						</row>
+						<row>
+							<entry>name</entry>
+							<entry>
+								The name of the Organizational Unit.
+							</entry>
+						</row>
+						<row>
+							<entry>description</entry>
+
+							<entry>
+								A short description of the Organizational Unit.
+							</entry>
+						</row>
+<!--  						
+						<row>
+							<entry>pid</entry>
+
+							<entry>
+								A persistent identifier of the
+								Organizational Unit.
+							</entry>
+						</row>
+-->
+						<row>
+							<entry>external-ids</entry>
+
+							<entry>
+								A list of external ids of the Organizational Unit.
+							</entry>
+						</row>
+						<row>
+							<entry>has-children</entry>
+
+							<entry>
+								Indicates that the Organizational Unit has children.
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</section>
+		</section>
+      <section>
+        <title>Additional Elements of an Organizational Unit</title>
+
+        <table frame="all">
+          <title>Elements of an Organizational Unit</title>
+
+          <tgroup align="left" cols="2" colsep="1" rowsep="1">
+            <colspec colname="c1" />
+
+            <colspec colname="c2" />
+
+            <thead>
+              <row>
+                <entry>Element</entry>
+
+                <entry>Description</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>md-records</entry>
+
+                <entry>The content specific metadata of the object.</entry>
+              </row>
+
+              <row>
+                <entry>parents</entry>
+
+                <entry>
+                    List of Organizational Units to that this Organizational Unit is
+                    subordinated. This list contains references to Organizational Unit objects.
+                </entry>
+              </row>
+
+              <row>
+                <entry>predecessors</entry>
+
+                <entry>
+                    List of Organizational Units to that this Organizational Unit is
+                    successive. This list contains references to Organizational Unit objects.
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </section>
+
+	</section>
+	<section>
+		<title>XML Schemas</title>
+		<para>
+			In all methods XML-data is used as input and output. The related XML-schemas are located in
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>http://www.escidoc.de/schemas/rest/organizational-unit/0.8</listitem>
+				<listitem>http://www.escidoc.de/schemas/soap/organizational-unit/0.8</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			These XSDs are used:
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>filter-organizational-units.xsd</listitem>
+				<listitem>organizational-unit.xsd</listitem>
+				<listitem>organizational-unit-list.xsd</listitem>
+				<listitem>organizational-unit-path-list.xsd</listitem>
+			</itemizedlist>
+		</para> 
+	</section>
+	<section>
+		<title>Virtual Resources</title>
+		<para>
+			In additon to the resources and related sub
+			resources the eSciDoc framework supports
+			"virtual" resources. An Organizational Unit
+			supports the following virtual resources:
+		</para>
+		<itemizedlist mark="opencircle" spacing="compact">
+			<listitem>
+				parent-objects, list of all parent objects of an
+				Organizational Unit
+			</listitem>
+			<listitem>
+				child-objects, list of all child objects of an
+				Organizational Unit
+			</listitem>
+			<listitem>
+				path-list, all pathes from an
+				Organizational Unit to its
+				top-level-OrganizationalUnits
+			</listitem>
+			<listitem>
+                                successor-objects, list of successor objects of an
+				Organizational Unit
+			</listitem>
+			<listitem>
+                                relations, list of relations from and to this
+				Organizational Unit
+			</listitem>
+		</itemizedlist>
+	</section>
+</chapter>

@@ -1,0 +1,40 @@
+<${resourceNamespacePrefix}:content-model
+#set($unescapedTitle="#unesc(${TITLE})")
+	    #namespaceDecl(${contentStreamsNamespacePrefix} ${contentStreamsNamespace})
+	    #versionReleaseRootNsDecls("true")
+	    #restInsertConditionalRoot("true" "true" "true" ${resourceNamespacePrefix} ${resourceNamespace} "#escA($unescapedTitle)" ${HREF} ${LAST_MODIFICATION_DATE})> 
+ 	#parse("content-model/rest/properties.vm")
+
+#if(${contentModelMdRecordDefinitions})
+<${resourceNamespacePrefix}:md-record-definitions>
+  #foreach(${contentModelMdRecordDefinition} in ${contentModelMdRecordDefinitions})
+  	<${resourceNamespacePrefix}:md-record-definition
+  		name="$contentModelMdRecordDefinition.name">
+  		#if($contentModelMdRecordDefinition.schemaHref)
+  		<${resourceNamespacePrefix}:schema
+  			#restLinkAttributes(${contentModelMdRecordDefinition.name} ${contentModelMdRecordDefinition.schemaHref})
+  			/>
+  		#end
+  	</${resourceNamespacePrefix}:md-record-definition>
+  #end
+</${resourceNamespacePrefix}:md-record-definitions>
+#end
+
+#if(${contentModelResourceDefinitions})
+<${resourceNamespacePrefix}:resource-definitions>
+  #foreach(${contentModelResourceDefinition} in ${contentModelResourceDefinitions})
+  	<${resourceNamespacePrefix}:resource-definition
+  		name="$contentModelResourceDefinition.name"
+  		>
+	  	<${resourceNamespacePrefix}:xslt
+  			#restLinkAttributes(${contentModelResourceDefinition.name} ${contentModelResourceDefinition.xsltHref})
+	  		/>
+	  	<${resourceNamespacePrefix}:md-record-name>$contentModelResourceDefinition.mdRecordName</${resourceNamespacePrefix}:md-record-name>
+  	</${resourceNamespacePrefix}:resource-definition>
+  #end
+</${resourceNamespacePrefix}:resource-definitions>
+#end
+
+ 	${CONTENT_STREAMS}
+ 	#parse("content-model/rest/resources.vm")
+</${resourceNamespacePrefix}:content-model>

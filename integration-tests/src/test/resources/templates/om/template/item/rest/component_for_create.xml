@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocComponents:component
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<escidocComponents:properties>
+		<prop:valid-status>valid</prop:valid-status>
+		<prop:visibility>public</prop:visibility>
+		<prop:content-category>pre-print</prop:content-category>
+	</escidocComponents:properties>
+
+	<escidocComponents:content
+		xlink:href="http://localhost:8080/images/escidoc-banner.jpg" storage="internal-managed" />
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record
+			name="md2" schema="http://www.escidoc-project.de/metadata/schema/0.1">
+			<md2-content />
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+
+</escidocComponents:component>

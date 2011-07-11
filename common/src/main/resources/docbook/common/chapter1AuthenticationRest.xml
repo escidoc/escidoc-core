@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+
+<section id="Overview.Aa">
+  <title>Authentication and Authorization</title>
+
+  <para>Access to most of the eSciDoc services is protected. User requests
+    have to be authorized before they are granted. Exceptions are the 
+    Search service and the Statistic Data service, which are unprotected.
+  </para>
+     
+  <para>
+  	After a successful authentication, the Authentication and Authorization 
+  	Manager returns an eSciDoc user handle in the form of a cookie named
+    <literal>escidocCookie</literal> in the HTTP header of the response, 
+    which has to be provided by the application with every subsequent 
+    method invocation throughout the user session. The eSciDoc user handle 
+    expires after a user-definable period of inacitivty. This period may
+    be set in the <literal>escidoc-core.custom.properties</literal> 
+    configuration file.
+  </para>
+
+  <para>When either the eSciDoc user handle is missing or the authorization 
+  	of a user fails, the services of the eSciDoc Infrastructure send a HTTP 
+  	redirect header to the invoking application, pointing to a page which 
+  	prompts the user for her or his credentials. Which page this is depends 
+  	on the configuration of the eSciDoc authentication. It might be a page 
+  	provided by the eSciDoc Infrastructure (using the local user database), 
+  	a page provided by a local X.509 Directory Server, or a page provided 
+  	by a Shibboleth Identity Provider (IdP). 
+  </para>
+
+  <para>The following example shows how the eSciDoc user handle can be
+    provided within the <literal>escidocCookie</literal> cookie. This 
+    Java example assumes the usage of the HTTP client from the Apache 
+    HTTP Components project<footnote id="HttpComponents"><para>see 
+    http://hc.apache.org/</para></footnote>.
+  </para>
+
+  <para>
+  	<programlisting>			
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.HttpMessage;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.HttpResponse;
+
+  /**
+   * Adds a cookie named "escidocCookie" that holds the eScidoc user
+   * handle to the provided http method object.
+   * 
+   * @param method
+   *            The http method to add the cookie to.
+   * @param eSciDocUserHandle
+   *            The eSciDoc user handle to sent within the cookie.
+   */
+  private void addHandleToMethod(final HttpMessage method, 
+                                 final String eSciDocUserHandle) {
+
+    method.setHeader("Cookie", "escidocCookie=" + eSciDocUserHandle);
+  }
+  
+  /**
+   * Performs a GET request to the provided location.
+   *
+   * @param url
+   *            The location to that the GET request shall be sent.
+   * @return Returns the http method object of the performed request.
+   */
+  private HttpResponse performGetRequest(final String location) {
+  
+    HttpGet method = new HttpGet(location);
+
+    addHandleToMethod(method);
+    
+    // Execute the method with HttpClient.
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpResponse res = client.execute(method);
+    return res;
+  }				
+		</programlisting>
+	</para>
+
+  <para>
+  	<informaltable frame="topbot" colsep="0">
+      <tgroup cols="2">
+      <colspec colwidth="2.5cm"/>
+      <colspec colwidth="12.3cm"/>
+        <tbody>
+          <row rowsep="0">
+            <entry>
+            	<inlinemediaobject>
+                <imageobject>
+                  <imagedata depth="2.0cm" fileref="note.png" />
+                </imageobject>
+              </inlinemediaobject>
+            </entry>
+ 
+            <entry>
+            	<para><emphasis role="bold">Hint</emphasis></para>
+              <para>URL parameters are not evaluated by eSciDoc 
+              	Infrastructure services while processing authorization 
+              	requests. If any URL parameter is found in a GET or a 
+              	HEAD request &#x2014; for example, the parameter 
+                <literal>eSciDocUserHandle</literal> from the login 
+                servlet &#x2014; a redirect response to the same URL 
+                without these parameters is sent back. This is done to 
+                prevent security information from being shown in the 
+                URL field of a browser that directly connects to one 
+                of the eSciDoc Infrastructure services directly.
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </para>
+</section>

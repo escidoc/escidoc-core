@@ -1,0 +1,6 @@
+<processor>
+    <modify>
+        <name>Resource.ContentRelation.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+</processor>

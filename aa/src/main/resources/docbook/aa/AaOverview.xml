@@ -1,0 +1,3377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>AA Overview</title>
+
+  <section>
+    <title>eSciDoc Roles</title>
+
+    <para>An eSciDoc Role represents a set of policies defining the privileges
+    for perfoming actions in accordance to defined conditions, e. g. in
+    accordance to object states. By granting these roles to users, their
+    privileges are defined.</para>
+
+    <para>Additionally, for each eSciDoc role a scope is defined that
+    specifies for which resource objects the role has been defined. The
+    policies of a role are only evaluated during the authorization of a
+    request to perform an action on a resource object, if the object is
+    within the scope of the role. Otherwise, the role's policies are skipped
+    during authorization.</para>
+
+    <para>There are three kinds of eSciDoc roles with different scope
+    definitions: <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <para><emphasis role="bold">Unlimited Roles</emphasis></para>
+
+          <para>The scope of an unlimited role includes all resource objects.
+          The policies of an unlimited role are evaluated, if the user that
+          wants to perfom an action on an object owns a valid grant for the
+          role.</para>
+
+          <para>Currently, the system administrator and the system-inspector are
+          the only predefined unlimited roles.</para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold"> Roles with scope limited to specific
+          object-types </emphasis></para>
+
+          <para>The scope of a role of this kind is limited to objects of a
+          (or some) specified resource types (object types). The policies of
+          such a role are evaluated, if the user that wants to perfom an
+          action on an object owns a valid grant for the role, and if the
+          object is of one of the resource types that are specified for the
+          role.</para>
+
+          <para>Currently, no predefined role of this kind exists. A user
+          manager role, that is limited to user-account and grant resources,
+          could be an example of a role of this kind.</para>
+        </listitem>
+
+        <listitem>
+          <para><emphasis role="bold"> Roles with scope defined on specific
+          objects </emphasis></para>
+
+          <para>Roles of this kind are the most common kind in eSciDoc. The
+          idea is to limit the scope of the role to specific objects, e.g. to
+          containers and items of a context. The scope is defined by
+          specifying the resource type and additionally specifying the
+          attribute that holds the relation of this resource type to another
+          one, on that the role shall be defined.</para>
+
+          <para>In the example above, the role would be defined on the
+          resource type <emphasis>context</emphasis> and its scope by the
+          tuples <emphasis> (container, container:context) </emphasis> and
+          <emphasis>(item, item:context)</emphasis> . Now, the policies of
+          such a role are evaluated, if the object is of one of the specified
+          resource types and if the attribute value matches an object that is
+          referenced in a valid grant owned by the user that wants to perform
+          an action on that object.</para>
+
+          <para>Specifying the attribute defining the relation to another
+          resource type is optional. This allows the inclusion of resource
+          types without any relation to the resource type on that the role is
+          defined. E.g., the staging file does not have any relation to other
+          resource types. But it needs to be in the scope of a role that
+          allows to create or update items, because staging files are used for
+          the upload of binary content.</para>
+
+          <para>Predefined roles of this kind are Author, Administrator,
+          Depositor, MD-Editor and Moderator.</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>The data of an eSciDoc roles is stored by the eSciDoc resource role.
+    The access to the roles is provided by the role handler service.</para>
+
+    <section>
+      <title>Predefined Roles</title>
+      <section>
+        <title>Administrator</title>
+        <para>internal id: escidoc:role-administrator</para>
+        <para>An Administrator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve the context,</para>
+            </listitem>
+            <listitem>
+              <para>update the context,</para>
+            </listitem>
+            <listitem>
+              <para>open the context,</para>
+            </listitem>
+            <listitem>
+              <para>close the context,</para>
+            </listitem>
+            <listitem>
+              <para>retrieve containers and items,</para>
+            </listitem>
+            <listitem>
+              <para>withdraw containers and items,</para>
+            </listitem>
+            <listitem>
+              <para>revise containers and items,</para>
+            </listitem>
+            <listitem>
+              <para>create a grant (user + group),</para>
+            </listitem>
+            <listitem>
+              <para>revoke a grant (user + group),</para>
+            </listitem>
+            <listitem>
+              <para>retrieve a grant (user + group),</para>
+            </listitem>
+            <listitem>
+              <para>add a selector to a user-group,</para>
+            </listitem>
+            <listitem>
+              <para>remove a selector from a user-group,</para>
+            </listitem>
+            <listitem>
+              <para>retrieve user-accounts,</para>
+            </listitem>
+            <listitem>
+              <para>retrieve user-groups.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to the context on
+        that the role is granted to an user.</para>
+      </section>
+
+      <section>
+        <title>Audience</title>
+
+        <para>internal id: escidoc:role-audience</para>
+        <para>An Audience is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve content of components with visibility=audience if item is released.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a component.</para>
+      </section>
+
+      <section>
+        <title>Collaborator-Modifier-Container-Add-Remove-any-Members</title>
+
+        <para>internal id: escidoc:role-collaborator-modifier-container-add-remove-any-members</para>
+        <para>An Collaborator-Modifier-Container-Add-Remove-any-Members is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve a container, item, component-content</para>
+            </listitem>
+            <listitem>
+              <para>update, lock, unlock a container</para>
+            </listitem>
+            <listitem>
+              <para>add members to a container</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a container. scope is resolved hierarchically.</para>
+      </section>
+
+      <section>
+        <title>Collaborator-Modifier-Container-Add-Remove-Members</title>
+
+        <para>internal id: escidoc:role-collaborator-modifier-container-add-remove-members</para>
+        <para>An Collaborator-Modifier-Container-Add-Remove-Members is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve, update, lock, unlock containers</para>
+            </listitem>
+            <listitem>
+              <para>add members to a container</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a container. scope is not resolved hierarchically.</para>
+      </section>
+
+      <section>
+        <title>Collaborator-Modifier-Container-Update-any-Members</title>
+
+        <para>internal id: escidoc:role-collaborator-modifier-container-update-any-members</para>
+        <para>An Collaborator-Modifier-Container-Update-any-Members is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve a container, item, component-content</para>
+            </listitem>
+            <listitem>
+              <para>update, lock, unlock a container or item</para>
+            </listitem>
+            <listitem>
+              <para>add members to a container</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a container. scope is resolved hierarchically.</para>
+      </section>
+
+      <section>
+        <title>Role Collaborator-Modifier-Container-update-direct-members</title>
+
+        <para>internal id: escidoc:role-collaborator-modifier-container-update-direct-members</para>
+        <para>An Role Collaborator-Modifier-Container-update-direct-members is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve a container, item, component-content</para>
+            </listitem>
+            <listitem>
+              <para>update, lock, unlock a container or item</para>
+            </listitem>
+            <listitem>
+              <para>add members to a container</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a container. scope is not resolved hierarchically.</para>
+      </section>
+
+      <section>
+        <title>Collaborator-Modifier</title>
+
+        <para>internal id: escidoc:role-collaborator-modifier</para>
+        <para>A Collaborator-Modifier is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve, update, lock, unlock containers or items.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve content of components.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a context, container or item.
+        Scope definitions to point from container to member-items are not realized.</para>
+      </section>
+
+      <section>
+        <title>Collaborator</title>
+
+        <para>internal id: escidoc:role-collaborator</para>
+        <para>A Collaborator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve items or containers.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve content of components.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a context, container, item or component.
+        If restricted to a component, user may also see the item.</para>
+      </section>
+
+      <section>
+        <title>ContentRelationManager</title>
+
+        <para>internal id: escidoc:role-content-relation-manager</para>
+        <para>A ContentRelationManager is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create content-relations.</para>
+            </listitem>
+            <listitem>
+              <para>delete, retrieve, update, submit, release, revise, lock and unlock 
+              content-relations (s)he created.</para>
+            </listitem>
+            <listitem>
+              <para>create role-grants with scope on content-relations (s)he created (see default-policy).</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is unlimited (no scope-definitions).</para>
+      </section>
+
+      <section>
+        <title>ContentRelationModifier</title>
+
+        <para>internal id: escidoc:role-content-relation-modifier</para>
+        <para>A ContentRelationModifier is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>delete, retrieve, update, submit, release, revise, lock and unlock 
+              content-relations.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. 
+        It is restricted to a content-relation.</para>
+      </section>
+
+      <section>
+        <title>Context-Administrator</title>
+        <para>internal id: escidoc:role-context-administrator</para>
+        <para>A Context-Administrator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create contexts.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve, modify, delete, open, close contexts (s)he created.</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a unlimited role. (Has no scope-definitions).</para>
+      </section>
+
+      <section>
+        <title>Context-Modifier</title>
+        <para>internal id: escidoc:role-context-modifier</para>
+        <para>A Context-Modifier is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve, modify, delete, open, close context granted for.</para>
+            </listitem>
+            <listitem>
+              <para>grant other context-scoped roles to the context (s)he has privileges for (except Context Modifier role).</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a limited role. 
+        It is restricted to a context.</para>
+      </section>
+
+      <section>
+        <title>Depositor</title>
+
+        <para>internal id: escidoc:role-depositor</para>
+        <para>A Depositor is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create containers and items,</para>
+            </listitem>
+
+            <listitem>
+              <para>retrieve containers and items and binary content of an
+              item if the user has created them,</para>
+            </listitem>
+
+            <listitem>
+              <para>update containers and items in the status
+              <emphasis>pending</emphasis>, <emphasis>released</emphasis>, 
+              <emphasis>in-revision</emphasis> or <emphasis>submitted</emphasis> if the user has created
+              them,</para>
+            </listitem>
+
+            <listitem>
+              <para>lock containers and items in the status
+              <emphasis>pending</emphasis>, <emphasis>released</emphasis>, 
+              <emphasis>in-revision</emphasis> or <emphasis>submitted</emphasis> if the user has created
+              them,</para>
+            </listitem>
+
+            <listitem>
+              <para>add/remove members (containers and items) to a container that is
+              in status <emphasis>pending</emphasis>, <emphasis>released</emphasis>, 
+              <emphasis>in-revision</emphasis> or <emphasis>submitted</emphasis> and has been created by
+              the user,</para>
+            </listitem>
+
+            <listitem>
+              <para>delete containers and items not in public-status
+              <emphasis>released</emphasis> or <emphasis>withdrawn</emphasis> 
+              and in latest-version-status <emphasis>pending</emphasis> 
+              or <emphasis>in-revision</emphasis> if the user has created
+              them,</para>
+            </listitem>
+
+            <listitem>
+              <para>submit, withdraw, release containers and items (in version-status
+              <emphasis>pending</emphasis> ) if the user has created
+              them,</para>
+            </listitem>
+            
+            <listitem>
+              <para>upload files to the staging area (i.e. create staging
+              files).</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to a context.</para>
+      </section>
+
+      <section>
+        <title>Ingester</title>
+        <para>internal id: escidoc:role-ingester</para>
+        <para>An Ingester is allowed to: 
+          <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>ingest object via ingest-interfcae.</para>
+            </listitem>
+          </itemizedlist>
+        </para>
+        <para>This role is unlimited (no scope-definitions).</para>
+      </section>
+
+      <section>
+        <title>MD-Editor</title>
+
+        <para>internal id: escidoc:role-md-editor</para>
+        <para>An MD-Editor is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve containers and items if version-status is
+              <emphasis>pending</emphasis>,<emphasis>in-revision</emphasis>,
+              <emphasis>submitted</emphasis> or <emphasis>released</emphasis> 
+              and public-status is 
+              <emphasis>submitted</emphasis>,<emphasis>released</emphasis>, 
+              <emphasis>in-revision</emphasis> or <emphasis>withdrawn</emphasis>
+              </para>
+            </listitem>
+
+            <listitem>
+              <para>update and lock containers and items in version-status
+              <emphasis>submitted</emphasis> and 
+              public-status <emphasis>submitted</emphasis> or <emphasis>released</emphasis>.</para>
+            </listitem>
+            
+            <listitem>
+              <para>submit items and containers that are 
+              in public-status <emphasis>submitted</emphasis> or <emphasis>released</emphasis> 
+              and latest-version-status <emphasis>pending</emphasis>.</para>
+            </listitem>
+
+            <listitem>
+              <para>revise items and containers that are in public-status
+              <emphasis>submitted</emphasis> and latest-version-status <emphasis>submitted</emphasis>.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve content of items in public-status NOT <emphasis>pending</emphasis>.</para>
+            </listitem>
+            <listitem>
+              <para>add and remove members from containers in version-status
+              <emphasis>submitted</emphasis> and 
+              public-status <emphasis>submitted</emphasis> or <emphasis>released</emphasis>.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to a context.</para>
+      </section>
+
+      <section>
+        <title>Moderator</title>
+        <para>internal id: escidoc:role-moderator</para>
+        <para>A Moderator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve containers and items 
+              in public-status submitted, released, in-revision and withdrawn
+              and version-status pending, submitted, released or in-revision.</para>
+            </listitem>
+            <listitem>
+              <para>release containers and items in 
+              public-status submitted or released and latest-version-status submitted.</para>
+            </listitem>
+            <listitem>
+              <para>submit containers and items in public-status 
+              submitted or released and latest-version-status pending or submitted.</para>
+            </listitem>
+            <listitem>
+              <para>revise items and containers in status submitted (public-status and latest-version-status).</para>
+            </listitem>
+            <listitem>
+              <para>update and lock items or containers in public-status submitted or released.
+              version-status has to be submitted or released
+              or item was last-modified by moderator.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve content of items NOT in status pending.</para>
+            </listitem>
+            <listitem>
+              <para>add and remove members of containers in public-status submitted or released.
+              version-status has to be submitted or released
+              or container was last-modified by moderator.</para>
+            </listitem>
+            <listitem>
+              <para>create grants (user + group) for all objects in his context.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve user-accounts and roles.</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a limited role. It is restricted to a context.</para>
+      </section>
+
+      <section>
+        <title>OU-Administrator</title>
+        <para>internal id: escidoc:role-ou-administrator</para>
+        <para>A OU-Administrator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create organizational-units, if parent is in scope.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve, modify, open, close organizational-units if parent is in scope.</para>
+            </listitem>
+            <listitem>
+              <para>grant Organizational Unit Administrator privileges for organizational-units in scope.</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a limited role. 
+        It is restricted to an organizational-unit and implicitely to all its children.</para>
+      </section>
+
+      <section>
+        <title>Privileged-Viewer</title>
+
+        <para>internal id: escidoc:role-privileged-viewer</para>
+        <para>A Privileged-Viewer is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve content of items, no matter in what visibility.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to a context.</para>
+      </section>
+
+      <section>
+        <title>Statistics-Editor</title>
+
+        <para>internal id: escidoc:role-statistics-editor</para>
+        <para>A Statistics-Editor is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create statistic-data-records.</para>
+            </listitem>
+            <listitem>
+              <para>create, retrieve and delete aggregation-definitions.</para>
+            </listitem>
+            <listitem>
+              <para>create, retrieve, update and delete report-definitions.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve and update scopes.</para>
+            </listitem>
+            <listitem>
+              <para>preprocess statistic-data.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to a statistic-scope.</para>
+      </section>
+
+      <section>
+        <title>Statistics-Reader</title>
+
+        <para>internal id: escidoc:role-statistics-reader</para>
+        <para>A Statistics-Reader is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve reports.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>This role is a limited role. It is restricted to a statistic-scope. 
+        report-definition user for report-creation has to belong to that statistic-scope</para>
+      </section>
+
+      <section>
+        <title>System Administrator</title>
+        
+        <para>internal id: escidoc:role-system-administrator</para>
+        <para>The System Administrator is the eSciDoc super user that is
+        allowed to execute any method on any resource.</para>
+      </section>
+
+      <section>
+        <title>System Inspector</title>
+        
+        <para>internal id: escidoc:role-system-inspector</para>
+        <para>The System Inspector is the eSciDoc read-only super user that is
+        allowed to retrieve any resource object, but he/she is not allowed to
+        create or update objects.</para>
+      </section>
+
+      <section>
+        <title>User-Account-Administrator</title>
+        <para>internal id: escidoc:role-user-account-administrator</para>
+        <para>A User-Account-Administrator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create user-accounts.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve, update, activate, deactivate user-accounts (s)he created.</para>
+            </listitem>
+        	<listitem>
+          		<para>create, retrieve and revoke grants for user-accounts (s)he created.</para>
+        	</listitem>
+        	<listitem>
+          		<para>create user-account-inspector role for users + groups with scope on user-accounts (s)he created.</para>
+        	</listitem>
+          </itemizedlist></para>
+        <para>This role is a unlimited role. (Has no scope-definitions).</para>
+      </section>
+
+      <section>
+        <title>User-Account-Inspector</title>
+        <para>internal id: escidoc:role-user-account-inspector</para>
+        <para>A User-Account-Inspector is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve user-accounts.</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a limited role. It is restricted to a user-account.</para>
+      </section>
+
+      <section>
+        <title>User-Group-Administrator</title>
+        <para>internal id: escidoc:role-user-group-administrator</para>
+        <para>A User-Group-Administrator is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>create user-groups.</para>
+            </listitem>
+            <listitem>
+              <para>retrieve, update, delete, activate, deactivate user-groups (s)he created.</para>
+            </listitem>
+            <listitem>
+              <para>add and remove user-group-selectors to user-groups (s)he created.</para>
+            </listitem>
+            <listitem>
+              <para>create, retrieve and revoke user-group-grants for user groups (s)he created.</para>
+            </listitem>
+        	<listitem>
+          		<para>create user-group-inspector role for users + groups with scope on user-groups (s)he created.</para>
+        	</listitem>
+          </itemizedlist></para>
+        <para>This role is a unlimited role. (Has no scope-definitions).</para>
+      </section>
+
+      <section>
+        <title>User-Group-Inspector</title>
+        <para>internal id: escidoc:role-user-group-inspector</para>
+        <para>A User-Group-Inspector is allowed to: <itemizedlist mark="opencircle"
+            spacing="compact">
+            <listitem>
+              <para>retrieve user-groups.</para>
+            </listitem>
+          </itemizedlist></para>
+        <para>This role is a limited role. It is restricted to a user-group.</para>
+      </section>
+
+    </section>
+  </section>
+  <section>
+    <title>Default privileges</title>
+
+    <para>Besides the defined roles, some default privileges exists for every
+    user, even for the anonymous user, that tries access to the services
+    without providing an eSciDoc user handle.</para>
+
+    <para>Every user is allowed to: <itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+          <para>retrieve container versions in the version-status 
+          <emphasis>released</emphasis>,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve item versions in the version-status
+          <emphasis>released</emphasis>,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve contexts in the public-status <emphasis>open</emphasis> and <emphasis>closed</emphasis>
+          ,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve content models,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve content relations in the public-status <emphasis>released</emphasis>,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve binary context of an item if the item is not in the 
+          public-status <emphasis>withdrawn</emphasis>, the item version is in 
+          the version-status <emphasis>released</emphasis>, the component is 
+          in status <emphasis>valid</emphasis> and the component visibility is
+          <emphasis>public</emphasis> ,</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve organizational-units in the public-status
+          <emphasis>open</emphasis> and <emphasis>closed</emphasis> 
+          and also the children and parents of these organizational-units.</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve his/her own user-account (if the user has been
+          authenticated) and grants of their user-accounts.</para>
+        </listitem>
+
+        <listitem>
+          <para>query the semantic store, if the user has been
+          authenticated.</para>
+        </listitem>
+
+        <listitem>
+          <para>logout.</para>
+        </listitem>
+        <listitem>
+          <para>unlock items that she/he has locked.</para>
+        </listitem>
+        <listitem>
+          <para>unlock containers that she/he has locked.</para>
+        </listitem>
+        <listitem>
+          <para>retrieve list of object-refs and 
+           to retrieve list of objects, as the latter is filtered during 
+           the method call.</para>
+        </listitem>
+        <listitem>
+          <para>download a staging file. 
+           This is needed for anonymous access by fedora</para>
+        </listitem>
+        <listitem>
+          <para>retrieve OAI-PMH set definitions</para>
+        </listitem>
+        <listitem>
+          <para>retrieve repository info</para>
+        </listitem>
+        <listitem>
+          <para>retrieve statistic-reports if she/he is 
+           in the role permitted by the record-definition</para>
+        </listitem>
+        <listitem>
+          <para>create grants that have scope on 
+          context/item/container/component/content-relation she/he created</para>
+        </listitem>
+        <listitem>
+          <para>revoke grants she/he created</para>
+        </listitem>
+        <listitem>
+          <para>retrieve grants she/he created</para>
+        </listitem>
+        <listitem>
+          <para>retrieve grants of groups she/he belongs to</para>
+        </listitem>
+        <listitem>
+          <para>create grant for role User Inspector for his/her own account</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>Additionally, every user is allowed to perform a search request, as
+    the search service is not protected by the eSciDoc authentication and
+    authorization component.</para>
+  </section>
+
+
+  <section>
+    <title>Attributes</title>
+
+    <para>In the policies of the roles, attributes of the subject (i.e. the
+    user perfoming an action), the resource, and the action are used. As their
+    values are needed to evaluate the policies, the policy decision point
+    determines these values and uses them during the evaluation of the
+    authorization requests, whenever this is possible. The attribute values
+    that cannot automatically be determined, e.g. the subject-id, the
+    attribute-id, the resource-id and attributes of resources that shall be
+    created or updated, have to be defined within the request to the policy
+    decision point. Attributes values that can automatically be determined
+    must not be overwritten within the authorization requests.</para>
+
+    <para>In the following sections, the attributes supported by the eSciDoc
+    policy decision point are introduced. They can be classified as follows:
+    <itemizedlist>
+        <listitem>
+          <para>Standard XACML Attributes</para>
+        </listitem>
+
+        <listitem>
+          <para>eSciDoc PDP Attributes</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>eSciDoc Resource PDP Attributes</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>Stored Attributes</para>
+                </listitem>
+
+                <listitem>
+                  <para>New Value Attributes</para>
+                </listitem>
+
+                <listitem>
+                  <para>Partly Resolveable Attributes</para>
+                </listitem>
+
+                <listitem>
+                  <para>The Object-Type Attribute</para>
+                </listitem>
+
+                <listitem>
+                  <para>Resource Identifier Attributes</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <para>eSciDoc Subject PDP Attributes (attributes of the current
+              user)</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Service Specific Attributes</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <section>
+      <title>Supported standard XACML attributes</title>
+
+      <para>The policy decision point supports the following attributes
+      defined by XACML:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>XACML Action Attributes</para>
+
+          <para>The eSciDoc policy decision point supports the unique action
+          identifier attribute <emphasis>
+          urn:oasis:names:tc:xacml:1.0:action:action-id </emphasis> . This
+          attribute has to be provided in the authorization request to the
+          policy decision point.</para>
+        </listitem>
+
+        <listitem>
+          <para>XACML Resource Attributes</para>
+
+          <para>The eSciDoc policy decision point supports the resource id
+          attribute <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> . In
+          most cases, this resource-id has to be provided in the request to
+          the policy decision point and should point to the addressed main
+          resource, e.g. to the item in case of a retrieveComponent
+          request.</para>
+        </listitem>
+
+        <listitem>
+          <para>XACML Subject Attributes</para>
+
+          <para>The eSciDoc policy decision point supports the subject id
+          attribute <emphasis> urn:oasis:names:tc:xacml:1.0:subject:subject-id
+          </emphasis> . This attribute must equal to the id of the current
+          user for that an action shall be authorized and must be provided
+          within the authorization request to the policy decision
+          point.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>eSciDoc PDP Attributes</title>
+
+      <para>Additionally, eSciDoc specific resource attributes and subject
+      attributes are supported by the eSciDoc policy decision point. An
+      eSciDoc PDP attribute is identified by an attribute-id starting with the
+      prefix 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:</programlisting>
+          </para>
+        </para>
+
+      <section>
+        <title>eSciDoc Resource PDP Attributes</title>
+
+        <para>An eSciDoc Resource PDP attribute refers an attribute (property)
+        of a resource handled by eSciDoc. An eSciDoc PDP attribute is
+        identified by an attribute-id starting with the prefix 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:</programlisting>
+          </para>
+          In common, this prefix is followed by an path expression
+        that defines the addressed attribute.</para>
+
+        <section>
+          <title>Path Expressions in Attribute Ids</title>
+
+          <para>The second part of an eSciDoc attribute id consists of some
+          kind of a path expression that navigates in the repository's data
+          and selects the corresponding attribute. The path expression
+          elements are separated by colons: 
+          <para>
+            <programlisting>element1:element2:element3:...:elementN</programlisting>
+          </para>
+            </para>
+
+          <para>The first element is the name of an eSciDoc resource in lower
+          letters, e.g. container, context, or item. This first element has to match the requested resource.
+          So if eg an item is requested, the first element of the attribute id has to be <emphasis>item</emphasis>.
+          The second element
+          selects some "property" of the resource. This may be a simple value
+          like the public status of an item. In this case no further path
+          element can exist. Or it may be a reference to another resource,
+          e.g. the context to that an item belongs to, or to a sub resource,
+          e.g. the components of an item. In this case, a further path element
+          can exist to navigate to a "property" of the object selected by the
+          previous element.</para>
+
+          <para>For example, the following attribute id refers to the public
+          status of the context to that an item belongs to: 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:item:context:public-status</programlisting>
+          </para>
+            In this example, the path expression is
+          <emphasis>item:context:public-status</emphasis> . The first element
+          <emphasis>item</emphasis> selects the item resource that is
+          addressed by the XACML resource identifier <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> . The
+          second element <emphasis>context</emphasis> navigates to the context
+          of the item. The third element <emphasis>public-status</emphasis>
+          selects the public status of the previously identified
+          context.</para>
+
+          <para>In the example above, the selected "properties" have been
+          single value "properties". In general, an element may select a set
+          of values, e.g. the components of an item. If the path expression
+          consists of further elements, additional information is needed to
+          navigate to the attribute.</para>
+
+          <para>For example, the value of the visibility of an item's
+          component is addressed by the following attribute id: 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:item:component:visibility</programlisting>
+          </para>
+            Again, the first element <emphasis>item</emphasis> of
+          the path expression navigates to the item resource that is addressed
+          by the resource identifier <emphasis>resource-id</emphasis> . The
+          second element <emphasis>component</emphasis> navigates to the
+          components of the item. An item may have a set of components, not
+          only a single one. Therefore, a set of components are selected by
+          the second element. In this case, additional information is needed
+          for further navigation. Therefore, besides the resource id
+          (referencing to the item), the id of the component has to be defined
+          within the authorization request to the policy decision point.
+          Before the navigation
+          is continued, the eSciDoc policy decision point has to assert that
+          one of the selected components match the provided component id. If
+          this is the case, the component with the provided id is implicitly
+          selected. Then, the third element <emphasis>visibility</emphasis>
+          selects the visibility of this component.
+          Note that if the addressed resource is a component and not an item, then 
+          the attribute id of the visibility of the addressed resource is
+          info:escidoc/names:aa:1.0:resource:component:visibility. So the first
+          element has to match the addressed resource!
+          </para>
+        </section>
+
+        <section>
+          <title>Stored Resource Attributes</title>
+
+          <para>An attribute of this kind refers to a value stored within
+          eSciDoc. It is related to the resource object addressed by the XACML
+          resource identifier <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> . The
+          resolving of the path expression of the attribute id starts with
+          this object, and ends with selecting a value of a stored object. The
+          resolving of the attribute fails, if the resource identifier does
+          not point to an existing object or if the attribute id is
+          invalid.</para>
+        </section>
+
+        <section>
+          <title>New Resource Attributes</title>
+
+          <para>An attribute of this kind does not refer to a stored value.
+          Instead, it refers to a new value of a new resource object that
+          shall be created, or to a new value of a resource object that shall
+          be updated. Its attribute id ends with the suffix 
+          <para>
+            <programlisting>-new</programlisting>
+          </para>
+            For example, the attribute with the following id refers
+          to the new context of a (new) item 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:item:context-new</programlisting>
+          </para>
+            For each new resource attribute exists a corresponding
+          stored attribute (with the same id without the suffix
+          <emphasis>-new</emphasis> ) that refers to the corresponding stored
+          (old) value. But there are many more stored attributes than new
+          resource attributes, because with new resource attributes it is only
+          possible to "navigate" within the new object data and select a new
+          value, but it is not possible to select a value of an object that is
+          related to the new or updated object.</para>
+
+          <para>Attributes of this kind cannot be automatically resolved but
+          all of them have to be provided within the create or update
+          authorization requests, if they may be needed during policy
+          evaluation.</para>
+        </section>
+
+        <section>
+          <title>Partly Resolveable Attributes</title>
+
+          <para>Attributes of this kind are some kind of mixture of the two
+          previous ones. They refer to a stored value, but are related to the
+          new data of an object that shall be created or updated. Their
+          attribute ids contain one path expression element that has the
+          suffix <emphasis>-new</emphasis> , but this is not the last element
+          as it is the case with the new resource attributes. The first part
+          of the id until the suffix <emphasis>-new</emphasis> cannot be
+          automatically resolved and the corresponding value has to be
+          provided within the authorization requests, while the second part of
+          the id, starting with the element after the "new" element, is
+          automatically resolved by the eSciDoc policy decision point using
+          stored data.</para>
+
+          <para>For example, the attribute with the following id is an partly
+          resolveable attribute that refers to the (stored) public status of
+          the (stored) context to that a new item belongs to: 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:item:context-new:public-status</programlisting>
+          </para>
+            As the first part of the id until the element with the
+          suffix <emphasis>-new</emphasis> cannot be automatically resolved,
+          determining the attribute value starts with the value of the
+          provided new resource attribute <emphasis>
+          info:escidoc/names:aa:1.0:resource:item:context-new </emphasis> .
+          Then, the second part of the id is resolved by selecting the public
+          status of this context.</para>
+        </section>
+
+        <section>
+          <title>eSciDoc Object-Type Attributes</title>
+
+          <para>The attribute with the id 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:object-type</programlisting>
+          </para>
+            addresses the name of the resource (in lower letters) of
+          the object that is addressed by the value of the XACML resource
+          identifier attribute <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> . The
+          object-type attribute is automatically resolved by the policy
+          decision point and must not be specified within the authorization
+          request. If a new resource shall be created, its object type has to
+          be specified within the authorization request using the attribute
+          <emphasis> info:escidoc/names:aa:1.0:resource:object-type-new
+          </emphasis> . In this case, the XACML resource identifier <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> must
+          not be provided to indicate this situation.</para>
+        </section>
+
+        <section>
+          <title>eSciDoc Resource Identifier Attributes</title>
+
+          <para>For each eSciDoc resource, an additional resource identifier
+          attribute is defined. These attributes are used, if an additional id
+          of a resource or sub resource is needed to navigate to an attribute
+          value. The ids of these resource identifier attributes are</para>
+
+          <para>
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:resource:&lt;resource-name&gt;-id</programlisting>
+          </para>
+            , where &lt;resource-name&gt; is replaced by the name of
+          the resources/sub resources. Currently, the following resource
+          identifier attributes exist, but this list may be extended when new
+          resource types or sub resources are added to eSciDoc: 
+          <itemizedlist
+            mark="opencircle" spacing="compact">
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:component-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:container-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:content-model-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:content-relation-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:content-type-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:context-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:grant-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:item-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:organizational-unit-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:role-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:scope-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:user-account-id
+                </emphasis></para>
+              </listitem>
+              <listitem>
+                <para><emphasis>
+                info:escidoc/names:aa:1.0:resource:user-group-id
+                </emphasis></para>
+              </listitem>
+          </itemizedlist>
+            </para>
+        </section>
+      </section>
+
+      <section>
+        <title>eScidoc Subject PDP Attributes</title>
+
+        <para>An eSciDoc Subject attribute refers an attribute of the the
+        current user. It is releated to the user-account that is addressed by
+        the XACML subject identifier <emphasis>
+        urn:oasis:names:tc:xacml:1.0:subject:subject-id </emphasis> . An
+        eSciDoc Subject PDP attribute is identified by an attribute id
+        starting with the prefix 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:subject:</programlisting>
+          </para>
+          This prefix is followed by an path expression that defines
+          the addressed attribute. The first element of this path expression is 
+          always <emphasis>user-account</emphasis>.</para>
+
+        <para>The values of eSciDoc Subject PDP attributes are automatically
+        determined by the eSciDoc policy decision point. They must not be
+        overwritten within the authorization request.</para>
+      </section>
+
+      <section>
+        <title>Supported path expression segments in scope of
+        resources</title>
+
+        <para>The supported segments of path expressions are listed in the
+        following tables. 
+        <table>
+        <title>Supported path expression segments in the scope of a context
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>context-id</para></entry>
+                <entry> the id of the context, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>context:created-by</para></entry>
+                <entry> the id of the user who created the context, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>context:id</para></entry>
+                <entry> the id of the context, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>context:organizational-unit</para></entry>
+                <entry> the organizational-unit of the context, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>context:public-status</para></entry>
+                <entry> the public-status of the context, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>context:title</para></entry>
+                <entry> the title of the context, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a container
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>container-id</para></entry>
+                <entry> the id of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:container</para></entry>
+                <entry> the (parent)container of the container, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:content-model</para></entry>
+                <entry> the id of the content-model of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:context</para></entry>
+                <entry> the id of the context of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:created-by</para></entry>
+                <entry> the id of the user who created the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:hierarchical-containers</para></entry>
+                <entry> the (parent)containers (hierarchical) of the container, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:id</para></entry>
+                <entry> the id of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:latest-release-number</para></entry>
+                <entry> the number of the latest release of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:latest-release-pid</para></entry>
+                <entry> the pid of the latest release of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:latest-version-modified-by</para></entry>
+                <entry> the id of the user who created the latest-version of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:latest-version-number</para></entry>
+                <entry> the number of the latest-version of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:latest-version-status</para></entry>
+                <entry> the status of the latest-version of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:lock-owner</para></entry>
+                <entry> the id of the user who locked the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:member</para></entry>
+                <entry> the id of the member of the container, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:public-status</para></entry>
+                <entry> the public-status of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:title</para></entry>
+                <entry> the title of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:version-modified-by</para></entry>
+                <entry> the id of the user who created the current version of the container, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>container:version-status</para></entry>
+                <entry> the status of the current version of the container, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a item
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>item-id</para></entry>
+                <entry> the id of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:component</para></entry>
+                <entry> the id of the component of the item, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:component:content-category</para></entry>
+                <entry> the content-category of the component of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:component:created-by</para></entry>
+                <entry> the id of the user who created the component of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:component:valid-status</para></entry>
+                <entry> the valid-status of the component of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:component:visibility</para></entry>
+                <entry> the visibility of the component of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:container</para></entry>
+                <entry> the id of the container of the item, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:content-model</para></entry>
+                <entry> the id of the content-model of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:context</para></entry>
+                <entry> the id of the context of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:created-by</para></entry>
+                <entry> the id of the user who created the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:hierarchical-containers</para></entry>
+                <entry> the ids of the containers of the item (hierarchical), multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:id</para></entry>
+                <entry> the id of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:latest-release-number</para></entry>
+                <entry> the latest-release-number of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:latest-release-pid</para></entry>
+                <entry> the latest-release-pid of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:latest-version-modified-by</para></entry>
+                <entry> the id of the user who created the latest-version of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:latest-version-number</para></entry>
+                <entry> the latest-version-number of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:latest-version-status</para></entry>
+                <entry> the latest-version-status of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:lock-owner</para></entry>
+                <entry> the id of the user who locked the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:modified-by</para></entry>
+                <entry> the id of the user who modified the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:public-status</para></entry>
+                <entry> the public-status of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:title</para></entry>
+                <entry> the title of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:version-modified-by</para></entry>
+                <entry> the id of the user who created the current version of the item, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>item:version-status</para></entry>
+                <entry> the version-status of the item, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a component
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>component-id</para></entry>
+                <entry> the id of the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:content-category</para></entry>
+                <entry> the content-category of the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:created-by</para></entry>
+                <entry> the id of the user who created the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:id</para></entry>
+                <entry> the id of the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:item</para></entry>
+                <entry> the id of the item of the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:valid-status</para></entry>
+                <entry> the valid-status of the component, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>component:visibility</para></entry>
+                <entry> the visibility of the component, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a content-model
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>content-model-id</para></entry>
+                <entry> the id of the content-model, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>content-model:id</para></entry>
+                <entry> the id of the content-model, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>content-model:title</para></entry>
+                <entry> the title of the content-model</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a content-type
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>content-type-id</para></entry>
+                <entry> the id of the content-type, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a content-relation
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>content-relation-id</para></entry>
+                <entry> the id of the content-relation, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>content-relation:created-by</para></entry>
+                <entry> the id of the user who created the content-relation, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>content-relation:id</para></entry>
+                <entry> the id of the content-relation, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>content-relation:version-status</para></entry>
+                <entry> the status of the current version of the content-relation, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a organizational-unit
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>organizational-unit-id</para></entry>
+                <entry> the id of the organizational-unit, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:created-by</para></entry>
+                <entry> the id of the user who created the organizational-unit, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:hierarchical-parents</para></entry>
+                <entry> the ids of the parents of the organizational-unit (hierarchical), multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:hierarchical-parents-new</para></entry>
+                <entry> the parents of the new organizational-unit (hierarchical), multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:id</para></entry>
+                <entry> the id of the organizational-unit, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:latest-version-number</para></entry>
+                <entry> the latest-version-number of the organizational-unit, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:parent</para></entry>
+                <entry> the ids of the parents of the organizational-unit, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:public-status</para></entry>
+                <entry> the public-status of the organizational-unit, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>organizational-unit:title</para></entry>
+                <entry> the title of the organizational-unit, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a user-account
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>user-account-id</para></entry>
+                <entry> the id of the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:created-by</para></entry>
+                <entry> the user who created the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:grant:assigned-on</para></entry>
+                <entry> the id of the object the grant is assigned on (scope of the grant), single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:grant:assigned-on:context</para></entry>
+                <entry> the context-id of the object the grant is assigned on, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:grant:assigned-on:created-by</para></entry>
+                <entry> the id of the user who created the object the grant is assigned on, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:grant:created-by</para></entry>
+                <entry> the id of the user who created the grant, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:grant:role</para></entry>
+                <entry> the role-id of the grant, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:group-membership</para></entry>
+                <entry> the ids of the groups the user is member(hierarchical), multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:handle</para></entry>
+                <entry> the handle of the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:id</para></entry>
+                <entry> the id of the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:login-name</para></entry>
+                <entry> the login-name of the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:modified-by</para></entry>
+                <entry> the user who modified the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:name</para></entry>
+                <entry> the name of the user-account, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:organizational-unit</para></entry>
+                <entry> the organizational-unit of the user-account, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-account:organizational-unit-with-children</para></entry>
+                <entry> the organizational-unit tree of the user-account, multi value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a user-group
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>user-group-id</para></entry>
+                <entry> the id of the user-group, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:created-by</para></entry>
+                <entry> the id of the user who created the user-group, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:grant:assigned-on</para></entry>
+                <entry> the id of the object the group-grant is assigned on, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:grant:assigned-on:context</para></entry>
+                <entry> the context-id of the object the group-grant is assigned on, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:grant:assigned-on:created-by</para></entry>
+                <entry> the id of the user who created the object the group-grant is assigned on, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:grant:created-by</para></entry>
+                <entry> the id of the user who created the group-grant, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:grant:role</para></entry>
+                <entry> the role-id of the grant, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:id</para></entry>
+                <entry> the id of the user-group, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:modified-by</para></entry>
+                <entry> the id of the user who last modified the user-group, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>user-group:name</para></entry>
+                <entry> the name of the user-group, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a role
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>role-id</para></entry>
+                <entry> the id of the role, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>role:created-by</para></entry>
+                <entry> the id of the user who created the role, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>role:id</para></entry>
+                <entry> the id of the role, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>role:modified-by</para></entry>
+                <entry> the id of the user who last modified the role, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>role:name</para></entry>
+                <entry> the name of the role, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a grant
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>grant-id</para></entry>
+                <entry> the id of the grant, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a aggregation-definition
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>aggregation-definition:scope</para></entry>
+                <entry> the id of the scope of the aggregation-definition, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a report-definition
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>report-definition:allowed-roles:allowed-role</para></entry>
+                <entry> the id of the role that is allowed to execute the report-definition, single value attribute containing roleIds whitespace-separated</entry>
+              </row>
+              <row>
+                <entry><para>report-definition:scope</para></entry>
+                <entry> the id of the scope of the report-definition, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a report
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>report:scope</para></entry>
+                <entry> the id of the scope of the report, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a scope
+        prefix is: info:escidoc/names:aa:1.0:resource:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>scope-id</para></entry>
+                <entry> the id of the scope, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in the scope of a subject
+        prefix is: info:escidoc/names:aa:1.0:</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>subject:created-by</para></entry>
+                <entry> the user who created the current user, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:group-membership</para></entry>
+                <entry> the ids of the groups the current user is member(hierarchical), multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:handle</para></entry>
+                <entry> the handle of the current user, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:login-name</para></entry>
+                <entry> the login-name of the current user, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:modified-by</para></entry>
+                <entry> the user who modified the current user, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:name</para></entry>
+                <entry> the name of the current user, single value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:organizational-unit</para></entry>
+                <entry> the organizational-unit of the current user, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:organizational-unit-with-children</para></entry>
+                <entry> the organizational-unit tree of the current user, multi value attribute</entry>
+              </row>
+              <row>
+                <entry><para>subject:role-grant:&lt;role-id&gt;:assigned-on</para></entry>
+                <entry> the id of the object the grant is assigned on (scope of the grant), multi value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        <table>
+        <title>Supported path expression segments in other scopes
+       </title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Segment</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+              <row>
+                <entry><para>info:escidoc/names:aa:1.0:resource:object-type</para></entry>
+                <entry> the object-type of the resource, single value attribute</entry>
+              </row>
+          </tbody>
+        </tgroup>
+        </table>
+        </para>
+      </section>
+    </section>
+
+    <section>
+      <title>Service Specific Attributes</title>
+
+      <para>In the policies of the roles further attributes that are specific
+      for services may be used. These attributes are unknown to the eSciDoc
+      policy decision point. Their values have to be defined within the
+      authorization requests and will be used by the policy decision point
+      during evaluation.</para>
+
+      <para>These service specific attributes are unsupported by the policy
+      enforcement points of the eSciDoc base services. Therefore, they must
+      not be used in policies defining the privileges for the eSciDoc base
+      services.</para>
+
+      <para>Any attribute-id that does not begin with the prefix of the
+      eSciDoc PDP attributes or the supported XACML attributes may be used to
+      define service specific attributes.</para>
+    </section>
+
+    <section>
+      <title>Mandatory attributes in authorization requests</title>
+
+      <para>The following attributes have to be defined within each
+      authorization request to the policy decision point:</para>
+
+      <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <para>The XACML action identifier ( <emphasis>
+          urn:oasis:names:tc:xacml:1.0:action:action-id </emphasis> ), that
+          specifies the action that shall be authorized.</para>
+        </listitem>
+
+        <listitem>
+          <para>The XACML subject identifier ( <emphasis>
+          urn:oasis:names:tc:xacml:1.0:subject:subject-id </emphasis> ), that
+          addresses the current user for that the action shall be
+          authorized.</para>
+        </listitem>
+
+        <listitem>
+          <para>The object type of a new resource, if a new resource shall be
+          created.</para>
+        </listitem>
+
+        <listitem>
+          <para>The XACML resource identifier ( <emphasis>
+          urn:oasis:names:tc:xacml:1.0:resource:resource-id </emphasis> ), in
+          case of an action on an existing resource object.</para>
+        </listitem>
+
+        <listitem>
+          <para>the eSciDoc resource identifier attributes related to the sub
+          resource(s), in case of an action on a sub resource.</para>
+        </listitem>
+
+        <listitem>
+          <para>The appropriate eSciDoc New Resource Attributes, in case of a
+          create or an update action.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Service Specific Attributes that are used within some
+          policies defined for the roles.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+
+  <section>
+    <title>Actions</title>
+
+    <para>The actions referenced in the policies are identified by the XACML
+    action identifier <emphasis> urn:oasis:names:tc:xacml:1.0:action:action-id
+    </emphasis> that has to be provided within the authorization requests.
+    This is the one and only attribute related to actions that is defined by
+    the eSciDoc policy decision point.</para>
+
+    <section>
+      <title>Base Service Actions</title>
+
+      <para>The policy enforcement points of the eSciDoc base services support
+      the following actions. Their ids start with the common prefix 
+          <para>
+            <programlisting>info:escidoc/names:aa:1.0:action:</programlisting>
+          </para>
+        These actions have to be used in the policies of the roles
+      to secure the eSciDoc base services.</para>
+
+      <table>
+        <title>User Management Wrapper</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>logout</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Policy Decision Point</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>evaluate</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Role handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-role</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-role</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-role</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-role</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Content Model handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-content-model</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-content-model</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-content-model</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-content-model</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Container handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>revise-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>submit-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>release-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>withdraw-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>container-move-to-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>add-members-to-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>remove-members-from-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>lock-container</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>unlock-container</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Context handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>close-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>open-context</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Item handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>submit-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>release-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>revise-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>withdraw-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-content</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>item-move-to-context</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>lock-item</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>unlock-item</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Semantic Store handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>query-semantic-store</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Organizational Unit handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-children-of-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-parents-of-organizational-unit</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Statistic Aggregation Definition handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-aggregation-definition</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-aggregation-definition'</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-aggregation-definition'</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-aggregation-definition'</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Statistic Report Definition handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-report-definition</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>create-report-definition</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>create-report-definition</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>create-report-definition</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Statistic Report handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>retrieve-report</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Statistic Data handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-statistic-data</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-statistic-data</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-statistic-data</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-statistic-data</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Statistic Scope handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-scope</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-scope</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-scope</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-scope</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>Staging File handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-staging-file</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-staging-file</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <table>
+        <title>User Account handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>activate-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>deactivate-user-account</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>create-grant</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-grant</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-current-grants</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>revoke-grant</entry>
+
+              <entry></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+      <table>
+        <title>User Group handler</title>
+
+        <tgroup align="left" cols="2" colsep="1" rowsep="1">
+          <colspec colname="c1" />
+
+          <colspec colname="c2" />
+
+          <thead>
+            <row>
+              <entry>Action id (Suffix)</entry>
+
+              <entry>Description</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>create-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>delete-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>update-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>activate-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>deactivate-user-group</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>create-user-group-grant</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>retrieve-user-group-grant</entry>
+
+              <entry></entry>
+            </row>
+
+            
+            <row>
+              <entry>retrieve-user-group-grants</entry>
+
+              <entry></entry>
+            </row>
+
+            <row>
+              <entry>revoke-user-group-grant</entry>
+
+              <entry></entry>
+            </row>
+            
+            <row>
+              <entry>remove-user-group-selectors</entry>
+
+              <entry></entry>
+            </row>
+            
+            <row>
+              <entry>add-user-group-selectors</entry>
+
+              <entry></entry>
+            </row>
+            
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+
+    <section>
+      <title>Service Specific Actions</title>
+
+      <para>Services may define own actions to secure their own methods. As
+      from the eSciDoc authorization component's point of view an action is
+      nothing more than an unique identifier string, all that has to be done
+      is to define these attribute ids. These ids should not start with the
+      common prefix of the base service's action ids
+      (info:escidoc/names:aa:1.0:action:).</para>
+    </section>
+  </section>
+  <section>
+    <title>Escidoc Login Mechanisms</title>
+    <section>
+        <title>Objective</title>
+        <para>The eSciDoc infrastructure supports (starting with version 1.0beta1, build 254) 
+        different login mechanisms. The main idea is, the real user management takes place outside 
+        of eSciDoc in a central or distributed user management system of a organization or 
+        a federation of organizations. Within eSciDoc, the users are represented by proxy objects 
+        (the UserAccount resources) that are created or updated during the login of the user using 
+        the services and data provided by the external user management systems.</para>
+    </section>
+    <section>
+        <title>Configuration of login mechanism(s)</title>
+        <para>The login of the users is configured using a spring bean 
+        configuration file named escidoc-login.xml that has to be available 
+        on the classpath of the deployed escidoc infrastructure. 
+        It should be placed in the configuration folder of the application server, 
+        e.g. in ${jboss.home}/server/default/conf/. 
+        This configuration file defines the spring security beans that realizes the login mechanisms 
+        that shall be used. For details about the spring framework and its spring-security project, see</para>
+
+        <para>http://www.springframework.org/</para>
+        <para>http://static.springframework.org/spring-security/site/index.html </para>
+
+        <para>The following shows the skeletal structure of the escidoc-login.xml file:</para>
+        <programlisting>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans
+   xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+    default-lazy-init="false""&gt;
+
+    &lt;security:http auto-config="false" path-type="regex" ...&gt;
+        &lt;security:intercept-url 
+            pattern="/aa/login[^/].*$" 
+            access="IS_AUTHENTICATED_FULLY"/&gt;
+        &lt;security:intercept-url 
+            pattern="/.*" 
+            filters="none" /&gt;
+
+        ...
+
+    &lt;/security:http&gt;
+
+    &lt;!-- Definition of authentication providers 
+        and additionally needed beans --&gt;
+    ...
+
+&lt;/beans&gt;
+        </programlisting>
+
+        <para>The http element of the spring-security namespace defines that the eSciDoc login servlet 
+        (that is located at ${server.url}/aa/login shall be protected by mechanisms 
+        of spring security, while all other resources shall be unprotected 
+        (as they use the internal eSciDoc security mechanism). 
+        If the values above are changed, the login mechanisms would not work properly.
+        Configuration of form based login mechanisms
+        The LDAP authentication or the (deprecated) login via the internal UserAccount resource 
+        are form based login mechanisms. In this case, the http element looks like follows:
+        </para>
+        <programlisting>
+&lt;security:http 
+    auto-config="false" 
+    access-denied-page="/aa/login/login-repeated.html" 
+    path-type="regex" 
+    entry-point-ref="authenticationProcessingFilterEntryPoint"&gt;
+    &lt;security:intercept-url 
+        pattern="/aa/login[^/].*$" 
+        access="IS_AUTHENTICATED_FULLY"/&gt;
+    &lt;security:intercept-url 
+        pattern="/.*" 
+        filters="none" /&gt;
+    &lt;security:form-login
+        authentication-failure-url="/aa/login/login-repeated.html"
+        default-target-url="/aa/login/missing-target.html" /&gt;
+&lt;/security:http>
+
+&lt;bean id="authenticationProcessingFilterEntryPoint" 
+    class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint"&gt;
+&lt;property name="loginFormUrl" value="/aa/login/login.html"/&gt;
+&lt;/bean&gt;
+        </programlisting>
+    </section>
+    <section>
+        <title>Supported Login mechanisms</title>
+        <para>Currently, eSciDoc supports the following login mechanisms:</para>
+        <section>
+            <title>Login via LDAP server</title>
+            <para>eSciDoc supports the login of user and creation of UserAccount 
+            resources for new users using the services and data provided by LDAP servers. 
+            Currently, the user's distinguished name (DN) and LDAP username are used to identify 
+            the related UserAccount of the user and fill in its values during creation. 
+            Existing UserAccount currently are not updated:</para>
+
+            <para>* UserAccount.loginname: To assure unique login names in case of using multiple LDAP servers 
+            (which should possible but currently has not been tested), the LDAP username (e.g. uid) 
+            and the distinguished name (dn) of the user are concatenated and "tokenized". 
+            E.g., if the user is identified by entering "foo" as the user name and the LDAP server 
+            returns the distinguished name "cn=foo bar, ou=example, ou=org", 
+            the resulting internal loginname would be "foo,cn=foo_bar,ou=example,ou=org".</para>
+
+            <para>* UserAccount.name: The first part of the distinguished name (e.g. "foo bar" in the example above) 
+            is used as the name of the UserAccount.</para>
+
+            <para>The LDAP mechanism is a login form based mechanism and may be combined 
+            with the (deprecated) login via the internal UserAccount resource.</para>
+            
+            <para>All the other LDAP attributes of the user and the names of the LDAP groups 
+            the user belongs to are written as user-attributes into the internal eSciDoc-Database.
+            The user-attribute-name for the LDAP-groups the user belongs to is 'groupRole'.</para>
+
+            <para>The following has to be placed in the login configuration 
+            file escidoc-login.xml to enable this mechanism:</para>
+            
+            <programlisting>
+
+&lt;security:http 
+  auto-config="false" 
+  access-denied-page="/aa/login/login-repeated.html" 
+  path-type="regex" 
+  entry-point-ref="authenticationProcessingFilterEntryPoint"&gt;
+    &lt;security:intercept-url 
+        pattern="/aa/login[^/].*$" 
+        access="IS_AUTHENTICATED_FULLY"/&gt;
+    &lt;security:intercept-url 
+        pattern="/.*" 
+        filters="none" /&gt;
+    &lt;security:form-login
+        authentication-failure-url="/aa/login/login-repeated.html"
+        default-target-url="/aa/login/missing-target.html" /&gt;
+&lt;/security:http&gt;
+
+
+&lt;bean id="authenticationProcessingFilterEntryPoint" 
+    class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint"&gt;
+  &lt;property name="loginFormUrl" value="/aa/login/login.html"/&gt;
+&lt;/bean&gt;
+
+&lt;!-- Definition of authentication providers 
+     and additionally needed beans --&gt;
+&lt;bean id="contextSource"
+    class="org.springframework.security.ldap.DefaultSpringSecurityContextSource"&gt;
+    &lt;constructor-arg value="ldap://localhost/dc=fiz-karlsruhe,dc=de"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="userSearch"
+    class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch"&gt;
+    &lt;constructor-arg index="0" value="ou=people"/&gt;
+    &lt;constructor-arg index="1" value="(uid={0})"/&gt;
+    &lt;constructor-arg index="2" ref="contextSource" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="ldapAuthProvider"
+    class="org.springframework.security.providers.ldap.LdapAuthenticationProvider"&gt;
+    &lt;constructor-arg&gt;
+        &lt;bean class="org.springframework.security.providers.ldap.authenticator.BindAuthenticator"&gt;
+            &lt;constructor-arg ref="contextSource"/&gt;
+            &lt;property name="userSearch" ref="userSearch" /&gt;
+        &lt;/bean&gt;
+    &lt;/constructor-arg&gt;
+    &lt;constructor-arg&gt;
+        &lt;bean class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator"&gt;
+            &lt;constructor-arg ref="contextSource"/&gt;
+            &lt;constructor-arg value="ou=group"/&gt;
+            &lt;property name="groupRoleAttribute" value="cn"/&gt;
+            &lt;property name="groupSearchFilter" value="(memberUid={1})"/&gt;
+            &lt;property name="rolePrefix" value=""/&gt;
+            &lt;property name="convertToUpperCase" value="false"/&gt;
+        &lt;/bean&gt;
+    &lt;/constructor-arg&gt;
+    &lt;property name="userDetailsContextMapper"&gt;
+        &lt;bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+	&lt;security:authentication-manager&gt;
+    	&lt;security:authentication-provider ref="ldapAuthProvider" /&gt;
+    &lt;/security:authentication-manager&gt;
+            </programlisting>
+        </section>
+        <section>
+            <title>Login via Shibboleth</title>
+            <para>Shibboleth is standards-based, open source middleware software 
+            which provides Web Single SignOn (SSO) across or within organizational boundaries. 
+            It allows sites to make informed authorization decisions for individual access 
+            of protected online resources in a privacy-preserving manner. 
+            For information about setting up and configuring shibboleth for eSciDoc, 
+            see https://www.escidoc.org/JPSWiki/en/UserLoginShibboleth.</para>
+            
+            <para>eSciDoc supports the login of user and creation of UserAccount 
+            resources for new users using the data provided by Shibboleth. 
+            As it is freely configurable which Shibboleth-Attributes to return to an application,
+            eSciDoc does not know which attributes it can use for UserAccount-creation.
+            Therefore it has to be configured which Shibboleth-Attributes to use for UserAccount-creation.
+            There are 2 configurable Attribute-names for the UserAccount-creation:</para>
+            
+	        <itemizedlist>
+		        <listitem>
+		            <para>escidoc-core.aa.attribute-name.common-name:</para>
+		            <para>defines the name of the Shibboleth-attribute that contains the common-name of the user.</para>
+                    <para>The default-value of this attribute is cn.</para>
+		        </listitem>
+		        <listitem>
+		            <para>escidoc-core.aa.attribute-name.persistent-id:</para>
+                    <para>defines the name of the Shibboleth-attribute that contains the unique id of the user.</para>
+                    <para>the attribute-value should follow the rules of the LDAP-attribute eduPersonPrincipalName.
+                    (The value consists of an left and a right part, separated by an @ eg user@fiz-karlsruhe.de.
+                    The right part is the domain of the user and the left part is the unique id of the user within the domain)</para>
+                    <para>The default-value of this attribute is eduPersonPrincipalName.</para>
+		        </listitem>
+	        </itemizedlist>
+	        <para>it is important that the Shibboleth-SP delivers values for these 
+	        two attributes to the eSciDoc-core-service, otherwise login will not work properly!</para>
+	        <para>The default values of these attributes can get overwritten 
+	        by setting them in the escidoc-core.properties file
+	        that is located in &lt;jboss-home&gt;/server/default/conf</para>
+	        
+            <para>* UserAccount.loginname: The unique id of the user, according to the value 
+            of the configured shibboleth-attribute-name.</para>
+
+            <para>* UserAccount.name: The common name of the user, according to the value 
+            of the configured shibboleth-attribute-name.</para>
+            
+            <para>All the other attributes shibboleth returns to the eSciDocCore-service 
+            are written as user-attributes into the internal eSciDoc-Database</para>
+
+            <para>The following has to be placed in the login configuration file escidoc-login.xml to enable this mechanism:</para>
+
+            <programlisting>
+&lt;security:http auto-config="false" entry-point-ref="entryPoint"
+    path-type="regex"&gt;
+    &lt;security:intercept-url 
+        pattern="/aa/login[^/].*$" 
+        access="IS_AUTHENTICATED_FULLY"/&gt;
+    &lt;security:intercept-url pattern="/.*" filters="none" /&gt;
+    &lt;security:custom-filter ref="shibFilter" before="CAS_FILTER"/&gt;
+&lt;/security:http&gt;
+
+&lt;!-- Definition of authentication providers 
+     and additionally needed beans --&gt;
+	&lt;security:authentication-manager&gt;
+    	&lt;security:authentication-provider ref="shibProvider" /&gt;
+	&lt;/security:authentication-manager&gt;    
+&lt;bean id="shibFilter" 
+    class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"&gt;
+    &lt;security:custom-filter before="AUTHENTICATION_PROCESSING_FILTER"/&gt;
+&lt;/bean&gt;
+&lt;bean id="entryPoint" 
+    class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint"&gt;
+    &lt;property name="serviceProviderBaseUrl" value="https://kal04756.fiz-karlsruhe.de" /&gt;
+    &lt;property name="sessionInitiatorPath" value="/Shibboleth.sso/Login" /&gt;
+&lt;/bean&gt;
+&lt;bean id="shibProvider" 
+    class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider"&gt;
+&lt;/bean&gt;
+		    </programlisting>
+        </section>
+        <section>
+            <title>Login via the internal UserAccount resource (deprecated)</title>
+            <para>The login via the internal UserAccount is a form based login mechanism. 
+            It may be combined with Login via LDAP (see above). The following has to be placed 
+            in the login configuration file escidoc-login.xml to enable this mechanism:</para>
+            
+            <programlisting>
+&lt;security:http 
+  auto-config="false" 
+  access-denied-page="/aa/login/login-repeated.html" 
+  path-type="regex" 
+  entry-point-ref="authenticationProcessingFilterEntryPoint"&gt;
+    &lt;security:intercept-url 
+        pattern="/aa/login[^/].*$" 
+        access="IS_AUTHENTICATED_FULLY"/&gt;
+    &lt;security:intercept-url 
+        pattern="/.*" 
+        filters="none" /&gt;
+    &lt;security:form-login 
+        authentication-failure-url="/aa/login/login-repeated.html"
+        default-target-url="/aa/login/missing-target.html" /&gt;
+&lt;/security:http&gt;
+
+&lt;bean id="authenticationProcessingFilterEntryPoint" 
+    class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint"&gt;
+  &lt;property name="loginFormUrl" value="/aa/login/login.html"/&gt;
+&lt;/bean&gt;
+
+&lt;!-- Definition of authentication providers 
+     and additionally needed beans --&gt;
+&lt;security:authentication-manager&gt;
+&lt;security:authentication-provider&gt;
+    &lt;security:jdbc-user-service
+        data-source-ref="escidoc-core.DataSource"
+        users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+        authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" /&gt;
+&lt;/security:authentication-provider&gt;
+&lt;/security:authentication-manager&gt;
+            </programlisting>
+        </section>
+        <section>
+            <title>Login via OpenID</title>
+            <para>OpenID-Login logs in via an OpenID-Provider. 
+            The OpenID-Provider is retrived from the OpenID-Url provided by the user in the login-form.
+            Supported OpenID-Providers are restrictable by providing an openidProviderRegex in the openIdFilter-bean.
+            If the OpenID-Provider is not supported, the user is redirected to the login-page that displays the error-message.
+            One can configure, which of the attributes the OpenID-Provider returns should get saved as user-attributes in the eSciDOc internal Database
+            by providing the attributes in the myOpenID4JavaConsumer-bean as a list of OpenIdAttributes.</para>
+            
+            <programlisting>
+    &lt;bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" /&gt;
+    &lt;security:http auto-config="false"
+        path-type="regex"&gt;
+		&lt;security:session-management session-fixation-protection="none"/&gt;
+        &lt;security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/&gt;
+        &lt;security:intercept-url pattern="/.*" filters="none" /&gt;
+        &lt;security:openid-login 
+        	user-service-ref="openidUserDetailsService" 
+        	login-page="/aa/login/openidlogin.jsp"
+        	authentication-failure-url="/aa/login/openidlogin.jsp?login_error=true" /&gt;
+        &lt;security:custom-filter ref="openidFilter" before="CAS_FILTER"/&gt;
+    &lt;/security:http&gt;
+
+	&lt;bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" /&gt;
+    &lt;bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter"&gt;
+    	&lt;property name="authenticationManager" ref="authenticationManager"/&gt;
+		&lt;property name="consumer" ref="myOpenID4JavaConsumer" /&gt;
+		&lt;property name="openidProviderRegex" value=".*" /&gt;
+		&lt;property name="providerRegexFailureUrl" value="/aa/login/openidlogin.jsp?login_error=true" /&gt;
+	&lt;/bean&gt;
+ 	&lt;bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider"&gt;
+  		&lt;property name="userDetailsService" ref="openidUserDetailsService" /&gt;
+ 	&lt;/bean&gt;
+	 &lt;bean id="myOpenID4JavaConsumer" class="org.springframework.security.openid.OpenID4JavaConsumer"&gt;
+	  &lt;constructor-arg index="0"&gt;
+	  	&lt;bean class="org.openid4java.consumer.ConsumerManager"/&gt;
+	  &lt;/constructor-arg&gt;
+	  &lt;constructor-arg index="1"&gt;
+	   &lt;list value-type="org.springframework.security.openid.OpenIDAttribute"&gt;
+	    &lt;bean class="org.springframework.security.openid.OpenIDAttribute"&gt;
+	     &lt;constructor-arg index="0" value="email"/&gt;
+	     &lt;constructor-arg index="1" value="http://axschema.org/contact/email"/&gt;
+	     &lt;property name="required" value="true"/&gt;
+	     &lt;property name="count" value="1"/&gt;
+	    &lt;/bean&gt;
+	    &lt;bean class="org.springframework.security.openid.OpenIDAttribute"&gt;
+	     &lt;constructor-arg index="0" value="fullname"/&gt;
+	     &lt;constructor-arg index="1" value="http://axschema.org/namePerson"/&gt;
+	     &lt;property name="required" value="true"/&gt;
+	     &lt;property name="count" value="1"/&gt;
+	    &lt;/bean&gt;
+	   &lt;/list&gt;
+	  &lt;/constructor-arg&gt;
+	 &lt;/bean&gt;
+	  
+	&lt;security:authentication-manager alias="authenticationManager"&gt;
+    	&lt;security:authentication-provider ref="openIDAuthenticationProvider"/&gt;
+	&lt;/security:authentication-manager&gt;
+            </programlisting>
+        </section>
+    </section>
+  </section>
+</chapter>

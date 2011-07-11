@@ -1,0 +1,61 @@
+<${containerNamespacePrefix}:properties #versionReleaseRootNsDecls (${isRootProperties}) #restInsertConditionalRoot(${isRootProperties} "true" "true" ${containerNamespacePrefix} ${containerNamespace} ${propertiesTitle} ${propertiesHref} ${LAST_MODIFICATION_DATE})>
+#set($unescapedName="#unesc(${containerName})")
+#creationDate(${containerCreationDate})
+#set($unescapedCreator="#unesc(${containerCreatedByTitle})")
+    #restCreatedBy("#escA(${unescapedCreator})" ${containerCreatedByHref})
+
+	<${escidocPropertiesNamespacePrefix}:public-status>${containerStatus}</${escidocPropertiesNamespacePrefix}:public-status>	
+	<${escidocPropertiesNamespacePrefix}:public-status-comment>${containerStatusComment}</${escidocPropertiesNamespacePrefix}:public-status-comment>	
+	<${escidocPropertiesNamespacePrefix}:name>#escT($unescapedName)</${escidocPropertiesNamespacePrefix}:name>
+	#if($containerDescription)
+	#set($unescapedDescription="#unesc(${containerDescription})")
+	<${escidocPropertiesNamespacePrefix}:description>#escT($unescapedDescription)</${escidocPropertiesNamespacePrefix}:description>
+	#end
+#set($unescapedContextTitle="#unesc(${containerContextTitle})")
+	#restLink(${structuralRelationsNamespacePrefix} "context" "#escA(${unescapedContextTitle})" ${containerContextHref})
+	#set($unescapedContentModelTitle="#unesc(${containerContentModelTitle})")
+	#restLink(${structuralRelationsNamespacePrefix} "content-model" "#escA(${unescapedContentModelTitle})" ${containerContentModelHref})
+##
+    <${escidocPropertiesNamespacePrefix}:lock-status>${containerLockStatus}</${escidocPropertiesNamespacePrefix}:lock-status>	
+    #if( ${containerLocked} == "true" )
+    <${escidocPropertiesNamespacePrefix}:lock-date>${containerLockDate}</${escidocPropertiesNamespacePrefix}:lock-date>	
+    #restLink(${structuralRelationsNamespacePrefix} "lock-owner" ${containerLockOwnerTitle} ${containerLockOwnerHref})
+	#end
+##	
+    #if ($containerPid)
+    <${escidocPropertiesNamespacePrefix}:pid>${containerPid}</${escidocPropertiesNamespacePrefix}:pid>
+    #end
+    <${escidocPropertiesNamespacePrefix}:version #restLinkAttributes (${containerCurrentVersionTitle} ${containerCurrentVersionHref})>
+    <${versionNamespacePrefix}:number>${containerCurrentVersionNumber}</${versionNamespacePrefix}:number>
+    <${versionNamespacePrefix}:date>${containerCurrentVersionDate}</${versionNamespacePrefix}:date>
+    <${versionNamespacePrefix}:status>${containerCurrentVersionStatus}</${versionNamespacePrefix}:status>
+
+    #set($unescapedModifiedByTitle="#unesc(${containerCurrentVersionModifiedByTitle})")
+    #restModifiedBy("#escA(${unescapedModifiedByTitle})" ${containerCurrentVersionModifiedByHref})
+
+
+    #set($unescapedComment="#unesc(${containerCurrentVersionComment})")
+    <${versionNamespacePrefix}:comment>#escT(${unescapedComment})</${versionNamespacePrefix}:comment>
+
+    #if (${containerCurrentVersionPID})
+    <${versionNamespacePrefix}:pid>${containerCurrentVersionPID}</${versionNamespacePrefix}:pid>
+    #end
+    </${escidocPropertiesNamespacePrefix}:version>
+
+    <${escidocPropertiesNamespacePrefix}:latest-version #restLinkAttributes (${containerLatestVersionTitle} ${containerLatestVersionHref})>
+    <${versionNamespacePrefix}:number>${containerLatestVersionNumber}</${versionNamespacePrefix}:number>
+    <${versionNamespacePrefix}:date>${containerLatestVersionDate}</${versionNamespacePrefix}:date>
+    </${escidocPropertiesNamespacePrefix}:latest-version>
+
+    #if (${containerLatestReleaseDate})
+    <${escidocPropertiesNamespacePrefix}:latest-release #restLinkAttributes (${containerLatestReleaseTitle} ${containerLatestReleaseHref})>
+    <${releaseNamespacePrefix}:number>${containerLatestReleaseNumber}</${releaseNamespacePrefix}:number>
+    <${releaseNamespacePrefix}:date>${containerLatestReleaseDate}</${releaseNamespacePrefix}:date>
+
+    #if (${containerLatestReleasePid})
+    <${releaseNamespacePrefix}:pid>${containerLatestReleasePid}</${releaseNamespacePrefix}:pid>
+    #end
+    </${escidocPropertiesNamespacePrefix}:latest-release>
+    #end
+	#if(${containerCms})${containerCms}#end
+</${containerNamespacePrefix}:properties>

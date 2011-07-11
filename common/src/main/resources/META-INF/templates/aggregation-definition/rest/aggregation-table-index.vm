@@ -1,0 +1,6 @@
+        <${aggregationDefinitionNamespacePrefix}:index>
+            <${aggregationDefinitionNamespacePrefix}:name>#escT(${indexName})</${aggregationDefinitionNamespacePrefix}:name>
+#foreach ( $aggregationIndexField in $indexFields )
+            <${aggregationDefinitionNamespacePrefix}:field>#escT(${aggregationIndexField.field})</${aggregationDefinitionNamespacePrefix}:field>
+#end
+        </${aggregationDefinitionNamespacePrefix}:index>

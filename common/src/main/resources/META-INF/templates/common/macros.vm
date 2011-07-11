@@ -1,0 +1,52 @@
+#macro( escA $value )$esc.escapeAttribute($value)#end
+#macro( escT $value )$esc.escapeTextContent($value)#end
+#macro( unesc $value )$esc.unescape($value)#end
+#macro( namespaceDecl $prefix $uri )xmlns:${prefix}="${uri}"#end
+#macro( xmlBase )xml:base="${ESCIDOC_BASE_URL}"#end
+#macro( creationDate $creationDate )<${escidocPropertiesNamespacePrefix}:creation-date>${creationDate}</${escidocPropertiesNamespacePrefix}:creation-date>#end
+#macro( versionReleaseRootNsDecls $isRootSubresource) #if( ${isRootSubresource} && ${isRootSubresource} == "true" )#namespaceDecl(${versionNamespacePrefix} ${versionNamespace}) #namespaceDecl(${releaseNamespacePrefix} ${releaseNamespace})#end #end 
+#macro( publicStatus $status )<${escidocPropertiesNamespacePrefix}:public-status>${status}</${escidocPropertiesNamespacePrefix}:public-status>#end
+#macro( xmlElement $namespacePrefix $tagName $attributes $content )<${namespacePrefix}:${tagName} ${attributes}>${content}</${namespacePrefix}:${tagName}>#end
+##
+##
+#macro( linkTitleAndTypeAttributes $title )xlink:type="simple" xlink:title="${title}" #end
+#macro( restLinkAttributes $title $href ) #if(${href})xlink:type="simple" xlink:title="#escA(${title})" xlink:href="#escA(${href})"#end#end
+#macro( soapLinkAttributes $id ) #if(${id})objid="${id}"#end#end
+#macro( restLink $namespacePrefix $elementName $title $href )<#if(${namespacePrefix} != "")${namespacePrefix}:#end$elementName #restLinkAttributes(${title} ${href}) />#end
+#macro( soapLink $namespacePrefix $elementName $id )<${namespacePrefix}:$elementName #soapLinkAttributes($id) />#end
+#macro( restLinkContent $namespacePrefix $elementName $title $href $storage)<${namespacePrefix}:$elementName #restLinkAttributes(${title} ${href}) storage="$storage"/>#end
+##
+##
+#macro( restRootAttributes $title $href $lastModificationDate ) #xmlBase() #if( ${href})#restLinkAttributes(${title} ${href})#end #if( ${lastModificationDate})last-modification-date="${lastModificationDate}"#end #end
+#macro( soapRootAttributes $id $lastModificationDate ) #if(${id})objid="${id}"#end  #if( ${lastModificationDate})last-modification-date="${lastModificationDate}"#end #end
+##
+##
+#macro( restCommonRootNsDecls $isPropNeeded $isSrelNeeded ) #if( ${isPropNeeded} && ${isPropNeeded} == "true" )#namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace})#end #if( ${isSrelNeeded} && ${isSrelNeeded} == "true" )#namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})#end #namespaceDecl("xlink" "http://www.w3.org/1999/xlink") #end
+#macro( soapCommonRootNsDecls $isPropNeeded $isSrelNeeded ) #if( ${isPropNeeded} && ${isPropNeeded} == "true" )#namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace})#end #if( ${isSrelNeeded} && ${isSrelNeeded} == "true" )#namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})#end #end
+##
+##
+#macro( commonRootNsDecls )#namespaceDecl("xlink" "http://www.w3.org/1999/xlink") #end
+##
+##
+#macro( restCreatedBy $creatorTitle $creatorHref )#restLink(${structuralRelationsNamespacePrefix} "created-by" ${creatorTitle} ${creatorHref})#end
+#macro( soapCreatedBy $creatorId )#soapLink(${structuralRelationsNamespacePrefix} "created-by" ${creatorId})#end
+#macro( restModifiedBy $title $href )#if( ${title}) #if(${href}) #restLink(${structuralRelationsNamespacePrefix} "modified-by" ${title} ${href})#end#end#end
+#macro( soapModifiedBy $id )#if($id) #soapLink(${structuralRelationsNamespacePrefix} "modified-by" ${id})#end#end
+#macro( restContext $title $href )#restLink(${structuralRelationsNamespacePrefix} "context" ${title} ${href})#end
+#macro( soapContext $id )#soapLink(${structuralRelationsNamespacePrefix} "context" ${id})#end
+#macro( restOrigin $title $href )#restLink(${structuralRelationsNamespacePrefix} "origin" ${title} ${href})#end
+#macro( soapOrigin $id )#soapLink(${structuralRelationsNamespacePrefix} "origin" ${id})#end
+#macro( restContentModel $title $href )#restLink(${structuralRelationsNamespacePrefix} "content-model" ${title} ${href})#end
+#macro( soapContentModel $id )#soapLink(${structuralRelationsNamespacePrefix} "content-model" ${id})#end
+##
+##
+#macro(insertConditionalAttribute $attribute $attributeName) #if($attribute) ${attributeName}="${attribute}"#end#end
+##
+##
+#macro( restInsertConditionalRoot $isRootSubResource $isPropNeeded $isSrelNeeded $namespacePrefix $namespace $title $href $lastModificationDate )#if( ${isRootSubResource} && ${isRootSubResource} == "true" ) #namespaceDecl(${namespacePrefix} ${namespace}) #restCommonRootNsDecls($isPropNeeded $isSrelNeeded) #restRootAttributes(${title} ${href} ${lastModificationDate})#else#restLinkAttributes(${title} ${href} )#end#end
+#macro( soapInsertConditionalRoot $isRootSubResource $isPropNeeded $isSrelNeeded $namespacePrefix $namespace $id $lastModificationDate )#if( ${isRootSubResource} && ${isRootSubResource} == "true" ) #namespaceDecl(${namespacePrefix} ${namespace}) #soapCommonRootNsDecls($isPropNeeded $isSrelNeeded) #soapRootAttributes( ${id} ${lastModificationDate})#else#soapLinkAttributes(${id})#end#end
+##
+##
+#macro( virtualResourceRootForResourceList $namespacePrefix $namespace $title) #namespaceDecl(${namespacePrefix} ${namespace}) #commonRootNsDecls() #linkTitleAndTypeAttributes(${title})#end
+#macro( virtualResourceRoot $namespacePrefix $namespace $title) #virtualResourceRootForResourceList(${namespacePrefix} ${namespace} ${title}) #xmlBase()#end
+#macro( searchResultRecord $file) #set($body = "<search-result:search-result-record #namespaceDecl('search-result' ${searchResultNamespace})>" + "#parse(${file})" + "</search-result:search-result-record>") #if(${recordPacking.getType()} == "string") #escT($body) #else $body #end #end

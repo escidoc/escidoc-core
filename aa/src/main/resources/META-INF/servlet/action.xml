@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <define>
+        <var name="ROLE-ID" regexp="/([^/?]*)" />
+    </define>
+    <define>
+        <var name="CONTEXT-ID" regexp="/([^/?]*)" />
+    </define>
+    
+    <!--#########################################################
+        # Unsecured actions
+        # -->
+    <resource name="Action" base-uri="/aa/unsecured-actions/">
+        <descriptor uri="/aa/unsecured-actions/${CONTEXT-ID}">
+            <invoke http="DELETE" method="deleteUnsecuredActions" param1="${ROLE-ID}">
+            </invoke>
+            <invoke http="GET" method="retrieveUnsecuredActions"
+                param1="${CONTEXT-ID}">
+            </invoke>
+            <invoke http="PUT" method="createUnsecuredActions" param1="${ROLE-ID}"
+                param2="${BODY}">
+            </invoke>
+        </descriptor>
+    </resource>
+</mapping>
