@@ -23,6 +23,7 @@ package de.escidoc.core.common.servlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
@@ -657,18 +658,21 @@ public class EscidocServlet extends HttpServlet {
                 httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
             }
         }
-        final String body = XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition() + exception.toXmlString();
         if (compressionIsAccepted) {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
-            final byte[] txt = (body.getBytes());
             final ServletOutputStream servletOut = httpResponse.getOutputStream();
             final OutputStream out = new GZIPOutputStream(servletOut);
-            out.write(txt);
+            out.write(XmlUtility.DOCUMENT_START.getBytes());
+            out.write(XmlUtility.getStylesheetDefinition().getBytes());
+            out.write(exception.toXmlString().getBytes());
             out.close();
             servletOut.close();
         }
         else {
-            httpResponse.getWriter().println(body);
+            PrintWriter p = httpResponse.getWriter();
+            p.print(XmlUtility.DOCUMENT_START);
+            p.print(XmlUtility.getStylesheetDefinition());
+            p.println(exception.toXmlString());
         }
     }
 
