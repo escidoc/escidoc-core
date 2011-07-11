@@ -1906,13 +1906,13 @@
         <groupId>org.escidoc</groupId>
         <artifactId>fedoragsearch</artifactId>
         <type>war</type>
-        <version>1.4.3</version>
+        <version>1.4.4</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
         <artifactId>srw</artifactId>
         <type>war</type>
-        <version>1.4.2</version>
+        <version>1.4.3</version>
       </dependency>
       <dependency>
         <groupId>fedora.localservice</groupId>
