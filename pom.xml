@@ -1905,7 +1905,7 @@
         <groupId>org.escidoc</groupId>
         <artifactId>fedoragsearch</artifactId>
         <type>war</type>
-        <version>1.4.4</version>
+        <version>1.4.5</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
