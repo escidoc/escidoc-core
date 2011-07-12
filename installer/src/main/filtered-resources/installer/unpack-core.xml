@@ -123,6 +123,8 @@
     <!-- patch fedora.war by adding the database driver -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
+    <!-- patch fedora.war by adding a jboss-web.xml -->
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-web.xml" />
     <!-- deploy fedora.war in JBoss -->
     <antcall target="move-file-with-save">
       <param name="source" value="${install.dir}/install.tmp/fedora.war" />
