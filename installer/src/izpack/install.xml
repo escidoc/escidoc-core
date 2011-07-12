@@ -437,6 +437,8 @@
             <parsable targetfile="$INSTALL_PATH/install.tmp/fedora-users.xml" />
             <file src="../fedora.fcfg" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/fedora.fcfg" />
+            <file src="../staging/fedora/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/WEB-INF/jboss-web.xml" />
             <file src="config/fedora/log4j.properties" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="config/fedora/deny-everything-if-not-administrator.xml" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
