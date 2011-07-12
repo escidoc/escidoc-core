@@ -116,32 +116,6 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     </bean>  
 
     <!-- END DATABASE FILTER CHAIN #######################################################################################################-->
-    <!-- OPENID FILTER CHAIN #######################################################################################################-->
-    <bean id="springSecurityOpenidFilterChain"
-        class="org.springframework.security.web.FilterChainProxy">
-        <security:filter-chain-map path-type="regex">
-            <security:filter-chain pattern="/aa/login/database$|/aa/login/database[^/].*$|/aa/database/j_spring_security_check|/aa/database/spring_security_check" 
-                       filters="httpSessionContextIntegrationFilter,
-                                openidLogoutFilter,
-                                databaseAuthenticationProcessingFilter,
-                                securityContextHolderAwareRequestFilter,
-                                databaseExceptionTranslationFilter,
-                                databaseFilterSecurityInterceptor" />
-        </security:filter-chain-map>
-    </bean>
-    
-    <bean id="openidLogoutFilter"  
-        class="org.springframework.security.web.authentication.logout.LogoutFilter">  
-        <constructor-arg value="/aa/login/database/login.html" />  
-        <!-- URL redirected to after logout -->  
-        <constructor-arg>  
-            <list>                      
-                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />  
-            </list>  
-        </constructor-arg>  
-    </bean>  
-
-    <!-- END OPENID FILTER CHAIN #######################################################################################################-->
     <!-- LDAP FILTER CHAIN #######################################################################################################-->
     <bean id="springSecurityLdapFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
@@ -255,6 +229,110 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     </bean>  
 
     <!-- END LDAP FILTER CHAIN #######################################################################################################-->
+    <!-- SHIBBOLETH FILTER CHAIN #######################################################################################################-->
+    <security:http auto-config="false" entry-point-ref="entryPoint"
+        path-type="regex">
+        <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
+        <security:intercept-url pattern="/.*" filters="none" />
+        <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:custom-filter ref="shibFilter" before="CAS_FILTER"/>
+    </security:http>
+    
+	<security:authentication-manager>
+    	<security:authentication-provider ref="shibProvider" />
+	</security:authentication-manager>    
+	
+    <bean id="shibFilter" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationFilter"/>
+
+    <bean id="entryPoint" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint">
+        <property name="serviceProviderBaseUrl" value="https://esfedrep5.fiz-karlsruhe.de:8545" />
+        <property name="sessionInitiatorPath" value="/Shibboleth.sso/DS" />
+    </bean>
+
+    <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider" />
+
+	<security:authentication-manager>
+    	<security:authentication-provider>
+        	<security:jdbc-user-service
+            	id="jdbcUserService"
+            	data-source-ref="escidoc-core.DataSource"
+            	users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            	authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
+    	</security:authentication-provider>
+	</security:authentication-manager>
+
+
+    <bean id="springSecurityShibbolethFilterChain"
+        class="org.springframework.security.web.FilterChainProxy">
+        <security:filter-chain-map path-type="regex">
+            <security:filter-chain pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check" 
+                       filters="httpSessionContextIntegrationFilter,
+                                databaseAuthenticationProcessingFilter,
+                                securityContextHolderAwareRequestFilter,
+                                databaseExceptionTranslationFilter,
+                                databaseFilterSecurityInterceptor" />
+        </security:filter-chain-map>
+    </bean>
+    
+    <bean id="eSciDocShibbolethAuthenticationManager"
+        class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="shibbolethAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="shibbolethAuthenticationProvider"
+        class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <constructor-arg ref="contextSource"/>
+                <property name="userSearch" ref="userSearch" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+                <constructor-arg ref="contextSource"/>
+                <constructor-arg value="ou=group"/>
+                <property name="groupRoleAttribute" value="cn"/>
+                <property name="groupSearchFilter" value="(member={0})"/>
+                <property name="rolePrefix" value=""/>
+                <property name="convertToUpperCase" value="false"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDetailsContextMapper">
+            <bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/>
+        </property>
+    </bean>
+
+    <!-- END SHIBBOLETH FILTER CHAIN #######################################################################################################-->
+    <!-- OPENID FILTER CHAIN #######################################################################################################-->
+    <bean id="springSecurityOpenidFilterChain"
+        class="org.springframework.security.web.FilterChainProxy">
+        <security:filter-chain-map path-type="regex">
+            <security:filter-chain pattern="/aa/login/database$|/aa/login/database[^/].*$|/aa/database/j_spring_security_check|/aa/database/spring_security_check" 
+                       filters="httpSessionContextIntegrationFilter,
+                                openidLogoutFilter,
+                                databaseAuthenticationProcessingFilter,
+                                securityContextHolderAwareRequestFilter,
+                                databaseExceptionTranslationFilter,
+                                databaseFilterSecurityInterceptor" />
+        </security:filter-chain-map>
+    </bean>
+    
+    <bean id="openidLogoutFilter"  
+        class="org.springframework.security.web.authentication.logout.LogoutFilter">  
+        <constructor-arg value="/aa/login/database/login.html" />  
+        <!-- URL redirected to after logout -->  
+        <constructor-arg>  
+            <list>                      
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />  
+            </list>  
+        </constructor-arg>  
+    </bean>  
+
+    <!-- END OPENID FILTER CHAIN #######################################################################################################-->
 
 
     <!-- ACCESS DECISION MANAGER ######################################################################################################-->
