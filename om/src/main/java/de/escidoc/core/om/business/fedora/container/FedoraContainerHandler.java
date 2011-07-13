@@ -801,24 +801,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      */
     @Override
     public String retrieveMembers(final String id, final SRURequestParameters parameters)
-        throws ContainerNotFoundException, TripleStoreSystemException, IntegritySystemException,
-        WebserverSystemException {
+        throws ContainerNotFoundException, TripleStoreSystemException, IntegritySystemException, SystemException {
         final StringWriter result = new StringWriter();
 
-        this.utility.checkIsContainer(id);
-        if (parameters.isExplain()) {
-            // Items and containers are in the same index.
-            sruRequest.explain(result, ResourceType.ITEM);
-        }
-        else {
-            String query = "\"/resources/parent\"=" + id;
-
-            if (parameters.getQuery() != null) {
-                query += " AND " + parameters.getQuery();
+        setContainer(id);
+        if (getContainer().isLatestVersion()) {
+            if (parameters.isExplain()) {
+                // Items and containers are in the same index.
+                sruRequest.explain(result, ResourceType.ITEM);
             }
-            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(), parameters
-                    .getRecordPacking());
+            else {
+                String query = "\"/resources/parent\"=" + getContainer().getId();
+
+                if (parameters.getQuery() != null) {
+                    query += " AND " + parameters.getQuery();
+                }
+                sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
+                    query, parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(),
+                    parameters.getRecordPacking());
+            }
         }
         return result.toString();
     }
