@@ -275,8 +275,9 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         String newSubject = "/ir/item/" + createItemFromTemplate("item_without_component.xml");
 
         Node subject = selectSingleNode(relationCreated, "/content-relation/subject/@href");
+        String oldSubject = subject.getNodeValue();
+
         subject.setNodeValue(newSubject);
-        String oldSubject = selectSingleNode(relationCreated, "/content-relation/subject/@href").getNodeValue();
 
         String relationToUdate = toString(relationCreated, false);
 
@@ -288,6 +289,8 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         Document updatedRelationDoc = getDocument(updatedRelationXml);
 
         String subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@href").getNodeValue();
+
+        // FIXME If updating the subject will be supported by the core then newSubject and subjectValue should be the same
         assertEquals(oldSubject, subjectValue);
 
         // retrieve
@@ -297,6 +300,8 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
         subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
+
+        // FIXME If updating the subject will be supported by the core then newSubject and subjectValue should be the same
         assertEquals(oldSubject, subjectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);
@@ -315,15 +320,15 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
     @Test
     public void testUpdateObject() throws Exception {
 
-        // change subject
+        // change object
         Document relationCreated = getDocument(relationXml);
 
-        String newSubject = "/ir/item/" + createItemFromTemplate("item_without_component.xml");
+        String newObject = "/ir/item/" + createItemFromTemplate("item_without_component.xml");
 
-        Node subject = selectSingleNode(relationCreated, "/content-relation/object/@href");
-        subject.setNodeValue(newSubject);
+        Node object = selectSingleNode(relationCreated, "/content-relation/object/@href");
+        String oldObject = object.getNodeValue();
 
-        String oldSubject = selectSingleNode(relationCreated, "/content-relation/object/@href").getNodeValue();
+        object.setNodeValue(newObject);
 
         String relationToUdate = toString(relationCreated, false);
 
@@ -334,8 +339,10 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         assertXmlValidContentRelation(updatedRelationXml);
         Document updatedRelationDoc = getDocument(updatedRelationXml);
 
-        String subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
-        assertEquals(oldSubject, subjectValue);
+        String objectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
+
+        // FIXME If updating the object will be supported by the core then newObject and objectValue should be the same
+        assertEquals(oldObject, objectValue);
 
         // retrieve
         String retrieveXml = retrieve(this.relationId);
@@ -343,8 +350,10 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         // check values of retrieved ContentRelation
         assertXmlValidContentRelation(retrieveXml);
         Document retrieveDoc = getDocument(retrieveXml);
-        subjectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
-        assertEquals(oldSubject, subjectValue);
+        objectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
+
+        // FIXME If updating the object will be supported by the core then newObject and objectValue should be the same
+        assertEquals(oldObject, objectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);
         String lmdUpdate = getLastModificationDateValue(updatedRelationDoc);
