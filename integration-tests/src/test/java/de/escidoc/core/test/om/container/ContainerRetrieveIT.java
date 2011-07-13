@@ -28,12 +28,15 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.test.EscidocAbstractTest;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,15 +44,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.test.EscidocAbstractTest;
 
 /**
  * Test the mock implementation of the container resource.
@@ -904,6 +904,47 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         catch (final Exception e) {
             assertExceptionType("Wrong exception", ContainerNotFoundException.class, e);
         }
+    }
+
+    /**
+     * Test https://www.escidoc.org/jira/browse/INFR-916
+     *
+     * It should be possible to get the container member list even if the
+     * container id contains the version number. Of course ths will only work
+     * for the latest version.
+     *
+     * @throws Exception
+     *             If framework behavior is not as expected.
+     */
+    @Test
+    public void testIssue916() throws Exception {
+        // create container
+        String containerId =
+            getObjidValue(create(getContainerTemplate("create_container.xml").replaceAll("escidoc:persistent3",
+                "escidoc:ex1")));
+
+        // create item
+        createItem(containerId, EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest/",
+            "item_without_component.xml"));
+
+        // retrieve container members without version number
+        String members1Xml = retrieveMembers(containerId, new HashMap<String, String[]>());
+
+        assertXmlValidSrwResponse(members1Xml);
+
+        Document members1 = getDocument(members1Xml);
+        NodeList members1List = selectNodeList(members1, XPATH_SRW_RESPONSE_OBJECT + "/*/@href");
+
+        // retrieve container members with version number
+        String members2Xml = retrieveMembers(containerId + ":2", new HashMap<String, String[]>());
+
+        assertXmlValidSrwResponse(members2Xml);
+
+        Document members2 = getDocument(members2Xml);
+        NodeList members2List = selectNodeList(members2, XPATH_SRW_RESPONSE_OBJECT + "/*/@href");
+
+        // compare both lists
+        assertListContentEqual("Member lists differ.", nodeList2List(members1List), nodeList2List(members2List));
     }
 
     /**
