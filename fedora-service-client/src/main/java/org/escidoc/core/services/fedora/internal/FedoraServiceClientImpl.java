@@ -2,21 +2,22 @@ package org.escidoc.core.services.fedora.internal;
 
 import static org.esidoc.core.utils.Preconditions.checkState;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-import com.googlecode.ehcache.annotations.KeyGenerator;
-import com.googlecode.ehcache.annotations.TriggersRemove;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
+
 import net.sf.oval.guard.Guarded;
 
 import org.apache.cxf.jaxrs.client.Client;
 import org.apache.cxf.jaxrs.client.WebClient;
-
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.DatastreamState;
@@ -27,7 +28,6 @@ import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.DigitalObjectTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint;
-import java.util.concurrent.Future;
 import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
 import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
@@ -46,7 +46,6 @@ import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ListDatastreamsPathParam;
 import org.escidoc.core.services.fedora.ListDatastreamsQueryParam;
-import org.esidoc.core.utils.io.MimeStream;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.NextPIDPathParam;
@@ -63,7 +62,7 @@ import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
 import org.esidoc.core.utils.io.IOUtils;
-import org.esidoc.core.utils.io.Stream;
+import org.esidoc.core.utils.io.MimeStream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -72,13 +71,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.Future;
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Default implementation for {@link FedoraServiceClient}.
@@ -463,7 +461,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
     
     @Override
-    public MimeStream getMimeTypedBinaryContent(final String pid, final String dsId, final DateTime versionDate) {
+    public MimeStream getMimeTypedBinaryContent(final String pid, final String dsId, final DateTime versionDate) throws ResourceNotFoundException, SystemException {
         final Client client = WebClient.client(this.fedoraService);
         final WebClient webClient = WebClient.fromClient(client);
         String path = "/get/" + pid + "/" + dsId + "/";
@@ -471,6 +469,13 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
             path = path + versionDate.toString();
         }
         Response response = webClient.accept(MimeTypes.ALL).path(path).get();
+        
+        if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
+            throw new ResourceNotFoundException("\"" + path + "\" not found"); 
+        }
+        else if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new SystemException("request to \"" + path + "\" failed with error code " +  response.getStatus());
+        }
         String contentType = null;
         List<Object> contentTypeList = (List<Object>)response.getMetadata().get("Content-Type");
         if (!contentTypeList.isEmpty()){
@@ -484,14 +489,14 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
             result = new MimeStream(stream, contentType);
         }
         catch (IOException e) {
-            throw new RuntimeException("Error on getMimeTypedBinaryContent.", e);
+            throw new SystemException("Error on getMimeTypedBinaryContent.", e);
         }
         return result;
     }
     
     @Override
     @Async
-    public Future<MimeStream> getMimeTypedBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate){
+    public Future<MimeStream> getMimeTypedBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate) throws ResourceNotFoundException, SystemException{
         return new AsyncResult<MimeStream> (getMimeTypedBinaryContent(pid, dsId, versionDate));
     }
 

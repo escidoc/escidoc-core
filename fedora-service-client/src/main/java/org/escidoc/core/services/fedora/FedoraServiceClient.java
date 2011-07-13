@@ -12,12 +12,15 @@ import net.sf.oval.constraint.NotEmpty;
 
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
-import org.esidoc.core.utils.io.MimeStream;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.esidoc.core.utils.VoidObject;
+import org.esidoc.core.utils.io.MimeStream;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
+
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * REST Client for Fedora repository.
@@ -131,9 +134,9 @@ public interface FedoraServiceClient {
 
     Future<Stream> getBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
     
-    MimeStream getMimeTypedBinaryContent(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
+    MimeStream getMimeTypedBinaryContent(@NotNull String pid, @NotNull String dsId, DateTime versionDate) throws ResourceNotFoundException, SystemException;
     
-    Future<MimeStream> getMimeTypedBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate);
+    Future<MimeStream> getMimeTypedBinaryContentAsync(@NotNull String pid, @NotNull String dsId, DateTime versionDate) throws ResourceNotFoundException, SystemException;
 
     Stream getDissemination(@NotNull String pid, @NotNull String contentModelPid, @NotNull String methodName);
 
