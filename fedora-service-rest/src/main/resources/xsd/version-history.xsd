@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.4" xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4" xmlns:premis="http://www.loc.gov/standards/premis/v1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
+  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="premis.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:element name="version-history">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="escidocVersions:version"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="escidocVersions:version-number"/>
+        <xs:element ref="escidocVersions:timestamp"/>
+        <xs:element ref="escidocVersions:version-status"/>
+        <xs:element ref="escidocVersions:valid-status"/>
+        <xs:element ref="escidocVersions:comment"/>
+        <xs:element ref="escidocVersions:events"/>
+      </xs:sequence>
+      <xs:attribute name="objid" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="timestamp" use="required" type="xs:dateTime">
+        <xs:annotation>
+          <xs:appinfo>
+            <jaxb:property name="fedoraTimestamp"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute ref="xlink:href" use="required"/>
+      <xs:attribute ref="xlink:title"/>
+      <xs:attribute ref="xlink:type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version-number" type="xs:integer"/>
+  <xs:element name="timestamp" type="xs:dateTime"/>
+  <xs:element name="version-status" type="xs:NCName"/>
+  <xs:element name="valid-status" type="xs:NCName"/>
+  <xs:element name="comment" type="xs:string"/>
+  <xs:element name="events">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="premis:event"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

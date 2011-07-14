@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.loc.gov/standards/premis/v1" xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4" xmlns:premis="http://www.loc.gov/standards/premis/v1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.escidoc.de/schemas/versionhistory/0.4" schemaLocation="version-history.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:element name="event">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="premis:eventIdentifier"/>
+        <xs:element ref="premis:eventType"/>
+        <xs:element ref="premis:eventDateTime"/>
+        <xs:element ref="premis:eventDetail"/>
+        <xs:element ref="premis:linkingAgentIdentifier"/>
+        <xs:element ref="premis:linkingObjectIdentifier"/>
+      </xs:sequence>
+      <xs:attribute name="xmlID" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="eventIdentifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="premis:eventIdentifierType"/>
+        <xs:element ref="premis:eventIdentifierValue"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="eventIdentifierType" type="xs:NCName"/>
+  <xs:element name="eventIdentifierValue" type="xs:string"/>
+  <xs:element name="eventType" type="xs:NCName"/>
+  <xs:element name="eventDateTime" type="xs:NMTOKEN"/>
+  <xs:element name="eventDetail" type="xs:string"/>
+  <xs:element name="linkingAgentIdentifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="premis:linkingAgentIdentifierType"/>
+        <xs:element ref="premis:linkingAgentIdentifierValue"/>
+      </xs:sequence>
+      <xs:attribute ref="xlink:href" use="required"/>
+      <xs:attribute ref="xlink:title"/>
+      <xs:attribute ref="xlink:type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="linkingAgentIdentifierType" type="xs:NCName"/>
+  <xs:element name="linkingAgentIdentifierValue" type="xs:NMTOKEN"/>
+  <xs:element name="linkingObjectIdentifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="premis:linkingObjectIdentifierType"/>
+        <xs:element ref="premis:linkingObjectIdentifierValue"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="linkingObjectIdentifierType" type="xs:NCName"/>
+  <xs:element name="linkingObjectIdentifierValue" type="xs:NMTOKEN"/>
+</xs:schema>

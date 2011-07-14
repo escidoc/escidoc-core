@@ -134,6 +134,24 @@
             </nameXmlTransform>
         </schemaBindings>
     </bindings>
+    <bindings schemaLocation="premis.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.premis"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="version-history.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.services.fedora.wov"/>
+            <nameXmlTransform>
+                <typeName suffix="TO"/>
+                <elementName suffix="TO"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
     <bindings schemaLocation="xlink.xsd">
         <schemaBindings>
             <package name="org.escidoc.core.services.fedora.xlink"/>
