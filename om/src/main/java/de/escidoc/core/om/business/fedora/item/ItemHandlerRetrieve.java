@@ -852,29 +852,33 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             throw new ItemNotFoundException(e);
         }
 
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_TITLE, item.getProperty
-            (PropertyMapKeys.CREATED_BY_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_TITLE, item
+            .getProperty(PropertyMapKeys.CREATED_BY_TITLE));
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_HREF,
             de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
                 + item.getProperty(PropertyMapKeys.CREATED_BY_ID));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_ID, item.getProperty(PropertyMapKeys.CREATED_BY_ID));
+        values
+            .put(XmlTemplateProviderConstants.VAR_ITEM_CREATED_BY_ID, item.getProperty(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_TITLE, item.getProperty
-            (PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_TITLE, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_HREF,
             de.escidoc.core.common.business.Constants.CONTEXT_URL_BASE
                 + item.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_ID, item.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTEXT_ID, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
 
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_TITLE, item.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_TITLE, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_HREF,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
                 + item.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_ID, item.getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CONTENT_MODEL_ID, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
         values.put(XmlTemplateProviderConstants.VAR_ITEM_STATUS, item.getStatus());
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_STATUS_COMMENT, XmlUtility
-            .escapeForbiddenXmlCharacters(item.getProperty(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_STATUS_COMMENT, XmlUtility.escapeForbiddenXmlCharacters(item
+            .getProperty(PropertyMapKeys.PUBLIC_STATUS_COMMENT)));
 
         if (item.hasObjectPid()) {
             values.put(XmlTemplateProviderConstants.VAR_ITEM_OBJECT_PID, item.getObjectPid());
@@ -910,12 +914,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_STATUS, item.getVersionStatus());
         // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_VALID_STATUS, item.getProperty(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_VALID_STATUS, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_COMMENT, XmlUtility
             .escapeForbiddenXmlCharacters(item.getProperty(PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
 
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID, item.getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE, item.getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_ID, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_TITLE, item
+            .getProperty(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
 
         // href is rest only value
         values.put(XmlTemplateProviderConstants.VAR_ITEM_CURRENT_VERSION_MODIFIED_BY_HREF,
@@ -932,13 +939,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestVersionId);
         values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_TITLE, "Latest Version");
         values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_ID, latestVersionId);
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_NUMBER, item.getProperty(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_DATE, item.getProperty(PropertyMapKeys.LATEST_VERSION_DATE));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_NUMBER, item
+            .getProperty(PropertyMapKeys.LATEST_VERSION_NUMBER));
+        values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_VERSION_DATE, item
+            .getProperty(PropertyMapKeys.LATEST_VERSION_DATE));
 
         // if item is released -------------------------------------------------
         if (item.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER) != null) {
 
-            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_NUMBER, item.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_NUMBER, item
+                .getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             // ! changes versionIdBase
             final String latestRevisonId =
@@ -947,7 +957,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
                 de.escidoc.core.common.business.Constants.ITEM_URL_BASE + latestRevisonId);
             values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_TITLE, "Latest public version");
             values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_ID, latestRevisonId);
-            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_DATE, item.getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
+            values.put(XmlTemplateProviderConstants.VAR_ITEM_LATEST_RELEASE_DATE, item
+                .getProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
             final String latestReleasePid = item.getLatestReleasePid();
             if (latestReleasePid != null) {
