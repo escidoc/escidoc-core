@@ -30,6 +30,7 @@ package de.escidoc.core.om.business.fedora.item;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.fedora.MimeInputStream;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
@@ -170,7 +171,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 if (getItem().getVersionDate() != null) {
                     fedoraLocalUrl += '/' + getItem().getVersionDate();
                 }
-                bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
+                // 
+                MimeInputStream mimeInputStream = getFedoraUtility().requestMimeFedoraURL(fedoraLocalUrl);
+                bin.setContent(mimeInputStream.getInputStream());
+                if (mimeInputStream.getMimeType() != null) {
+                    bin.setMimeType(mimeInputStream.getMimeType());
+                }
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(e);
