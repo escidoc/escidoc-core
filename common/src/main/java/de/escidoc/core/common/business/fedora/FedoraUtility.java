@@ -1493,12 +1493,12 @@ public class FedoraUtility implements InitializingBean {
      * @param localUrl
      *            The Fedora local URL. Should start with the '/' after the webcontext path (usually "fedora"). E.g. if
      *            http://localhost:8080/fedora/get/... then localUrl is /get/...
-     * @return the content of the URL Request.
+     * @return MimeInputStream for content of the URL Request.
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public InputStream requestFedoraURL(final String localUrl) throws WebserverSystemException {
-        final InputStream fedoraResponseStream;
+    public MimeInputStream requestMimeFedoraURL(final String localUrl) throws WebserverSystemException {
+        final MimeInputStream fedoraResponseStream = new MimeInputStream();
         try {
             final DefaultHttpClient httpClient = getHttpClient();
             final HttpContext localcontext = new BasicHttpContext();
@@ -1508,13 +1508,18 @@ public class FedoraUtility implements InitializingBean {
             final HttpGet httpGet = new HttpGet(this.fedoraUrl + localUrl);
             final HttpResponse httpResponse = httpClient.execute(httpGet);
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
+
+            if (httpResponse.getFirstHeader("Content-Type") != null) {
+                fedoraResponseStream.setMimeType(httpResponse.getFirstHeader("Content-Type").getValue());
+            }
+
             if (responseCode != HttpServletResponse.SC_OK) {
                 EntityUtils.consume(httpResponse.getEntity());
                 throw new WebserverSystemException("Bad response code '" + responseCode + "' requesting '"
                     + this.fedoraUrl + localUrl + "'.", new FedoraSystemException(httpResponse
                     .getStatusLine().getReasonPhrase()));
             }
-            fedoraResponseStream = httpResponse.getEntity().getContent();
+            fedoraResponseStream.setInputStream(httpResponse.getEntity().getContent());
 
         }
         catch (final IOException e) {
@@ -1522,6 +1527,25 @@ public class FedoraUtility implements InitializingBean {
         }
 
         return fedoraResponseStream;
+    }
+
+    /**
+     * Makes a HTTP GET request to Fedora URL expanded by given local URL.
+     * 
+     * @param localUrl
+     *            The Fedora local URL. Should start with the '/' after the webcontext path (usually "fedora"). E.g. if
+     *            http://localhost:8080/fedora/get/... then localUrl is /get/...
+     * @return the content of the URL Request.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     */
+    public InputStream requestFedoraURL(final String localUrl) throws WebserverSystemException {
+        try {
+            return requestMimeFedoraURL(localUrl).getInputStream();
+        }
+        catch (Exception e) {
+            throw new WebserverSystemException(e);
+        }
     }
 
     /**
