@@ -115,9 +115,12 @@ public abstract class WriteHandler extends DefaultHandler {
     }
 
     protected void writeAttribute(
-        final String uri, final String elementName, final String attributeName, final String attributeValue,
-        String prefix, final NamespaceContext nscontext) throws XMLStreamException {
+        String uri, final String elementName, final String attributeName, final String attributeValue, String prefix,
+        final NamespaceContext nscontext) throws XMLStreamException {
         if (uri != null) {
+            if ("".equals(uri)) {
+                uri = nscontext.getNamespaceURI(prefix);
+            }
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = nsuris.get(uri);
                 final String prefixTrace = (String) namespaceTrace.get(2);
@@ -136,7 +139,6 @@ public abstract class WriteHandler extends DefaultHandler {
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
-
                 writer.writeNamespace(prefix, uri);
             }
         }

@@ -73,7 +73,7 @@
         <module>tme-spec</module>
         <module>tme</module>
         <module>escidoc-core.war</module>
-        <module>escidoc-core.ear</module>
+        <!--module>escidoc-core.ear</module-->
         <module>assembly</module>
         <module>installer</module>
         <module>integration-tests</module>
@@ -1598,6 +1598,12 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         <version>${cxf.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>com.sun.xml.bind</groupId>
+                  <artifactId>jaxb-impl</artifactId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
@@ -1619,6 +1625,16 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-jms</artifactId>
         <version>${cxf.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>com.sun.xml.bind</groupId>
+                  <artifactId>jaxb-impl</artifactId>
+              </exclusion>
+              <exclusion>
+                  <groupId>com.sun.xml.bind</groupId>
+                  <artifactId>jaxb-xjc</artifactId>
+              </exclusion>
+          </exclusions>
       </dependency>
       <dependency>
         <groupId>com.sun.xml.fastinfoset</groupId>
@@ -1640,6 +1656,10 @@
           <exclusion>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -1797,6 +1817,21 @@
           </exclusion>
         </exclusions>
       </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-support</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-openid</artifactId>

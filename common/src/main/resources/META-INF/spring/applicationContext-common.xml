@@ -39,13 +39,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
        default-lazy-init="false">
 
     <!--
-		This will automatically locate any and all property files you have within your classpath, provided they fall
-		under the META-INF/spring directory. The located property files are parsed and their values can then be used
-		within application context files in the form of ${propertyKey}.
-	-->
-    <context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
-
-    <!--
 		Turn on AspectJ @Configurable support. As a result, any time you instantiate an object, Spring will attempt to
 		perform dependency injection on that object. This occurs for instantiation via the "new" keyword, as well as via
 		reflection. This is possible because AspectJ is used to "weave" applications at compile time. In effect this
@@ -122,8 +115,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>file:${catalina.home}/conf/escidoc-core.properties</value>
-                <value>file:${catalina.home}/conf/escidoc-core.custom.properties</value>
+                <value>classpath:escidoc-core.properties</value>
+                <value>classpath:escidoc-core.custom.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>

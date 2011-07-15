@@ -176,10 +176,9 @@
     <delete file="${install.dir}/install.tmp/${escidoc.core.zip}"/>
     <!-- Delete old admin.jsp. -->
     <delete dir="${install.dir}/jboss/server/default/work/jboss.web/localhost/_"/>
-    <!-- move file="${install.dir}/jboss/server/default/deploy/escidoc-core.ear" tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.ear-${timestamp}" /-->
-    <move tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.ear">
-      <fileset dir="${install.dir}/core/ear">
-        <include name="escidoc-core*.ear"/>
+    <move tofile="${install.dir}/jboss/server/default/deploy/escidoc-core.war">
+      <fileset dir="${install.dir}/core/war">
+        <include name="escidoc-core*.war"/>
       </fileset>
     </move>
     <move file="${install.dir}/core/license/ESCIDOC.LICENSE" todir="${install.dir}"/>
@@ -190,7 +189,7 @@
     <move todir="${install.dir}/core/doc/xsd">
       <fileset dir="${install.dir}/core/xsd"/>
     </move>
-    <delete dir="${install.dir}/core/ear"/>
+    <delete dir="${install.dir}/core/war"/>
     <delete dir="${install.dir}/core/xsd"/>
     <delete dir="${install.dir}/core/license"/>
   </target>
