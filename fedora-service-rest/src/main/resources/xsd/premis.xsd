@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.loc.gov/standards/premis/v1" xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4" xmlns:premis="http://www.loc.gov/standards/premis/v1" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <xs:import namespace="http://www.escidoc.de/schemas/versionhistory/0.4" schemaLocation="version-history.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.loc.gov/standards/premis/v1" xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3" xmlns:premis="http://www.loc.gov/standards/premis/v1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.escidoc.de/schemas/versionhistory/0.3" schemaLocation="version-history.xsd"/>
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
   <xs:element name="event">
     <xs:complexType>

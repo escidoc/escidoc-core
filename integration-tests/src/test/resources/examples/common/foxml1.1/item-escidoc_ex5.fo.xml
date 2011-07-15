@@ -222,7 +222,7 @@
     <foxml:datastreamVersion CREATED="2007-11-15T08:37:00.546Z" ID="version-history.3"
       LABEL="whole object versioning datastream" MIMETYPE="text/xml" SIZE="4582">
       <foxml:xmlContent>
-        <escidocVersions:version-history xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4">
+        <escidocVersions:version-history xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3">
           <escidocVersions:version objid="escidoc:ex5:1" timestamp="2007-11-15T08:36:52.453Z"
             xlink:href="/ir/item/escidoc:ex5:1" xlink:title="Version 1" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink">
             <escidocVersions:version-number>1</escidocVersions:version-number>
