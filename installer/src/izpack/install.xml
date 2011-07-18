@@ -446,6 +446,9 @@
         <pack name="eSciDoc Infrastructure" id="core.package" parent="escidoc.package" required="yes">
             <description/>
             <file src="../../../assembly/target/escidoc-core-${project.version}-bin.zip" targetdir="$INSTALL_PATH/install.tmp" />
+            <fileset dir="packages/fedoragsearch" includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
+            <fileset dir="packages/srw"           includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
+            <fileset dir="packages/saxon"         includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
         </pack>
         
         <!-- pack name="Examples" id="examples.package" parent="escidoc.package" required="yes">
