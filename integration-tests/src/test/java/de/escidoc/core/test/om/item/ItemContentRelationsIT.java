@@ -38,6 +38,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNot
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -46,6 +47,8 @@ import org.w3c.dom.NodeList;
 
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -54,7 +57,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class ItemContentRelationsIT extends ItemTestBase {
@@ -65,8 +68,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -84,8 +88,13 @@ public class ItemContentRelationsIT extends ItemTestBase {
         // this.itemId = itemId;
     }
 
-    // FIXME reactivate after 1.3
-    //@Test
+    /**
+     * reactivated after version 1.4
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
     public void testIssueInfr1007() throws Exception {
         addRelation(itemId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
         addRelation(itemId, "http://escidoc.org/examples/test1");
@@ -105,8 +114,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Tets successfully adding a new relation to the item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelation() throws Exception {
@@ -161,7 +171,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithoutId() throws Exception {
@@ -192,7 +203,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithoutTaskParam() throws Exception {
@@ -208,8 +220,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining adding of an relation with a non existing target to the item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingTarget() throws Exception {
@@ -231,8 +244,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining adding of an relation with a non existing predicate to the item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingPredicate() throws Exception {
@@ -266,8 +280,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining adding of an relation with a target id containing a version number.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithTargetContainingVersionNumber() throws Exception {
@@ -289,8 +304,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining adding of an existing relation to the item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddExistingRelation() throws Exception {
@@ -321,8 +337,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test successfully removing an existing relation.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveRelation() throws Exception {
@@ -352,8 +369,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining removing of a already deleted relation.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveDeletedRelation() throws Exception {
@@ -393,8 +411,9 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Test declining removing of an existing relation, which belongs to another source resource.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveRelationWithWrongSource() throws Exception {
@@ -428,7 +447,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRelations() throws Exception {
@@ -440,60 +460,45 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ResourceNotFoundException.class)
     public void testRetrieveNonexistingRelations() throws Exception {
-        try {
-            String relationsElementXml = retrieveRelations(this.itemId);
-            Node relationsElementDoc = EscidocAbstractTest.getDocument(relationsElementXml);
-            selectSingleNodeAsserted(relationsElementDoc, "/relations");
-            assertNull(selectSingleNode(relationsElementDoc, "/relations/*"));
-        }
-        catch (final Exception e) {
-            Class ec = ResourceNotFoundException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+
+        String relationsElementXml = retrieveRelations(this.itemId);
+        Node relationsElementDoc = EscidocAbstractTest.getDocument(relationsElementXml);
+        selectSingleNodeAsserted(relationsElementDoc, "/relations");
+        assertNull(selectSingleNode(relationsElementDoc, "/relations/*"));
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ItemNotFoundException.class)
     public void testRetrieveRelationsWithWrongId() throws Exception {
-        addRelation(itemId, null);
 
-        try {
-            retrieveRelations("bla");
-            fail("No exception when retrieveRelations with wrong id.");
-        }
-        catch (final Exception e) {
-            Class ec = ItemNotFoundException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        addRelation(itemId, null);
+        retrieveRelations("bla");
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testRetrieveRelationsWithoutId() throws Exception {
-        addRelation(itemId, null);
 
-        try {
-            retrieveRelations(null);
-            fail("No exception when retrieveRelations without id.");
-        }
-        catch (final Exception e) {
-            Class ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        addRelation(itemId, null);
+        retrieveRelations(null);
     }
 
     /**
      * Test the last-modification-date in the return value of addContentRelations.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRelationReturnValue01() throws Exception {
@@ -550,9 +555,53 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @param objectId  The id of the object to which the relation should be added. The source id.
-     * @param predicate The predicate of the relation.
-     * @throws Exception If anything fails.
+     * Test successfully retrieving a last version of an item, which has an active relation in the last version but not
+     * in the old version.
+     * 
+     * @throws Exception
+     */
+    @Ignore
+    @Test
+    public void testRelationsWithVersionedItem() throws Exception {
+        String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
+        param += "/>";
+
+        submit(this.itemId, param);
+        String submittedItem = retrieve(this.itemId);
+
+        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create.xml"));
+        String targetId = null;
+        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
+        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
+        if (m.find()) {
+            targetId = m.group(1);
+        }
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.itemId);
+        String taskParam = getTaskParameter(lastModDate, targets, null);
+        String addedRelations = addContentRelations(this.itemId, taskParam);
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String submittedWithRelations = retrieve(this.itemId);
+        String newItemXml = addCtsElement(submittedWithRelations);
+
+        String updatedItem = update(itemId, newItemXml);
+        String itemVersion1 = retrieve(this.itemId + ":" + 1);
+        String item = retrieve(this.itemId);
+        Node relations = selectSingleNode(getDocument(itemVersion1), "/item/relations");
+        assertNull("relations may not exist", relations);
+        String retrievedRelationId =
+            selectSingleNode(getDocument(item), "/item/relations/relation[1]/@objid").getTextContent();
+        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+    }
+
+    /**
+     * @param objectId
+     *            The id of the object to which the relation should be added. The source id.
+     * @param predicate
+     *            The predicate of the relation.
+     * @throws Exception
+     *             If anything fails.
      */
     private void addRelation(final String objectId, final String predicate) throws Exception {
         Document xmlItem =
@@ -572,9 +621,11 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @param id The id of the resource.
+     * @param id
+     *            The id of the resource.
      * @return The date of last modification of the resource as string.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String getTheLastModificationParam(final String id) throws Exception {
         Document item = EscidocAbstractTest.getDocument(retrieve(id));
@@ -588,8 +639,10 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @param lastModDate The last modification date of the source.
-     * @param targets     List of target ids. As much relations are added as there are tagets.
+     * @param lastModDate
+     *            The last modification date of the source.
+     * @param targets
+     *            List of target ids. As much relations are added as there are tagets.
      * @return The task parameter according to the given values.
      */
     private String getTaskParameter(final String lastModDate, final Vector<String> targets) {
@@ -598,9 +651,11 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
     /**
      * Get taskParameter with german Umlaut.
-     *
-     * @param lastModDate last-modification-date
-     * @param targets     vector with targets
+     * 
+     * @param lastModDate
+     *            last-modification-date
+     * @param targets
+     *            vector with targets
      * @return task-parameter (for task oriented methods)
      */
     private String getTaskParameterWithUmlaut(final String lastModDate, final Vector<String> targets) {
@@ -610,9 +665,12 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
-     * @param lastModDate The last modification date of the source.
-     * @param targets     List of target ids. As much relations are added as there are tagets.
-     * @param predicate   The predicate of the relation.
+     * @param lastModDate
+     *            The last modification date of the source.
+     * @param targets
+     *            List of target ids. As much relations are added as there are tagets.
+     * @param predicate
+     *            The predicate of the relation.
      * @return The task parameter according to the given values.
      */
     private String getTaskParameter(final String lastModDate, final Vector<String> targets, final String predicate) {
@@ -640,50 +698,4 @@ public class ItemContentRelationsIT extends ItemTestBase {
         return taskParam;
     }
 
-    // /**
-    // * Test successfully retrieving a last version of an item, which has an
-    // * active relation in the last version but not in the old version.
-    // * @throws Exception
-    // */
-    // public void testRelationsWithVersionedItem() throws Exception {
-    // String param = "<param last-modification-date=\""
-    // + getTheLastModificationParam(this.itemId) + "\" ";
-    // param += "/>";
-    //    
-    // submit(this.itemId, param);
-    // String submittedItem = retrieve(this.itemId);
-    //    
-    // String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH,
-    // "escidoc_item_198_for_create.xml"));
-    // String targetId = null;
-    // Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-    // Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
-    // if (m.find()) {
-    // targetId = m.group(1);
-    // }
-    // Vector targets = new Vector();
-    // targets.add(targetId);
-    // String lastModDate = getTheLastModificationParam(this.itemId);
-    // String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // String addedRelations = addContentRelations(this.itemId, taskParam);
-    // String relationId = selectSingleNode(getDocument(addedRelations),
-    // "/param/relation[1]/@objid").getTextContent();
-    // String submittedWithRelations = retrieve(this.itemId);
-    // String newItemXml = addCtsElement(submittedWithRelations);
-    //     
-    // String updatedItem = update(itemId, newItemXml);
-    // String itemVersion1 = retrieve(this.itemId + ":" + 1);
-    // String item = retrieve(this.itemId);
-    // Node relations = selectSingleNode(getDocument(itemVersion1),
-    // "/item/relations");
-    // assertNull("relations may not exist", relations);
-    // String retrievedRelationId = selectSingleNode(getDocument(item),
-    // "/item/relations/relation[1]/@objid").getTextContent();
-    // assertEquals("relation ids are not equal", relationId,
-    // retrievedRelationId);
-    //    
-    // }
-    //    
-    //    
-    //
 }
