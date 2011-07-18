@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.GenericFilterBean;
 
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 
 public class DisabledAuthenticationFilter extends GenericFilterBean {
@@ -49,10 +50,8 @@ public class DisabledAuthenticationFilter extends GenericFilterBean {
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
         throws IOException, ServletException {
 
-//        EscidocServlet.doRedirect(response, null, "<html><body><a href=\"/aa/login/???????"
-//             + "\">Resource available under this location: ??????</a></body></html>",
-//            "??????",
-//            HttpServletResponse.SC_MOVED_PERMANENTLY, true);
+        EscidocServlet.doDeclineHttpRequest((HttpServletResponse) response, new AuthorizationException(
+            "Authentication method not supported"), true);
     }
 
 }

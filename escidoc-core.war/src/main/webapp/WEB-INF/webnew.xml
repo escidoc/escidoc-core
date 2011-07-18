@@ -140,6 +140,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>LoginSelect</servlet-name>
+		<jsp-file>/aa/login/login-select.jsp</jsp-file>
+	</servlet>
+
+	<servlet>
 		<servlet-name>ActionServlet</servlet-name>
 		<servlet-class>
 			de.escidoc.core.common.servlet.EscidocServlet
@@ -512,6 +517,14 @@
 		############################
 	-->
 
+	<servlet-mapping>
+		<servlet-name>LoginSelect</servlet-name>
+		<url-pattern>/aa/login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginSelect</servlet-name>
+		<url-pattern>/aa/login/</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/aa/login/database</url-pattern>

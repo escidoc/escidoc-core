@@ -33,34 +33,45 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="javax.servlet.Filter"%>
-<%@ page import="de.escidoc.core.common.servlet.EscidocServlet"%>
 <%@ page import="org.springframework.web.context.WebApplicationContext"%>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@ page import="org.springframework.security.web.FilterChainProxy"%>
+<%@ page import="de.escidoc.core.aa.springsecurity.DisabledAuthenticationFilter"%>
+<%@ page import="de.escidoc.core.aa.servlet.Login"%>
+<%@ page import="de.escidoc.core.common.servlet.EscidocServlet"%>
 <%!
 
-private List<String> getLoginMethods() throws Exception {
-	List<String> methodList = new ArrayList<String>();
+private List<String> getLoginMethods() {
+    List<String> methodList = new ArrayList<String>();
     WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(this.getServletContext());
     String[] filterBeans = context.getBeanNamesForType(FilterChainProxy.class);
     if (filterBeans != null) {
         for (int i = 0; i < filterBeans.length; i++) {
             try {
-            	FilterChainProxy filterChainProxy = (FilterChainProxy)context.getBean(filterBeans[i]);
-            	Map<String, List<Filter>> filterChainMap = filterChainProxy.getFilterChainMap();
-            	if (filterChainMap != null) {
+                FilterChainProxy filterChainProxy = (FilterChainProxy) context.getBean(filterBeans[i]);
+                Map<String, List<Filter>> filterChainMap = filterChainProxy.getFilterChainMap();
+                if (filterChainMap != null) {
                     for (Entry<String, List<Filter>> entry : filterChainMap.entrySet()) {
-                        if (!entry.getValue().isEmpty()) {
-                            methodList.add(entry.getKey().replaceFirst(".*?\\/aa\\/login\\/([A-Za-z]*).*", "$1"));
+                        boolean disabledFilter = false;
+                        for (Filter filter : entry.getValue()) {
+                            if (filter.getClass().getName().equals(DisabledAuthenticationFilter.class.getName())) {
+                                disabledFilter = true;
+                                break;
+                            }
+                        }
+                        if (!entry.getValue().isEmpty() && !disabledFilter) {
+                            methodList.add(entry.getKey().replaceFirst(
+                            		".*?" + Login.BASE_PATH_LOGIN + "([A-Za-z]*).*", "$1"));
                         }
                     }
-            	}
+                }
             }
-            catch (Throwable e) {}
-        }    	
+            catch (Throwable e) {
+            }
+        }
     }
     return methodList;
-  }
+}
 
 %>
 
@@ -80,17 +91,20 @@ private List<String> getLoginMethods() throws Exception {
 		    if (queryString != null && !queryString.isEmpty()) {
 		    	queryString = "?" + queryString;
 		    } else {
-		    	queryString = "?target=";
+		    	queryString = "?" + EscidocServlet.PARAM_TARGET + "=";
 		    }
 
 		    if (loginMethods.size() == 1) {
-		        EscidocServlet.doRedirect(response, null, "<html><body><a href=\"/aa/login/"
-		                + loginMethods.iterator().next()
+		    	String loginUrlPostfix = loginMethods.iterator().next();
+		        EscidocServlet.doRedirect(response, null, "<html><body><a href=\""
+		        		+ Login.BASE_PATH_LOGIN
+		                + loginUrlPostfix
 		                + queryString
 		                + "\">Resource available under this location: "
-		                + loginMethods.iterator().next() + queryString +"</a></body></html>",
-		                loginMethods.iterator().next() + queryString,
-		                HttpServletResponse.SC_MOVED_PERMANENTLY, true);
+		                + Login.BASE_PATH_LOGIN
+		                + loginUrlPostfix + queryString +"</a></body></html>",
+		                Login.BASE_PATH_LOGIN + loginUrlPostfix + queryString,
+		                HttpServletResponse.SC_MOVED_TEMPORARILY, true);
 		    }
 		    
 		    if (loginMethods.isEmpty()) {

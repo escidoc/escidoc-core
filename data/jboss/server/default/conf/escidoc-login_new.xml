@@ -121,14 +121,14 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="springSecurityLdapFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
-        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check"/ -->
-            <security:filter-chain pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check" 
+        	<security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check"/>
+            <!-- security:filter-chain pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 ldapLogoutFilter,
                                 ldapAuthenticationProcessingFilter,
                                 securityContextHolderAwareRequestFilter,
                                 ldapExceptionTranslationFilter,
-                                ldapFilterSecurityInterceptor" />
+                                ldapFilterSecurityInterceptor" / -->
         </security:filter-chain-map>
 
     </bean>
@@ -235,13 +235,13 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="springSecurityShibbolethFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
-        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check"/ -->
-            <security:filter-chain pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check" 
+        	<security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check"/>
+            <!-- security:filter-chain pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 shibbolethAuthenticationProcessingFilter,
                                 securityContextHolderAwareRequestFilter,
                                 shibbolethExceptionTranslationFilter,
-                                shibbolethFilterSecurityInterceptor" />
+                                shibbolethFilterSecurityInterceptor" / -->
         </security:filter-chain-map>
     </bean>
     
@@ -289,6 +289,20 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 
     <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" lazy-init="false"/>
 
+    <bean id="springSecurityOpenidFilterChain"
+        class="org.springframework.security.web.FilterChainProxy">
+        <security:filter-chain-map path-type="regex">
+        	<security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check"/>
+            <!-- security:filter-chain pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check" 
+                       filters="httpSessionContextIntegrationFilter,
+                                openidLogoutFilter,
+                                openidAuthenticationProcessingFilter,
+                                securityContextHolderAwareRequestFilter,
+                                openidExceptionTranslationFilter,
+                                openidFilterSecurityInterceptor" / -->
+        </security:filter-chain-map>
+    </bean>
+    
 	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />    
 
 	<bean id="openidAuthenticationProcessingFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
@@ -333,20 +347,6 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     	<security:authentication-provider ref="openIDAuthenticationProvider"/>
 	</security:authentication-manager>
 
-    <bean id="springSecurityOpenidFilterChain"
-        class="org.springframework.security.web.FilterChainProxy">
-        <security:filter-chain-map path-type="regex">
-        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check"/ -->
-            <security:filter-chain pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check" 
-                       filters="httpSessionContextIntegrationFilter,
-                                openidLogoutFilter,
-                                openidAuthenticationProcessingFilter,
-                                securityContextHolderAwareRequestFilter,
-                                openidExceptionTranslationFilter,
-                                openidFilterSecurityInterceptor" />
-        </security:filter-chain-map>
-    </bean>
-    
     <bean id="openidFilterSecurityInterceptor"  class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
         <property name="authenticationManager" ref="openIDAuthenticationManager" />
         <property name="accessDecisionManager" ref="accessDecisionManager" />

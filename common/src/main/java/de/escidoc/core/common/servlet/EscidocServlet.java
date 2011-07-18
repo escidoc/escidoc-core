@@ -646,7 +646,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If anything fails.
      */
-    private static void doDeclineHttpRequest(
+    public static void doDeclineHttpRequest(
         final HttpServletResponse httpResponse, final EscidocException exception, final boolean compressionIsAccepted)
         throws IOException {
         httpResponse.reset();

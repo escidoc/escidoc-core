@@ -41,13 +41,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.escidoc.core.common.util.service.EscidocUserDetails;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.openid.OpenIDAttribute;
 import org.springframework.security.openid.OpenIDAuthenticationToken;
 
 import de.escidoc.core.aa.business.SecurityHelper;
@@ -57,7 +55,6 @@ import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.aa.ldap.EscidocLdapUserDetails;
 import de.escidoc.core.aa.openid.EscidocOpenidUserDetails;
-import de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService;
 import de.escidoc.core.aa.shibboleth.ShibbolethUser;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -67,6 +64,7 @@ import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.EscidocUserDetails;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 
@@ -138,9 +136,9 @@ public class Login extends HttpServlet {
     // dependencies)
     public static final String AUTHENTICATION = "eSciDocUserHandle";
 
-    private static final int BUFFER_SIZE = 0xFFFF;
+    public static final String BASE_PATH_LOGIN = "/aa/login/";
 
-    private static final String BASE_PATH_LOGIN = "/aa/login/";
+    private static final int BUFFER_SIZE = 0xFFFF;
 
     private static final String BASE_PATH_LOGOUT = "/aa/logout";
 
@@ -208,7 +206,6 @@ public class Login extends HttpServlet {
     @Override
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException,
         IOException {
-
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
             doLogout(request, response);
         }
@@ -869,4 +866,5 @@ public class Login extends HttpServlet {
         }
         return escidocCookieVersion;
     }
+
 }
