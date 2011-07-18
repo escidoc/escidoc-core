@@ -1054,6 +1054,9 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
+    <fedoragsearch.version>1.4.4</fedoragsearch.version>
+    <srw.version>1.4.3</srw.version>
+    <saxon.version>1.0.1</saxon.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
@@ -1935,24 +1938,6 @@
         <artifactId>trippi</artifactId>
         <version>1.4.1</version>
         <classifier>mptstore</classifier>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc</groupId>
-        <artifactId>fedoragsearch</artifactId>
-        <type>war</type>
-        <version>1.4.4</version>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc</groupId>
-        <artifactId>srw</artifactId>
-        <type>war</type>
-        <version>1.4.3</version>
-      </dependency>
-      <dependency>
-        <groupId>fedora.localservice</groupId>
-        <artifactId>saxon</artifactId>
-        <type>war</type>
-        <version>1.0.1</version>
       </dependency>
 
       <!-- Internal Modules -->

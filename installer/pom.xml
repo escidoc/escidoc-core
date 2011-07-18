@@ -82,17 +82,20 @@
 		</dependency>
                 <dependency>
                         <groupId>org.escidoc</groupId>
-                        <artifactId>fedoragsearch</artifactId>
+                        <artifactId>fedoragsearch_full</artifactId>
+                        <version>${fedoragsearch.version}</version>
                         <type>war</type>
                 </dependency>
                 <dependency>
                         <groupId>org.escidoc</groupId>
-                        <artifactId>srw</artifactId>
+                        <artifactId>srw_full</artifactId>
+                        <version>${srw.version}</version>
                         <type>war</type>
                 </dependency>
                 <dependency>
                         <groupId>fedora.localservice</groupId>
                         <artifactId>saxon</artifactId>
+                        <version>${saxon.version}</version>
                         <type>war</type>
                 </dependency>
 		<dependency>
@@ -360,7 +363,8 @@
 
 								<artifactItem>
 									<groupId>org.escidoc</groupId>
-									<artifactId>fedoragsearch</artifactId>
+									<artifactId>fedoragsearch_full</artifactId>
+                                                                        <version>${fedoragsearch.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/packages/fedoragsearch</outputDirectory>
@@ -368,7 +372,8 @@
 
 								<artifactItem>
 									<groupId>org.escidoc</groupId>
-									<artifactId>srw</artifactId>
+									<artifactId>srw_full</artifactId>
+                                                                        <version>${srw.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/packages/srw</outputDirectory>
@@ -377,6 +382,7 @@
 								<artifactItem>
 									<groupId>fedora.localservice</groupId>
 									<artifactId>saxon</artifactId>
+                                                                        <version>${saxon.version}</version>
 									<type>war</type>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/packages/saxon</outputDirectory>

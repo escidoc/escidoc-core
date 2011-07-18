@@ -183,7 +183,6 @@
     <delete dir="${install.dir}/core/xsd"/>
     <delete dir="${install.dir}/core/license"/>
     <!-- additional WAR files -->
-<!--
     <move tofile="${install.dir}/jboss/server/default/deploy/fedoragsearch.war">
       <fileset dir="${install.dir}/install.tmp/">
         <include name="fedoragsearch*.war" />
@@ -199,7 +198,6 @@
         <include name="saxon*.war" />
       </fileset>
     </move>
--->
   </target>
 
   <target name="escidoc-examples" depends="init" description="Installs eSciDoc Examples">
