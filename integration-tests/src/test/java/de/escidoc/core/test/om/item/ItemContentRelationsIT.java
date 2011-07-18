@@ -174,7 +174,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testAddRelationWithoutId() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -192,30 +192,18 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         String lastModDate = getTheLastModificationParam(this.itemId);
         String taskParam = getTaskParameter(lastModDate, targets);
-        try {
-            addContentRelations(null, taskParam);
-            fail("No exception when add content relation without source id.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+
+        addContentRelations(null, taskParam);
     }
 
     /**
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testAddRelationWithoutTaskParam() throws Exception {
-        try {
-            addContentRelations(this.itemId, null);
-            fail("No exception when add content relation without source id.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+
+        addContentRelations(this.itemId, null);
     }
 
     /**
@@ -674,28 +662,31 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @return The task parameter according to the given values.
      */
     private String getTaskParameter(final String lastModDate, final Vector<String> targets, final String predicate) {
-        String taskParam = null;
+
+        StringBuffer taskParam = new StringBuffer();
         if ((targets != null) && (targets.size() > 0)) {
-            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
+            taskParam.append("<param last-modification-date=\"");
+            taskParam.append(lastModDate);
+            taskParam.append("\">");
             Iterator<String> it = targets.iterator();
             while (it.hasNext()) {
-                String target = (String) it.next();
-                taskParam = taskParam + "<relation><targetId>";
-                taskParam = taskParam + target + "</targetId>";
-                taskParam = taskParam + "<predicate>";
+                String target = it.next();
+                taskParam.append("<relation><targetId>");
+                taskParam.append(target);
+                taskParam.append("</targetId>");
+                taskParam.append("<predicate>");
                 if (predicate != null) {
-                    taskParam = taskParam + predicate;
+                    taskParam.append(predicate);
                 }
                 else {
-                    taskParam =
-                        taskParam + "http://www.escidoc.de/ontologies/" + "mpdl-ontologies/content-relations#isPartOf";
+                    taskParam.append("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf");
 
                 }
-                taskParam = taskParam + "</predicate></relation>";
+                taskParam.append("</predicate></relation>");
             }
-            taskParam = taskParam + "</param>";
+            taskParam.append("</param>");
         }
-        return taskParam;
+        return taskParam.toString();
     }
 
 }
