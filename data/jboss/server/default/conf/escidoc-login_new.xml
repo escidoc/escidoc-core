@@ -10,13 +10,14 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
 
   default-autowire="no"
-  default-lazy-init="true"
+  default-lazy-init="false"
 >
  
     <!-- DATABASE FILTER CHAIN #######################################################################################################-->
     <bean id="springSecurityDatabaseFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
+        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/database$|/aa/login/database[^/].*$|/aa/database/j_spring_security_check|/aa/database/spring_security_check"/ -->
             <security:filter-chain pattern="/aa/login/database$|/aa/login/database[^/].*$|/aa/database/j_spring_security_check|/aa/database/spring_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 databaseLogoutFilter,
@@ -120,6 +121,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="springSecurityLdapFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
+        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check"/ -->
             <security:filter-chain pattern="/aa/login/ldap$|/aa/login/ldap[^/].*$|/aa/ldap/j_spring_security_check|/aa/ldap/spring_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 ldapLogoutFilter,
@@ -233,6 +235,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="springSecurityShibbolethFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
+        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check"/ -->
             <security:filter-chain pattern="/aa/login/shibboleth$|/aa/login/shibboleth[^/].*$|/aa/shibboleth/j_spring_security_check|/aa/shibboleth/spring_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 shibbolethAuthenticationProcessingFilter,
@@ -333,6 +336,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="springSecurityOpenidFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
         <security:filter-chain-map path-type="regex">
+        	<!-- security:filter-chain filters="disabledAuthenticationProcessingFilter" pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check"/ -->
             <security:filter-chain pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 openidLogoutFilter,
@@ -393,6 +397,8 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     <bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.web.context.HttpSessionContextIntegrationFilter" />  
 
     <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />  
+
+    <bean id="disabledAuthenticationProcessingFilter" class="de.escidoc.core.aa.springsecurity.DisabledAuthenticationFilter"/>
 
     <!-- ##END FILTERS ######################################################################################################################-->
 
