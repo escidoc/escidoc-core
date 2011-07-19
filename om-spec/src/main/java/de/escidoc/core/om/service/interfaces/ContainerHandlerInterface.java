@@ -1500,6 +1500,7 @@ public interface ContainerHandlerInterface {
      * @throws SystemException                Thrown if a framework internal error occurs.
      */
     @Validate(param = 1, resolver = "getItemSchemaLocation")
+    @Deprecated
     String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
         MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
@@ -1560,6 +1561,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidStatusException         Thrown if an organizational unit is in an invalid status.
      */
     @Validate(param = 1, resolver = "getContainerSchemaLocation")
+    @Deprecated
     String createContainer(final String containerId, final String xmlData) throws MissingMethodParameterException,
         ContainerNotFoundException, LockingException, ContextNotFoundException, ContentModelNotFoundException,
         InvalidContentException, InvalidXmlException, MissingAttributeValueException, MissingElementValueException,
