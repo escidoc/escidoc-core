@@ -45,8 +45,6 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
 
     private Pattern openidProviderPattern = null;
 
-    private String openidProviderRegex = null;
-
     private String providerRegexFailureUrl = null;
 
     /**
@@ -75,12 +73,8 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      * @param openidProviderRegex
      *            openidProviderRegex
      */
-    public void setOpenidProviderRegex(String openidProviderRegex) {
-        this.openidProviderRegex = openidProviderRegex;
-        if (openidProviderRegex == null || openidProviderRegex.equals("")) {
-            openidProviderRegex = null;
-        }
-        else {
+    public void setOpenidProviderRegex(final String openidProviderRegex) {
+        if (openidProviderRegex != null && !openidProviderRegex.isEmpty()) {
             openidProviderPattern = Pattern.compile(openidProviderRegex);
         }
     }
@@ -91,7 +85,7 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      * @param providerRegexFailureUrl
      *            providerRegexFailureUrl
      */
-    public void setProviderRegexFailureUrl(String providerRegexFailureUrl) {
+    public void setProviderRegexFailureUrl(final String providerRegexFailureUrl) {
         this.providerRegexFailureUrl = providerRegexFailureUrl;
     }
 
