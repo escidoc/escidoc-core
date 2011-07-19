@@ -830,35 +830,6 @@ public class GenericVersionableResource extends GenericResourcePid {
     // --------------------------------------------------------------------------
 
     /**
-     * Parse data from WOV data stream. The values are retrievable via the getVersionData() method.
-     *
-     * @throws ResourceNotFoundException Thrown if the resource was not found.
-     * @throws XmlParserSystemException  Thrown in case of parser errors.
-     * @throws WebserverSystemException  Thrown in case of internal errors.
-     */
-    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException {
-
-        // parse version-history
-        final StaxParser sp = new StaxParser();
-        final WovReadHandler wrh = new WovReadHandler(sp, this.versionNumber);
-        sp.addHandler(wrh);
-        try {
-            sp.parse(this.getWov().getStream());
-        }
-        catch (final IntegritySystemException e) {
-            throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
-            throw new XmlParserSystemException("Unexpected exception.", e);
-        }
-        this.currentVersionData = wrh.getVersionData();
-        if (this.currentVersionData == null || currentVersionData.size() <= 1) {
-            throw new ResourceNotFoundException("Can not retrieve version '" + this.versionNumber + "' for Resource '"
-                + getId() + "'.");
-        }
-    }
-
-    /**
      * Persists the whole object to Fedora and force the TripleStore sync.
      *
      * @return lastModificationDate of the resource (Attention this timestamp differs from the last-modification
