@@ -117,16 +117,19 @@
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
 			<type>war</type>
+			<version>${escidoc.fedoragsearch.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>srw</artifactId>
 			<type>war</type>
+			<version>${escidoc.srw.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>fedora.localservice</groupId>
 			<artifactId>saxon</artifactId>
 			<type>war</type>
+			<version>${saxon.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-discovery</groupId>
