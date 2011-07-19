@@ -19,6 +19,24 @@
 	</profiles>
 
 	<dependencies>
+      <dependency>
+        <groupId>org.escidoc</groupId>
+        <artifactId>srw_src</artifactId>
+        <type>zip</type>
+        <version>${escidoc.srw.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc</groupId>
+        <artifactId>fedoragsearch_src</artifactId>
+        <type>zip</type>
+        <version>${escidoc.fedoragsearch.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc</groupId>
+        <artifactId>SRW_src</artifactId>
+        <type>zip</type>
+        <version>${srw.version}</version>
+      </dependency>
 	</dependencies>
 
 	<build>
@@ -39,6 +57,7 @@
 					<descriptors>
 						<descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
 						<descriptor>src/main/assembly/src-descriptor.xml</descriptor>
+						<descriptor>src/main/assembly/search-indexing-descriptor.xml</descriptor>
 <!-- 
 						<descriptor>src/main/assembly/doc-descriptor.xml</descriptor>
  -->						
