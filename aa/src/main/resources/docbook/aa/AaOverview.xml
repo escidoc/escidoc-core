@@ -3318,7 +3318,7 @@
             The OpenID-Provider is retrived from the OpenID-Url provided by the user in the login-form.
             Supported OpenID-Providers are restrictable by providing an openidProviderRegex in the openIdFilter-bean.
             If the OpenID-Provider is not supported, the user is redirected to the login-page that displays the error-message.
-            One can configure, which of the attributes the OpenID-Provider returns should get saved as user-attributes in the eSciDOc internal Database
+            One can configure, which of the attributes the OpenID-Provider returns should get saved as user-attributes in the eSciDoc internal database
             by providing the attributes in the myOpenID4JavaConsumer-bean as a list of OpenIdAttributes.</para>
             
             <programlisting>
