@@ -32,7 +32,7 @@
 <html>
 <head>
 <title>eSciDoc - Open ID Login page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000">
