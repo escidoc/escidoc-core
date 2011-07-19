@@ -1054,6 +1054,9 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
+    <escidoc.fedoragsearch.version>1.4.4</escidoc.fedoragsearch.version>
+    <escidoc.srw.version>1.4.3</escidoc.srw.version>
+    <srw.version>1.4.1</srw.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
@@ -1905,13 +1908,13 @@
         <groupId>org.escidoc</groupId>
         <artifactId>fedoragsearch</artifactId>
         <type>war</type>
-        <version>1.4.4</version>
+        <version>${escidoc.fedoragsearch.version}</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
         <artifactId>srw</artifactId>
         <type>war</type>
-        <version>1.4.3</version>
+        <version>${escidoc.srw.version}</version>
       </dependency>
       <dependency>
         <groupId>fedora.localservice</groupId>
