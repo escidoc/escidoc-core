@@ -19,6 +19,13 @@ changes since version 1.3
 			 defines if content (not binary) will be delivered gzip compressed
 			-remove aa.cache properties as we now use eh-cache
 			-remove property escidoc-core.om.indexer.cache.size as indexer-cache was removed
+			
+	July 2011:
+		-springsecurity complains a session-fixation-protection-strategy execption
+		 because it is not possible to copy a servlet-session to give it a new session-id.
+		 This is a Problem of JBoss version 4.2.
+		 Fix: provide the attribute emptySessionPath="false" in server.xml
+		 --> server.xml in JBoss-Patch adapted.
 
 changes since version 1.2
 --------------------------
