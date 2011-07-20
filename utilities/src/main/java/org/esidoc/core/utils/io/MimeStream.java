@@ -21,7 +21,7 @@
 package org.esidoc.core.utils.io;
 
 /**
- * @author Jörg Hermann
+ * @author Joerg Hermann
  */
 public class MimeStream {
     
