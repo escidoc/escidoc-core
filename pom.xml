@@ -1047,7 +1047,7 @@
     <jrdf.version>0.3.4.3</jrdf.version>
     <pdfbox.version>1.6.0</pdfbox.version>
     <xmlunit.version>1.3</xmlunit.version>
-    <escidoc.analyzers.version>1.4.2</escidoc.analyzers.version>
+    <escidoc.analyzers.version>1.4.3</escidoc.analyzers.version>
     <poi.version>3.1-beta2</poi.version>
     <sen.version>1.0.0</sen.version>
     <dbutils.version>1.0.0</dbutils.version>
