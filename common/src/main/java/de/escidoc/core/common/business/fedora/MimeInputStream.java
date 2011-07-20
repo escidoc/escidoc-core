@@ -49,14 +49,14 @@ public class MimeInputStream {
     /**
      * @set the stream
      */
-    public void setInputStream(InputStream inputStream) {
+    public void setInputStream(final InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
     /**
      * @set the mimeType
      */
-    public void setMimeType(String mimeType) {
+    public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
     }
 
