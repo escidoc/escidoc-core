@@ -36,8 +36,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -88,28 +86,6 @@ public class CreateIT extends ContextTestBase {
         String t2 = "2008-02-24T20:13:01+0000";
 
         compareTimestamps(t1, t2);
-    }
-
-    /**
-     * Test schema validation check (see issue INFR-1196).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
-     */
-    @Test
-    public void testSchemaValidation() {
-        final String handle = PWCallback.getHandle();
-
-        try {
-            PWCallback.resetHandle();
-            System.out.println("create: " + create("<context/>"));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            PWCallback.setHandle(handle);
-        }
     }
 
     /**

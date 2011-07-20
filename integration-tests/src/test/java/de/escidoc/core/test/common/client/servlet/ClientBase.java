@@ -776,7 +776,6 @@ public abstract class ClientBase {
                     e);
             }
 
-            System.out.println(exceptionXML);
             exceptionObject = exceptionClass.newInstance();
             if (exceptionObject == null || !(exceptionObject instanceof EscidocException)) {
                 throw new Exception("Exception class could not be instantiated [" + exceptionName + ", "
