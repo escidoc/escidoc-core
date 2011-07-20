@@ -33,7 +33,6 @@ import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Item;
-import de.escidoc.core.common.business.fedora.resources.Relation;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
@@ -48,8 +47,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
@@ -70,7 +67,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * This is a class, indeed.
@@ -990,48 +986,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         return getItem().getCts().toStringUTF8();
     }
 
-    public Set checkRelations(final String versionDate, final Map relations) throws TripleStoreSystemException,
-        WebserverSystemException, FedoraSystemException, IntegritySystemException {
-        final Set relationsData = relations.entrySet();
-        final Iterator it = relationsData.iterator();
-        while (it.hasNext()) {
-            final Entry relData = (Entry) it.next();
-            final String id = (String) relData.getKey();
-            final Relation relation;
-            try {
-                relation = new Relation(id);
-            }
-            catch (final ResourceNotFoundException e) {
-                throw new WebserverSystemException("unreachable", e);
-            }
-            final byte[] wov;
-            try {
-                wov = relation.getWov().getStream();
-            }
-            catch (final StreamNotFoundException e) {
-                throw new IntegritySystemException("unreachable", e);
-            }
-            final StaxParser sp = new StaxParser();
-
-            final WovContentRelationsRetrieveHandler wovHandler =
-                new WovContentRelationsRetrieveHandler(sp, versionDate);
-            sp.addHandler(wovHandler);
-            try {
-                sp.parse(wov);
-                sp.clearHandlerChain();
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException("unreachable", e);
-            }
-            final String status = wovHandler.getStatus();
-            if ("inactive".equals(status)) {
-                it.remove();
-            }
-
-        }
-        return relationsData;
-    }
-
     /**
      * Get Common values from Item.
      *
@@ -1109,13 +1063,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
         return values;
     }
 
-    protected void addParentsNamespaceValues(final Map values) {
+    protected void addParentsNamespaceValues(final Map<String, Object> values) {
         values.put("parentsNamespacePrefix", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
         values.put("parentsNamespace", de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_URI);
 
     }
 
-    protected void addXlinkValues(final Map values) {
+    protected void addXlinkValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProviderConstants.VAR_ESCIDOC_BASE_URL, XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProviderConstants.VAR_XLINK_NAMESPACE_PREFIX,
@@ -1124,7 +1078,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
-    protected void addStructuralRelationsValues(final Map values) {
+    protected void addStructuralRelationsValues(final Map<String, Object> values) {
         values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX,
             de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS,
