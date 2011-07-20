@@ -78,6 +78,31 @@
       <param name="targetDir" value="${install.dir}/jboss/server"/>
     </antcall>
 
+    <!-- copy empty Lucene segment files if they not yet exist -->
+    <move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server/default/data" tofile="${install.dir}/jboss/server/default/data"/>
+    <for param="indexDir">
+      <path>
+        <dirset dir="${install.dir}/jboss/server/default/data/index/lucene">
+          <and>
+            <type type="dir"/>
+            <depth min="0"/>
+          </and>
+        </dirset>
+      </path>
+      <sequential>
+        <if>
+          <length length="0">
+            <fileset dir="@{indexDir}"/>
+          </length>
+          <then>
+            <copy todir="@{indexDir}">
+              <fileset dir="${install.dir}/install.tmp/lucene"/>
+            </copy>
+          </then>
+        </if>
+      </sequential>
+    </for>
+
     <!-- change JBoss port numbers -->
     <replace file="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml" token="8080" value="${EscidocPort}"/>
     <math result="connectorPort" operand1="${EscidocPort}" operation="add" operand2="9" datatype="int"/>

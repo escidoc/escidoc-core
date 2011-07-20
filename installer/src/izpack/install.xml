@@ -405,6 +405,7 @@
             <!-- Configuration files -->
             <file src="config/escidoc/core/escidoc-core.custom.properties" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/escidoc-core.custom.properties" />
+            <fileset dir="config/lucene" includes="*" targetdir="$INSTALL_PATH/install.tmp/lucene" />
         </pack>
         
         <pack name="JBoss Application Server" id="jboss.package" parent="escidoc.package" required="yes">
