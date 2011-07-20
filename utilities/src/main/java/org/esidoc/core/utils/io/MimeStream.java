@@ -33,7 +33,7 @@ public class MimeStream {
      * @param stream
      * @param mimet
      */
-    public MimeStream(Stream stream, String mimeType) {
+    public MimeStream(final Stream stream, final String mimeType) {
         super();
         this.stream = stream;
         this.mimeType = mimeType;
@@ -69,7 +69,7 @@ public class MimeStream {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
