@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
@@ -53,6 +54,7 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -62,7 +64,6 @@ import de.escidoc.core.common.util.stax.handler.WovReadHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 
@@ -94,7 +95,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
     protected Datastream wov;
 
-    private VersionData currentVersionData;
+    private Map<String, String> currentVersionData;
 
     /**
      * Number of the version. Is null if it is the latest version.
@@ -264,7 +265,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public String getVersionStatus() throws IntegritySystemException {
-        return getVersionData().getCurrentVersion().getVersionStatus();
+        return getVersionElementData(PropertyMapKeys.CURRENT_VERSION_STATUS);
     }
 
     /**
@@ -274,7 +275,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public void setVersionStatus(final String versionStatus) throws IntegritySystemException {
-        getVersionData().getCurrentVersion().setVersionStatus(versionStatus);
+        getVersionData().put(PropertyMapKeys.CURRENT_VERSION_STATUS, versionStatus);
     }
 
     /**
@@ -284,7 +285,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException If data integrity of Fedora Repository is violated
      */
     public void setLatestReleaseVersionNumber(final String latestReleaseVersionNumber) throws IntegritySystemException {
-        getVersionData().getLatestRelease().setVersionNumber(latestReleaseVersionNumber);
+        getVersionData().put(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
     }
 
     /**
@@ -353,7 +354,8 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final DateTime versionDate;
         try {
-            versionDate = new DateTime(getVersionData().getCurrentVersion().getVersionDate(), DateTimeZone.UTC);
+            versionDate =
+                new DateTime(getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE), DateTimeZone.UTC);
         }
         catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
@@ -370,7 +372,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public void setVersionDate(final String timestamp) throws WebserverSystemException {
         try {
-            getVersionData().getLatestVersion().setVersionDate(timestamp);
+            setVersionElementData(TripleStoreUtility.PROP_LATEST_VERSION_DATE, timestamp);
         }
         catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
@@ -521,7 +523,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             else {
                 // use a parser to get the information for older versions
                 try {
-                    setLastModificationDate(new DateTime(getVersionData().getCurrentVersion().getTimestamp(),
+                    setLastModificationDate(new DateTime(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP),
                         DateTimeZone.UTC));
                 }
                 catch (final IntegritySystemException e) {
@@ -590,7 +592,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return value of element or null
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      */
-    public VersionData getVersionData() throws IntegritySystemException {
+    public Map<String, String> getVersionData() throws IntegritySystemException {
 
         if (this.currentVersionData == null) {
             try {
@@ -613,10 +615,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    private VersionData getVersionData(final String versionNo) throws IntegritySystemException,
+    public Map<String, String> getVersionData(final String versionNo) throws IntegritySystemException,
         WebserverSystemException {
 
-        final VersionData result = new VersionData();
         final Map<String, String> versionData;
 
         try {
@@ -626,20 +627,45 @@ public class GenericVersionableResource extends GenericResourcePid {
             throw new WebserverSystemException(e);
         }
         if (versionNo != null) {
-            versionData.putAll(loadVersionData(versionNo));
+            try {
+                final StaxParser sp = new StaxParser();
+                final WovReadHandler wrh = new WovReadHandler(sp, versionNo);
+                sp.addHandler(wrh);
+                sp.parse(getWov().getStream());
+                final Map<String, String> prop = wrh.getVersionData();
+                versionData.putAll(prop);
+            }
+            catch (final Exception e) {
+                throw new IntegritySystemException("No version data for resource " + getId() + '.' + e);
+            }
         }
 
-        result.getCurrentVersion().setTimestamp(versionData.get(Elements.ELEMENT_WOV_VERSION_TIMESTAMP));
-        result.getCurrentVersion().setVersionDate(versionData.get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE));
-        result.getCurrentVersion().setVersionPid(versionData.get(PropertyMapKeys.CURRENT_VERSION_PID));
-        result.getCurrentVersion().setVersionStatus(versionData.get(PropertyMapKeys.CURRENT_VERSION_STATUS));
+        return versionData;
+    }
 
-        result.getLatestRelease().setVersionDate(versionData.get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
-        result.getLatestRelease().setVersionNumber(versionData.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+    /**
+     * Get resource version data for a selected element.
+     *
+     * @param elementName Name of the Element.
+     * @return value of element or null
+     * @throws IntegritySystemException Thrown if data integrity is violated.
+     */
+    public String getVersionElementData(final String elementName) throws IntegritySystemException {
 
-        result.getLatestVersion().setVersionDate(versionData.get(TripleStoreUtility.PROP_LATEST_VERSION_DATE));
-        result.getLatestVersion().setVersionNumber(versionData.get(PropertyMapKeys.LATEST_VERSION_NUMBER));
-        return result;
+        return getVersionData().get(elementName);
+    }
+
+    /**
+     * Set values for the resource version.
+     *
+     * @param elementName Name of the value.
+     * @param value       new value.
+     * @throws WebserverSystemException Thrown in case of internal failure.
+     * @throws IntegritySystemException Thrown if data integrity is violated.
+     */
+    private void setVersionElementData(final String elementName, final String value) throws IntegritySystemException {
+
+        getVersionData().put(elementName, value);
     }
 
     // -------------------------------------------------------------------------
@@ -806,21 +832,30 @@ public class GenericVersionableResource extends GenericResourcePid {
     /**
      * Parse data from WOV data stream. The values are retrievable via the getVersionData() method.
      *
+     * @throws ResourceNotFoundException Thrown if the resource was not found.
+     * @throws XmlParserSystemException  Thrown in case of parser errors.
      * @throws WebserverSystemException  Thrown in case of internal errors.
      */
-    private Map<String, String> loadVersionData(String versionNumber) throws WebserverSystemException {
+    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException {
 
         // parse version-history
         final StaxParser sp = new StaxParser();
-        final WovReadHandler wrh = new WovReadHandler(sp, versionNumber);
+        final WovReadHandler wrh = new WovReadHandler(sp, this.versionNumber);
         sp.addHandler(wrh);
         try {
             sp.parse(this.getWov().getStream());
         }
-        catch (final Exception e) {
-            throw new WebserverSystemException("Unexpected exception.", e);
+        catch (final IntegritySystemException e) {
+            throw new XmlParserSystemException(e);
         }
-        return wrh.getVersionData();
+        catch (final Exception e) {
+            throw new XmlParserSystemException("Unexpected exception.", e);
+        }
+        this.currentVersionData = wrh.getVersionData();
+        if (this.currentVersionData == null || currentVersionData.size() <= 1) {
+            throw new ResourceNotFoundException("Can not retrieve version '" + this.versionNumber + "' for Resource '"
+                + getId() + "'.");
+        }
     }
 
     /**
@@ -966,8 +1001,8 @@ public class GenericVersionableResource extends GenericResourcePid {
         final HashMap<String, String> eventValues = new HashMap<String, String>();
 
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, "v"
-            + getVersionData().getLatestVersion().getVersionNumber() + "e" + System.currentTimeMillis());
+        eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, 'v'
+            + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
             + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'

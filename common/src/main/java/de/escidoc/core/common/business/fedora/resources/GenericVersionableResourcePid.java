@@ -154,12 +154,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         if (pid == null) {
             if (fullId.equals(getFullId())) {
-                pid = getVersionData().getCurrentVersion().getVersionPid();
+                pid = getVersionData().get(PropertyMapKeys.CURRENT_VERSION_PID);
             }
             else {
                 // FIXME
                 final DateTime latestReleaseDate =
-                    new DateTime(getVersionData().getLatestRelease().getVersionDate(), DateTimeZone.UTC);
+                    new DateTime(getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE), DateTimeZone.UTC);
                 // get the timestamp of this version
                 // get the RELSE-EXT of the version and parse it for the
                 // versionPid
