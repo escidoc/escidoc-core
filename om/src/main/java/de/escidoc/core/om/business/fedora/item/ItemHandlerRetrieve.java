@@ -33,7 +33,6 @@ import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Item;
-import de.escidoc.core.common.business.fedora.resources.Relation;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
@@ -48,8 +47,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
@@ -70,7 +67,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * This is a class, indeed.
@@ -989,48 +985,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
     protected String getContentTypeSpecificPropertiesXml() throws EncodingSystemException {
 
         return getItem().getCts().toStringUTF8();
-    }
-
-    public Set checkRelations(final String versionDate, final Map relations) throws TripleStoreSystemException,
-        WebserverSystemException, FedoraSystemException, IntegritySystemException {
-        final Set relationsData = relations.entrySet();
-        final Iterator it = relationsData.iterator();
-        while (it.hasNext()) {
-            final Entry relData = (Entry) it.next();
-            final String id = (String) relData.getKey();
-            final Relation relation;
-            try {
-                relation = new Relation(id);
-            }
-            catch (final ResourceNotFoundException e) {
-                throw new WebserverSystemException("unreachable", e);
-            }
-            final byte[] wov;
-            try {
-                wov = relation.getWov().getStream();
-            }
-            catch (final StreamNotFoundException e) {
-                throw new IntegritySystemException("unreachable", e);
-            }
-            final StaxParser sp = new StaxParser();
-
-            final WovContentRelationsRetrieveHandler wovHandler =
-                new WovContentRelationsRetrieveHandler(sp, versionDate);
-            sp.addHandler(wovHandler);
-            try {
-                sp.parse(wov);
-                sp.clearHandlerChain();
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException("unreachable", e);
-            }
-            final String status = wovHandler.getStatus();
-            if ("inactive".equals(status)) {
-                it.remove();
-            }
-
-        }
-        return relationsData;
     }
 
     /**
