@@ -31,6 +31,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedR
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -146,6 +148,28 @@ public class ContainerCreateIT extends ContainerTestBase {
          * creation if a non XML datastructur is send (e.g. String).
          */
         create("laber-rababer");
+    }
+
+    /**
+     * Test schema validation check (see issue INFR-1196).
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
+     */
+    @Test
+    public void testSchemaValidation() {
+        final String handle = PWCallback.getHandle();
+
+        try {
+            PWCallback.resetHandle();
+            System.out.println("create: " + create("<container/>"));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            PWCallback.setHandle(handle);
+        }
     }
 
     /**
