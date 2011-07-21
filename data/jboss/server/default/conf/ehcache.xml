@@ -5,6 +5,15 @@
     <diskStore path="java.io.tmpdir"/>
     <defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="1200" overflowToDisk="false"/>
 
+    <!-- caches resources for the indexer.
+    Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
+    <cache
+            name="resourcesCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            overflowToDisk="true"
+            timeToIdleSeconds="1800"/>
+
     <!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
     Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
     <cache name="roleIsGrantedCache"

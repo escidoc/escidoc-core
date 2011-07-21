@@ -117,4 +117,35 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         return null;
     }
 
+    /**
+     * writes the given xml into the cache.
+     *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object
+     */
+    @Override
+    public void cache(final String pid, final String xml) throws SystemException {
+        this.indexerResourceRequester.setResource(pid, xml);
+    }
+
+    /**
+     * removes the given pid from the cache.
+     *
+     * @param pid uri to the resource.
+     */
+    @Override
+    public void removeFromCache(final String pid) throws SystemException {
+        this.indexerResourceRequester.deleteResource(pid);
+    }
+
+    /**
+     * retreives the given pid not from cache.
+     *
+     * @param pid uri to the resource.
+     */
+    @Override
+    public String retrieveUncached(final String pid) throws SystemException {
+        return (String) this.indexerResourceRequester.getResourceUncached(pid);
+    }
+
 }

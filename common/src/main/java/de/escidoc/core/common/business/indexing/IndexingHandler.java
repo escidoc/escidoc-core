@@ -33,8 +33,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
-import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -105,8 +103,8 @@ public class IndexingHandler implements ResourceListener {
     private TripleStoreUtility tripleStoreUtility;
 
     @Autowired
-    @Qualifier("service.FedoraRestDeviationHandler")
-    private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
+    @Qualifier("common.business.indexing.IndexingCacheHandler")
+    private IndexingCacheHandler indexingCacheHandler;
 
     private final DocumentBuilder docBuilder;
 
@@ -148,6 +146,15 @@ public class IndexingHandler implements ResourceListener {
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
+        }
+        if (xml != null && xml.length() > 0) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("writing xml in cache");
+            }
+            indexingCacheHandler.writeObjectInCache(id, xml);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished.");
+            }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, xml);
@@ -191,6 +198,10 @@ public class IndexingHandler implements ResourceListener {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
+        indexingCacheHandler.removeObjectFromCache(id, xml);
+        if (xml != null && xml.length() > 0) {
+            indexingCacheHandler.writeObjectInCache(id, xml);
+        }
         addResource(id, objectType, xml);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
@@ -504,7 +515,7 @@ public class IndexingHandler implements ResourceListener {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("xml is null, requesting it from cache");
                     }
-                    xml = fedoraRestDeviationHandler.export(resource, null);
+                    xml = indexingCacheHandler.retrieveObjectFromCache(resource);
                 }
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("xml is: " + xml);
