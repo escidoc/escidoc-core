@@ -39,6 +39,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.KeyGenerator;
+import com.googlecode.ehcache.annotations.PartialCacheKey;
+import com.googlecode.ehcache.annotations.Property;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -79,6 +85,7 @@ public class IndexerResourceRequester {
      * @return Object resource-object
      * @throws SystemException e
      */
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
@@ -90,11 +97,49 @@ public class IndexerResourceRequester {
     }
 
     /**
+     * Get resource with given identifier.
+     *
+     * @param identifier identifier
+     * @return Object resource-object
+     * @throws SystemException e
+     */
+    public Object getResourceUncached(final String identifier) throws SystemException {
+        final String href = getHref(identifier);
+        if (identifier.startsWith("http")) {
+            return getExternalResource(href);
+        }
+        else {
+            return getInternalResource(href);
+        }
+    }
+
+    /**
+     * Set resource with given identifier in cache.
+     *
+     * @param identifier identifier
+     * @param resource   resource-object
+     * @return Object resource-object
+     */
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public Object setResource(@PartialCacheKey
+    final String identifier, final Object resource) {
+        return resource;
+    }
+
+    /**
+     * delete resource with given identifier from cache.
+     *
+     * @param identifier identifier
+     */
+    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public void deleteResource(final String identifier) {
+    }
+
+    /**
      * get resource with given identifier from framework.
      *
      * @param identifier identifier
      * @throws SystemException e
-     * @return
      */
     private Object getInternalResource(final String identifier) throws SystemException {
         try {
@@ -132,7 +177,6 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      * @throws SystemException e
-     * @return
      */
     private Object getExternalResource(final String identifier) {
         try {

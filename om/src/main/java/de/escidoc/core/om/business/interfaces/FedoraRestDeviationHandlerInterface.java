@@ -65,4 +65,30 @@ public interface FedoraRestDeviationHandlerInterface {
     EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException;
 
+    /**
+     * writes the given xml into the cache.
+     *
+     * @param pid uri to the resource.
+     * @param xml xml-representation of the object
+     * @throws SystemException ex
+     */
+    void cache(final String pid, final String xml) throws SystemException;
+
+    /**
+     * removes the given pid from the cache.
+     *
+     * @param pid uri to the resource.
+     * @throws SystemException ex
+     */
+    void removeFromCache(final String pid) throws SystemException;
+
+    /**
+     * retrieves the given pid not from cache.
+     *
+     * @param pid uri to the resource.
+     * @return String String with the fedora-object as escidoc-xml
+     * @throws SystemException ex
+     */
+    String retrieveUncached(final String pid) throws SystemException;
+
 }
