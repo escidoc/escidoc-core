@@ -35,6 +35,8 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -256,41 +258,42 @@ public class ItemRetrieveTest extends ItemTestBase {
         PWCallback.resetHandle();
     }
 
-    // /**
-    // * Test declining retrieving depositor item as other depositor. Issue 608
-    // * (unfixed).
-    // *
-    // *
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void testRetrieveUnprevDepositor() throws Exception {
-    // String xml =
-    // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-    // + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-    // // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
-    // PWCallback.setHandle("ex_adm");
-    // String itemXml = create(xml);
-    // String itemId = getObjidValue(itemXml);
-    //
-    // PWCallback.setHandle("ex_dep");
-    // Class ec = AuthorizationException.class;
-    // try {
-    // retrieve(itemId);
-    // fail(ec.getName() + " expected");
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    // finally {
-    // PWCallback.resetHandle();
-    // }
-    // }
+    /**
+     * Test declining retrieving depositor item as other depositor. Issue 608 (unfixed).
+     * 
+     * 
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    @Ignore
+    public void testRetrieveUnprevDepositor() throws Exception {
+        String xml =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml");
+        // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
+        PWCallback.setHandle("ex_adm");
+        String itemXml = create(xml);
+        String itemId = getObjidValue(itemXml);
+
+        PWCallback.setHandle("ex_dep");
+        Class ec = AuthorizationException.class;
+        try {
+            retrieve(itemId);
+            fail(ec.getName() + " expected");
+        }
+        catch (final Exception e) {
+            assertExceptionType(ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
+        }
+    }
 
     /**
-     * Test retrieving items.
+     * Test retrieving Items via eSciDoc filter.
      * <p/>
      * See Bugzilla #586
      *
