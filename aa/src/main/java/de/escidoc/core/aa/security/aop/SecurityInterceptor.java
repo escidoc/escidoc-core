@@ -76,10 +76,10 @@ import java.util.regex.Pattern;
  */
 @Aspect
 @DeclarePrecedence("org.escidoc.core.aspects.TraceInterceptor, "
-    + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
-    + "de.escidoc.core.aa.security.aop.SecurityInterceptor, "
     + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
     + "de.escidoc.core.common.util.aop.XmlValidationInterceptor, "
+    + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
+    + "de.escidoc.core.aa.security.aop.SecurityInterceptor, "
     + "de.escidoc.core.common.util.aop.StatisticInterceptor, " + '*')
 public class SecurityInterceptor implements Ordered {
 
