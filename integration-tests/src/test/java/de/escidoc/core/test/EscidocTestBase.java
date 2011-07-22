@@ -3085,7 +3085,7 @@ public abstract class EscidocTestBase {
         if (replacedData.indexOf("explainResponse") > -1) {
             replacedData = replacedData.replaceFirst("(?s).*?(<[^>]*?explain[\\s>].*?<\\/[^>]*?explain.*?>).*", "$1");
         }
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/search-result/0.3/zeerex-2.0.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/search-result/0.4/zeerex-2.0.xsd");
         assertXmlValid(replacedData, url);
     }
 
