@@ -12,7 +12,7 @@
     <xs:import namespace="http://escidoc.de/core/01/properties/" 
         schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/properties.xsd"/>
     <xs:import namespace="http://escidoc.de/core/01/structural-relations/" 
-        schemaLocation="http://www.escidoc.org/schemas/soap/common/0.4/structural-relations.xsd"/>
+        schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/structural-relations.xsd"/>
     <xs:import namespace="http://www.w3.org/1999/xlink"
         schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xlink.xsd" />
     <xs:element name="set-definition">
