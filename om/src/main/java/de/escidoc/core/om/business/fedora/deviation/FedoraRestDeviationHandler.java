@@ -98,13 +98,23 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public String export(final String pid, final Map<String, String[]> parameters) throws SystemException {
+        final String xml;
+        final String resource;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid);
         }
-        final String xml;
 
+        if (parameters.get("uri") != null 
+            && parameters.get("uri")[0] != null) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("uri:" + parameters.get("uri")[0]);
+            }
+            resource = parameters.get("uri")[0];
+        } else {
+            resource = pid;
+        }
         try {
-            xml = (String) this.indexerResourceRequester.getResource(pid);
+            xml = (String) this.indexerResourceRequester.getResource(resource);
         }
         catch (final SystemException e) {
             LOGGER.error(e.toString());
