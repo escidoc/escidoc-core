@@ -51,9 +51,7 @@
       
       April, 2010
       - All child elements of 'resources' optional.
-
-			July, 2011
-      - fix structural-relation import to rest schema location      
+      
       
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -69,7 +67,7 @@
     <xs:import namespace="http://escidoc.de/core/01/properties/" 
         schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/properties.xsd"/>
     <xs:import namespace="http://escidoc.de/core/01/structural-relations/" 
-        schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/structural-relations.xsd"/>
+        schemaLocation="http://www.escidoc.org/schemas/soap/common/0.4/structural-relations.xsd"/>
     <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
         schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/common-types.xsd" />
     <xs:import namespace="http://www.w3.org/1999/xlink"
