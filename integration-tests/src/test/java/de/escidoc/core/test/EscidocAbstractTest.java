@@ -1006,8 +1006,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     /**
-     * Get location of Schema. Schema are delived with framework and therefore the schema location based on the
-     * framework location. Schemas are currently not pulled from www.escidoc.org wven if they could.
+     * Get location of Schema. Schema are delivered with framework and therefore the schema location based on the
+     * framework location. Schemas are currently not pulled from www.escidoc.org even if they could.
      * 
      * @return schema location
      */
