@@ -70,7 +70,7 @@ import static org.junit.Assert.assertNull;
  *         UM_CG_12-rest/UM_CG_12-soap</li> </ul>
  */
 @RunWith(Parameterized.class)
-public abstract class GrantIT extends GrantTestBase {
+public class GrantIT extends GrantTestBase {
 
     /**
      * Initializes test-class with data.
@@ -78,16 +78,12 @@ public abstract class GrantIT extends GrantTestBase {
      * @return Collection with data.
      */
     @Parameterized.Parameters
-    public static Collection<Object> data() {
-        return Arrays.asList(new Object[] { USER_GROUP_HANDLER_CODE, USER_ACCOUNT_HANDLER_CODE });
-    }
-
-    public GrantIT(final int handlerCode) throws Exception {
-        super(handlerCode);
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {{ USER_GROUP_HANDLER_CODE, null},{USER_ACCOUNT_HANDLER_CODE, null}});
     }
 
     public GrantIT(final int handlerCode, final String userIdOrUserGroupId) throws Exception {
-        super(handlerCode, userIdOrUserGroupId);
+        super(handlerCode);
     }
 
     /**
@@ -420,7 +416,8 @@ public abstract class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType organizational-unit";
-            assertMatches(e.toString() + " does not match " + testString, testString, e.toString());
+            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
+                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
         }
     }
 
@@ -447,7 +444,8 @@ public abstract class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType user-account";
-            assertMatches(e.toString() + " does not match " + testString, testString, e.toString());
+            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
+                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
         }
     }
 
@@ -473,7 +471,8 @@ public abstract class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType role";
-            assertMatches(e.toString() + " does not match " + testString, testString, e.toString());
+            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
+                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
         }
     }
 
@@ -503,7 +502,8 @@ public abstract class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType grant";
-            assertMatches(e.toString() + " does not match " + testString, testString, e.toString());
+            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
+                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
         }
     }
 
@@ -530,7 +530,8 @@ public abstract class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType content-model";
-            assertMatches(e.toString() + " does not match " + testString, testString, e.toString());
+            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
+                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
         }
     }
 
