@@ -531,19 +531,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CHARACTERS:
+                case XMLStreamConstants.CDATA:
                     final String data = event.asCharacters().getData();
                     if (data.length() != 0) {
                         startElements.peek().setHasCharacters(true);
                         handle(data);
-                    }
-                    break;
-
-                case XMLStreamConstants.CDATA:
-                    final String cdata = "<![CDATA[" + event.asCharacters().getData() + "]]>";
-                    // FIXME this length is always != 0
-                    if (cdata.length() != 0) {
-                        startElements.peek().setHasCharacters(true);
-                        handle(cdata);
                     }
                     break;
 
