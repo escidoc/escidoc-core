@@ -49,7 +49,6 @@ public class ScopeTestBase extends SmTestBase {
      * @return The created Scope.
      * @throws Exception If anything fails.
      */
-    @Override
     public String create(final String dataXml) throws Exception {
 
         Object result = getScopeClient().create(dataXml);
@@ -71,7 +70,6 @@ public class ScopeTestBase extends SmTestBase {
      * @param id The id of the Scope.
      * @throws Exception If anything fails.
      */
-    @Override
     public void delete(final String id) throws Exception {
 
         Object result = getScopeClient().delete(id);
@@ -89,7 +87,6 @@ public class ScopeTestBase extends SmTestBase {
      * @return The updated Scope.
      * @throws Exception If anything fails.
      */
-    @Override
     public String update(final String id, final String xml) throws Exception {
 
         Object result = getScopeClient().update(id, xml);
@@ -114,7 +111,6 @@ public class ScopeTestBase extends SmTestBase {
      * @return The retrieved Scope.
      * @throws Exception If anything fails.
      */
-    @Override
     public String retrieve(final String id) throws Exception {
 
         Object result = getScopeClient().retrieve(id);
