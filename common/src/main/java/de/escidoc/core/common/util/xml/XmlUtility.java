@@ -1822,7 +1822,7 @@ public final class XmlUtility {
     public static String getStatisticDataSchemaLocation() {
 
         if (statisticDataSchemaLocation == null) {
-            statisticDataSchemaLocation = getSchemaBaseUrl() + "statistic-data/0.3/statistic-data.xsd";
+            statisticDataSchemaLocation = getSchemaBaseUrl() + "rest/statistic-data/0.3/statistic-data.xsd";
         }
         return statisticDataSchemaLocation;
     }
@@ -1898,7 +1898,7 @@ public final class XmlUtility {
 
         if (preprocessingInformationSchemaLocation == null) {
             preprocessingInformationSchemaLocation =
-                getSchemaBaseUrl() + "soap/preprocessing-information"
+                getSchemaBaseUrl() + "rest/preprocessing-information"
                     + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
         }
         return preprocessingInformationSchemaLocation;
