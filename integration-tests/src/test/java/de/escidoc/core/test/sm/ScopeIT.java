@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +47,7 @@ import static org.junit.Assert.fail;
  *
  * @author Michael Hoppe
  */
-public abstract class ScopeAbstractIT extends ScopeTestBase {
+public abstract class ScopeIT extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
 
@@ -281,11 +280,11 @@ public abstract class ScopeAbstractIT extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.failException("Retrieving of list of Scopes failed. ", e);
+            failException("Retrieving of list of Scopes failed. ", e);
         }
 
         assertXmlValidSrwResponse(result);
-        Document retrievedDocument = EscidocAbstractTest.getDocument(result);
+        Document retrievedDocument = getDocument(result);
         NodeList resultNodes = selectNodeList(retrievedDocument, XPATH_SRW_SCOPE_LIST_SCOPE);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
 
@@ -302,7 +301,7 @@ public abstract class ScopeAbstractIT extends ScopeTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(EscidocAbstractTest.FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -310,7 +309,7 @@ public abstract class ScopeAbstractIT extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (final Exception e) {
-            EscidocAbstractTest.failException(e);
+            failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

@@ -42,7 +42,7 @@ import static org.junit.Assert.fail;
  */
 public class StatisticDataIT extends StatisticDataTestBase {
 
-    private ScopeAbstractIT scope = null;
+    private ScopeIT scope = null;
 
     private static String scopeId = null;
 
@@ -55,7 +55,7 @@ public class StatisticDataIT extends StatisticDataTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractIT() {
+        scope = new ScopeIT() {
         };
         if (methodCounter == 0) {
             createScope();
