@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.escidoc.de/schemas/statistic-data/0.3"
-	xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.3"
+	xmlns:statistic-data="http://www.escidoc.de/schemas/statistic-data/0.3"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.3"
-		schemaLocation="http://www.escidoc.org/schemas/soap/common/0.3/common-types.xsd" />
 	<xs:element name="statistic-record">
 		<xs:annotation>
 			<xs:documentation>
@@ -25,7 +23,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="scope"
-					type="common-types:linkRequired">
+					type="statistic-data:linkRequired">
 					<xs:annotation>
 						<xs:documentation>
 							<create>
@@ -102,4 +100,26 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+
+	<xs:complexType name="linkRequired">
+        <xs:attribute name="objid" type="statistic-data:objid" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    <create>required</create>
+                    <update>required</update>
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+	<xs:simpleType name="objid">
+		<xs:annotation>
+			<xs:documentation>
+				The type of eSciDoc resource identifiers.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="255" />
+		</xs:restriction>
+	</xs:simpleType>
+
 </xs:schema>
