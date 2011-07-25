@@ -50,7 +50,7 @@ import static org.junit.Assert.fail;
  */
 public class AggregationDefinitionIT extends AggregationDefinitionTestBase {
 
-    private ScopeAbstractIT scope = null;
+    private ScopeIT scope = null;
 
     private static String scopeId = null;
 
@@ -67,7 +67,7 @@ public class AggregationDefinitionIT extends AggregationDefinitionTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractIT() {
+        scope = new ScopeIT() {
         };
         if (methodCounter == 0) {
             primKeys = new ArrayList<String>();
