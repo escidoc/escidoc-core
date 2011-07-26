@@ -36,7 +36,6 @@ import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.joda.time.DateTime;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
@@ -77,6 +76,8 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,6 +88,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -710,6 +712,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
             }
         }
         catch (final UnsupportedEncodingException e) {
+            throw new WebserverSystemException(e);
+        }
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 

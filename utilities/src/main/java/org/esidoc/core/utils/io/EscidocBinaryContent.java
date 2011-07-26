@@ -18,17 +18,18 @@
  * terms.
  */
 
-package de.escidoc.core.common.business.fedora;
+package org.esidoc.core.utils.io;
 
+import java.io.IOException;
 import java.io.InputStream;
+
 
 /**
  * Class encapsulating binary content.
  */
 public class EscidocBinaryContent {
 
-    @Deprecated
-    private InputStream content;
+    private Stream stream;
 
     private String fileName;
 
@@ -54,18 +55,20 @@ public class EscidocBinaryContent {
     /**
      * @return the content
      */
-    public InputStream getContent() {
-        return this.content;
+    public InputStream getContent() throws IOException {
+        if (this.stream == null) {
+            return null;
+        }
+        return this.stream.getInputStream();
     }
 
     /**
      * @param content
      *            the content to set
-     * @deprecated A GetMethod should be set. getContent will acquire the InputStream from that GetMethod.
      */
-    @Deprecated
-    public void setContent(final InputStream content) {
-        this.content = content;
+    public void setContent(final InputStream content) throws IOException {
+        this.stream = new Stream();
+        IOUtils.copy(content, this.stream);
     }
 
     /**

@@ -29,7 +29,6 @@
 package de.escidoc.core.om.business.fedora.item;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
@@ -54,6 +53,8 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.Stream;
 
 import java.io.ByteArrayOutputStream;

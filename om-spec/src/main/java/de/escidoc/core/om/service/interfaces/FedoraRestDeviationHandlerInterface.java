@@ -20,10 +20,11 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of an fedora deviation handler via rest.

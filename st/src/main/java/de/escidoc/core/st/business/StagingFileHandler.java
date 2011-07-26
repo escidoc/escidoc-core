@@ -29,7 +29,6 @@
 package de.escidoc.core.st.business;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -41,6 +40,8 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
+     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(org.esidoc.core.utils.io.EscidocBinaryContent)
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -82,8 +83,13 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         if (stagingFile == null) {
             throw new MissingMethodParameterException("Missing staging file.");
         }
-        if (binaryContent == null || binaryContent.getContent() == null) {
-            throw new MissingMethodParameterException("Binary content must be provided.");
+        try {
+            if (binaryContent == null || binaryContent.getContent() == null) {
+                throw new MissingMethodParameterException("Binary content must be provided.");
+            }
+        }
+        catch (IOException e) {
+            throw new WebserverSystemException(e.getMessage(), e);
         }
         final String token = stagingFile.getToken();
         stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));

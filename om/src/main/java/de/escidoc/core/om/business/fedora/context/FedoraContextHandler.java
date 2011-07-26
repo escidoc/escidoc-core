@@ -29,7 +29,6 @@
 package de.escidoc.core.om.business.fedora.context;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
@@ -62,6 +61,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -71,6 +72,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -217,6 +219,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
+            catch (final IOException e) {
+                throw new WebserverSystemException(e);
+            }
         }
         else if ("relations".equals(resourceName)) {
             try {
@@ -225,6 +230,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
                 return content;
             }
             catch (final UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }

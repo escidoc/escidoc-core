@@ -46,6 +46,8 @@ import java.util.TreeMap;
 import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -59,7 +61,6 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -947,6 +948,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
+            catch (final IOException e) {
+                throw new WebserverSystemException(e);
+            }
         }
         else if ("relations".equals(resourceName)) {
             try {
@@ -955,6 +959,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 return content;
             }
             catch (final UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }

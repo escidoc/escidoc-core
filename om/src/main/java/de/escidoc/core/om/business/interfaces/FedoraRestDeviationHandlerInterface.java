@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of an FedoraRestDeviation handler of the business layer.

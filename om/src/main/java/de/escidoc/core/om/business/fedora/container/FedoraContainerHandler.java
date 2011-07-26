@@ -55,6 +55,7 @@ import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -68,7 +69,6 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -1148,6 +1148,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
+            catch (final IOException e) {
+                throw new WebserverSystemException(e);
+            }
         }
         else if ("version-history".equals(resourceName)) {
             try {
@@ -1155,6 +1158,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     XmlUtility.CHARACTER_ENCODING)));
             }
             catch (final UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -1166,6 +1172,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
+            catch (final IOException e) {
+                throw new WebserverSystemException(e);
+            }
         }
         else if ("parents".equals(resourceName)) {
             try {
@@ -1173,6 +1182,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     .setContent(new ByteArrayInputStream(retrieveParents(id).getBytes(XmlUtility.CHARACTER_ENCODING)));
             }
             catch (final UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }

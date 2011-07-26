@@ -79,7 +79,7 @@ public class GrantIT extends GrantTestBase {
      */
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {{ USER_GROUP_HANDLER_CODE, null},{USER_ACCOUNT_HANDLER_CODE, null}});
+        return Arrays.asList(new Object[][] { { USER_GROUP_HANDLER_CODE, null }, { USER_ACCOUNT_HANDLER_CODE, null } });
     }
 
     public GrantIT(final int handlerCode, final String userIdOrUserGroupId) throws Exception {
@@ -416,8 +416,8 @@ public class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType organizational-unit";
-            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
-                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
+            assertMatches(((InvalidScopeException) e).getHttpStatusMsg() + " does not match " + testString, testString,
+                ((InvalidScopeException) e).getHttpStatusMsg());
         }
     }
 
@@ -444,8 +444,8 @@ public class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType user-account";
-            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
-                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
+            assertMatches(((InvalidScopeException) e).getHttpStatusMsg() + " does not match " + testString, testString,
+                ((InvalidScopeException) e).getHttpStatusMsg());
         }
     }
 
@@ -471,8 +471,8 @@ public class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType role";
-            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
-                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
+            assertMatches(((InvalidScopeException) e).getHttpStatusMsg() + " does not match " + testString, testString,
+                ((InvalidScopeException) e).getHttpStatusMsg());
         }
     }
 
@@ -502,8 +502,8 @@ public class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType grant";
-            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
-                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
+            assertMatches(((InvalidScopeException) e).getHttpStatusMsg() + " does not match " + testString, testString,
+                ((InvalidScopeException) e).getHttpStatusMsg());
         }
     }
 
@@ -530,8 +530,8 @@ public class GrantIT extends GrantTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(InvalidScopeException.class, e);
             String testString = "has objectType content-model";
-            assertMatches(((InvalidScopeException)e).getHttpStatusMsg() + " does not match " 
-                + testString, testString, ((InvalidScopeException)e).getHttpStatusMsg());
+            assertMatches(((InvalidScopeException) e).getHttpStatusMsg() + " does not match " + testString, testString,
+                ((InvalidScopeException) e).getHttpStatusMsg());
         }
     }
 

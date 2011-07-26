@@ -21,7 +21,6 @@
 package de.escidoc.core.om.service.interfaces;
 
 import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -64,6 +63,8 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationE
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of an Item handler.
