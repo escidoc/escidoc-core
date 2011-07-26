@@ -258,6 +258,16 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
+     * Get the PID of the current version.
+     *
+     * @return version PID
+     * @throws IntegritySystemException Thrown if determining failed.
+     */
+    public String getVersionPid() throws IntegritySystemException {
+        return getVersionElementData(PropertyMapKeys.CURRENT_VERSION_PID);
+    }
+
+    /**
      * Get the status of the current version.
      *
      * @return version status.
@@ -448,6 +458,16 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
+     * Get date of latest released version.
+     *
+     * @return latest-release version date
+     * @throws IntegritySystemException Thrown if determining failed.
+     */
+    public String getLatestReleaseVersionDate() throws IntegritySystemException {
+        return getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
+    }
+
+    /**
      * Get number of latest released version.
      *
      * @return latest-release version number
@@ -599,7 +619,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return value of element or null
      * @throws IntegritySystemException Thrown if data integrity is violated.
      */
-    public String getVersionElementData(final String elementName) throws IntegritySystemException {
+    private String getVersionElementData(final String elementName) throws IntegritySystemException {
 
         return getVersionData().get(elementName);
     }
