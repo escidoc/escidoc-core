@@ -54,7 +54,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -365,21 +364,6 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
-     * Set the versionDate.
-     *
-     * @param timestamp VersionDate timestamp
-     * @throws WebserverSystemException Thrown if setting of value failed.
-     */
-    public void setVersionDate(final String timestamp) throws WebserverSystemException {
-        try {
-            setVersionElementData(TripleStoreUtility.PROP_LATEST_VERSION_DATE, timestamp);
-        }
-        catch (final IntegritySystemException e) {
-            throw new WebserverSystemException(e);
-        }
-    }
-
-    /**
      * Get the latest version number of the object.
      *
      * @return latest version number
@@ -412,7 +396,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *
      * @param description New description of resource.
      */
-    public void setDescription(final String description) {
+    protected void setDescription(final String description) {
         this.description = description;
     }
 
@@ -488,16 +472,6 @@ public class GenericVersionableResource extends GenericResourcePid {
     // --------------------------------------------------------------------------
 
     /**
-     * Get HashMap of with latest version data.
-     *
-     * @return latest version data
-     */
-    public Map<String, String> getLastVersionData() {
-
-        return this.lastVersionData;
-    }
-
-    /**
      * Get last modification date of the resource. This modification date differs from the Fedora object (last)
      * modification date!
      *
@@ -532,24 +506,13 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
-     * Is resource latest version?
-     *
-     * @return true if the resource is latest version. False otherwise.
-     * @throws IntegritySystemException Thrown if required values are not available.
-     */
-    public boolean isLatestRelease() throws IntegritySystemException {
-
-        return isLatestVersion() && "released".equals(getVersionStatus());
-    }
-
-    /**
      * Retrieve the properties of the last version and prepare them as HashMap.
      *
      * @return properties of latest version as HashMap
      * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
      * @throws WebserverSystemException   Thrown in case of internal failure.
      */
-    public final Map<String, String> setLastVersionData() throws WebserverSystemException {
+    private final Map<String, String> setLastVersionData() throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -687,28 +650,12 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
-     * Write the Wov data stream to Fedora repository.
-     *
-     * @param ds A byte array of the WOV data stream.
-     * @throws StreamNotFoundException    Thrown if the WOV data stream was not found.
-     * @throws FedoraSystemException      Thrown if update of WOV data stream in Fedora failed.
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
-     * @throws IntegritySystemException   Thrown if data integrity is violated.
-     * @throws WebserverSystemException   Thrown in case of internal error.
-     */
-    public void setWov(final byte[] ds) throws StreamNotFoundException, FedoraSystemException {
-
-        setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), ds, MimeTypes.TEXT_XML));
-
-    }
-
-    /**
      * Update the timestamp of the version within RELS-EXT.
      *
      * @param newVersionTimestamp The timestamp of the version.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public void updateRelsExtVersionTimestamp(final DateTime newVersionTimestamp) throws WebserverSystemException {
+    protected void updateRelsExtVersionTimestamp(final DateTime newVersionTimestamp) throws WebserverSystemException {
 
         // TODO this method should be better called
         // setLastModificationDate(timestamp)
@@ -737,20 +684,6 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         updateRelsExt(updateElementsRelsExt, null);
         setLastModificationDate(newVersionTimestamp);
-    }
-
-    /**
-     * Update the timestamp of the version within RELS-EXT. The timestamp is fetched from the Fedora object.
-     *
-     * @throws WebserverSystemException   Thrown in case of internal error.
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
-     * @throws FedoraSystemException      Thrown if update of RELS-EXT data stream failed.
-     */
-    public void updateRelsExtVersionTimestamp() throws WebserverSystemException, FedoraSystemException {
-
-        // TODO this method should be better called setLastModificationDate()
-        // (and override the inherited method)
-        updateRelsExtVersionTimestamp(getLastFedoraModificationDate());
     }
 
     // --------------------------------------------------------------------------
