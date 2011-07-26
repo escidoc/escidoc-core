@@ -33,6 +33,7 @@ import java.net.URL;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,6 @@ import com.googlecode.ehcache.annotations.PartialCacheKey;
 import com.googlecode.ehcache.annotations.Property;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;

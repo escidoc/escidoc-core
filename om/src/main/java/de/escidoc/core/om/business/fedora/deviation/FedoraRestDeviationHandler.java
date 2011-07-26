@@ -28,11 +28,12 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceRequester;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

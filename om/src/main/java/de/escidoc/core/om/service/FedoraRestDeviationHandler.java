@@ -28,9 +28,10 @@
  */
 package de.escidoc.core.om.service;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;

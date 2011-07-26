@@ -38,7 +38,6 @@ import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelProper
 import de.escidoc.core.cmm.business.stax.handler.contentModel.MdRecordDefinitionHandler;
 import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinitionHandler;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -90,6 +89,7 @@ import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;

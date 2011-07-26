@@ -21,7 +21,6 @@
 package de.escidoc.core.oum.service.interfaces;
 
 import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -43,6 +42,8 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * The interface for access to an OrganizationalUnitHandler Service.

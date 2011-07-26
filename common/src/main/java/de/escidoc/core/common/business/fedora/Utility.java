@@ -41,8 +41,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.apache.xpath.XPathAPI;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -96,6 +96,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -1181,9 +1182,14 @@ public class Utility {
         throws FileSystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setFileName(fileName);
-        content.setMimeType(mimeType);
-        content.setContent(new ByteArrayInputStream(streamContent));
+        try {
+            content.setFileName(fileName);
+            content.setMimeType(mimeType);
+            content.setContent(new ByteArrayInputStream(streamContent));
+        }
+        catch (IOException e) {
+            throw new FileSystemException(e.getMessage(), e);
+        }
         final String stagingFileXml;
 
         try {

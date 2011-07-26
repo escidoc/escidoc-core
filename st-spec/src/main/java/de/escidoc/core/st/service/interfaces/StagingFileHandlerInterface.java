@@ -20,7 +20,8 @@
 
 package de.escidoc.core.st.service.interfaces;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
+
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;

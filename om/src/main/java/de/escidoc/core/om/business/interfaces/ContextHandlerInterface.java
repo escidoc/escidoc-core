@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
@@ -51,6 +50,8 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of a context handler of the business layer.
