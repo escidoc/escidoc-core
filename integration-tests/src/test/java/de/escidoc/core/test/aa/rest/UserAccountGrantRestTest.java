@@ -33,7 +33,7 @@ package de.escidoc.core.test.aa.rest;
  *
  * @author Michael Hoppe
  */
-public class UserAccountGrantRestTest extends GrantRestAbstractTest {
+public class UserAccountGrantRestTest extends GrantRestTest {
 
     /**
      * Constructor.

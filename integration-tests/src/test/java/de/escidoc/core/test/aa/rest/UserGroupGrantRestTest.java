@@ -36,7 +36,7 @@ import org.junit.runners.JUnit4;
  * @author Michael Hoppe
  */
 @RunWith(JUnit4.class)
-public class UserGroupGrantRestTest extends GrantRestAbstractTest {
+public class UserGroupGrantRestTest extends GrantRestTest {
 
     /**
      * Constructor.

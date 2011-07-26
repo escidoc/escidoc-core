@@ -37,7 +37,7 @@ import org.junit.runners.JUnit4;
  * @author Torsten Tetteroo
  */
 @RunWith(JUnit4.class)
-public class UserGroupGrantSoapTest extends GrantSoapAbstractTest {
+public class UserGroupGrantSoapTest extends GrantSoapTest {
 
     /**
      * Constructor.
