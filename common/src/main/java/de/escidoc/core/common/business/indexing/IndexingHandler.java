@@ -498,6 +498,7 @@ public class IndexingHandler implements ResourceListener {
     private int checkPrerequisites(
         String xml, final Map<String, Object> parameters, final String resource, Document domObject)
         throws SystemException {
+        String thisXml = xml;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("prerequisites is " + parameters.get("prerequisites"));
         }
@@ -511,17 +512,17 @@ public class IndexingHandler implements ResourceListener {
                 return Constants.DO_UPDATE;
             }
             else {
-                if (xml == null) {
+                if (thisXml == null) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("xml is null, requesting it from cache");
                     }
-                    xml = indexingCacheHandler.retrieveObjectFromCache(resource);
+                    thisXml = indexingCacheHandler.retrieveObjectFromCache(resource);
                 }
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("xml is: " + xml);
+                    LOGGER.debug("xml is: " + thisXml);
                 }
                 if (domObject == null) {
-                    domObject = getXmlAsDocument(xml);
+                    domObject = getXmlAsDocument(thisXml);
                 }
                 if (prerequisites.get("indexingPrerequisiteXpath") != null) {
                     final Node updateNode =
