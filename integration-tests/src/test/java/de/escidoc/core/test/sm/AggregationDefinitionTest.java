@@ -53,7 +53,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
-    private ScopeAbstractTest scope = null;
+    private ScopeTest scope = null;
 
     private static String scopeId = null;
 
@@ -77,7 +77,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest(getTransport());
+        scope = new ScopeTest(getTransport());
         if (methodCounter == 0) {
             primKeys = new ArrayList<String>();
             createScope();

@@ -45,7 +45,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class StatisticDataTest extends StatisticDataTestBase {
 
-    private ScopeAbstractTest scope = null;
+    private ScopeTest scope = null;
 
     private static String scopeId = null;
 
@@ -65,7 +65,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeAbstractTest(getTransport());
+        scope = new ScopeTest(getTransport());
         if (methodCounter == 0) {
             createScope();
         }
