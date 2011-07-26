@@ -51,7 +51,7 @@ import static org.junit.Assert.fail;
  * @author Michael Hoppe
  */
 @RunWith(value = Parameterized.class)
-public class ScopeAbstractTest extends ScopeTestBase {
+public class ScopeTest extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
 
@@ -62,7 +62,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
     /**
      * @param transport The transport identifier.
      */
-    public ScopeAbstractTest(final int transport) {
+    public ScopeTest(final int transport) {
         super(transport);
     }
 
