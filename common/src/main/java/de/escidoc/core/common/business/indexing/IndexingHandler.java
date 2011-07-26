@@ -496,7 +496,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private int checkPrerequisites(
-        String xml, final Map<String, Object> parameters, final String resource, Document domObject)
+        final String xml, final Map<String, Object> parameters, final String resource, Document domObject)
         throws SystemException {
         String thisXml = xml;
         if (LOGGER.isDebugEnabled()) {
