@@ -45,7 +45,7 @@ import org.w3c.dom.Document;
  * @author Torsten Tetteroo
  */
 @RunWith(JUnit4.class)
-public class GrantRestAbstractTest extends GrantAbstractTest {
+public class GrantRestTest extends GrantAbstractTest {
 
     /**
      * Constructor.
@@ -53,7 +53,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
      * @param handlerCode handlerCode.
      * @throws Exception If anything fails.
      */
-    public GrantRestAbstractTest(final int handlerCode) throws Exception {
+    public GrantRestTest(final int handlerCode) throws Exception {
         super(Constants.TRANSPORT_REST, handlerCode);
     }
 
