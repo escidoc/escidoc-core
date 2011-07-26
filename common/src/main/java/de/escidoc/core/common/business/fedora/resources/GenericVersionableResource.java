@@ -275,7 +275,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public void setVersionStatus(final String versionStatus) throws IntegritySystemException {
-        getVersionData().put(PropertyMapKeys.CURRENT_VERSION_STATUS, versionStatus);
+        setVersionElementData(PropertyMapKeys.CURRENT_VERSION_STATUS, versionStatus);
     }
 
     /**
@@ -285,7 +285,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException If data integrity of Fedora Repository is violated
      */
     public void setLatestReleaseVersionNumber(final String latestReleaseVersionNumber) throws IntegritySystemException {
-        getVersionData().put(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
+        setVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
     }
 
     /**
@@ -592,7 +592,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return value of element or null
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      */
-    public Map<String, String> getVersionData() throws IntegritySystemException {
+    protected Map<String, String> getVersionData() throws IntegritySystemException {
 
         if (this.currentVersionData == null) {
             try {
@@ -615,7 +615,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    public Map<String, String> getVersionData(final String versionNo) throws IntegritySystemException,
+    private Map<String, String> getVersionData(final String versionNo) throws IntegritySystemException,
         WebserverSystemException {
 
         final Map<String, String> versionData;
@@ -828,35 +828,6 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     // --------------------------------------------------------------------------
-
-    /**
-     * Parse data from WOV data stream. The values are retrievable via the getVersionData() method.
-     *
-     * @throws ResourceNotFoundException Thrown if the resource was not found.
-     * @throws XmlParserSystemException  Thrown in case of parser errors.
-     * @throws WebserverSystemException  Thrown in case of internal errors.
-     */
-    protected void setVersionData() throws ResourceNotFoundException, XmlParserSystemException {
-
-        // parse version-history
-        final StaxParser sp = new StaxParser();
-        final WovReadHandler wrh = new WovReadHandler(sp, this.versionNumber);
-        sp.addHandler(wrh);
-        try {
-            sp.parse(this.getWov().getStream());
-        }
-        catch (final IntegritySystemException e) {
-            throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
-            throw new XmlParserSystemException("Unexpected exception.", e);
-        }
-        this.currentVersionData = wrh.getVersionData();
-        if (this.currentVersionData == null || currentVersionData.size() <= 1) {
-            throw new ResourceNotFoundException("Can not retrieve version '" + this.versionNumber + "' for Resource '"
-                + getId() + "'.");
-        }
-    }
 
     /**
      * Persists the whole object to Fedora and force the TripleStore sync.

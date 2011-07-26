@@ -154,7 +154,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         if (pid == null) {
             if (fullId.equals(getFullId())) {
-                pid = getVersionData().get(PropertyMapKeys.CURRENT_VERSION_PID);
+                pid = getVersionElementData(PropertyMapKeys.CURRENT_VERSION_PID);
             }
             else {
                 // FIXME
