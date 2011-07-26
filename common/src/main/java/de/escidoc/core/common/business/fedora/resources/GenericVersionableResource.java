@@ -592,7 +592,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return value of element or null
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      */
-    protected Map<String, String> getVersionData() throws IntegritySystemException {
+    private Map<String, String> getVersionData() throws IntegritySystemException {
 
         if (this.currentVersionData == null) {
             try {

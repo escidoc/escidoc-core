@@ -119,7 +119,6 @@ public class Container extends GenericVersionableResourcePid implements Containe
         this.getUtility().checkIsContainer(getId());
 
         setHref(Constants.CONTAINER_URL_BASE + getId());
-        getVersionData();
         if (getVersionNumber() != null) {
 
             setDcData();
