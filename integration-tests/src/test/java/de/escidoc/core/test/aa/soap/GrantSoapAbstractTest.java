@@ -43,7 +43,7 @@ import org.w3c.dom.Document;
  * @author Torsten Tetteroo
  */
 @RunWith(JUnit4.class)
-public class GrantSoapTest extends GrantAbstractTest {
+public class GrantSoapAbstractTest extends GrantAbstractTest {
 
     /**
      * Constructor.
@@ -51,7 +51,7 @@ public class GrantSoapTest extends GrantAbstractTest {
      * @param handlerCode handlerCode.
      * @throws Exception If anything fails.
      */
-    public GrantSoapTest(final int handlerCode) throws Exception {
+    public GrantSoapAbstractTest(final int handlerCode) throws Exception {
         super(Constants.TRANSPORT_SOAP, handlerCode);
     }
 

@@ -33,7 +33,7 @@ package de.escidoc.core.test.aa.soap;
  *
  * @author Torsten Tetteroo
  */
-public class UserAccountGrantSoapTest extends GrantSoapTest {
+public class UserAccountGrantSoapTest extends GrantSoapAbstractTest {
 
     /**
      * Constructor.
