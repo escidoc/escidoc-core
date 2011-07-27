@@ -122,6 +122,11 @@ public final class Constants {
         Pattern.compile(".*Lock obtain timed out.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
     //Initialize Matcher for faster later use
+
+    /**
+     * FIXME: Using Matcher instance here is not thread-safe. Use Patterns instead in static context.
+     */
+
     public static final Matcher INDEX_NAME_MATCHER = INDEX_NAME_PATTERN.matcher("");
 
     public static final Matcher VALUE_MATCHER = VALUE_PATTERN.matcher("");
