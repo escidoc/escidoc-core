@@ -28,18 +28,21 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.om.business.indexer.IndexerResourceRequester;
-import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
+import java.io.IOException;
+import java.util.Map;
 
 import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.om.business.indexer.IndexerResourceRequester;
+import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
 
 /**
  * @author Michael Hoppe
@@ -64,13 +67,22 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException {
-
+        String resource;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
-        EscidocBinaryContent escidocBinaryContent = null;
+        if (parameters.get("uri") != null && parameters.get("uri")[0] != null) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("uri:" + parameters.get("uri")[0]);
+            }
+            resource = parameters.get("uri")[0];
+        }
+        else {
+            resource = dsID;
+        }
+        EscidocBinaryContent content = null;
         try {
-            escidocBinaryContent = (EscidocBinaryContent) this.indexerResourceRequester.getResource(dsID);
+            content = this.indexerResourceRequester.getResource(resource);
         }
         catch (final SystemException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -81,8 +93,8 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
             }
             throw e;
         }
-        if (escidocBinaryContent != null) {
-            return escidocBinaryContent;
+        if (content != null) {
+            return content;
         }
         LOGGER.error(StringUtility.format("could not get resource for cache", dsID));
 
@@ -115,11 +127,23 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
             resource = pid;
         }
         try {
-            xml = (String) this.indexerResourceRequester.getResource(resource);
+            EscidocBinaryContent content = this.indexerResourceRequester.getResource(resource);
+            if (content.getMimeType() != null && content.getMimeType().startsWith("text")
+                && content.getContent() != null) {
+                xml = IOUtils.newStringFromStream(content.getContent(), XmlUtility.CHARACTER_ENCODING);
+            }
+            else {
+                throw new SystemException("wrong mime-type");
+            }
+
         }
         catch (final SystemException e) {
             LOGGER.error(e.toString());
             throw e;
+        }
+        catch (final IOException e) {
+            LOGGER.error(e.toString());
+            throw new SystemException(e);
         }
         if (xml != null) {
             return xml;
@@ -132,11 +156,11 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * writes the given xml into the cache.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object
+     * @param content EscidocBinaryContent
      */
     @Override
-    public void cache(final String pid, final String xml) throws SystemException {
-        this.indexerResourceRequester.setResource(pid, xml);
+    public void cache(final String pid, final EscidocBinaryContent content) throws SystemException {
+        this.indexerResourceRequester.setResource(pid, content);
     }
 
     /**
@@ -155,8 +179,8 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * @param pid uri to the resource.
      */
     @Override
-    public String retrieveUncached(final String pid) throws SystemException {
-        return (String) this.indexerResourceRequester.getResourceUncached(pid);
+    public EscidocBinaryContent retrieveUncached(final String pid) throws SystemException {
+        return this.indexerResourceRequester.getResourceUncached(pid);
     }
 
 }

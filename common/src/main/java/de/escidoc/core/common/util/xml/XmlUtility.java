@@ -114,6 +114,11 @@ public final class XmlUtility {
     public static final String CHARACTER_ENCODING = "UTF-8";
 
     /**
+     * The Mime-Type for XML.
+     */
+    public static final String MIME_TYPE_XML = "text/xml";
+
+    /**
      * The XML version.
      */
     private static final String XML_VERSION = "1.0";

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.indexer;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
@@ -82,11 +83,11 @@ public class IndexerResourceRequester {
      * Get resource with given identifier.
      *
      * @param identifier identifier
-     * @return Object resource-object
+     * @return EscidocBinaryContent resource-object
      * @throws SystemException e
      */
     @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Object getResource(final String identifier) throws SystemException {
+    public EscidocBinaryContent getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
             return getExternalResource(href);
@@ -100,10 +101,10 @@ public class IndexerResourceRequester {
      * Get resource with given identifier.
      *
      * @param identifier identifier
-     * @return Object resource-object
+     * @return EscidocBinaryContent resource-object
      * @throws SystemException e
      */
-    public Object getResourceUncached(final String identifier) throws SystemException {
+    public EscidocBinaryContent getResourceUncached(final String identifier) throws SystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
             return getExternalResource(href);
@@ -122,7 +123,7 @@ public class IndexerResourceRequester {
      */
     @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object setResource(@PartialCacheKey
-    final String identifier, final Object resource) {
+    final String identifier, final EscidocBinaryContent resource) {
         return resource;
     }
 
@@ -141,15 +142,22 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @throws SystemException e
      */
-    private Object getInternalResource(final String identifier) throws SystemException {
+    private EscidocBinaryContent getInternalResource(final String identifier) throws SystemException {
         try {
             final BeanMethod method = methodMapper.getMethod(identifier, null, null, "GET", "");
             final Object content = method.invokeWithProtocol(null);
             if (content != null && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
                 return (EscidocBinaryContent) content;
             }
-            else if (content != null) {
-                return content;
+            else if (content != null && "String".equals(content.getClass().getSimpleName())) {
+                final EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
+                escidocBinaryContent.setMimeType(XmlUtility.MIME_TYPE_XML);
+                escidocBinaryContent.setContent(new ByteArrayInputStream(((String) content)
+                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
+                return escidocBinaryContent;
+            }
+            else {
+                throw new SystemException("wrong object-type");
             }
         }
         catch (final InvocationTargetException e) {
@@ -178,7 +186,7 @@ public class IndexerResourceRequester {
      * @param identifier identifier
      * @throws SystemException e
      */
-    private Object getExternalResource(final String identifier) {
+    private EscidocBinaryContent getExternalResource(final String identifier) {
         try {
             final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 

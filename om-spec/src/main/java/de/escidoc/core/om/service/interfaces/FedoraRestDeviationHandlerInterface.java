@@ -62,10 +62,10 @@ public interface FedoraRestDeviationHandlerInterface {
      * writes the given xml into the cache.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object
+     * @param content EscidocBinaryContent
      * @throws SystemException ex
      */
-    void cache(final String pid, final String xml) throws SystemException;
+    void cache(final String pid, final EscidocBinaryContent content) throws SystemException;
 
     /**
      * removes the given pid from the cache.
@@ -79,9 +79,9 @@ public interface FedoraRestDeviationHandlerInterface {
      * retrieves given object. Not cached.
      *
      * @param pid uri to the resource.
-     * @return String with the fedora-object as escidoc-xml
+     * @return EscidocBinaryContent with object
      * @throws SystemException ex
      */
-    String retrieveUncached(final String pid) throws SystemException;
+    EscidocBinaryContent retrieveUncached(final String pid) throws SystemException;
 
 }
