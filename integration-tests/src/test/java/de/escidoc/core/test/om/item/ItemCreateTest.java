@@ -205,7 +205,7 @@ public class ItemCreateTest extends ItemTestBase {
         atts.setNamedItem(newAtt);
 
         String xml2 = createComponent(itemId, toString(componentDoc, false));
-        
+
         // TODO intensivate checks
         assertXmlValidComponent(xml2);
         assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
