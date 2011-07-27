@@ -2,5 +2,6 @@
 <jboss-web>
   <loader-repository>
    org.fedora:loader=fedoraClassLoaderRepository
+   <loader-repository-config>java2ParentDelegation=false</loader-repository-config>
   </loader-repository>
 </jboss-web>
