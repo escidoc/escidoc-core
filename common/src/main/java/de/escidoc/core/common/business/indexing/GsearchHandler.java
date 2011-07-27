@@ -34,8 +34,9 @@ import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,22 +77,23 @@ public class GsearchHandler {
     @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
-    /**
-     * Use this instance to perform requests, because of the GsearchHandler needs to use different configurations.
-     */
-    private DefaultHttpClient httpClient;
+    private URL gsearchUrl;
 
-    private String gsearchUrl;
+    private final HttpParams gSearchDefaultParams = new BasicHttpParams();
 
+    @SuppressWarnings("unused")
     @PostConstruct
     private void init() {
+        // setup HttpClient configuration
+        HttpConnectionParams.setSoTimeout(gSearchDefaultParams, Constants.REQUEST_TIMEOUT);
+        // load gSearch configuration
         final EscidocConfiguration config = EscidocConfiguration.getInstance();
         if (config != null) {
-            gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
+            final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
             if (gsearchUrl != null) {
                 try {
-                    this.httpClient = this.connectionUtility.getHttpClient(new URL(gsearchUrl));
-                    HttpConnectionParams.setSoTimeout(this.httpClient.getParams(), Constants.REQUEST_TIMEOUT);
+                    this.gsearchUrl = new URL(gsearchUrl);
+
                 }
                 catch (final MalformedURLException e) {
                     LOGGER.error(INITIALIZATION_ERROR_MSG, e);
@@ -135,7 +137,7 @@ public class GsearchHandler {
         final String resource, final String index, final String pidSuffix, final String indexFulltextVisibilities)
         throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
@@ -174,7 +176,8 @@ public class GsearchHandler {
                 }
 
                 final String response =
-                    connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + updateIndexParams));
+                    connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                        new URL(gsearchUrl + updateIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
@@ -219,7 +222,7 @@ public class GsearchHandler {
     public String requestDeletion(String resource, final String index, final String pidSuffix)
         throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
@@ -246,8 +249,10 @@ public class GsearchHandler {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + deleteIndexParams + " from " + gsearchUrl);
                 }
+
                 final String response =
-                    connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + deleteIndexParams));
+                    connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                        new URL(gsearchUrl + deleteIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
@@ -284,7 +289,7 @@ public class GsearchHandler {
      */
     public String requestCreateEmpty(String index) throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
@@ -294,14 +299,18 @@ public class GsearchHandler {
         final String createEmptyParams =
             Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(index);
         try {
+
+            final URL request = new URL(gsearchUrl + createEmptyParams);
+
             String response =
-                connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + createEmptyParams));
+                connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams), request);
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 if (Constants.LOCK_OBTAIN_TIMEOUT_MATCHER.reset(response).matches()) {
                     deleteLock(response);
                     response =
-                        connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + createEmptyParams));
+                        connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                            request);
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         deleteIndexDirs();
                     }
@@ -309,7 +318,8 @@ public class GsearchHandler {
                         LOGGER.debug("requesting " + createEmptyParams + " from " + gsearchUrl);
                     }
                     response =
-                        connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + createEmptyParams));
+                        connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                            request);
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("response: " + response);
                     }
@@ -345,7 +355,7 @@ public class GsearchHandler {
      */
     public String requestOptimize(final String index) throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
@@ -366,7 +376,8 @@ public class GsearchHandler {
                     LOGGER.debug("requesting " + optimizeIndexParams + " from " + gsearchUrl);
                 }
                 final String response =
-                    connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + optimizeIndexParams));
+                    connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                        new URL(gsearchUrl + optimizeIndexParams));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("response: " + response);
                 }
@@ -399,14 +410,14 @@ public class GsearchHandler {
      */
     private Map<String, Map<String, String>> requestIndexConfiguration() throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
         try {
             final String response =
-                connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl
-                    + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
+                connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams), new URL(
+                    gsearchUrl + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new ApplicationServerSystemException(response);
@@ -437,14 +448,14 @@ public class GsearchHandler {
      */
     private Map<String, String> requestRepositoryInfo() throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
         try {
             final String response =
-                connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl
-                    + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));
+                connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams), new URL(
+                    gsearchUrl + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new ApplicationServerSystemException(response);
@@ -519,7 +530,7 @@ public class GsearchHandler {
     private void handleGsearchException(final String index, final String request, String response, int retries)
         throws ApplicationServerSystemException {
 
-        if (httpClient == null) {
+        if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
         }
 
@@ -546,15 +557,20 @@ public class GsearchHandler {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("creating empty index");
                     }
+
                     response =
-                        connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + createEmptyParams));
+                        connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                            new URL(gsearchUrl + createEmptyParams));
+
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new ApplicationServerSystemException(response);
                     }
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("retrying request " + request);
                     }
-                    response = connectionUtility.getRequestURLAsString(httpClient, new URL(gsearchUrl + request));
+                    response =
+                        connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                            new URL(gsearchUrl + request));
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         if (retries < MAX_ERROR_RETRIES) {
                             retries++;

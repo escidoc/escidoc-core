@@ -110,9 +110,10 @@ public class ConnectionUtility {
     }
 
     /**
-     * Allow instantiation for spring only.
+     * Allow instantiation for Spring only.
      */
     protected ConnectionUtility() {
+
     }
 
     private static void init() {
@@ -177,9 +178,10 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
-     * this connection. Be aware to reset the authentication if the user name and password should not be reused for
-     * later connection.
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the URL contains an authentication part, the UserCredentials will be set to
+     * the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not.
      * 
      * @param url
      *            The resource URL.
@@ -192,11 +194,21 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. If the URL contains an authentication part, the
+     * UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the
+     * settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a
+     * proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
-     * @return
+     *            The resource URL.
+     * @return The response as a String.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public String getRequestURLAsString(final DefaultHttpClient client, final URL url) throws WebserverSystemException {
         final HttpResponse httpResponse = getRequestURL(client, url);
@@ -204,9 +216,10 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get a response-string for the URL. The username and password is stored for this connection. Later connection to
-     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
-     * avoid reuse reset the authentication for the URL.
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. The UserCredentials will be set to the {@link HttpClient} instance using the
+     * specified <tt>username</tt> and <tt>password</tt>. Depending on the specified <tt>url</tt> and the settings from
+     * the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not.
      * 
      * @param url
      *            The resource URL.
@@ -224,13 +237,25 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. The UserCredentials will be set to the
+     * {@link HttpClient} instance using the specified <tt>username</tt> and <tt>password</tt>. Depending on the
+     * specified <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient}
+     * instance will be configured to use a proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            The resource URL.
      * @param username
+     *            User name for authentication.
      * @param password
-     * @return
+     *            Password for authentication.
+     * @return String response as String.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public String getRequestURLAsString(
         final DefaultHttpClient client, final URL url, final String username, final String password)
@@ -240,9 +265,10 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
-     * this connection. Be aware to reset the authentication if the user name and password should not be reused for
-     * later connection. T
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the <tt>cookie</tt> is not null, it will be used for the request. Depending
+     * on the specified <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient}
+     * instance will be configured to use a proxy or not.
      * 
      * @param url
      *            The resource URL.
@@ -257,12 +283,21 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. If the <tt>cookie</tt> is not null, it will be used
+     * for the request. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
      * @param url
+     *            The resource URL.
      * @param cookie
-     * @return
+     *            the Cookie.
+     * @return String response as String.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public String getRequestURLAsString(final DefaultHttpClient client, final URL url, final Cookie cookie)
         throws WebserverSystemException {
@@ -271,13 +306,14 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get a HttpGet for the URL. If the URL contains an Authentication part then is this used and stored for this
-     * connection. Be aware to reset the authentication if the user name and password should not be reused for later
-     * connection.
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the URL contains an authentication part, the UserCredentials will be set to
+     * the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not.
      * 
      * @param url
      *            The resource URL.
-     * @return HttpGet.
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
@@ -286,10 +322,17 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. If the URL contains an authentication part, the
+     * UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the
+     * settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a
+     * proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
      * @param url
-     * @return
+     * @return The response of the request.
      * @throws WebserverSystemException
      */
     public HttpResponse getRequestURL(final DefaultHttpClient client, final URL url) throws WebserverSystemException {
@@ -309,9 +352,11 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the HttpGet with authentication. The username and password is stored for this connection. Later connection to
-     * same URL doesn't require to set the authentication again. Be aware that this could lead to an security issue! To
-     * avoid reuse reset the authentication for the URL.
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If <tt>username</tt> and <tt>password</tt> are not <tt>null</tt>, the
+     * UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the
+     * settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a
+     * proxy or not.
      * 
      * @param url
      *            URL of resource.
@@ -319,7 +364,7 @@ public class ConnectionUtility {
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return HttpGet
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
@@ -329,28 +374,43 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. If <tt>username</tt> and <tt>password</tt> are not
+     * <tt>null</tt>, the UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified
+     * <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be
+     * configured to use a proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            The resource URL.
      * @param username
+     *            User name for authentication.
      * @param password
-     * @return
+     *            Password for authentication.
+     * @return The response of the request.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse getRequestURL(
         final DefaultHttpClient client, final URL url, final String username, final String password)
         throws WebserverSystemException {
-        return get(client, url);
+        return get(client, url, null, username, password);
     }
 
     /**
-     * Get the HttpGet with a cookie.
+     * Perform a GET-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the <tt>cookie</tt> is not null, it will be used for the request. Depending
+     * on the specified <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient}
+     * instance will be configured to use a proxy or not.
      * 
      * @param url
      *            URL of resource.
      * @param cookie
      *            the Cookie.
-     * @return HttpGet
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
@@ -359,12 +419,22 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a GET-request using the specified {@link HttpClient}. If the <tt>cookie</tt> is not null, it will be used
+     * for the request. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            The resource URL.
      * @param cookie
-     * @return
+     *            the Cookie.
+     * @return The response of the request.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse getRequestURL(final DefaultHttpClient client, final URL url, final Cookie cookie)
         throws WebserverSystemException {
@@ -372,19 +442,21 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the HttpPost with authentication. Username and password is stored for connection. Later connections to same
-     * URL doesn't require to set authentication again. Be aware that this could lead to an security issue! To avoid
-     * reuse reset the authentication for the URL.
+     * Perform a POST-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If <tt>username</tt> and <tt>password</tt> are not <tt>null</tt>, the
+     * UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the
+     * settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a
+     * proxy or not. The <tt>body</tt> will be set to request and must be encoded as <b>UTF-8</b>.
      * 
      * @param url
      *            URL of resource.
      * @param body
-     *            The post body of HTTP request.
+     *            The post body of HTTP request encoded in UTF-8.
      * @param username
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return HttpPost
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
@@ -394,14 +466,28 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a POST-request using the specified {@link HttpClient}. If <tt>username</tt> and <tt>password</tt> are not
+     * <tt>null</tt>, the UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified
+     * <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be
+     * configured to use a proxy or not. The <tt>body</tt> will be set to the request and must be encoded as
+     * <b>UTF-8</b>.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            URL of resource.
      * @param body
+     *            The post body of HTTP request encoded in UTF-8.
      * @param username
+     *            User name for authentication.
      * @param password
-     * @return
+     *            Password for authentication.
+     * @return The response of the request.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse postRequestURL(
         final DefaultHttpClient client, final URL url, final String body, final String username, final String password)
@@ -410,18 +496,23 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a POST-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the <tt>cookie</tt> is not null, it will be used for the request. Depending
+     * on the specified <tt>url</tt> and the settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient}
+     * instance will be configured to use a proxy or not. The <tt>body</tt> will be set to the request and must be
+     * encoded as <b>UTF-8</b>.
      * 
      * @param url
      *            URL of resource.
      * @param body
-     *            The post body of HTTP request.
+     *            The post body of HTTP request encoded in UTF-8.
      * @param cookie
      *            The cookie to use of the request.
      * @param username
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return HttpPost
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
@@ -431,13 +522,29 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a POST-request using the specified {@link HttpClient}. If the <tt>cookie</tt> is not null, it will be
+     * used for the request. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not. The
+     * <tt>body</tt> will be set to the request and must be encoded as <b>UTF-8</b>.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            URL of resource.
      * @param body
+     *            The post body of HTTP request encoded in UTF-8.
      * @param cookie
-     * @return
+     *            The cookie to use of the request.
+     * @param username
+     *            User name for authentication.
+     * @param password
+     *            Password for authentication.
+     * @return The response of the request.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse postRequestURL(
         final DefaultHttpClient client, final URL url, final String body, final Cookie cookie)
@@ -446,26 +553,58 @@ public class ConnectionUtility {
     }
 
     /**
+     * Perform a POST-request using the default {@link HttpClient} configuration from the
+     * <tt>escidoc-core.properties</tt>. If the URL contains an authentication part, the UserCredentials will be set to
+     * the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the settings from the
+     * <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a proxy or not. The
+     * <tt>body</tt> will be set to the request and must be encoded as <b>UTF-8</b>.
+     * 
      * @param url
      *            URL of resource.
      * @param body
-     *            The post body of HTTP request.
+     *            The post body of HTTP request encoded in UTF-8.
+     * @return The response of the request.
+     * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse postRequestURL(final URL url, final String body) throws WebserverSystemException {
         return postRequestURL(null, url, body);
     }
 
     /**
+     * Perform a POST-request using the specified {@link HttpClient}. If the URL contains an authentication part, the
+     * UserCredentials will be set to the {@link HttpClient} instance. Depending on the specified <tt>url</tt> and the
+     * settings from the <tt>escidoc-core.properties</tt>, the {@link HttpClient} instance will be configured to use a
+     * proxy or not. The <tt>body</tt> will be set to the request and must be encoded as <b>UTF-8</b>.
+     * 
+     * @see ConnectionUtility#getHttpClient()
+     * @see ConnectionUtility#getHttpClient(HttpParams)
      * 
      * @param client
+     *            The {@link HttpClient} to use.
      * @param url
+     *            URL of resource.
      * @param body
-     * @return
+     *            The post body of HTTP request encoded in UTF-8.
+     * @return The response of the request.
      * @throws WebserverSystemException
+     *             Thrown if connection failed.
      */
     public HttpResponse postRequestURL(final DefaultHttpClient client, final URL url, final String body)
         throws WebserverSystemException {
-        return post(client, url, body, null, null, null);
+        final String username;
+        final String password;
+        final String userinfo = url.getUserInfo();
+        if (userinfo != null) {
+            final String[] loginValues = SPLIT_PATTERN.split(userinfo);
+            username = loginValues[0];
+            password = loginValues[1];
+        }
+        else {
+            username = EscidocConfiguration.FEDORA_USER;
+            password = EscidocConfiguration.FEDORA_PASSWORD;
+        }
+        return post(client, url, body, null, username, password);
     }
 
     /**
@@ -478,7 +617,7 @@ public class ConnectionUtility {
      * @param password
      *            Password for authentication.
      * @throws WebserverSystemException
-     *             e
+     *             Thrown if connection failed.
      */
     public void setAuthentication(
         final DefaultHttpClient client, final URL url, final String username, final String password) {
@@ -541,39 +680,37 @@ public class ConnectionUtility {
      * <br/>
      * <b>TODO:</b> return {@link HttpClient} instead of {@link DefaultHttpClient}.
      * 
-     * @param url
-     *            The url to call with the httpClient used to decide if proxy has to get used.
      * @return DefaultHttpClient
-     * @throws IllegalArgumentException
-     *             if and only if the specified <tt>url</tt> is <tt>null</tt>
      */
-    public DefaultHttpClient getHttpClient(final URL url) {
-
-        if (url == null) {
-            throw new IllegalArgumentException("The specified URL must not be null.");
-        }
-
-        if (PROXY_HOST != null && isProxyRequired(url)) {
-            return new DefaultHttpClient(CONN_MANAGER, new DefaultedHttpParams(new BasicHttpParams(),
-                DEFAULT_HTTP_PARAMS).setParameter(ConnRoutePNames.DEFAULT_PROXY, PROXY_HOST));
-        }
-        else {
-            return new DefaultHttpClient(CONN_MANAGER, new DefaultedHttpParams(new BasicHttpParams(),
-                DEFAULT_HTTP_PARAMS));
-        }
+    public DefaultHttpClient getHttpClient() {
+        return new DefaultHttpClient(CONN_MANAGER, new DefaultedHttpParams(new BasicHttpParams(), DEFAULT_HTTP_PARAMS));
     }
 
     /**
-     * Call the HttpGet.
+     * Get a new {@link HttpClient} instance overwriting the default configuration by the parameters in
+     * <tt>overwriteParams</tt>. Each instance will use the same {@link ThreadSafeClientConnManager}. New instances are
+     * being created because of possible configurations done on the {@link HttpClient}. See
+     * {@link ConnectionUtility#setAuthentication(DefaultHttpClient, URL, String, String)} for example. If multiple
+     * threads are using the same {@link HttpClient} instance, they could overwrite the credentials and everything else
+     * of the {@link HttpClient} causing the {@link HttpClient} instance to become unusable for other threads. Therefore
+     * new instances will be returned.<br/>
+     * The {@link HttpClient} instance will be initialized with {@link DefaultedHttpParams}, which delegates resolution
+     * of a parameter to the given default {@link HttpParams} instance, which is read-only, if the parameter is not
+     * present in the local one.<br/>
+     * <br/>
+     * <b>Note:</b> A user of the returned {@link HttpClient} instance shall not modify the configurations on the
+     * {@link ClientConnectionManager} of this instance, because this will affect all other users of the
+     * {@link HttpClient} instances returned by this ConnectionUtility. If you need to change the behavior of the
+     * {@link ClientConnectionManager}, then use the configuration of the {@link HttpClient} because {@link HttpParams}
+     * will be handled in a hierarchy. <br/>
+     * <br/>
+     * <b>TODO:</b> return {@link HttpClient} instead of {@link DefaultHttpClient}.
      * 
-     * @param url
-     *            The URL for the HTTP GET method.
-     * @return HttpGet
-     * @throws WebserverSystemException
-     *             If connection failed.
+     * @return DefaultHttpClient
      */
-    private HttpResponse get(final DefaultHttpClient client, final URL url) throws WebserverSystemException {
-        return get(client, url, null, null, null);
+    public DefaultHttpClient getHttpClient(final HttpParams overwriteParams) {
+        final HttpParams params = overwriteParams == null ? new BasicHttpParams() : overwriteParams;
+        return new DefaultHttpClient(CONN_MANAGER, new DefaultedHttpParams(params, DEFAULT_HTTP_PARAMS));
     }
 
     /**
@@ -583,7 +720,7 @@ public class ConnectionUtility {
      *            The URL for the HTTP GET method.
      * @param cookie
      *            The Cookie.
-     * @return HttpGet
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             If connection failed.
      */
@@ -602,7 +739,7 @@ public class ConnectionUtility {
      *            The body for the POST request.
      * @param cookie
      *            The Cookie.
-     * @return HttpResponse
+     * @return The response of the request.
      * @throws WebserverSystemException
      *             If connection failed.
      */
@@ -623,7 +760,7 @@ public class ConnectionUtility {
      * 
      * @param request
      * @param cookie
-     * @return
+     * @return The response of the request.
      * @throws WebserverSystemException
      */
     private HttpResponse executeRequest(
@@ -637,12 +774,10 @@ public class ConnectionUtility {
                 request.setHeader("Cookie", cookie.getName() + '=' + cookie.getValue());
             }
 
-            DefaultHttpClient clientToUse = null;
-            if (client == null) {
-                clientToUse = getHttpClient(request.getURI().toURL());
-            }
-            else {
-                clientToUse = client;
+            final DefaultHttpClient clientToUse = client == null ? getHttpClient() : client;
+
+            if (PROXY_HOST != null && isProxyRequired(url)) {
+                clientToUse.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, PROXY_HOST);
             }
 
             if (username != null && password != null) {
@@ -673,7 +808,7 @@ public class ConnectionUtility {
      * 
      * @param httpResponse
      *            The HttpResponse.
-     * @return String.
+     * @return The response of the request as a String.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
