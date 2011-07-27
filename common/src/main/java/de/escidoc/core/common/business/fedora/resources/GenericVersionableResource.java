@@ -94,7 +94,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
     protected Datastream wov;
 
-    private Map<String, String> currentVersionData;
+    private VersionData currentVersionData;
 
     /**
      * Number of the version. Is null if it is the latest version.
@@ -264,7 +264,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public String getVersionPid() throws IntegritySystemException {
-        return getVersionElementData(PropertyMapKeys.CURRENT_VERSION_PID);
+        return getVersionData().getCurrentVersion().getVersionPid();
     }
 
     /**
@@ -274,7 +274,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public String getVersionStatus() throws IntegritySystemException {
-        return getVersionElementData(PropertyMapKeys.CURRENT_VERSION_STATUS);
+        return getVersionData().getCurrentVersion().getVersionStatus();
     }
 
     /**
@@ -284,7 +284,16 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public void setVersionStatus(final String versionStatus) throws IntegritySystemException {
-        setVersionElementData(PropertyMapKeys.CURRENT_VERSION_STATUS, versionStatus);
+        try {
+            setProperty(PropertyMapKeys.CURRENT_VERSION_STATUS, versionStatus);
+        }
+        catch (TripleStoreSystemException e) {
+            throw new IntegritySystemException(e);
+        }
+        catch (WebserverSystemException e) {
+            throw new IntegritySystemException(e);
+        }
+        getVersionData().getCurrentVersion().setVersionStatus(versionStatus);
     }
 
     /**
@@ -294,7 +303,16 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException If data integrity of Fedora Repository is violated
      */
     public void setLatestReleaseVersionNumber(final String latestReleaseVersionNumber) throws IntegritySystemException {
-        setVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
+        try {
+            setProperty(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER, latestReleaseVersionNumber);
+        }
+        catch (TripleStoreSystemException e) {
+            throw new IntegritySystemException(e);
+        }
+        catch (WebserverSystemException e) {
+            throw new IntegritySystemException(e);
+        }
+        getVersionData().getLatestRelease().setVersionNumber(latestReleaseVersionNumber);
     }
 
     /**
@@ -363,8 +381,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final DateTime versionDate;
         try {
-            versionDate =
-                new DateTime(getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE), DateTimeZone.UTC);
+            versionDate = new DateTime(getVersionData().getCurrentVersion().getVersionDate(), DateTimeZone.UTC);
         }
         catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
@@ -464,7 +481,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if determining failed.
      */
     public String getLatestReleaseVersionDate() throws IntegritySystemException {
-        return getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
+        return getVersionData().getLatestRelease().getVersionDate();
     }
 
     /**
@@ -561,7 +578,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return value of element or null
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      */
-    private Map<String, String> getVersionData() throws IntegritySystemException {
+    private VersionData getVersionData() throws IntegritySystemException {
 
         if (this.currentVersionData == null) {
             try {
@@ -584,9 +601,10 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
      * @throws WebserverSystemException Thrown in case of internal error.
      */
-    private Map<String, String> getVersionData(final String versionNo) throws IntegritySystemException,
+    private VersionData getVersionData(final String versionNo) throws IntegritySystemException,
         WebserverSystemException {
 
+        final VersionData result = new VersionData();
         final Map<String, String> versionData;
 
         try {
@@ -608,33 +626,12 @@ public class GenericVersionableResource extends GenericResourcePid {
                 throw new IntegritySystemException("No version data for resource " + getId() + '.' + e);
             }
         }
-
-        return versionData;
-    }
-
-    /**
-     * Get resource version data for a selected element.
-     *
-     * @param elementName Name of the Element.
-     * @return value of element or null
-     * @throws IntegritySystemException Thrown if data integrity is violated.
-     */
-    private String getVersionElementData(final String elementName) throws IntegritySystemException {
-
-        return getVersionData().get(elementName);
-    }
-
-    /**
-     * Set values for the resource version.
-     *
-     * @param elementName Name of the value.
-     * @param value       new value.
-     * @throws WebserverSystemException Thrown in case of internal failure.
-     * @throws IntegritySystemException Thrown if data integrity is violated.
-     */
-    private void setVersionElementData(final String elementName, final String value) throws IntegritySystemException {
-
-        getVersionData().put(elementName, value);
+        result.getCurrentVersion().setVersionDate(versionData.get(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE));
+        result.getCurrentVersion().setVersionPid(versionData.get(PropertyMapKeys.CURRENT_VERSION_PID));
+        result.getCurrentVersion().setVersionStatus(versionData.get(PropertyMapKeys.CURRENT_VERSION_STATUS));
+        result.getLatestRelease().setVersionNumber(versionData.get(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+        result.getLatestVersion().setVersionNumber(versionData.get(PropertyMapKeys.LATEST_VERSION_NUMBER));
+        return result;
     }
 
     // -------------------------------------------------------------------------
@@ -912,7 +909,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_TYPE, newStatus);
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, 'v'
-            + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e' + System.currentTimeMillis());
+            + getVersionData().getLatestVersion().getVersionNumber() + 'e' + System.currentTimeMillis());
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, getHrefWithoutVersionNumber() + "/resources/"
             + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
