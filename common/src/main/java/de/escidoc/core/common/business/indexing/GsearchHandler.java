@@ -22,6 +22,7 @@ package de.escidoc.core.common.business.indexing;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -30,7 +31,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +50,6 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
 import de.escidoc.core.common.util.stax.handler.GsearchRepositoryInfoHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import java.net.MalformedURLException;
-import javax.annotation.PostConstruct;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
 
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete with requestDeletion.
@@ -84,7 +85,7 @@ public class GsearchHandler {
 
     @PostConstruct
     private void init() {
-        EscidocConfiguration config = EscidocConfiguration.getInstance();
+        final EscidocConfiguration config = EscidocConfiguration.getInstance();
         if (config != null) {
             gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
             if (gsearchUrl != null) {
@@ -92,7 +93,7 @@ public class GsearchHandler {
                     this.httpClient = this.connectionUtility.getHttpClient(new URL(gsearchUrl));
                     HttpConnectionParams.setSoTimeout(this.httpClient.getParams(), Constants.REQUEST_TIMEOUT);
                 }
-                catch (MalformedURLException e) {
+                catch (final MalformedURLException e) {
                     LOGGER.error(INITIALIZATION_ERROR_MSG, e);
                 }
             }
@@ -103,23 +104,32 @@ public class GsearchHandler {
                 }
             }
         }
+        else {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(INITIALIZATION_ERROR_MSG + " No configuration available.");
+            }
+        }
     }
 
     /**
      * requests indexing by calling fedoragsearch-servlet.
      * <p/>
+     * 
      * <pre>
      *        execute get-request with hardcoded index + repositoryname
      *        to fedoragsearch.
      * </pre>
-     *
-     * @param resource  String resource.
-     * @param index     String name of the index.
-     * @param pidSuffix PidSuffix for latestVersion, latestRelease if both is in index.
+     * 
+     * @param resource
+     *            String resource.
+     * @param index
+     *            String name of the index.
+     * @param pidSuffix
+     *            PidSuffix for latestVersion, latestRelease if both is in index.
      * @param indexFulltextVisibilities
      * @return String response
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public String requestIndexing(
         final String resource, final String index, final String pidSuffix, final String indexFulltextVisibilities)
@@ -190,17 +200,21 @@ public class GsearchHandler {
     /**
      * requests deletion of one index-entry by calling fedoragsearch-servlet.
      * <p/>
+     * 
      * <pre>
      *        execute get-request with hardcoded index + repositoryname
      *        to fedoragsearch.
      * </pre>
-     *
-     * @param resource  String resource.
-     * @param index     String name of the index.
-     * @param pidSuffix PidSuffix for latestVersion, latestRelease if both is in index.
+     * 
+     * @param resource
+     *            String resource.
+     * @param index
+     *            String name of the index.
+     * @param pidSuffix
+     *            PidSuffix for latestVersion, latestRelease if both is in index.
      * @return String response
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public String requestDeletion(String resource, final String index, final String pidSuffix)
         throws ApplicationServerSystemException {
@@ -256,15 +270,17 @@ public class GsearchHandler {
     /**
      * requests new empty creation of index by calling fedoragsearch-servlet.
      * <p/>
+     * 
      * <pre>
      *        execute get-request with hardcoded index + repositoryname
      *        to fedoragsearch.
      * </pre>
-     *
-     * @param index String name of the index.
+     * 
+     * @param index
+     *            String name of the index.
      * @return String response
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public String requestCreateEmpty(String index) throws ApplicationServerSystemException {
 
@@ -315,15 +331,17 @@ public class GsearchHandler {
     /**
      * requests optimization of the given index by calling fedoragsearch-servlet.
      * <p/>
+     * 
      * <pre>
      *        execute get-request with hardcoded index
      *        to fedoragsearch.
      * </pre>
-     *
-     * @param index String name of the index.
+     * 
+     * @param index
+     *            String name of the index.
      * @return String response
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public String requestOptimize(final String index) throws ApplicationServerSystemException {
 
@@ -370,13 +388,14 @@ public class GsearchHandler {
     /**
      * requests available index-configurations from fedoragsearch.
      * <p/>
+     * 
      * <pre>
      *        execute get-request to fedoragsearch.
      * </pre>
-     *
+     * 
      * @return HashMap<String, HashMap<String, String>> index-configurations
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     private Map<String, Map<String, String>> requestIndexConfiguration() throws ApplicationServerSystemException {
 
@@ -407,13 +426,14 @@ public class GsearchHandler {
     /**
      * requests information about repository.
      * <p/>
+     * 
      * <pre>
      *        execute get-request to fedoragsearch.
      * </pre>
-     *
+     * 
      * @return HashMap<String, String> repository-info
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     private Map<String, String> requestRepositoryInfo() throws ApplicationServerSystemException {
 
@@ -444,7 +464,7 @@ public class GsearchHandler {
     /**
      * @return the indexConfigurations
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public Map<String, Map<String, String>> getIndexConfigurations() throws ApplicationServerSystemException {
         if (this.indexConfigurations == null) {
@@ -456,7 +476,7 @@ public class GsearchHandler {
     /**
      * @return the repositoryInfo
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public Map<String, String> getRepositoryInfo() throws ApplicationServerSystemException {
         if (this.repositoryInfo == null) {
@@ -468,7 +488,7 @@ public class GsearchHandler {
     /**
      * @return the supportedMimeTypes
      * @throws ApplicationServerSystemException
-     *          e
+     *             e
      */
     public Set<String> getSupportedMimeTypes() throws ApplicationServerSystemException {
         if (this.supportedMimeTypes == null) {
@@ -485,11 +505,15 @@ public class GsearchHandler {
     /**
      * Check if gsearch returned an Exception. If it is an Exception and saying that an index-directory does not exist
      * or does not have segment-files, create this index-directory with segment-files. Otherwise throw Exception.
-     *
-     * @param index    name of the index
-     * @param request  request that was send to gsearch
-     * @param response response thatr was returned by gsearch
-     * @param retries  numer of retries already executed
+     * 
+     * @param index
+     *            name of the index
+     * @param request
+     *            request that was send to gsearch
+     * @param response
+     *            response thatr was returned by gsearch
+     * @param retries
+     *            numer of retries already executed
      * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(final String index, final String request, String response, int retries)
@@ -556,8 +580,9 @@ public class GsearchHandler {
 
     /**
      * Delete Index-Lock.
-     *
-     * @param response Errormessage that contains the path to the lockfile
+     * 
+     * @param response
+     *            Errormessage that contains the path to the lockfile
      */
     private static void deleteLock(final String response) {
         try {
@@ -602,8 +627,9 @@ public class GsearchHandler {
 
     /**
      * Delete Directory with Indexes.
-     *
-     * @param path path to Directory
+     * 
+     * @param path
+     *            path to Directory
      * @return boolean if delete was successful
      */
     public static boolean deleteDir(final File path) {
