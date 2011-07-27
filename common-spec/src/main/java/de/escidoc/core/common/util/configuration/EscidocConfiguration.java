@@ -140,6 +140,10 @@ public final class EscidocConfiguration {
     public static final String ADMIN_TOOL_URL = "admin-tool.url";
 
     public static final String ESCIDOC_BROWSER_URL = "escidoc-browser.url";
+    
+    public static final String HTTP_CONNECTION_TIMEOUT = "http.connection.timeout";
+    
+    public static final String HTTP_SOCKET_TIMEOUT = "http.socket.timeout";
 
     private static final String TRUE = "true";
 

@@ -73,25 +73,9 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
         }
 
         String describeUrl = null;
-        try {
-            describeUrl = baseURL + "describe" + urlParams;
-            return connectionUtility.getRequestURLAsString(new URL(describeUrl), user, pass);
-        }
-        finally {
-            if (describeUrl != null) {
-                try {
-                    connectionUtility.resetAuthentication(new URL(describeUrl));
-                }
-                catch (final Exception e) {
-                    if (LOGGER.isWarnEnabled()) {
-                        LOGGER.warn("Error on reseting authentication.");
-                    }
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Error on reseting authentication.", e);
-                    }
-                }
-            }
-        }
+
+        describeUrl = baseURL + "describe" + urlParams;
+        return connectionUtility.getRequestURLAsString(new URL(describeUrl), user, pass);
     }
 
     /**

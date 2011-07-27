@@ -52,12 +52,16 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Communication with PIDManager WebService via RESTlet API.
  *
  * @author Steffen Wagner
  */
+@Configurable
 public class PIDManagerRESTService implements PIDSystem {
 
     private String pidGeneratorServer;
@@ -70,15 +74,9 @@ public class PIDManagerRESTService implements PIDSystem {
 
     private String localPrefix = "";
 
-    private final ConnectionUtility connectionUtility;
-
-    /**
-     * PIDManagerRESTService.
-     */
-    public PIDManagerRESTService() {
-
-        this.connectionUtility = new ConnectionUtility();
-    }
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
+    private ConnectionUtility connectionUtility;
 
     /*
      * (non-Javadoc)
