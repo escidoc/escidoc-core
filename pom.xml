@@ -1054,9 +1054,9 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
-    <escidoc.fedoragsearch.version>1.4.11</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.4.6</escidoc.srw.version>
-    <srw.version>1.4.1</srw.version>
+    <escidoc.fedoragsearch.version>1.4.12</escidoc.fedoragsearch.version>
+    <escidoc.srw.version>1.4.7</escidoc.srw.version>
+    <srw.version>1.4.2</srw.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
