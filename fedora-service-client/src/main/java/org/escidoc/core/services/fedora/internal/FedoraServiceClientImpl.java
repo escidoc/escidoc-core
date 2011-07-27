@@ -169,8 +169,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    /*@Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))*/
+    @Cacheable(cacheName = "Fedora.DatastreamLists", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.ListDatastreamsKeyGenerator"))
     public ObjectDatastreamsTO listDatastreams(final String pid, final DateTime timestamp) {
         final ListDatastreamsPathParam path = new ListDatastreamsPathParam(pid);
         final ListDatastreamsQueryParam query = new ListDatastreamsQueryParam();
@@ -205,8 +205,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    /*@Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfileKeyGenerator"))*/
+    @Cacheable(cacheName = "Fedora.DatastreamProfiles", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfileKeyGenerator"))
     public DatastreamProfileTO getDatastreamProfile(final GetDatastreamProfilePathParam path,
                                                     final GetDatastreamProfileQueryParam query) {
         return this.fedoraService.getDatastreamProfile(path, query);
