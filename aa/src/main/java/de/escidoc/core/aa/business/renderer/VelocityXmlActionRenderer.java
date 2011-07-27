@@ -55,6 +55,12 @@ public class VelocityXmlActionRenderer extends AbstractRenderer implements Actio
     private static final Pattern PATTERN_WHITESPACE = Pattern.compile("\\s");
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlActionRenderer() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see RoleRendererInterface #renderUnsecuredActionList(de.escidoc.core.aa.business.persistence.UnsecuredActionList)

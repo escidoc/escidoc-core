@@ -62,6 +62,12 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     private long eSciDocUserHandleLifetime = Long.MIN_VALUE;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserManagementWrapper() {
+    }
+
+    /**
      * Setter for the dao.
      *
      * @param dao The data access object.

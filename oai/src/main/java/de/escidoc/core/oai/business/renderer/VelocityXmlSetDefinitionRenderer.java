@@ -56,6 +56,12 @@ import java.util.Map;
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer implements SetDefinitionRendererInterface {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlSetDefinitionRenderer() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

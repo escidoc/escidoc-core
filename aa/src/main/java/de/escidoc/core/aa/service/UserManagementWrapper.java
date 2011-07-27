@@ -48,6 +48,12 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     private de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserManagementWrapper() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see UserManagementWrapperInterface #logout()

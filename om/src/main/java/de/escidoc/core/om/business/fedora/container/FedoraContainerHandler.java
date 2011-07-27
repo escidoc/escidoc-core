@@ -211,6 +211,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     private TripleStoreUtility tripleStoreUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraContainerHandler() {
+    }
+
+    /**
      * Create a container.
      *
      * @param xmlData The XML Container representation.

@@ -94,6 +94,12 @@ public class CheckProvidedAttributeFinderModule extends AbstractAttributeFinderM
     }
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected CheckProvidedAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

@@ -57,6 +57,12 @@ public class SecurityInterceptorCache {
     private RequestMappingDaoInterface requestMappingDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SecurityInterceptorCache() {
+    }
+
+    /**
      * Gets the method mapping for the provided class name and method name. <br> If the mappings are not stored within
      * the cache they are fetched from the AA component.
      *

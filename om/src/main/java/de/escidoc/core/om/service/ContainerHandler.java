@@ -91,6 +91,12 @@ public class ContainerHandler implements ContainerHandlerInterface {
     // FIXME: exception handling
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ContainerHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#create(java.lang.String)

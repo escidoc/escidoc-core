@@ -88,6 +88,12 @@ public class SRURequest {
     private ConnectionUtility connectionUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SRURequest() {
+    }
+
+    /**
      * Send an explain request to the SRW servlet and write the response to the given writer. The given resource type
      * determines the SRW index to use.
      *

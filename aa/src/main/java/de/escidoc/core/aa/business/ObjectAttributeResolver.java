@@ -63,6 +63,12 @@ public class ObjectAttributeResolver {
     public static final String ATTR_OBJECT_TITLE = "objectTitle";
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ObjectAttributeResolver() {
+    }
+
+    /**
      * Try to retrieve ObjectType and objectTitle for given id.
      *
      * @param objectId The objectId.

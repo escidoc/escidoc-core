@@ -49,6 +49,12 @@ public class SmFilterUtility {
     private PolicyDecisionPointInterface pdp;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SmFilterUtility() {
+    }
+
+    /**
      * Filters the provided list of object ids by evaluating the retrieve privilege for the current user.
      *
      * @param objectType The object type of the objects to filter.

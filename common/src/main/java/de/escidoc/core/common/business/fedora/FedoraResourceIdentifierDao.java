@@ -41,6 +41,12 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
     private FedoraServiceClient fedoraServiceClient;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraResourceIdentifierDao() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

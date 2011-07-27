@@ -222,6 +222,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     private SecurityHelper securityHelper;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserAccountHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param userId userId

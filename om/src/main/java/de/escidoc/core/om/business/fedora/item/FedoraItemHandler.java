@@ -181,6 +181,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraItemHandler() {
+    }
+
     @Override
     public String retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
         SystemException, ComponentNotFoundException, AuthorizationException {

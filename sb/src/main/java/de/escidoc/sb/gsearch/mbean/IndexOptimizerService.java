@@ -63,6 +63,12 @@ public class IndexOptimizerService {
     private ErrorMessageHandler errorMessageHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected IndexOptimizerService() {
+    }
+
+    /**
      * call optimize.
      */
     @ManagedOperation(description = "call optimize.")

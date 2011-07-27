@@ -50,6 +50,12 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StatisticDataHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData statistic data as xml in statistic-data schema.

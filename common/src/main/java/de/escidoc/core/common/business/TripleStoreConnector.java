@@ -85,6 +85,12 @@ public class TripleStoreConnector {
     private FedoraServiceClient fedoraServiceClient;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected TripleStoreConnector() {
+    }
+
+    /**
      * @param spoQuery
      * @param outputFormat
      * @throws TripleStoreSystemException TODO move to TriplestoreUtility implementation

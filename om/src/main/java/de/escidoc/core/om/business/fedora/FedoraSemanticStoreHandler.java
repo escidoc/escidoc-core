@@ -69,6 +69,12 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
     private TripleStoreConnector tripleStoreConnector;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraSemanticStoreHandler() {
+    }
+
+    /**
      * Retrieves a result of provided triple store query in a provided output format.
      *
      * @param taskParam SPO query parameter and return representation type.

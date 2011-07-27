@@ -78,6 +78,12 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
         new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected NewOuParentsAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param attributeIdValue      attributeIdValue

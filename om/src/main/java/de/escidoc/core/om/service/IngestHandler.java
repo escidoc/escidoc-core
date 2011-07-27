@@ -50,6 +50,12 @@ public class IngestHandler implements IngestHandlerInterface {
     private de.escidoc.core.om.business.interfaces.IngestHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected IngestHandler() {
+    }
+
+    /**
      * Ingest method.
      *
      * @param xmlData XML representation of resource which is to create via ingest.

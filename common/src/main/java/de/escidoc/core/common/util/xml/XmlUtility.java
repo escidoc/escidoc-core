@@ -489,6 +489,12 @@ public final class XmlUtility {
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected XmlUtility() {
+    }
+
+    /**
      * Simple proxy method that can decide about the resource type and return the matching schema location.
      *
      * @param type The type of the resource.

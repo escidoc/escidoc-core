@@ -99,6 +99,12 @@ public class SecurityHelper {
     private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SecurityHelper() {
+    }
+
+    /**
      * Gets the {@link EvaluationResult} for {@link XacmlFunctionRoleIsGranted} result using the user ID, the role ID
      * and (optional) the resource ID as key. <br> Answers the question if user or group has assigned the given role and
      * if resourceId is in scope of that role (if role has scope-definitions).

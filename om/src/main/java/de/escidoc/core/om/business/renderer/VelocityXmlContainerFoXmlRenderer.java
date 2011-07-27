@@ -25,6 +25,12 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
     private final VelocityXmlCommonFoXmlRenderer commonRenderer = new VelocityXmlCommonFoXmlRenderer();
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlContainerFoXmlRenderer() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param values               Map of values

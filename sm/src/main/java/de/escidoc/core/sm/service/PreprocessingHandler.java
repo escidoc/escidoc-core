@@ -52,6 +52,12 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PreprocessingHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param aggregationDefinitionId id of the aggregation-definition to preprocess.

@@ -106,6 +106,12 @@ public class StatisticPreprocessor {
     private ErrorMessageHandler errorMessageHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StatisticPreprocessor() {
+    }
+
+    /**
      * Retrieves all Aggregation-Definitions from Database and loop through. For each Aggregation-Definition, get raw
      * statistic Data and process the data with Class AggregationPreprocessor.
      *

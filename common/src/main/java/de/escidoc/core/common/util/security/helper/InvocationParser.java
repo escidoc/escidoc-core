@@ -78,6 +78,12 @@ public class InvocationParser {
     private DocumentsCache documentsCache;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected InvocationParser() {
+    }
+
+    /**
      * Builds a {@link List} of {@link Map} objects that are holding the attributes for a authorization request to the
      * PDP from the provided methodName and arguments, and from the stored user context.<br> This method delegates to
      * {@code buildRequestsList(Object MethodMapping, boolean)}

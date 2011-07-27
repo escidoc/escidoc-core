@@ -73,6 +73,12 @@ public class OrganizationalUnitHandler
     @Qualifier("business.FedoraOrganizationalUnitHandler")
     private OrganizationalUnitHandlerInterface business;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected OrganizationalUnitHandler() {
+    }
+
     @Override
     public String ingest(final String xmlData) throws EscidocException {
         return business.ingest(xmlData);

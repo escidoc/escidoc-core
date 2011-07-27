@@ -96,6 +96,12 @@ public class ItemHandler implements ItemHandlerInterface {
     // FIXME: exception handling
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ItemHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

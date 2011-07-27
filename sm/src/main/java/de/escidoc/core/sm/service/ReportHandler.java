@@ -54,6 +54,12 @@ public class ReportHandler implements ReportHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ReportHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ReportHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xml xml with parameters (report-parameters.xsd).

@@ -68,6 +68,12 @@ public class ActionHandler implements ActionHandlerInterface {
     private XmlUtility xmlUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ActionHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

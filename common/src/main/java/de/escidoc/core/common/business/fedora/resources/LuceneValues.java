@@ -113,7 +113,13 @@ public final class LuceneValues extends Values {
     }
 
     /**
-     * Escape a string.
+     * Private constructor to prevent initialization.
+     */
+    protected LuceneValues() {
+    }
+
+    /**
+     * Eicape a string.
      *
      * @param s string
      * @return the escaped string

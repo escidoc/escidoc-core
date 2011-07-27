@@ -102,8 +102,18 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     private SmFilterUtility filterUtility;
 
     @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
     @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer")
     private AggregationDefinitionRendererInterface renderer;
+
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected AggregationDefinitionHandler() {
+    }
 
     /**
      * See Interface for functional description.
@@ -140,7 +150,6 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
 
         // get AggregationDefinitionObject to insert aggregation-definition
         // into database
-        final Utility utility = new Utility();
         final AggregationDefinition aggregationDefinition = handler.getAggregationDefinition();
         aggregationDefinition.setCreatorId(utility.getCurrentUserId());
         aggregationDefinition.setCreationDate(new Timestamp(System.currentTimeMillis()));

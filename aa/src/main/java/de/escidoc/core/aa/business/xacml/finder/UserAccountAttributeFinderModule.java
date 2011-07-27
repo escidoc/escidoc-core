@@ -209,6 +209,12 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
     private TripleStoreUtility tripleStoreUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserAccountAttributeFinderModule() {
+    }
+
+    /**
      * Since this class will retrieve subject attributes and resource attributes, it will return a set only containing
      * two values, indicating that it supports Designators of type SUBJECT_TARGET and RESOURCE_TARGET.
      *

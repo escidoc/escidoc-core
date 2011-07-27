@@ -56,6 +56,12 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     private IndexerResourceRequester indexerResourceRequester;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraRestDeviationHandler() {
+    }
+
+    /**
      * @param pid        unused.
      * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.

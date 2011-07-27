@@ -72,6 +72,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserGroupHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData xmlData

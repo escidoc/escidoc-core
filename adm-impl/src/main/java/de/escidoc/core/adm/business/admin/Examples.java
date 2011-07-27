@@ -131,6 +131,12 @@ public class Examples {
     private OrganizationalUnitHandlerInterface organizationalUnitHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected Examples() {
+    }
+
+    /**
      * Create an XML snippet for a message that can be displayed on the Web page.
      *
      * @param message message text

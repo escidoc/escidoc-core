@@ -36,6 +36,12 @@ public class UserHandleCleaner {
     private UserAccountDaoInterface userAccountDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserHandleCleaner() {
+    }
+
+    /**
      * Cleans up the login data, i.e. removes each eSciDoc user handle that has been expired a while ago.
      */
     @Scheduled(fixedRate = 3600000)

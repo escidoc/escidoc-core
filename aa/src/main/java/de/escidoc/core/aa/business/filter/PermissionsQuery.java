@@ -79,9 +79,9 @@ public class PermissionsQuery {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Create a new resource cache object.
+     * Private constructor to prevent initialization.
      */
-    public PermissionsQuery() {
+    protected PermissionsQuery() {
     }
 
     /**

@@ -54,6 +54,12 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
     private de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraDescribeDeviationHandler() {
+    }
+
+    /**
      * @param parameters request parameters.
      * @return String response
      * @throws Exception ex

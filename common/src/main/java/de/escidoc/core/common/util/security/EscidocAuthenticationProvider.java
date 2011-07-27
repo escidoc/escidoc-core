@@ -43,6 +43,12 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected EscidocAuthenticationProvider() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

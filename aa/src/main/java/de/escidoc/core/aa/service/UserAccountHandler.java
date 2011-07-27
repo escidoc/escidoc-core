@@ -73,6 +73,12 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     private de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserAccountHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param user userId

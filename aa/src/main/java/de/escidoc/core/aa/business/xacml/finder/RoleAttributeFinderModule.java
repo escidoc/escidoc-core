@@ -100,6 +100,12 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     private EscidocRoleDaoInterface roleDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected RoleAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

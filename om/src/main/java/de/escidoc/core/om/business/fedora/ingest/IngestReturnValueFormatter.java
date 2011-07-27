@@ -15,6 +15,12 @@ import java.util.Map;
 public class IngestReturnValueFormatter implements ValueFormatter {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected IngestReturnValueFormatter() {
+    }
+
+    /**
      * Format the return value from the ingest.
      */
     // TODO: make velocity template out of string builder concatenation

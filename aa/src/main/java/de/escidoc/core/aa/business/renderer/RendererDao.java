@@ -54,6 +54,12 @@ public class RendererDao {
     private TripleStoreUtility tsu;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected RendererDao() {
+    }
+
+    /**
      * Gets the title of the specified organizational unit.<br> First, the triple store is asked for the ou's title. If
      * this fails, the organizationalUnitHandler is asked for the xml representation of the organizational unit and the
      * title is set to the name extracted from the xml data. The latter has been implemented as a fallback to handle old

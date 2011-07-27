@@ -165,6 +165,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserGroupHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface #create(java.lang.String)

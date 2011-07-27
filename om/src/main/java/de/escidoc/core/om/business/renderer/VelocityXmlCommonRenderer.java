@@ -56,6 +56,12 @@ public class VelocityXmlCommonRenderer {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlCommonRenderer() {
+    }
+
+    /**
      * Adds content relations values to the provided map.
      *
      * @param relations Vector with relation maps

@@ -168,6 +168,12 @@ public class AccessRights {
     private Values values;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected AccessRights() {
+    }
+
+    /**
      * Delete a specific access right.
      *
      * @param roleId role id

@@ -76,6 +76,12 @@ public class ContextHandler implements ContextHandlerInterface {
     // FIXME: exception handling
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ContextHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

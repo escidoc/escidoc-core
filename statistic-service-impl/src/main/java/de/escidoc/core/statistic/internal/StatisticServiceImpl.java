@@ -17,6 +17,12 @@ public class StatisticServiceImpl {
     private StatisticDataHandlerInterface statisticDataHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StatisticServiceImpl() {
+    }
+
+    /**
      * Saves the static data string in the repository.
      *
      * @param statisticData the statistic data XML string

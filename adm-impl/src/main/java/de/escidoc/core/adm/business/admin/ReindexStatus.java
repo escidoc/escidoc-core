@@ -41,6 +41,12 @@ import org.springframework.stereotype.Service;
 public final class ReindexStatus extends AdminMethodStatus {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ReindexStatus() {
+    }
+
+    /**
      * Decrease the number of resources of the given type which still have to be processed.
      *
      * @param type resource type

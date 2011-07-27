@@ -56,9 +56,9 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 
     /**
-     * Default constructor.
+     * Private constructor to prevent initialization.
      */
-    public PolicyDecisionPoint() {
+    protected PolicyDecisionPoint() {
     }
 
     /**

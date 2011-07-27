@@ -84,7 +84,7 @@ public class JhoveHandler implements JhoveHandlerInterface {
      *
      * @throws IOException Thrown if the configuration file could not be loaded or copied.
      */
-    public JhoveHandler() throws IOException {
+    protected JhoveHandler() throws IOException {
         OutputStream outputStream = null;
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);

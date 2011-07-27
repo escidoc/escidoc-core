@@ -84,6 +84,10 @@ public class XacmlParser {
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
     @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleInList")
+    private XacmlFunctionRoleInList xacmlFunctionRoleInList;
+
+    @Autowired
     @Qualifier("convert.PolicyParser")
     private PolicyParser pol;
 
@@ -132,6 +136,12 @@ public class XacmlParser {
         public void deleteScopeDef(final ScopeDef scopeDef) {
         }
     };
+
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected XacmlParser() {
+    }
 
     /**
      * Get an SQL fragment from the XACML translation process of the policy rules for the given resource type.
@@ -194,7 +204,7 @@ public class XacmlParser {
 
         factory.addFunction(new XacmlFunctionContains());
         factory.addFunction(new XacmlFunctionIsIn());
-        factory.addFunction(new XacmlFunctionRoleInList());
+        factory.addFunction(this.xacmlFunctionRoleInList);
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
         factory.addFunction(this.xacmlFunctionRoleIsGranted);
         FunctionFactory.setDefaultFactory(proxy);

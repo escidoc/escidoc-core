@@ -87,6 +87,12 @@ public class UserGroupAttributeFinderModule extends AbstractAttributeFinderModul
     private UserGroupDaoInterface userGroupDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected UserGroupAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

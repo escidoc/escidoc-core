@@ -54,6 +54,12 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     private StatisticPreprocessor preprocessor;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PreprocessingHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param aggregationDefinitionId id of the aggregation-definition to preprocess.

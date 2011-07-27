@@ -126,6 +126,12 @@ public class Utility {
     private TripleStoreUtility tripleStoreUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected Utility() {
+    }
+
+    /**
      * Fetches the id from the link. It is the String after the last '/' in the link.
      *
      * @param link The link

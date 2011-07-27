@@ -75,6 +75,12 @@ public class ReportHandler implements ReportHandlerInterface {
     private ReportRendererInterface renderer;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ReportHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xml the xml with parameters (report-parameters.xsd).

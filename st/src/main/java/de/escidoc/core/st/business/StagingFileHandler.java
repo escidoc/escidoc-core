@@ -71,6 +71,12 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     private StagingFileDao dao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StagingFileHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(org.esidoc.core.utils.io.EscidocBinaryContent)

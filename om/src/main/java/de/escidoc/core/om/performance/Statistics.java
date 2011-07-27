@@ -56,7 +56,7 @@ public class Statistics {
     /**
      * Create new Statistics. Ensure that the Map holding all measurements is created.
      */
-    public Statistics() {
+    protected Statistics() {
         this.statisticsMap = new HashMap<String, SummaryStatistics>();
     }
 

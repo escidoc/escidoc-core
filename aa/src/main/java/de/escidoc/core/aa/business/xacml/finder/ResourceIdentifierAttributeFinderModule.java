@@ -71,6 +71,12 @@ public class ResourceIdentifierAttributeFinderModule extends AbstractAttributeFi
             + "|organizational-unit|role|user-account|user-group)(-id){0,1}$");
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ResourceIdentifierAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

@@ -32,6 +32,12 @@ public class PurgeServiceImpl implements PurgeService {
     @Qualifier("admin.PurgeStatus")
     private PurgeStatus purgeStatus;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected PurgeServiceImpl() {
+    }
+
     @Override
     public void purge(final PurgeRequest purgeRequest) {
         // TODO: Refector this old code.

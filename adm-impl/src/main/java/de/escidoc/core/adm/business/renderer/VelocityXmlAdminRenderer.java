@@ -52,6 +52,12 @@ import java.util.Set;
 public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlAdminRenderer() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see AdminRendererInterface #renderIndexConfiguration(HashMap<String, HashMap<String, HashMap<String, Object>>>)

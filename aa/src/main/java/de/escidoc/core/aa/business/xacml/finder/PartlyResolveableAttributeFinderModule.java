@@ -72,6 +72,12 @@ public class PartlyResolveableAttributeFinderModule extends AbstractAttributeFin
     public static final int MARKER_LENGTH = AttributeIds.MARKER.length();
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PartlyResolveableAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

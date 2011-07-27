@@ -54,6 +54,12 @@ public class ConditionParser {
     private Values values;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ConditionParser() {
+    }
+
+    /**
      * Extract the attribute name from a function URI.
      *
      * @param function function URI

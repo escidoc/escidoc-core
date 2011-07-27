@@ -138,6 +138,12 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
     private PIDSystem pidGen;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraContentRelationHandler() {
+    }
+
     @PostConstruct
     public void init() {
         addContentRelationListener(indexingHandler);

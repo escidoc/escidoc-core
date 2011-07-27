@@ -41,6 +41,12 @@ public final class PurgeStatus extends AdminMethodStatus {
     private int count;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PurgeStatus() {
+    }
+
+    /**
      * Decrease the number of resources which still have to be processed.
      */
     public synchronized void dec() {

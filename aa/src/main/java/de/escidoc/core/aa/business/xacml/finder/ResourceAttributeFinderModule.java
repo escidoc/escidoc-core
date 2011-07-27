@@ -120,6 +120,12 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private ContainerHandlerInterface containerHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ResourceAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

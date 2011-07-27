@@ -69,6 +69,12 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     private ContentModelHandlerInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ContentModelHandler() {
+    }
+
+    /**
      * Setter for the business object.
      *
      * @param business business object.

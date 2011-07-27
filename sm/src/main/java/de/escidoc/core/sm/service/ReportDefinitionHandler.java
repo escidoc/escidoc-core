@@ -59,6 +59,12 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     private de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ReportDefinitionHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData ReportDefinition as xml in ReportDefinition schema.
