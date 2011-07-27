@@ -20,16 +20,21 @@
 
 package de.escidoc.core.common.business.indexing;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.IndexerCacheHandler;
-import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+import java.io.ByteArrayInputStream;
+import java.util.HashMap;
+import java.util.Set;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.esidoc.core.utils.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Set;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.IndexerCacheHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
 /**
  * Handler for handling cache for indexing.
@@ -58,7 +63,15 @@ public class IndexingCacheHandler {
                 reId = reId.substring(0, reId.lastIndexOf(':'));
             }
             if (reXml == null || reXml.isEmpty()) {
-                reXml = fedoraRestDeviationHandler.retrieveUncached(reId);
+                EscidocBinaryContent content = fedoraRestDeviationHandler.retrieveUncached(reId);
+                if (content.getMimeType() != null && content.getMimeType().startsWith("text")
+                    && content.getContent() != null) {
+                    reXml =
+                        new String(IOUtils.readBytesFromStream(content.getContent()), XmlUtility.CHARACTER_ENCODING);
+                }
+                else {
+                    throw new SystemException("wrong mime-type");
+                }
             }
             final StaxParser sp = new StaxParser();
             final IndexerCacheHandler handler = new IndexerCacheHandler(sp);
@@ -96,7 +109,11 @@ public class IndexingCacheHandler {
      */
     public void writeObjectInCache(final String id, final String xml) throws SystemException {
         try {
-            fedoraRestDeviationHandler.cache(id, xml);
+            final EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
+            escidocBinaryContent.setMimeType(XmlUtility.MIME_TYPE_XML);
+            escidocBinaryContent.setContent(new ByteArrayInputStream(((String) xml)
+                .getBytes(XmlUtility.CHARACTER_ENCODING)));
+            fedoraRestDeviationHandler.cache(id, escidocBinaryContent);
         }
         catch (final Exception e) {
             throw new SystemException(e);

@@ -90,12 +90,12 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * writes the given xml into the cache.
      *
      * @param pid uri to the resource.
-     * @param xml xml-representation of the object
+     * @param content EscidocBinaryContent
      * @throws SystemException ex
      */
     @Override
-    public void cache(final String pid, final String xml) throws SystemException {
-        handler.cache(pid, xml);
+    public void cache(final String pid, final EscidocBinaryContent content) throws SystemException {
+        handler.cache(pid, content);
     }
 
     /**
@@ -113,11 +113,11 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      * retrieves the given pid not from cache.
      *
      * @param pid uri to the resource.
-     * @return String String with the fedora-object as escidoc-xml
+     * @return EscidocBinaryContent with the object
      * @throws SystemException ex
      */
     @Override
-    public String retrieveUncached(final String pid) throws SystemException {
+    public EscidocBinaryContent retrieveUncached(final String pid) throws SystemException {
         return handler.retrieveUncached(pid);
     }
 
