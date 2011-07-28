@@ -719,8 +719,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * Check if the requested item version is the latest version.
      *
      * @throws ReadonlyVersionException If the requested item version is not the latest one.
+     * @throws IntegritySystemException 
      */
-    protected void checkLatestVersion() throws ReadonlyVersionException {
+    protected void checkLatestVersion() throws ReadonlyVersionException, IntegritySystemException {
         final String thisVersion = getContentModel().getVersionNumber();
         if (thisVersion != null && !thisVersion.equals(getContentModel().getLatestVersionNumber())) {
             throw new ReadonlyVersionException("Only latest version can be modified.");

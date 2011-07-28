@@ -412,13 +412,13 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final StartElement pointer =
             new StartElement("version", Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX, null);
 
-        pointer.addAttribute(new Attribute("objid", null, null, getFullId()));
-
-        addNewSubtreesHandler.setPointerElement(pointer);
-        addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
-        sp.addHandler(addNewSubtreesHandler);
-
         try {
+            pointer.addAttribute(new Attribute("objid", null, null, getFullId()));
+
+            addNewSubtreesHandler.setPointerElement(pointer);
+            addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
+            sp.addHandler(addNewSubtreesHandler);
+
             sp.parse(new ByteArrayInputStream(getWov().getStream()));
             final ByteArrayOutputStream wovExtNew = addNewSubtreesHandler.getOutputStreams();
             final byte[] wovNewBytes = wovExtNew.toByteArray();
@@ -437,9 +437,11 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws XmlParserSystemException   Thrown if parsing of RELS_ET fails.
      * @throws WebserverSystemException   In case of an internal error.
      * @throws TripleStoreSystemException If the triple store request failed.
+     * @throws IntegritySystemException 
+     * @throws NumberFormatException 
      */
     private byte[] createVersionPid(final String pid) throws XmlParserSystemException, TripleStoreSystemException,
-        WebserverSystemException {
+        WebserverSystemException, NumberFormatException, IntegritySystemException {
 
         final StaxParser sp = new StaxParser();
 

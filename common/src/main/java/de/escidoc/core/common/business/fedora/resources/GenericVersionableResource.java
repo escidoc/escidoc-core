@@ -161,7 +161,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
-        this.initLastModificationDate();
+        this.initLastVersionData();
     }
 
     private void initVersionNumber(final String id) throws TripleStoreSystemException, WebserverSystemException,
@@ -198,7 +198,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
     }
 
-    private void initLastModificationDate() throws TripleStoreSystemException, WebserverSystemException,
+    private void initLastVersionData() throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
         try {
             setLastVersionData();
@@ -235,8 +235,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Get the objectId inclusive version number.
      *
      * @return Id inclusive version number
+     * @throws IntegritySystemException 
      */
-    public String getFullId() {
+    public String getFullId() throws IntegritySystemException {
         if (this.versionId == null || this.versionId.length() <= 0) {
             return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
         }
@@ -318,8 +319,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * version Number the number of the current retrieved version.
      *
      * @return number of version
+     * @throws IntegritySystemException 
      */
-    public String getVersionId() {
+    public String getVersionId() throws IntegritySystemException {
         if (this.versionId == null) {
             final String curVersionId = getVersionNumber();
             if (curVersionId != null) {
@@ -392,18 +394,19 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Get the latest version number of the object.
      *
      * @return latest version number
+     * @throws IntegritySystemException 
      */
-    public String getLatestVersionNumber() {
-
-        return lastVersionData.get(TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
+    public String getLatestVersionNumber() throws IntegritySystemException {
+        return getVersionData().getLatestVersion().getVersionNumber();
     }
 
     /**
      * Get the full object identifier with version number.
      *
      * @return object identifier with version number
+     * @throws IntegritySystemException 
      */
-    public String getLatestVersionId() {
+    public String getLatestVersionId() throws IntegritySystemException {
         return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
     }
 
@@ -446,8 +449,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Return the href of the Container where ever the version suffix is included.
      *
      * @return href with version suffix
+     * @throws IntegritySystemException 
      */
-    public String getVersionHref() {
+    public String getVersionHref() throws IntegritySystemException {
 
         return super.getHref() + VERSION_NUMBER_SEPARATOR + getVersionId();
     }
@@ -466,8 +470,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Return the href to the latest version of the Container (where ever the version suffix is included).
      *
      * @return href to the latest Container version (with version suffix)
+     * @throws IntegritySystemException 
      */
-    public String getLatestVersionHref() {
+    public String getLatestVersionHref() throws IntegritySystemException {
 
         return super.getHref() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
     }
@@ -528,8 +533,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      * Is resource latest version?
      *
      * @return true if the resource is latest version. False otherwise.
+     * @throws IntegritySystemException 
      */
-    public boolean isLatestVersion() {
+    public boolean isLatestVersion() throws IntegritySystemException {
         return this.versionNumber == null || this.versionNumber.equals(getLatestVersionNumber());
     }
 
@@ -733,6 +739,9 @@ public class GenericVersionableResource extends GenericResourcePid {
                 else {
                     setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), getVersionDate()));
                 }
+            }
+            catch (final IntegritySystemException e) {
+                throw new FedoraSystemException(e);
             }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);

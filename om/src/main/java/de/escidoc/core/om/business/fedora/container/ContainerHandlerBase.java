@@ -394,8 +394,9 @@ public class ContainerHandlerBase extends HandlerBase {
      * Check if the requested container version is the latest version.
      *
      * @throws ReadonlyVersionException if the requested container version is not the last version
+     * @throws IntegritySystemException 
      */
-    protected void checkLatestVersion() throws ReadonlyVersionException {
+    protected void checkLatestVersion() throws ReadonlyVersionException, IntegritySystemException {
         final String thisVersion = container.getVersionNumber();
         if (thisVersion != null && !thisVersion.equals(container.getLatestVersionNumber())) {
             throw new ReadonlyVersionException("Only latest version can be modified.");

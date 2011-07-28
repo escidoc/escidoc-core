@@ -466,6 +466,9 @@ public class Container extends GenericVersionableResourcePid implements Containe
                     setEscidocRelsExt(new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getVersionDate()));
                 }
             }
+            catch (final IntegritySystemException e) {
+                throw new FedoraSystemException(e);
+            }
             catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
