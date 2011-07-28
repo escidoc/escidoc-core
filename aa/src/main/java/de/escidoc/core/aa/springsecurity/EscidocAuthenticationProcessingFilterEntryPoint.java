@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationProcessingFilterEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.RedirectUrlBuilder;
 
 /**
@@ -42,9 +42,9 @@ import org.springframework.security.web.util.RedirectUrlBuilder;
  *
  * @author Michael Hoppe
  */
-public class EscidocAuthenticationProcessingFilterEntryPoint extends AuthenticationProcessingFilterEntryPoint {
+public class EscidocAuthenticationProcessingFilterEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationProcessingFilterEntryPoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginUrlAuthenticationEntryPoint.class);
 
     /**
      * Get url to login-page from configuration.

@@ -678,7 +678,7 @@ public class IndexingHandler implements ResourceListener {
             sp.addHandler(handler);
 
             final String query =
-                Constants.SRW_MAXIMUM_TERMS_MATCHER.reset(Constants.SRW_SCAN_PARAMS).replaceFirst(
+                Constants.SRW_MAXIMUM_TERMS_PATTERN.matcher(Constants.SRW_SCAN_PARAMS).replaceFirst(
                     Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
             String lastTerm = "";
             boolean running = true;
@@ -686,7 +686,7 @@ public class IndexingHandler implements ResourceListener {
                 handler.resetNoOfDocumentTerms();
                 final HttpGet httpGet =
                     new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
-                        + indexName + Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));
+                        + indexName + Constants.SRW_TERM_PATTERN.matcher(query).replaceFirst(lastTerm));
 
                 final HttpResponse response = client.execute(httpGet);
                 final String lastLastTerm;
