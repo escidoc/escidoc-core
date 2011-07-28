@@ -106,8 +106,6 @@ public class GenericVersionableResource extends GenericResourcePid {
 
     private Map<String, String> lastVersionData;
 
-    private String latestReleaseVersionNumber;
-
     private boolean initLastModifiedDate = true;
 
     // ---------------
@@ -491,19 +489,12 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException Thrwon if TripleStore request failed.
      */
     public String getLatestReleaseVersionNumber() throws WebserverSystemException {
-
-        if (this.latestReleaseVersionNumber == null) {
-            try {
-                this.latestReleaseVersionNumber =
-                    this.tripleStoreUtility.getPropertiesElements(getId(),
-                        TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
-            }
-            catch (final TripleStoreSystemException tse) {
-                throw new WebserverSystemException(tse);
-            }
+        try {
+            return getVersionData().getLatestRelease().getVersionNumber();
         }
-
-        return this.latestReleaseVersionNumber;
+        catch (IntegritySystemException e) {
+            throw new WebserverSystemException(e);
+        }
     }
 
     // --------------------------------------------------------------------------
