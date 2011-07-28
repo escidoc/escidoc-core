@@ -148,6 +148,10 @@ public class CustomPdp {
     @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleIsGranted")
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleInList")
+    private XacmlFunctionRoleInList xacmlFunctionRoleInList;
+
     // this is the actual PDP object we'll use for evaluation
     private PDP pdp;
 
@@ -166,7 +170,7 @@ public class CustomPdp {
      * @see ResourceAttributeFinderModule
      * @see DatabasePolicyFinderModule
      */
-    public CustomPdp() {
+    protected CustomPdp() {
     }
 
     /**
@@ -220,7 +224,7 @@ public class CustomPdp {
         final FunctionFactory factory = proxy.getTargetFactory();
         factory.addFunction(new XacmlFunctionContains());
         factory.addFunction(new XacmlFunctionIsIn());
-        factory.addFunction(new XacmlFunctionRoleInList());
+        factory.addFunction(this.xacmlFunctionRoleInList);
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
         factory.addFunction(this.xacmlFunctionRoleIsGranted);
 

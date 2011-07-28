@@ -57,6 +57,12 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     private de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected AggregationDefinitionHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData aggregationDefinition as xml in aggregationDefinition schema.

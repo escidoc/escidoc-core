@@ -57,6 +57,12 @@ import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 public class SchemasCache {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SchemasCache() {
+    }
+
+    /**
      * Gets the {@code Schema} from the cache.<br> If none exists for the provided schema URL, it is created and
      * put into the cache.
      *

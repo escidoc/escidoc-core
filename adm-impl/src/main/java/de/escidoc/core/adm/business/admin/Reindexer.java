@@ -76,6 +76,12 @@ public class Reindexer {
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected Reindexer() {
+    }
+
+    /**
      * Check if the given index contains objects with the given resource type.
      *
      * @param indexName name of the index (may be null for "all indexes")

@@ -38,6 +38,12 @@ public class ErrorMessageHandler {
             + "#################################################\n";
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ErrorMessageHandler() {
+    }
+
+    /**
      * Writes error-message and timestamp into logfile.
      *
      * @param parameters Message message-object

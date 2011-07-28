@@ -25,6 +25,12 @@ public class JhoveHandler implements de.escidoc.core.tme.service.interfaces.Jhov
     private JhoveHandlerInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected JhoveHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param requests The list of files to examine.

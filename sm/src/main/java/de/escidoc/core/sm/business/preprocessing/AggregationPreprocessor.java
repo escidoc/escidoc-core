@@ -97,6 +97,12 @@ public class AggregationPreprocessor {
     private XPathFactory xpathFactory;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected AggregationPreprocessor() {
+    }
+
+    /**
      * initialize global Hashes (dataHash, fieldTypeHash, differencesHash).
      *
      * @param aggregationDefinitionIn AggregationDefinition Binding Object.

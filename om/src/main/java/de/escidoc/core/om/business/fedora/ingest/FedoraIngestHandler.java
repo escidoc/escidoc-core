@@ -51,6 +51,12 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
     private IngestFacade ingestFacade;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraIngestHandler() {
+    }
+
+    /**
      * Getter for the ingest facade.
      *
      * @return ingestFacade the ingestFacade that has been injected

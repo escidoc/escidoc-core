@@ -199,10 +199,9 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
             false);
 
     /**
-     * The constructor.
+     * Private constructor to prevent initialization.
      */
-    public TripleStoreAttributeFinderModule() {
-
+    protected TripleStoreAttributeFinderModule() {
         initMapping();
     }
 

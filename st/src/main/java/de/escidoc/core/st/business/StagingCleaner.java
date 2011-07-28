@@ -66,6 +66,12 @@ public class StagingCleaner {
     private StagingFileDao stagingFileDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StagingCleaner() {
+    }
+
+    /**
      * Cleans up the staging area, i.e. removes each file in the file system associated to an expired staging file
      * object and each expired staging file whose associated file does not exist or could be removed.
      */

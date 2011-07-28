@@ -70,6 +70,12 @@ public class GsearchHandler {
     private ConnectionUtility connectionUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected GsearchHandler() {
+    }
+
+    /**
      * requests indexing by calling fedoragsearch-servlet.
      * <p/>
      * <pre>

@@ -80,6 +80,12 @@ public class IndexerResourceRequester {
     private ConnectionUtility connectionUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected IndexerResourceRequester() {
+    }
+
+    /**
      * Get resource with given identifier.
      *
      * @param identifier identifier

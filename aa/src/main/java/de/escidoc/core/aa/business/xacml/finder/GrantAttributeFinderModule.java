@@ -112,6 +112,12 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     private TripleStoreUtility tsu;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected GrantAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

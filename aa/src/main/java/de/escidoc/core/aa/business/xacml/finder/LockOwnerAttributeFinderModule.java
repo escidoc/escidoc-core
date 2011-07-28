@@ -62,6 +62,12 @@ public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModul
     private LockHandler lockHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected LockOwnerAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

@@ -60,6 +60,12 @@ import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 public class VelocityXmlRoleRenderer extends AbstractRenderer implements RoleRendererInterface {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlRoleRenderer() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see RoleRendererInterface #render(de.escidoc.core.aa.business.persistence.EscidocRole)

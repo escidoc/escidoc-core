@@ -49,6 +49,12 @@ public class IndexingCacheHandler {
     private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected IndexingCacheHandler() {
+    }
+
+    /**
      * removes object + subobjects with given id from cache.
      *
      * @param id  resource id

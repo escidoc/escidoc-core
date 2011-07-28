@@ -53,6 +53,12 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
     private de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SemanticStoreHandler() {
+    }
+
+    /**
      * Retrieves a result of provided triple store query in a provided output format.
      *
      * @return Returns XML representation of the query result.

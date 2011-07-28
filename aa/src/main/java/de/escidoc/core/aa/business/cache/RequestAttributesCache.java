@@ -46,6 +46,12 @@ import com.sun.xacml.EvaluationCtx;
 public class RequestAttributesCache {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected RequestAttributesCache() {
+    }
+
+    /**
      * Puts object in cache.
      *
      * @param ctx      the EvaluationContext.

@@ -77,6 +77,12 @@ public class SpringStatisticPreprocessorService {
     private ErrorMessageHandler errorMessageHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SpringStatisticPreprocessorService() {
+    }
+
+    /**
      * Preprocess statistic data by calling preprocessor.
      *
      * @throws Exception e

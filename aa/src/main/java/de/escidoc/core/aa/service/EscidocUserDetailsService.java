@@ -66,6 +66,12 @@ public class EscidocUserDetailsService implements EscidocUserDetailsServiceInter
     private UserAccountHandlerInterface userAccountHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected EscidocUserDetailsService() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      */

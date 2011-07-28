@@ -21,6 +21,12 @@ public class IndexServiceImpl {
     @Qualifier("service.AdminHandler")
     private AdminHandlerInterface adminHandler;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected IndexServiceImpl() {
+    }
+
     public void onNewIndexRequest(final IndexRequest indexRequest) throws IndexServiceException {
         final String indexName = indexRequest.getIndexName();
         final boolean allIndexes =

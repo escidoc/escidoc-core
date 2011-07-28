@@ -80,10 +80,9 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     private SecurityHelper securityHelper;
 
     /**
-     * The constructor.
+     * Private constructor to prevent initialization.
      */
-    public XacmlFunctionRoleIsGranted() {
-
+    protected XacmlFunctionRoleIsGranted() {
         super(NAME, 0, StringAttribute.identifier, false, 2, BooleanAttribute.identifier, false);
     }
 

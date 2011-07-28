@@ -55,6 +55,12 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public class DocumentsCache {
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected DocumentsCache() {
+    }
+
+    /**
      * Retrieves the document for the provided document data.
      *
      * @param documentData The object to get the xml document for, or {@code null} in case of an error.

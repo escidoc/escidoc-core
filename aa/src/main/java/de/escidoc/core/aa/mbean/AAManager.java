@@ -59,6 +59,12 @@ public class AAManager {
     private SecurityHelper securityHelper;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected AAManager() {
+    }
+
+    /**
      * Cleans up the eSciDoc user handles.<br> This delegates to {@link UserHandleCleaner}.cleanUp.
      */
     @ManagedOperation(description = "Clean up the eSciDoc user handles that have been expired.")

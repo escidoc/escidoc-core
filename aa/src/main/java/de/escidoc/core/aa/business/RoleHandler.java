@@ -129,6 +129,12 @@ public class RoleHandler implements RoleHandlerInterface {
     private SecurityHelper securityHelper;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected RoleHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#create(String)

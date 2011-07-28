@@ -110,6 +110,12 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     private ResourceListener indexingHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraContextHandler() {
+    }
+
+    /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
      *
      * @return PolicyDecisionPointInterface

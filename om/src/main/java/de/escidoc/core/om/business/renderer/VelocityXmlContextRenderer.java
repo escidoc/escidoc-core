@@ -89,6 +89,12 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     @Qualifier("business.FedoraContainerHandler")
     private FedoraContainerHandler containerHandler;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlContextRenderer() {
+    }
+
     /*
      * (non-Javadoc)
      * 

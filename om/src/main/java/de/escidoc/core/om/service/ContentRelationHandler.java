@@ -69,6 +69,12 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
     private de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ContentRelationHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData to be created corresponding to XML-schema "content-relation.xsd".

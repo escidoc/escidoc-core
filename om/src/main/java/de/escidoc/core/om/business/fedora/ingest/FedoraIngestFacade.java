@@ -58,6 +58,12 @@ public class FedoraIngestFacade implements IngestFacade {
     private ValueFormatter formatter;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraIngestFacade() {
+    }
+
+    /**
      * Ingest a given resource and return the id which has been assigned by the framework. Format the return value
      * according to the rule implemented in the injected Formatter instance.
      */

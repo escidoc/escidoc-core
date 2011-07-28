@@ -59,6 +59,12 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     private de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraRestDeviationHandler() {
+    }
+
+    /**
      * @param pid        unused.
      * @param dsID       uri to component-content
      * @param parameters REST-GET-Parameters.

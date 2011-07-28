@@ -72,6 +72,12 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private TripleStoreUtility tripleStoreUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ContentRelationXmlProvider() {
+    }
+
+    /**
      * Render XML representation of Content Relation.
      *
      * @param cr ContentRelation

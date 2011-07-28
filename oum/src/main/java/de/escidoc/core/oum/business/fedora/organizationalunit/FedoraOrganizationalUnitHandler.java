@@ -128,6 +128,12 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     private ResourceListener indexingHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraOrganizationalUnitHandler() {
+    }
+
+    /**
      * Register an ou listener.
      *
      * @param listener listener which will be added to the list

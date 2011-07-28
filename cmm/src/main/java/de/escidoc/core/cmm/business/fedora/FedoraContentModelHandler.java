@@ -139,6 +139,12 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraContentModelHandler() {
+    }
+
     @PostConstruct
     private void init() {
         contentModelListeners.add(this.indexingHandler);

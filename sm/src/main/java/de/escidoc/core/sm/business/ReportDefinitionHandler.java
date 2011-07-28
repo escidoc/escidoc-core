@@ -95,8 +95,18 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
     private SmFilterUtility filterUtility;
 
     @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
     @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlReportDefinitionRenderer")
     private ReportDefinitionRendererInterface renderer;
+
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected ReportDefinitionHandler() {
+    }
 
     /**
      * See Interface for functional description.
@@ -132,7 +142,6 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
         final Scope scope = scopesDao.retrieve(scopeId);
 
         final ReportDefinition reportDefinition = handler.getReportDefinition();
-        final Utility utility = new Utility();
         reportDefinition.setCreatorId(utility.getCurrentUserId());
         reportDefinition.setModifiedById(reportDefinition.getCreatorId());
         reportDefinition.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
@@ -281,7 +290,6 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
         final String scopeId = reportDefinition.getScope().getId();
         final Scope scope = scopesDao.retrieve(scopeId);
 
-        final Utility utility = new Utility();
         reportDefinition.setModifiedById(utility.getCurrentUserId());
         reportDefinition.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
         reportDefinition.setScope(scope);

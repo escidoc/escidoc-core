@@ -56,6 +56,12 @@ public class ScopeHandler implements ScopeHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface handler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ScopeHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData Scope as xml in Scope schema.

@@ -90,6 +90,12 @@ public class PolicyParser {
     private Values values;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PolicyParser() {
+    }
+
+    /**
      * This map only contains these actions which match the actions collected in "MATCHES".
      */
     private final Map<Object, AttributeValue> actions = new HashMap<Object, AttributeValue>();

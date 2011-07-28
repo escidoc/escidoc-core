@@ -97,6 +97,12 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private PolicyFinder policyFinder;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected DatabasePolicyFinderModule() {
+    }
+
+    /**
      * Indicates whether this module supports finding policies based on a request (target matching). Since this module
      * does support finding policies based on requests, it returns true.
      *

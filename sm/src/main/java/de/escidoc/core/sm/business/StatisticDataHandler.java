@@ -66,6 +66,12 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private CamelContext camelContext;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StatisticDataHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param xmlData statistic data as xml in statistic-data schema.

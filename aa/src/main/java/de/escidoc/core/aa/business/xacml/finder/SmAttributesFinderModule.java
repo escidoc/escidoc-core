@@ -125,6 +125,12 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private ScopeHandlerInterface scopeHandler;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected SmAttributesFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

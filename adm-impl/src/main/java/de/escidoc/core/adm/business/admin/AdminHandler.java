@@ -106,6 +106,12 @@ public class AdminHandler {
     private Utility utility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected AdminHandler() {
+    }
+
+    /**
      * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
      * all depending components of the given items. The deletion runs synchronously and returns some useful information
      * for the user, e.g. the total number of objects deleted.

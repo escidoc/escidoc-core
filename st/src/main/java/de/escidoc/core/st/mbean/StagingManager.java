@@ -51,6 +51,12 @@ public class StagingManager {
     private StagingCleaner stagingCleaner;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected StagingManager() {
+    }
+
+    /**
      * Cleans up the staging file area.<br> This delegates to {@link StagingCleaner}.cleanUp.
      */
     @ManagedOperation(description = "Clean up the staging file area.")

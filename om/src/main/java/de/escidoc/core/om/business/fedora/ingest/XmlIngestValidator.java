@@ -53,6 +53,12 @@ public class XmlIngestValidator implements IngestValidator {
     private XmlUtility xmlUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected XmlIngestValidator() {
+    }
+
+    /**
      * Check if the given resource is valid. If it is not valid, an Exception gets thrown
      *
      * @param xmlData the xmlData

@@ -73,6 +73,12 @@ public class AggregationDataSelector {
     @Qualifier("sm.persistence.DirectDatabaseAccessor")
     private SmScopesDaoInterface scopesDao;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected AggregationDataSelector() {
+    }
+
     public List getDataForAggregation(final AggregationDefinition aggregationDefinition, final Date date)
         throws ScopeNotFoundException, SqlDatabaseSystemException, StatisticPreprocessingSystemException {
         if (aggregationDefinition.getAggregationStatisticDataSelectors() != null) {

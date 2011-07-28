@@ -92,6 +92,12 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     private FedoraServiceRESTEndpoint fedoraService;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraServiceClientImpl() {
+    }
+
     public void setFedoraService(final FedoraServiceRESTEndpoint fedoraService) {
         this.fedoraService = fedoraService;
     }

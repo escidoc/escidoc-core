@@ -115,11 +115,9 @@ public class IndexingHandler implements ResourceListener {
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
-     * Constructor.
-     *
-     * @throws SystemException e
+     * Private constructor to prevent initialization.
      */
-    public IndexingHandler() throws SystemException {
+    protected IndexingHandler() throws SystemException {
         final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             this.docBuilder = docBuilderFactory.newDocumentBuilder();

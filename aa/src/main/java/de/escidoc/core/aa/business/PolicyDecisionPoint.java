@@ -184,12 +184,10 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private final Map<String, URI> uriCache = new HashMap<String, URI>();
 
     /**
-     * Default constructor.
+     * Private constructor to prevent initialization.
      */
-    public PolicyDecisionPoint() {
-
+    protected PolicyDecisionPoint() {
         initializeHandlerClassNames();
-
     }
 
     /**

@@ -52,6 +52,12 @@ public class ActionHandler implements ActionHandlerInterface {
     private ActionHandlerInterface business;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ActionHandler() {
+    }
+
+    /**
      * See Interface for functional description.
      */
     @Override

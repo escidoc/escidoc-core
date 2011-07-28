@@ -74,8 +74,18 @@ public class ScopeHandler implements ScopeHandlerInterface {
     private SmFilterUtility filterUtility;
 
     @Autowired
+    @Qualifier("business.Utility")
+    private Utility utility;
+
+    @Autowired
     @Qualifier("eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer")
     private ScopeRendererInterface renderer;
+
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected ScopeHandler() {
+    }
 
     /**
      * See Interface for functional description.
@@ -104,7 +114,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
 
         final Scope scope = handler.getScope();
-        final Utility utility = new Utility();
         scope.setCreatorId(utility.getCurrentUserId());
         scope.setModifiedById(scope.getCreatorId());
         scope.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
@@ -236,7 +245,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
 
         final Scope scope = handler.getScope();
-        final Utility utility = new Utility();
         scope.setModifiedById(utility.getCurrentUserId());
         scope.setLastModificationDate(new Timestamp(System.currentTimeMillis()));
 

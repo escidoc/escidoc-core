@@ -52,6 +52,12 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     @Qualifier("business.StagingFileHandler")
     private de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface handler;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected StagingFileHandler() {
+    }
+
     @Override
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {

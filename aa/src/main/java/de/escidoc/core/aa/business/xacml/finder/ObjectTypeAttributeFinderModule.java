@@ -69,6 +69,12 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     private ObjectAttributeResolver objectAttributeResolver;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected ObjectTypeAttributeFinderModule() {
+    }
+
+    /**
      * See Interface for functional description.
      *
      * @param attributeIdValue      attributeIdValue

@@ -75,6 +75,12 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected VelocityXmlOrganizationalUnitRenderer() {
+    }
+
     /*
      * See Interface for functional description.
      * 

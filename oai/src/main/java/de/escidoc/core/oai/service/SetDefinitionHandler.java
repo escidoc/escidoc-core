@@ -34,6 +34,12 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     @Qualifier("business.SetDefinitionHandler")
     private de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler;
 
+    /**
+     * Private constructor to prevent initialization.
+     */
+    protected SetDefinitionHandler() {
+    }
+
     /*
      * (non-Javadoc)
      * 

@@ -101,6 +101,12 @@ public class PoliciesCache {
     private EscidocRoleDaoInterface roleDao;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected PoliciesCache() {
+    }
+
+    /**
      * Stores the provided roleIsGranted Map for {@link XacmlFunctionRoleIsGranted} result using the user- or group ID
      * as key.
      *

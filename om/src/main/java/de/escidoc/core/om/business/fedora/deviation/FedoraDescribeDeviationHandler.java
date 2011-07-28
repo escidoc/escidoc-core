@@ -56,6 +56,12 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
     private ConnectionUtility connectionUtility;
 
     /**
+     * Private constructor to prevent initialization.
+     */
+    protected FedoraDescribeDeviationHandler() {
+    }
+
+    /**
      * @param parameters http request parameters.
      * @return String response
      * @see de.escidoc.core.om.business.interfaces .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
