@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.business.indexing;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -84,77 +83,42 @@ public final class Constants {
 
     public static final int SRW_MAXIMUM_SCAN_TERMS = 10000;
 
-    private static final Pattern INDEX_NAME_PATTERN = Pattern.compile("\\$\\{INDEX_NAME\\}");
+    public static final Pattern INDEX_NAME_PATTERN = Pattern.compile("\\$\\{INDEX_NAME\\}");
 
-    private static final Pattern VALUE_PATTERN = Pattern.compile("\\$\\{VALUE\\}");
+    public static final Pattern VALUE_PATTERN = Pattern.compile("\\$\\{VALUE\\}");
 
-    private static final Pattern SUPPORTED_MIMETYPES_PATTERN = Pattern.compile("\\$\\{SUPPORTED_MIMETYPES\\}");
+    public static final Pattern SUPPORTED_MIMETYPES_PATTERN = Pattern.compile("\\$\\{SUPPORTED_MIMETYPES\\}");
 
-    private static final Pattern PID_VERSION_IDENTIFIER_PATTERN = Pattern.compile("\\$\\{PID_VERSION_IDENTIFIER\\}");
+    public static final Pattern PID_VERSION_IDENTIFIER_PATTERN = Pattern.compile("\\$\\{PID_VERSION_IDENTIFIER\\}");
 
-    private static final Pattern PID_VERSION_IDENTIFIER_TOTAL_PATTERN =
+    public static final Pattern PID_VERSION_IDENTIFIER_TOTAL_PATTERN =
         Pattern.compile(",PID_VERSION_IDENTIFIER=\\$\\{PID_VERSION_IDENTIFIER\\}");
 
-    private static final Pattern INDEX_FULLTEXT_VISIBILITIES_PATTERN =
+    public static final Pattern INDEX_FULLTEXT_VISIBILITIES_PATTERN =
         Pattern.compile("\\$\\{INDEX_FULLTEXT_VISIBILITIES\\}");
 
-    private static final Pattern INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN =
+    public static final Pattern INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN =
         Pattern.compile(",INDEX_FULLTEXT_VISIBILITIES=\\$\\{INDEX_FULLTEXT_VISIBILITIES\\}");
 
-    private static final Pattern DOC_COUNT_PATTERN =
+    public static final Pattern DOC_COUNT_PATTERN =
         Pattern.compile(".*?docCount=\"(.*?)\".*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern SRW_TERM_PATTERN = Pattern.compile("\\$\\{TERM\\}");
+    public static final Pattern SRW_TERM_PATTERN = Pattern.compile("\\$\\{TERM\\}");
 
-    private static final Pattern SRW_MAXIMUM_TERMS_PATTERN = Pattern.compile("\\$\\{MAXIMUM_TERMS\\}");
+    public static final Pattern SRW_MAXIMUM_TERMS_PATTERN = Pattern.compile("\\$\\{MAXIMUM_TERMS\\}");
 
-    private static final Pattern EXCEPTION_PATTERN =
+    public static final Pattern EXCEPTION_PATTERN =
         Pattern.compile(".*Exception.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern NO_INDEX_DIR_PATTERN =
+    public static final Pattern NO_INDEX_DIR_PATTERN =
         Pattern.compile(".*?(no segments|not a directory|NoSuchDirectoryException).*", Pattern.DOTALL
             | Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern NO_INDEX_DIR_INDEX_NAME_PATTERN =
+    public static final Pattern NO_INDEX_DIR_INDEX_NAME_PATTERN =
         Pattern.compile(".*?indexName=([^\\s]*).*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern LOCK_OBTAIN_TIMEOUT_PATTERN =
+    public static final Pattern LOCK_OBTAIN_TIMEOUT_PATTERN =
         Pattern.compile(".*Lock obtain timed out.*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-
-    //Initialize Matcher for faster later use
-
-    /**
-     * FIXME: Using Matcher instance here is not thread-safe. Use Patterns instead in static context.
-     */
-
-    public static final Matcher INDEX_NAME_MATCHER = INDEX_NAME_PATTERN.matcher("");
-
-    public static final Matcher VALUE_MATCHER = VALUE_PATTERN.matcher("");
-
-    public static final Matcher SUPPORTED_MIMETYPES_MATCHER = SUPPORTED_MIMETYPES_PATTERN.matcher("");
-
-    public static final Matcher PID_VERSION_IDENTIFIER_MATCHER = PID_VERSION_IDENTIFIER_PATTERN.matcher("");
-
-    public static final Matcher PID_VERSION_IDENTIFIER_TOTAL_MATCHER = PID_VERSION_IDENTIFIER_TOTAL_PATTERN.matcher("");
-
-    public static final Matcher INDEX_FULLTEXT_VISIBILITIES_MATCHER = INDEX_FULLTEXT_VISIBILITIES_PATTERN.matcher("");
-
-    public static final Matcher INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER =
-        INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN.matcher("");
-
-    public static final Matcher DOC_COUNT_MATCHER = DOC_COUNT_PATTERN.matcher("");
-
-    public static final Matcher SRW_TERM_MATCHER = SRW_TERM_PATTERN.matcher("");
-
-    public static final Matcher SRW_MAXIMUM_TERMS_MATCHER = SRW_MAXIMUM_TERMS_PATTERN.matcher("");
-
-    public static final Matcher EXCEPTION_MATCHER = EXCEPTION_PATTERN.matcher("");
-
-    public static final Matcher NO_INDEX_DIR_MATCHER = NO_INDEX_DIR_PATTERN.matcher("");
-
-    public static final Matcher NO_INDEX_DIR_INDEX_NAME_MATCHER = NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher("");
-
-    public static final Matcher LOCK_OBTAIN_TIMEOUT_MATCHER = LOCK_OBTAIN_TIMEOUT_PATTERN.matcher("");
 
     /**
      * Constants.
