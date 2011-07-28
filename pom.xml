@@ -1055,7 +1055,7 @@
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.3</saxon.version>
-    <escidoc.fedoragsearch.version>1.5.3</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.5.4</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.5.1</escidoc.srw.version>
     <srw.version>1.5.0</srw.version>
 
