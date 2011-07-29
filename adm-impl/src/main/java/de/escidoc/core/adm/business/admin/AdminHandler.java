@@ -106,7 +106,7 @@ public class AdminHandler {
     private Utility utility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AdminHandler() {
     }

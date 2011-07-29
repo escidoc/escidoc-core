@@ -96,7 +96,7 @@ public class ItemHandler implements ItemHandlerInterface {
     // FIXME: exception handling
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ItemHandler() {
     }

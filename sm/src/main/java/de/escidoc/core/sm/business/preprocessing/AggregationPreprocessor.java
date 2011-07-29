@@ -97,7 +97,7 @@ public class AggregationPreprocessor {
     private XPathFactory xpathFactory;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AggregationPreprocessor() {
     }

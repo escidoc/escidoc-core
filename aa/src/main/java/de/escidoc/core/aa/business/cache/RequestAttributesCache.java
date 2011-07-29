@@ -46,7 +46,7 @@ import com.sun.xacml.EvaluationCtx;
 public class RequestAttributesCache {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected RequestAttributesCache() {
     }

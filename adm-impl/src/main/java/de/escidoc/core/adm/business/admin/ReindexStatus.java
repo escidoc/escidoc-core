@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 public final class ReindexStatus extends AdminMethodStatus {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ReindexStatus() {
     }

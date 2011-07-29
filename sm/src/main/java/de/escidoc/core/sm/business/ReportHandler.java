@@ -75,7 +75,7 @@ public class ReportHandler implements ReportHandlerInterface {
     private ReportRendererInterface renderer;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ReportHandler() {
     }

@@ -131,7 +131,7 @@ public class Examples {
     private OrganizationalUnitHandlerInterface organizationalUnitHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected Examples() {
     }

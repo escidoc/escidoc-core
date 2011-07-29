@@ -115,7 +115,7 @@ public class IndexingHandler implements ResourceListener {
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected IndexingHandler() throws SystemException {
         final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();

@@ -63,7 +63,7 @@ public class ResourceNotFoundAttributeFinderModule extends AbstractAttributeFind
         "The resource with the specified id is not of the expected type.";
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ResourceNotFoundAttributeFinderModule() {
     }

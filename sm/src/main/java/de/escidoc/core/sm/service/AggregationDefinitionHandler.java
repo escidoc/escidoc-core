@@ -57,7 +57,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     private de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AggregationDefinitionHandler() {
     }

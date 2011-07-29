@@ -53,7 +53,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     private de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StagingFileHandler() {
     }

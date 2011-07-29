@@ -120,7 +120,7 @@ public class ResourceAttributeFinderModule extends AbstractAttributeFinderModule
     private ContainerHandlerInterface containerHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ResourceAttributeFinderModule() {
     }

@@ -129,7 +129,7 @@ public class RoleHandler implements RoleHandlerInterface {
     private SecurityHelper securityHelper;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected RoleHandler() {
     }

@@ -56,7 +56,7 @@ import java.util.Map;
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer implements SetDefinitionRendererInterface {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected VelocityXmlSetDefinitionRenderer() {
     }

@@ -101,7 +101,7 @@ public class PoliciesCache {
     private EscidocRoleDaoInterface roleDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PoliciesCache() {
     }

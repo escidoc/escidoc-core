@@ -90,7 +90,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     private FedoraContainerHandler containerHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected VelocityXmlContextRenderer() {
     }

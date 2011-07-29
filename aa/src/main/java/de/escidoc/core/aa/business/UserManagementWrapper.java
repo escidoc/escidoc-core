@@ -62,7 +62,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     private long eSciDocUserHandleLifetime = Long.MIN_VALUE;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected UserManagementWrapper() {
     }

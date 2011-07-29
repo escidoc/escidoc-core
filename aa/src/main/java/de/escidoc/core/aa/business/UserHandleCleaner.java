@@ -36,7 +36,7 @@ public class UserHandleCleaner {
     private UserAccountDaoInterface userAccountDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected UserHandleCleaner() {
     }

@@ -55,7 +55,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer implements Actio
     private static final Pattern PATTERN_WHITESPACE = Pattern.compile("\\s");
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected VelocityXmlActionRenderer() {
     }

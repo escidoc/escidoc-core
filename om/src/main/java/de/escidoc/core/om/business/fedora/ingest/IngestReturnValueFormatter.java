@@ -15,7 +15,7 @@ import java.util.Map;
 public class IngestReturnValueFormatter implements ValueFormatter {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected IngestReturnValueFormatter() {
     }

@@ -51,7 +51,7 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
     private IngestFacade ingestFacade;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraIngestHandler() {
     }

@@ -17,7 +17,7 @@ public class StatisticServiceImpl {
     private StatisticDataHandlerInterface statisticDataHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StatisticServiceImpl() {
     }

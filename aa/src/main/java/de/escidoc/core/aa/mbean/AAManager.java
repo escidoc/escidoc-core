@@ -59,7 +59,7 @@ public class AAManager {
     private SecurityHelper securityHelper;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AAManager() {
     }

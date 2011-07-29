@@ -80,7 +80,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     private SecurityHelper securityHelper;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected XacmlFunctionRoleIsGranted() {
         super(NAME, 0, StringAttribute.identifier, false, 2, BooleanAttribute.identifier, false);

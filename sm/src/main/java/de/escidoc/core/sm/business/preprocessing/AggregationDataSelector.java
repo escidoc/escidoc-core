@@ -74,7 +74,7 @@ public class AggregationDataSelector {
     private SmScopesDaoInterface scopesDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AggregationDataSelector() {
     }

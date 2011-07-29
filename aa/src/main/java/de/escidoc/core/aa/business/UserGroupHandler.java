@@ -165,7 +165,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     private static final String MSG_UNEXPECTED_EXCEPTION = "Unexpected exception in ";
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected UserGroupHandler() {
     }

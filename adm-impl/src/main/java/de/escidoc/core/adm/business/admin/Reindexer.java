@@ -76,7 +76,7 @@ public class Reindexer {
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected Reindexer() {
     }

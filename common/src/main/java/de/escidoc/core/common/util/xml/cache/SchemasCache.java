@@ -57,7 +57,7 @@ import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 public class SchemasCache {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SchemasCache() {
     }

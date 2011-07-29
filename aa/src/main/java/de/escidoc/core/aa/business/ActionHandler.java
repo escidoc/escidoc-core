@@ -68,7 +68,7 @@ public class ActionHandler implements ActionHandlerInterface {
     private XmlUtility xmlUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ActionHandler() {
     }

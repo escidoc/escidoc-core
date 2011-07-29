@@ -91,7 +91,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     // FIXME: exception handling
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ContainerHandler() {
     }

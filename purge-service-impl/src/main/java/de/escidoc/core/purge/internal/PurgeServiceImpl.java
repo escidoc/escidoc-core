@@ -33,7 +33,7 @@ public class PurgeServiceImpl implements PurgeService {
     private PurgeStatus purgeStatus;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PurgeServiceImpl() {
     }

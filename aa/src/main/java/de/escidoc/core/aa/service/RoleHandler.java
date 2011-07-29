@@ -63,7 +63,7 @@ public class RoleHandler implements RoleHandlerInterface {
     private de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected RoleHandler() {
     }

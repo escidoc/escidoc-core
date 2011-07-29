@@ -35,7 +35,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     private de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SetDefinitionHandler() {
     }

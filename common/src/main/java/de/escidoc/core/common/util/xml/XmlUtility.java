@@ -489,7 +489,7 @@ public final class XmlUtility {
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected XmlUtility() {
     }

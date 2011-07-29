@@ -53,7 +53,7 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
     private de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SemanticStoreHandler() {
     }

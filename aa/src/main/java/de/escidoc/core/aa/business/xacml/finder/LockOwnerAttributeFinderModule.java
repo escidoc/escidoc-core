@@ -62,7 +62,7 @@ public class LockOwnerAttributeFinderModule extends AbstractAttributeFinderModul
     private LockHandler lockHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected LockOwnerAttributeFinderModule() {
     }

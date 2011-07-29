@@ -100,7 +100,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     private EscidocRoleDaoInterface roleDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected RoleAttributeFinderModule() {
     }

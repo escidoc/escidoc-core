@@ -71,7 +71,7 @@ public class GsearchHandler {
     private ConnectionUtility connectionUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected GsearchHandler() {
     }

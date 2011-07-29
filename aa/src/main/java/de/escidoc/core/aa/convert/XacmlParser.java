@@ -138,7 +138,7 @@ public class XacmlParser {
     };
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected XacmlParser() {
     }

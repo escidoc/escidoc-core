@@ -71,7 +71,7 @@ public class ResourceIdentifierAttributeFinderModule extends AbstractAttributeFi
             + "|organizational-unit|role|user-account|user-group)(-id){0,1}$");
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ResourceIdentifierAttributeFinderModule() {
     }

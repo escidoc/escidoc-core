@@ -54,7 +54,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     private StatisticPreprocessor preprocessor;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PreprocessingHandler() {
     }

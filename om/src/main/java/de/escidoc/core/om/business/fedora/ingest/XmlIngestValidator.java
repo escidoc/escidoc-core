@@ -53,7 +53,7 @@ public class XmlIngestValidator implements IngestValidator {
     private XmlUtility xmlUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected XmlIngestValidator() {
     }

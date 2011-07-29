@@ -69,7 +69,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(SetDefinitionHandler.class);
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SetDefinitionHandler() {
     }

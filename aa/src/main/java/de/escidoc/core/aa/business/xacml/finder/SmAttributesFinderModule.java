@@ -125,7 +125,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private ScopeHandlerInterface scopeHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SmAttributesFinderModule() {
     }

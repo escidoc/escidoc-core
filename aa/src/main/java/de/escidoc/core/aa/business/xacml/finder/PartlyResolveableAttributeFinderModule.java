@@ -72,7 +72,7 @@ public class PartlyResolveableAttributeFinderModule extends AbstractAttributeFin
     public static final int MARKER_LENGTH = AttributeIds.MARKER.length();
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PartlyResolveableAttributeFinderModule() {
     }

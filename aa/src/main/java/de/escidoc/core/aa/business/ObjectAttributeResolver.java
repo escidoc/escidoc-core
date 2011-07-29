@@ -63,7 +63,7 @@ public class ObjectAttributeResolver {
     public static final String ATTR_OBJECT_TITLE = "objectTitle";
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ObjectAttributeResolver() {
     }

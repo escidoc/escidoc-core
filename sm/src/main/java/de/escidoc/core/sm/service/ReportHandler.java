@@ -54,7 +54,7 @@ public class ReportHandler implements ReportHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ReportHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ReportHandler() {
     }

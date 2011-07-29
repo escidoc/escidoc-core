@@ -58,7 +58,7 @@ public class FedoraIngestFacade implements IngestFacade {
     private ValueFormatter formatter;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraIngestFacade() {
     }

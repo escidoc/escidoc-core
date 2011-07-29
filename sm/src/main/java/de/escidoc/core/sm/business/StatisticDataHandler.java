@@ -66,7 +66,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private CamelContext camelContext;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StatisticDataHandler() {
     }

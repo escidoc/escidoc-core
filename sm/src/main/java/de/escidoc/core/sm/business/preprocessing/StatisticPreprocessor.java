@@ -106,7 +106,7 @@ public class StatisticPreprocessor {
     private ErrorMessageHandler errorMessageHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StatisticPreprocessor() {
     }
