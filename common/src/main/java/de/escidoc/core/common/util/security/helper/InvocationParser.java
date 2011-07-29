@@ -78,7 +78,7 @@ public class InvocationParser {
     private DocumentsCache documentsCache;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected InvocationParser() {
     }

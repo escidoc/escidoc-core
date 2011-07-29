@@ -25,7 +25,7 @@ public class VelocityXmlContainerFoXmlRenderer implements ContainerFoXmlRenderer
     private final VelocityXmlCommonFoXmlRenderer commonRenderer = new VelocityXmlCommonFoXmlRenderer();
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected VelocityXmlContainerFoXmlRenderer() {
     }

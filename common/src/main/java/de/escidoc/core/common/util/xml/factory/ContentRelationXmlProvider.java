@@ -72,7 +72,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ContentRelationXmlProvider() {
     }

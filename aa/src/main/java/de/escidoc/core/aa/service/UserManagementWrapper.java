@@ -48,7 +48,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     private de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected UserManagementWrapper() {
     }

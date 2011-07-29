@@ -69,7 +69,7 @@ public class ObjectTypeAttributeFinderModule extends AbstractAttributeFinderModu
     private ObjectAttributeResolver objectAttributeResolver;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ObjectTypeAttributeFinderModule() {
     }

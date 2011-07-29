@@ -51,7 +51,7 @@ public class StagingManager {
     private StagingCleaner stagingCleaner;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StagingManager() {
     }

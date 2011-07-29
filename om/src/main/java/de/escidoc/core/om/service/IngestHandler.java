@@ -50,7 +50,7 @@ public class IngestHandler implements IngestHandlerInterface {
     private de.escidoc.core.om.business.interfaces.IngestHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected IngestHandler() {
     }

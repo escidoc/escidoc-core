@@ -732,6 +732,8 @@ public abstract class ClientBase {
 
         String exceptionXML = ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
 
+        System.out.println(exceptionXML);
+
         // try to parse the body that may contain XML representation of an
         // eScidoc exception.
         Document exceptionDocument = null;

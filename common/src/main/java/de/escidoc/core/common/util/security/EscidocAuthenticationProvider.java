@@ -43,7 +43,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected EscidocAuthenticationProvider() {
     }

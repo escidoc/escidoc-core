@@ -75,7 +75,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     private SecurityHelper securityHelper;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected XacmlFunctionRoleInList() {
         super(NAME, 0, StringAttribute.identifier, false, 1, BooleanAttribute.identifier, false);

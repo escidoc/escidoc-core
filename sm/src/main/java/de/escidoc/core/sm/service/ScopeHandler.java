@@ -56,7 +56,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ScopeHandler() {
     }

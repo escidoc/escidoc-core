@@ -54,7 +54,7 @@ public class ConditionParser {
     private Values values;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ConditionParser() {
     }

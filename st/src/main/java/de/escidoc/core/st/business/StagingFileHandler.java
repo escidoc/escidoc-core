@@ -71,7 +71,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     private StagingFileDao dao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StagingFileHandler() {
     }

@@ -140,7 +140,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraContentModelHandler() {
     }

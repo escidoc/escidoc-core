@@ -50,7 +50,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface handler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StatisticDataHandler() {
     }

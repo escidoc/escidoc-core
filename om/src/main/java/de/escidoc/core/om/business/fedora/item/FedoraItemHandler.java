@@ -182,7 +182,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraItemHandler() {
     }

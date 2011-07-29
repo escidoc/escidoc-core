@@ -99,7 +99,7 @@ public class SecurityHelper {
     private static final String PATTERN_INSERT_MARKER = "$1" + AttributeIds.MARKER + "$2";
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SecurityHelper() {
     }

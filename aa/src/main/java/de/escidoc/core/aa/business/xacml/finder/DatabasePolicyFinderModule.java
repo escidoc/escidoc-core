@@ -97,7 +97,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private PolicyFinder policyFinder;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected DatabasePolicyFinderModule() {
     }

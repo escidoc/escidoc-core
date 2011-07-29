@@ -82,7 +82,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
     private ScopeRendererInterface renderer;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ScopeHandler() {
     }

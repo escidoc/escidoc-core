@@ -22,7 +22,7 @@ public class IndexServiceImpl {
     private AdminHandlerInterface adminHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected IndexServiceImpl() {
     }

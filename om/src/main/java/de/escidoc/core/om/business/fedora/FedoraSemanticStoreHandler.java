@@ -69,7 +69,7 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
     private TripleStoreConnector tripleStoreConnector;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraSemanticStoreHandler() {
     }

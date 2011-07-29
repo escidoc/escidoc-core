@@ -139,7 +139,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
     private PIDSystem pidGen;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraContentRelationHandler() {
     }

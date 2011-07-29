@@ -83,7 +83,7 @@ public class GsearchHandler {
     private final HttpParams gSearchDefaultParams = new BasicHttpParams();
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected GsearchHandler() {
     }

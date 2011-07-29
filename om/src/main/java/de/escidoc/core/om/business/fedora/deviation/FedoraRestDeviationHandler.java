@@ -56,7 +56,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     private IndexerResourceRequester indexerResourceRequester;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraRestDeviationHandler() {
     }

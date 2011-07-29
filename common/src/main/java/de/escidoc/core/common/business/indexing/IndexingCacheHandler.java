@@ -49,7 +49,7 @@ public class IndexingCacheHandler {
     private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected IndexingCacheHandler() {
     }

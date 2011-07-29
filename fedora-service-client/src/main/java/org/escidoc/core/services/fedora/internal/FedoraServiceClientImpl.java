@@ -93,7 +93,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     private FedoraServiceRESTEndpoint fedoraService;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraServiceClientImpl() {
     }

@@ -38,7 +38,7 @@ public class ErrorMessageHandler {
             + "#################################################\n";
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ErrorMessageHandler() {
     }

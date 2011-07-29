@@ -56,7 +56,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PolicyDecisionPoint() {
     }

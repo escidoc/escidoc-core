@@ -110,7 +110,7 @@ public class AggregationDefinitionHandler implements AggregationDefinitionHandle
     private AggregationDefinitionRendererInterface renderer;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AggregationDefinitionHandler() {
     }

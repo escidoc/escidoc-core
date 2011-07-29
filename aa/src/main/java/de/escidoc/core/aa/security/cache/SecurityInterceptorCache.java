@@ -57,7 +57,7 @@ public class SecurityInterceptorCache {
     private RequestMappingDaoInterface requestMappingDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SecurityInterceptorCache() {
     }

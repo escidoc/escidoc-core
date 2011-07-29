@@ -78,7 +78,7 @@ public class NewOuParentsAttributeFinderModule extends AbstractAttributeFinderMo
         new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected NewOuParentsAttributeFinderModule() {
     }

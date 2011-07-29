@@ -110,7 +110,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
     private ResourceListener indexingHandler;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraContextHandler() {
     }

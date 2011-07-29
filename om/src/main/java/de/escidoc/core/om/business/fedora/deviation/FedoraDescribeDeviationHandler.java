@@ -56,7 +56,7 @@ public class FedoraDescribeDeviationHandler implements FedoraDescribeDeviationHa
     private ConnectionUtility connectionUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected FedoraDescribeDeviationHandler() {
     }

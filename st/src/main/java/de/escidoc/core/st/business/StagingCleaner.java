@@ -66,7 +66,7 @@ public class StagingCleaner {
     private StagingFileDao stagingFileDao;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected StagingCleaner() {
     }

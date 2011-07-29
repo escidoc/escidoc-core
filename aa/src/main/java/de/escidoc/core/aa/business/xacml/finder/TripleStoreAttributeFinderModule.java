@@ -199,7 +199,7 @@ public class TripleStoreAttributeFinderModule extends AbstractAttributeFinderMod
             false);
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected TripleStoreAttributeFinderModule() {
         initMapping();

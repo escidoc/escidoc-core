@@ -25,7 +25,7 @@ public class JhoveHandler implements de.escidoc.core.tme.service.interfaces.Jhov
     private JhoveHandlerInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected JhoveHandler() {
     }

@@ -84,7 +84,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     private TripleStoreUtility tripleStoreUtility;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected VelocityXmlContainerRenderer() {
     }

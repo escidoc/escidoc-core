@@ -41,7 +41,7 @@ public final class PurgeStatus extends AdminMethodStatus {
     private int count;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected PurgeStatus() {
     }

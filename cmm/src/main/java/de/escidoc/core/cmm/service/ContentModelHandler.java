@@ -69,7 +69,7 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     private ContentModelHandlerInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected ContentModelHandler() {
     }

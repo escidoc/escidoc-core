@@ -49,7 +49,7 @@ public class SmFilterUtility {
     private PolicyDecisionPointInterface pdp;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected SmFilterUtility() {
     }

@@ -74,7 +74,7 @@ public class OrganizationalUnitHandler
     private OrganizationalUnitHandlerInterface business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected OrganizationalUnitHandler() {
     }

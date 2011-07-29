@@ -55,7 +55,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public class DocumentsCache {
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected DocumentsCache() {
     }

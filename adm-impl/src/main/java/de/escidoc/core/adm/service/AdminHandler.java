@@ -56,7 +56,7 @@ public class AdminHandler implements AdminHandlerInterface {
     private de.escidoc.core.adm.business.admin.AdminHandler business;
 
     /**
-     * Private constructor to prevent initialization.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected AdminHandler() {
     }
