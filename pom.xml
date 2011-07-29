@@ -1057,7 +1057,7 @@
     <escidoc.fedoragsearch.version>1.4.13</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.4.7</escidoc.srw.version>
     <srw.version>1.4.2</srw.version>
-
+    <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
     <java.source.version>1.6</java.source.version>
