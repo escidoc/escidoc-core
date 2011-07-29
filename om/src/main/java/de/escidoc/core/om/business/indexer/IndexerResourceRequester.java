@@ -128,8 +128,8 @@ public class IndexerResourceRequester {
      * @return Object resource-object
      */
     @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
-    public Object setResource(@PartialCacheKey
-    final EscidocBinaryContent identifier, final EscidocBinaryContent resource) {
+    public EscidocBinaryContent setResource(@PartialCacheKey
+    final String identifier, final EscidocBinaryContent resource) {
         return resource;
     }
 
