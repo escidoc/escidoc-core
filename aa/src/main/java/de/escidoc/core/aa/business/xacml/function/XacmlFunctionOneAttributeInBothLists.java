@@ -69,9 +69,9 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
     private static final boolean[] BAG_PARAMS = { true, true };
 
     /**
-     * The constructor.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
-    public XacmlFunctionOneAttributeInBothLists() {
+    protected XacmlFunctionOneAttributeInBothLists() {
 
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }

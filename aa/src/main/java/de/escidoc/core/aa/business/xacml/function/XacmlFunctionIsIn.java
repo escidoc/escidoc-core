@@ -66,9 +66,9 @@ public class XacmlFunctionIsIn extends FunctionBase {
     private static final boolean[] BAG_PARAMS = { false, true };
 
     /**
-     * The constructor.
+     * Protected constructor to prevent instantiation outside of the Spring-context.
      */
-    public XacmlFunctionIsIn() {
+    protected XacmlFunctionIsIn() {
 
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }
