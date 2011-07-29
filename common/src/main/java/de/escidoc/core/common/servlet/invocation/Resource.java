@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import org.apache.xpath.XPathAPI;
 
 /**
  * The resource class to map HTTP requests to a configured resource method.
@@ -176,7 +177,8 @@ public class Resource extends XMLBase {
     }
 
     /**
-     * Get the invocation definition corresponding containing the given http method.
+     * Get the invocation definition corresponding containing the given http method. This method uses the XPathAPI 
+     * convenience class, because the XPath-Expressions are generic.
      *
      * @param descriptor The descriptor.
      * @param method     The http method name.
@@ -184,15 +186,7 @@ public class Resource extends XMLBase {
      * @throws TransformerException Thrown if an xml transformation fails.
      */
     private Node getInvocationDescription(final Node descriptor, final String method) throws TransformerException {
-        String xPath = INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + '\"';
-
-        xPath += "]";
-        final NodeList nodes = parse(xPath, descriptor);
-        Node result = null;
-        if (nodes.getLength() == 1) {
-            result = nodes.item(0);
-        }
-        return result;
+        return XPathAPI.selectSingleNode(descriptor, INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + "\"]");
     }
 
     /**
