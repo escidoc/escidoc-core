@@ -9,10 +9,16 @@
     Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
     <cache
             name="resourcesCache"
-            maxElementsInMemory="1000"
+            maxElementsInMemory="200"
             eternal="false"
-            overflowToDisk="true"
-            timeToIdleSeconds="1800"/>
+            overflowToDisk="false"
+            timeToIdleSeconds="1800">
+    	<cacheEventListenerFactory 
+    		class="de.escidoc.core.common.util.ehcache.listener.ResourcesCacheEventListenerFactory" 
+    		properties="" 
+    		listenFor="all"/>
+		<searchable/>
+	</cache>
 
     <!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
     Used by de.escidoc.core.aa.business.cache.PoliciesCache -->

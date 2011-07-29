@@ -92,7 +92,7 @@ public class IndexerResourceRequester {
      * @return EscidocBinaryContent resource-object
      * @throws SystemException e
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocBinaryContent getResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
@@ -127,9 +127,9 @@ public class IndexerResourceRequester {
      * @param resource   resource-object
      * @return Object resource-object
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object setResource(@PartialCacheKey
-    final String identifier, final EscidocBinaryContent resource) {
+    final EscidocBinaryContent identifier, final EscidocBinaryContent resource) {
         return resource;
     }
 
@@ -138,7 +138,7 @@ public class IndexerResourceRequester {
      *
      * @param identifier identifier
      */
-    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @TriggersRemove(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public void deleteResource(final String identifier) {
     }
 

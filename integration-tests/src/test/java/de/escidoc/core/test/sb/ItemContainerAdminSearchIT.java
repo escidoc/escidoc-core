@@ -104,7 +104,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
     public void setUp() throws Exception {
         if (methodCounter == 0) {
             prepare();
-            //          prepare(51001);
+            //          prepare(1001);
         }
     }
 

@@ -55,50 +55,21 @@ public class IndexingCacheHandler {
     }
 
     /**
-     * removes object + subobjects with given id from cache.
+     * removes object with given id from cache.
      *
      * @param id  resource id
-     * @param xml xml
+     * @param href href
      * @throws SystemException The resource could not be removed.
      */
-    public void removeObjectFromCache(final String id, final String xml) throws SystemException {
+    public void removeObjectFromCache(final String id, final String href) throws SystemException {
         try {
-            String reXml = xml;
-            String reId = id;
-            if (reId.matches(".*?:.*?:.*")) {
-                reId = reId.substring(0, reId.lastIndexOf(':'));
+            if (id.matches(".*?:.*?:.*")) {
+                fedoraRestDeviationHandler.removeFromCache(id.substring(0, id.lastIndexOf(':')));
+                fedoraRestDeviationHandler.removeFromCache(href.substring(0, href.lastIndexOf(':')));
             }
-            if (reXml == null || reXml.isEmpty()) {
-                EscidocBinaryContent content = fedoraRestDeviationHandler.retrieveUncached(reId);
-                if (content.getMimeType() != null && content.getMimeType().startsWith("text")
-                    && content.getContent() != null) {
-                    reXml =
-                        new String(IOUtils.readBytesFromStream(content.getContent()), XmlUtility.CHARACTER_ENCODING);
-                }
-                else {
-                    throw new SystemException("wrong mime-type");
-                }
-            }
-            final StaxParser sp = new StaxParser();
-            final IndexerCacheHandler handler = new IndexerCacheHandler(sp);
-            sp.addHandler(handler);
-            sp.parse(reXml);
-            final int version = handler.getLastVersion();
-            final Set<String> components = handler.getComponents();
-            fedoraRestDeviationHandler.removeFromCache(id);
-            for (final String componentHref : components) {
-                fedoraRestDeviationHandler.removeFromCache(componentHref);
-                fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
-            }
-            if (version > -1) {
-                for (int i = 1; i <= version; i++) {
-                    fedoraRestDeviationHandler.removeFromCache(reId + ':' + i);
-                    for (String componentHref : components) {
-                        componentHref = componentHref.replaceAll(reId, reId + ':' + i);
-                        fedoraRestDeviationHandler.removeFromCache(componentHref);
-                        fedoraRestDeviationHandler.removeFromCache(componentHref.replaceFirst("/", ""));
-                    }
-                }
+            else {
+                fedoraRestDeviationHandler.removeFromCache(id);
+                fedoraRestDeviationHandler.removeFromCache(href);
             }
         }
         catch (final Exception e) {
