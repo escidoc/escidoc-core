@@ -22,17 +22,13 @@ package de.escidoc.core.common.business.indexing;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
-import java.util.Set;
 
 import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.IndexerCacheHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
