@@ -96,8 +96,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
 
     private static final Pattern FIELD_NAME_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}");
 
-    private static final Matcher FIELD_NAME_MATCHER = FIELD_NAME_PATTERN.matcher("");
-
     private static final String XPATH_BOOLEAN_FUNCTION =
         "(xpath('${XPATH}', XMLPARSE(DOCUMENT ${FIELD_NAME})))[1]::text IS NOT NULL";
 
@@ -108,8 +106,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
         "(xpath('${XPATH}', XMLPARSE(DOCUMENT ${FIELD_NAME})))[1]::text";
 
     private static final Pattern XPATH_PATTERN = Pattern.compile("\\$\\{XPATH\\}(.*?)\\$\\{FIELD_NAME\\}");
-
-    private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
     private static final Map<String, String> RESERVED_EXPRESSIONS = new HashMap<String, String>();
 
@@ -603,14 +599,14 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
                 final String dayOfMonthFunction =
-                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION).replaceAll(
+                    FIELD_NAME_PATTERN.matcher(DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
 
                 whereClause.append(dayOfMonthFunction).append(operator).append(' ');
             }
             else {
                 final String dateToCharFunction =
-                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_FUNCTION).replaceAll(
+                    FIELD_NAME_PATTERN.matcher(DATE_TO_CHAR_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
                 whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
@@ -678,7 +674,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_BOOLEAN_FUNCTION).replaceAll(
             Matcher.quoteReplacement(xpath) + "$1" + Matcher.quoteReplacement(field));
     }
 
@@ -698,7 +694,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
             }
             replacedXpath.append("text()");
         }
-        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_STRING_FUNCTION).replaceAll(
             Matcher.quoteReplacement(replacedXpath.toString()) + "$1" + Matcher.quoteReplacement(field));
     }
 
@@ -717,7 +713,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
             }
             replacedXpath.append("text()");
         }
-        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_NUMBER_FUNCTION).replaceAll(
             Matcher.quoteReplacement(replacedXpath.toString()) + "$1" + Matcher.quoteReplacement(field));
     }
 

@@ -71,8 +71,6 @@ public class InvocationParser {
      */
     private static final Pattern PATTERN_SUBRESOURCE = Pattern.compile(InvocationMapping.SUBRESOURCE_PATTERN);
 
-    private static final Matcher MATCHER_SUBRESOURCE = PATTERN_SUBRESOURCE.matcher("");
-
     @Autowired
     @Qualifier("security.DocumentsCache")
     private DocumentsCache documentsCache;
@@ -219,7 +217,7 @@ public class InvocationParser {
                     // found the resource ID
                     resourceIdProvided = true;
                 }
-                else if (MATCHER_SUBRESOURCE.reset(attributeId).matches()) {
+                else if (PATTERN_SUBRESOURCE.matcher(attributeId).matches()) {
                     resourceAttributes.put(AttributeIds.URN_SUBRESOURCE_ATTR, value.getValue());
                     subresourceIdProvided = true;
                 }

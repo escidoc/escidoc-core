@@ -96,8 +96,6 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
     private Pattern grantPattern = Pattern.compile("</[^:]*?:grant>");
 
-    private Matcher grantMatcher = grantPattern.matcher("");
-
     protected String defaultUserAccountOrGroupId = null;
 
     protected static boolean isUserAccountTest = false;
@@ -996,7 +994,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         try {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
             String grantsXml = retrieveCurrentGrants(id);
-            grantMatcher.reset(grantsXml);
+            Matcher grantMatcher = grantPattern.matcher(grantsXml);
             int matches = 0;
             while (grantMatcher.find()) {
                 matches++;

@@ -84,8 +84,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
 
     private static final Pattern FIELD_NAME_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}");
 
-    private static final Matcher FIELD_NAME_MATCHER = FIELD_NAME_PATTERN.matcher("");
-
     private static final String XPATH_BOOLEAN_FUNCTION = "ExtractValue(${FIELD_NAME},'${XPATH}') is not null ";
 
     private static final String XPATH_STRING_FUNCTION = "ExtractValue(${FIELD_NAME},'${XPATH}')";
@@ -93,8 +91,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
     private static final String XPATH_NUMBER_FUNCTION = "ExtractValue(${FIELD_NAME},'${XPATH}')";
 
     private static final Pattern XPATH_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}(.*?)\\$\\{XPATH\\}");
-
-    private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
     private static final Map<String, String> RESERVED_EXPRESSIONS = new HashMap<String, String>();
 
@@ -558,7 +554,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
                 final String dayOfMonthFunction =
-                    FIELD_NAME_MATCHER.reset(DAY_OF_MONTH_FUNCTION).replaceAll(
+                    FIELD_NAME_PATTERN.matcher(DAY_OF_MONTH_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
 
                 whereClause.append(dayOfMonthFunction).append(operator).append(' ');
@@ -630,7 +626,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_BOOLEAN_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
@@ -643,7 +639,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_STRING_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
@@ -655,7 +651,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
      * @return String database-dependant query for an xpath-string request.
      */
     public String getXpathNumeric(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_NUMBER_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 

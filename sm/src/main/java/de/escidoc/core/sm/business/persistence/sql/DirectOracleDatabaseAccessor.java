@@ -89,8 +89,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
 
     private static final Pattern FIELD_NAME_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}");
 
-    private static final Matcher FIELD_NAME_MATCHER = FIELD_NAME_PATTERN.matcher("");
-
     private static final String XPATH_BOOLEAN_FUNCTION = "EXTRACT(xmltype(${FIELD_NAME}), '${XPATH}') IS NOT NULL";
 
     private static final String XPATH_STRING_FUNCTION = "EXTRACTVALUE(xmltype(${FIELD_NAME}), '${XPATH}')";
@@ -98,8 +96,6 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
     private static final String XPATH_NUMBER_FUNCTION = "EXTRACTVALUE(xmltype(${FIELD_NAME}), '${XPATH}')";
 
     private static final Pattern XPATH_PATTERN = Pattern.compile("\\$\\{FIELD_NAME\\}(.*?)\\$\\{XPATH\\}");
-
-    private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
     private static final Map<String, String> RESERVED_EXPRESSIONS = new HashMap<String, String>();
 
@@ -592,14 +588,14 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
                 final String dayOfMonthFunction =
-                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION).replaceAll(
+                    FIELD_NAME_PATTERN.matcher(DATE_TO_CHAR_DAY_OF_MONTH_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
 
                 whereClause.append(dayOfMonthFunction).append(operator).append(' ');
             }
             else {
                 final String dateToCharFunction =
-                    FIELD_NAME_MATCHER.reset(DATE_TO_CHAR_FUNCTION).replaceAll(
+                    FIELD_NAME_PATTERN.matcher(DATE_TO_CHAR_FUNCTION).replaceAll(
                         Matcher.quoteReplacement(longFieldName.toString()));
                 whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
@@ -667,7 +663,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_BOOLEAN_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
@@ -680,7 +676,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_STRING_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
@@ -692,7 +688,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
      * @return String database-dependant query for an xpath-string request.
      */
     public String getXpathNumeric(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(
+        return XPATH_PATTERN.matcher(XPATH_NUMBER_FUNCTION).replaceAll(
             Matcher.quoteReplacement(field) + "$1" + Matcher.quoteReplacement(xpath));
     }
 
