@@ -132,6 +132,9 @@ public class ConnectionUtility {
          */
         final EscidocConfiguration config = EscidocConfiguration.getInstance();
         if (config == null) {
+            if (LOG.isWarnEnabled()) {
+                LOG.warn("Unable to get eSciDoc configuration.");
+            }
             return;
         }
 
