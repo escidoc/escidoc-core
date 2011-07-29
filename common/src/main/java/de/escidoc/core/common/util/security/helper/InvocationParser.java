@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.transform.TransformerException;
@@ -70,8 +69,6 @@ public class InvocationParser {
      * Pattern used to detect sub-resource-attributes in invocation-mappings.
      */
     private static final Pattern PATTERN_SUBRESOURCE = Pattern.compile(InvocationMapping.SUBRESOURCE_PATTERN);
-
-    private static final Matcher MATCHER_SUBRESOURCE = PATTERN_SUBRESOURCE.matcher("");
 
     @Autowired
     @Qualifier("security.DocumentsCache")
@@ -219,7 +216,7 @@ public class InvocationParser {
                     // found the resource ID
                     resourceIdProvided = true;
                 }
-                else if (MATCHER_SUBRESOURCE.reset(attributeId).matches()) {
+                else if (PATTERN_SUBRESOURCE.matcher(attributeId).matches()) {
                     resourceAttributes.put(AttributeIds.URN_SUBRESOURCE_ATTR, value.getValue());
                     subresourceIdProvided = true;
                 }

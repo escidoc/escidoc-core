@@ -62,8 +62,6 @@ public class SmTestBase extends EscidocAbstractTest {
     private Pattern yearPattern =
         Pattern.compile("(?s)\\{yearReplacement\\}", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
 
-    private Matcher yearMatcher = yearPattern.matcher("");
-
     public SmTestBase() {
         this.statisticDataClient = new StatisticDataClient();
         this.aggregationDefinitionClient = new AggregationDefinitionClient();
@@ -156,7 +154,7 @@ public class SmTestBase extends EscidocAbstractTest {
      * @return Returns the replacedXml.
      */
     public String replaceYear(final String xml, final String year) {
-        yearMatcher = yearMatcher.reset(xml);
+        Matcher yearMatcher = yearPattern.matcher(xml);
         String replacedXml = yearMatcher.replaceAll(year);
         return replacedXml;
     }
