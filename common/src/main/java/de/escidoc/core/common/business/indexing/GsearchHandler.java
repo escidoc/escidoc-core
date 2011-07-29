@@ -164,18 +164,18 @@ public class GsearchHandler {
             updateIndexParams = Constants.VALUE_PATTERN.matcher(updateIndexParams).replaceFirst(resource);
             try {
                 String stylesheetParameters =
-                    Constants.SUPPORTED_MIMETYPES_PATTERN.matcher(
-                        Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
+                    Constants.SUPPORTED_MIMETYPES_PATTERN
+                        .matcher(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
                             URLEncoder.encode(getRepositoryInfo().get("SupportedMimeTypes"),
                                 XmlUtility.CHARACTER_ENCODING));
                 stylesheetParameters =
-                    pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_PATTERN.matcher(
-                        stylesheetParameters).replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_PATTERN.matcher(
-                        stylesheetParameters).replaceFirst(pidSuffix);
+                    pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst(pidSuffix);
                 stylesheetParameters =
-                    indexFulltextVisibilities == null || indexFulltextVisibilities.length() == 0 ? 
-                        Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN.matcher(stylesheetParameters).replaceFirst("") 
-                        : Constants.INDEX_FULLTEXT_VISIBILITIES_PATTERN.matcher(stylesheetParameters).replaceFirst(
+                    indexFulltextVisibilities == null || indexFulltextVisibilities.length() == 0 ? Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst("") : Constants.INDEX_FULLTEXT_VISIBILITIES_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst(
                             URLEncoder.encode(indexFulltextVisibilities, XmlUtility.CHARACTER_ENCODING));
                 updateIndexParams += stylesheetParameters;
 
@@ -305,7 +305,8 @@ public class GsearchHandler {
         if (index == null) {
             createEmptyParams =
                 Constants.INDEX_NAME_PATTERN.matcher(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst("");
-        } else {
+        }
+        else {
             createEmptyParams =
                 Constants.INDEX_NAME_PATTERN.matcher(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(index);
         }
@@ -554,7 +555,8 @@ public class GsearchHandler {
                 // gsearch
                 if (Constants.NO_INDEX_DIR_PATTERN.matcher(response).matches()) {
                     if (StringUtils.isEmpty(myIndex)) {
-                        Matcher NoIndexDirIndexNameMatcher = Constants.NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher(response);
+                        Matcher NoIndexDirIndexNameMatcher =
+                            Constants.NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher(response);
                         if (!NoIndexDirIndexNameMatcher.matches()) {
                             throw new ApplicationServerSystemException(response);
                         }
