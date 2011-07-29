@@ -2127,7 +2127,7 @@
       </properties>
     </profile>
     <profile>
-      <id>oracle-db</id>
+      <id>oracle-database</id>
       <activation>
         <activeByDefault>false</activeByDefault>
         <property>
