@@ -90,11 +90,9 @@ public class GenericVersionableResource extends GenericResourcePid {
     @Qualifier("business.TripleStoreUtility")
     private TripleStoreUtility tripleStoreUtility;
 
-    private String description;
-
     protected Datastream wov;
 
-    private VersionData currentVersionData;
+    private VersionData versionData;
 
     /**
      * Number of the version. Is null if it is the latest version.
@@ -104,7 +102,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     // has the version number independent if it is the latest version or not
     private String versionId;
 
-    private Map<String, String> lastVersionData;
+    private Map<String, String> relsExtData;
 
     private boolean initLastModifiedDate = true;
 
@@ -410,24 +408,6 @@ public class GenericVersionableResource extends GenericResourcePid {
         return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
     }
 
-    /**
-     * Get the resource description.
-     *
-     * @return description
-     */
-    public String getDescription() {
-        return this.description;
-    }
-
-    /**
-     * Set the resource description.
-     *
-     * @param description New description of resource.
-     */
-    protected void setDescription(final String description) {
-        this.description = description;
-    }
-
     // --------------------------------------------------------------------------
 
     /**
@@ -560,12 +540,12 @@ public class GenericVersionableResource extends GenericResourcePid {
             throw new WebserverSystemException(e);
         }
 
-        this.lastVersionData = new HashMap<String, String>();
+        this.relsExtData = new HashMap<String, String>();
         final List<Triple> triples = eve.getElementValues().getTriples();
         for (final Triple triple : triples) {
-            this.lastVersionData.put(triple.getPredicate(), triple.getObject());
+            this.relsExtData.put(triple.getPredicate(), triple.getObject());
         }
-        return this.lastVersionData;
+        return this.relsExtData;
     }
 
     /**
@@ -577,16 +557,16 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     private VersionData getVersionData() throws IntegritySystemException {
 
-        if (this.currentVersionData == null) {
+        if (this.versionData == null) {
             try {
-                this.currentVersionData = getVersionData(getVersionNumber());
+                this.versionData = getVersionData(getVersionNumber());
             }
             catch (final Exception e) {
                 throw new IntegritySystemException("No version data for resource " + getId() + '.' + e);
             }
         }
 
-        return this.currentVersionData;
+        return this.versionData;
     }
 
     /**
@@ -713,9 +693,8 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         setLastVersionData();
         if (getVersionNumber() == null) {
-            this.description =
-                this.tripleStoreUtility.getPropertiesElements(getId(), Constants.DC_NS_URI
-                    + Elements.ELEMENT_DESCRIPTION);
+            setDescription(this.tripleStoreUtility.getPropertiesElements(getId(), Constants.DC_NS_URI
+                + Elements.ELEMENT_DESCRIPTION));
         }
     }
 

@@ -113,6 +113,8 @@ public class GenericResource implements FedoraResource {
 
     private String title;
 
+    private String description;
+
     /**
      * The resource Href.
      */
@@ -166,6 +168,24 @@ public class GenericResource implements FedoraResource {
         this.id = objid;
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
+    }
+
+    /**
+     * Get the resource description.
+     *
+     * @return description
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Set the resource description.
+     *
+     * @param description New description of resource.
+     */
+    protected void setDescription(final String description) {
+        this.description = description;
     }
 
     /**
