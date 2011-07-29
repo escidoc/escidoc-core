@@ -59,13 +59,19 @@ public class IndexingCacheHandler {
      */
     public void removeObjectFromCache(final String id, final String href) throws SystemException {
         try {
-            if (id.matches(".*?:.*?:.*")) {
+            if (id != null && id.matches(".*?:.*?:.*")) {
                 fedoraRestDeviationHandler.removeFromCache(id.substring(0, id.lastIndexOf(':')));
-                fedoraRestDeviationHandler.removeFromCache(href.substring(0, href.lastIndexOf(':')));
+                if (href != null) {
+                    fedoraRestDeviationHandler.removeFromCache(href.substring(0, href.lastIndexOf(':')));
+                    fedoraRestDeviationHandler.removeFromCache(href.substring(1, href.lastIndexOf(':')));
+                }
             }
             else {
                 fedoraRestDeviationHandler.removeFromCache(id);
-                fedoraRestDeviationHandler.removeFromCache(href);
+                if (href != null) {
+                    fedoraRestDeviationHandler.removeFromCache(href);
+                    fedoraRestDeviationHandler.removeFromCache(href.substring(1, href.length()));
+                }
             }
         }
         catch (final Exception e) {
