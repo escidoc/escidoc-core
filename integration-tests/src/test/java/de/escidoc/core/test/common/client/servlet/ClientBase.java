@@ -771,9 +771,12 @@ public abstract class ClientBase {
                 exceptionClass = Class.forName(exceptionName);
             }
             catch (final ClassNotFoundException e) {
-                throw new Exception("No class found for identified exception" + " received from eSciDoc ["
-                    + exceptionName + ", " + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML,
-                    e);
+                final String message =
+                    "No class found for identified exception" + " received from eSciDoc [" + exceptionName + ", "
+                        + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML;
+
+                LOGGER.error(message, e);
+                throw new Exception(message, e);
             }
 
             exceptionObject = exceptionClass.newInstance();
