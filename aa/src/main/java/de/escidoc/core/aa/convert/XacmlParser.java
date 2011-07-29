@@ -88,6 +88,18 @@ public class XacmlParser {
     private XacmlFunctionRoleInList xacmlFunctionRoleInList;
 
     @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionContains")
+    private XacmlFunctionContains xacmlFunctionContains;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionIsIn")
+    private XacmlFunctionIsIn xacmlFunctionIsIn;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionOneAttributeInBothLists")
+    private XacmlFunctionOneAttributeInBothLists xacmlFunctionOneAttributeInBothLists;
+
+    @Autowired
     @Qualifier("convert.PolicyParser")
     private PolicyParser pol;
 
@@ -202,10 +214,10 @@ public class XacmlParser {
         final FunctionFactoryProxy proxy = StandardFunctionFactory.getNewFactoryProxy();
         final FunctionFactory factory = proxy.getTargetFactory();
 
-        factory.addFunction(new XacmlFunctionContains());
-        factory.addFunction(new XacmlFunctionIsIn());
+        factory.addFunction(this.xacmlFunctionContains);
+        factory.addFunction(this.xacmlFunctionIsIn);
         factory.addFunction(this.xacmlFunctionRoleInList);
-        factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
+        factory.addFunction(this.xacmlFunctionOneAttributeInBothLists);
         factory.addFunction(this.xacmlFunctionRoleIsGranted);
         FunctionFactory.setDefaultFactory(proxy);
     }
