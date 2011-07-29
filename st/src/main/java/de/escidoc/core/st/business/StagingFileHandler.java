@@ -93,7 +93,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             if (binaryContent == null || binaryContent.getContent() == null) {
                 throw new MissingMethodParameterException("Binary content must be provided.");
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
         final String token = stagingFile.getToken();

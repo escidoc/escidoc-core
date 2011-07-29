@@ -30,14 +30,14 @@ package de.escidoc.core.common.util.ehcache.listener;
 
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.CacheEventListenerFactory;
+import net.sf.ehcache.search.Query;
+import net.sf.ehcache.search.Result;
+import net.sf.ehcache.search.Results;
 
 /**
  * @author Michael Hoppe
@@ -48,11 +48,6 @@ public class ResourcesCacheEventListenerFactory extends CacheEventListenerFactor
     public CacheEventListener createCacheEventListener(Properties properties) {
         return new CacheEventListener() {
 
-            /**
-             * The logger.
-             */
-            private final Logger log = LoggerFactory.getLogger(ResourcesCacheEventListenerFactory.class);
-
             @Override
             public Object clone() throws CloneNotSupportedException {
                 return super.clone();
@@ -60,37 +55,41 @@ public class ResourcesCacheEventListenerFactory extends CacheEventListenerFactor
 
             @Override
             public void notifyElementRemoved(Ehcache cache, Element element) throws CacheException {
-                log.info("Element removed from the cache : {}", element.getObjectKey());
+                String searchKey =
+                    ((String) element.getObjectKey()).substring(0, ((String) element.getObjectKey()).length() - 1);
+
+                @SuppressWarnings("unchecked")
+                Results results =
+                    cache
+                        .createQuery().addCriteria(Query.KEY.between(searchKey + " ", searchKey + "z")).includeKeys()
+                        .execute();
+                for (Result result : results.all()) {
+                    cache.removeQuiet(result.getKey());
+                }
             }
 
             @Override
             public void notifyElementPut(Ehcache cache, Element element) throws CacheException {
-                log.info("Element put into the cache : {}", element.getObjectKey());
             }
 
             @Override
             public void notifyElementUpdated(Ehcache cache, Element element) throws CacheException {
-                log.info("Element updated in the cache : {}", element.getObjectKey());
             }
 
             @Override
             public void notifyElementExpired(Ehcache cache, Element element) {
-                log.info("Element expired in the cache : {}", element.getObjectKey());
             }
 
             @Override
             public void notifyElementEvicted(Ehcache cache, Element element) {
-                log.info("Element evicted from the cache : {}", element.getObjectKey());
             }
 
             @Override
             public void notifyRemoveAll(Ehcache cache) {
-                log.info("Remove all elements from the cache");
             }
 
             @Override
             public void dispose() {
-                log.info("Dispose the listener");
             }
         };
     }
