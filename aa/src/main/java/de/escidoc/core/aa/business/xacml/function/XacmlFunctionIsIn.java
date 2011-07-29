@@ -38,6 +38,8 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Implementation of an XACML (target) function that checks if a provided value can be found in a provided bag.<br> The
  * first parameter has to be a StringAttribute, the second one has to be a bag containing StringAttributes.<br> The
@@ -45,6 +47,7 @@ import java.util.List;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.XacmlFunctionIsIn")
 public class XacmlFunctionIsIn extends FunctionBase {
 
     /**
