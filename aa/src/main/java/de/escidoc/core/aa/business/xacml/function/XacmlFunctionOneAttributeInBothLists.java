@@ -40,6 +40,8 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Implementation of a XACML (target) function that checks if at least one Attribute is contained in both Bags.<br> The
  * first parameter has to be a StringAttribute that contains a space separated list of strings. The second parameter has
@@ -48,6 +50,7 @@ import java.util.List;
  *
  * @author Michael Hoppe
  */
+@Service("eSciDoc.core.aa.XacmlFunctionOneAttributeInBothLists")
 public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
 
     /**

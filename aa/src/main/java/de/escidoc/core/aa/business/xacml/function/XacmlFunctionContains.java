@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Implementation of a XACML (target) function that checks if the first attribute contains the second one.<br> The first
  * parameter has to be a StringAttribute that contains a space separated list of strings. The second parameter has to be
@@ -48,6 +50,7 @@ import java.util.regex.Pattern;
  *
  * @author Torsten Tetteroo
  */
+@Service("eSciDoc.core.aa.XacmlFunctionContains")
 public class XacmlFunctionContains extends FunctionBase {
 
     /**

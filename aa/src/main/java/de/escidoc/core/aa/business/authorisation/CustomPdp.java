@@ -152,6 +152,18 @@ public class CustomPdp {
     @Qualifier("eSciDoc.core.aa.XacmlFunctionRoleInList")
     private XacmlFunctionRoleInList xacmlFunctionRoleInList;
 
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionContains")
+    private XacmlFunctionContains xacmlFunctionContains;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionIsIn")
+    private XacmlFunctionIsIn xacmlFunctionIsIn;
+
+    @Autowired
+    @Qualifier("eSciDoc.core.aa.XacmlFunctionOneAttributeInBothLists")
+    private XacmlFunctionOneAttributeInBothLists xacmlFunctionOneAttributeInBothLists;
+
     // this is the actual PDP object we'll use for evaluation
     private PDP pdp;
 
@@ -222,10 +234,10 @@ public class CustomPdp {
         // Setup the FunctionFactory
         final FunctionFactoryProxy proxy = StandardFunctionFactory.getNewFactoryProxy();
         final FunctionFactory factory = proxy.getTargetFactory();
-        factory.addFunction(new XacmlFunctionContains());
-        factory.addFunction(new XacmlFunctionIsIn());
+        factory.addFunction(this.xacmlFunctionContains);
+        factory.addFunction(this.xacmlFunctionIsIn);
         factory.addFunction(this.xacmlFunctionRoleInList);
-        factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
+        factory.addFunction(this.xacmlFunctionOneAttributeInBothLists);
         factory.addFunction(this.xacmlFunctionRoleIsGranted);
 
         FunctionFactory.setDefaultFactory(proxy);
