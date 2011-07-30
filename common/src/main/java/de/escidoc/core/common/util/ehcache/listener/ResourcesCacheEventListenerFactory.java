@@ -64,9 +64,9 @@ public class ResourcesCacheEventListenerFactory extends CacheEventListenerFactor
                         .createQuery().addCriteria(Query.KEY.between(searchKey + " ", searchKey + "z")).includeKeys()
                         .execute();
                 for (Result result : results.all()) {
-                    if (!((String)result.getKey()).matches(searchKey + "[0-9].*")) {
+                    //if (!((String)result.getKey()).matches(searchKey + "[0-9].*")) {
                         cache.removeQuiet(result.getKey());
-                    }
+                    //}
                 }
             }
 
