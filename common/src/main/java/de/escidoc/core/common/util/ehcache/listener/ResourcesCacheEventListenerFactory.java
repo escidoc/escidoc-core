@@ -65,7 +65,7 @@ public class ResourcesCacheEventListenerFactory extends CacheEventListenerFactor
                         .execute();
                 for (Result result : results.all()) {
                     //if (!((String)result.getKey()).matches(searchKey + "[0-9].*")) {
-                        cache.removeQuiet(result.getKey());
+                    cache.removeQuiet(result.getKey());
                     //}
                 }
             }
