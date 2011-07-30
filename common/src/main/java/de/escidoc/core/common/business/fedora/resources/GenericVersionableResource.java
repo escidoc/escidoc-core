@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
@@ -45,7 +44,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -58,11 +56,11 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.ItemRelsExtUpdateHandler;
-import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.stax.handler.WovReadHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 
@@ -101,8 +99,6 @@ public class GenericVersionableResource extends GenericResourcePid {
 
     // has the version number independent if it is the latest version or not
     private String versionId;
-
-    private Map<String, String> relsExtData;
 
     private boolean initLastModifiedDate = true;
 
@@ -159,7 +155,10 @@ public class GenericVersionableResource extends GenericResourcePid {
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
-        this.initLastVersionData();
+        if (!this.tripleStoreUtility.exists(this.getId())) {
+            throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
+                + "' does not exist.");
+        }
     }
 
     private void initVersionNumber(final String id) throws TripleStoreSystemException, WebserverSystemException,
@@ -193,23 +192,6 @@ public class GenericVersionableResource extends GenericResourcePid {
             else {
                 this.versionNumber = null;
             }
-        }
-    }
-
-    private void initLastVersionData() throws TripleStoreSystemException, WebserverSystemException,
-        ResourceNotFoundException {
-        try {
-            setLastVersionData();
-        }
-        catch (final WebserverSystemException e) {
-            if (this.tripleStoreUtility.exists(this.getId())) {
-                throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
-            }
-            else {
-                throw new ResourceNotFoundException("Resource with the provided objid '" + this.getId()
-                    + "' does not exist.", e);
-            }
-
         }
     }
 
@@ -520,35 +502,6 @@ public class GenericVersionableResource extends GenericResourcePid {
     }
 
     /**
-     * Retrieve the properties of the last version and prepare them as HashMap.
-     *
-     * @return properties of latest version as HashMap
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
-     * @throws WebserverSystemException   Thrown in case of internal failure.
-     */
-    private final Map<String, String> setLastVersionData() throws WebserverSystemException {
-
-        final StaxParser sp = new StaxParser();
-
-        final RelsExtReadHandler eve = new RelsExtReadHandler(sp);
-        eve.cleanIdentifier(true);
-        sp.addHandler(eve);
-        try {
-            sp.parse(getRelsExt(null).getStream());
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-
-        this.relsExtData = new HashMap<String, String>();
-        final List<Triple> triples = eve.getElementValues().getTriples();
-        for (final Triple triple : triples) {
-            this.relsExtData.put(triple.getPredicate(), triple.getObject());
-        }
-        return this.relsExtData;
-    }
-
-    /**
      * Get object version data for the current version of resource. This values are only read once from the WOV data
      * stream (cached).
      *
@@ -678,24 +631,6 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         updateRelsExt(updateElementsRelsExt, null);
         setLastModificationDate(newVersionTimestamp);
-    }
-
-    // --------------------------------------------------------------------------
-
-    /**
-     * It shouldn't be necessary to retrieve values from Fedora again, which the last process has written in.
-     *
-     * @throws TripleStoreSystemException Thrown if request of TripleStore failed.
-     * @throws WebserverSystemException   Thrown in case of internal error.
-     */
-    @Deprecated
-    protected void getSomeValuesFromFedora() throws TripleStoreSystemException, WebserverSystemException {
-
-        setLastVersionData();
-        if (getVersionNumber() == null) {
-            setDescription(this.tripleStoreUtility.getPropertiesElements(getId(), Constants.DC_NS_URI
-                + Elements.ELEMENT_DESCRIPTION));
-        }
     }
 
     // --------------------------------------------------------------------------

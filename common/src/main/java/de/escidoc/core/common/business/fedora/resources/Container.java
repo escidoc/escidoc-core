@@ -661,7 +661,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException("No DC for item " + getId() + '.', e);
         }
-        getSomeValuesFromFedora();
+        if (getVersionNumber() == null) {
+            setDescription(this.tripleStoreUtility.getPropertiesElements(getId(), Constants.DC_NS_URI
+                + Elements.ELEMENT_DESCRIPTION));
+        }
     }
 
     /*
