@@ -28,17 +28,30 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.stereotype.Service;
 
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+
 /**
  * Singleton which contains all information about a running or finished reindexing process.
- *
+ * 
  * @author Michael Hoppe
  */
 @Service("admin.ReindexStatus")
 public final class ReindexStatus extends AdminMethodStatus {
+
+    // use a lock to synchronize access to variable "counts"
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    private final Lock readLock = lock.readLock(), writeLock = lock.writeLock();
+
+    private final Map<ResourceType, Integer> counts = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -48,38 +61,54 @@ public final class ReindexStatus extends AdminMethodStatus {
 
     /**
      * Decrease the number of resources of the given type which still have to be processed.
-     *
-     * @param type resource type
+     * 
+     * @param type
+     *            resource type
      */
-    public synchronized void dec(final ResourceType type) {
-        final Integer oldValue = get(type);
+    public void dec(final ResourceType type) {
+        try {
+            writeLock.lock();
 
-        if (oldValue != null) {
-            if (oldValue == 1) {
-                remove(type);
+            final Integer oldValue = counts.get(type);
+
+            if (oldValue != null) {
+                if (oldValue == 1) {
+                    counts.remove(type);
+                }
+                else {
+                    counts.put(type, oldValue - 1);
+                }
             }
-            else {
-                treeMap.put(type, oldValue - 1);
+            if (this.isFillingComplete() && counts.size() == 0) {
+                finishMethod();
             }
         }
-        if (this.isFillingComplete() && size() == 0) {
-            finishMethod();
+        finally {
+            writeLock.unlock();
         }
     }
 
     /**
      * Increase the number of resources of the given type which still have to be processed.
-     *
-     * @param type resource type
+     * 
+     * @param type
+     *            resource type
      */
-    public synchronized void inc(final ResourceType type) {
-        final Integer oldValue = get(type);
+    public void inc(final ResourceType type) {
+        try {
+            writeLock.lock();
 
-        if (oldValue != null) {
-            treeMap.put(type, oldValue + 1);
+            final Integer oldValue = counts.get(type);
+
+            if (oldValue != null) {
+                counts.put(type, oldValue + 1);
+            }
+            else {
+                counts.put(type, 1);
+            }
         }
-        else {
-            treeMap.put(type, 1);
+        finally {
+            writeLock.unlock();
         }
     }
 
@@ -89,14 +118,20 @@ public final class ReindexStatus extends AdminMethodStatus {
      */
     public void setFillingComplete() {
         this.setFillingComplete(true);
-        if (size() == 0) {
-            finishMethod();
+        try {
+            readLock.lock();
+            if (counts.size() == 0) {
+                finishMethod();
+            }
+        }
+        finally {
+            readLock.unlock();
         }
     }
 
     /**
      * Return a string representation of the object.
-     *
+     * 
      * @return a string representation of this object
      */
     @Override
@@ -108,13 +143,19 @@ public final class ReindexStatus extends AdminMethodStatus {
         }
         else {
             result.append("<message>reindexing currently running</message>\n");
-            for (final Entry<ResourceType, Integer> e : entrySet()) {
-                result.append("<message>\n");
-                result.append(e.getValue());
-                result.append(' ');
-                result.append(e.getKey().getLabel());
-                result.append("(s) still to be reindexed\n");
-                result.append("</message>\n");
+            try {
+                readLock.lock();
+                for (final Map.Entry<ResourceType, Integer> e : counts.entrySet()) {
+                    result.append("<message>\n");
+                    result.append(e.getValue());
+                    result.append(' ');
+                    result.append(e.getKey().getLabel());
+                    result.append("(s) still to be reindexed\n");
+                    result.append("</message>\n");
+                }
+            }
+            finally {
+                readLock.unlock();
             }
         }
         return result.toString();

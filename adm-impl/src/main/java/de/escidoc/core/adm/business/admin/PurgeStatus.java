@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,6 +41,11 @@ import org.springframework.stereotype.Service;
  */
 @Service("admin.PurgeStatus")
 public final class PurgeStatus extends AdminMethodStatus {
+
+    // use a lock to synchronize access to variable "count"
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+
+    private final Lock readLock = lock.readLock(), writeLock = lock.writeLock();
 
     private int count;
 
@@ -49,18 +58,30 @@ public final class PurgeStatus extends AdminMethodStatus {
     /**
      * Decrease the number of resources which still have to be processed.
      */
-    public synchronized void dec() {
-        this.count--;
-        if (this.isFillingComplete() && this.count == 0) {
-            finishMethod();
+    public void dec() {
+        try {
+            writeLock.lock();
+            this.count--;
+            if (this.isFillingComplete() && this.count == 0) {
+                finishMethod();
+            }
+        }
+        finally {
+            writeLock.unlock();
         }
     }
 
     /**
      * Increase the number of resources which still have to be processed.
      */
-    public synchronized void inc() {
-        this.count++;
+    public void inc() {
+        try {
+            writeLock.lock();
+            this.count++;
+        }
+        finally {
+            writeLock.unlock();
+        }
     }
 
     /**
@@ -69,8 +90,14 @@ public final class PurgeStatus extends AdminMethodStatus {
      */
     public void setFillingComplete() {
         this.setFillingComplete(true);
-        if (this.count == 0) {
-            finishMethod();
+        try {
+            readLock.lock();
+            if (this.count == 0) {
+                finishMethod();
+            }
+        }
+        finally {
+            readLock.unlock();
         }
     }
 
@@ -88,7 +115,13 @@ public final class PurgeStatus extends AdminMethodStatus {
         else {
             result.append("<message>purging currently running</message>\n");
             result.append("<message>");
-            result.append(this.count);
+            try {
+                readLock.lock();
+                result.append(this.count);
+            }
+            finally {
+                readLock.unlock();
+            }
             result.append(" object(s) still to be purged\n");
             result.append("</message>\n");
         }

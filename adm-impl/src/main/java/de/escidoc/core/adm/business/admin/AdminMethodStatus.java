@@ -28,13 +28,7 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-
-import java.util.Collection;
 import java.util.Date;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -42,15 +36,13 @@ import java.util.concurrent.Semaphore;
  *
  * @author André Schenk
  */
-public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
+public abstract class AdminMethodStatus {
 
     private Date completionDate = new Date();
 
     private boolean fillingComplete;
 
     private final Semaphore semaphore = new Semaphore(1);
-
-    protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     protected boolean isFillingComplete() {
         return this.fillingComplete;
@@ -92,73 +84,5 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
             result = true;
         }
         return result;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return treeMap.isEmpty();
-    }
-
-    public boolean equals(final Object o) {
-        return treeMap.equals(o);
-    }
-
-    public int hashCode() {
-        return treeMap.hashCode();
-    }
-
-    @Override
-    public void clear() {
-        treeMap.clear();
-    }
-
-    @Override
-    public boolean containsKey(final Object key) {
-        return treeMap.containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(final Object value) {
-        return treeMap.containsValue(value);
-    }
-
-    @Override
-    public Set<Entry<ResourceType, Integer>> entrySet() {
-        return treeMap.entrySet();
-    }
-
-    @Override
-    public Integer get(final Object key) {
-        return treeMap.get(key);
-    }
-
-    @Override
-    public Integer put(final ResourceType key, final Integer value) {
-        return this.treeMap.put(key, value);
-    }
-
-    @Override
-    public Set<ResourceType> keySet() {
-        return treeMap.keySet();
-    }
-
-    @Override
-    public Integer remove(final Object key) {
-        return treeMap.remove(key);
-    }
-
-    @Override
-    public void putAll(final Map<? extends ResourceType, ? extends Integer> m) {
-        this.treeMap.putAll(m);
-    }
-
-    @Override
-    public int size() {
-        return treeMap.size();
-    }
-
-    @Override
-    public Collection<Integer> values() {
-        return treeMap.values();
     }
 }
