@@ -230,7 +230,7 @@ public final class XmlUtility {
     private static String aaTaskParamSchemaLocation;
 
     private static String assignTaskParamSchemaLocation;
-    
+
     private static String deletionTaskParamSchemaLocation;
     
     private static String relationTaskParamSchemaLocation;
@@ -1935,7 +1935,7 @@ public final class XmlUtility {
         }
         return aaTaskParamSchemaLocation;
     }
-    
+
     /**
      * @return Returns the AssignTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
