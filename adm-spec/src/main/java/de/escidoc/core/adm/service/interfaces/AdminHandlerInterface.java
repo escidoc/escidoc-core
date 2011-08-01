@@ -20,6 +20,7 @@
 
 package de.escidoc.core.adm.service.interfaces;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -72,6 +73,7 @@ public interface AdminHandlerInterface {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
+    @Validate(param = 0, resolver = "getDeletionTaskParamSchemaLocation")
     String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException;
 
