@@ -151,6 +151,9 @@
 									<attr path="//*[@name='jdbcDriverClass']" attr="value" value="${DatabaseDriverClass}" />
 
 									<!-- triplestore settings -->
+                                                                        <attr
+                                                                                path="//*[local-name()='module'][@role='org.fcrepo.server.resourceIndex.ResourceIndex']/*[local-name()='param'][@name='datastore']"
+                                                                                attr="value" value="localPostgresMPTTriplestore" />
 									<attr
 										path="//*[local-name()='datastore'][@id='localPostgresMPTTriplestore']/*[local-name()='param'][@name='ddlGenerator']"
 										attr="value" value="${DDLGeneratorClass}" />
