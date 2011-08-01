@@ -18,27 +18,15 @@
   ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
   ~ terms.
   -->
-
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="param">
-		<!-- mandatory attribute "last-modification-date" must accord to ISO 8601 
-			format -->
-		<xs:attribute name="last-modification-date" type="common:objid"
-			use="required" type="xs:dateTime" />
-
-		<xs:element name="withdraw-comment" minOccurs="0">
-
-		</xs:element>
-
-		<xs:element name="revokation-remark" minOccurs="0">
-
-		</xs:element>
-
-		<xs:element name="comment" minOccurs="0">
-
-		</xs:element>
-
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="withdraw-comment" minOccurs="0"/>
+				<xs:element name="comment" minOccurs="0"/>
+				<xs:element name="revokation-remark" minOccurs="0"/>
+			</xs:all>
+			<xs:attribute name="last-modification-date" use="required" type="xs:dateTime"/>
+		</xs:complexType>
 	</xs:element>
-
 </xs:schema>

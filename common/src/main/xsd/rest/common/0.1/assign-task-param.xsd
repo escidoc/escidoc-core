@@ -22,22 +22,15 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="param">
-		<!-- mandatory attribute "last-modification-date" must accord to ISO 8601 
-			format -->
-		<xs:attribute name="last-modification-date" type="common:objid"
-			use="required" type="xs:dateTime" />
-
-		<xs:element name="url" minOccurs="0" type="xsd:anyURI">
-
-		</xs:element>
-		
-		<xs:element name="id" minOccurs="0">
-
-		</xs:element>
-
-		<xs:element name="pid" minOccurs="0">
-
-		</xs:element>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="url" minOccurs="0"  type="xs:anyURI" />
+				<xs:element name="id" minOccurs="0" />
+				<xs:element name="pid" minOccurs="0" />
+				<xs:element name="password" minOccurs="0" />
+			</xs:all>
+			<xs:attribute name="last-modification-date" use="required" type="xs:dateTime"/>
+		</xs:complexType>
 
 	</xs:element>
 
