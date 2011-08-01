@@ -29,6 +29,7 @@
 package de.escidoc.core.common.util.ehcache.listener;
 
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
@@ -63,10 +64,13 @@ public class ResourcesCacheEventListenerFactory extends CacheEventListenerFactor
                     cache
                         .createQuery().addCriteria(Query.KEY.between(searchKey + " ", searchKey + "z")).includeKeys()
                         .execute();
-                for (Result result : results.all()) {
-                    //if (!((String)result.getKey()).matches(searchKey + "[0-9].*")) {
-                        cache.removeQuiet(result.getKey());
-                    //}
+                if (results != null && results.size() > 0) {
+                    Pattern searchPattern = Pattern.compile(Pattern.quote(searchKey) + "[0-9].*");
+                    for (Result result : results.all()) {
+                        if (!searchPattern.matcher((String) result.getKey()).matches()) {
+                            cache.removeQuiet(result.getKey());
+                        }
+                    }
                 }
             }
 

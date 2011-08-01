@@ -36,8 +36,10 @@ import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -54,6 +56,10 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
 
     @Autowired
     private IndexerResourceRequester indexerResourceRequester;
+
+    @Autowired
+    @Qualifier("business.TripleStoreUtility")
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -73,22 +79,12 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException {
-        String resource;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
-        if (parameters.get("uri") != null && parameters.get("uri")[0] != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("uri:" + parameters.get("uri")[0]);
-            }
-            resource = parameters.get("uri")[0];
-        }
-        else {
-            resource = dsID;
-        }
         EscidocBinaryContent content = null;
         try {
-            content = this.indexerResourceRequester.getResource(resource);
+            content = this.indexerResourceRequester.getResource(getHref(dsID));
         }
         catch (final SystemException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -118,22 +114,12 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     @Override
     public String export(final String pid, final Map<String, String[]> parameters) throws SystemException {
         final String xml;
-        final String resource;
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid);
         }
 
-        if (parameters.get("uri") != null && parameters.get("uri")[0] != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("uri:" + parameters.get("uri")[0]);
-            }
-            resource = parameters.get("uri")[0];
-        }
-        else {
-            resource = pid;
-        }
         try {
-            EscidocBinaryContent content = this.indexerResourceRequester.getResource(resource);
+            EscidocBinaryContent content = this.indexerResourceRequester.getResource(getHref(pid));
             if (content.getMimeType() != null && content.getMimeType().startsWith("text")
                 && content.getContent() != null) {
                 xml = IOUtils.newStringFromStream(content.getContent(), XmlUtility.CHARACTER_ENCODING);
@@ -166,7 +152,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void cache(final String pid, final EscidocBinaryContent content) throws SystemException {
-        this.indexerResourceRequester.setResource(pid, content);
+        this.indexerResourceRequester.setResource(getHref(pid), content);
     }
 
     /**
@@ -176,7 +162,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public void removeFromCache(final String pid) throws SystemException {
-        this.indexerResourceRequester.deleteResource(pid);
+        this.indexerResourceRequester.deleteResource(getHref(pid));
     }
 
     /**
@@ -186,7 +172,32 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
      */
     @Override
     public EscidocBinaryContent retrieveUncached(final String pid) throws SystemException {
-        return this.indexerResourceRequester.getResourceUncached(pid);
+        return this.indexerResourceRequester.getResourceUncached(getHref(pid));
     }
 
+    /**
+     * generate href out of pid.
+     *
+     * @param identifier identifier
+     * @return String href
+     * @throws SystemException e
+     */
+    private String getHref(final String identifier) throws SystemException {
+        String href = identifier;
+        if (!href.contains("/")) {
+            // objectId provided, generate href
+            // get object-type
+            href = XmlUtility.getObjidWithoutVersion(href);
+            final String objectType = tripleStoreUtility.getObjectType(href);
+            if (objectType == null) {
+                throw new SystemException("couldnt get objectType for object " + href);
+            }
+
+            href = this.tripleStoreUtility.getHref(objectType, identifier);
+        }
+        if (!href.startsWith("http") && !href.startsWith("/")) {
+            href = '/' + href;
+        }
+        return href;
+    }
 }
