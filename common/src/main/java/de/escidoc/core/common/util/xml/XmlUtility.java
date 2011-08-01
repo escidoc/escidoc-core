@@ -227,6 +227,14 @@ public final class XmlUtility {
 
     private static String xmlSchemaSchemaLocation;
 
+    private static String aaTaskParamSchemaLocation;
+
+    private static String assignTaskParamSchemaLocation;
+    
+    private static String deletionTaskParamSchemaLocation;
+
+    private static String statusTaskParamSchemaLocation;
+
     private static String stagingFileSchemaLocation;
 
     private static String statisticDataSchemaLocation;
@@ -1913,6 +1921,50 @@ public final class XmlUtility {
                     + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
         }
         return preprocessingInformationSchemaLocation;
+    }
+
+    /**
+     * @return Returns the AaTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getAaTaskParamSchemaLocation() {
+        if (aaTaskParamSchemaLocation == null) {
+            aaTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/aa-task-param.xsd";
+        }
+        return aaTaskParamSchemaLocation;
+    }
+    
+    /**
+     * @return Returns the AssignTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getAssignTaskParamSchemaLocation() {
+        if (assignTaskParamSchemaLocation == null) {
+            assignTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/assign-task-param.xsd";
+        }
+        return assignTaskParamSchemaLocation;
+    }
+
+    /**
+     * @return Returns the DeletionTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getDeletionTaskParamSchemaLocation() {
+        if (deletionTaskParamSchemaLocation == null) {
+            deletionTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/deletion-task-param.xsd";
+        }
+        return deletionTaskParamSchemaLocation;
+    }
+
+    /**
+     * @return Returns the StatusTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getStatusTaskParamSchemaLocation() {
+        if (statusTaskParamSchemaLocation == null) {
+            statusTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/status-task-param.xsd";
+        }
+        return statusTaskParamSchemaLocation;
     }
 
     /**
