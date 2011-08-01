@@ -232,7 +232,7 @@ public final class XmlUtility {
     private static String assignTaskParamSchemaLocation;
 
     private static String deletionTaskParamSchemaLocation;
-    
+
     private static String relationTaskParamSchemaLocation;
 
     private static String statusTaskParamSchemaLocation;
