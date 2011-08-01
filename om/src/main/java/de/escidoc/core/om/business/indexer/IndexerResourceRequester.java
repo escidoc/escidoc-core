@@ -47,7 +47,6 @@ import com.googlecode.ehcache.annotations.PartialCacheKey;
 import com.googlecode.ehcache.annotations.Property;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
@@ -72,10 +71,6 @@ public class IndexerResourceRequester {
     private MethodMapper methodMapper;
 
     @Autowired
-    @Qualifier("business.TripleStoreUtility")
-    private TripleStoreUtility tripleStoreUtility;
-
-    @Autowired
     @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
     private ConnectionUtility connectionUtility;
 
@@ -94,12 +89,11 @@ public class IndexerResourceRequester {
      */
     @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocBinaryContent getResource(final String identifier) throws SystemException {
-        final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
-            return getExternalResource(href);
+            return getExternalResource(identifier);
         }
         else {
-            return getInternalResource(href);
+            return getInternalResource(identifier);
         }
     }
 
@@ -111,12 +105,11 @@ public class IndexerResourceRequester {
      * @throws SystemException e
      */
     public EscidocBinaryContent getResourceUncached(final String identifier) throws SystemException {
-        final String href = getHref(identifier);
         if (identifier.startsWith("http")) {
-            return getExternalResource(href);
+            return getExternalResource(identifier);
         }
         else {
-            return getInternalResource(href);
+            return getInternalResource(identifier);
         }
     }
 
@@ -220,29 +213,4 @@ public class IndexerResourceRequester {
         return null;
     }
 
-    /**
-     * generate href out of pid.
-     *
-     * @param identifier identifier
-     * @return String href
-     * @throws SystemException e
-     */
-    private String getHref(final String identifier) throws SystemException {
-        String href = identifier;
-        if (!href.contains("/")) {
-            // objectId provided, generate href
-            // get object-type
-            href = XmlUtility.getObjidWithoutVersion(href);
-            final String objectType = tripleStoreUtility.getObjectType(href);
-            if (objectType == null) {
-                throw new SystemException("couldnt get objectType for object " + href);
-            }
-
-            href = this.tripleStoreUtility.getHref(objectType, identifier);
-        }
-        if (!href.startsWith("http") && !href.startsWith("/")) {
-            href = '/' + href;
-        }
-        return href;
-    }
 }

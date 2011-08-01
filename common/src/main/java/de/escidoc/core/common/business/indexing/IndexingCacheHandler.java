@@ -54,24 +54,15 @@ public class IndexingCacheHandler {
      * removes object with given id from cache.
      *
      * @param id  resource id
-     * @param href href
      * @throws SystemException The resource could not be removed.
      */
-    public void removeObjectFromCache(final String id, final String href) throws SystemException {
+    public void removeObjectFromCache(final String id) throws SystemException {
         try {
             if (id != null && id.matches(".*?:.*?:.*")) {
                 fedoraRestDeviationHandler.removeFromCache(id.substring(0, id.lastIndexOf(':')));
-                if (href != null) {
-                    fedoraRestDeviationHandler.removeFromCache(href.substring(0, href.lastIndexOf(':')));
-                    fedoraRestDeviationHandler.removeFromCache(href.substring(1, href.lastIndexOf(':')));
-                }
             }
             else {
                 fedoraRestDeviationHandler.removeFromCache(id);
-                if (href != null) {
-                    fedoraRestDeviationHandler.removeFromCache(href);
-                    fedoraRestDeviationHandler.removeFromCache(href.substring(1, href.length()));
-                }
             }
         }
         catch (final Exception e) {
