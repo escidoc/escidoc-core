@@ -69,6 +69,8 @@
       <param name="zipfile" value="${install.dir}/install.tmp/${jboss.patch.zip}"/>
       <param name="target.dir" value="${install.dir}/install.tmp"/>
     </antcall>
+
+    <!-- move eSciDoc configuration into JBoss -->
     <antcall target="move-with-save">
       <param name="sourceDir" value="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server"/>
       <param name="targetDir" value="${install.dir}/jboss/server"/>
@@ -207,6 +209,12 @@
     <delete dir="${install.dir}/core/war"/>
     <delete dir="${install.dir}/core/xsd"/>
     <delete dir="${install.dir}/core/license"/>
+
+    <!-- copy eSciDoc configuration to ESCIDOC_HOME -->
+    <copy todir="${install.dir}/core/conf">
+      <fileset dir="${install.dir}/jboss/server/default/conf"/>
+    </copy>
+
     <!-- additional WAR files -->
     <move tofile="${install.dir}/jboss/server/default/deploy/fedoragsearch.war">
       <fileset dir="${install.dir}/install.tmp/">
