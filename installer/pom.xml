@@ -22,9 +22,9 @@
 		<ant-launcher.version>1.8.2</ant-launcher.version>
 		<ant-contrib.version>1.0b3</ant-contrib.version>
 		<jboss.version>4.2.3.GA</jboss.version>
-		<mptstore.version>0.9.4</mptstore.version>
 		<admin-tool.version>1.1.1-RC2</admin-tool.version>
 		<migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
+		<fcrepo.patchlevel>1</fcrepo.patchlevel>
 	</properties>
 
 	<dependencies>
@@ -35,13 +35,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fcrepo-installer</artifactId>
-			<version>${fcrepo.version}.oracle</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>mptstore</groupId>
-			<artifactId>mptstore-oracle</artifactId>
-			<version>${mptstore.version}</version>
+			<version>${fcrepo.version}-${fcrepo.patchlevel}</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
@@ -104,7 +98,7 @@
 							<executable>java</executable>
 							<arguments>
 								<argument>-jar</argument>
-								<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}.oracle/fcrepo-installer-${fcrepo.version}.oracle.jar</argument>
+								<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}-${fcrepo.patchlevel}/fcrepo-installer-${fcrepo.version}-${fcrepo.patchlevel}.jar</argument>
 								<argument>src/main/resources/fedora/install.properties</argument>
 							</arguments>
 							<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
@@ -326,15 +320,6 @@
 									<version>${admin-tool.version}</version>
 									<overWrite>false</overWrite>
 									<outputDirectory>${staging.dir}/packages/admin-tool</outputDirectory>
-								</artifactItem>
-
-								<artifactItem>
-									<groupId>mptstore</groupId>
-									<artifactId>mptstore-oracle</artifactId>
-									<type>jar</type>
-									<version>${mptstore.version}</version>
-									<overWrite>false</overWrite>
-									<outputDirectory>${staging.dir}/lib</outputDirectory>
 								</artifactItem>
 
 								<artifactItem>

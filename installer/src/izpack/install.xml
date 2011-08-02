@@ -168,7 +168,6 @@
       <variable name="SqlScriptDelimiterOracle" value="/" />
       <variable name="SqlScriptDelimiterTypeOracle" value="row" />
       <variable name="SqlScriptKeepFormatOracle" value="true" />
-      <variable name="OracleDDLGenerator" value="mptstore-oracle-0.9.4.jar" />
       <variable name="RootDatabaseNameOracle" value="oraesci01" />
 
       <variable name="DatabaseAdminPassword" value="" />
@@ -428,7 +427,6 @@
             <description/>
             <file src="fedora-fedora.zip" targetdir="$INSTALL_PATH/install.tmp" />
             <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
-            <file src="lib/${OracleDDLGenerator}" targetdir="$INSTALL_PATH/install.tmp/WEB-INF/lib" />
             <!-- Configuration files -->
             <!--file src="fedora/mpt-mysql.jar" targetdir="$INSTALL_PATH/fedora/WEB-INF/lib" / -->
             <file src="../web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
