@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
+import java.util.Map;
+
+import org.esidoc.core.utils.io.EscidocBinaryContent;
+
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -64,10 +69,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-
-import java.util.Map;
-
-import org.esidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of a container handler of the business layer.
@@ -203,6 +204,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
         MissingAttributeValueException;
@@ -219,6 +221,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String addMembers(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
         MissingAttributeValueException;
@@ -237,6 +240,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String removeMembers(final String id, final String taskParam) throws ContextNotFoundException, LockingException,
         XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException,
         SystemException, ContainerNotFoundException, InvalidContentException;
@@ -598,6 +602,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, InvalidXmlException;
@@ -618,6 +623,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, XmlCorruptedException;
@@ -640,6 +646,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws InvalidXmlException        TODO
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         AlreadyWithdrawnException, ReadonlyVersionException, InvalidXmlException;
@@ -660,6 +667,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException;
@@ -679,6 +687,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException;
@@ -694,6 +703,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
         ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException;
 
@@ -780,6 +790,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
+//    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String param) throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
         AlreadyExistsException, InvalidStatusException, InvalidXmlException, MissingElementValueException,
@@ -823,6 +834,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException            Thrown if a framework internal error occurs.
      * @throws InvalidXmlException        TODO
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String param) throws InvalidStatusException,
         ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         SystemException, InvalidXmlException;
@@ -849,6 +861,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException   Thrown if a provided container version id is not a latest version.
      * @throws XmlCorruptedException      TODO
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String param) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         XmlCorruptedException, ReadonlyVersionException;
