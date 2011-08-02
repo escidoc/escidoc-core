@@ -74,16 +74,6 @@ public final class SmXmlUtility {
     }
 
     /**
-     * returns id of scope.
-     *
-     * @param xmlData .
-     * @return String scopeId
-     */
-    public static String getScopeId(final String xmlData) {
-        return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*", "$1");
-    }
-
-    /**
      * removes Special Signs from primKey to create a table with primKey in name.
      *
      * @param primKey primKey
