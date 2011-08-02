@@ -26,7 +26,7 @@
 					<xs:complexType>
 						<xs:all>
 							<xs:element name="targetId" minOccurs="1"/>
-							<xs:element name="predicate" minOccurs="1"/>
+							<xs:element name="predicate" type="xs:anyURI"  minOccurs="1"/>
 						</xs:all>
 					</xs:complexType>
 				</xs:element>
