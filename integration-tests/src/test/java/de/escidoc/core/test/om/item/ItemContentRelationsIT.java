@@ -451,7 +451,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void testRetrieveNonexistingRelations() throws Exception {
 
         String relationsElementXml = retrieveRelations(this.itemId);
