@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -85,6 +86,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws SystemException            Thrown in case of internal error.
      */
+//    @Validate(param = 2, resolver = "getAssignTaskParamSchemaLocation")
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         InvalidStatusException, ComponentNotFoundException, SystemException, XmlCorruptedException,
@@ -139,6 +141,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
      * @throws SystemException            Thrown in case of internal error.
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, XmlCorruptedException, SystemException {
@@ -200,6 +203,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws SystemException            Thrown in case of internal error.
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
         XmlCorruptedException, SystemException, ComponentNotFoundException, ReadonlyVersionException {
@@ -261,6 +265,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      *                                  Thrown if necessary parameters are not part of the param XML structure.
      * @throws WebserverSystemException Thrown by assignPid().
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     public String getPid(final String id, final String param) throws PidSystemException,
         MissingMethodParameterException, WebserverSystemException {
 
