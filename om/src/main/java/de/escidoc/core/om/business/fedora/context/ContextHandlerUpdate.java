@@ -52,6 +52,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -255,6 +256,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     public void open(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
         OptimisticLockingException, SystemException, XmlCorruptedException {
 
@@ -342,6 +344,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     public void close(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
         OptimisticLockingException, SystemException, XmlCorruptedException {
 
