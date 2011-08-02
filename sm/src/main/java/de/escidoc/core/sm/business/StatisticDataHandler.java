@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.sm.business;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -36,14 +42,11 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
-import org.apache.camel.CamelContext;
-import org.apache.camel.ProducerTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import de.escidoc.core.sm.business.stax.handler.StatisticDataStaxHandler;
 
 /**
  * An statistic data resource handler.
@@ -110,7 +113,18 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         }
         xmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
-        final String scopeId = SmXmlUtility.getScopeId(xmlData);
+        // parse
+        final StaxParser sp = new StaxParser();
+        final StatisticDataStaxHandler handler = new StatisticDataStaxHandler();
+        sp.addHandler(handler);
+        try {
+            sp.parse(xmlData);
+        }
+        catch (final Exception e) {
+            throw new XmlParserSystemException("Error on parsing XML.", e);
+        }
+
+        final String scopeId = handler.getScopeId();
 
         if (scopeId == null || scopeId.length() == 0) {
             throw new ScopeNotFoundException("scopeId is null");
