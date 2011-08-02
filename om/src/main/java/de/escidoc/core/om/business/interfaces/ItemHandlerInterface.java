@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
@@ -752,6 +753,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
@@ -774,6 +776,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException;
@@ -796,6 +799,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String param) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, XmlCorruptedException;
@@ -821,6 +825,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException
      * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         NotPublishedException, LockingException, AlreadyWithdrawnException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
@@ -843,6 +848,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidContentException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException;
@@ -862,6 +868,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws OptimisticLockingException Thrown in case of an optimistic locking error.
      * @throws InvalidXmlException        TODO
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException;
@@ -879,6 +886,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String moveToContext(final String id, String taskParam) throws ItemNotFoundException, ContextNotFoundException,
         InvalidContentException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException;
@@ -900,6 +908,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws XmlCorruptedException      TODO
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;
@@ -920,6 +929,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws XmlCorruptedException      TODO
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.
      */
+//    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException;
@@ -942,6 +952,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
      * @throws SystemException            Thrown in case of internal failure.
      */
+//    @Validate(param = 2, resolver = "getAssignTaskParamSchemaLocation")
     String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ComponentNotFoundException,
@@ -980,6 +991,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
+//    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String taskParameter) throws SystemException,
         ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
@@ -1004,6 +1016,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeletedException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
      */
+//    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,
         ComponentNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         InvalidContentException, InvalidXmlException, ContentRelationNotFoundException, AlreadyDeletedException,
