@@ -251,6 +251,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
+//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
     void updatePassword(String userId, String taskParam) throws UserAccountNotFoundException, InvalidStatusException,
         XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException, AuthenticationException,
         AuthorizationException, SystemException;
@@ -312,6 +313,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
     void activate(String userId, String taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -349,6 +351,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
     void deactivate(String userId, String taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -600,6 +603,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+//    @Validate(param = 2, resolver = "getAaTaskParamSchemaLocation")
     void revokeGrant(String userId, String grantId, String taskParam) throws UserAccountNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -666,6 +670,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
     void revokeGrants(String userId, String taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
