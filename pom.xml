@@ -1063,6 +1063,8 @@
     <lucene.version>3.3.0</lucene.version>
     <java.source.version>1.6</java.source.version>
     <java.target.version>1.6</java.target.version>
+    <wstx.version>3.2.9</wstx.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <escidoc.installer.config>escidoc-core-installer-config.xml</escidoc.installer.config>
