@@ -67,7 +67,7 @@
         <executions>
           <execution>
             <id>copy-drop-script [oracle]</id>
-            <phase>pre-clean</phase>
+            <phase>clean</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
