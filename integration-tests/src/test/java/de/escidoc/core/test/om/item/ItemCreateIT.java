@@ -137,6 +137,27 @@ public class ItemCreateIT extends ItemTestBase {
     }
 
     /**
+     * Test if special characters are handled correctly.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
+     */
+    @Test
+    public void testSpecialCharacters() throws Exception {
+        String inputXml = getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/item_fuer_umlaut_create_mpdl.xml");
+        Document inputDoc = EscidocAbstractTest.getDocument(inputXml);
+
+        String outputXml = create(inputXml);
+        Document outputDoc = EscidocAbstractTest.getDocument(outputXml);
+
+        String mdTitlePath = "/item/md-records/md-record/publication/title";
+        Node inputMdTitle = selectSingleNode(inputDoc, mdTitlePath);
+        Node outputMdTitle = selectSingleNode(outputDoc, mdTitlePath);
+
+        assertXmlEquals("", inputMdTitle, outputMdTitle);
+    }
+
+    /**
      * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
      * 
      * @throws Exception
