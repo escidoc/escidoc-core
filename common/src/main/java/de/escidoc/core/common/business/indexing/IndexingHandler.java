@@ -20,30 +20,28 @@
 
 package de.escidoc.core.common.business.indexing;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.xpath.XPathAPI;
@@ -56,24 +54,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -90,6 +84,10 @@ public class IndexingHandler implements ResourceListener {
      */
     private static final String[] INDEX_PRIM_KEY_FIELDS = { "PID", "distinction.rootPid" };
 
+    private static final String SRW_QUERY =
+        Constants.SRW_MAXIMUM_TERMS_PATTERN.matcher(Constants.SRW_SCAN_PARAMS).replaceFirst(
+            Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
+
     @Autowired
     @Qualifier("common.business.indexing.GsearchHandler")
     private GsearchHandler gsearchHandler;
@@ -105,6 +103,10 @@ public class IndexingHandler implements ResourceListener {
     @Autowired
     @Qualifier("common.business.indexing.IndexingCacheHandler")
     private IndexingCacheHandler indexingCacheHandler;
+
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
+    private ConnectionUtility connectionUtility;
 
     private final DocumentBuilder docBuilder;
 
@@ -587,19 +589,10 @@ public class IndexingHandler implements ResourceListener {
      * @return true if the resource already exists
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    private static boolean exists(final String id, final String indexName) throws SystemException {
+    private boolean exists(final String id, final String indexName) throws SystemException {
         boolean result = false;
 
         try {
-
-            final HttpParams params = new BasicHttpParams();
-            final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
-            final SchemeRegistry sr = new SchemeRegistry();
-            sr.register(http);
-            final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
-
-            final DefaultHttpClient client = new DefaultHttpClient(cm, params);
-
             final StringBuilder query = new StringBuilder("");
             for (int i = 0; i < INDEX_PRIM_KEY_FIELDS.length; i++) {
                 if (query.length() > 0) {
@@ -608,11 +601,10 @@ public class IndexingHandler implements ResourceListener {
                 query.append(INDEX_PRIM_KEY_FIELDS[i]).append('=').append(id);
             }
 
-            final HttpUriRequest httpGet =
-                new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
-                    + indexName + "?query=" + URLEncoder.encode(query.toString(), "UTF-8"));
-
-            final HttpResponse response = client.execute(httpGet);
+            final HttpResponse response =
+                connectionUtility.getRequestURL(new URL(EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.SRW_URL)
+                    + "/search/" + indexName + "?query=" + URLEncoder.encode(query.toString(), "UTF-8")));
             if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 final Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
 
@@ -662,33 +654,21 @@ public class IndexingHandler implements ResourceListener {
      * @return List of PIDs
      * @throws SystemException Thrown if a framework internal error occurs.
      */
-    private static Set<String> getPids(final String indexName) throws SystemException {
+    private Set<String> getPids(final String indexName) throws SystemException {
         try {
-
-            final HttpParams params = new BasicHttpParams();
-            final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
-            final SchemeRegistry sr = new SchemeRegistry();
-            sr.register(http);
-            final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
-
-            final DefaultHttpClient client = new DefaultHttpClient(cm, params);
-
             final StaxParser sp = new StaxParser();
             final SrwScanResponseHandler handler = new SrwScanResponseHandler(sp);
             sp.addHandler(handler);
 
-            final String query =
-                Constants.SRW_MAXIMUM_TERMS_PATTERN.matcher(Constants.SRW_SCAN_PARAMS).replaceFirst(
-                    Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
             String lastTerm = "";
             boolean running = true;
             while (running) {
                 handler.resetNoOfDocumentTerms();
-                final HttpGet httpGet =
-                    new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
-                        + indexName + Constants.SRW_TERM_PATTERN.matcher(query).replaceFirst(lastTerm));
-
-                final HttpResponse response = client.execute(httpGet);
+                final HttpResponse response =
+                    connectionUtility
+                        .getRequestURL(new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL)
+                            + "/search/" + indexName
+                            + Constants.SRW_TERM_PATTERN.matcher(SRW_QUERY).replaceFirst(lastTerm)));
                 final String lastLastTerm;
                 if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                     lastLastTerm = handler.getLastTerm();
