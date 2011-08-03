@@ -24,7 +24,6 @@
 			<xs:all>
 				<xs:element name="id" minOccurs="1"/>
 			</xs:all>
-			<xs:attribute name="last-modification-date" use="required" type="xs:dateTime"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
