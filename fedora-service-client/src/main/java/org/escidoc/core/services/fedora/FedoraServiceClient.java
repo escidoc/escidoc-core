@@ -39,6 +39,14 @@ public interface FedoraServiceClient {
 
     Future<ObjectProfileTO> getObjectProfileAsync(@NotNull @NotEmpty String pid);
 
+    DigitalObjectTO export(@NotNull @NotEmpty final String pid);
+
+    Future<DigitalObjectTO> exportAsync(@NotNull @NotEmpty final String pid);
+
+    Stream exportAsStream(@NotNull @NotEmpty final String pid);
+
+    Future<Stream> exportAsStreamAsync(@NotNull @NotEmpty final String pid);
+
     DigitalObjectTO getObjectXML(@NotNull @NotEmpty final String pid);
 
     Future<DigitalObjectTO> getObjectXMLAsync(@NotNull @NotEmpty final String pid);

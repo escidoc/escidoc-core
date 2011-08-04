@@ -56,6 +56,20 @@ public interface FedoraServiceRESTEndpoint {
         @NotNull @PathParam("") DeleteObjectPathParam path, @NotNull @QueryParam("") DeleteObjectQueryParam query);
 
     @GET
+    @Path("/objects/{pid}/export")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    DigitalObjectTO export(
+        @NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
+
+    @GET
+    @Path("/objects/{pid}/export")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    Stream exportAsStream(
+        @NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
+
+    @GET
     @Path("/objects/{pid}/objectXML")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)

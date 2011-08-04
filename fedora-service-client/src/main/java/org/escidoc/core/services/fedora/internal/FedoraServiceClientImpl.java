@@ -27,6 +27,8 @@ import org.escidoc.core.services.fedora.DeleteDatastreamQueryParam;
 import org.escidoc.core.services.fedora.DeleteObjectPathParam;
 import org.escidoc.core.services.fedora.DeleteObjectQueryParam;
 import org.escidoc.core.services.fedora.DigitalObjectTO;
+import org.escidoc.core.services.fedora.ExportPathParam;
+import org.escidoc.core.services.fedora.ExportQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint;
 import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
@@ -146,6 +148,36 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
+    @Cacheable(cacheName = "Fedora.ExportObjects", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
+    public DigitalObjectTO export(final String pid) {
+        final ExportPathParam path = new ExportPathParam(pid);
+        final ExportQueryParam query = new ExportQueryParam();
+        return this.fedoraService.export(path, query);
+    }
+
+    @Override
+    @Async
+    public Future<DigitalObjectTO> exportAsync(final String pid) {
+        return new AsyncResult<DigitalObjectTO>(export(pid));
+    }
+
+    @Override
+    @Cacheable(cacheName = "Fedora.ExportObjectStreams", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
+    public Stream exportAsStream(final String pid) {
+        final ExportPathParam path = new ExportPathParam(pid);
+        final ExportQueryParam query = new ExportQueryParam();
+        return this.fedoraService.exportAsStream(path, query);
+    }
+
+    @Override
+    @Async
+    public Future<Stream> exportAsStreamAsync(final String pid) {
+        return new AsyncResult<Stream>(exportAsStream(pid));
+    }
+
+    @Override
     @Cacheable(cacheName = "Fedora.DigitalObjects", keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
     public DigitalObjectTO getObjectXML(final String pid) {
         final GetObjectXMLPathParam path = new GetObjectXMLPathParam(pid);
@@ -222,10 +254,13 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
-    public DatastreamProfileTO addDatastream(
-        final AddDatastreamPathParam path, final AddDatastreamQueryParam query, final Stream stream) {
-        if (stream != null) {
+    @TriggersRemove(
+            cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.AddDatastreamKeyGenerator"))
+    public DatastreamProfileTO addDatastream(final AddDatastreamPathParam path, final AddDatastreamQueryParam query,
+                                             final Stream stream) {
+        if(stream != null) {
             return this.fedoraService.addDatastream(path, query, stream);
         }
         else {
@@ -241,10 +276,12 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
-    public DatastreamProfileTO modifyDatastream(
-        final ModifiyDatastreamPathParam path, final ModifyDatastreamQueryParam query, final Stream stream) {
-        if (stream != null) {
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.ModifyDatastreamKeyGenerator"))
+    public DatastreamProfileTO modifyDatastream(final ModifiyDatastreamPathParam path,
+                                                final ModifyDatastreamQueryParam query, final Stream stream) {
+        if(stream != null) {
             return this.fedoraService.modifyDatastream(path, query, stream);
         }
         else {
@@ -260,7 +297,9 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.DeleteDatastreamKeyGenerator"))
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.DeleteDatastreamKeyGenerator"))
     public void deleteDatastream(final DeleteDatastreamPathParam path, final DeleteDatastreamQueryParam query) {
         final Client client = WebClient.client(this.fedoraService);
         final WebClient webClient = WebClient.fromClient(client);
@@ -278,7 +317,9 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.SetDatastreamStateKeyGenerator"))
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.SetDatastreamStateKeyGenerator"))
     public DatastreamProfileTO setDatastreamState(final String pid, final String dsID, final DatastreamState state) {
         final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(pid, dsID);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
@@ -294,7 +335,9 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
     public void updateObject(final UpdateObjectPathParam path, final UpdateObjectQueryParam query) {
         this.fedoraService.updateObject(path, query);
     }
@@ -307,7 +350,9 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.DeleteObjectKeyGenerator"))
     public void deleteObject(final String pid) {
         final DeleteObjectPathParam path = new DeleteObjectPathParam(pid);
         final DeleteObjectQueryParam query = new DeleteObjectQueryParam();
@@ -322,8 +367,11 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
-    public String ingest(final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTO digitalObjectTO) {
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
+    public String ingest(final IngestPathParam path, final IngestQueryParam query,
+                         final DigitalObjectTO digitalObjectTO) {
         return this.fedoraService.ingest(path, query, digitalObjectTO);
     }
 
@@ -339,7 +387,9 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
      * this method.
      */
     @Override
-    @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
+    @TriggersRemove(cacheName = {"Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams", "Fedora.ExportObjects", "Fedora.ExportObjectStreams"},
+            keyGenerator = @KeyGenerator(
+                    name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
     public String ingest(final IngestPathParam path, final IngestQueryParam query, final String foxml) {
         final Stream stream = new Stream();
         try {
