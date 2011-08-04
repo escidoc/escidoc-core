@@ -42,6 +42,7 @@ import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -66,7 +67,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -139,12 +140,17 @@ public class Datastream {
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
-     *
-     * @param name      The name of the datastream.
-     * @param parentId  The unique id the fedora object to which the datastream belongs.
-     * @param timestamp A timestamp specify the version of the stream.
-     * @throws StreamNotFoundException If there is no datastream identified by name and parentId in Fedora.
-     * @throws FedoraSystemException   Thrown in case of an internal system error caused by failed fedora access.
+     * 
+     * @param name
+     *            The name of the datastream.
+     * @param parentId
+     *            The unique id the fedora object to which the datastream belongs.
+     * @param timestamp
+     *            A timestamp specify the version of the stream.
+     * @throws StreamNotFoundException
+     *             If there is no datastream identified by name and parentId in Fedora.
+     * @throws FedoraSystemException
+     *             Thrown in case of an internal system error caused by failed fedora access.
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -182,13 +188,19 @@ public class Datastream {
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
-     *
-     * @param name              The name of the datastream.
-     * @param parentId          The unique id the fedora object to which the datastream belongs.
-     * @param timestamp         A timestamp specify the version of the stream.
-     * @param mimeType          MIME Type of the data stream.
-     * @param location          TODO
-     * @param controlGroupValue The Fedora Control Group type.
+     * 
+     * @param name
+     *            The name of the datastream.
+     * @param parentId
+     *            The unique id the fedora object to which the datastream belongs.
+     * @param timestamp
+     *            A timestamp specify the version of the stream.
+     * @param mimeType
+     *            MIME Type of the data stream.
+     * @param location
+     *            TODO
+     * @param controlGroupValue
+     *            The Fedora Control Group type.
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -205,15 +217,23 @@ public class Datastream {
     /**
      * Constructs the Stream identified by name and parentId. The version of the stream identified by timestamp is
      * retrieved from Fedora. If timestamp is {@code null} the latest version is retrieved.
-     *
-     * @param name              The name of the datastream.
-     * @param parentId          The unique id the fedora object to which the datastream belongs.
-     * @param timestamp         A timestamp specify the version of the stream.
-     * @param mimeType          MIME Type of the data stream.
-     * @param location          TODO
-     * @param controlGroupValue The Fedora Control Group type.
-     * @param checksumMethod    The method to compute the streams checksum.
-     * @param checksum          The streams checksum.
+     * 
+     * @param name
+     *            The name of the datastream.
+     * @param parentId
+     *            The unique id the fedora object to which the datastream belongs.
+     * @param timestamp
+     *            A timestamp specify the version of the stream.
+     * @param mimeType
+     *            MIME Type of the data stream.
+     * @param location
+     *            TODO
+     * @param controlGroupValue
+     *            The Fedora Control Group type.
+     * @param checksumMethod
+     *            The method to compute the streams checksum.
+     * @param checksum
+     *            The streams checksum.
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -234,11 +254,15 @@ public class Datastream {
     /**
      * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
      * not. Maybe there is no such datastream in Fedora.
-     *
-     * @param name     The name of this datastream
-     * @param parentId The ID of the parent of this datastream.
-     * @param stream   The string representing the content of this datastream.
-     * @param mimeType TODO
+     * 
+     * @param name
+     *            The name of this datastream
+     * @param parentId
+     *            The ID of the parent of this datastream.
+     * @param stream
+     *            The string representing the content of this datastream.
+     * @param mimeType
+     *            TODO
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -253,12 +277,17 @@ public class Datastream {
     /**
      * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
      * not. Maybe there is no such datastream in Fedora.
-     *
-     * @param name     The name of this datastream
-     * @param parentId The ID of the parent of this datastream.
-     * @param url      The URL of the content.
-     * @param storage  TODO
-     * @param mimeType TODO
+     * 
+     * @param name
+     *            The name of this datastream
+     * @param parentId
+     *            The ID of the parent of this datastream.
+     * @param url
+     *            The URL of the content.
+     * @param storage
+     *            TODO
+     * @param mimeType
+     *            TODO
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -282,12 +311,17 @@ public class Datastream {
     /**
      * Constructs a Stream of the given parameters. The stream may be concurrent with the datastream saved in Fedora or
      * not. Maybe there is no such datastream in Fedora.
-     *
-     * @param name       The name of this datastream
-     * @param parentId   The ID of the parent of this datastream.
-     * @param stream     The string representing the content of this datastream.
-     * @param mimeType   The MIME type of this datastream.
-     * @param properties Map with properties of this datastream
+     * 
+     * @param name
+     *            The name of this datastream
+     * @param parentId
+     *            The ID of the parent of this datastream.
+     * @param stream
+     *            The string representing the content of this datastream.
+     * @param mimeType
+     *            The MIME type of this datastream.
+     * @param properties
+     *            Map with properties of this datastream
      */
     public Datastream(@NotNull
     final String name, @NotNull
@@ -340,10 +374,12 @@ public class Datastream {
     /**
      * Merges the datastream identified by the name and the objectId to Fedora. The datastream must already exists in
      * Fedora. Otherwise call {@code persist()}.
-     *
+     * 
      * @return timestamp of datastream (last-modification-date)
-     * @throws FedoraSystemException    Thrown if writing to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of internal failure (get configuration)
+     * @throws FedoraSystemException
+     *             Thrown if writing to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure (get configuration)
      */
     public DateTime merge() throws WebserverSystemException {
         final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(this.parentId, this.name);
@@ -435,11 +471,14 @@ public class Datastream {
 
     /**
      * Persist datastream to Fedora.
-     *
-     * @param sync Set true if TripleStore sync is to force.
+     * 
+     * @param sync
+     *            Set true if TripleStore sync is to force.
      * @return Fedora timestamp of datastream.
-     * @throws FedoraSystemException    Thrown if writing of datastream into Fedora fails.
-     * @throws WebserverSystemException Thrown if getting Fedora instance fails.
+     * @throws FedoraSystemException
+     *             Thrown if writing of datastream into Fedora fails.
+     * @throws WebserverSystemException
+     *             Thrown if getting Fedora instance fails.
      */
     public String persist(final boolean sync) throws FedoraSystemException {
         final AddDatastreamPathParam path = new AddDatastreamPathParam(this.parentId, this.name);
@@ -481,9 +520,11 @@ public class Datastream {
     /**
      * Mark datastream as deleted. The datastream is not purged from repository. A new version of datastream is created
      * with {@code <deleted/>} as content.
-     *
-     * @throws FedoraSystemException    If an error ocurres in Fedora.
-     * @throws WebserverSystemException If an error ocurres.
+     * 
+     * @throws FedoraSystemException
+     *             If an error ocurres in Fedora.
+     * @throws WebserverSystemException
+     *             If an error ocurres.
      */
     public void delete() {
         final DatastreamProfileTO datastreamProfileTO =
@@ -493,7 +534,7 @@ public class Datastream {
 
     /**
      * Checks if a data stream is logically deleted.
-     *
+     * 
      * @return true/false
      */
     public boolean isDeleted() {
@@ -502,7 +543,7 @@ public class Datastream {
 
     /**
      * Returns the name of the datastream which is unique in parents scope in Fedora.
-     *
+     * 
      * @return The name of this datastream.
      */
     public String getName() {
@@ -512,7 +553,7 @@ public class Datastream {
     /**
      * Returns a {@link java.util.Set Set} of the alternate IDs of this datastream. Metadata datastreams have the
      * alternate ID "metadata".
-     *
+     * 
      * @return The alternate IDs of this datastream.
      */
     public List<String> getAlternateIDs() {
@@ -522,8 +563,9 @@ public class Datastream {
     /**
      * Adds an alternate ID to the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
      * call with the same string have no effect. A value off {@code null} may be forbidden.
-     *
-     * @param alternateId An alternate ID to add to this Stream.
+     * 
+     * @param alternateId
+     *            An alternate ID to add to this Stream.
      */
     public void addAlternateId(final String alternateId) {
         this.alternateIDs.add(alternateId);
@@ -532,9 +574,11 @@ public class Datastream {
     /**
      * Replaces an alternate ID in the {@link java.util.List List} of the alternate IDs of this datastream. A subsequent
      * call with the same string have no effect. A value off {@code null} may be forbidden.
-     *
-     * @param alternateId An alternate ID to add to this Stream.
-     * @param index       position to insert ID
+     * 
+     * @param alternateId
+     *            An alternate ID to add to this Stream.
+     * @param index
+     *            position to insert ID
      */
     public void replaceAlternateId(final String alternateId, final int index) {
         alternateIDs.remove(index);
@@ -543,8 +587,9 @@ public class Datastream {
 
     /**
      * Sets the alternate IDs for this datastream. Overrides all existing alternate IDs.
-     *
-     * @param alternateIDs A {@link java.util.Set Set} of strings with alternate IDs.
+     * 
+     * @param alternateIDs
+     *            A {@link java.util.Set Set} of strings with alternate IDs.
      */
     public void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;
@@ -552,7 +597,7 @@ public class Datastream {
 
     /**
      * Gets the unique id of this datastreams parent.
-     *
+     * 
      * @return The ID of the parent of this datastream.
      */
     public String getParentId() {
@@ -561,9 +606,10 @@ public class Datastream {
 
     /**
      * Gets the string representing the datastream.
-     *
+     * 
      * @return The string which is the datastream in Fedora.
-     * @throws WebserverSystemException If an error ocurres.
+     * @throws WebserverSystemException
+     *             If an error ocurres.
      */
     public byte[] getStream() {
         // Workaround for the issue INFR666, now the content of a data stream
@@ -595,8 +641,9 @@ public class Datastream {
     /**
      * Updates the string representing the datastream. The datastream may not be concurrent with Fedora unless
      * {@code save()} is called.
-     *
-     * @param stream The string representing the content of this datastream.
+     * 
+     * @param stream
+     *            The string representing the content of this datastream.
      * @return
      */
     public boolean updateStream(final byte[] stream) {
@@ -609,7 +656,7 @@ public class Datastream {
 
     /**
      * Gets the Map with datastream properties.
-     *
+     * 
      * @return Map with datastream properties.
      */
     public Map<String, String> getProperties() {
@@ -618,10 +665,12 @@ public class Datastream {
 
     /**
      * Return a String representation of the Stream using UTF-8 encoding.
-     *
+     * 
      * @return The String representation of the Stream.
-     * @throws EncodingSystemException  If the charset UTF-8 is not supported.
-     * @throws WebserverSystemException If an error ocurres.
+     * @throws EncodingSystemException
+     *             If the charset UTF-8 is not supported.
+     * @throws WebserverSystemException
+     *             If an error ocurres.
      */
     public String toStringUTF8() throws EncodingSystemException {
 
@@ -629,8 +678,9 @@ public class Datastream {
     }
 
     /**
-     * See Interface for functional description.<br> This implementation calls {@code toStringUTF8}.
-     *
+     * See Interface for functional description.<br>
+     * This implementation calls {@code toStringUTF8}.
+     * 
      * @return The String representation of the Stream.
      */
     @Override
@@ -646,11 +696,14 @@ public class Datastream {
 
     /**
      * Return a String representation of the Stream.
-     *
-     * @param charset The character encoding.
+     * 
+     * @param charset
+     *            The character encoding.
      * @return The String representation of the Stream.
-     * @throws EncodingSystemException  If the charset is not supported.
-     * @throws WebserverSystemException If an error ocurres.
+     * @throws EncodingSystemException
+     *             If the charset is not supported.
+     * @throws WebserverSystemException
+     *             If an error ocurres.
      */
     public String toString(final String charset) throws EncodingSystemException {
         try {
@@ -663,7 +716,7 @@ public class Datastream {
 
     /**
      * Returns the label of this datastream.
-     *
+     * 
      * @return The label of this datastream.
      */
     public String getLabel() {
@@ -672,8 +725,9 @@ public class Datastream {
 
     /**
      * Sets the label of this datastream.
-     *
-     * @param label The label of this datastream.
+     * 
+     * @param label
+     *            The label of this datastream.
      */
     public void setLabel(final String label) {
         this.label = label;
@@ -681,7 +735,7 @@ public class Datastream {
 
     /**
      * Get the used ControlGroup type.
-     *
+     * 
      * @return controlGroup
      */
     public String getControlGroup() {
@@ -690,8 +744,9 @@ public class Datastream {
 
     /**
      * Set the used ControlGroup type.
-     *
-     * @param controlGroup Fedora controlGroup type
+     * 
+     * @param controlGroup
+     *            Fedora controlGroup type
      */
     public void setControlGroup(final String controlGroup) {
         this.controlGroupValue = controlGroup;
@@ -744,43 +799,49 @@ public class Datastream {
     }
 
     /**
-     * A convenience method to support all old implementations using the  object instead of the new
-     * {@link DatastreamProfileTO} object.<br/> <br/> If you want to convert an instance of {@link DatastreamProfileTO}
-     * to an instance of  use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
-     * String)}
-     *
+     * A convenience method to support all old implementations using the object instead of the new
+     * {@link DatastreamProfileTO} object.<br/>
+     * <br/>
+     * If you want to convert an instance of {@link DatastreamProfileTO} to an instance of use the constructor
+     * {@link Datastream#Datastream(DatastreamProfileTO, String)}
+     * 
      * @param datastreamProfileTOs
      * @param parentId
-     * @return a map containing  objects representing the {@link DatastreamProfileTO} objects and the
-     *         datastream ID as the keys.
+     * @return a map containing objects representing the {@link DatastreamProfileTO} objects and the datastream ID as
+     *         the keys.
      */
-    public static Map<String, Datastream> convertDatastreamProfileTOs(@NotNull
-    final List<DatastreamProfileTO> datastreamProfileTOs, final String parentId) {
+    public static Map<String, Datastream> convertDatastreamProfilesTO(@NotNull
+    final DatastreamProfilesTO datastreamProfileTOs, final String parentId) {
 
-        final Map<String, Datastream> result = new HashMap<String, Datastream>(datastreamProfileTOs.size() + 1);
+        final Map<String, Datastream> result =
+            new HashMap<String, Datastream>(datastreamProfileTOs.getDatastreamProfile().size() + 1);
 
-        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs) {
+        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs.getDatastreamProfile()) {
             result.put(datastreamProfileTO.getDsID(), new Datastream(datastreamProfileTO, parentId, null));
         }
         return result;
     }
 
     /**
-     * A convenience method to support all old implementations using the  object instead of the new
-     * {@link DatastreamProfileTO} object.<br/> <br/> If you want to convert an instance of {@link DatastreamProfileTO}
-     * to an instance of  use the constructor {@link Datastream#Datastream(DatastreamProfileTO,
-     * String)}
-     *
+     * A convenience method to support all old implementations using the object instead of the new
+     * {@link DatastreamProfileTO} object.<br/>
+     * <br/>
+     * If you want to convert an instance of {@link DatastreamProfileTO} to an instance of use the constructor
+     * {@link Datastream#Datastream(DatastreamProfileTO, String)}
+     * 
      * @param datastreamProfileTOs
      * @param parentId
      * @param intoMap
-     * @return a map containing  objects representing the {@link DatastreamProfileTO} objects and the
-     *         datastream ID as the keys.
+     * @return a map containing objects representing the {@link DatastreamProfileTO} objects and the datastream ID as
+     *         the keys.
      */
-    public static void convertDatastreamProfileTOs(@NotNull
-    final List<DatastreamProfileTO> datastreamProfileTOs, final String parentId, final Map<String, Datastream> intoMap) {
+    public static void convertDatastreamProfilesTO(@NotNull
+    final DatastreamProfilesTO datastreamProfiles, final String parentId, final Map<String, Datastream> intoMap) {
 
-        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfileTOs) {
+        if (intoMap == null)
+            return;
+
+        for (final DatastreamProfileTO datastreamProfileTO : datastreamProfiles.getDatastreamProfile()) {
             intoMap.put(datastreamProfileTO.getDsID(), new Datastream(datastreamProfileTO, parentId, null));
         }
     }

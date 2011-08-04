@@ -30,10 +30,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.validation.constraints.NotNull;
+
 import net.sf.oval.guard.Guarded;
+
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -66,8 +70,6 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream, locking and sync mechanisms.
@@ -1165,7 +1167,7 @@ public class GenericResource implements FedoraResource {
         return eve.getElementValues().getTriples();
     }
 
-    protected List<DatastreamProfileTO> getDatastreamProfiles() throws WebserverSystemException {
+    protected DatastreamProfilesTO getDatastreamProfiles() throws WebserverSystemException {
         return getFedoraServiceClient().getDatastreamProfiles(getId(), null);
     }
 
@@ -1179,11 +1181,11 @@ public class GenericResource implements FedoraResource {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
-    protected final void initDatastreams(final List<DatastreamProfileTO> datastreamProfiles)
+    protected final void initDatastreams(final DatastreamProfilesTO datastreamProfiles)
         throws WebserverSystemException, FedoraSystemException, TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
-        for (final DatastreamProfileTO profile : datastreamProfiles) {
+        for (final DatastreamProfileTO profile : datastreamProfiles.getDatastreamProfile()) {
             initDatastream(profile);
         }
     }

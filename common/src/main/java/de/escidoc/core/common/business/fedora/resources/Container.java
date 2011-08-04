@@ -38,7 +38,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
-import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -69,9 +69,8 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * Implementation of a Fedora Container Object which consist of datastreams managed in Fedora Digital Repository
- * System.
- *
+ * Implementation of a Fedora Container Object which consist of datastreams managed in Fedora Digital Repository System.
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -101,11 +100,15 @@ public class Container extends GenericVersionableResourcePid implements Containe
     /**
      * Constructor of Container with specified id. The datastreams are instantiated and retrieved if the related getter
      * is called.
-     *
-     * @param id The id of an container managed in Fedora.
-     * @throws StreamNotFoundException   Thrown if a datastream could not be found.
-     * @throws SystemException           Thrown in case of an internal error.
-     * @throws ResourceNotFoundException Thrown if no container could be found under the provided id.
+     * 
+     * @param id
+     *            The id of an container managed in Fedora.
+     * @throws StreamNotFoundException
+     *             Thrown if a datastream could not be found.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @throws ResourceNotFoundException
+     *             Thrown if no container could be found under the provided id.
      */
     public Container(final String id) throws SystemException, ResourceNotFoundException {
         super(id);
@@ -131,27 +134,26 @@ public class Container extends GenericVersionableResourcePid implements Containe
      * Get creation date of a versionated resource.
      * <p/>
      * Attention: The creation date of a resource differs from the creation date in the Fedora resource.
-     *
+     * 
      * @return creation date
-     * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
-     * @throws WebserverSystemException   Thrown in case of internal error.
+     * @throws TripleStoreSystemException
+     *             Thrown if request to TripleStore failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     @Override
     public String getCreationDate() throws TripleStoreSystemException {
 
         if (this.creationDate == null) {
             /*
-             * The creation version date is the date of the first version. This
-             * is not the creation date of the Fedora object! With Fedora
-             * 3.2/3.3 is the date indirectly obtained from the date of the
-             * first RELS-EXT version or from the version/date entry of the
-             * second version of RELS-EXT or the 'created date' of the RELS-EXT
+             * The creation version date is the date of the first version. This is not the creation date of the Fedora
+             * object! With Fedora 3.2/3.3 is the date indirectly obtained from the date of the first RELS-EXT version
+             * or from the version/date entry of the second version of RELS-EXT or the 'created date' of the RELS-EXT
              * datastream.
              * 
              * Another way would be to obtain the creation date from the WOV.
              * 
-             * The current implementation derives the creation date from the
-             * 'created Date' of the RELS-EXT datastream.
+             * The current implementation derives the creation date from the 'created Date' of the RELS-EXT datastream.
              */
 
             final GetDatastreamHistoryPathParam path =
@@ -167,13 +169,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Obtain title and description from DC an write them to properties map.
-     *
-     * @throws XmlParserSystemException Thrown if parsing of DC failed.
+     * 
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of DC failed.
      */
     private void setDcData() throws XmlParserSystemException {
         /*
-         * TODO maybe parsing could be removed, because values from DC are
-         * written to TrippleSTore by Fedora.
+         * TODO maybe parsing could be removed, because values from DC are written to TrippleSTore by Fedora.
          */
         // parse DC data stream
         final StaxParser sp = new StaxParser();
@@ -191,10 +193,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Get Content Model Specific.
-     *
+     * 
      * @return content model specific datastream (if exist)
-     * @throws StreamNotFoundException If datastream with content-model-specific id does not exist
-     * @throws FedoraSystemException   If access to Fedora fail
+     * @throws StreamNotFoundException
+     *             If datastream with content-model-specific id does not exist
+     * @throws FedoraSystemException
+     *             If access to Fedora fail
      */
     @Deprecated
     public Datastream getCts() throws StreamNotFoundException, FedoraSystemException {
@@ -210,7 +214,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     }
 
     /**
-     *
+     * 
      * @param ds
      * @throws StreamNotFoundException
      * @throws FedoraSystemException
@@ -253,25 +257,26 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * See Interface for functional description.
-     *
+     * 
      * @return MdRecords HashMap
      */
     @Override
     public Map<String, Datastream> getMdRecords() throws IntegritySystemException, FedoraSystemException,
         WebserverSystemException {
 
-        final List<DatastreamProfileTO> profiles =
+        final DatastreamProfilesTO profiles =
             getFedoraServiceClient().getDatastreamProfilesByAltId(getId(), Datastream.METADATA_ALTERNATE_ID,
                 getVersionDate());
 
         this.mdRecords.clear();
-        Datastream.convertDatastreamProfileTOs(profiles, getId(), this.mdRecords);
+        Datastream.convertDatastreamProfilesTO(profiles, getId(), this.mdRecords);
 
         return this.mdRecords;
     }
 
     /**
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords) throws FedoraSystemException,
@@ -356,7 +361,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
     }
 
     /**
-     * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds) throws WebserverSystemException,
@@ -447,11 +453,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Get the ESCIDOC_RELS_EXT for the corresponding version of the Resource.
-     *
+     * 
      * @return ESCIDOC_RELS_EXT corresponding to the Resource version.
-     * @throws StreamNotFoundException Thrown if the ESCIDOC_RELS_EXT data stream (with specified version) was not
-     *                                 found.
-     * @throws FedoraSystemException   Thrown in case of internal error.
+     * @throws StreamNotFoundException
+     *             Thrown if the ESCIDOC_RELS_EXT data stream (with specified version) was not found.
+     * @throws FedoraSystemException
+     *             Thrown in case of internal error.
      */
 
     public Datastream getEscidocRelsExt() throws StreamNotFoundException, FedoraSystemException {
@@ -477,11 +484,15 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * See Interface for functional description.
-     *
-     * @param ds The ESCIDOC_RELS_EXT datasream.
-     * @throws StreamNotFoundException  Thrown if the datastream was not found.
-     * @throws FedoraSystemException    Thrown if Fedora request failed.
-     * @throws WebserverSystemException Thrown in case of internal failure.
+     * 
+     * @param ds
+     *            The ESCIDOC_RELS_EXT datasream.
+     * @throws StreamNotFoundException
+     *             Thrown if the datastream was not found.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora request failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
      */
     public void setEscidocRelsExt(final Datastream ds) {
 
@@ -499,39 +510,35 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Persists the whole object to Fedora.
-     *
+     * 
      * @return lastModificationDate of the resource (Attention this timestamp differs from the last-modification
      *         timestamp of the repository. See Versioning Concept.)
-     * @throws FedoraSystemException    Thrown if connection to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of internal error.
+     * @throws FedoraSystemException
+     *             Thrown if connection to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     @Override
     public DateTime persist() throws FedoraSystemException, WebserverSystemException {
         /*
-         * Persist persists the data streams of the object and updates all
-         * version depending values. These values are RELS-EXT (version/date)
-         * and WOV timestamp.
+         * Persist persists the data streams of the object and updates all version depending values. These values are
+         * RELS-EXT (version/date) and WOV timestamp.
          * 
-         * It is assumed that all data (except timestamp information) are
-         * up-to-date in the datastreams! Afterwards should no operations be
-         * necessary.
+         * It is assumed that all data (except timestamp information) are up-to-date in the datastreams! Afterwards
+         * should no operations be necessary.
          * 
          * Procedure to persist an resource with versions:
          * 
          * 1.write ESCIDOC_RELS_EXT with a content of the RELS-EXT data stream.
          * 
-         * 2. get last-modifcation-date from fedora object (We need the
-         * timestamp from ESCIDOC_RELS_EXT precisely. But if no other method
-         * writes (hopefully) to this object so we can use the object
-         * timestamp.)
+         * 2. get last-modifcation-date from fedora object (We need the timestamp from ESCIDOC_RELS_EXT precisely. But
+         * if no other method writes (hopefully) to this object so we can use the object timestamp.)
          * 
          * 3. write the timestamp to the WOV
          * 
-         * 4. Update RELS-EXT (/version/date) with the timestamp (which is
-         * written to WOV)
+         * 4. Update RELS-EXT (/version/date) with the timestamp (which is written to WOV)
          * 
-         * Note: These are to many data stream updates to write one single
-         * information (timestamp)
+         * Note: These are to many data stream updates to write one single information (timestamp)
          */
         DateTime timestamp = null;
         if (this.isNeedSync()) {
@@ -602,10 +609,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Write ESCIDOC_RELS_EXT to Fedora.
-     *
+     * 
      * @return new timestamp of data stream (or null if not updated)
-     * @throws FedoraSystemException    Thrown if connection to Fedora failed.
-     * @throws WebserverSystemException Thrown in case of internal error.
+     * @throws FedoraSystemException
+     *             Thrown if connection to Fedora failed.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     protected DateTime persistEscidocRelsExt() throws FedoraSystemException, WebserverSystemException {
 
@@ -634,8 +643,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setDc(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -665,9 +673,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #getDc()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getDc()
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
@@ -683,9 +689,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Get the Id of the context.
-     *
+     * 
      * @return context id
-     * @throws WebserverSystemException Thrown if the id could not retrieved from the TripleStore.
+     * @throws WebserverSystemException
+     *             Thrown if the id could not retrieved from the TripleStore.
      */
     public String getContextId() throws WebserverSystemException {
 
@@ -704,9 +711,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Get the href of the Context.
-     *
+     * 
      * @return href of context.
-     * @throws WebserverSystemException Thrown if determining of contextId failed.
+     * @throws WebserverSystemException
+     *             Thrown if determining of contextId failed.
      */
     public String getContextHref() throws WebserverSystemException {
 
@@ -715,9 +723,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * The Title of the Container Context.
-     *
+     * 
      * @return title of Context
-     * @throws WebserverSystemException Thrown in case of internal failure.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
      */
     public String getContextTitle() throws WebserverSystemException {
 
@@ -737,9 +746,10 @@ public class Container extends GenericVersionableResourcePid implements Containe
     /**
      * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
      * could be used to request the TripleStore.
-     *
-     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
-     *                        propertiesNames.
+     * 
+     * @param propertiesNames
+     *            Collection of propertiesNames. The collection contains only the version resource specific
+     *            propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -755,11 +765,11 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Expanding the properties naming map.
-     *
-     * @param propertiesMapping The properties name mapping from external as key and the internal name as value. E.g.
-     *                          with the key "version-status" and "LATEST_VERSION_STATUS" as value is the value of
-     *                          "versin-status" after the mapping accessible with the internal key
-     *                          "LATEST_VERSION_STATUS".
+     * 
+     * @param propertiesMapping
+     *            The properties name mapping from external as key and the internal name as value. E.g. with the key
+     *            "version-status" and "LATEST_VERSION_STATUS" as value is the value of "versin-status" after the
+     *            mapping accessible with the internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
@@ -779,10 +789,12 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Get Whole Object Version datastream (WOV).
-     *
+     * 
      * @return WOV
-     * @throws StreamNotFoundException Thrown if wov datastream was not found.
-     * @throws FedoraSystemException   Thrown in case of Fedora error.
+     * @throws StreamNotFoundException
+     *             Thrown if wov datastream was not found.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora error.
      */
     @Override
     public Datastream getWov() throws StreamNotFoundException, FedoraSystemException {
@@ -796,10 +808,13 @@ public class Container extends GenericVersionableResourcePid implements Containe
 
     /**
      * Write the WOV data stream to Fedora repository.
-     *
-     * @param ds The WOV data stream.
-     * @throws StreamNotFoundException Thrown if the WOV data stream was not found.
-     * @throws FedoraSystemException   Thrown in case of Fedora error.
+     * 
+     * @param ds
+     *            The WOV data stream.
+     * @throws StreamNotFoundException
+     *             Thrown if the WOV data stream was not found.
+     * @throws FedoraSystemException
+     *             Thrown in case of Fedora error.
      */
     @Override
     public void setWov(final Datastream ds) throws FedoraSystemException, StreamNotFoundException {
