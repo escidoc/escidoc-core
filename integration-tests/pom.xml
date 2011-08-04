@@ -67,7 +67,7 @@
         <executions>
           <execution>
             <id>copy-drop-script [oracle]</id>
-            <phase>clean</phase>
+            <phase>-pre-clean</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -293,7 +293,7 @@
           </execution>
           <execution>
             <id>drop-escidoc-db [oracle]</id>
-            <phase>clean</phase>
+            <phase>-pre-clean</phase>
             <goals>
               <goal>execute</goal>
             </goals>
