@@ -775,7 +775,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             if (!startTimestamp.isEqual(endTimestamp) || getContainer().isNewVersion()) {
                 // object is modified
                 // make new version
-                makeVersion("ContainerHandler.update()");
+                getUtility().makeVersion("ContainerHandler.update()", null, getContainer());
                 getContainer().persist();
 
                 // retrieve updated container
@@ -1290,7 +1290,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
-            makeVersion("ContainerHandler.release()", Constants.STATUS_RELEASED);
+            getUtility().makeVersion("ContainerHandler.release()", Constants.STATUS_RELEASED, getContainer());
             getContainer().setLatestReleasePid();
             getContainer().persist();
         }
@@ -1445,7 +1445,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED, getContainer());
             getContainer().persist();
             fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
         }
@@ -1504,7 +1504,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
             // set status "in-revision"
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION, getContainer());
             getContainer().persist();
 
             fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
@@ -1568,7 +1568,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // withdrawing is possible in every version status
 
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_WITHDRAWN);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_WITHDRAWN, getContainer());
             getContainer().persist();
 
             // notify indexer
@@ -1846,7 +1846,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         final String itemXml = itemHandler.create(xmlData);
         final String itemId = XmlUtility.getIdFromXml(itemXml);
 
-        makeVersion("Item added");
+        getUtility().makeVersion("Item added", null, getContainer());
 
         // rebuild rels-ext
         final List<StartElementWithChildElements> elements = new ArrayList<StartElementWithChildElements>();
@@ -1916,7 +1916,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         final String objid = XmlUtility.getIdFromXml(containerXml);
 
-        makeVersion("Add Container");
+        getUtility().makeVersion("Add Container", null, getContainer());
 
         // rebuild rels-ext
 
@@ -1995,9 +1995,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             sp.clearHandlerChain();
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
+            
             for (final String memberId : memberIds) {
-                if (!this.utility.hasSameContext(memberId, getContainer().getId())) {
-                    throw new InvalidContextException("Member has not the same context as container.");
+                if (!this.utility.hasSameContext(memberId, getContainer().getContextId())) {
+                    throw new InvalidContextException("Member " + memberId + " has not the same context as container.");
                 }
             }
 
@@ -2028,8 +2029,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             }
             final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
             if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
-                // updateTimeStamp();
-                makeVersion("Container.addMembers");
+                getUtility().makeVersion("Container.addMembers", null, getContainer());
                 getContainer().persist();
             }
 
@@ -2211,7 +2211,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         MimeTypes.TEXT_XML));
 
                 // updateTimeStamp
-                makeVersion("Container.removeMembers");
+                getUtility().makeVersion("Container.removeMembers", null, getContainer());
                 getContainer().persist();
                 fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
 
@@ -2238,23 +2238,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new SystemException("Should not occur in FedoraContainerHandler.removeMember.", e);
         }
 
-    }
-
-    /**
-     * @param comment comment
-     * @throws SystemException e
-     */
-    private void makeVersion(final String comment) throws SystemException {
-        makeVersion(comment, null);
-    }
-
-    /**
-     * @param comment   comment
-     * @param newStatus newStatus
-     * @throws SystemException e
-     */
-    private void makeVersion(final String comment, final String newStatus) throws SystemException {
-        getUtility().makeVersion(comment, newStatus, getContainer());
     }
 
     /**
@@ -2371,7 +2354,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         MimeTypes.TEXT_XML));
                 final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
-                    makeVersion("Container.addContentRelations");
+                    getUtility().makeVersion("Container.addContentRelations", null, getContainer());
                     getContainer().persist();
                     fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
                 }
@@ -2492,7 +2475,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         MimeTypes.TEXT_XML));
                 final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
-                    makeVersion("Container.removeContentRelations");
+                    getUtility().makeVersion("Container.removeContentRelations", null, getContainer());
                     getContainer().persist();
                 }
                 fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));

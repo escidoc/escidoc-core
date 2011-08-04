@@ -226,18 +226,17 @@ public class Utility {
     }
 
     /**
-     * Returns true if both objects specified by id have the same context.
+     * Returns true if id of Context of object equals to given contextId.
      *
-     * @param id0 of object
-     * @param id1 of object
-     * @return true if objects has same context else false.
+     * @param id of object to check
+     * @param contextId
+     * @return true if context of objects equals the parameter contextId.
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
-    public boolean hasSameContext(final String id0, final String id1) throws TripleStoreSystemException {
-        final String context0 = tripleStoreUtility.getContext(id0);
-        final String context1 = tripleStoreUtility.getContext(id1);
+    public boolean hasSameContext(final String id, final String contextId) throws TripleStoreSystemException {
+        final String context = tripleStoreUtility.getContext(id);
 
-        return !(context0 == null || !context0.equals(context1));
+        return !(context == null || !context.equals(contextId));
     }
 
     /**
