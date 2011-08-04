@@ -117,9 +117,8 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.codehaus.woodstox</groupId>
+            <groupId>org.codehaus.woodstox</groupId>
             <artifactId>wstx-asl</artifactId>
-            <version>${wstx.version}</version>
         </dependency>
     </dependencies>
 
