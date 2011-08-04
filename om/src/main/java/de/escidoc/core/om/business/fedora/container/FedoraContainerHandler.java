@@ -2238,7 +2238,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
             for (final String memberId : memberIds) {
-                if (!Utility.getInstance().hasSameContext(memberId, getContainer().getId())) {
+                if (!Utility.getInstance().hasSameContext(memberId, getContainer().getContextId())) {
                     throw new InvalidContextException("Member has not the same context as container.");
                 }
             }
