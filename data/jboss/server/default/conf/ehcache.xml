@@ -131,6 +131,20 @@
 
     <!-- caches Fedora digital objects
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache name="Fedora.ExportObjects"
+           maxElementsInMemory="1000"
+           eternal="true"
+           overflowToDisk="false"/>
+
+    <!-- caches Fedora streams of digital objects
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
+    <cache name="Fedora.ExportObjectStreams"
+           maxElementsInMemory="1000"
+           eternal="true"
+           overflowToDisk="false"/>
+
+    <!-- caches Fedora digital objects
+    Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DigitalObjects"
            maxElementsInMemory="1000"
            eternal="true"
