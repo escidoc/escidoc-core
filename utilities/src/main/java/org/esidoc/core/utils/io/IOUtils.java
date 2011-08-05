@@ -10,6 +10,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -62,6 +63,23 @@ public final class IOUtils {
         int total = 0;
         while(- 1 != n) {
             output.write(buffer, 0, n);
+            total += n;
+            n = input.read(buffer);
+        }
+        return total;
+    }
+
+    public static int copy(final Reader input, final OutputStream output) throws IOException {
+        return copy(input, output, DEFAULT_BUFFER_SIZE);
+    }
+
+    public static int copy(final Reader input, final OutputStream output, int bufferSize)
+            throws IOException {
+        final char[] buffer = new char[bufferSize];
+        int n = input.read(buffer);
+        int total = 0;
+        while(- 1 != n) {
+            output.write(new String(buffer).getBytes("UTF-8"), 0, n);
             total += n;
             n = input.read(buffer);
         }
@@ -131,6 +149,13 @@ public final class IOUtils {
         } catch(final IOException e) {
             LOG.error("Error on closing stream.", e);
         }
+    }
+
+    // TODO: Temporal workaround!
+    public static StringBuffer convertStreamToStringBuffer(final Stream stream) throws IOException {
+        StringBuffer resultXml = new StringBuffer();
+        stream.writeCacheTo(resultXml);
+        return resultXml;
     }
 
 }

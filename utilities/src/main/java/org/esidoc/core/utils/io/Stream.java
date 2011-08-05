@@ -1,14 +1,7 @@
 package org.esidoc.core.utils.io;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -17,10 +10,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
@@ -300,6 +299,36 @@ public final class Stream extends OutputStream {
     }
 
     public void writeCacheTo(final StringBuilder out, final String charsetName) throws IOException {
+        flush();
+        if(isInMemory()) {
+            if(this.currentStream instanceof ByteArrayOutputStream) {
+                final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
+                out.append(IOUtils.newStringFromBytes(bytes, charsetName));
+            } else {
+                throw new IOException("Unknown format of currentStream");
+            }
+        } else {
+            // read the file
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+            try {
+                final byte bytes[] = new byte[1024];
+                int x = in.read(bytes);
+                while(x != - 1) {
+                    out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
+                    x = in.read(bytes);
+                }
+            } finally {
+                in.close();
+            }
+        }
+    }
+
+
+    public void writeCacheTo(final StringBuffer out) throws IOException {
+        writeCacheTo(out, "UTF-8");
+    }
+
+    public void writeCacheTo(final StringBuffer out, final String charsetName) throws IOException {
         flush();
         if(isInMemory()) {
             if(this.currentStream instanceof ByteArrayOutputStream) {
