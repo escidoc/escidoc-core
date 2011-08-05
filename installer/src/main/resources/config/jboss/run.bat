@@ -18,7 +18,7 @@ set JBOSS_HOME=%CD%
 popd
 
 set JAVA_HOME=${JDKPath}
-set ESCIDOC_HOME=${INSTALL_PATH}\core\conf
+set ESCIDOC_HOME=${INSTALL_PATH}\core
 set FEDORA_HOME=${INSTALL_PATH}\fedora
 
 REM Add bin/native to the PATH if present
