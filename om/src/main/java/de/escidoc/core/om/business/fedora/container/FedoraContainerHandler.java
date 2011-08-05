@@ -1995,7 +1995,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             sp.clearHandlerChain();
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
-            
+
             for (final String memberId : memberIds) {
                 if (!this.utility.hasSameContext(memberId, getContainer().getContextId())) {
                     throw new InvalidContextException("Member " + memberId + " has not the same context as container.");
