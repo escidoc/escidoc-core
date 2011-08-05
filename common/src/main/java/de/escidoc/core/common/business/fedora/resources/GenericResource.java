@@ -884,7 +884,7 @@ public class GenericResource implements FedoraResource {
         }
         // check if datastream is set, is equal to ds and save to fedora
         try {
-            // FIXME the getDatastream method delivers an virgin Stream. Is
+            // FIXME the getStream method delivers an virgin Stream. Is
             // this compare really necessary (Ok, this prevents writing of
             // unused data streams.)?
             final Datastream curDs = getDatastream();

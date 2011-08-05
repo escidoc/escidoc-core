@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.xml.DatastreamHolder;
+import org.esidoc.core.utils.xml.StreamHolder;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.namespace.NamespaceContext;
@@ -9,7 +9,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
- * {@link XMLStreamWriter} that filters content elements in {@link org.esidoc.core.utils.xml.DatastreamHolder} objects.
+ * {@link XMLStreamWriter} that filters content elements in {@link org.esidoc.core.utils.xml.StreamHolder} objects.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
@@ -121,7 +121,7 @@ public class FilteringXMLStreamWriter implements XMLStreamWriter {
 
     @Override
     public void writeEmptyElement(final String s, final String s1, final String s2) throws XMLStreamException {
-        if(! (DatastreamHolder.NAMESPACE.equals(s2) && DatastreamHolder.ELEMENT_NAME.equals(s1))) {
+        if(! (StreamHolder.NAMESPACE.equals(s2) && StreamHolder.ELEMENT_NAME.equals(s1))) {
             xmlStreamWriter.writeEmptyElement(s, s1, s2);
         }
     }
@@ -187,7 +187,7 @@ public class FilteringXMLStreamWriter implements XMLStreamWriter {
 
     @Override
     public void writeStartElement(final String s, final String s1, final String s2) throws XMLStreamException {
-        if(DatastreamHolder.NAMESPACE.equals(s2) && DatastreamHolder.ELEMENT_NAME.equals(s1)) {
+        if(StreamHolder.NAMESPACE.equals(s2) && StreamHolder.ELEMENT_NAME.equals(s1)) {
             this.ignore = true;
         } else {
             xmlStreamWriter.writeStartElement(s, s1, s2);

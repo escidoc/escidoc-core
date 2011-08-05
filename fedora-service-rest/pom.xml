@@ -13,13 +13,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aspects</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jvnet.jaxb2_commons</groupId>
-			<artifactId>jaxb2-basics-runtime</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>jsr311-api</artifactId>
@@ -50,22 +50,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<args>
-						<arg>-XtoString</arg>
-						<arg>-Xequals</arg>
-						<arg>-XhashCode</arg>
-						<arg>-Xcopyable</arg>
-						<arg>-Xmergeable</arg>
-					</args>
-					<plugins>
-						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics</artifactId>
-							<version>${jaxb2-basics.version}</version>
-						</plugin>
-					</plugins>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -75,6 +59,10 @@
 						<aspectLibrary>
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+                        <aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>policies</artifactId>
 						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.escidoc.core</groupId>

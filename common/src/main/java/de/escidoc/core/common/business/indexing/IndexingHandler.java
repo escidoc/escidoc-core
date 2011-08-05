@@ -20,6 +20,37 @@
 
 package de.escidoc.core.common.business.indexing;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,39 +66,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.apache.xpath.XPathAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
 
 /**
  * Handler for synchronous indexing via gsearch.

@@ -20,6 +20,27 @@
 
 package de.escidoc.core.common.business.fedora.mptstore;
 
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.db.DatabaseType;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.nsdl.mptstore.core.BasicTableManager;
+import org.nsdl.mptstore.core.DDLGenerator;
+import org.nsdl.mptstore.core.TableManager;
+import org.nsdl.mptstore.rdf.URIReference;
+import org.nsdl.mptstore.util.NTriplesUtil;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+
+import javax.sql.DataSource;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -36,29 +57,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import javax.sql.DataSource;
-
-import org.nsdl.mptstore.core.BasicTableManager;
-import org.nsdl.mptstore.core.DDLGenerator;
-import org.nsdl.mptstore.core.TableManager;
-import org.nsdl.mptstore.rdf.URIReference;
-import org.nsdl.mptstore.util.NTriplesUtil;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
-
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.db.DatabaseType;
-import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * To use is as implementation of the abstract class TripleStoreUtility register this as spring.bean

@@ -40,6 +40,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.esidoc.core.utils.io.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -258,7 +259,7 @@ public class PIDManagerRESTService implements PIDSystem {
 
         // add the systemID of object for semantic identifier
         final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        final Document doc = db.parse(new ByteArrayInputStream(param.getBytes()));
+        final Document doc = db.parse(new ByteArrayInputStream(param.getBytes(Charsets.UTF8_CHARSET)));
         final NodeList systemIDs = doc.getElementsByTagName("systemID");
 
         if (systemIDs.getLength() == 1) {

@@ -422,6 +422,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
         addEscidocBaseUrl(values);
 
         final Collection<Map<String, String>> userAccountPreferencesValues = new ArrayList<Map<String, String>>();
+        ;
         for (final UserPreference preference : preferences) {
             final Map<String, String> m = new HashMap<String, String>();
             m.put("userAccountPreferenceName", preference.getName());

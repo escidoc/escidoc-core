@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>installer</artifactId>
-	<name>Installer</name>
+	<name>eSciDoc Core - Installer</name>
 	<version>trunk-SNAPSHOT</version>
 	<description>Installer of eSciDoc Infrastructure</description>
 
@@ -29,9 +29,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aspects</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fcrepo-installer</artifactId>

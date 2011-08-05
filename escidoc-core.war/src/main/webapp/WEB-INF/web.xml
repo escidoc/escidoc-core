@@ -35,9 +35,10 @@
             classpath:/META-INF/spring/applicationContext-sb.xml
             classpath:/META-INF/spring/applicationContext-st.xml
             classpath:/META-INF/spring/applicationContext-tme.xml
+            classpath:/META-INF/spring/applicationContext-content-relation-rest-service.xml
             classpath:applicationContext-persistence.xml
             classpath:applicationContext-webapp.xml
-            classpath:escidoc-login.xml
+            file:///${ESCIDOC_HOME}/conf/escidoc-login.xml
 		</param-value>
 	</context-param>
 
@@ -56,6 +57,11 @@
             <param-name>sessionFactoryBeanName</param-name>
             <param-value>escidoc-core.SessionFactory</param-value>
         </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>authorizationFilter</filter-name>
+        <filter-class>de.escidoc.core.aa.servlet.AuthorizationFilter</filter-class>
     </filter>
 
 	<!--
@@ -109,6 +115,11 @@
     <filter-mapping>
         <filter-name>hibernateFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>authorizationFilter</filter-name>
+        <url-pattern>/services/*</url-pattern>
     </filter-mapping>
 
 	<!--
@@ -497,10 +508,18 @@
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 
-	<!--
-		############################ # Servlet Mappings
-		############################
-	-->
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <display-name>CXF Servlet</display-name>
+        <servlet-class>
+            org.apache.cxf.transport.servlet.CXFServlet
+        </servlet-class>
+    </servlet>
+
+    <!--
+         ############################ # Servlet Mappings
+         ############################
+     -->
 
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
@@ -706,6 +725,11 @@
 		<servlet-name>FedoraRestDeviationServlet</servlet-name>
 		<url-pattern>/fedoradeviation/*</url-pattern>
 	</servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
 
 	<session-config>
 		<!-- Default to 5 minute session timeouts -->

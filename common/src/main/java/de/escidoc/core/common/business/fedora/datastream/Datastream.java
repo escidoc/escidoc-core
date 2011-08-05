@@ -404,17 +404,6 @@ public class Datastream {
                 location = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + location;
             }
         }
-        else if (this.getStream() != null) {
-            if (CONTROL_GROUP_MANAGED.equals(this.getControlGroup())) {
-                try {
-                    location = this.utility.upload(this.getStream(), this.parentId + this.name, MimeTypes.TEXT_XML);
-                }
-                catch (final FileSystemException e) {
-                    throw new WebserverSystemException("Error while uploading of content of datastream '" + this.name
-                        + "' of the fedora object with id '" + this.parentId + "' to the staging area. ", e);
-                }
-            }
-        }
         query.setDsLocation(location);
         try {
             final DatastreamProfileTO datastreamProfile =

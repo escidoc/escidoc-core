@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
 import org.esidoc.core.utils.io.Stream;
-import org.esidoc.core.utils.xml.DatastreamHolder;
+import org.esidoc.core.utils.xml.StreamHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +57,8 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     @Override
     public void beforeUnmarshal(final Object target, final Object parent) {
-        if(target instanceof DatastreamHolder) {
-            final DatastreamHolder contentTO = (DatastreamHolder) target;
+        if(target instanceof StreamHolder) {
+            final StreamHolder contentTO = (StreamHolder) target;
             beforeUnmarshalContentTO(contentTO);
         }
         for(final UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
@@ -68,8 +68,8 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
 
     @Override
     public void afterUnmarshal(final Object target, final Object parent) {
-        if(target instanceof DatastreamHolder) {
-            final DatastreamHolder contentTO = (DatastreamHolder) target;
+        if(target instanceof StreamHolder) {
+            final StreamHolder contentTO = (StreamHolder) target;
             afterUnmarshalContentTO(contentTO);
         }
         for(final UnmarshallerListener unmarshallerListener : this.unmarshallerListeners) {
@@ -77,14 +77,14 @@ public class EsciDocUnmarshallerListener extends Unmarshaller.Listener {
         }
     }
 
-    private void beforeUnmarshalContentTO(final DatastreamHolder datastreamHolder) {
+    private void beforeUnmarshalContentTO(final StreamHolder datastreamHolder) {
         this.elementStreamFilter.setActive(true);
-        this.elementStreamFilter.setOutputStream(datastreamHolder.getDatastream());
+        this.elementStreamFilter.setOutputStream(datastreamHolder.getStream());
     }
 
-    private void afterUnmarshalContentTO(final DatastreamHolder datastreamHolder) {
+    private void afterUnmarshalContentTO(final StreamHolder datastreamHolder) {
         this.elementStreamFilter.setActive(false);
-        lockStream(datastreamHolder.getDatastream());
+        lockStream(datastreamHolder.getStream());
     }
 
     private void lockStream(final Stream stream) {

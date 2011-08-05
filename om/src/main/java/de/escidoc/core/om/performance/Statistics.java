@@ -114,6 +114,7 @@ public class Statistics {
                     (long) s.getSum()).append('\n');
             }
         }
+        System.gc();
         return b.toString();
     }
 

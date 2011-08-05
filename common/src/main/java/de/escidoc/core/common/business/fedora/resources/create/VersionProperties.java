@@ -20,11 +20,10 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+import org.joda.time.DateTime;
 
 /**
  * Version properties of versionable resource (Item/Container)(can represent current and latest version).

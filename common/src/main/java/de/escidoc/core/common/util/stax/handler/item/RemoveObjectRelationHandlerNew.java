@@ -181,7 +181,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
             }
             else {
-                final List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList<String>();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);

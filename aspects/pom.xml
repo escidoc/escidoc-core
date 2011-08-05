@@ -10,50 +10,55 @@
 	reserved. Use is subject to license ~ terms. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>eSciDocCore</artifactId>
-		<groupId>org.escidoc.core</groupId>
-		<version>trunk-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eSciDocCore</artifactId>
+        <groupId>org.escidoc.core</groupId>
+        <version>trunk-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>aspects</artifactId>
-	<name>eSciDoc Core - Infrastructure - Aspects</name>
+    <artifactId>aspects</artifactId>
+    <name>eSciDoc Core - Infrastructure - Aspects</name>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-        <artifactId>aspectj-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjrt</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.aspectj</groupId>
-						<artifactId>aspectjtools</artifactId>
-						<version>${aspectj.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<verbose>false</verbose>
-					<source>${java.source.version}</source>
-					<complianceLevel>${java.target.version}</complianceLevel>
-					<outxml>true</outxml>
-					<showWeaveInfo>false</showWeaveInfo>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <verbose>false</verbose>
+                    <source>${java.source.version}</source>
+                    <complianceLevel>${java.target.version}</complianceLevel>
+                    <outxml>true</outxml>
+                    <showWeaveInfo>false</showWeaveInfo>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aa-spec</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aa-spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javolution</groupId>
+            <artifactId>javolution</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>

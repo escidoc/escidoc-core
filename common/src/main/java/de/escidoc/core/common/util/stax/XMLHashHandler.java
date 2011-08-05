@@ -23,6 +23,7 @@
  */
 package de.escidoc.core.common.util.stax;
 
+import org.esidoc.core.utils.io.Charsets;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -112,7 +113,7 @@ public class XMLHashHandler extends DefaultHandler {
         string.append("#end");
         try {
             final MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(string.toString().getBytes());
+            md.update(string.toString().getBytes(Charsets.UTF8_CHARSET));
             this.hash = new String(md.digest());
         }
         catch (final NoSuchAlgorithmException e) {

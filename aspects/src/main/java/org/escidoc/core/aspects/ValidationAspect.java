@@ -29,6 +29,9 @@ import org.aspectj.lang.annotation.Aspect;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @Aspect
-public class ValidationAspect extends GuardAspect2 {
+public final class ValidationAspect extends GuardAspect2 {
+
+    private ValidationAspect() {
+    }
 
 }

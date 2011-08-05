@@ -134,7 +134,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 // }
             }
             else {
-                final List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList<String>();
                 namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

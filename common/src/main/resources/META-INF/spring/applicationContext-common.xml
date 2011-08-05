@@ -115,8 +115,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:escidoc-core.properties</value>
-                <value>classpath:escidoc-core.custom.properties</value>
+                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.properties</value>
+                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.custom.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>

@@ -35,6 +35,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
+import org.esidoc.core.utils.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -352,7 +353,7 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         throws WebserverSystemException {
         final String uploadUrl;
         try {
-            final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
+            final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes(Charsets.UTF8_CHARSET));
             uploadUrl = this.utility.upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {

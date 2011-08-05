@@ -11,6 +11,9 @@ import edu.harvard.hul.ois.jhove.OutputHandler;
 import org.esidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedInputStream;
@@ -87,7 +90,7 @@ public class JhoveHandler implements JhoveHandlerInterface {
     protected JhoveHandler() throws IOException {
         OutputStream outputStream = null;
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
+            InputStream inputStream = getInputStream(CONFIG_FILE);
             if (inputStream == null) {
                 throw new FileNotFoundException(CONFIG_FILE + " not found!");
             }
@@ -101,6 +104,26 @@ public class JhoveHandler implements JhoveHandlerInterface {
         finally {
             IOUtils.closeStream(outputStream);
         }
+    }
+
+    /**
+     * Get an InputStream for the given file.
+     *
+     * @param filename The name of the file.
+     * @return The InputStream or null if the file could not be located.
+     * @throws FileNotFoundException If access to the specified file fails.
+     */
+    private static InputStream getInputStream(final String filename) throws IOException {
+        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
+        String escidocHome = System.getenv("ESCIDOC_HOME");
+        if (escidocHome == null) {
+            escidocHome = System.getProperty("ESCIDOC_HOME");
+        }
+        final Resource[] resource = applicationContext.getResources("file:///" + escidocHome + "/conf/" + filename);
+        if (resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
+        }
+        return resource[0].getInputStream();
     }
 
     /**

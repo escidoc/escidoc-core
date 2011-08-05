@@ -29,15 +29,7 @@
 
 package de.escidoc.core.aa.ldap;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-
+import de.escidoc.core.aa.business.authorisation.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -47,7 +39,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 
-import de.escidoc.core.aa.business.authorisation.Constants;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Customized Springsecurity-ContextMapper. Writes all attributes from LDAP into EscidocLdapUserDetails-Object.

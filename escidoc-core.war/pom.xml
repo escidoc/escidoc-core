@@ -102,7 +102,10 @@
         <dependency>
             <groupId>org.escidoc.core</groupId>
             <artifactId>purge-service-impl</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>content-relation-rest-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -117,8 +120,16 @@
             <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-ext</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.codehaus.woodstox</groupId>
             <artifactId>wstx-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javolution</groupId>
+            <artifactId>javolution</artifactId>
         </dependency>
     </dependencies>
 
@@ -218,6 +229,32 @@
 				  </execution>			  
 				</executions>
 			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <configuration>
+                    <weaveDependencies>
+                        <weaveDependency>
+                            <groupId>joda-time</groupId>
+                            <artifactId>joda-time</artifactId>
+                        </weaveDependency>
+                        <weaveDependency>
+                            <groupId>org.apache.httpcomponents</groupId>
+                            <artifactId>httpcore</artifactId>
+                        </weaveDependency>
+                        <weaveDependency>
+                            <groupId>org.apache.httpcomponents</groupId>
+                            <artifactId>httpclient</artifactId>
+                        </weaveDependency>
+                    </weaveDependencies>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>

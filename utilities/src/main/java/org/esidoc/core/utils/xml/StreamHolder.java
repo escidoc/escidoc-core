@@ -7,12 +7,12 @@ import org.esidoc.core.utils.io.Stream;
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public interface DatastreamHolder {
+public interface StreamHolder {
 
     String NAMESPACE = "http://www.escidoc.org/ignore";
-    String ELEMENT_NAME = "datastream";
+    String ELEMENT_NAME = "stream";
 
-    Stream getDatastream();
+    Stream getStream();
 
     void setContent(final Stream stream );
 

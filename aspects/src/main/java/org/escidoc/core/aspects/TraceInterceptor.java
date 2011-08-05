@@ -31,11 +31,14 @@ import org.slf4j.LoggerFactory;
 import java.io.StringWriter;
 
 @Aspect
-public class TraceInterceptor {
+public final class TraceInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("de.escidoc.core.trace");
 
     private static final int DEPTH_SPACES = 2;
+
+    private TraceInterceptor() {
+    }
 
     @Around("execution(public * de.escidoc.core..*.* (..))" + " && !within(org.escidoc.core.aspects..*)" +
             " && !within(de.escidoc.core.common.util.aop..*)" + " && if(" + "false" + ')')

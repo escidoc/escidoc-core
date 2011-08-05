@@ -17,6 +17,7 @@ import java.util.Vector;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.codec.binary.Base64;
+import org.esidoc.core.utils.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -143,7 +144,7 @@ public class ContentTestBase extends ItemTestBase {
      */
     protected static String userNamePasswordBase64(final String userInfo) {
 
-        String encs = new String(Base64.encodeBase64(userInfo.getBytes()));
+        String encs = new String(Base64.encodeBase64(userInfo.getBytes(Charsets.UTF8_CHARSET)));
         return "Basic " + encs;
     }
 

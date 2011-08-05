@@ -28,24 +28,6 @@
  */
 package de.escidoc.core.aa.business;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.PolicyReference;
@@ -53,7 +35,6 @@ import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.combine.OrderedPermitOverridesPolicyAlg;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.finder.PolicyFinder;
-
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
@@ -69,6 +50,23 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class Proxies PoliciesCache. Contains methods that get User- or Group-Policies, grantedRoles, Roles, userDetails,
@@ -340,8 +338,7 @@ public class SecurityHelper {
         if (result == null) {
             result =
                 new XacmlPolicySet("roles-" + groupId,
-                    XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null,
-                    new ArrayList<AbstractPolicy>());
+                    XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES, null, new ArrayList());
         }
         policiesCache.clearGroupPolicies(groupId);
         return policiesCache.putGroupPolicies(groupId, result);

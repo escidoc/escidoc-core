@@ -185,23 +185,9 @@ public final class EscidocConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EscidocConfiguration.class);
 
-    private static EscidocConfiguration instance;
+    private static EscidocConfiguration instance = new EscidocConfiguration();
 
-    static {
-        try {
-            instance = new EscidocConfiguration();
-        }
-        catch (final EscidocException e) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Problem while loading properties.");
-            }
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Problem while loading properties.", e);
-            }
-        }
-    }
-
-    private final Properties properties;
+    private Properties properties = new Properties();
 
     private static final String PROPERTIES_FILENAME = "escidoc-core.custom.properties";
 
@@ -215,9 +201,18 @@ public final class EscidocConfiguration {
      * 
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
-    private EscidocConfiguration() throws SystemException {
+    private EscidocConfiguration() {
         System.setProperty("java.awt.headless", "true");
-        this.properties = loadProperties();
+        try {
+            this.properties = loadProperties();
+        } catch (final EscidocException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading properties.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading properties.", e);
+            }
+        }
     }
 
     /**
@@ -426,7 +421,11 @@ public final class EscidocConfiguration {
      */
     private static InputStream getInputStream(final String filename) throws IOException {
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
-        final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
+        String escidocHome = System.getenv("ESCIDOC_HOME");
+        if(escidocHome == null) {
+            escidocHome = System.getProperty("ESCIDOC_HOME");
+        }
+        final Resource[] resource = applicationContext.getResources("file:///" + escidocHome + "/conf/" + filename);
         if (resource.length == 0) {
             throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }

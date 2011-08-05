@@ -53,8 +53,12 @@
 						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.escidoc.core</groupId>
-							<artifactId>aspects</artifactId>
+							<artifactId>policies</artifactId>
 						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>aspects</artifactId>
+						</aspectLibrary>>
 					</aspectLibraries>
 				</configuration>
 			</plugin>
@@ -75,9 +79,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aspects</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
         <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>cmm-spec</artifactId>

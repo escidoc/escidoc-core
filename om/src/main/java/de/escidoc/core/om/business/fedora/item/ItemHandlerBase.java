@@ -41,6 +41,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.esidoc.core.utils.io.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -119,7 +120,7 @@ public class ItemHandlerBase extends HandlerBase {
         throws WebserverSystemException {
         final String uploadUrl;
         try {
-            final byte[] streamContent = Base64.decodeBase64(content.getBytes());
+            final byte[] streamContent = Base64.decodeBase64(content.getBytes(Charsets.UTF8_CHARSET));
             uploadUrl = this.getUtility().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {

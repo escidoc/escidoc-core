@@ -33,6 +33,10 @@
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
+                        <aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>policies</artifactId>
+						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>aspects</artifactId>
@@ -45,9 +49,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aspects</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>purge-service-spec</artifactId>

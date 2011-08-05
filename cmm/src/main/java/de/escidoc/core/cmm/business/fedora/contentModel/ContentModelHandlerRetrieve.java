@@ -1,11 +1,5 @@
 package de.escidoc.core.cmm.business.fedora.contentModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
@@ -24,6 +18,12 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ContentModelHandlerRetrieve extends HandlerBase {
 

@@ -10,7 +10,7 @@
 
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="cacheManagerName" value="defaultCacheManager"/>
-        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="configLocation" value="file:///${ESCIDOC_HOME}/conf/ehcache.xml"/>
     </bean>
 
 </beans>

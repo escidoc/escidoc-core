@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
+          version="2.1">
+    <bindings>
+        <globalBindings>
+            <javaType name="org.joda.time.DateTime" xmlType="xs:date"
+                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+            <javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
+                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+            <serializable/>
+        </globalBindings>
+    </bindings>
+    <bindings schemaLocation="common-types.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.common"/>
+        </schemaBindings>
+        <bindings node="//xs:complexType[@name='laxLinkContainer']">
+            <class name="LaxLinkContainerTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='link']">
+            <class name="LinkTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='linkForCreate']">
+            <class name="LinkForCreateTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='linkRequired']">
+            <class name="LinkRequiredTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='linkWithoutObjid']">
+            <class name="LinkWithoutObjidTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='readOnlyLink']">
+            <class name="ReadOnlyLinkTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="components.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.componets"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='component']">
+            <class name="ComponentTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='components']">
+            <class name="ComponentsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ComponentPropertiesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="container-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.container"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='container-list']">
+            <class name="ContainerListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="container.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.container"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='container']">
+            <class name="ContainerTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ContainerPropertiesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="content-model.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.content.model"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='content-model']">
+            <class name="ContentModelTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ContentModelPropertiesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="content-relation.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.content.relation"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='content-relation']">
+            <class name="ContentRelationTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='type']">
+            <class name="ContentRelationTypeTO"/>
+            <property name="contentRelationType"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ContentRelationPropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='resources']">
+            <class name="ContentRelationResourcesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='object']">
+            <class name="ContentRelationObjectTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='subject']">
+            <class name="SubjectTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="content-streams.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.content.stream"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='content-stream']">
+            <class name="ContentStreamTO"
+                   implClass="org.escidoc.core.domain.content.stream.ContentStreamDatastreamHolderTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='content-streams']">
+            <class name="ContentStreamsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="context-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.context"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='context-list']">
+            <class name="ContextListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="context.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.context"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ContextPropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='resources']">
+            <class name="ContextResourcesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='admin-descriptor']">
+            <class name="AdminDescriptorTO"
+                   implClass="org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='admin-descriptors']">
+            <class name="AdminDescriptorsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='context']">
+            <class name="ContextTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="item-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.item"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='item-list']">
+            <class name="ItemListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="item.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.item"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='item']">
+            <class name="ItemTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="ItemPropertiesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="md-records.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.metadatarecords"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='md-record']">
+            <class name="MdRecordTO" implClass="org.escidoc.core.domain.metadatarecords.MdRecordDatastreamHolderTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='md-records']">
+            <class name="MdRecordsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="organizational-unit.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.ou"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="OrganizationalUnitPropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='organizational-unit']">
+            <class name="OrganizationalUnitTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='parents']">
+            <class name="ParentsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='predecessors']">
+            <class name="PredecessorsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="organizational-unit-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.ou"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='organizational-unit-list']">
+            <class name="OrganizationalUnitListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="properties.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.properties"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='affiliations']">
+            <class name="AffiliationsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='content-model-specific']">
+            <class name="ContentModelSpecificTO"
+                   implClass="org.escidoc.core.domain.properties.ContentModelSpecificDatastreamHolderTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='external-ids']">
+            <class name="ExternalIdsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='latest-release']">
+            <class name="LatestReleaseTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='latest-version']">
+            <class name="LatestVersionTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='organizational-units']">
+            <class name="OrganizationalUnitsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='version']">
+            <class name="VersionTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='type']">
+            <property name="resourceType"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="relations.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.relations"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='relations']">
+            <class name="RelationsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="structural-relations.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.relations"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='affiliation']">
+            <class name="AffiliationTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='granted-to']">
+            <class name="GrantedToTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='predecessorLinkRequired']">
+            <class name="PredecessorLinkRequiredTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="struct-map.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.relations"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='struct-map']">
+            <class name="StructMapTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="release.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.release"/>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="version.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.version"/>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="version-history.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.version"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='version-history']">
+            <class name="VersionHistoryTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='version']">
+            <class name="VersionTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='timestamp']">
+            <property name="lastEventTimestamp"/>
+        </bindings>
+        <bindings node="//xs:element[@name='events']">
+            <class name="EventsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="Event-v1-1.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.version"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='event']">
+            <class name="EventTO"/>
+        </bindings>
+    </bindings>
+</bindings>

@@ -23,30 +23,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.xml.stream.XMLStreamException;
-
-import org.escidoc.core.services.fedora.UpdateObjectPathParam;
-import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
-import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -75,6 +51,28 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.escidoc.core.services.fedora.UpdateObjectPathParam;
+import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Implementation of a Fedora Item Object which consist of datastreams managed in Fedora Digital Repository System.

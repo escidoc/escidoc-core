@@ -20,6 +20,38 @@
 
 package de.escidoc.core.common.servlet;
 
+import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.security.SecurityException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.servlet.invocation.BeanMethod;
+import de.escidoc.core.common.servlet.invocation.MapperInterface;
+import de.escidoc.core.common.servlet.invocation.MethodMapper;
+import de.escidoc.core.common.servlet.invocation.XMLBase;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.aopalliance.aop.AspectException;
+import org.esidoc.core.utils.io.Charsets;
+import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.esidoc.core.utils.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.xml.sax.SAXException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,39 +66,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.aopalliance.aop.AspectException;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.xml.sax.SAXException;
-
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.security.SecurityException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.servlet.invocation.BeanMethod;
-import de.escidoc.core.common.servlet.invocation.MapperInterface;
-import de.escidoc.core.common.servlet.invocation.MethodMapper;
-import de.escidoc.core.common.servlet.invocation.XMLBase;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 
 /**
  * The eSciDoc servlet. Maps a REST request to the specified resource and invokes the specified (if one is configured).<br />
@@ -623,7 +622,7 @@ public class EscidocServlet extends HttpServlet {
         if (text != null) {
             httpResponse.setContentType(XML_RESPONSE_CONTENT_TYPE);
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
-            final byte[] txt = (text.getBytes());
+            final byte[] txt = (text.getBytes(Charsets.UTF8_CHARSET));
             final ServletOutputStream servletOut = httpResponse.getOutputStream();
             final OutputStream out = new GZIPOutputStream(servletOut);
             out.write(txt);
@@ -662,9 +661,9 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
             final ServletOutputStream servletOut = httpResponse.getOutputStream();
             final OutputStream out = new GZIPOutputStream(servletOut);
-            out.write(XmlUtility.DOCUMENT_START.getBytes());
-            out.write(XmlUtility.getStylesheetDefinition().getBytes());
-            out.write(exception.toXmlString().getBytes());
+            out.write(XmlUtility.DOCUMENT_START.getBytes(Charsets.UTF8_CHARSET));
+            out.write(XmlUtility.getStylesheetDefinition().getBytes(Charsets.UTF8_CHARSET));
+            out.write(exception.toXmlString().getBytes(Charsets.UTF8_CHARSET));
             out.close();
             servletOut.close();
         }

@@ -5,7 +5,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.joda.time.DateTime;
 
 /**
- * {@link CacheKeyGenerator} for getDatastream-Operation in {@link org.escidoc.core.services.fedora.FedoraServiceClient}.
+ * {@link CacheKeyGenerator} for getStream-Operation in {@link org.escidoc.core.services.fedora.FedoraServiceClient}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */

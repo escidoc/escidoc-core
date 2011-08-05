@@ -29,6 +29,7 @@
 package de.escidoc.core.test.adm;
 
 import de.escidoc.core.test.common.resources.PropertiesProvider;
+import org.esidoc.core.utils.io.Charsets;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -66,7 +67,7 @@ public class GetRepositoryInfoIT extends AdminToolTestBase {
 
         Properties repositoryInfo = new Properties();
 
-        repositoryInfo.loadFromXML(new ByteArrayInputStream(output.toString().getBytes()));
+        repositoryInfo.loadFromXML(new ByteArrayInputStream(output.toString().getBytes(Charsets.UTF8_CHARSET)));
 
         // Check Property escidoc-core.build that comes from
         // internal configuration file escidoc-core.constant.properties

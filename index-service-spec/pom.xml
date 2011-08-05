@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.escidoc.core</groupId>
+	<artifactId>index-service-spec</artifactId>
+	<name>eSciDoc Core - Index Service Spec.</name>
+    <version>trunk-SNAPSHOT</version>
+
+    <parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
 		<version>trunk-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
-	<artifactId>index-service-spec</artifactId>
-	<name>eSciDoc Core - Index Service Spec.</name>
 
 	<build>
 		<plugins>
@@ -56,6 +60,10 @@
 				<artifactId>aspectj-maven-plugin</artifactId>
 				<configuration>
 					<aspectLibraries>
+                        <aspectLibrary>
+							<groupId>org.escidoc.core</groupId>
+							<artifactId>policies</artifactId>
+						</aspectLibrary>
 						<aspectLibrary>
 							<groupId>org.escidoc.core</groupId>
 							<artifactId>aspects</artifactId>
@@ -68,9 +76,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.escidoc.core</groupId>
-			<artifactId>aspects</artifactId>
-		</dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>

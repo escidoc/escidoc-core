@@ -28,17 +28,6 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
@@ -48,6 +37,16 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides Methods used for Re-indexing.

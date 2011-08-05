@@ -36,11 +36,12 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Parser with Handler Chain.
@@ -58,7 +59,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
 
-    private final Stack<StartElement> startElements = new Stack<StartElement>();
+    private final Deque<StartElement> startElements = new ArrayDeque<StartElement>();
 
     private final StringBuffer curPath = new StringBuffer();
 

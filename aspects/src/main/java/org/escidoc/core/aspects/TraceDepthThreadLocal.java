@@ -20,7 +20,7 @@
 
 package org.escidoc.core.aspects;
 
-public final class TraceDepthThreadLocal {
+final class TraceDepthThreadLocal {
 
     private static final Integer ZERO = 0;
 
@@ -34,7 +34,7 @@ public final class TraceDepthThreadLocal {
     /**
      * Private constructor to avoid instantiation.
      */
-    private TraceDepthThreadLocal() {
+    TraceDepthThreadLocal() {
     }
 
     public static int getDepth() {
