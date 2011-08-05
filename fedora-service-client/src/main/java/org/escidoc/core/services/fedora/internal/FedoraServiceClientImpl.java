@@ -149,32 +149,50 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Cacheable(cacheName = "Fedora.ExportObjects", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
-    public DigitalObjectTO export(final String pid) {
+            name = "org.escidoc.core.services.fedora.internal.cache.ExportKeyGenerator"))
+    public DigitalObjectTO export(final String pid, final String format, final String context, final String encoding) {
         final ExportPathParam path = new ExportPathParam(pid);
         final ExportQueryParam query = new ExportQueryParam();
+        if(format != null) {
+            query.setFormat(format);
+        }
+        if(context != null) {
+            query.setContext(context);
+        }
+        if(encoding != null) {
+            query.setEncoding(encoding);
+        }
         return this.fedoraService.export(path, query);
     }
 
     @Override
     @Async
-    public Future<DigitalObjectTO> exportAsync(final String pid) {
-        return new AsyncResult<DigitalObjectTO>(export(pid));
+    public Future<DigitalObjectTO> exportAsync(final String pid, final String format, final String context, final String encoding) {
+        return new AsyncResult<DigitalObjectTO>(export(pid, format, context, encoding));
     }
 
     @Override
     @Cacheable(cacheName = "Fedora.ExportObjectStreams", keyGenerator = @KeyGenerator(
-            name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
-    public Stream exportAsStream(final String pid) {
+            name = "org.escidoc.core.services.fedora.internal.cache.ExportKeyGenerator"))
+    public Stream exportAsStream(final String pid, final String format, final String context, final String encoding) {
         final ExportPathParam path = new ExportPathParam(pid);
         final ExportQueryParam query = new ExportQueryParam();
+        if(format != null) {
+            query.setFormat(format);
+        }
+        if(context != null) {
+            query.setContext(context);
+        }
+        if(encoding != null) {
+            query.setEncoding(encoding);
+        }
         return this.fedoraService.exportAsStream(path, query);
     }
 
     @Override
     @Async
-    public Future<Stream> exportAsStreamAsync(final String pid) {
-        return new AsyncResult<Stream>(exportAsStream(pid));
+    public Future<Stream> exportAsStreamAsync(final String pid, final String format, final String context, final String encoding) {
+        return new AsyncResult<Stream>(exportAsStream(pid, format, context, encoding));
     }
 
     @Override

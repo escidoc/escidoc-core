@@ -39,13 +39,13 @@ public interface FedoraServiceClient {
 
     Future<ObjectProfileTO> getObjectProfileAsync(@NotNull @NotEmpty String pid);
 
-    DigitalObjectTO export(@NotNull @NotEmpty final String pid);
+    DigitalObjectTO export(@NotNull @NotEmpty final String pid, final String format, final String context, final String encoding);
 
-    Future<DigitalObjectTO> exportAsync(@NotNull @NotEmpty final String pid);
+    Future<DigitalObjectTO> exportAsync(@NotNull @NotEmpty final String pid, final String format, final String context, final String encoding);
 
-    Stream exportAsStream(@NotNull @NotEmpty final String pid);
+    Stream exportAsStream(@NotNull @NotEmpty final String pid, final String format, final String context, final String encoding);
 
-    Future<Stream> exportAsStreamAsync(@NotNull @NotEmpty final String pid);
+    Future<Stream> exportAsStreamAsync(@NotNull @NotEmpty final String pid, final String format, final String context, final String encoding);
 
     DigitalObjectTO getObjectXML(@NotNull @NotEmpty final String pid);
 
