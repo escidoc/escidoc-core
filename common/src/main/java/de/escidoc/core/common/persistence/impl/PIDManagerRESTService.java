@@ -20,21 +20,12 @@
 
 package de.escidoc.core.common.persistence.impl;
 
-import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.PidSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.persistence.PIDSystem;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,18 +37,33 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.PidSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.persistence.PIDSystem;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Communication with PIDManager WebService via RESTlet API.
- *
+ * 
  * @author Steffen Wagner
  */
+@Configurable
 public class PIDManagerRESTService implements PIDSystem {
 
     private String pidGeneratorServer;
@@ -70,22 +76,14 @@ public class PIDManagerRESTService implements PIDSystem {
 
     private String localPrefix = "";
 
-    private final ConnectionUtility connectionUtility;
-
-    /**
-     * PIDManagerRESTService.
-     */
-    public PIDManagerRESTService() {
-
-        this.connectionUtility = new ConnectionUtility();
-    }
+    @Autowired
+    @Qualifier("escidoc.core.common.util.service.ConnectionUtility")
+    private ConnectionUtility connectionUtility;
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.persistence.PIDSystem#assignPID(java.lang.String,
-     * java.lang.String)
+     * @see de.escidoc.core.common.persistence.PIDSystem#assignPID(java.lang.String, java.lang.String)
      */
     @Override
     public String assignPID(final String systemID, final String param) throws PidSystemException,
@@ -123,8 +121,7 @@ public class PIDManagerRESTService implements PIDSystem {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.common.persistence.PIDSystem
-     * #generatePID(java.lang.String)
+     * @see de.escidoc.core.common.persistence.PIDSystem #generatePID(java.lang.String)
      */
     @Override
     public String generatePID(final String systemID) throws PidSystemException {
@@ -140,8 +137,7 @@ public class PIDManagerRESTService implements PIDSystem {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.common.persistence.PIDSystem
-     * #neverGeneratePID(java.lang.String)
+     * @see de.escidoc.core.common.persistence.PIDSystem #neverGeneratePID(java.lang.String)
      */
     @Override
     public void neverGeneratePID(final String pid) {
@@ -151,9 +147,11 @@ public class PIDManagerRESTService implements PIDSystem {
     /**
      * Delete a Persistent Identifier from the PID System. Attention: A Persistent Identifier exist even if the resource
      * is permanently in-accessible. Therefore is a PID deletion usually not necessary. Use this with caution.
-     *
-     * @param pid The Persistent Identifier which is to delete.
-     * @throws PidSystemException Thrown if delete from the PID System fails.
+     * 
+     * @param pid
+     *            The Persistent Identifier which is to delete.
+     * @throws PidSystemException
+     *             Thrown if delete from the PID System fails.
      */
     public void deletePID(final String pid) throws PidSystemException {
 
@@ -182,8 +180,9 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the system for PID management service.
-     *
-     * @param url URL to PID Manager Service (http://host[:port]/)
+     * 
+     * @param url
+     *            URL to PID Manager Service (http://host[:port]/)
      */
     public void setPidGeneratorServer(final String url) {
         this.pidGeneratorServer = url;
@@ -191,10 +190,11 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the globalPrefix for generated PIDs.
-     *
-     * @param globalPrefix The globalPrefix for generated PIDs
+     * 
+     * @param globalPrefix
+     *            The globalPrefix for generated PIDs
      * @throws MissingMethodParameterException
-     *          If {@code globalPrefix} is null.
+     *             If {@code globalPrefix} is null.
      */
     public void setGlobalPrefix(final String globalPrefix) throws MissingMethodParameterException {
         Utility.checkNotNull(globalPrefix, "global prefix for PID");
@@ -204,8 +204,9 @@ public class PIDManagerRESTService implements PIDSystem {
     /**
      * Set the localPrefix for generated PIDs. This a part of the PID between the global prefix and the system id.
      * Default is "test" to indicate that the generated (Dummy-)PIDs are not registered.
-     *
-     * @param localPrefix The localPrefix for generated PIDs
+     * 
+     * @param localPrefix
+     *            The localPrefix for generated PIDs
      */
     public void setLocalPrefix(final String localPrefix) {
         this.localPrefix = localPrefix;
@@ -213,10 +214,11 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the separator between the parts of generated PIDs. Default is "/".
-     *
-     * @param separator The separator for generated PIDs
+     * 
+     * @param separator
+     *            The separator for generated PIDs
      * @throws MissingMethodParameterException
-     *          If {@code separator} is null.
+     *             If {@code separator} is null.
      */
     public void setSeparator(final String separator) throws MissingMethodParameterException {
         Utility.checkNotNull(separator, "separator");
@@ -225,10 +227,11 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Set the namespace of PID.
-     *
-     * @param pidNamespace The namespace for generated PIDs
+     * 
+     * @param pidNamespace
+     *            The namespace for generated PIDs
      * @throws MissingMethodParameterException
-     *          If {@code pidNamespace} is null.
+     *             If {@code pidNamespace} is null.
      */
     public void setPidNamespace(final String pidNamespace) throws MissingMethodParameterException {
         Utility.checkNotNull(pidNamespace, "namespace for PID");
@@ -237,9 +240,11 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Add systemID to data structure for PIDManager.
-     *
-     * @param systemID Objid of resource.
-     * @param param    XML parameter from assignPID user interface.
+     * 
+     * @param systemID
+     *            Objid of resource.
+     * @param param
+     *            XML parameter from assignPID user interface.
      * @return XML data structure for PID Manager enriched with objid.
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws org.xml.sax.SAXException
@@ -278,8 +283,9 @@ public class PIDManagerRESTService implements PIDSystem {
 
     /**
      * Obtain PID from respose message of PIDManager.
-     *
-     * @param in InputStream from PIDManager.
+     * 
+     * @param in
+     *            InputStream from PIDManager.
      * @return PID
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws org.xml.sax.SAXException

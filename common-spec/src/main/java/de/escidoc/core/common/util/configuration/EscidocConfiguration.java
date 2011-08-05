@@ -20,29 +20,35 @@
 
 package de.escidoc.core.common.util.configuration;
 
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SystemException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Handles properties.
- *
+ * 
  * @author Michael Hoppe
  */
 public final class EscidocConfiguration {
 
-    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\}.*?\\$\\{");
+    private static final Pattern PATTERN_PROPERTY_SPLIT = Pattern.compile("\\}.*?\\$\\{");
+
+    private static final Pattern PATTERN_PROPERTY_FIND = Pattern.compile(".*?\\$\\{(.+?)\\}.*");
+
+    private static final Pattern p = Pattern.compile(".*?\\$\\{");
 
     public static final String SEARCH_PROPERTIES_DIRECTORY = "search.properties.directory";
 
@@ -141,6 +147,10 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_BROWSER_URL = "escidoc-browser.url";
 
+    public static final String HTTP_CONNECTION_TIMEOUT = "http.connection.timeout";
+
+    public static final String HTTP_SOCKET_TIMEOUT = "http.socket.timeout";
+
     private static final String TRUE = "true";
 
     private static final String ONE = "1";
@@ -202,6 +212,7 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
      * properties attribute.
+     * 
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private EscidocConfiguration() throws SystemException {
@@ -211,9 +222,10 @@ public final class EscidocConfiguration {
 
     /**
      * Returns and perhaps initializes Object.
-     *
+     * 
      * @return EscidocConfiguration self
-     * @throws IOException Thrown if properties loading fails.
+     * @throws IOException
+     *             Thrown if properties loading fails.
      */
     public static EscidocConfiguration getInstance() {
         return instance;
@@ -221,8 +233,9 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name or null if property was not found.
-     *
-     * @param name The name of the Property.
+     * 
+     * @param name
+     *            The name of the Property.
      * @return Value of the given Property as String.
      */
     public String get(final String name) {
@@ -231,9 +244,11 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name or the second parameter as default value if property was not found.
-     *
-     * @param name         The name of the Property.
-     * @param defaultValue The default vaule if property isn't given.
+     * 
+     * @param name
+     *            The name of the Property.
+     * @param defaultValue
+     *            The default vaule if property isn't given.
      * @return Value of the given Property as String.
      */
     public String get(final String name, final String defaultValue) {
@@ -248,8 +263,9 @@ public final class EscidocConfiguration {
     /**
      * Returns the property with the given name as a boolean value. The result is set to true if the property value as
      * String has the value "true" or "1".
-     *
-     * @param name The name of the Property.
+     * 
+     * @param name
+     *            The name of the Property.
      * @return Value of the given Property as boolean.
      */
     public boolean getAsBoolean(final String name) {
@@ -266,8 +282,9 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name as a long value.
-     *
-     * @param name The name of the Property.
+     * 
+     * @param name
+     *            The name of the Property.
      * @return Value of the given Property as long value.
      */
     public Long getAsLong(final String name) {
@@ -286,8 +303,9 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name as a long value.
-     *
-     * @param name The name of the Property.
+     * 
+     * @param name
+     *            The name of the Property.
      * @return Value of the given Property as long value.
      */
     public Integer getAsInt(final String name) {
@@ -318,9 +336,10 @@ public final class EscidocConfiguration {
      * Afterwards tries to load specific properties from the file escidoc-core.custom.properties and merges them with
      * the default properties. If any key is included in default and specific properties, the value of the specific
      * property will overwrite the default property.
-     *
+     * 
      * @return The properties
-     * @throws SystemException If the loading of the default properties (file escidoc-core.properties) fails.
+     * @throws SystemException
+     *             If the loading of the default properties (file escidoc-core.properties) fails.
      */
     private static Properties loadProperties() throws SystemException {
         final Properties result;
@@ -381,10 +400,12 @@ public final class EscidocConfiguration {
 
     /**
      * Get the properties from a file.
-     *
-     * @param filename The name of the properties file.
+     * 
+     * @param filename
+     *            The name of the properties file.
      * @return The properties.
-     * @throws IOException If access to the specified file fails.
+     * @throws IOException
+     *             If access to the specified file fails.
      */
     private static Properties getProperties(final String filename) throws IOException {
 
@@ -396,10 +417,12 @@ public final class EscidocConfiguration {
 
     /**
      * Get an InputStream for the given file.
-     *
-     * @param filename The name of the file.
+     * 
+     * @param filename
+     *            The name of the file.
      * @return The InputStream or null if the file could not be located.
-     * @throws FileNotFoundException If access to the specified file fails.
+     * @throws FileNotFoundException
+     *             If access to the specified file fails.
      */
     private static InputStream getInputStream(final String filename) throws IOException {
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
@@ -412,18 +435,21 @@ public final class EscidocConfiguration {
 
     /**
      * Retrieves the Properties from File.
-     *
-     * @param property value of property with env-variable-syntax (e.g. ${java.home})
+     * 
+     * @param property
+     *            value of property with env-variable-syntax (e.g. ${java.home})
      * @return String replaced env-variables
      */
     private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;
-        if (property.contains("${")) {
-            final String[] envVariables = SPLIT_PATTERN.split(property);
+        if (property.startsWith("${")) {
+            final String[] envVariables = PATTERN_PROPERTY_SPLIT.split(property);
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
-                    envVariables[i] = envVariables[i].replaceFirst(".*?\\$\\{", "");
-                    envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
+                    final Matcher m = PATTERN_PROPERTY_FIND.matcher(envVariables[i]);
+                    if (m.find()) {
+                        envVariables[i] = m.group(1);
+                    }
                     if (System.getProperty(envVariables[i]) != null
                         && System.getProperty(envVariables[i]).length() != 0) {
                         String envVariable = System.getProperty(envVariables[i]);
@@ -439,8 +465,9 @@ public final class EscidocConfiguration {
     /**
      * Get the full URL to the eSciDoc Infrastructure itself extend with the provided path. E.g. path =
      * "/xsd/schema1.xsd" leads to http://localhost:8080/xsd/schema1.xsd.
-     *
-     * @param path path which is to append on the eSciDoc selfUrl.
+     * 
+     * @param path
+     *            path which is to append on the eSciDoc selfUrl.
      * @return baseUrl with appended path
      */
     public String appendToSelfURL(final String path) {
