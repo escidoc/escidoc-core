@@ -72,7 +72,7 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 
 /**
  * Component resource of eSciDoc.
- *
+ * 
  * @author Frank Schwichtenberg
  */
 @Configurable(preConstruction = true)
@@ -99,11 +99,15 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /**
      * Constructs the Component with the specified id from the Repository. The datastreams are instantiated and
      * retrieved if the related getter is called.
-     *
-     * @param id        The id of an item managed in Fedora.
-     * @param parentId  The id of the parent object.
-     * @param timestamp The timestamp which specifies the version of the datastreams to retrieve.
-     * @throws ResourceNotFoundException Thrown if the Component resource was not found.
+     * 
+     * @param id
+     *            The id of an item managed in Fedora.
+     * @param parentId
+     *            The id of the parent object.
+     * @param timestamp
+     *            The timestamp which specifies the version of the datastreams to retrieve.
+     * @throws ResourceNotFoundException
+     *             Thrown if the Component resource was not found.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -124,9 +128,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
-         * There was no StreamNotFoundException thrown before from this method
-         * and to avoid such a change, throw a ComponentNotFoundException
-         * instead.
+         * There was no StreamNotFoundException thrown before from this method and to avoid such a change, throw a
+         * ComponentNotFoundException instead.
          */
         try {
             initDatastreams(getDatastreamProfiles());
@@ -165,10 +168,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Retrieving some values from Fedora & TripleStore and keep it in internal HashMap.
-     *
-     * @throws TripleStoreSystemException Thrown if request to TripleStore failed.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS-EXT failed.
-     * @throws WebserverSystemException   Thrown if request to TripleStore failed.
+     * 
+     * @throws TripleStoreSystemException
+     *             Thrown if request to TripleStore failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS-EXT failed.
+     * @throws WebserverSystemException
+     *             Thrown if request to TripleStore failed.
      */
     private void getSomeValuesFromFedora() throws XmlParserSystemException {
 
@@ -212,7 +218,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Get Content as Stream.
-     *
+     * 
      * @return content
      */
     public Datastream getContent() {
@@ -226,8 +232,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.common.business.fedora.resources.GenericResource#setRelsExt
+     * @see de.escidoc.core.common.business.fedora.resources.GenericResource#setRelsExt
      * (de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     @Override
@@ -275,9 +280,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
-     * #getMdRecords()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface #getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords() {
@@ -287,9 +290,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
-     * #setMdRecords(java.util.HashMap)
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface #setMdRecords(java.util.HashMap)
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> ds) throws FedoraSystemException, WebserverSystemException,
@@ -355,9 +356,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
-     * #getMdRecord(java.lang.String)
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface #getMdRecord(java.lang.String)
      */
     @Override
     public Datastream getMdRecord(final String name) {
@@ -367,9 +366,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
-     * #setMdRecord(java.lang.String,
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface #setMdRecord(java.lang.String,
      * de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     @Override
@@ -488,8 +485,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws FedoraSystemException, WebserverSystemException,
@@ -516,9 +512,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #getRelsExt()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getRelsExt()
      */
     public Datastream getDc() {
 
@@ -548,8 +542,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * values.
      * <p/>
      * Once meant as setter-like method. Compare to setMdRecord, setMdRecords, setContent (FRS).
-     *
-     * @param xml    The XML with properties section of Component.
+     * 
+     * @param xml
+     *            The XML with properties section of Component.
      * @return Map of Component properties.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
@@ -595,9 +590,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     /**
      * Obtains values from RelsExt.
-     *
+     * 
      * @return map with predictate and objects
-     * @throws XmlParserSystemException Thrown if parse of RELS-EXT failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parse of RELS-EXT failed.
      */
     private Map<String, String> obtainRelsExtValues() throws XmlParserSystemException {
 

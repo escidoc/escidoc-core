@@ -16,6 +16,7 @@ import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 
@@ -58,15 +59,13 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/objects/{pid}/export")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    DigitalObjectTO export(
-        @NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
+    DigitalObjectTO export(@NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
 
     @GET
     @Path("/objects/{pid}/export")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    Stream exportAsStream(
-        @NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
+    Stream exportAsStream(@NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
 
     @GET
     @Path("/objects/{pid}/objectXML")
@@ -145,6 +144,14 @@ public interface FedoraServiceRESTEndpoint {
         @NotNull @PathParam("") ListDatastreamsPathParam path, @NotNull @QueryParam("") ListDatastreamsQueryParam query);
 
     @GET
+    @Path("/objects/{pid}/datastreams/infolist")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
+    DatastreamProfilesTO listProfiles(
+        @NotNull @PathParam("") ListDatastreamProfilesPathParam path,
+        @NotNull @QueryParam("") ListDatastreamProfilesQueryParam query);
+
+    @GET
     @Path("/objects/{pid}/datastreams/{dsID}/history")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
@@ -163,14 +170,16 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/get/{pid}/{dsID}/{versionDate}")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)
-    Stream getBinaryContent(@NotNull @PathParam("") GetBinaryContentPathParam path,
-                            @NotNull @QueryParam("") GetBinaryContentQueryParam query);
+    Stream getBinaryContent(
+        @NotNull @PathParam("") GetBinaryContentPathParam path,
+        @NotNull @QueryParam("") GetBinaryContentQueryParam query);
 
     @GET
     @Path("/objects/{pid}/methods/{sdefPid}/{method}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    Stream getDissemination(@NotNull @PathParam("") GetDisseminationPathParam path,
-                            @NotNull @QueryParam("") GetDisseminationQueryParam query);
+    Stream getDissemination(
+        @NotNull @PathParam("") GetDisseminationPathParam path,
+        @NotNull @QueryParam("") GetDisseminationQueryParam query);
 
 }
