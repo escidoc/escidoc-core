@@ -93,9 +93,9 @@ public interface FedoraServiceClient {
     Future<DatastreamProfileTO> addDatastreamAsync(
         @NotNull AddDatastreamPathParam path, @NotNull AddDatastreamQueryParam query, Stream outputStream);
 
-    Stream getDatastream(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp);
+    MimeStream getDatastream(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp);
 
-    Future<Stream> getDatastreamAsync(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp);
+    Future<MimeStream> getDatastreamAsync(@NotNull final String pid, @NotNull final String dsID, final DateTime timestamp);
 
     DatastreamProfileTO getDatastreamProfile(
         @NotNull GetDatastreamProfilePathParam path, @NotNull GetDatastreamProfileQueryParam query);

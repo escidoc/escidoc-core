@@ -43,6 +43,7 @@ import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
+import org.esidoc.core.utils.io.MimeStream;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.esidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
@@ -621,13 +622,13 @@ public class Datastream {
     }
 
     private void loadStreamFromFedora() {
-        final Stream stream = this.fedoraServiceClient.getDatastream(this.parentId, this.name, this.timestamp);
-        if (stream == null) {
+        final MimeStream mimeStream = this.fedoraServiceClient.getDatastream(this.parentId, this.name, this.timestamp);
+        if (mimeStream == null || mimeStream.getStream() == null) {
             throw new RuntimeException("Stream is 'null' after retrieving "
                 + "datastream from Fedora without exception.");
         }
         try {
-            this.setStream(stream.getBytes());
+            this.setStream(mimeStream.getStream().getBytes());
         }
         catch (final IOException e) {
             throw new RuntimeException("Error loading datastream.", e);

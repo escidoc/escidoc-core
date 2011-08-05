@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import net.sf.oval.guard.Guarded;
 
 import org.apache.cxf.jaxrs.client.Client;
+import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
@@ -35,10 +36,8 @@ import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
 import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
-import org.escidoc.core.services.fedora.GetDatastreamPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
-import org.escidoc.core.services.fedora.GetDatastreamQueryParam;
 import org.escidoc.core.services.fedora.GetDisseminationPathParam;
 import org.escidoc.core.services.fedora.GetDisseminationQueryParam;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
@@ -241,20 +240,43 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     }
 
     @Override
-    @Cacheable(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamKeyGenerator"))
-    public Stream getDatastream(final String pid, final String dsID, final DateTime timestamp) {
-        final GetDatastreamPathParam path = new GetDatastreamPathParam(pid, dsID);
-        final GetDatastreamQueryParam query = new GetDatastreamQueryParam();
-        if (timestamp != null) {
-            query.setAsOfDateTime(timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
+    @Cacheable(cacheName = "Fedora.Datastreams", keyGenerator = @KeyGenerator(
+            name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamKeyGenerator"))
+    public MimeStream getDatastream(final String pid, final String dsID, final DateTime timestamp) {
+        final Client client = WebClient.client(this.fedoraService);
+        final WebClient webClient = WebClient.fromClient(client);
+        String path = "/objects/" + pid + "/datastreams/" + dsID + "/content";
+        webClient.accept(MimeTypes.ALL).path(path);
+        if(timestamp != null) {
+            webClient.query("asOfDateTime", timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
         }
-        return this.fedoraService.getDatastream(path, query);
+        Response response = webClient.get();
+        
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new ServerWebApplicationException(response);
+        }
+        String contentType = null;
+        List<Object> contentTypeList = (List<Object>)response.getMetadata().get("Content-Type");
+        if (!contentTypeList.isEmpty()){
+            contentType =  contentTypeList.get(0).toString();
+        }
+        MimeStream result;
+        try {
+            InputStream inputStream = (InputStream)response.getEntity();
+            Stream stream = new Stream();
+            IOUtils.copy(inputStream, stream);
+            result = new MimeStream(stream, contentType);
+        }
+        catch (IOException e) {
+            throw new ServerWebApplicationException(e, response);
+        }
+        return result;
     }
 
     @Override
     @Async
-    public Future<Stream> getDatastreamAsync(final String pid, final String dsID, final DateTime timestamp) {
-        return new AsyncResult<Stream>(getDatastream(pid, dsID, timestamp));
+    public Future<MimeStream> getDatastreamAsync(final String pid, final String dsID, final DateTime timestamp) {
+        return new AsyncResult<MimeStream>(getDatastream(pid, dsID, timestamp));
     }
 
     @Override
