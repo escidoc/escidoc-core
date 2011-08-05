@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +93,8 @@ public class Context extends GenericResource implements ContextInterface {
     }
 
     /**
-     * Instantiates the Context with the specified id. The datastreams are
-     * instantiated and retrieved if the related getter is called.
+     * Instantiates the Context with the specified id. The datastreams are instantiated and retrieved if the related
+     * getter is called.
      * 
      * @param id
      *            The id of an context managed in Fedora.
@@ -163,9 +164,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #getProperties()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #getProperties()
      */
     @Override
     public Datastream getProperties() throws StreamNotFoundException, FedoraSystemException {
@@ -179,10 +178,8 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * # setProperties(de.escidoc.core.common.business.fedora.datastream.Stream
-     * )
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #
+     * setProperties(de.escidoc.core.common.business.fedora.datastream.Stream )
      */
     @Override
     public void setProperties(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -298,9 +295,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #getRelsExt()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface #getRelsExt()
      */
     public Datastream getDc() throws StreamNotFoundException, FedoraSystemException {
         if (this.dc == null) {
@@ -312,8 +307,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Stream)
      */
     public void setDc(final Datastream ds) throws StreamNotFoundException, FedoraSystemException,
@@ -336,25 +330,23 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #getAdminDescriptors()
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource #getAdminDescriptors()
      */
     @Override
     public Map<String, DatastreamProfileTO> getAdminDescriptors() throws IntegritySystemException,
         FedoraSystemException {
 
-        final List<DatastreamProfileTO> profiles =
+        final DatastreamProfilesTO profiles =
             getFedoraServiceClient().getDatastreamProfilesByAltId(getId(),
                 de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID, null);
         /*
-         * make a map from the list to keep the old implementation "alive" but
-         * do not instantiate a DataStream Object to avoid multiple loading of
-         * datastreams.
+         * make a map from the list to keep the old implementation "alive" but do not instantiate a DataStream Object to
+         * avoid multiple loading of datastreams.
          */
-        final Map<String, DatastreamProfileTO> map = new HashMap<String, DatastreamProfileTO>(profiles.size() + 1);
+        final Map<String, DatastreamProfileTO> map =
+            new HashMap<String, DatastreamProfileTO>(profiles.getDatastreamProfile().size() + 1);
 
-        for (final DatastreamProfileTO profile : profiles) {
+        for (final DatastreamProfileTO profile : profiles.getDatastreamProfile()) {
             map.put(profile.getDsID(), profile);
         }
 
@@ -364,8 +356,7 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getAdminDescriptor(java.lang.String)
      */
     @Override
@@ -385,10 +376,8 @@ public class Context extends GenericResource implements ContextInterface {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
-     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream.
-     * Stream)
+     * @see de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
+     * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream. Stream)
      */
     @Override
     public void setAdminDescriptor(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
@@ -400,8 +389,8 @@ public class Context extends GenericResource implements ContextInterface {
     }
 
     /**
-     * Get a map of all admin-decriptors of the Context. The map consists of
-     * datastream name and the admin-descriptor datastream itself.
+     * Get a map of all admin-decriptors of the Context. The map consists of datastream name and the admin-descriptor
+     * datastream itself.
      * 
      * @return Map of admin-descriptors.
      * @throws FedoraSystemException
@@ -409,12 +398,12 @@ public class Context extends GenericResource implements ContextInterface {
      */
     public Map<String, Datastream> getAdminDescriptorsMap() throws FedoraSystemException {
 
-        final List<DatastreamProfileTO> profiles =
+        final DatastreamProfilesTO profiles =
             getFedoraServiceClient().getDatastreamProfilesByAltId(getId(),
                 de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID, null);
 
         // add only new Datastreams to HashMap
-        for (final DatastreamProfileTO profile : profiles) {
+        for (final DatastreamProfileTO profile : profiles.getDatastreamProfile()) {
             if (!this.adminDescriptors.containsKey(profile.getDsID())) {
                 try {
                     final Datastream newDs = new Datastream(profile.getDsID(), getId(), null);
@@ -446,8 +435,7 @@ public class Context extends GenericResource implements ContextInterface {
      * Delete an AdminDescriptor from Context.
      * 
      * @param admDescName
-     *            The name/id of the AdminDescriptor (must be unique within
-     *            Context).
+     *            The name/id of the AdminDescriptor (must be unique within Context).
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      * @throws WebserverSystemException
@@ -523,13 +511,12 @@ public class Context extends GenericResource implements ContextInterface {
     }
 
     /**
-     * Expand a list with names of properties values with the propertiesNames
-     * for a versionated resource. These list could be used to request the
-     * TripleStore.
+     * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
+     * could be used to request the TripleStore.
      * 
      * @param propertiesNames
-     *            Collection of propertiesNames. The collection contains only
-     *            the version resource specific propertiesNames.
+     *            Collection of propertiesNames. The collection contains only the version resource specific
+     *            propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -547,11 +534,9 @@ public class Context extends GenericResource implements ContextInterface {
      * Expanding the properties naming map.
      * 
      * @param propertiesMapping
-     *            The properties name mapping from external as key and the
-     *            internal name as value. E.g. with the key "version-status" and
-     *            "LATEST_VERSION_STATUS" as value is the value of
-     *            "version-status" after the mapping accessible with the
-     *            internal key "LATEST_VERSION_STATUS".
+     *            The properties name mapping from external as key and the internal name as value. E.g. with the key
+     *            "version-status" and "LATEST_VERSION_STATUS" as value is the value of "version-status" after the
+     *            mapping accessible with the internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
