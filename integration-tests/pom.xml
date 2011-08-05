@@ -482,6 +482,9 @@
             <containerId>jboss42x</containerId>
             <home>${project.build.directory}/escidoc/jboss</home>
             <timeout>600000</timeout>
+            <systemProperties>
+              <ESCIDOC_HOME>${project.build.directory}/escidoc/core/conf</ESCIDOC_HOME>
+            </systemProperties>
           </container>
 
           <configuration>
