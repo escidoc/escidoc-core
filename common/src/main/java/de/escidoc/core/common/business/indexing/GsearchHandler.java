@@ -121,7 +121,6 @@ public class GsearchHandler {
     }
 
     /**
-    >>>>>>> .r43744
      * requests indexing by calling fedoragsearch-servlet.
      * <p/>
      * 
@@ -555,12 +554,12 @@ public class GsearchHandler {
                 // gsearch
                 if (Constants.NO_INDEX_DIR_PATTERN.matcher(response).matches()) {
                     if (StringUtils.isEmpty(myIndex)) {
-                        Matcher NoIndexDirIndexNameMatcher =
+                        final Matcher noIndexDirIndexNameMatcher =
                             Constants.NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher(response);
-                        if (!NoIndexDirIndexNameMatcher.matches()) {
+                        if (!noIndexDirIndexNameMatcher.matches()) {
                             throw new ApplicationServerSystemException(response);
                         }
-                        myIndex = NoIndexDirIndexNameMatcher.group(1);
+                        myIndex = noIndexDirIndexNameMatcher.group(1);
                         if (StringUtils.isEmpty(myIndex)) {
                             throw new ApplicationServerSystemException(response);
                         }
