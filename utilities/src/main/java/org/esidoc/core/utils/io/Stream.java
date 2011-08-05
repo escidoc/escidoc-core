@@ -323,6 +323,36 @@ public final class Stream extends OutputStream {
     }
 
 
+    public void writeCacheTo(final StringBuffer out) throws IOException {
+        writeCacheTo(out, "UTF-8");
+    }
+
+    public void writeCacheTo(final StringBuffer out, final String charsetName) throws IOException {
+        flush();
+        if(isInMemory()) {
+            if(this.currentStream instanceof ByteArrayOutputStream) {
+                final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
+                out.append(IOUtils.newStringFromBytes(bytes, charsetName));
+            } else {
+                throw new IOException("Unknown format of currentStream");
+            }
+        } else {
+            // read the file
+            final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
+            try {
+                final byte bytes[] = new byte[1024];
+                int x = in.read(bytes);
+                while(x != - 1) {
+                    out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
+                    x = in.read(bytes);
+                }
+            } finally {
+                in.close();
+            }
+        }
+    }
+
+
     @Override
     public void write(final byte[] b, final int off, final int len) throws IOException {
         if(! this.isOutputLocked()) {

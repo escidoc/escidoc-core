@@ -1,16 +1,19 @@
 package org.esidoc.core.utils.io;
 
-import net.sf.oval.guard.Guarded;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+
+import javax.validation.constraints.NotNull;
+
+import net.sf.oval.guard.Guarded;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
@@ -62,6 +65,23 @@ public final class IOUtils {
         int total = 0;
         while(- 1 != n) {
             output.write(buffer, 0, n);
+            total += n;
+            n = input.read(buffer);
+        }
+        return total;
+    }
+
+    public static int copy(final Reader input, final OutputStream output) throws IOException {
+        return copy(input, output, DEFAULT_BUFFER_SIZE);
+    }
+
+    public static int copy(final Reader input, final OutputStream output, int bufferSize)
+            throws IOException {
+        final char[] buffer = new char[bufferSize];
+        int n = input.read(buffer);
+        int total = 0;
+        while(- 1 != n) {
+            output.write(new String(buffer).getBytes("UTF-8"), 0, n);
             total += n;
             n = input.read(buffer);
         }
@@ -131,6 +151,13 @@ public final class IOUtils {
         } catch(final IOException e) {
             LOG.error("Error on closing stream.", e);
         }
+    }
+
+    // TODO: Temporal workaround!
+    public static StringBuffer convertStreamToStringBuffer(final Stream stream) throws IOException {
+        StringBuffer resultXml = new StringBuffer();
+        stream.writeCacheTo(resultXml);
+        return resultXml;
     }
 
 }
