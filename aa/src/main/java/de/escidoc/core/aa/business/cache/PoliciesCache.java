@@ -114,7 +114,7 @@ public class PoliciesCache {
      * @param roleIsGranted The Map with key: role ID, value: map with key: resource ID, value: EvaluationResult.
      * @return
      */
-    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "roleIsGrantedCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> putRoleIsGrantedEvaluationResult(@PartialCacheKey
     final String userOrGroupId, final Map<String, Map<String, EvaluationResult>> roleIsGranted) {
         return roleIsGranted;
@@ -127,7 +127,7 @@ public class PoliciesCache {
      * @param userOrGroupId The user or group ID..
      * @return Map.  The Map with key: role ID, value: map with key: resource ID, value: EvaluationResult.
      */
-    @Cacheable(cacheName = "roleIsGrantedCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "roleIsGrantedCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, EvaluationResult>> getRoleIsGrantedEvaluationResultCached(@PartialCacheKey
     final String userOrGroupId) {
         return new HashMap<String, Map<String, EvaluationResult>>();
@@ -142,7 +142,7 @@ public class PoliciesCache {
      * @return The {@code XacmlPolicySet} containing the policy set that consists of the user's polices, or
      *         {@code null}.
      */
-    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userPoliciesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getUserPolicies(final String userId) {
         return null;
     }
@@ -155,7 +155,7 @@ public class PoliciesCache {
      * @param policySet
      * @return The {@code XacmlPolicySet} containing the policy set that consists of the user's polices.
      */
-    @Cacheable(cacheName = "userPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userPoliciesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putUserPolicies(@PartialCacheKey
     final String userId, final XacmlPolicySet policySet) {
         return policySet;
@@ -170,7 +170,7 @@ public class PoliciesCache {
      * @return The {@code XacmlPolicySet} containing the policy set that consists of the group's polices, or
      *         {@code null}.
      */
-    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupPoliciesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getGroupPolicies(final String groupId) {
         return null;
     }
@@ -183,7 +183,7 @@ public class PoliciesCache {
      * @param policySet
      * @return The {@code XacmlPolicySet} containing the policy set that consists of the user's polices.
      */
-    @Cacheable(cacheName = "groupPoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupPoliciesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet putGroupPolicies(@PartialCacheKey
     final String groupId, final XacmlPolicySet policySet) {
         return policySet;
@@ -197,7 +197,7 @@ public class PoliciesCache {
      * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
-    @Cacheable(cacheName = "userGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userGrantsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
         return userAccountHandler.retrieveCurrentGrantsAsMap(userId);
@@ -211,7 +211,7 @@ public class PoliciesCache {
      * @throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
-    @Cacheable(cacheName = "groupGrantsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "groupGrantsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(final String groupId)
         throws ResourceNotFoundException, SystemException {
         return userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
@@ -224,7 +224,7 @@ public class PoliciesCache {
      * @return The details of the user as {@code UserDetails}, or {@code null}.
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
-    @Cacheable(cacheName = "userDetailsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userDetailsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
         EscidocUserDetails result = null;
         final UserAccount userAccount = userAccountDao.retrieveUserAccountByHandle(handle);
@@ -244,7 +244,7 @@ public class PoliciesCache {
      * @throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException
      * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
-    @Cacheable(cacheName = "userGroupsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "userGroupsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Set<String> getUserGroups(final String userId) throws UserAccountNotFoundException, SystemException {
         return userGroupHandler.retrieveGroupsForUser(userId, true);
     }
@@ -257,7 +257,7 @@ public class PoliciesCache {
      * @return Returns the {@code PolicyFinderResult} containing the policy set of the addressed role.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    @Cacheable(cacheName = "rolePoliciesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "rolePoliciesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public XacmlPolicySet getRolePolicySet(@PartialCacheKey
     final URI idReference, final EscidocRole role) throws WebserverSystemException {
         if (role == null) {
@@ -272,7 +272,7 @@ public class PoliciesCache {
      * @param roleId The role identifier.
      * @return Returns the {@code EscidocRole} for the provided key.
      */
-    @Cacheable(cacheName = "rolesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "rolesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocRole getRole(final String roleId) {
         EscidocRole role = null;
         try {

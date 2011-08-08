@@ -71,7 +71,7 @@ public class SecurityInterceptorCache {
      * @return Returns the method mappings.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    @Cacheable(cacheName = "mappingsCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "mappingsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public MethodMappingList getMethodMappings(final String className, final String methodName)
         throws WebserverSystemException {
         final MethodMappingList methodMappings;

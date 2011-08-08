@@ -59,7 +59,7 @@ public class RequestAttributesCache {
      * @param result   the object to cache.
      * @return Object cached Object.
      */
-    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "attributesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object putAttribute(@PartialCacheKey
     final EvaluationCtx ctx, @PartialCacheKey
     final String cacheKey, final Object result) {
@@ -73,7 +73,7 @@ public class RequestAttributesCache {
      * @param cacheKey the cacheKey for this object.
      * @return Object cached Object.
      */
-    @Cacheable(cacheName = "attributesCache", keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "attributesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Object getAttribute(final EvaluationCtx ctx, final String cacheKey) {
         return null;
     }

@@ -87,7 +87,7 @@ public class IndexerResourceRequester {
      * @return EscidocBinaryContent resource-object
      * @throws SystemException e
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocBinaryContent getResource(final String identifier) throws SystemException {
         if (identifier.startsWith("http")) {
             return getExternalResource(identifier);
@@ -120,7 +120,7 @@ public class IndexerResourceRequester {
      * @param resource   resource-object
      * @return Object resource-object
      */
-    @Cacheable(cacheName = "resourcesCache", keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    @Cacheable(cacheName = "resourcesCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "StringCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public EscidocBinaryContent setResource(@PartialCacheKey
     final String identifier, final EscidocBinaryContent resource) {
         return resource;
