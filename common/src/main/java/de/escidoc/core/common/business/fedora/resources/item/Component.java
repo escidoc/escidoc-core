@@ -120,7 +120,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         init();
     }
 
-    protected void init() throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException,
+    private void init() throws ResourceNotFoundException, IntegritySystemException, FedoraSystemException,
         TripleStoreSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
