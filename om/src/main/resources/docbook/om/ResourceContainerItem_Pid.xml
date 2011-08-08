@@ -80,12 +80,11 @@
 			In comparing is the definition for the whole Item object to
 			set via cmm.Item.objectPid.releaseWithoutPid.
 		</para>
-		<para>
+		<programlisting>
 			cmm.[Container|Item].[objectPid|versionPid].
-			[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
-
+			   [setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
 			cmm.Item.contentPid.[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
-		</para>
+		</programlisting>
 	</section>
 
 	<section>
