@@ -36,11 +36,11 @@ import java.util.ListIterator;
 @Aspect
 public final class ListPerformanceAspect {
 
-    private static CollectionFactory collectionFactory = CollectionFactory.getInstance();
+    /*private static CollectionFactory collectionFactory = CollectionFactory.getInstance();
 
     /**
      * Package protected constructor to avoid instantion outside of this package.
-     */
+
     ListPerformanceAspect() {
     }
 
@@ -181,7 +181,7 @@ public final class ListPerformanceAspect {
         public void ensureCapacity(int minCapacity) {
             // ignore this
         }
-    }
+    }*/
 
 }
 

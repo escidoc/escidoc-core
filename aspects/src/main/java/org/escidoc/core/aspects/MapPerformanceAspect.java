@@ -33,11 +33,11 @@ import java.util.Set;
 @Aspect
 public final class MapPerformanceAspect {
 
-    private CollectionFactory collectionFactory = CollectionFactory.getInstance();
+    /*private CollectionFactory collectionFactory = CollectionFactory.getInstance();
 
     /**
      * Protected constructor to avoid instantion outside of this package.
-     */
+
     MapPerformanceAspect() {
     }
 
@@ -114,7 +114,7 @@ public final class MapPerformanceAspect {
         public String toString() {
             return internalMap.toString();
         }
-    }
+    }*/
 
 }
 
