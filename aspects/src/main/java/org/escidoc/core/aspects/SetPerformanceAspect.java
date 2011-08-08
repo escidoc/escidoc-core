@@ -33,11 +33,11 @@ import java.util.Set;
 @Aspect
 public final class SetPerformanceAspect {
 
-    /*private CollectionFactory collectionFactory = CollectionFactory.getInstance();
+    private CollectionFactory collectionFactory = CollectionFactory.getInstance();
 
     /**
      * Package protected constructor to avoid instantion outside of this package.
-
+     */
     SetPerformanceAspect() {
     }
 
@@ -118,7 +118,7 @@ public final class SetPerformanceAspect {
         public String toString() {
             return internalSet.toString();
         }
-    }*/
+    }
 
 }
 

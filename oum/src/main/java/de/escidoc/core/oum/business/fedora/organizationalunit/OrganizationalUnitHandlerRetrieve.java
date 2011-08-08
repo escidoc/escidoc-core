@@ -219,7 +219,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
         initialPath.add(getOrganizationalUnit().getId());
         expandPaths(initialPath);
 
-        while (!getPathes().empty()) {
+        while (getPathes().size() > 0) {
             final List<String> path = getPathes().pop();
             final String topParentOu = path.get(path.size() - 1);
 

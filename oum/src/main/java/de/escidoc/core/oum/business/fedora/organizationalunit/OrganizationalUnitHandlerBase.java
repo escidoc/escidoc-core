@@ -68,7 +68,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.xml.stream.XMLStreamException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +83,7 @@ import java.util.Stack;
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {
 
-    private Stack<List<String>> pathes;
+    private Deque<List<String>> pathes;
 
     @Autowired
     @Qualifier("business.Utility")
@@ -154,13 +156,13 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * Initialize the pathes queue.
      */
     protected void initPathes() {
-        this.pathes = new Stack<List<String>>();
+        this.pathes = new ArrayDeque<List<String>>();
     }
 
     /**
      * @return The pathes queue.
      */
-    protected Stack<List<String>> getPathes() {
+    protected Deque<List<String>> getPathes() {
         return this.pathes;
     }
 

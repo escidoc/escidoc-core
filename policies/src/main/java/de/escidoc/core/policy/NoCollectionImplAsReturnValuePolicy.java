@@ -1,6 +1,7 @@
 package de.escidoc.core.policy;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.DeclareError;
 import org.aspectj.lang.annotation.DeclareWarning;
 
 /**
@@ -10,7 +11,7 @@ import org.aspectj.lang.annotation.DeclareWarning;
 final class NoCollectionImplAsReturnValuePolicy {
 
     @SuppressWarnings("unused")
-    @DeclareWarning(
+    @DeclareError(
             "execution(" + "(java.util.TreeSet+" + " || java.util.Vector+" +
                     " || java.util.concurrent.SynchronousQueue+" + " || java.util.Stack+" +
                     " || javax.management.relation.RoleUnresolvedList+" + " || javax.management.relation.RoleList+" +
