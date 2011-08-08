@@ -524,12 +524,4 @@ public class HibernateUserGroupDao extends AbstractHibernateDao implements UserG
         return result;
     }
 
-    /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param mySessionFactory The mySessionFactory to set.
-     */
-    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-        setSessionFactory(mySessionFactory);
-    }
 }

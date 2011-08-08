@@ -39,16 +39,6 @@ import java.util.List;
 public class HibernateRequestMappingDao extends HibernateDaoSupport implements RequestMappingDaoInterface {
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param requestMappingSessionFactory The sessionFactory to set.
-     */
-    public final void setRequestMappingSessionFactory(final SessionFactory requestMappingSessionFactory) {
-
-        setSessionFactory(requestMappingSessionFactory);
-    }
-
-    /**
      * See Interface for functional description.
      * <p/>
      * The database tables used are {@code method_mappings} and {@code invocation_mappings}.

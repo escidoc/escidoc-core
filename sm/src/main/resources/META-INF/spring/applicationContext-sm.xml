@@ -19,29 +19,29 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
        default-lazy-init="false">
 
     <bean id="persistence.SmScopesDao" class="de.escidoc.core.sm.business.persistence.hibernate.SmScopesHibernateDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 
     <bean id="persistence.SmStatisticDataDao"
           class="de.escidoc.core.sm.business.persistence.hibernate.SmStatisticDataHibernateDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 
     <bean id="persistence.SmReportDefinitionsDao"
           class="de.escidoc.core.sm.business.persistence.hibernate.SmReportDefinitionsHibernateDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 
     <bean id="persistence.SmPreprocessingLogsDao"
           class="de.escidoc.core.sm.business.persistence.hibernate.SmPreprocessingLogsHibernateDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 
@@ -50,8 +50,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
         </property>
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 

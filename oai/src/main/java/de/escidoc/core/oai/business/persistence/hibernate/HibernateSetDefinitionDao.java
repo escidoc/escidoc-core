@@ -249,12 +249,4 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao implements S
         super.update(setDefinition);
     }
 
-    /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param mySessionFactory The mySessionFactory to set.
-     */
-    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-        setSessionFactory(mySessionFactory);
-    }
 }

@@ -87,8 +87,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <bean id="persistence.HibernateRequestMappingDao"
           class="de.escidoc.core.common.util.security.persistence.hibernate.HibernateRequestMappingDao">
-        <property name="requestMappingSessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 

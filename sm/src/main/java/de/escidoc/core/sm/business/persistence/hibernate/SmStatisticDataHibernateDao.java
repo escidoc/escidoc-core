@@ -79,14 +79,4 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao implements
         return results != null ? (Date) results.get(0) : null;
     }
 
-    /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param mySessionFactory The sessionFactory to set.
-     */
-    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-
-        setSessionFactory(mySessionFactory);
-    }
-
 }

@@ -19,8 +19,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
        default-lazy-init="false">
     <bean id="persistence.SetDefinitionDao"
           class="de.escidoc.core.oai.business.persistence.hibernate.HibernateSetDefinitionDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 </beans>

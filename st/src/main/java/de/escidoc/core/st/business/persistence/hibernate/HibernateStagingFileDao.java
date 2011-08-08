@@ -49,17 +49,6 @@ import java.util.List;
  * @author Torsten Tetteroo
  */
 public class HibernateStagingFileDao extends HibernateDaoSupport implements StagingFileDao {
-
-    /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param stagingSessionFactory The sessionFactory to set.
-     */
-    public final void setStagingSessionFactory(final SessionFactory stagingSessionFactory) {
-
-        setSessionFactory(stagingSessionFactory);
-    }
-
     /**
      * See Interface for functional description.
      */

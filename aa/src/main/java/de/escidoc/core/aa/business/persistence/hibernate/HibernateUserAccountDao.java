@@ -1117,16 +1117,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     }
 
     /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param mySessionFactory The mySessionFactory to set.
-     */
-    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-
-        setSessionFactory(mySessionFactory);
-    }
-
-    /**
      * See Interface for functional description.
      *
      * @param userId userId

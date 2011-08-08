@@ -19,8 +19,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
        default-lazy-init="false">
     <bean id="persistence.StagingFileDao"
           class="de.escidoc.core.st.business.persistence.hibernate.HibernateStagingFileDao">
-        <property name="stagingSessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 </beans>

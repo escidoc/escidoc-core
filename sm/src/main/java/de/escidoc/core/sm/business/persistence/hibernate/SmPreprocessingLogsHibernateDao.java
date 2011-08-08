@@ -168,14 +168,4 @@ public class SmPreprocessingLogsHibernateDao extends AbstractHibernateDao implem
             processingDate, hasError);
     }
 
-    /**
-     * Wrapper of setSessionFactory to enable bean stuff generation for this bean.
-     *
-     * @param mySessionFactory The sessionFactory to set.
-     */
-    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-
-        setSessionFactory(mySessionFactory);
-    }
-
 }

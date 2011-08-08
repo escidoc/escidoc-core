@@ -41,24 +41,18 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         </property>
         <property name="hibernateProperties">
             <props>
-                <!--prop key="hibernate.transaction.factory_class">
-                    org.hibernate.transaction.JTATransactionFactory
-                </prop>
-                <prop key="hibernate.transaction.manager_lookup_class">
-                    ${escidoc-core.hibernate.transaction.manager_lookup_class}
-                </prop>
-                <prop key="jta.UserTransaction">
-                    ${escidoc-core.jta.UserTransaction}
-                </prop-->
-                <prop key="hibernate.dialect">
-                    ${escidoc-core.hibernate.dialect}
-                </prop>
-                <!-- ehCache default provider cannot handle two session factories -->
-                <prop key="hibernate.cache.provider_class">
-                    org.hibernate.cache.HashtableCacheProvider
-                </prop>
+                <prop key="hibernate.dialect">${escidoc-core.hibernate.dialect}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.default_batch_fetch_size">16</prop>
+                <prop key="hibernate.order_updates">true</prop>
                 <prop key="hibernate.show_sql">false</prop>
-
+                <prop key="hibernate.jdbc.batch_size">30</prop>
+                <prop key="hibernate.jdbc.batch_versioned_data">true</prop>
+                <prop key="hibernate.jdbc.use_scrollable_resultset">true</prop>
+                <prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
                 <prop key="hibernate.connection.release_mode">auto</prop>
             </props>
         </property>
@@ -147,6 +141,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 </value>
             </list>
         </property>
+    </bean>
+
+    <bean id="escidoc-core.HibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="escidoc-core.SessionFactory"/>
+        </property>
+        <property name="cacheQueries" value="true"/>
+        <property name="queryCacheRegion" value="QueryCache"/>
     </bean>
 
     <bean id="escidoc-core.transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

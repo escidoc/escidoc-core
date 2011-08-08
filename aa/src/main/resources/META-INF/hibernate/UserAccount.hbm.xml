@@ -28,6 +28,8 @@
         schema="aa"
     </meta>
 
+    <cache usage="read-write" />
+
     <id
         name="id"
         type="java.lang.String"

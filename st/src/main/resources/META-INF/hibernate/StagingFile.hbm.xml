@@ -16,6 +16,8 @@
 			schema="st"
 	    </meta>
 
+        <cache usage="read-write" />
+
 		<id name="token" type="java.lang.String" column="token">
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>

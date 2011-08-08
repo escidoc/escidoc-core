@@ -28,19 +28,19 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="persistence.UserAccountDao"
           class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserAccountDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
     <bean id="persistence.ActionDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateActionDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
     <bean id="persistence.EscidocRoleDao"
           class="de.escidoc.core.aa.business.persistence.hibernate.HibernateEscidocRoleDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
     <bean id="security.SecurityInterceptor" class="de.escidoc.core.aa.security.aop.SecurityInterceptor"
@@ -59,8 +59,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
     <bean id="persistence.UserGroupDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserGroupDao">
-        <property name="mySessionFactory">
-            <ref bean="escidoc-core.SessionFactory"/>
+        <property name="hibernateTemplate">
+            <ref bean="escidoc-core.HibernateTemplate"/>
         </property>
     </bean>
 </beans>
