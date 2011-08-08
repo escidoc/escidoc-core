@@ -1212,7 +1212,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // set status "released"
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_RELEASED);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_RELEASED, getItem());
             getItem().setLatestReleasePid();
             getItem().persist();
 
@@ -1269,7 +1269,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // set status "submited"
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED, getItem());
             getItem().persist();
 
             try {
@@ -1301,7 +1301,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // set status "in-revision"
             // only renew the timestamp and set status with version entry
-            makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION, getItem());
             getItem().persist();
 
             try {
@@ -1352,7 +1352,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
             .getLastModificationDate(), "Item " + getItem().getId())) {
 
-            makeVersion(withdrawComment, Constants.STATUS_WITHDRAWN);
+            getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_WITHDRAWN, getItem());
             getItem().persist();
 
             // getUtility().notifyIndexerDeletePublication(getItem().getHref());
@@ -1700,16 +1700,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * @param id The id of the item.
-     * @return TODO
-     * @throws ItemNotFoundException TODO
-     */
-    public String retrieveRevisions(final String id) {
-        // FIXME
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * @param id        The id of the item.
      * @param taskParam Taskparam XML including the latest-modification-date.
      * @return TODO
@@ -1728,7 +1718,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @throws SystemException If an error occures.
      */
     private void makeVersion(final String comment) throws SystemException {
-        makeVersion(comment, null);
+        getUtility().makeVersion(comment, null, getItem());
     }
 
     /**
@@ -1796,15 +1786,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         }
 
         return itemHandler.getItem();
-    }
-
-    /**
-     * @param comment   Optional comment to associate with the created version or event.
-     * @param newStatus The status of the new version.
-     * @throws SystemException If an error occures.
-     */
-    private void makeVersion(final String comment, final String newStatus) throws SystemException {
-        getUtility().makeVersion(comment, newStatus, getItem());
     }
 
     /**
