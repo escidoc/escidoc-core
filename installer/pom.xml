@@ -22,9 +22,9 @@
 		<ant-launcher.version>1.8.2</ant-launcher.version>
 		<ant-contrib.version>1.0b3</ant-contrib.version>
 		<jboss.version>4.2.3.GA</jboss.version>
-		<admin-tool.version>1.1.1-SNAPSHOT</admin-tool.version>
+		<admin-tool.version>1.1.1</admin-tool.version>
 		<migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
-                <fcrepo.patchlevel>3</fcrepo.patchlevel>
+    <fcrepo.patchlevel>3</fcrepo.patchlevel>
 	</properties>
 
 	<dependencies>
