@@ -48,8 +48,6 @@ public final class EscidocConfiguration {
 
     private static final Pattern PATTERN_PROPERTY_FIND = Pattern.compile(".*?\\$\\{(.+?)\\}.*");
 
-    private static final Pattern p = Pattern.compile(".*?\\$\\{");
-
     public static final String SEARCH_PROPERTIES_DIRECTORY = "search.properties.directory";
 
     public static final String GSEARCH_URL = "gsearch.url";
