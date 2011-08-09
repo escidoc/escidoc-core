@@ -589,27 +589,27 @@
       </plugin>
 
       <!-- [08] -->
-      <plugin>
-        <groupId>org.apache.jmeter</groupId>
-        <artifactId>maven-jmeter-plugin</artifactId>
-        <version>1.0-GA</version>
-        <executions>
-          <execution>
-            <id>jmeter-tests</id>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>jmeter</goal>
-            </goals>
-            <configuration>
-              <reportDir>${project.build.directory}/jmeter-reports</reportDir>
-              <jmeterUserProperties>
-                <hostname>localhost</hostname>
-                <port>${escidoc.server.port}</port>
-              </jmeterUserProperties>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--       <plugin> -->
+<!--         <groupId>org.apache.jmeter</groupId> -->
+<!--         <artifactId>maven-jmeter-plugin</artifactId> -->
+<!--         <version>1.0-GA</version> -->
+<!--         <executions> -->
+<!--           <execution> -->
+<!--             <id>jmeter-tests</id> -->
+<!--             <phase>integration-test</phase> -->
+<!--             <goals> -->
+<!--               <goal>jmeter</goal> -->
+<!--             </goals> -->
+<!--             <configuration> -->
+<!--               <reportDir>${project.build.directory}/jmeter-reports</reportDir> -->
+<!--               <jmeterUserProperties> -->
+<!--                 <hostname>localhost</hostname> -->
+<!--                 <port>${escidoc.server.port}</port> -->
+<!--               </jmeterUserProperties> -->
+<!--             </configuration> -->
+<!--           </execution> -->
+<!--         </executions> -->
+<!--       </plugin> -->
 
     </plugins>
   </build>
