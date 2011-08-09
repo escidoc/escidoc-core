@@ -67,6 +67,8 @@
         <module>oai</module>
         <module>om-spec</module>
         <module>om</module>
+        <module>oum-rest-spec</module>
+        <module>oum-rest-impl</module>
         <module>oum-spec</module>
         <module>oum</module>
         <module>sb</module>
@@ -2141,6 +2143,16 @@
         <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>content-relation-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>organizational-unit-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>organizational-unit-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
