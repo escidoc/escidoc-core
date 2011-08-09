@@ -20,6 +20,39 @@
 
 package de.escidoc.core.common.business.indexing;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
@@ -34,38 +67,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.apache.xpath.XPathAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -604,15 +605,13 @@ public class IndexingHandler implements ResourceListener {
                 connectionUtility.getRequestURL(new URL(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.SRW_URL)
                     + "/search/" + indexName + "?query=" + URLEncoder.encode(query.toString(), "UTF-8")));
-            if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
-                final Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
+            final Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
 
-                final Matcher m =
-                    numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
+            final Matcher m =
+                numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
 
-                if (m.find()) {
-                    result = Integer.parseInt(m.group(1)) > 0;
-                }
+            if (m.find()) {
+                result = Integer.parseInt(m.group(1)) > 0;
             }
         }
         catch (final IOException e) {
@@ -669,15 +668,9 @@ public class IndexingHandler implements ResourceListener {
                         .getRequestURL(new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL)
                             + "/search/" + indexName
                             + Constants.SRW_TERM_PATTERN.matcher(SRW_QUERY).replaceFirst(lastTerm)));
-                final String lastLastTerm;
-                if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
-                    lastLastTerm = handler.getLastTerm();
-                    sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity())));
-                    lastTerm = handler.getLastTerm();
-                }
-                else {
-                    throw new WebserverSystemException(response.getStatusLine().getReasonPhrase());
-                }
+                final String lastLastTerm = handler.getLastTerm();
+                sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(response.getEntity())));
+                lastTerm = handler.getLastTerm();
                 if (handler.getNoOfDocumentTerms() == 0) {
                     running = false;
                 }
