@@ -20,6 +20,12 @@
 
 package de.escidoc.core.content.relation.internal;
 
+import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.service.ServiceUtility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -35,98 +41,50 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.content.relation.ContentRelationRestService;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.esidoc.core.utils.io.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 @Service
 public class ContentRelationRestServiceImpl implements ContentRelationRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(ContentRelationRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.ContentRelationHandler")
     private ContentRelationHandlerInterface contentRelationHandler;
 
-    private JAXBContext jaxbContext;
-
+    /**
+     * 
+     */
     protected ContentRelationRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(ContentRelationTO.class);
-        } catch(JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
-    }
-
-    @Override
-    public ContentRelationTO create(final ContentRelationTO contentRelationTO)
-            throws SystemException, InvalidContentException, MissingAttributeValueException,
-            RelationPredicateNotFoundException, AuthorizationException, AuthenticationException, InvalidXmlException,
-            ReferencedResourceNotFoundException, MissingMethodParameterException {
-            return fromXML(this.contentRelationHandler.create(toXML(contentRelationTO)));
 
     }
 
     @Override
-    public ContentRelationTO retrieve(final String id)
-            throws SystemException, AuthorizationException, AuthenticationException, ContentRelationNotFoundException {
-        return fromXML(this.contentRelationHandler.retrieve(id));
+    public ContentRelationTO create(final ContentRelationTO contentRelationTO) throws SystemException,
+        InvalidContentException, MissingAttributeValueException, RelationPredicateNotFoundException,
+        AuthorizationException, AuthenticationException, InvalidXmlException, ReferencedResourceNotFoundException,
+        MissingMethodParameterException {
+        return ServiceUtility.fromXML(ContentRelationTO.class,
+            this.contentRelationHandler.create(ServiceUtility.toXML(contentRelationTO)));
+
     }
 
     @Override
-    public ContentRelationTO update(final String id, final ContentRelationTO contentRelationTO)
-            throws SystemException, InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
-            RelationPredicateNotFoundException, AuthorizationException, InvalidStatusException, AuthenticationException,
-            ContentRelationNotFoundException, InvalidXmlException, ReferencedResourceNotFoundException,
-            LockingException, MissingMethodParameterException {
-        return fromXML(this.contentRelationHandler.update(id, toXML(contentRelationTO)));
+    public ContentRelationTO retrieve(final String id) throws SystemException, AuthorizationException,
+        AuthenticationException, ContentRelationNotFoundException {
+        return ServiceUtility.fromXML(ContentRelationTO.class, this.contentRelationHandler.retrieve(id));
     }
 
     @Override
-    public void delete(final String id)
-            throws SystemException, AuthorizationException, AuthenticationException, ContentRelationNotFoundException,
-            LockingException {
+    public ContentRelationTO update(final String id, final ContentRelationTO contentRelationTO) throws SystemException,
+        InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
+        RelationPredicateNotFoundException, AuthorizationException, InvalidStatusException, AuthenticationException,
+        ContentRelationNotFoundException, InvalidXmlException, ReferencedResourceNotFoundException, LockingException,
+        MissingMethodParameterException {
+        return ServiceUtility.fromXML(ContentRelationTO.class,
+            this.contentRelationHandler.update(id, ServiceUtility.toXML(contentRelationTO)));
+    }
+
+    @Override
+    public void delete(final String id) throws SystemException, AuthorizationException, AuthenticationException,
+        ContentRelationNotFoundException, LockingException {
         contentRelationHandler.delete(id);
-    }
-
-    // Note: This code is slow and only for migration!
-    // TODO: Replace this code and use domain objects!
-    private String toXML(ContentRelationTO contentRelationTO) throws SystemException {
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            final Marshaller marshaller = this.jaxbContext.createMarshaller();
-            Stream stream = new Stream();
-            marshaller.marshal(contentRelationTO, stream);
-            stream.lock();
-            stream.writeCacheTo(stringBuilder);
-        } catch(Exception e) {
-            throw new SystemException("Error on marshalling content relation object.", e);
-        }
-        return stringBuilder.toString();
-    }
-
-    // Note: This code is slow and only for migration!
-    // TODO: Replace this code and use domain objects!
-    private ContentRelationTO fromXML(String xmlString) throws SystemException {
-        ContentRelationTO result = new ContentRelationTO();
-        try {
-            final Unmarshaller unmarshaller = this.jaxbContext.createUnmarshaller();
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlString.getBytes("UTF-8"));
-            result = (ContentRelationTO) unmarshaller.unmarshal(inputStream);
-        } catch(Exception e) {
-            throw new SystemException("Error on unmarshalling content relation object.", e);
-        }
-        return result;
     }
 }
