@@ -22,7 +22,6 @@ package de.escidoc.core.oum;
 
 import java.util.Map;
 
-import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
