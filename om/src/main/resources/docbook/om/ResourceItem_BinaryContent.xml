@@ -95,20 +95,18 @@
       interface. To this staging area, the files can be uploaded by the
       services before calling the create or update methods: <programlisting>HTTP PUT http://www.escidoc.de/st/staging-file</programlisting>
       The result of this request is an XML structure describing the location
-      of the uploaded file: 
-      <programlisting>&lt;staging-file:staging-file xml:base="http://www.escidoc.de/" 
-      xlink:type="simple" xlink:href="/st/staging-file/&lt;staging-file-id&gt;" 
-      last-modification-date="&lt;date&gt;"&gt;</programlisting>
+      of the uploaded file: <programlisting>&lt;staging-file:staging-file xml:base="http://www.escidoc.de/" xlink:type="simple" 
+    xlink:href="/st/staging-file/&lt;staging-file-id&gt;" last-modification-date="&lt;date&gt;"&gt;</programlisting>
       In this case, the references to the files provided within the item
       representation are the URLs to the file in the staging area:
       <programlisting>&lt;item:item ...&gt;
   &lt;components:components ...&gt;
     ...
     &lt;components:component ...&gt;
-     ...
-     &lt;components:content xlink:type="simple" xlink:title="Content"
-       xlink:href="http://www.escidoc.de/st/staging-file/&lt;staging-file-id&gt;"/&gt;
-     ...
+      ...
+      &lt;components:content xlink:type="simple" xlink:title="Content"
+          xlink:href="http://www.escidoc.de/st/staging-file/&lt;staging-file-id&gt;"/&gt;
+      ...
     &lt;/components:component&gt;
     ...
   &lt;/components:components&gt;
