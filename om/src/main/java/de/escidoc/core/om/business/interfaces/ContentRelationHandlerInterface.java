@@ -128,7 +128,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, InvalidContentException;
@@ -147,7 +146,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, InvalidContentException;
@@ -166,7 +164,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         XmlCorruptedException, InvalidContentException;
@@ -185,7 +182,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String lock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, InvalidStatusException;
@@ -205,7 +201,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      * @return
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String unlock(final String id, final String param) throws ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidContentException, InvalidStatusException;
@@ -257,7 +252,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
      * @throws SystemException             Thrown in case of internal error.
      */
-    //    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws ContentRelationNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidXmlException,
         SystemException, PidAlreadyAssignedException;

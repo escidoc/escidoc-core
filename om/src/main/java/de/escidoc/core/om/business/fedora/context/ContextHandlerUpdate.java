@@ -256,7 +256,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     public void open(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
         OptimisticLockingException, SystemException, XmlCorruptedException {
 
@@ -344,7 +343,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException           Thrown if Context is locked.
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
-    //    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     public void close(final FedoraContextHandler contextHandler, final String taskParam) throws InvalidStatusException,
         OptimisticLockingException, SystemException, XmlCorruptedException {
 

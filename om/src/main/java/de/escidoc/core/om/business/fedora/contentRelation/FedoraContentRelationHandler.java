@@ -767,7 +767,6 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      * @throws WebserverSystemException
      *             Thrown by assignPid().
      */
-    // @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     public String getPid(final String id, final String param) throws PidSystemException,
         MissingMethodParameterException, WebserverSystemException {
 
