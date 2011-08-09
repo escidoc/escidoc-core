@@ -73,7 +73,7 @@ public interface AdminHandlerInterface {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
-//    @Validate(param = 0, resolver = "getDeletionTaskParamSchemaLocation")
+    @Validate(param = 0, resolver = "getDeletionTaskParamSchemaLocation")
     String deleteObjects(final String taskParam) throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException;
 

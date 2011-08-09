@@ -36,15 +36,16 @@ import static org.junit.Assert.fail;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
- *
+ * 
  * @author André Schenk
  */
 public class DeleteObjectsIT extends AdminToolTestBase {
 
     /**
      * Delete a list of objects from Fedora and search index.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(timeout = 30000)
     public void testDeleteObjects() throws Exception {
@@ -54,7 +55,10 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         String itemId = getObjidValue(createItem(xml));
 
         // delete item
-        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>" + itemId + "</id></param>";
+        xml =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/deletion-task-param/0.1\">\n" + "<id>" + itemId
+                + "</id></param>";
         deleteObjects(xml);
 
         // wait until process has finished
