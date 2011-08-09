@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.0.xsd"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
        default-lazy-init="false">
-
-    <ehcache:annotation-driven create-missing-caches="true" cache-manager="ehCacheManager"/>
 
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="cacheManagerName" value="defaultCacheManager"/>
         <property name="configLocation" value="file:///${ESCIDOC_HOME}/conf/ehcache.xml"/>
     </bean>
+
+    <bean id="cacheAspect"
+          class="org.escidoc.core.aspects.CacheAspect" factory-method="aspectOf" lazy-init="false">
+        <property name="cacheAttributeSource">
+            <ref bean="cacheAttributeSource"/>
+        </property>
+    </bean>
+
+    <bean id="cacheAttributeSource" class="com.googlecode.ehcache.annotations.impl.CacheAttributeSourceImpl">
+        <property name="cacheManager">
+            <ref bean="ehCacheManager"/>
+        </property>
+        <property name="createCaches" value="true"/>
+        <property name="defaultCacheKeyGenerator">
+            <ref bean="com.googlecode.ehcache.annotations.key.HashCodeCacheKeyGenerator"/>
+        </property>
+        <property name="reflectionHelper">
+            <ref bean="com.googlecode.ehcache.annotations.key.CachingReflectionHelper"/>
+        </property>
+    </bean>
+
+    <bean id="com.googlecode.ehcache.annotations.key.HashCodeCacheKeyGenerator"
+          class="com.googlecode.ehcache.annotations.key.HashCodeCacheKeyGenerator"/>
+
+    <bean id="com.googlecode.ehcache.annotations.key.CachingReflectionHelper"
+          class="com.googlecode.ehcache.annotations.key.CachingReflectionHelper"/>
 
 </beans>
