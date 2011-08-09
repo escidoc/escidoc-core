@@ -103,6 +103,7 @@ echo.
 :RESTART
 "%JAVA%" %JAVA_OPTS% ^
    -Djava.endorsed.dirs="%JBOSS_ENDORSED_DIRS%" ^
+   -DESCIDOC_HOME="%ESCIDOC_HOME%" ^
    -classpath "%JBOSS_CLASSPATH%" ^
    org.jboss.Main %*
 
