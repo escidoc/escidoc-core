@@ -136,27 +136,27 @@ public interface OrganizationalUnitRestService {
 //
 //    @GET
 //    @Path("/{id}/resources/parent-objects")
-//    String retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+//    ParentObjectsTO retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
 //        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 //
 //    @GET
 //    @Path("/{id}/resources/successors")
-//    String retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+//    SuccessorsTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
 //        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 //
 //    @GET
 //    @Path("/{id}/resources/child-objects")
-//    String retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+//    ChildObjectsTO retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
 //        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 //
 //    @GET
 //    @Path("/{id}/resources/path-list")
-//    String retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+//    PathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
 //        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
 //
 //    @GET
 //    @Path("/{id}/organizational-units")
-//    String retrieveOrganizationalUnits(final Map<String, String[]> filter) throws MissingMethodParameterException,
+//    OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter) throws MissingMethodParameterException,
 //        SystemException, InvalidSearchQueryException, InvalidXmlException;
 //
 //    @POST
