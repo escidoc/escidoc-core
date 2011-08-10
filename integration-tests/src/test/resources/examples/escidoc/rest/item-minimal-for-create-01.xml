@@ -31,14 +31,6 @@
 		-->
 		<srel:content-model xlink:href="/cmm/content-model/escidoc:ex4" />
 
-		<!-- 
-			The content model specific section has to be part of the 
-			properties section. It could contain any XML which has 
-			only one root element. 
-		-->
-		<prop:content-model-specific>
-			<cms-prop test="1" />
-		</prop:content-model-specific>
 	</escidocItem:properties>
 
 	<!-- 

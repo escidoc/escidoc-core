@@ -13,9 +13,6 @@
 	<escidocItem:properties>
 		<srel:context xlink:href="/ir/context/escidoc:ex1" />
 		<srel:content-model xlink:href="/cmm/content-model/escidoc:ex4" />
-		<prop:content-model-specific>
-			<cms-prop test="1" />
-		</prop:content-model-specific>
 	</escidocItem:properties>
 
 	<!--
