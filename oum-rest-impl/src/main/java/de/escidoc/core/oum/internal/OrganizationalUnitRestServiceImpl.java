@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.OrganizationalUnitRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
+import org.escidoc.core.service.ServiceUtility;
 import org.esidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ import java.io.ByteArrayOutputStream;
  * REST Service Implementation for Organizational Unit.
  * 
  * @author SWA
- *
+ * 
  */
 @Service
 public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRestService {
@@ -87,16 +88,17 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
         MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
-        
-        return fromXML(this.organizationalUnitHandler.create(toXML(organizationalUnitTO)));
+
+        return ServiceUtility.fromXML(OrganizationalUnitTO.class,
+            this.organizationalUnitHandler.create((ServiceUtility.toXML(organizationalUnitTO))));
 
     }
 
     @Override
     public OrganizationalUnitTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-        
-        return fromXML(this.organizationalUnitHandler.retrieve(id));
+
+        return ServiceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.retrieve(id));
     }
 
     @Override
@@ -105,47 +107,16 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
         InvalidStatusException {
-        
-        return fromXML(this.organizationalUnitHandler.update(id, toXML(organizationalUnitTO)));
+
+        return ServiceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.update(id, ServiceUtility.toXML(organizationalUnitTO)));
     }
 
     @Override
     public void delete(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
         OrganizationalUnitHasChildrenException, SystemException {
-        
+
         this.organizationalUnitHandler.delete(id);
     }
 
-    // Note: This code is slow and only for migration!
-    // TODO: Replace this code and use domain objects!
-    private String toXML(OrganizationalUnitTO organizationalUnitTO) throws SystemException {
-        StringBuilder stringBuilder = new StringBuilder();
-        try {
-            final Marshaller marshaller = this.jaxbContext.createMarshaller();
-            Stream stream = new Stream();
-            marshaller.marshal(organizationalUnitTO, stream);
-            stream.lock();
-            stream.writeCacheTo(stringBuilder);
-        }
-        catch (Exception e) {
-            throw new SystemException("Error on marshalling content relation object.", e);
-        }
-        return stringBuilder.toString();
-    }
-
-    // Note: This code is slow and only for migration!
-    // TODO: Replace this code and use domain objects!
-    private OrganizationalUnitTO fromXML(String xmlString) throws SystemException {
-        OrganizationalUnitTO result = new OrganizationalUnitTO();
-        try {
-            final Unmarshaller unmarshaller = this.jaxbContext.createUnmarshaller();
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(xmlString.getBytes("UTF-8"));
-            result = (OrganizationalUnitTO) unmarshaller.unmarshal(inputStream);
-        }
-        catch (Exception e) {
-            throw new SystemException("Error on unmarshalling content relation object.", e);
-        }
-        return result;
-    }
 }
