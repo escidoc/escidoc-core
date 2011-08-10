@@ -37,6 +37,7 @@
             classpath:/META-INF/spring/applicationContext-st.xml
             classpath:/META-INF/spring/applicationContext-tme.xml
             classpath:/META-INF/spring/applicationContext-content-relation-rest-service.xml
+            classpath:/META-INF/spring/applicationContext-context-rest-service.xml
             classpath:applicationContext-persistence.xml
             classpath:applicationContext-webapp.xml
             file:///${ESCIDOC_HOME}/conf/escidoc-login.xml
