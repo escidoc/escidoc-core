@@ -241,7 +241,7 @@ public final class EscidocConfiguration {
      * @param name
      *            The name of the Property.
      * @param defaultValue
-     *            The default vaule if property isn't given.
+     *            The default value if property isn't given.
      * @return Value of the given Property as String.
      */
     public String get(final String name, final String defaultValue) {
@@ -363,7 +363,7 @@ public final class EscidocConfiguration {
         // Load constant properties
         Properties constant = new Properties();
         try {
-            constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
+            constant = getInternProperties(PROPERTIES_CONSTANT_FILENAME);
         }
         catch (final IOException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -408,6 +408,30 @@ public final class EscidocConfiguration {
         return result;
     }
 
+    /**
+     * Get the properties from a classpath resource.
+     * 
+     * @param filename
+     *            The name of the properties file.
+     * @return The properties.
+     * @throws IOException
+     *             If access to the specified file fails.
+     */
+    private static Properties getInternProperties(final String filename) throws IOException {
+
+        final Properties result = new Properties();
+        
+        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
+        final Resource[] resource = applicationContext.getResources("classpath://filename");
+        if (resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
+        }
+
+        result.load(resource[0].getInputStream());
+        return result;
+    }
+
+    
     /**
      * Get an InputStream for the given file.
      * 
