@@ -74,10 +74,10 @@
 		<!--#
 			# Change Context
 			# -->
-		<descriptor uri="/ir/item/${ITEM-ID}/move-to-context">
-			<invoke http="POST" method="moveToContext" param1="${ITEM-ID}"
-				param2="${BODY}"/>
-		</descriptor>
+<!-- 		<descriptor uri="/ir/item/${ITEM-ID}/move-to-context"> -->
+<!-- 			<invoke http="POST" method="moveToContext" param1="${ITEM-ID}" -->
+<!-- 				param2="${BODY}"/> -->
+<!-- 		</descriptor> -->
 		<descriptor uri="/ir/item/${ITEM-ID}/assign-object-pid">
 			<invoke http="POST" method="assignObjectPid" param1="${ITEM-ID}"
 				param2="${BODY}"/>

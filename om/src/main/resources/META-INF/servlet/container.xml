@@ -134,11 +134,11 @@
 		<!--#
 			# Change Context
 			# -->
-		<descriptor
-			uri="/ir/container/${CONTAINER-ID}/move-to-context">
-			<invoke http="POST" method="moveToContext"
-				param1="${CONTAINER-ID}" param2="${BODY}"/>
-		</descriptor>
+<!-- 		<descriptor -->
+<!-- 			uri="/ir/container/${CONTAINER-ID}/move-to-context"> -->
+<!-- 			<invoke http="POST" method="moveToContext" -->
+<!-- 				param1="${CONTAINER-ID}" param2="${BODY}"/> -->
+<!-- 		</descriptor> -->
 		<!--#
 			# Metadata records
 			# -->
