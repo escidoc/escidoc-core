@@ -49,6 +49,8 @@
         <module>dataobjects-spec</module>
         <module>content-relation-rest-spec</module>
         <module>content-relation-rest-impl</module>
+        <module>context-rest-spec</module>
+        <module>context-rest-impl</module>
         <module>index-service-spec</module>
         <module>index-service-impl</module>
         <module>statistic-service-spec</module>
@@ -2147,6 +2149,16 @@
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
+        <artifactId>context-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>context-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>organizational-unit-rest-spec</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -2181,7 +2193,7 @@
         <version>5.5.1</version>
       </dependency>    
     </dependencies>
-	</dependencyManagement>
+  </dependencyManagement>
 
   <profiles>
     <profile>
