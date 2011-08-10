@@ -891,6 +891,9 @@
                                 <containerId>jboss42x</containerId>
                                 <home>${project.build.directory}/escidoc/jboss</home>
                                 <timeout>600000</timeout>
+				<systemProperties>
+					<ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME>
+				</systemProperties>
                             </container>
                             <configuration>
                                 <type>standalone</type>
@@ -959,6 +962,9 @@
                                     <url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.12/bin/apache-tomcat-7.0.12.zip</url>
                                 </zipUrlInstaller>
                                 <timeout>600000</timeout>
+				<systemProperties>
+					<ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME>
+				</systemProperties>
                             </container>
                             <configuration>
                                 <type>standalone</type>
