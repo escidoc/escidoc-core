@@ -240,16 +240,10 @@ public class ItemUpdateIT extends ItemTestBase {
      * @throws Exception
      *             If framework
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testUpdateWithNullId() throws Exception {
-        try {
 
-            update(null, this.theItemXml);
-            fail("Not expected exception");
-        }
-        catch (final MissingMethodParameterException e) {
-            // Well done
-        }
+        update(null, this.theItemXml);
     }
 
     /**
@@ -262,16 +256,12 @@ public class ItemUpdateIT extends ItemTestBase {
         String dcTitleXPath = "/item/md-records/md-record[@name=\"escidoc\"]/publication/title";
         String newTitle = getUniqueName(selectSingleNode(item, dcTitleXPath).getTextContent());
         Node toBeUpdated = substitute(item, dcTitleXPath, newTitle);
-        try {
-            String updated = update(theItemId, toString(toBeUpdated, false));
-            assertXmlValidItem(updated);
-            Document updatedDocument = getDocument(updated);
-            assertXmlEquals("DC-Title in Md Record not updated!", updatedDocument, dcTitleXPath, newTitle);
-            assertXmlEquals("Title in Item root element not updated!", updatedDocument, "/item/@title", newTitle);
-        }
-        catch (final Exception e) {
-            failException(e);
-        }
+
+        String updated = update(theItemId, toString(toBeUpdated, false));
+        assertXmlValidItem(updated);
+        Document updatedDocument = getDocument(updated);
+        assertXmlEquals("DC-Title in Md Record not updated!", updatedDocument, dcTitleXPath, newTitle);
+        assertXmlEquals("Title in Item root element not updated!", updatedDocument, "/item/@title", newTitle);
     }
 
     @Test
@@ -487,7 +477,7 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testOM_UCI_2() throws Exception {
 
-        Document curItem = EscidocAbstractTest.getDocument(theItemXml);
+        // Document curItem = EscidocAbstractTest.getDocument(theItemXml);
         // save component
         // Node curFirstComponent = selectSingleNode(curItem,
         // "/item/components/component[1]");
@@ -964,7 +954,8 @@ public class ItemUpdateIT extends ItemTestBase {
         newItem = substitute(curItem, "/item/components/component[1]/@href", hrefNewVal);
         String newItemXml = toString(newItem, true);
 
-        update(theItemId, newItemXml);
+        String updatedItem = update(theItemId, newItemXml);
+        assertXmlValidItem(updatedItem);
     }
 
     /**
@@ -1018,6 +1009,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String xmlItemWithNewContentHref = toString(itemWithNewContentHref, true);
 
         String xml = update(theItemId, xmlItemWithNewContentHref);
+        assertXmlValidItem(xml);
 
         // TODO check binary content
     }
@@ -1031,16 +1023,12 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testOM_UCI_12() throws Exception {
         Document newItem = EscidocAbstractTest.getDocument(theItemXml);
-        Node itemWithWrongCreationdate =
+        Node itemWithChangedCreationdate =
             substitute(newItem, "/item/properties/creation-date", "1970-01-01T00:00:00.000Z");
-        String xmlItemWithWrongCreationdate = toString(itemWithWrongCreationdate, true);
+        String xmlItemWithWrongCreationdate = toString(itemWithChangedCreationdate, true);
 
-        try {
-            String xml = update(theItemId, xmlItemWithWrongCreationdate);
-        }
-        catch (final Exception e) {
-            fail("Not expected exception " + e);
-        }
+        String xml = update(theItemId, xmlItemWithWrongCreationdate);
+        assertXmlValidItem(xml);
 
     }
 
@@ -1161,7 +1149,6 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testUpdateItemWithDublicateComponent() throws Exception {
         Document newItem = EscidocAbstractTest.getDocument(theItemXml);
-        Document updateItem = null;
 
         // with wrong objid
         this.theItemXml = retrieve(theItemId);
@@ -1192,6 +1179,10 @@ public class ItemUpdateIT extends ItemTestBase {
         selectSingleNodeAsserted(getDocument(this.theItemXml), "/item/components/component[2]");
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testUpdateComponentWithWrongHrefContent() throws Exception {
         // description
@@ -1235,6 +1226,10 @@ public class ItemUpdateIT extends ItemTestBase {
         // basePath + "file-size/text()").getNodeValue());
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testUpdateComponentReadonlyProperties() throws Exception {
         // creation-date
@@ -1341,6 +1336,10 @@ public class ItemUpdateIT extends ItemTestBase {
         // }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testUpdateReadonlyProperties() throws Exception {
         // xlink:href xlink:title xlink:type
@@ -1473,22 +1472,15 @@ public class ItemUpdateIT extends ItemTestBase {
         document = EscidocAbstractTest.getDocument(xml);
         String basePathLV = basePath + "/latest-version/";
         testItem = substitute(document, basePathLV + "number", testIntegerValue);
-        try {
-            xml = update(theItemId, toString(testItem, true));
-        }
-        catch (final Exception e) {
-            fail("No exception after update number expected.");
-        }
+        xml = update(theItemId, toString(testItem, true));
+        assertXmlValidItem(xml);
 
         // date
         document = EscidocAbstractTest.getDocument(xml);
         testItem = substitute(document, basePathLV + "date", testDateValue);
-        try {
-            xml = update(theItemId, toString(testItem, true));
-        }
-        catch (final Exception e) {
-            fail("No exception after update date expected.");
-        }
+
+        xml = update(theItemId, toString(testItem, true));
+        assertXmlValidItem(xml);
 
         // latest-revision (number date pid xlink:href xlink:title xlink:type)
 
@@ -2310,6 +2302,7 @@ public class ItemUpdateIT extends ItemTestBase {
         deleteNodes(item3Doc, "/item/components/component/@href");
 
         final String restoreItem3Xml = update(itemId, toString(item3Doc, false));
+        assertXmlValidItem(restoreItem3Xml);
     }
 
     /**
