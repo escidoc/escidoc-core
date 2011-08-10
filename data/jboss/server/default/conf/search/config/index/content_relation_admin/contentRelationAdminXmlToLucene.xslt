@@ -97,6 +97,7 @@ Notes:
             <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='content-relation']/@*[local-name()='href'], '/'))"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+            <xsl:with-param name="sort">true</xsl:with-param>
         </xsl:call-template>
         <IndexField IFname="aa_xml_representation" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
@@ -130,6 +131,7 @@ Notes:
             			<xsl:with-param name="fieldvalue" select="."/>
             			<xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
             			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                		<xsl:with-param name="sort">true</xsl:with-param>
         			</xsl:call-template>
         		</xsl:if>
         	</xsl:for-each>
@@ -138,6 +140,7 @@ Notes:
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
                 <xsl:with-param name="indexAttributes">yes</xsl:with-param>
                 <xsl:with-param name="nametype">path</xsl:with-param>
+                <xsl:with-param name="sort">true</xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
 
@@ -152,10 +155,12 @@ Notes:
         <xsl:param name="context"/>
         <!-- if 'yes', also write attributes as index-fields -->
         <xsl:param name="indexAttributes"/>
-        <!-- nametype defines if paths are used for indexnames or elementname only -->
-        <!-- can be 'path' or 'element' -->
+        <!-- nametype defines if paths are used for indexnames or elementname only or fixed name-->
+        <!-- can be 'path' or 'element' or 'fixed'-->
         <!-- eg first-name or publication.creator.person.first-name -->
         <xsl:param name="nametype"/>
+        <!-- if 'true', also write sortable fields -->
+        <xsl:param name="sort"/>
         <xsl:if test="string(text()) and normalize-space(text())!=''">
             <xsl:call-template name="writeIndexField">
                 <xsl:with-param name="context" select="$context"/>
@@ -163,20 +168,34 @@ Notes:
                 <xsl:with-param name="fieldvalue" select="text()"/>
                 <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                 <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                <xsl:with-param name="sort" select="$sort"/>
             </xsl:call-template>
         </xsl:if>
         <xsl:if test="$indexAttributes='yes'">
             <!-- ITERATE ALL ATTRIBUTES AND WRITE ELEMENT-NAME, ATTRIBUTE-NAME AND ATTRIBUTE-VALUE -->
+            <!--  EXCEPT FOR XLINK-ATTRIBUTES -->
             <xsl:for-each select="@*">
                 <xsl:if test="string(.) and normalize-space(.)!=''
                         and string($path) and normalize-space($path)!='' 
-                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
+                        and (namespace-uri()!='http://www.w3.org/1999/xlink'
+                        or (namespace-uri()='http://www.w3.org/1999/xlink' and local-name()='title'))">
+		            <xsl:variable name="fieldname">
+		                <xsl:choose>
+		                    <xsl:when test="$nametype='fixed'">
+		                    	<xsl:value-of select="$path"/>
+		                    </xsl:when>
+		                    <xsl:otherwise>
+		                    	<xsl:value-of select="concat($path,$FIELDSEPARATOR,local-name())"/>
+		                    </xsl:otherwise>
+		                </xsl:choose>
+		            </xsl:variable>
                     <xsl:call-template name="writeIndexField">
                         <xsl:with-param name="context" select="$context"/>
-                        <xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,local-name())"/>
+                        <xsl:with-param name="fieldname" select="$fieldname"/>
                         <xsl:with-param name="fieldvalue" select="."/>
                         <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                		<xsl:with-param name="sort" select="$sort"/>
                     </xsl:call-template>
                 </xsl:if>
                 <!--  WRITE HREF-ATTRIBUTES AS ID (EXTRACT ID OUT OF HREF) -->
@@ -187,12 +206,23 @@ Notes:
                 	<xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(., '/')"/>
                 	<xsl:if test="string($objectId) and normalize-space($objectId)!=''
                         and contains($objectId, ':')">
+			            <xsl:variable name="fieldname">
+			                <xsl:choose>
+			                    <xsl:when test="$nametype='fixed'">
+			                    	<xsl:value-of select="$path"/>
+			                    </xsl:when>
+			                    <xsl:otherwise>
+			                    	<xsl:value-of select="concat($path,$FIELDSEPARATOR,'id')"/>
+			                    </xsl:otherwise>
+			                </xsl:choose>
+			            </xsl:variable>
                     	<xsl:call-template name="writeIndexField">
                         	<xsl:with-param name="context" select="$context"/>
-                        	<xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,'id')"/>
+                        	<xsl:with-param name="fieldname" select="$fieldname"/>
                         	<xsl:with-param name="fieldvalue" select="$objectId"/>
                         	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
                         	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                			<xsl:with-param name="sort" select="$sort"/>
                     	</xsl:call-template>
                     </xsl:if>
                 </xsl:if>
@@ -203,6 +233,9 @@ Notes:
                 <xsl:choose>
                     <xsl:when test="$nametype='element'">
                             <xsl:value-of select="local-name()"/>
+                    </xsl:when>
+                    <xsl:when test="$nametype='fixed'">
+                            <xsl:value-of select="$path"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:choose>
@@ -221,6 +254,7 @@ Notes:
                 <xsl:with-param name="indexAttributes" select="$indexAttributes"/>
                 <xsl:with-param name="path" select="$fieldname"/>
                 <xsl:with-param name="nametype" select="$nametype"/>
+                <xsl:with-param name="sort" select="$sort"/>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
@@ -232,6 +266,7 @@ Notes:
         <xsl:param name="fieldvalue"/>
         <xsl:param name="indextype"/>
         <xsl:param name="store"/>
+        <xsl:param name="sort"/>
         <xsl:if test="string($fieldvalue) and normalize-space($fieldvalue)!=''">
             <IndexField termVector="NO">
                 <xsl:attribute name="index">
@@ -246,11 +281,13 @@ Notes:
                 <xsl:value-of select="$fieldvalue"/>
                 
             </IndexField>
-            <xsl:call-template name="writeSortField">
-                <xsl:with-param name="context" select="$context"/>
-                <xsl:with-param name="fieldname" select="$fieldname"/>
-                <xsl:with-param name="fieldvalue" select="$fieldvalue"/>
-            </xsl:call-template>
+            <xsl:if test="string($sort) and normalize-space($sort)='true'">
+            	<xsl:call-template name="writeSortField">
+                	<xsl:with-param name="context" select="$context"/>
+                	<xsl:with-param name="fieldname" select="$fieldname"/>
+                	<xsl:with-param name="fieldvalue" select="$fieldvalue"/>
+            	</xsl:call-template>
+            </xsl:if>
         </xsl:if>
     </xsl:template>
         
