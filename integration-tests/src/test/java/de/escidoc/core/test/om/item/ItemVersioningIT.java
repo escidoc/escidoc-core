@@ -173,15 +173,10 @@ public class ItemVersioningIT extends ItemTestBase {
      *
      * @throws Exception Thrown if framework throws no ItemNotFoundException
      */
-    @Test
+    @Test(expected = ItemNotFoundException.class)
     public void testRetrieveVersionHistoryWithWrongId() throws Exception {
-        try {
-            retrieveVersionHistory("escidoc:foo");
-        }
-        catch (final Exception e) {
-            Class<?> ec = ItemNotFoundException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+
+        retrieveVersionHistory("escidoc:foo");
     }
 
     /**
@@ -189,15 +184,10 @@ public class ItemVersioningIT extends ItemTestBase {
      *
      * @throws Exception Thrown if framework throws no MissingMethodParameterException.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testRetrieveVersionHistoryWithoutId() throws Exception {
-        try {
-            retrieveVersionHistory(null);
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+
+        retrieveVersionHistory(null);
     }
 
     /**
