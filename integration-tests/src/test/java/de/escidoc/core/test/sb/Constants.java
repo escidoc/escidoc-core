@@ -56,21 +56,21 @@ public final class Constants {
 
     public static final int ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT = 180;
 
-    public static final int CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT = 25;
+    public static final int CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT = 35;
 
-    public static final int CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT = 24;
+    public static final int CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT = 34;
 
-    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 18;
+    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 26;
 
-    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 16;
+    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 24;
 
-    public static final int CONTEXT_ADMIN_INDEX_FIELD_COUNT = 22;
+    public static final int CONTEXT_ADMIN_INDEX_FIELD_COUNT = 31;
 
-    public static final int CONTEXT_ADMIN_SORT_FIELD_COUNT = 21;
+    public static final int CONTEXT_ADMIN_SORT_FIELD_COUNT = 30;
 
-    public static final int OU_ADMIN_INDEX_FIELD_COUNT = 96;
+    public static final int OU_ADMIN_INDEX_FIELD_COUNT = 111;
 
-    public static final int OU_ADMIN_SORT_FIELD_COUNT = 94;
+    public static final int OU_ADMIN_SORT_FIELD_COUNT = 107;
 
     public static final int OU_INDEX_FIELD_COUNT = 21;
 
