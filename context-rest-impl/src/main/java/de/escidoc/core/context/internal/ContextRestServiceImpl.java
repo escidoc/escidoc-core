@@ -47,7 +47,7 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 public class ContextRestServiceImpl implements ContextRestService {
 
     @Autowired
-    @Qualifier("service.ContentRelationHandler")
+    @Qualifier("service.ContextHandler")
     private ContextHandlerInterface contextHandler;
 
     /**
