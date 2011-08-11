@@ -78,20 +78,23 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
      */
     @Override
     public final Object invoke(final MethodInvocation invocation) throws Throwable {
-        final String className = invocation.getMethod().getDeclaringClass().getName();
-        final String methodName = invocation.getMethod().getName();
-        if (methodName.matches(".*addValueToStatistics")) {
-            return invocation.proceed();
-        }
 
-        final String name = className + '.' + invocation.getMethod().getName();
-        final long t1 = System.nanoTime();
-        final Object rval = invocation.proceed();
-        final long t2 = System.nanoTime();
-        final long executionTime = (t2 - t1) / DIVISOR;
-        LOGGER.trace(name + ' ' + executionTime);
-        statistics.addValueToStatistics(name, executionTime);
-        return rval;
+        return invocation.proceed();
+
+        //        final String className = invocation.getMethod().getDeclaringClass().getName();
+        //        final String methodName = invocation.getMethod().getName();
+        //        if (methodName.matches(".*addValueToStatistics")) {
+        //            return invocation.proceed();
+        //        }
+        //
+        //        final String name = className + '.' + invocation.getMethod().getName();
+        //        final long t1 = System.nanoTime();
+        //        final Object rval = invocation.proceed();
+        //        final long t2 = System.nanoTime();
+        //        final long executionTime = (t2 - t1) / DIVISOR;
+        //        LOGGER.trace(name + ' ' + executionTime);
+        //        statistics.addValueToStatistics(name, executionTime);
+        //        return rval;
     }
 
 }
