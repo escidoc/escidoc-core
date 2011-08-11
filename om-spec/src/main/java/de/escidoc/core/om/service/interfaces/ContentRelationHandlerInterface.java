@@ -243,6 +243,7 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
+    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidStatusException;
@@ -281,6 +282,7 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      * @throws InvalidStatusException     Thrown if resource is not locked.
      */
+    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidContentException, InvalidStatusException;

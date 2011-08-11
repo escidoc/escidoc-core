@@ -1740,6 +1740,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidStatusException, InvalidXmlException;
@@ -1795,6 +1796,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam contains invalid data.
      */
+    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidStatusException, InvalidXmlException;
