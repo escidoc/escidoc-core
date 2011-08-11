@@ -2141,10 +2141,10 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 contentRelationClient.lock(getObjidValue(document),
-                    getTaskParam(getLastModificationDateValue(document)));
+                    getLockTaskParam(getLastModificationDateValue2(document)));
             }
             else {
-                contentRelationClient.lock(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.lock(UNKNOWN_ID, getLockTaskParam(getLastModificationDateValue2(document)));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -2194,16 +2194,16 @@ public class AaTestBase extends EscidocAbstractTest {
         Document document = EscidocAbstractTest.getDocument(createdXml);
         String objId = getObjidValue(document);
         createdXml =
-            handleResult(contentRelationClient.lock(objId, getTaskParam(getLastModificationDateValue(document))));
+            handleResult(contentRelationClient.lock(objId, getLockTaskParam(getLastModificationDateValue2(document))));
         document = EscidocAbstractTest.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.unlock(objId, getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.unlock(objId, getLockTaskParam(getLastModificationDateValue2(document)));
             }
             else {
-                contentRelationClient.unlock(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.unlock(UNKNOWN_ID, getLockTaskParam(getLastModificationDateValue2(document)));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
