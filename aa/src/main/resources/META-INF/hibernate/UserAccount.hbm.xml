@@ -319,7 +319,6 @@
         name="userAccountsByCreatorId"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
@@ -486,7 +485,6 @@
         name="userAccountsByModifiedById"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
