@@ -23,8 +23,8 @@
 		<xs:complexType>
 			<xs:all>
 				<xs:element name="url" type="xs:anyURI" minOccurs="0"/>
-				<xs:element name="id" minOccurs="0"/>
-				<xs:element name="pid" minOccurs="0"/>
+				<xs:element name="id" type="xs:token" minOccurs="0"/>
+				<xs:element name="pid" type="xs:token" minOccurs="0"/>
 			</xs:all>
 			<xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
 		</xs:complexType>

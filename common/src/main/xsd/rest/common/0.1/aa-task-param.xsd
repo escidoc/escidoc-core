@@ -22,7 +22,7 @@
 	<xs:element name="param">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="password" minOccurs="0"/>
+				<xs:element name="password" type="xs:string" minOccurs="0"/>
 			</xs:all>
 			<xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
 		</xs:complexType>

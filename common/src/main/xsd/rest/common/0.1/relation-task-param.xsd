@@ -25,7 +25,7 @@
 				<xs:element name="relation" minOccurs="1">
 					<xs:complexType>
 						<xs:all>
-							<xs:element name="targetId" minOccurs="1"/>
+							<xs:element name="targetId" type="xs:token" minOccurs="1"/>
 							<xs:element name="predicate" type="xs:anyURI"  minOccurs="1"/>
 						</xs:all>
 					</xs:complexType>
