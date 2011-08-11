@@ -38,6 +38,7 @@ import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.st.StagingFileTestBase;
+import de.escidoc.core.test.utils.DateTimeJaxbConverter;
 import etm.core.configuration.EtmManager;
 import etm.core.monitor.EtmMonitor;
 import etm.core.monitor.EtmPoint;
@@ -51,6 +52,7 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
 import org.esidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +70,7 @@ import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.XMLConstants;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -2662,12 +2665,10 @@ public abstract class EscidocTestBase {
      */
     public String getLockTaskParam(final DateTime timestamp) {
 
-        String param =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
-                + timestamp.toString() + "\" " + " />";
-
-        return param;
+                + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
     }
 
     /**
@@ -3512,6 +3513,25 @@ public abstract class EscidocTestBase {
     public static String getLastModificationDateValue(final Document document) throws Exception {
 
         return getRootElementAttributeValue(document, "last-modification-date");
+    }
+
+    /**
+     * Gets the last-modification-date attribute of the root element from the document.
+     * 
+     * @param document
+     *            The document to retrieve the value from.
+     * @return Returns the attribute value.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public static DateTime getLastModificationDateValue2(final Document document) throws Exception {
+
+        String dateString =  getRootElementAttributeValue(document, "last-modification-date");
+        if (dateString == null) {
+            return null;
+        }
+        final Calendar calendar = DatatypeConverter.parseDate(dateString);
+        return new DateTime(calendar.getTimeInMillis(), DateTimeZone.forTimeZone(calendar.getTimeZone()));
     }
 
     /**
