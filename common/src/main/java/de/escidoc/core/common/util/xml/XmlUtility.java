@@ -235,6 +235,8 @@ public final class XmlUtility {
 
     private static String statusTaskParamSchemaLocation;
 
+    private static String lockTaskParamSchemaLocation;
+
     private static String stagingFileSchemaLocation;
 
     private static String statisticDataSchemaLocation;
@@ -1976,6 +1978,17 @@ public final class XmlUtility {
             statusTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/status-task-param.xsd";
         }
         return statusTaskParamSchemaLocation;
+    }
+
+    /**
+     * @return Returns the schema location of lock-task-param schema.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getLockTaskParamSchemaLocation() {
+        if (lockTaskParamSchemaLocation == null) {
+            lockTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/lock-task-param.xsd";
+        }
+        return lockTaskParamSchemaLocation;
     }
 
     /**
