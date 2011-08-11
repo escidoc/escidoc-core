@@ -101,14 +101,14 @@ public class ItemCreate extends GenericResourceCreate {
     // define pattern
     // taken from method handleFedoraUploadError
     // in order to make them static final
-    private static final String ERROR_MSG_NO_HTTP_PROTOCOL = "The url has a wrong protocol."
-        + " The protocol must be a http protocol.";
+    private static final String ERROR_MSG_NO_HTTP_PROTOCOL =
+        "The url has a wrong protocol." + " The protocol must be a http protocol.";
 
-    private static final Pattern PATTERN_ERROR_GETTING = Pattern.compile(
-        "fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_ERROR_GETTING =
+        Pattern.compile("fedora.server.errors.GeneralException: Error getting", Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern PATTERN_MALFORMED_URL = Pattern
-        .compile("fedora.server.errors.ObjectIntegrityException: " + "FOXML IO stream was bad : Malformed URL");
+    private static final Pattern PATTERN_MALFORMED_URL =
+        Pattern.compile("fedora.server.errors.ObjectIntegrityException: " + "FOXML IO stream was bad : Malformed URL");
 
     /**
      * Set ItemProperties.
@@ -503,9 +503,9 @@ public class ItemCreate extends GenericResourceCreate {
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
         templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_XMLID, "v1e" + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE,
-            Constants.ITEM_URL_BASE + getObjid() + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
-                + templateValues.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
+        templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_VALUE, Constants.ITEM_URL_BASE + getObjid()
+            + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+            + templateValues.get(XmlTemplateProviderConstants.VAR_EVENT_XMLID));
         templateValues.put(XmlTemplateProviderConstants.VAR_EVENT_ID_TYPE, Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         templateValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_TYPE, Constants.PREMIS_ID_TYPE_ESCIDOC);
         templateValues.put(XmlTemplateProviderConstants.VAR_OBJECT_ID_VALUE, getObjid());

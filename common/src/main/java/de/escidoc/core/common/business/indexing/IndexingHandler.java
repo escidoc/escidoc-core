@@ -606,8 +606,7 @@ public class IndexingHandler implements ResourceListener {
                     + "/search/" + indexName + "?query=" + URLEncoder.encode(query.toString(), "UTF-8")));
             final Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
 
-            final Matcher m =
-                numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
+            final Matcher m = numberOfRecordsPattern.matcher(EntityUtils.toString(response.getEntity(), HTTP.UTF_8));
 
             if (m.find()) {
                 result = Integer.parseInt(m.group(1)) > 0;

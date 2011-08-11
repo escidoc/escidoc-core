@@ -217,7 +217,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         if (query.length() > 0) {
             query.append(this.tripleStoreUtility.getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER,
-                containerId, null, null, null));
+                XmlUtility.getObjidWithoutVersion(containerId), null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
                 ids = this.tripleStoreUtility.retrieve(query.toString());

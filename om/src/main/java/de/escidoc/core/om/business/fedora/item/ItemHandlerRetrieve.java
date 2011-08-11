@@ -737,8 +737,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase implements ItemRenderer
             getTripleStoreUtility().getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
         if (query.length() > 0) {
-            query.append(getTripleStoreUtility().getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, itemId,
-                null, null, null));
+            query.append(getTripleStoreUtility().getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER,
+                XmlUtility.getObjidWithoutVersion(itemId), null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
                 ids = getTripleStoreUtility().retrieve(query.toString());
