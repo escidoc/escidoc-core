@@ -42,6 +42,7 @@
     <property name="escidoc.admin.zip" value="migration-tool-${MigrationToolVersion}.zip"/>
     <property name="digilib.server.war" value="DigilibServer.war"/>
     <property name="digilib.client.war" value="DigilibClient.war"/>
+    <property name="changed_files" location="${install.dir}/changed_files.${EscidocVersion}"/>
   </target>
 
   <target name="copy-oracle-jdbc-jar" if="databaseIsOracle">
@@ -374,6 +375,7 @@
       </and>
       <then>
         <move file="${target}" tofile="${target}.bak" force="true" />
+        <echo output="${changed_files}" append="yes">${target}${line.separator}</echo>
       </then>
     </if>
     <move file="${source}" tofile="${target}" />
