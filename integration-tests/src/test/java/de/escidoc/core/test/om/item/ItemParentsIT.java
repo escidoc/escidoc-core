@@ -208,6 +208,25 @@ public class ItemParentsIT extends ItemTestBase {
     }
 
     /**
+     * Test successful retrieving parents of an item with a version number.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveParentsWithVersion() throws Exception {
+        String parentsXml = retrieveParents(itemIds[1] + ":1");
+        assertXmlValidParents(parentsXml);
+        Document parentsDoc = getDocument(parentsXml);
+        assertNodeCount(parentsXml, "/parents/parent", 2);
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[0] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[1]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[1] + "']");
+        assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='" + containerIds[2]
+            + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/" + containerIds[2] + "']");
+    }
+
+    /**
      * Test declining retrieving parents of an item with wrong itemId.
      *
      * @throws Exception If anything fails.
