@@ -24,7 +24,7 @@
 		<jboss.version>4.2.3.GA</jboss.version>
 		<admin-tool.version>1.1.1</admin-tool.version>
 		<migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
-		<fcrepo.patchlevel>2</fcrepo.patchlevel>
+		<fcrepo.patchlevel>4</fcrepo.patchlevel>
 	</properties>
 
 	<dependencies>
