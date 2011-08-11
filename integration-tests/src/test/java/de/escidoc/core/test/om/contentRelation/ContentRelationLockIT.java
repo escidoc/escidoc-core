@@ -319,7 +319,10 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param = "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
+        String param =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" "
+                + "last-modification-date=\"1970-01-01T00:00:00.000Z\" />";
 
         try {
             lock(theContentRelationId, param);
