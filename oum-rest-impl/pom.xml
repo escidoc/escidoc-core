@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.escidoc.core</groupId>
-    <artifactId>organizational-unit-rest-impl</artifactId>
+    <artifactId>oum-rest-impl</artifactId>
     <name>eSciDoc Core - Organizational Unit REST Impl.</name>
     <version>trunk-SNAPSHOT</version>
 
@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>
-            <artifactId>organizational-unit-rest-spec</artifactId>
+            <artifactId>oum-rest-spec</artifactId>
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>

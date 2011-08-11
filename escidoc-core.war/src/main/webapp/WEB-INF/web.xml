@@ -33,6 +33,7 @@
             classpath:/META-INF/spring/applicationContext-cmm.xml
             classpath:/META-INF/spring/applicationContext-oai.xml
             classpath:/META-INF/spring/applicationContext-oum.xml
+            classpath:/META-INF/spring/applicationContext-oum-rest-service.xml
             classpath:/META-INF/spring/applicationContext-sb.xml
             classpath:/META-INF/spring/applicationContext-st.xml
             classpath:/META-INF/spring/applicationContext-tme.xml
