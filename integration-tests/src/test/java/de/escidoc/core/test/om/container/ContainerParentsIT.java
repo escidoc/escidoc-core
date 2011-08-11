@@ -214,6 +214,28 @@ public class ContainerParentsIT extends ContainerTestBase {
     }
 
     /**
+     * Test successful retrieving parents of a container with a version number.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveParentsWithVersion() throws Exception {
+        String parentsXml = retrieveParents(lowLevelContainerIds[0] + ":1");
+        assertXmlValidParents(parentsXml);
+        Document parentsDoc = getDocument(parentsXml);
+        assertNodeCount(parentsXml, "/parents/parent", 3);
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='"
+            + middleLevelContainerIds[0] + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/"
+            + middleLevelContainerIds[0] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='"
+            + middleLevelContainerIds[1] + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/"
+            + middleLevelContainerIds[1] + "']");
+        assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='"
+            + middleLevelContainerIds[2] + "']|/parents/parent[@href='" + Constants.CONTAINER_BASE_URI + "/"
+            + middleLevelContainerIds[2] + "']");
+    }
+
+    /**
      * Test declining retrieving parents of a container with wrong containerId.
      *
      * @throws Exception If anything fails.
