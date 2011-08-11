@@ -36,6 +36,8 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
+
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +49,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test content relation create implementation.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationLockIT extends ContentRelationTestBase {
@@ -60,8 +62,9 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -78,8 +81,9 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Clean up after test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     @After
@@ -100,7 +104,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         lock(theContentRelationId, param);
 
         String contentRelationXml = retrieve(theContentRelationId);
@@ -117,7 +121,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
         assertXmlValidContentRelation(contentRelationXml);
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getTheLastModificationParam(false, theContentRelationId);
+        param = getLockTaskParam(theContentRelationId);
         try {
             update(theContentRelationId, contentRelationXml);
             fail("No exception on update after lock.");
@@ -133,7 +137,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         lock(theContentRelationId, param);
 
         String contentRelationXml = retrieve(theContentRelationId);
@@ -149,22 +153,23 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
         assertXmlValidContentRelation(contentRelationXml);
 
-        param = getTheLastModificationParam(false, theContentRelationId);
+        param = getLockTaskParam(theContentRelationId);
         update(theContentRelationId, contentRelationXml);
-        param = getTheLastModificationParam(false, theContentRelationId);
+        param = getLockTaskParam(theContentRelationId);
         unlock(theContentRelationId, param);
 
     }
 
     /**
      * Succesfully unlock item by the lock owner.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_1_1() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         try {
             lock(theContentRelationId, param);
         }
@@ -193,7 +198,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
         // try to call update by System-Administrator
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getTheLastModificationParam(false, theContentRelationId);
+        param = getLockTaskParam(theContentRelationId);
 
         try {
             update(theContentRelationId, contentRelationXml);
@@ -206,13 +211,14 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Succesfully unlock item by a system administrator.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_1_2() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         try {
             lock(theContentRelationId, param);
         }
@@ -242,7 +248,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
             "/content-relation/properties/lock-owner");
 
         // try to call update by System-Administrator
-        param = getTheLastModificationParam(false, theContentRelationId);
+        param = getLockTaskParam(theContentRelationId);
 
         try {
             update(theContentRelationId, contentRelationXml);
@@ -255,15 +261,16 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Declining unlock item by a user that is not the lock owner.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_2() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         try {
             lock(theContentRelationId, param);
         }
@@ -286,15 +293,16 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Unsuccessfully lock container with wrong container objid.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_C_lockWrongID() throws Exception {
 
         Class<?> ec = ContentRelationNotFoundException.class;
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
 
         try {
             lock("escidoc:noExist", param);
@@ -329,7 +337,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
 
         try {
             lock(null, param);
@@ -343,13 +351,14 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
     /**
      * Test the last modification date timestamp of the lock/unlock method.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContentRelationId);
+        String param = getLockTaskParam(theContentRelationId);
         String resultXml = lock(theContentRelationId, param);
         assertXmlValidResult(resultXml);
 

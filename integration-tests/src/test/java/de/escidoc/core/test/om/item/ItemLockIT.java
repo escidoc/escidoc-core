@@ -56,12 +56,45 @@ public class ItemLockIT extends ItemTestBase {
     private String theItemId;
 
     /**
+     * Set up servlet test.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Before
+    public void setUp() throws Exception {
+        // create an item and save the id
+        PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
+        String xmlData =
+            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        theItemXml = create(xmlData);
+        theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
+
+    }
+
+    /**
+     * Clean up after test.
+     *
+     * @throws Exception If anything fails.
+     */
+    @After
+    public void tearDown() throws Exception {
+
+        super.tearDown();
+        PWCallback.resetHandle();
+        try {
+            delete(theItemId);
+        }
+        catch (final LockingException e) {
+        }
+    }
+
+    /**
      * Successfully lock of container.
      */
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         lock(theItemId, param);
 
         String itemXml = retrieve(theItemId);
@@ -75,7 +108,7 @@ public class ItemLockIT extends ItemTestBase {
         assertXmlValidItem(itemXml);
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getTheLastModificationParam(false, theItemId);
+        param = getLockTaskParam(theItemId);
         try {
             update(theItemId, itemXml);
             fail("No exception on update after lock.");
@@ -88,10 +121,14 @@ public class ItemLockIT extends ItemTestBase {
         unlock(theItemId, param);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         lock(theItemId, param);
 
         String containerXml = retrieve(theItemId);
@@ -105,9 +142,9 @@ public class ItemLockIT extends ItemTestBase {
 
         assertXmlValidItem(containerXml);
 
-        param = getTheLastModificationParam(false, theItemId);
+        param = getLockTaskParam(theItemId);
         update(theItemId, containerXml);
-        param = getTheLastModificationParam(false, theItemId);
+        param = getLockTaskParam(theItemId);
         unlock(theItemId, param);
 
     }
@@ -120,7 +157,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_1() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         try {
             lock(theItemId, param);
         }
@@ -147,7 +184,7 @@ public class ItemLockIT extends ItemTestBase {
 
         // try to call update by System-Administrator
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getTheLastModificationParam(false, theItemId);
+        param = getLockTaskParam(theItemId);
 
         try {
             update(theItemId, containerXml);
@@ -166,7 +203,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_2() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         try {
             lock(theItemId, param);
         }
@@ -195,7 +232,7 @@ public class ItemLockIT extends ItemTestBase {
             "/item/properties/lock-owner");
 
         // try to call update by System-Administrator
-        param = getTheLastModificationParam(false, theItemId);
+        param = getLockTaskParam(theItemId);
 
         try {
             update(theItemId, containerXml);
@@ -216,7 +253,7 @@ public class ItemLockIT extends ItemTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         try {
             lock(theItemId, param);
         }
@@ -246,7 +283,7 @@ public class ItemLockIT extends ItemTestBase {
 
         Class<?> ec = ItemNotFoundException.class;
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
 
         try {
             lock("escidoc:noExist", param);
@@ -281,7 +318,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
 
         try {
             lock(null, param);
@@ -301,7 +338,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getTheLastModificationParam(false, theItemId);
+        String param = getLockTaskParam(theItemId);
         String resultXml = lock(theItemId, param);
         assertXmlValidResult(resultXml);
 
@@ -330,36 +367,4 @@ public class ItemLockIT extends ItemTestBase {
         assertEquals("Last modification date of result and item not equal", lmdResultUnlock, lmdResultLock);
     }
 
-    /**
-     * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Before
-    public void setUp() throws Exception {
-        // create an item and save the id
-        PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-        String xmlData =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        theItemXml = create(xmlData);
-        theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
-
-    }
-
-    /**
-     * Clean up after test.
-     *
-     * @throws Exception If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        PWCallback.resetHandle();
-        try {
-            delete(theItemId);
-        }
-        catch (final LockingException e) {
-        }
-    }
 }

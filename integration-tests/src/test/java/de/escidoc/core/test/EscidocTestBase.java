@@ -50,6 +50,7 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
 import org.esidoc.core.utils.io.MimeTypes;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1419,7 +1420,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the host name of the framework (read from properties).
-     *
+     * 
      * @return the host name of the framework
      */
     public static String getFrameworkHost() {
@@ -1431,7 +1432,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the port number of the framework (read from properties).
-     *
+     * 
      * @return the port number of the framework
      */
     public static String getFrameworkPort() {
@@ -2631,6 +2632,45 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task parameter for lock method.
+     * 
+     * use getLockTaskParam(DateTime timestamp) instead
+     * 
+     * @param id
+     *            objid of resource (used to obtained the last-modification-date of the resource - expensive operation)
+     * @return task param XML (lock-task-param.xsd)
+     * @throws Exception
+     *             If obtaining of last-modification-date failed.
+     */
+    @Deprecated
+    public String getLockTaskParam(final String id) throws Exception {
+
+        String param =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
+                + getTheLastModificationDate(id) + "\" />";
+
+        return param;
+    }
+
+    /**
+     * Get task parameter for lock method.
+     * 
+     * @param timestamp
+     *            last-modification-date of the resource
+     * @return task param XML (lock-task-param.xsd)
+     */
+    public String getLockTaskParam(final DateTime timestamp) {
+
+        String param =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
+                + timestamp.toString() + "\" " + " />";
+
+        return param;
+    }
+
+    /**
      * Assert that the before timestamp is lower than the after timestamp.
      * 
      * @param before
@@ -2757,7 +2797,8 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Validates Component XML against the XML Schema, checks if the xml:base exists and if all placeholders are replaced.
+     * Validates Component XML against the XML Schema, checks if the xml:base exists and if all placeholders are
+     * replaced.
      * 
      * @param xmlData
      *            The xml document as string.
