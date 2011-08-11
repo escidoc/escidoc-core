@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="contextRestService" address="/">
+    <jaxrs:server id="contextRestService" address="/context">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.context.internal.ContextRestServiceImpl"/>
         </jaxrs:serviceBeans>
