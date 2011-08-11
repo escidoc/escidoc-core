@@ -18,7 +18,7 @@
  * terms.
  */
 
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 /**
  * @author Joerg Hermann

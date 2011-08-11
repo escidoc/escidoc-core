@@ -1,4 +1,4 @@
-package org.esidoc.core.utils.xml;
+package org.escidoc.core.utils.xml;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

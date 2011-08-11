@@ -1,6 +1,6 @@
-package org.esidoc.core.utils.xml;
+package org.escidoc.core.utils.xml;
 
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.Stream;
 
 /**
  * Represents a transfer object holding a output stream as content.

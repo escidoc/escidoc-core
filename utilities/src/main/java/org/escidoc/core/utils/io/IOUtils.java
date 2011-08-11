@@ -1,4 +1,4 @@
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 import net.sf.oval.guard.Guarded;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@
  * terms.
  */
 
-package org.esidoc.core.utils;
+package org.escidoc.core.utils;
 
 /**
  * This object is a placeholder for return values in async void operations.
