@@ -675,7 +675,7 @@
 		<dependency>
 			<groupId>fedora-commons</groupId>
 			<artifactId>fedora-rest-client</artifactId>
-			<version>0.1.3.2-SNAPSHOT</version>
+			<version>0.1.3.1</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
