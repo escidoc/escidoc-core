@@ -10,7 +10,7 @@ import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.service.ServiceUtility;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

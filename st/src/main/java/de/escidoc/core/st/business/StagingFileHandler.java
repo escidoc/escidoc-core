@@ -41,7 +41,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +79,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(org.esidoc.core.utils.io.EscidocBinaryContent)
+     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(org.escidoc.core.utils.io.EscidocBinaryContent)
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)

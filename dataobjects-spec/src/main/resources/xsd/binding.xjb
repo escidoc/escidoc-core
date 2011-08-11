@@ -6,11 +6,11 @@
     <bindings>
         <globalBindings>
             <javaType name="org.joda.time.DateTime" xmlType="xs:date"
-                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
-                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+                      parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
             <javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
-                      parseMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
-                      printMethod="org.esidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
+                      parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate"
+                      printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate"/>
             <serializable/>
         </globalBindings>
     </bindings>

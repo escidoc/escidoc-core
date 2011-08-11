@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.esidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

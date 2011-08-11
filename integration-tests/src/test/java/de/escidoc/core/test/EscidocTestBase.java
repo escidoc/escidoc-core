@@ -50,7 +50,7 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -2665,10 +2665,9 @@ public abstract class EscidocTestBase {
      */
     public String getLockTaskParam(final DateTime timestamp) {
 
-        
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
-                + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
+            + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
+            + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
     }
 
     /**
@@ -3526,7 +3525,7 @@ public abstract class EscidocTestBase {
      */
     public static DateTime getLastModificationDateValue2(final Document document) throws Exception {
 
-        String dateString =  getRootElementAttributeValue(document, "last-modification-date");
+        String dateString = getRootElementAttributeValue(document, "last-modification-date");
         if (dateString == null) {
             return null;
         }

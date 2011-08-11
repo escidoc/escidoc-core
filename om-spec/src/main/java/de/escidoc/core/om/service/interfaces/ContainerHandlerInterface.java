@@ -59,7 +59,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 
 /**
  * Interface of a container handler.

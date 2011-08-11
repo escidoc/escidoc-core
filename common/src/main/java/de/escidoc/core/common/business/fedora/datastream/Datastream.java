@@ -43,9 +43,9 @@ import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.esidoc.core.utils.io.MimeStream;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.MimeStream;
+import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -483,7 +483,7 @@ public class Datastream {
         }
         else if (this.getStream() != null) {
             query.setVersionable(Boolean.TRUE);
-            final org.esidoc.core.utils.io.Stream stream = new org.esidoc.core.utils.io.Stream();
+            final org.escidoc.core.utils.io.Stream stream = new org.escidoc.core.utils.io.Stream();
             try {
                 stream.write(this.getStream());
                 stream.lock();

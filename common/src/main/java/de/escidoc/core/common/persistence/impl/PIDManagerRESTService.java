@@ -40,7 +40,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import org.esidoc.core.utils.io.Charsets;
+import org.escidoc.core.utils.io.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;

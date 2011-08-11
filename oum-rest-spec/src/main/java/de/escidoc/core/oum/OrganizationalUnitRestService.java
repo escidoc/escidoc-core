@@ -47,8 +47,8 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeTypes;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;

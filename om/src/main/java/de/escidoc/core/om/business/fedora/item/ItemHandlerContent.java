@@ -54,8 +54,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.Stream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -65,7 +65,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.esidoc.core.utils.io.MimeStream;
+import org.escidoc.core.utils.io.MimeStream;
 
 /**
  * Content relevant methods for Item.

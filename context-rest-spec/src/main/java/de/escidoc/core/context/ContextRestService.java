@@ -18,8 +18,8 @@ import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextTO;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;

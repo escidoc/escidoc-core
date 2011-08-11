@@ -1,7 +1,7 @@
 package org.escidoc.core.domain.properties;
 
-import org.esidoc.core.utils.io.Stream;
-import org.esidoc.core.utils.xml.StreamHolder;
+import org.escidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.xml.StreamHolder;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import static org.esidoc.core.utils.Preconditions.checkNotNull;
+import static org.escidoc.core.utils.Preconditions.checkNotNull;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>

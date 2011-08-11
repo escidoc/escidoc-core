@@ -1,7 +1,7 @@
 package org.escidoc.core.services.fedora;
 
-import org.esidoc.core.utils.io.Stream;
-import org.esidoc.core.utils.xml.StreamHolder;
+import org.escidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.xml.StreamHolder;
 
 import javax.xml.bind.annotation.XmlElement;
 

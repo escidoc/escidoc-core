@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.interfaces;
 
 import java.util.Map;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.filter.SRURequestParameters;

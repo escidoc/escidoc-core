@@ -34,7 +34,7 @@ import java.net.URL;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

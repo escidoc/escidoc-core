@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
-import org.esidoc.core.utils.io.Stream;
-import org.esidoc.core.utils.xml.StreamHolder;
+import org.escidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.xml.StreamHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

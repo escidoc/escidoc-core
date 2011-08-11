@@ -25,7 +25,7 @@ import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundExcept
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;

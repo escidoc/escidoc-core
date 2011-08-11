@@ -54,7 +54,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

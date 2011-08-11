@@ -55,7 +55,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;

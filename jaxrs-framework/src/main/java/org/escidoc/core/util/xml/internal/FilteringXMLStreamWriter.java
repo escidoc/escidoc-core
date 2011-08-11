@@ -1,7 +1,7 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.xml.StreamHolder;
+import org.escidoc.core.utils.xml.StreamHolder;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.namespace.NamespaceContext;
@@ -9,7 +9,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 /**
- * {@link XMLStreamWriter} that filters content elements in {@link org.esidoc.core.utils.xml.StreamHolder} objects.
+ * {@link XMLStreamWriter} that filters content elements in {@link org.escidoc.core.utils.xml.StreamHolder} objects.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */

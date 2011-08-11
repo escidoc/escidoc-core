@@ -31,7 +31,7 @@ package de.escidoc.core.aa.business.xacml;
 import com.sun.xacml.Indenter;
 import com.sun.xacml.PolicyReference;
 import com.sun.xacml.finder.PolicyFinder;
-import org.esidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;

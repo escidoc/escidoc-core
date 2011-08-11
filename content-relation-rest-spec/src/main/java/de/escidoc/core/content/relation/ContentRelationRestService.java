@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;

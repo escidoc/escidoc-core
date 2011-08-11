@@ -1,6 +1,6 @@
 package org.escidoc.core.services.fedora;
 
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>

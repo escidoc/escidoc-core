@@ -17,7 +17,7 @@ import java.util.Vector;
 import javax.activation.MimetypesFileTypeMap;
 
 import org.apache.commons.codec.binary.Base64;
-import org.esidoc.core.utils.io.Charsets;
+import org.escidoc.core.utils.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

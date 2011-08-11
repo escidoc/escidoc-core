@@ -29,7 +29,7 @@
 package de.escidoc.core.test.adm;
 
 import de.escidoc.core.test.common.resources.PropertiesProvider;
-import org.esidoc.core.utils.io.Charsets;
+import org.escidoc.core.utils.io.Charsets;
 import org.junit.Test;
 
 import java.io.BufferedReader;

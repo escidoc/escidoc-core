@@ -11,7 +11,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 

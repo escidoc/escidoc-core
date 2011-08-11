@@ -8,7 +8,7 @@ import edu.harvard.hul.ois.jhove.App;
 import edu.harvard.hul.ois.jhove.JhoveBase;
 import edu.harvard.hul.ois.jhove.JhoveException;
 import edu.harvard.hul.ois.jhove.OutputHandler;
-import org.esidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

@@ -31,8 +31,8 @@ package de.escidoc.core.om.business.fedora.deviation;
 import java.io.IOException;
 import java.util.Map;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

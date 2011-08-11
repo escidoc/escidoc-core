@@ -23,7 +23,7 @@
  */
 package de.escidoc.core.common.util.stax;
 
-import org.esidoc.core.utils.io.Charsets;
+import org.escidoc.core.utils.io.Charsets;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;

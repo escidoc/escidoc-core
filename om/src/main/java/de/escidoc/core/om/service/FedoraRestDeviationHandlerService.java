@@ -1,6 +1,6 @@
 package de.escidoc.core.om.service;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;

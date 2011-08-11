@@ -47,9 +47,9 @@ import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

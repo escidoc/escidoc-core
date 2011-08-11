@@ -46,8 +46,8 @@ import javax.xml.stream.XMLStreamException;
 
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

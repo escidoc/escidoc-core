@@ -44,7 +44,7 @@ import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

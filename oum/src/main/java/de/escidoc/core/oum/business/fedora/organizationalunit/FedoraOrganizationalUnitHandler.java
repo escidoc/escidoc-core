@@ -78,8 +78,8 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandle
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;

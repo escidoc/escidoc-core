@@ -12,9 +12,9 @@ import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.esidoc.core.utils.VoidObject;
-import org.esidoc.core.utils.io.MimeStream;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.VoidObject;
+import org.escidoc.core.utils.io.MimeStream;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;

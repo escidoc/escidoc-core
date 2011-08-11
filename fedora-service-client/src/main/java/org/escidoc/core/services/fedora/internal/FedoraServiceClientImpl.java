@@ -1,6 +1,6 @@
 package org.escidoc.core.services.fedora.internal;
 
-import static org.esidoc.core.utils.Preconditions.checkState;
+import static org.escidoc.core.utils.Preconditions.checkState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -66,11 +66,11 @@ import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.esidoc.core.utils.VoidObject;
-import org.esidoc.core.utils.io.IOUtils;
-import org.esidoc.core.utils.io.MimeStream;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.VoidObject;
+import org.escidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.MimeStream;
+import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.scheduling.annotation.Async;
