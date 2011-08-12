@@ -214,16 +214,14 @@ public interface ContentRelationHandlerInterface {
      * Lock-User (or the Admin) will unlock this item.<br/>
      * <p/>
      * <b>Prerequisites:</b><br/>
-     * <p/>
      * The content-relation must exist<br/>
-     * <p/>
      * The content-relation is not locked.<br/>
-     * <p/>
-     * The public-status is not "withdrawn".<br/>
+     * The public-status is not "withdrawn".
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The content-relation is accessed using the provided Id.</li> <li>Optimistic Locking
      * criteria is checked.</li> <li>The lock-status of the content-relation is changed to "locked".</li> <li>The
-     * lock-date and lock-owner are added to the content-relation.</li> <li>No data is returned.</li> </ul>
+     * lock-date and lock-owner are added to the content-relation.</li> <li>XML data structure regarding result.xsd is 
+     * returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
      * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
@@ -252,17 +250,15 @@ public interface ContentRelationHandlerInterface {
      * Unlock a content-relation.<br/> The content-relation will be unlocked.<br> /
      * <p/>
      * <b>Prerequisites:</b><br/>
-     * <p/>
      * The content-relation must exist<br/>
-     * <p/>
      * The content-relation is in lock-status "locked".<br/>
-     * <p/>
      * Only the user who has locked the content-relation (and the Admin) are allowed to unlock the
-     * content-relation.<br/>
+     * content-relation.
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The content-relation is accessed using the provided Id.</li> <li>Optimistic Locking
      * criteria is checked.</li> <li>The lock-status of the content-relation is changed to "unlocked".</li> <li>The
-     * lock-date and lock-owner are removed from the content-relation.</li> <li>No data is returned.</li> </ul>
+     * lock-date and lock-owner are removed from the content-relation.</li> <li>XML data structure regarding result.xsd 
+     * is returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
      * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
