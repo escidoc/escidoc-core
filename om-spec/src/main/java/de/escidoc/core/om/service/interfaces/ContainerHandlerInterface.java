@@ -1310,18 +1310,9 @@ public interface ContainerHandlerInterface {
      * criteria is checked.</li> <li>The lock-status of the container is changed to "locked".</li> <li>The lock-date is
      * added to the container.</li> <li>The lock-owner is added to the container.</li> <li>No new version is
      * created.</li> <li>A XML containing the new latest version timestamp is returned.</li> </ul> <b>Parameter for
-     * request:</b> (example)<br/>
-     * <p/>
+     * request:</b><br/>
      * <pre>
-     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
-     * </pre>
-     * <p/>
-     * <pre>
-     *  &lt;comment&gt;lock comment.&lt;/comment&gt;
-     * </pre>
-     * <p/>
-     * <pre>
-     * &lt;/param&gt;
+     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
      * @param id        The id of the Container to be locked.
@@ -1360,18 +1351,9 @@ public interface ContainerHandlerInterface {
      * criteria is checked.</li> <li>The lock-status of the container is changed to "unlocked".</li> <li>The lock-date
      * is removed from the container.</li> <li>The lock-owner is removed from the container.</li> <li>No new version is
      * created.</li> <li>A XML containing the new latest version timestamp is returned.</li> </ul> <b>Parameter for
-     * request:</b> (example)<br/>
-     * <p/>
+     * request:</b><br/>
      * <pre>
-     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
-     * </pre>
-     * <p/>
-     * <pre>
-     *  &lt;comment&gt;unlock comment.&lt;/comment&gt;
-     * </pre>
-     * <p/>
-     * <pre>
-     * &lt;/param&gt;
+     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
      * @param id        The id of the Container to be unlocked.
