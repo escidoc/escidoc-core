@@ -187,7 +187,6 @@
         name="escidocRolesByCreatorId"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
@@ -253,7 +252,6 @@
         name="roleGrantsByCreatorId"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
@@ -286,7 +284,6 @@
         name="roleGrantsByRevokerId"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
@@ -351,7 +348,6 @@
         name="userGroupsByCreatorId"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
@@ -384,7 +380,6 @@
         name="userGroupsByModifiedById"
         lazy="true"
         inverse="false"
-        cascade="all,delete-orphan"
 
     >
         <meta attribute="generated-class">
