@@ -201,6 +201,172 @@
             <class name="OrganizationalUnitListTO"/>
         </bindings>
     </bindings>
+    <bindings schemaLocation="user-account.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="UserAccountPropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='user-account']">
+            <class name="UserAccountTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='resources']">
+            <class name="UserAccountResourcesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="user-account-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='user-account-list']">
+            <class name="UserAccountListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="user-account-attributes.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='attributes']">
+            <class name="UserAccountAttributesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='attribute']">
+            <class name="UserAccountAttributeTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="user-account-preferences.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='preferences']">
+            <class name="UserAccountPreferencesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='preference']">
+            <class name="UserAccountPreferenceTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="user-group.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='user-group']">
+            <class name="UserGroupTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="UserGroupPropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='selectors']">
+            <class name="UserGroupSelectorsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='selector']">
+            <class name="UserGroupSelectorTO"/>
+            <bindings schemaLocation="user-group.xsd" node=".//xs:attribute[@name='type']">
+                <property name="SelectorType"/>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:element[@name='resources']">
+            <class name="UserGroupResourcesTO"/>
+        </bindings>
+        <!-- rename the type element -->
+    </bindings>
+    <bindings schemaLocation="user-group-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='user-group-list']">
+            <class name="UserGroupListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="add-selectors.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='param']">
+            <class name="AddSelectorsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='selector']">
+            <class name="AddSelectorTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="remove-selectors.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='param']">
+            <class name="RemoveSelectorsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="grants.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='current-grants']">
+            <class name="CurrentGrantsTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='grant-list']">
+            <class name="GrantListTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='grant']">
+            <class name="GrantTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="GrantPropertiesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="pdp-requests.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='requests']">
+            <class name="PdpRequestsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="pdp-results.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='results']">
+            <class name="PdpResultsTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="cs-xacml-schema-context-01.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa.context"/>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="cs-xacml-schema-policy-01.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa.policy"/>
+        </schemaBindings>
+    </bindings>
+    <bindings schemaLocation="role.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='role']">
+            <class name="RoleTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='properties']">
+            <class name="RolePropertiesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='resources']">
+            <class name="RoleResourcesTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='scope']">
+            <class name="RoleScopeTO"/>
+        </bindings>
+        <bindings node="//xs:element[@name='scope-def']">
+            <class name="RoleScopeDefTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="role-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='role-list']">
+            <class name="RoleListTO"/>
+        </bindings>
+    </bindings>
     <bindings schemaLocation="properties.xsd">
         <schemaBindings>
             <package name="org.escidoc.core.domain.properties"/>
