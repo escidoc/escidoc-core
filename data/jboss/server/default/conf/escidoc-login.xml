@@ -58,6 +58,7 @@ default-lazy-init="false">
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
+        <security:http-basic/>
         <security:form-login
             authentication-failure-url="/aa/login/login-repeated.html"
             default-target-url="/aa/login/missing-target.html" />
@@ -94,6 +95,7 @@ default-lazy-init="false">
         path-type="regex" entry-point-ref="authenticationProcessingFilterEntryPoint">
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
+        <security:http-basic/>
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:form-login
             authentication-failure-url="/aa/login/login-repeated.html"
@@ -163,6 +165,7 @@ default-lazy-init="false">
         path-type="regex">
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
+        <security:http-basic/>
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:custom-filter ref="shibFilter" before="CAS_FILTER"/>
     </security:http>
@@ -202,6 +205,7 @@ default-lazy-init="false">
 		<security:session-management session-fixation-protection="none"/>
         <security:intercept-url pattern="/aa/login[^/].*$" access="IS_AUTHENTICATED_FULLY"/>
         <security:intercept-url pattern="/.*" filters="none" />
+        <security:http-basic/>
         <security:x509 subject-principal-regex="CN=(.*?)," user-service-ref="jdbcUserService"/>
         <security:openid-login 
         	user-service-ref="openidUserDetailsService" 

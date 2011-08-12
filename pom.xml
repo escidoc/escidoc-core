@@ -61,6 +61,8 @@
         <module>common</module>
         <module>aa-spec</module>
         <module>aa</module>
+        <module>aa-rest-spec</module>
+        <module>aa-rest-impl</module>
         <module>adm-spec</module>
         <module>adm-impl</module>
         <module>cmm-spec</module>
@@ -2165,6 +2167,16 @@
         <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>oum-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>aa-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>aa-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

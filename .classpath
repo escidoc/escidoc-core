@@ -21,6 +21,13 @@
 	<classpathentry kind="src" output="cmm-spec/target/test-classes" path="cmm-spec/src/test/java"/>
 	<classpathentry kind="src" output="aa-spec/target/classes" path="aa-spec/src/main/java"/>
 	<classpathentry kind="src" output="aa-spec/target/test-classes" path="aa-spec/src/test/java"/>
+	<classpathentry kind="src" output="aa-rest-spec/target/classes" path="aa-rest-spec/src/main/java"/>
+	<classpathentry kind="src" output="aa-rest-spec/target/test-classes" path="aa-rest-spec/src/test/java"/>
+	<classpathentry kind="src" output="dataobjects-spec/target/classes" path="dataobjects-spec/src/main/java"/>
+	<classpathentry kind="src" output="dataobjects-spec/target/test-classes" path="dataobjects-spec/src/test/java"/>
+	<classpathentry kind="src" output="dataobjects-spec/target/classes" path="dataobjects-spec/target/generated-sources/java"/>
+	<classpathentry kind="src" output="context-rest-spec/target/classes" path="context-rest-spec/src/main/java"/>
+	<classpathentry kind="src" output="context-rest-spec/target/test-classes" path="context-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/test-classes" path="jaxrs-framework/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/resources"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/java"/>
@@ -48,8 +55,14 @@
 	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
 	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
+	<classpathentry kind="src" output="aa-rest-impl/target/classes" path="aa-rest-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="aa-rest-impl/target/classes" path="aa-rest-impl/src/main/resources"/>
+	<classpathentry kind="src" output="context-rest-impl/target/classes" path="context-rest-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="context-rest-impl/target/classes" path="context-rest-impl/src/main/resources"/>
 	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
+	<classpathentry kind="src" output="aspects/target/classes" path="aspects/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="aspects/target/classes" path="aspects/src/main/resources"/>
 	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="cmm/target/classes" path="cmm/src/main/resources"/>
 	<classpathentry kind="src" output="oai/target/classes" path="oai/src/main/java"/>
