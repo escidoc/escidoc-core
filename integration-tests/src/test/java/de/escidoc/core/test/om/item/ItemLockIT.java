@@ -35,6 +35,8 @@ import de.escidoc.core.common.exceptions.remote.application.violated.LockingExce
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.security.client.PWCallback;
+
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,8 +47,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 /**
- * Test locking and unlocking an item resource.<br> By default, the tests are executed using a depositor user.
- *
+ * Test locking and unlocking an item resource.<br>
+ * By default, the tests are executed using a depositor user.
+ * 
  * @author Michael Schneider
  */
 public class ItemLockIT extends ItemTestBase {
@@ -57,8 +60,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -73,8 +77,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Clean up after test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void tearDown() throws Exception {
@@ -151,8 +156,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Succesfully unlock item by the lock owner.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_1_1() throws Exception {
@@ -197,8 +203,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Succesfully unlock item by a system administrator.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_1_2() throws Exception {
@@ -245,8 +252,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Declining unlock item by a user that is not the lock owner.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_ULI_2() throws Exception {
@@ -275,8 +283,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Unsuccessfully lock container with wrong container objid.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOM_C_lockWrongID() throws Exception {
@@ -297,19 +306,11 @@ public class ItemLockIT extends ItemTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
-    @Test
+    @Test(expected=OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param = "<param last-modification-date=\"1970-01-01T00:00:00.000Z\" ></param>";
-
-        try {
-            lock(theItemId, param);
-            fail("No exception after lock with wrong last-modification-date.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = OptimisticLockingException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        String param = getLockTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
+        lock(theItemId, param);
     }
 
     /**
@@ -332,8 +333,9 @@ public class ItemLockIT extends ItemTestBase {
 
     /**
      * Test the last modification date timestamp of the lock/unlock method.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testLockReturnValue01() throws Exception {
