@@ -576,6 +576,7 @@
 			<param name="document" value="_api_doc_OM_SemanticStore" />
 			<param name="descriptor" value="om/${interface.descriptor.dir}/semanticstore.xml" />
 			<param name="draft.mode" value="no"/>
+			<param name="deprecated" value="true"/>
 		</antcall>
 	</target>
 	<!-- end: build of semanticstore documentation -->
