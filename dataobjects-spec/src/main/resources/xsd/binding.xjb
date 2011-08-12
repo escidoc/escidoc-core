@@ -228,7 +228,7 @@
             <package name="org.escidoc.core.domain.aa"/>
         </schemaBindings>
         <bindings node="//xs:element[@name='attributes']">
-            <class name="UserAccountAttributesTO"/>
+            <class name="UserAccountAttributeListTO"/>
         </bindings>
         <bindings node="//xs:element[@name='attribute']">
             <class name="UserAccountAttributeTO"/>
@@ -239,7 +239,7 @@
             <package name="org.escidoc.core.domain.aa"/>
         </schemaBindings>
         <bindings node="//xs:element[@name='preferences']">
-            <class name="UserAccountPreferencesTO"/>
+            <class name="UserAccountPreferenceListTO"/>
         </bindings>
         <bindings node="//xs:element[@name='preference']">
             <class name="UserAccountPreferenceTO"/>
@@ -365,6 +365,14 @@
         </schemaBindings>
         <bindings node="//xs:element[@name='role-list']">
             <class name="RoleListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="permission-filter.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.aa"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='result']">
+            <class name="PermissionFilterTO"/>
         </bindings>
     </bindings>
     <bindings schemaLocation="properties.xsd">
