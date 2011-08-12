@@ -223,11 +223,12 @@ public interface ContentRelationHandlerInterface {
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The content-relation is accessed using the provided Id.</li> <li>Optimistic Locking
      * criteria is checked.</li> <li>The lock-status of the content-relation is changed to "locked".</li> <li>The
-     * lock-date and lock-owner are added to the content-relation.</li> <li>No data is returned.</li> </ul>
+     * lock-date and lock-owner are added to the content-relation.</li> <li>XML data structure regarding result.xsd 
+     * is returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
      * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
-     *                  locking purpose. (see example above)
+     *                  locking purpose. 
      * @return last-modification-date within XML (result.xsd)
      * @throws AuthenticationException    Thrown if authentication fails.
      * @throws AuthorizationException     Thrown if authorization fails.
@@ -261,11 +262,12 @@ public interface ContentRelationHandlerInterface {
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The content-relation is accessed using the provided Id.</li> <li>Optimistic Locking
      * criteria is checked.</li> <li>The lock-status of the content-relation is changed to "unlocked".</li> <li>The
-     * lock-date and lock-owner are removed from the content-relation.</li> <li>No data is returned.</li> </ul>
+     * lock-date and lock-owner are removed from the content-relation.</li> <li>XML data structure regarding result.xsd 
+     * is returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
      * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
-     *                  locking purpose. (see example above)
+     *                  locking purpose.
      * @return last-modification-date within XML (result.xsd)
      * @throws AuthenticationException    Thrown if authentication fails.
      * @throws AuthorizationException     Thrown if authorization fails.
