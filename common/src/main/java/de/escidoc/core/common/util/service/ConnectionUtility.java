@@ -347,10 +347,7 @@ public class ConnectionUtility {
             username = loginValues[0];
             password = loginValues[1];
         }
-        else {
-            username = EscidocConfiguration.FEDORA_USER;
-            password = EscidocConfiguration.FEDORA_PASSWORD;
-        }
+
         return getRequestURL(client, url, username, password);
     }
 
@@ -603,10 +600,7 @@ public class ConnectionUtility {
             username = loginValues[0];
             password = loginValues[1];
         }
-        else {
-            username = EscidocConfiguration.FEDORA_USER;
-            password = EscidocConfiguration.FEDORA_PASSWORD;
-        }
+
         return post(client, url, body, null, username, password);
     }
 
