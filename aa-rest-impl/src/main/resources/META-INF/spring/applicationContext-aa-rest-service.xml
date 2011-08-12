@@ -8,9 +8,45 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="userAccountRestService" address="/aa/user-account">
+    <jaxrs:server id="userAccountRestService" address="/user-account">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+    <jaxrs:server id="userAccountsRestService" address="/user-accounts">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+    <jaxrs:server id="userGroupRestService" address="/user-group">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+    <jaxrs:server id="userGroupsRestService" address="/user-groups">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+    <jaxrs:server id="grantsRestService" address="/grants">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

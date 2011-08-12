@@ -31,12 +31,10 @@ package de.escidoc.core.aa.internal;
 import java.util.Map;
 
 import org.escidoc.core.domain.aa.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.GrantListTO;
 import org.escidoc.core.domain.aa.GrantTO;
 import org.escidoc.core.domain.aa.PermissionFilterTO;
 import org.escidoc.core.domain.aa.UserAccountAttributeListTO;
 import org.escidoc.core.domain.aa.UserAccountAttributeTO;
-import org.escidoc.core.domain.aa.UserAccountListTO;
 import org.escidoc.core.domain.aa.UserAccountPreferenceListTO;
 import org.escidoc.core.domain.aa.UserAccountPreferenceTO;
 import org.escidoc.core.domain.aa.UserAccountResourcesTO;
@@ -197,15 +195,6 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrieveGrants(java.util.Map)
-     */
-    @Override
-    public GrantListTO retrieveGrants(final Map<String, String[]> filter) throws MissingMethodParameterException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(filter));
-    }
-
-    /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#createGrant(org.escidoc.core.domain.aa.GrantTO)
      */
     @Override
@@ -243,15 +232,6 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         this.userAccountHandler.revokeGrants(id, taskParam);
-    }
-
-    /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(java.util.Map)
-     */
-    @Override
-    public UserAccountListTO retrieveUerAccounts(final Map<String, String[]> filter) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(filter));
     }
 
     /* (non-Javadoc)
