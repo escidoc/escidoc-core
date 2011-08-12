@@ -339,8 +339,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      */
     public HttpResponse getRequestURL(final DefaultHttpClient client, final URL url) throws WebserverSystemException {
-        final String username;
-        final String password;
+        String username = null;
+        String password = null;
         final String userinfo = url.getUserInfo();
         if (userinfo != null) {
             final String[] loginValues = SPLIT_PATTERN.split(userinfo);
