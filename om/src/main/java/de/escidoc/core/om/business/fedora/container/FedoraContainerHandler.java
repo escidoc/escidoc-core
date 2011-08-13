@@ -2031,13 +2031,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 // updateTimeStamp();
                 makeVersion("Container.addMembers");
                 getContainer().persist();
-            }
 
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+                fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
 
-            // Also reindex members
-            for (final String memberId : memberIds) {
-                fireContainerMembersModified(memberId);
+                // Also reindex members
+                for (final String memberId : memberIds) {
+                    fireContainerMembersModified(memberId);
+                }
             }
 
         }
