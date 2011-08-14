@@ -4,14 +4,14 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4-RC1</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>installer</artifactId>
 	<name>Installer</name>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4-RC1</version>
 	<description>Installer of eSciDoc Infrastructure</description>
 
 	<properties>

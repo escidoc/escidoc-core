@@ -6,12 +6,12 @@
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>cmm</artifactId>
 	<name>eSciDoc Core - Content Model Service Impl.</name>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4-RC1</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4-RC1</version>
 	</parent>
 
 	<description>Content Model Service package of eSciDoc Core</description>

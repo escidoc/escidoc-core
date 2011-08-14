@@ -28,12 +28,12 @@
     <groupId>org.escidoc.core</groupId>
     <artifactId>oai-spec</artifactId>
     <name>eSciDoc Core - OAI-PMH Service Impl.</name>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4-RC1</version>
 
     <parent>
         <artifactId>eSciDocCore</artifactId>
         <groupId>org.escidoc.core</groupId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.4-RC1</version>
     </parent>
 
     <dependencies>

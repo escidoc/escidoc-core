@@ -17,7 +17,7 @@
   <artifactId>eSciDocCore</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core</name>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4-RC1</version>
   <url>https://www.escidoc.org</url>
 
   <issueManagement>

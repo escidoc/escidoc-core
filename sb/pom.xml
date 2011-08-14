@@ -6,12 +6,12 @@
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>sb</artifactId>
 	<name>eSciDoc Core - Search and Browse Unit Service</name>
-	<version>1.4-SNAPSHOT</version>
+	<version>1.4-RC1</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.4-SNAPSHOT</version>
+		<version>1.4-RC1</version>
 	</parent>
 
 	<description>Search &amp; Browse Service package of eSciDoc Core</description>
