@@ -8,13 +8,13 @@
   <artifactId>integration-tests</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core - Integration Tests</name>
-  <version>1.4-RC1</version>
+  <version>1.4-SNAPSHOT</version>
   <description>Integration Tests of eSciDoc Core</description>
 
   <parent>
     <artifactId>eSciDocCore</artifactId>
     <groupId>org.escidoc.core</groupId>
-    <version>1.4-RC1</version>
+    <version>1.4-SNAPSHOT</version>
   </parent>
 
   <build>

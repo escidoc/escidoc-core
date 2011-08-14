@@ -28,12 +28,12 @@
     <groupId>org.escidoc.core</groupId>
     <artifactId>tme-spec</artifactId>
     <name>eSciDoc Core - Technical Metadata Extraction Service Spec.</name>
-    <version>1.4-RC1</version>
+    <version>1.4-SNAPSHOT</version>
 
     <parent>
         <artifactId>eSciDocCore</artifactId>
         <groupId>org.escidoc.core</groupId>
-        <version>1.4-RC1</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <dependencies>

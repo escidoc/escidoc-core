@@ -6,13 +6,13 @@
 
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>st</artifactId>
-	<version>1.4-RC1</version>
+	<version>1.4-SNAPSHOT</version>
 	<name>eSciDoc Core - Staging Impl.</name>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.4-RC1</version>
+		<version>1.4-SNAPSHOT</version>
 	</parent>
 
     <description>Staging Service package of eSciDoc Core</description>
