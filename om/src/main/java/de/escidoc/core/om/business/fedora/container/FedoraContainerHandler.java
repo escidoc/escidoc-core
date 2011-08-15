@@ -129,6 +129,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.interfaces.ContainerHandlerInterface;
+import de.escidoc.core.om.business.security.UserFilter;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsAddHandler2Edition;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsCreateHandler2Edition;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsRemoveHandler2Edition;
@@ -827,7 +828,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public String retrieveMembers(final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, TripleStoreSystemException, IntegritySystemException, SystemException {
         final StringWriter result = new StringWriter();
-
         setContainer(id);
         if (getContainer().isLatestVersion()) {
             if (parameters.isExplain()) {
@@ -843,6 +843,57 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
                     query, parameters.getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(),
                     parameters.getRecordPacking());
+            }
+        }
+        else {
+            /*
+             * This is a hack, because of a crud concept regarding versions and search.
+             * 
+             * Obtain all member ids an create a search request to still let the search answer.
+             */
+            if (parameters.isExplain()) {
+                // Items and containers are in the same index.
+                sruRequest.explain(result, ResourceType.ITEM);
+            }
+            else {
+                StringBuilder query = new StringBuilder();
+
+                final UserFilter ufilter = new UserFilter();
+
+                List<String> ids = null;
+                try {
+                    ids = ufilter.getMemberRefList(getContainer());
+                }
+                catch (MissingMethodParameterException e) {
+                    throw new SystemException("Error retrieving member references for Container '" + id + "'.", e);
+                }
+
+                if (ids.isEmpty()) {
+                    // create an empty search response (problem: if no query is given, than are all resources returned. A useless query is not a solution, because the query is part of the response)
+                    sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
+                        "\"/id\"=-1", parameters.getMaximumRecords(), parameters.getStartRecord(), parameters
+                            .getExtraData(), parameters.getRecordPacking());
+                }
+                else {
+                    final Iterator<String> idIter = ids.iterator();
+
+                    if (idIter.hasNext()) {
+                        query.append("\"/id\"=");
+                        query.append(idIter.next());
+                    }
+                    while (idIter.hasNext()) {
+                        query.append(" OR \"/id\"=");
+                        query.append(idIter.next());
+                    }
+
+                    if (parameters.getQuery() != null) {
+                        query.append(" AND ");
+                        query.append(parameters.getQuery());
+                    }
+                    sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
+                        query.toString(), parameters.getMaximumRecords(), parameters.getStartRecord(), parameters
+                            .getExtraData(), parameters.getRecordPacking());
+                }
             }
         }
         return result.toString();

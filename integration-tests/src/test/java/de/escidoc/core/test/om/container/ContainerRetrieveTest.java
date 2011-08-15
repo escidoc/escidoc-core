@@ -119,12 +119,41 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     @Test
     public void testOM_RFLMC_1_2() throws Exception {
 
-        List<String> smMembersList = getStructMapMembers(retrieve(theContainerId));
-        String memberListXml = retrieveMembers(theContainerId, new HashMap<String, String[]>());
+
+        Document containerDoc = getDocument(this.theContainerXml);
+        String versionNumber =
+            selectSingleNode(containerDoc, "/container/properties/version/number/text()").getNodeValue();
+
+        List<String> smMembersList = getStructMapMembers(this.theContainerXml);
+
+        // create a second version
+        addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
+            + "\" >\n<id>" + createItem() + "</id>\n</param>");
+
+        // check retrieveMembers method (latest version)
+        String memberListXml = retrieveMembers(this.theContainerId, new HashMap<String, String[]>());
         List<String> mlMembersList = getMemberListMembers(memberListXml);
 
-        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList, smMembersList);
+        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList,
+            getStructMapMembers(this.theContainerId));
         assertXmlValidSrwResponse(memberListXml);
+
+        // check retrieveMembers method with version suffix (first version)
+        String memberListXmlFirst = retrieveMembers(this.theContainerId + ":1", new HashMap<String, String[]>());
+        List<String> mlMembersListFirst = getMemberListMembers(memberListXmlFirst);
+
+        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersListFirst,
+            smMembersList);
+        assertXmlValidSrwResponse(memberListXmlFirst);
+
+        // check retrieveMembers method with version suffix (latest version)
+        String memberListXmlLatest =
+            retrieveMembers(this.theContainerId + ":" + versionNumber, new HashMap<String, String[]>());
+        List<String> mlMembersListLatest = getMemberListMembers(memberListXmlLatest);
+
+        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersListLatest,
+            getStructMapMembers(this.theContainerId + ":" + versionNumber));
+        assertXmlValidSrwResponse(memberListXmlLatest);
     }
 
     /**
