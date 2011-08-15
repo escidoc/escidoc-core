@@ -32,14 +32,14 @@ import java.util.regex.Pattern;
 @Aspect
 public final class PatternPerformanceAspect {
 
-    /*private final String EMPTY_STRING = "";
+    private final String EMPTY_STRING = "";
 
     private PatternFactory patternFactory = PatternFactory.getInstance();
     private MatcherFactory matcherFactory = MatcherFactory.getInstance();
 
     /**
      * Package protected constructor to avoid instantion outside of this package.
-
+     */
     protected PatternPerformanceAspect() {
     }
 
@@ -108,6 +108,6 @@ public final class PatternPerformanceAspect {
         final Integer limit = (Integer) joinPoint.getArgs()[1];
         final Pattern pattern = patternFactory.createPattern(patternString);
         return pattern.split(target, limit);
-    }*/
+    }
 
 }
