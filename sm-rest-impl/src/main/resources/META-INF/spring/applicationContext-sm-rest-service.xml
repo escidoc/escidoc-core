@@ -8,72 +8,81 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="userAccountRestService" address="/user-account">
+    <jaxrs:server id="aggregationDefinitionRestService" address="/aggregation-definition">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="userAccountsRestService" address="/user-accounts">
+    <jaxrs:server id="aggregationDefinitionsRestService" address="/aggregation-definitions">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="userGroupRestService" address="/user-group">
+    <jaxrs:server id="reportDefinitionRestService" address="/report-definition">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="userGroupsRestService" address="/user-groups">
+    <jaxrs:server id="reportDefinitionsRestService" address="/report-definitions">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="grantsRestService" address="/grants">
+    <jaxrs:server id="preprocessingRestService" address="/preprocessing">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="roleRestService" address="/role">
+    <jaxrs:server id="reportRestService" address="/report">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="rolesRestService" address="/roles">
+    <jaxrs:server id="scopeRestService" address="/scope">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="pdpRestService" address="/pdp">
+    <jaxrs:server id="scopesRestService" address="/scopes">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
+            <bean class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+    <jaxrs:server id="statisticDataRestService" address="/statistic-data">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

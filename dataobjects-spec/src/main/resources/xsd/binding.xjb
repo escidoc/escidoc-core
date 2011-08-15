@@ -328,6 +328,9 @@
         <bindings node="//xs:element[@name='results']">
             <class name="PdpResultsTO"/>
         </bindings>
+        <bindings node="//xs:element[@name='result']">
+            <class name="PdpResultTO"/>
+        </bindings>
     </bindings>
     <bindings schemaLocation="cs-xacml-schema-context-01.xsd">
         <schemaBindings>
@@ -373,6 +376,122 @@
         </schemaBindings>
         <bindings node="//xs:element[@name='result']">
             <class name="PermissionFilterTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="aggregation-definition.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='aggregation-definition']">
+            <class name="AggregationDefinitionTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='AggregationTableType']">
+            <class name="AggregationDefinitionAggregationTableTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='StatisticDataType']">
+            <class name="AggregationDefinitionStatisticDataTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='FieldType']">
+            <class name="AggregationTableFieldTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='InfoFieldType']">
+            <class name="AggregationTableInfoFieldTO"/>
+            <bindings schemaLocation="aggregation-definition.xsd" node=".//xs:element[@name='type']">
+                <property name="InfoFieldType"/>
+            </bindings>
+        </bindings>
+        <bindings node="//xs:complexType[@name='TimeReductionFieldType']">
+            <class name="AggregationTableTimeReductionFieldTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='CountCumulationFieldType']">
+            <class name="AggregationTableCountCumulationFieldTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='DifferenceCumulationFieldType']">
+            <class name="AggregationTableDifferenceCumulationFieldTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='IndexType']">
+            <class name="AggregationTableIndexTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="aggregation-definition-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='aggregation-definition-list']">
+            <class name="AggregationDefinitionListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="report-definition.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='report-definition']">
+            <class name="ReportDefinitionTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='AllowedRoleType']">
+            <class name="AllowedRolesTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="report-definition-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='report-definition-list']">
+            <class name="ReportDefinitionListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="scope.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='scope']">
+            <class name="ScopeTO"/>
+            <bindings schemaLocation="scope.xsd" node=".//xs:element[@name='type']">
+                <property name="ScopeType"/>
+            </bindings>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="scope-list.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='scope-list']">
+            <class name="ScopeListTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="statistic-data.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='statistic-record']">
+            <class name="StatisticDataTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="report.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='report']">
+            <class name="ReportTO"/>
+        </bindings>
+        <bindings node="//xs:complexType[@name='ReportRecordType']">
+            <class name="ReportRecordTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="report-parameters.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='report-parameters']">
+            <class name="ReportParametersTO"/>
+        </bindings>
+    </bindings>
+    <bindings schemaLocation="preprocessing-information.xsd">
+        <schemaBindings>
+            <package name="org.escidoc.core.domain.sm"/>
+        </schemaBindings>
+        <bindings node="//xs:element[@name='preprocessing-information']">
+            <class name="PreprocessingInformationTO"/>
         </bindings>
     </bindings>
     <bindings schemaLocation="properties.xsd">

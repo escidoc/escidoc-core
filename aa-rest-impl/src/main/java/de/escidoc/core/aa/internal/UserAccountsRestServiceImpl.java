@@ -61,7 +61,7 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
 
     /* (non-Javadoc)
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(java.util.Map)
+     * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(java.util.Map)
      */
     @Override
     public UserAccountListTO retrieveUserAccounts(final Map<String, String[]> filter) throws MissingMethodParameterException,

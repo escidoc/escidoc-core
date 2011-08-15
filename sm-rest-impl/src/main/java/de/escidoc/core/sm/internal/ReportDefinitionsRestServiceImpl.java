@@ -26,47 +26,47 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.internal;
+package de.escidoc.core.sm.internal;
 
 import java.util.Map;
 
-import org.escidoc.core.domain.aa.GrantListTO;
+import org.escidoc.core.domain.sm.ReportDefinitionListTO;
 import org.escidoc.core.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.aa.GrantsRestService;
-import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.sm.ReportDefinitionsRestService;
+import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 
 /**
  * @author Michael Hoppe
  *
  */
-public class GrantsRestServiceImpl implements GrantsRestService {
+public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestService {
 
     @Autowired
-    @Qualifier("service.UserAccountHandler")
-    private UserAccountHandlerInterface userAccountHandler;
+    @Qualifier("service.ReportDefinitionHandler")
+    private ReportDefinitionHandlerInterface reportDefinitionHandler;
 
     /**
      * 
      */
-    public GrantsRestServiceImpl() {
+    public ReportDefinitionsRestServiceImpl() {
     }
 
     /* (non-Javadoc)
-    /* (non-Javadoc)
-     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
+     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(java.util.Map)
      */
     @Override
-    public GrantListTO retrieveGrants(final Map<String, String[]> filter) throws MissingMethodParameterException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(filter));
+    public ReportDefinitionListTO retrieveReportDefinitions(Map<String, String[]> filter)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(filter));
     }
 
 }

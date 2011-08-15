@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.escidoc.de/schemas/removeselectors/0.6"
 	xmlns:usergroup="http://www.escidoc.de/schemas/usergroup/0.6"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="param">

@@ -26,47 +26,43 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.internal;
+package de.escidoc.core.sm.internal;
 
-import java.util.Map;
-
-import org.escidoc.core.domain.aa.GrantListTO;
+import org.escidoc.core.domain.sm.StatisticDataTO;
 import org.escidoc.core.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.aa.GrantsRestService;
-import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.sm.StatisticDataRestService;
+import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
 
 /**
  * @author Michael Hoppe
  *
  */
-public class GrantsRestServiceImpl implements GrantsRestService {
+public class StatisticDataRestServiceImpl implements StatisticDataRestService {
 
     @Autowired
-    @Qualifier("service.UserAccountHandler")
-    private UserAccountHandlerInterface userAccountHandler;
+    @Qualifier("service.StatisticDataHandler")
+    private StatisticDataHandlerInterface statisticDataHandler;
 
     /**
      * 
      */
-    public GrantsRestServiceImpl() {
+    public StatisticDataRestServiceImpl() {
     }
 
     /* (non-Javadoc)
-    /* (non-Javadoc)
-     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
+     * @see de.escidoc.core.sm.StatisticDataRestService#create(org.escidoc.core.domain.sm.StatisticDataTO)
      */
     @Override
-    public GrantListTO retrieveGrants(final Map<String, String[]> filter) throws MissingMethodParameterException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(filter));
+    public void create(StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
+        this.statisticDataHandler.create(ServiceUtility.toXML(statisticDataTO));
     }
 
 }

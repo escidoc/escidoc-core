@@ -306,7 +306,7 @@ public class ItemLockIT extends ItemTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
-    @Test(expected=OptimisticLockingException.class)
+    @Test(expected = OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
         String param = getLockTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));

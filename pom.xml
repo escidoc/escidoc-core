@@ -78,6 +78,8 @@
         <module>sb</module>
         <module>sm-spec</module>
         <module>sm</module>
+        <module>sm-rest-spec</module>
+        <module>sm-rest-impl</module>
         <module>st-spec</module>
         <module>st</module>
         <module>tme-spec</module>
@@ -2177,6 +2179,16 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>aa-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>sm-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>sm-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
