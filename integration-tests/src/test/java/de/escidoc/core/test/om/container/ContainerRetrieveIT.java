@@ -170,7 +170,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         List<String> smMembersList = getStructMapMembers(this.theContainerXml);
 
         // create a second version
-        addMembers(theContainerId, "<param last-modifcation-date=\"" + getLastModificationDateValue(containerDoc)
+        addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
             + "\" >\n<id>" + createItem() + "</id>\n</param>");
 
         // check retrieveMembers method (latest version)
