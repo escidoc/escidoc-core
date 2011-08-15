@@ -30,6 +30,8 @@
 	<classpathentry kind="src" output="dataobjects-spec/target/classes" path="dataobjects-spec/target/generated-sources/java"/>
 	<classpathentry kind="src" output="context-rest-spec/target/classes" path="context-rest-spec/src/main/java"/>
 	<classpathentry kind="src" output="context-rest-spec/target/test-classes" path="context-rest-spec/src/test/java"/>
+	<classpathentry kind="src" output="fedoradeviation-rest-spec/target/classes" path="fedoradeviation-rest-spec/src/main/java"/>
+	<classpathentry kind="src" output="fedoradeviation-rest-spec/target/test-classes" path="fedoradeviation-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/test-classes" path="jaxrs-framework/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/resources"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/java"/>
@@ -61,6 +63,8 @@
 	<classpathentry excluding="**" kind="src" output="aa-rest-impl/target/classes" path="aa-rest-impl/src/main/resources"/>
 	<classpathentry kind="src" output="context-rest-impl/target/classes" path="context-rest-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="context-rest-impl/target/classes" path="context-rest-impl/src/main/resources"/>
+	<classpathentry kind="src" output="fedoradeviation-rest-impl/target/classes" path="fedoradeviation-rest-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="fedoradeviation-rest-impl/target/classes" path="fedoradeviation-rest-impl/src/main/resources"/>
 	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
 	<classpathentry kind="src" output="aspects/target/classes" path="aspects/src/main/java"/>

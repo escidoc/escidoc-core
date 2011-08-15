@@ -51,6 +51,8 @@
         <module>content-relation-rest-impl</module>
         <module>context-rest-spec</module>
         <module>context-rest-impl</module>
+        <module>fedoradeviation-rest-spec</module>
+        <module>fedoradeviation-rest-impl</module>
         <module>index-service-spec</module>
         <module>index-service-impl</module>
         <module>statistic-service-spec</module>
@@ -2189,6 +2191,16 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>sm-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>fedoradeviation-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>fedoradeviation-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
