@@ -370,8 +370,8 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 
     <bean id="openidLogoutFilter"  
         class="org.springframework.security.web.authentication.logout.LogoutFilter">  
-        <constructor-arg value="/aa/login/openid/openidlogin.jsp" />  
         <!-- URL redirected to after logout -->  
+        <constructor-arg value="/aa/login/openid/openidlogin.jsp" />  
         <constructor-arg>  
             <list>                      
                 <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />  
