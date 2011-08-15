@@ -22,10 +22,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="role_grant"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -40,11 +36,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -61,9 +52,6 @@
                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="user_id"
-            length="255"
         </meta>    
     </property>
 
@@ -79,9 +67,6 @@
                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="group_id"
-            length="255"
         </meta>    
     </property>
 
@@ -97,9 +82,6 @@
                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="role_id"
-            length="255"
         </meta>    
     </property>
 
@@ -113,9 +95,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="object_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -128,9 +107,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="object_title"
-            length="255"
         </meta>    
     </property>
     <property
@@ -143,9 +119,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="object_href"
-            length="255"
         </meta>    
     </property>
     <property
@@ -158,9 +131,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="grant_remark"
-            length="255"
         </meta>    
     </property>
 
@@ -176,9 +146,6 @@
                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="creator_id"
-            length="255"
         </meta>    
     </property>
 
@@ -192,9 +159,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="creation_date"
-            length="29"
         </meta>    
     </property>
 
@@ -210,9 +174,6 @@
                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="revoker_id"
-            length="255"
         </meta>    
     </property>
 
@@ -226,9 +187,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="revocation_date"
-            length="29"
         </meta>    
     </property>
     <property
@@ -241,9 +199,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="revocation_remark"
-            length="255"
         </meta>    
     </property>
     <property
@@ -256,9 +211,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="granted_from"
-            length="29"
         </meta>    
     </property>
     <property
@@ -271,9 +223,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="granted_to"
-            length="29"
         </meta>    
     </property>
 
@@ -289,9 +238,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="role_id"         
         </meta>
         <column name="role_id" />
     </many-to-one>
@@ -304,8 +250,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="revoker_id"         
         </meta>
         <column name="revoker_id" />
     </many-to-one>
@@ -318,8 +262,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="user_id"         
         </meta>
         <column name="user_id" />
     </many-to-one>
@@ -332,8 +274,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="creator_id"         
         </meta>
         <column name="creator_id" />
     </many-to-one>
@@ -346,8 +286,6 @@
 				de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="group_id"         
         </meta>
         <column name="group_id" />
     </many-to-one>

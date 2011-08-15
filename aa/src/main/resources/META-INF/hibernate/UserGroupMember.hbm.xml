@@ -15,10 +15,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="user_group_member"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -33,11 +29,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -53,10 +44,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -70,10 +57,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="type"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -87,10 +70,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="value"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
 
@@ -103,9 +82,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="user_group_id"
         </meta>
         <column name="user_group_id" />
     </many-to-one>

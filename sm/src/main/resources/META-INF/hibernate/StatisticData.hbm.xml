@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="statistic_data"
-       @hibernate.mapping
-        schema="sm"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="uuid"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="uuid" />
     </id>
@@ -51,10 +42,6 @@
         length="2147483647"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="xml_data"
-            length="2147483647"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -65,10 +52,6 @@
         length="29"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="timemarker"
-            length="29"
-            not-null="true"
         </meta>    
     </property>
 
@@ -81,9 +64,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="scope_id"         
         </meta>
         <column name="scope_id" />
     </many-to-one>

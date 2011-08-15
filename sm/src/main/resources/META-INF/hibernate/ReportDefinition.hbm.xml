@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="report_definitions"
-       @hibernate.mapping
-        schema="sm"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -51,10 +42,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -65,10 +52,6 @@
         length="2147483647"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="sql"
-            length="2147483647"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -78,9 +61,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="creator_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -90,9 +70,6 @@
         length="29"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="creation_date"
-            length="29"
         </meta>    
     </property>
     <property
@@ -102,9 +79,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="modified_by_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -114,9 +88,6 @@
         length="29"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="last_modification_date"
-            length="29"
         </meta>    
     </property>
 
@@ -129,9 +100,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="scope_id"         
         </meta>
         <column name="scope_id" />
     </many-to-one>
@@ -145,17 +113,6 @@
 
     >
         <meta attribute="field-description">
-           @hibernate.set
-            lazy="true"
-            inverse="false"
-            cascade="all"
-
-           @hibernate.collection-key
-            column="report_definition_id"
-
-
-           @hibernate.collection-one-to-many
-            class="de.escidoc.core.sm.business.persistence.hibernate.ReportDefinitionRole"
         </meta>
         <key>
             <column name="report_definition_id" />

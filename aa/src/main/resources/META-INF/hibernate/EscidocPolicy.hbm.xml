@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="escidoc_policies"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -50,9 +41,6 @@
         length="2147483647"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="xml"
-            length="2147483647"
         </meta>    
     </property>
 
@@ -65,9 +53,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="role_id"         
         </meta>
         <column name="role_id" />
     </many-to-one>

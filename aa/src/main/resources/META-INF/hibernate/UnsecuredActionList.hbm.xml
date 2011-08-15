@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="unsecured_action_list"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -51,10 +42,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="context_id"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -65,10 +52,6 @@
         length="2147483647"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="action_ids"
-            length="2147483647"
-            not-null="true"
         </meta>    
     </property>
 

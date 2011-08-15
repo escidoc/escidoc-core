@@ -39,10 +39,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="report_definition_roles"
-       @hibernate.mapping
-        schema="sm"
     </meta>
 
     <cache usage="read-write" />
@@ -54,11 +50,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -71,10 +62,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="role_id"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -85,10 +72,6 @@
         length="2"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="list_index"
-            length="2"
-            not-null="true"
         </meta>    
     </property>
 
@@ -101,9 +84,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="report_definition_id"         
         </meta>
         <column name="report_definition_id" />
     </many-to-one>

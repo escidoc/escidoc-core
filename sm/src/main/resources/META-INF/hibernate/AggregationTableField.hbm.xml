@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="aggregation_table_fields"
-       @hibernate.mapping
-        schema="sm"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -51,10 +42,6 @@
         length="2"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="field_type_id"
-            length="2"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -65,10 +52,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -78,9 +61,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="feed"
-            length="255"
         </meta>    
     </property>
     <property
@@ -90,9 +70,6 @@
         length="2147483647"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="xpath"
-            length="2147483647"
         </meta>    
     </property>
     <property
@@ -102,9 +79,6 @@
         length="10"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="data_type"
-            length="10"
         </meta>    
     </property>
     <property
@@ -114,9 +88,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="reduce_to"
-            length="255"
         </meta>    
     </property>
     <property
@@ -127,10 +98,6 @@
         length="2"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="list_index"
-            length="2"
-            not-null="true"
         </meta>    
     </property>
 
@@ -143,9 +110,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="aggregation_table_id"         
         </meta>
         <column name="aggregation_table_id" />
     </many-to-one>

@@ -42,10 +42,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="invocation_mappings"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -60,11 +56,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -80,10 +71,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="attribute_id"
-            length="2147483647"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -97,10 +84,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="path"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -114,10 +97,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="position"
-            length="2"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -131,10 +110,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="attribute_type"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -148,10 +123,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="mapping_type"
-            length="2"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -165,10 +136,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="multi_value"
-            length="1"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -181,9 +148,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="value"
-            length="100"
         </meta>    
     </property>
 
@@ -199,9 +163,6 @@
 				de.escidoc.core.common.util.security.persistence.InvocationMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="method_mapping"         
         </meta>
         <column name="method_mapping" />
     </many-to-one>

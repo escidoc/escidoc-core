@@ -42,10 +42,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="method_mappings"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -60,11 +56,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -80,10 +71,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="class_name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -97,10 +84,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="method_name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -114,10 +97,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="action_name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -131,10 +110,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="exec_before"
-            length="1"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -148,10 +123,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="single_resource"
-            length="1"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -164,9 +135,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="resource_not_found_exception"
-            length="2147483647"
         </meta>    
     </property>
 
@@ -185,17 +153,6 @@
 				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.set
-            lazy="true"
-            inverse="false"
-            cascade="all,delete-orphan"
-
-           @hibernate.collection-key
-            column="method_mapping"
-
-
-           @hibernate.collection-one-to-many
-            class="de.escidoc.core.common.util.security.persistence.InvocationMapping"
         </meta>
         <key>
             <column name="method_mapping" />

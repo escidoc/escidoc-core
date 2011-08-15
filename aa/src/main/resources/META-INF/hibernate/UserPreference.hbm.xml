@@ -15,10 +15,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="user_preference"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -33,11 +29,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase</meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="uuid"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="uuid" />
     </id>
@@ -46,9 +37,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase</meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            column="id"
-
         </meta>
       <key-property name="user_id" type="string" column="user_id"/>
       <key-property name="name" type="string" column="name"/>
@@ -65,9 +53,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
         </meta>    
     </property>
     
@@ -81,9 +66,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="value"
-            length="255"
         </meta>    
     </property>
     
@@ -98,8 +80,6 @@
 				de.escidoc.core.aa.business.persistence.UserPreferenceBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="user_id"
         </meta>
         <column name="user_id" />
     </many-to-one>

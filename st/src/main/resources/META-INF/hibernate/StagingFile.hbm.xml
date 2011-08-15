@@ -10,10 +10,6 @@
 		<meta attribute="generated-class">
 			de.escidoc.core.st.business.persistence.StagingFile </meta>
 		<meta attribute="class-description" inherit="false">
-			@hibernate.class
-			table="staging_file"
-			@hibernate.mapping
-			schema="st"
 	    </meta>
 
         <cache usage="read-write" />
@@ -22,11 +18,6 @@
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>
 			<meta attribute="field-description">
-				@hibernate.id
-				generator-class="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator"
-				type="java.lang.String"
-				column="token"
-
     	    </meta>
 			<generator
 				class="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator" />
@@ -37,10 +28,6 @@
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>
 			<meta attribute="field-description">
-				@hibernate.property
-				column="expiry_ts"
-				length="19"
-				not-null="true"
         	</meta>
 		</property>
 
@@ -49,9 +36,6 @@
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>
 			<meta attribute="field-description">
-				@hibernate.property
-				column="reference"
-				length="2147483647"
         	</meta>
 		</property>
 
@@ -60,9 +44,6 @@
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>
 			<meta attribute="field-description">
-				@hibernate.property
-				column="mime_type"
-				length="255"
         	</meta>
 		</property>
 
@@ -71,10 +52,6 @@
 			<meta attribute="generated-class">
 				de.escidoc.core.st.business.persistence.StagingFile </meta>
 			<meta attribute="field-description">
-				@hibernate.property
-				column="upload"
-				length="1"
-				not-null="true"
         	</meta>
 		</property>
 

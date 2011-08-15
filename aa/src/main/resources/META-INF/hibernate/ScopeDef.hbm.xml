@@ -22,10 +22,6 @@
 				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="scope_def"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -40,11 +36,6 @@
 				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -60,10 +51,6 @@
 				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="object_type"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -76,9 +63,6 @@
 				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="attribute_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -91,9 +75,6 @@
                 de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="attribute_object_type"
-            length="255"
         </meta>    
     </property>
 
@@ -109,9 +90,6 @@
 				de.escidoc.core.aa.business.persistence.ScopeDefBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="role_id"         
         </meta>
         <column name="role_id" />
     </many-to-one>

@@ -19,10 +19,6 @@
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
-       @hibernate.class
-        table="user_login_data"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -34,11 +30,6 @@
     >
     
         <meta attribute="field-description">
-           @hibernate.id
-            generator-class="uuid"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="uuid" />
     </id>
@@ -51,10 +42,6 @@
         length="255"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="handle"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -65,10 +52,6 @@
         length="19"
     >
         <meta attribute="field-description">
-           @hibernate.property
-            column="expiryts"
-            length="19"
-            not-null="true"
         </meta>    
     </property>
 
@@ -81,9 +64,6 @@
         not-null="true"
     >
         <meta attribute="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="user_id"         
         </meta>
         <column name="user_id" />
     </many-to-one>

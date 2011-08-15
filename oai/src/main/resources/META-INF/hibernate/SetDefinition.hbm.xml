@@ -16,10 +16,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="set_definition"
-       @hibernate.mapping
-        schema="oai"
     </meta>
 
     <cache usage="read-write" />
@@ -34,14 +30,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
-           @hibernate.generator-param
-	        name="sequence"
-	        value=""
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator">
             <param name="sequence"></param>
@@ -60,11 +48,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="specification"
-            unique="true"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -78,10 +61,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -95,10 +74,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="query"
-            length="2147483647"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -111,10 +86,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="description"
-            length="2147483647"
-            not-null="false"
         </meta>    
     </property>
     <property
@@ -127,9 +98,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="creator_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -142,9 +110,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="creator_title"
-            length="255"
         </meta>    
     </property>
     <property
@@ -157,9 +122,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="creation_date"
-            length="29"
         </meta>    
     </property>
     <property
@@ -172,9 +134,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="modified_by_id"
-            length="255"
         </meta>    
     </property>
     <property
@@ -187,9 +146,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="modified_by_title"
-            length="255"
         </meta>    
     </property>
     <property
@@ -202,9 +158,6 @@
 				de.escidoc.core.oai.business.persistence.SetDefinitionBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="last_modification_date"
-            length="29"
         </meta>    
     </property>
 

@@ -15,10 +15,6 @@
 				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="user_attribute"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -33,11 +29,6 @@
 				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -51,10 +42,7 @@
         <meta attribute="generated-class">
 				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
 				<meta attribute
-			="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
+			="field-description">"
         </meta>    
     </property>
     
@@ -68,9 +56,6 @@
 				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="value"
-            length="255"
         </meta>    
     </property>
     
@@ -84,9 +69,6 @@
                 de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
                 <meta attribute
             ="field-description">
-           @hibernate.property
-            column="internal"
-            length="1"
         </meta>    
     </property>
     <!-- Associations -->
@@ -100,8 +82,6 @@
 				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
 				<meta attribute
 			="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="user_id"
         </meta>
         <column name="user_id" />
     </many-to-one>

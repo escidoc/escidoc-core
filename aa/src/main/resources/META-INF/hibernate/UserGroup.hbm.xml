@@ -15,10 +15,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="class-description" inherit="false">
-       @hibernate.class
-        table="user_group"
-       @hibernate.mapping
-        schema="aa"
     </meta>
 
     <cache usage="read-write" />
@@ -33,11 +29,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.id
-            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
-            type="java.lang.String"
-            column="id"
-
         </meta>
         <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
     </id>
@@ -54,11 +45,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.property
-            column="label"
-            unique="true"
-            length="255"
-            not-null="true"
         </meta>
     </property>
     <property
@@ -71,9 +57,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="active"
-            length="1"
         </meta>    
     </property>
     <property
@@ -87,10 +70,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="name"
-            length="255"
-            not-null="true"
         </meta>    
     </property>
     <property
@@ -103,9 +82,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.property
-            column="description"
-            length="2147483647"
         </meta>
     </property>
     <property
@@ -118,9 +94,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.property
-            column="type"
-            length="2147483647"
         </meta>
     </property>
     <property
@@ -133,9 +106,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.property
-            column="email"
-            length="2147483647"
         </meta>
     </property>
     <property
@@ -148,9 +118,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="creation_date"
-            length="29"
         </meta>    
     </property>
     <property
@@ -163,9 +130,6 @@
 				de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
 				<meta attribute
 			="field-description">
-           @hibernate.property
-            column="last_modification_date"
-            length="29"
         </meta>    
     </property>
 
@@ -180,17 +144,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupMemberBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.set
-            inverse="true"
-            lazy="true"
-            cascade="save-update,delete,delete-orphan"
- 
-           @hibernate.collection-key
-            column="user_group_id"
- 
- 
-           @hibernate.collection-one-to-many
-            class="de.escidoc.core.aa.business.persistence.UserGroupMember"
         </meta>
         <key>
             <column name="user_group_id" />
@@ -210,17 +163,6 @@
                                 de.escidoc.core.aa.business.persistence.RoleGrantBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.set
-            lazy="true"
-            inverse="false"
-            cascade="all,delete-orphan"
- 
-           @hibernate.collection-key
-            column="group_id"
- 
- 
-           @hibernate.collection-one-to-many
-            class="de.escidoc.core.aa.business.persistence.RoleGrant"
         </meta>
         <key>
             <column name="group_id" />
@@ -239,9 +181,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.many-to-one
-            not-null="true"
-           @hibernate.column name="modified_by_id"
         </meta>
         <column name="modified_by_id" />
     </many-to-one>
@@ -254,8 +193,6 @@
                                 de.escidoc.core.aa.business.persistence.UserGroupBase </meta>
                                 <meta attribute
                         ="field-description">
-           @hibernate.many-to-one
-           @hibernate.column name="creator_id"
         </meta>
         <column name="creator_id" />
     </many-to-one>
