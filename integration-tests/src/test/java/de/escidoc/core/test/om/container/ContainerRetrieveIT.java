@@ -178,7 +178,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         List<String> mlMembersList = getMemberListMembers(memberListXml);
 
         assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList,
-            getStructMapMembers(this.theContainerId));
+            getStructMapMembers(retrieve(this.theContainerId)));
         assertXmlValidSrwResponse(memberListXml);
 
         // check retrieveMembers method with version suffix (first version)
