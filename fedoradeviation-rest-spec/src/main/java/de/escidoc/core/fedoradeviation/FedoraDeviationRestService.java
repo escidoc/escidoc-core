@@ -31,14 +31,14 @@ public interface FedoraDeviationRestService {
      */
     @GET
     @Path("/objects/{id}/export")
-    String export(@PathParam("id") String id, final Map<String, String[]> parameters) throws SystemException;
+    String export(@PathParam("id") String id, Map<String, String[]> parameters) throws SystemException;
 
     /**
      * FIXME Map
      */
     @GET
     @Path("/objects/{id}/datastreams/{ds-id}/content")
-    EscidocBinaryContent getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId, final Map<String, String[]> parameters)
+    EscidocBinaryContent getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId, Map<String, String[]> parameters)
         throws SystemException;
 
     @GET

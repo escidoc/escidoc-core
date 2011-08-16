@@ -63,7 +63,7 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#export(java.lang.String, java.util.Map)
      */
     @Override
-    public String export(String id, Map<String, String[]> parameters) throws SystemException {
+    public String export(final String id, final Map<String, String[]> parameters) throws SystemException {
         return fedoraRestDeviationHandler.export(id, parameters);
     }
 
@@ -71,7 +71,7 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getDatastreamDissemination(java.lang.String, java.lang.String, java.util.Map)
      */
     @Override
-    public EscidocBinaryContent getDatastreamDissemination(String id, String dsId, Map<String, String[]> parameters)
+    public EscidocBinaryContent getDatastreamDissemination(final String id, final String dsId, final Map<String, String[]> parameters)
         throws SystemException {
         return fedoraRestDeviationHandler.getDatastreamDissemination(id, dsId, parameters);
     }
@@ -80,7 +80,7 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getFedoraDescription(java.util.Map)
      */
     @Override
-    public String getFedoraDescription(Map<String, String[]> parameters) throws Exception {
+    public String getFedoraDescription(final Map<String, String[]> parameters) throws Exception {
         return fedoraDescribeDeviationHandler.getFedoraDescription(parameters);
     }
 

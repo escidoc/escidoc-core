@@ -63,7 +63,7 @@ public class ScopeRestServiceImpl implements ScopeRestService {
      * @see de.escidoc.core.sm.ScopeRestService#create(org.escidoc.core.domain.sm.ScopeTO)
      */
     @Override
-    public ScopeTO create(ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
+    public ScopeTO create(final ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
         XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, SystemException {
         return ServiceUtility.fromXML(ScopeTO.class, this.scopeHandler.create(ServiceUtility.toXML(scopeTO)));
     }

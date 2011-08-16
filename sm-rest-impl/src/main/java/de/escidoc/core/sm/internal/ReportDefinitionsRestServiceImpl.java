@@ -63,7 +63,7 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
      * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(java.util.Map)
      */
     @Override
-    public ReportDefinitionListTO retrieveReportDefinitions(Map<String, String[]> filter)
+    public ReportDefinitionListTO retrieveReportDefinitions(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(filter));

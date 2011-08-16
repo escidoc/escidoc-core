@@ -60,7 +60,7 @@ public class StatisticDataRestServiceImpl implements StatisticDataRestService {
      * @see de.escidoc.core.sm.StatisticDataRestService#create(org.escidoc.core.domain.sm.StatisticDataTO)
      */
     @Override
-    public void create(StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
+    public void create(final StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException {
         this.statisticDataHandler.create(ServiceUtility.toXML(statisticDataTO));
     }

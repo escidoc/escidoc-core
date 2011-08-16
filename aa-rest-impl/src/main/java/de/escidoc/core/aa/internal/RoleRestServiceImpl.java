@@ -68,7 +68,7 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#create(org.escidoc.core.domain.aa.RoleTO)
      */
     @Override
-    public RoleTO create(RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
+    public RoleTO create(final RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
         return ServiceUtility.fromXML(RoleTO.class, this.roleHandler.create(ServiceUtility.toXML(roleTo)));
@@ -78,7 +78,7 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(String id) throws AuthenticationException, AuthorizationException,
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException, SystemException {
         this.roleHandler.delete(id);
     }
@@ -87,7 +87,7 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#retrieve(java.lang.String)
      */
     @Override
-    public RoleTO retrieve(String id) throws RoleNotFoundException, MissingMethodParameterException,
+    public RoleTO retrieve(final String id) throws RoleNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         return ServiceUtility.fromXML(RoleTO.class, this.roleHandler.retrieve(id));
     }
@@ -96,7 +96,7 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#update(java.lang.String, org.escidoc.core.domain.aa.RoleTO)
      */
     @Override
-    public RoleTO update(String id, RoleTO roleTo) throws RoleNotFoundException, XmlCorruptedException,
+    public RoleTO update(final String id, final RoleTO roleTo) throws RoleNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
@@ -107,7 +107,7 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#retrieveResources(java.lang.String)
      */
     @Override
-    public RoleResourcesTO retrieveResources(String id) throws AuthenticationException, AuthorizationException,
+    public RoleResourcesTO retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, SystemException {
         return ServiceUtility.fromXML(RoleResourcesTO.class, this.roleHandler.retrieveResources(id));
     }

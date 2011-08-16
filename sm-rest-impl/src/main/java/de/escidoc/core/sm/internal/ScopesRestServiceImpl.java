@@ -63,7 +63,7 @@ public class ScopesRestServiceImpl implements ScopesRestService {
      * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(java.util.Map)
      */
     @Override
-    public ScopeListTO retrieveScopes(Map<String, String[]> parameters) throws InvalidSearchQueryException,
+    public ScopeListTO retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         return ServiceUtility.fromXML(ScopeListTO.class, this.scopeHandler.retrieveScopes(parameters));
     }

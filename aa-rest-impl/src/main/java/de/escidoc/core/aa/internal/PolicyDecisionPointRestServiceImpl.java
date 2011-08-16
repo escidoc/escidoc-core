@@ -64,7 +64,7 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
      * @see de.escidoc.core.aa.PolicyDecisionPointRestService#evaluate(org.escidoc.core.domain.aa.PdpRequestsTO)
      */
     @Override
-    public PdpResultsTO evaluate(PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
+    public PdpResultsTO evaluate(final PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
         return ServiceUtility.fromXML(PdpResultsTO.class, this.policyDecisionPoint.evaluate(ServiceUtility.toXML(pdpRequestsTO)));

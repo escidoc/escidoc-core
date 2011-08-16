@@ -62,7 +62,7 @@ public class PreprocessingRestServiceImpl implements PreprocessingRestService {
      * @see de.escidoc.core.sm.PreprocessingRestService#preprocess(java.lang.String, org.escidoc.core.domain.sm.PreprocessingInformationTO)
      */
     @Override
-    public void preprocess(String id, PreprocessingInformationTO preprocessingInformationTO)
+    public void preprocess(final String id, final PreprocessingInformationTO preprocessingInformationTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, SystemException {
         this.preprocessingHandler.preprocess(id, ServiceUtility.toXML(preprocessingInformationTO));

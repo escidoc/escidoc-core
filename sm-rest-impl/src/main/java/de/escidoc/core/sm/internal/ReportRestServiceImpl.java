@@ -65,7 +65,7 @@ public class ReportRestServiceImpl implements ReportRestService {
      * @see de.escidoc.core.sm.ReportRestService#retrieve(org.escidoc.core.domain.sm.ReportParametersTO)
      */
     @Override
-    public ReportTO retrieve(ReportParametersTO reportParametersTO) throws AuthenticationException,
+    public ReportTO retrieve(final ReportParametersTO reportParametersTO) throws AuthenticationException,
         AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, InvalidSqlException, SystemException {
         return ServiceUtility.fromXML(ReportTO.class, this.reportHandler.retrieve(ServiceUtility.toXML(reportParametersTO)));

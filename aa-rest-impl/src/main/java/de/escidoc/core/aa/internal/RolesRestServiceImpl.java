@@ -63,7 +63,7 @@ public class RolesRestServiceImpl implements RolesRestService {
      * @see de.escidoc.core.aa.RolesRestService#retrieveRoles(java.util.Map)
      */
     @Override
-    public RoleListTO retrieveRoles(Map<String, String[]> filter) throws MissingMethodParameterException,
+    public RoleListTO retrieveRoles(final Map<String, String[]> filter) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
         return ServiceUtility.fromXML(RoleListTO.class, this.roleHandler.retrieveRoles(filter));
     }

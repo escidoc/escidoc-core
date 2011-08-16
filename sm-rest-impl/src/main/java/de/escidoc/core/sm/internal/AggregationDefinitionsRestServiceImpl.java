@@ -63,7 +63,7 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
      * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(java.util.Map)
      */
     @Override
-    public AggregationDefinitionListTO retrieveAggregationDefinitions(Map<String, String[]> parameters)
+    public AggregationDefinitionListTO retrieveAggregationDefinitions(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
         return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(parameters));

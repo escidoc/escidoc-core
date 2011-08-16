@@ -66,7 +66,7 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
      * @see de.escidoc.core.sm.ReportDefinitionRestService#create(org.escidoc.core.domain.sm.ReportDefinitionTO)
      */
     @Override
-    public ReportDefinitionTO create(ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
+    public ReportDefinitionTO create(final ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
         InvalidSqlException, ScopeNotFoundException, ScopeContextViolationException, SystemException {
         return ServiceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.create(ServiceUtility.toXML(reportDefinitionTO)));
@@ -76,7 +76,7 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
      * @see de.escidoc.core.sm.ReportDefinitionRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(String id) throws AuthenticationException, AuthorizationException,
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         this.reportDefinitionHandler.delete(id);
     }
@@ -85,7 +85,7 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
      * @see de.escidoc.core.sm.ReportDefinitionRestService#retrieve(java.lang.String)
      */
     @Override
-    public ReportDefinitionTO retrieve(String id) throws AuthenticationException, AuthorizationException,
+    public ReportDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         return ServiceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.retrieve(id));
     }
@@ -94,7 +94,7 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
      * @see de.escidoc.core.sm.ReportDefinitionRestService#update(java.lang.String, org.escidoc.core.domain.sm.ReportDefinitionTO)
      */
     @Override
-    public ReportDefinitionTO update(String id, ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
+    public ReportDefinitionTO update(final String id, final ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
         AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
         ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException {

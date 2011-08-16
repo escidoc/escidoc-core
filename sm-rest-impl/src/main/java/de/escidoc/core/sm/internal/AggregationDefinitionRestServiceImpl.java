@@ -64,7 +64,7 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
      * @see de.escidoc.core.sm.AggregationDefinitionRestService#create(org.escidoc.core.domain.sm.AggregationDefinitionTO)
      */
     @Override
-    public AggregationDefinitionTO create(AggregationDefinitionTO aggregationDefinitionTO)
+    public AggregationDefinitionTO create(final AggregationDefinitionTO aggregationDefinitionTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, ScopeNotFoundException, SystemException {
         return ServiceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.create(ServiceUtility.toXML(aggregationDefinitionTO)));
@@ -74,7 +74,7 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
      * @see de.escidoc.core.sm.AggregationDefinitionRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(String id) throws AuthenticationException, AuthorizationException,
+    public void delete(final String id) throws AuthenticationException, AuthorizationException,
         AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         this.aggregationDefinitionHandler.delete(id);
     }
@@ -83,7 +83,7 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
      * @see de.escidoc.core.sm.AggregationDefinitionRestService#retrieve(java.lang.String)
      */
     @Override
-    public AggregationDefinitionTO retrieve(String id) throws AuthenticationException, AuthorizationException,
+    public AggregationDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
         return ServiceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.retrieve(id));
     }
