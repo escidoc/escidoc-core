@@ -34,6 +34,7 @@ import de.escidoc.core.aa.business.filter.UserAccountFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.interfaces.UserLoginService;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
@@ -90,6 +91,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.EscidocUserDetails;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
@@ -175,6 +177,9 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Autowired
     @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface dao;
+
+    @Autowired
+    private UserLoginService userLoginService;
 
     @Autowired
     @Qualifier("persistence.UserGroupDao")
@@ -1152,25 +1157,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @param userId userId
-     * @return List of userHandles
-     * @throws UserAccountNotFoundException e
-     * @see UserAccountHandlerInterface #retrieveUserHandles(java.lang.String)
-     */
-    @Override
-    public List<UserLoginData> retrieveUserHandles(final String userId) throws UserAccountNotFoundException,
-        SqlDatabaseSystemException {
-
-        final List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
-        if (ret == null || ret.isEmpty()) {
-            assertUserAccount(userId, dao.retrieveUserAccountById(userId));
-        }
-        return ret;
-    }
-
-    /**
-     * See Interface for functional description.
-     *
      * @param filter userAccountFilter
      * @return list of filtered user-accounts
      * @throws InvalidSearchQueryException e
@@ -1480,17 +1466,25 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
     @Override
     public UserDetails retrieveUserDetails(final String handle) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, UserAccountNotFoundException, SqlDatabaseSystemException {
-        final UserDetails ret = dao.retrieveUserDetails(handle);
+        EscidocUserDetails result = null;
+        if (handle != null) {
+            final UserAccount userAccount = userLoginService.getUserAccountByHandle(handle);
+            if (userAccount != null) {
+                result = new EscidocUserDetails();
+                result.setId(userAccount.getId());
+                result.setRealName(userAccount.getName());
+            }
+        }
         // FIXME: use this as the authentication service?
         // In this case, additional values have to be set in the user details
         // and in case of user not found an authentication exception has to be
         // thrown.?
 
-        if (ret == null) {
+        if (result == null) {
             throw new UserAccountNotFoundException(StringUtility.format("User not authenticated by provided handle",
                 handle));
         }
-        return ret;
+        return result;
     }
 
     /**

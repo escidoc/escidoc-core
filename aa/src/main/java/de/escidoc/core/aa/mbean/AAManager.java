@@ -65,14 +65,6 @@ public class AAManager {
     }
 
     /**
-     * Cleans up the eSciDoc user handles.<br> This delegates to {@link UserHandleCleaner}.cleanUp.
-     */
-    @ManagedOperation(description = "Clean up the eSciDoc user handles that have been expired.")
-    public void cleanUpUserHandles() {
-        this.userHandleCleaner.cleanUp();
-    }
-
-    /**
      * Removes all objects stored in the PoliciesCache.<br>
      */
     @ManagedOperation(description = "remove everything from the PoliciesCache.")

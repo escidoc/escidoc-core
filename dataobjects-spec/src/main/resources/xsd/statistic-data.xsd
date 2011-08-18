@@ -7,7 +7,7 @@
 				<para>
 					The xml-record consists of a list of
 					parameter-elements that have a mandatory attribute
-					‘name’. Child of the parameter-element can be one of
+					'name'. Child of the parameter-element can be one of
 					&lt;datevalue&gt;(type xsd:date),
 					&lt;stringvalue&gt;(type xsd:string) or
 					&lt;decimalvalue&gt;(type xsd:decimal). This

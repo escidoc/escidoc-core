@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.aa.business;
 
+import de.escidoc.core.aa.business.interfaces.UserLoginService;
 import de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
@@ -56,6 +57,11 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     @Qualifier("persistence.UserAccountDao")
     private UserAccountDaoInterface dao;
 
+    SecurityHelper securityHelper;
+
+    @Autowired
+    private UserLoginService userLoginService;
+
     /**
      * The time span during that the eSciDoc user handle is valid (in milli seconds).
      */
@@ -65,16 +71,6 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * Protected constructor to prevent instantiation outside of the Spring-context.
      */
     protected UserManagementWrapper() {
-    }
-
-    /**
-     * Setter for the dao.
-     *
-     * @param dao The data access object.
-     */
-    public void setDao(final UserAccountDaoInterface dao) {
-
-        this.dao = dao;
     }
 
     /**
@@ -93,7 +89,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
         if (handle == null) {
             throw new WebserverSystemException(ERROR_MSG_LOGOUT_HANDLE_NULL);
         }
-        dao.deleteUserLoginData(handle);
+        this.userLoginService.logoutUser(handle);
     }
 
     /**
@@ -104,16 +100,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     @Override
     public void initHandleExpiryTimestamp(final String handle) throws SqlDatabaseSystemException,
         WebserverSystemException {
-        final UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
-        final long expiryts = System.currentTimeMillis() + getESciDocUserHandleLifetime();
-        if (userLoginData.getExpiryts() < expiryts) {
-            if (userLoginData.getExpiryts() < System.currentTimeMillis()) {
-                throw new WebserverSystemException("Handle-expiry-timestamp cannot get "
-                    + "reinitialized on expired handles");
-            }
-            userLoginData.setExpiryts(expiryts);
-            dao.saveOrUpdate(userLoginData);
-        }
+        this.userLoginService.getUserAccountByHandle(handle);
     }
 
     /**

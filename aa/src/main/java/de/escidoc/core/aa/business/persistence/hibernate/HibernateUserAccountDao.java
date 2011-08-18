@@ -972,74 +972,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
     }
 
     /**
-     * See Interface for functional description.
-     *
-     * @see UserAccountDaoInterface #retrieveUserDetails(java.lang.String)
-     */
-    @Override
-    public UserDetails retrieveUserDetails(final String handle) throws SqlDatabaseSystemException {
-
-        EscidocUserDetails result = null;
-        if (handle != null) {
-            result = (EscidocUserDetails) securityHelper.getUserDetails(handle);
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see UserAccountDaoInterface #saveOrUpdate(de.escidoc.core.aa.business.persistence.UserLoginData)
-     */
-    @Override
-    public void saveOrUpdate(final UserLoginData data) throws SqlDatabaseSystemException {
-        // remove UserDetails from Cache
-        securityHelper.clearUserDetails(data.getHandle());
-        super.saveOrUpdate(data);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see UserAccountDaoInterface #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
-     */
-    @Override
-    public void delete(final UserLoginData data) throws SqlDatabaseSystemException {
-        // remove UserData from Cache
-        securityHelper.clearUserDetails(data.getHandle());
-        super.delete(data);
-    }
-
-    /**
-     * See Interface for functional description.
-     */
-    @Override
-    public void deleteUserLoginData(final String handle) throws SqlDatabaseSystemException {
-        // remove UserData from Cache
-        securityHelper.clearUserDetails(handle);
-        super.delete(retrieveUserLoginDataByHandle(handle));
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @see UserAccountDaoInterface #retrieveExpiredUserLoginData(long)
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<UserLoginData> retrieveExpiredUserLoginData(final long timestamp) throws SqlDatabaseSystemException {
-
-        final DetachedCriteria criteria = DetachedCriteria.forClass(UserLoginData.class);
-        criteria.add(Restrictions.lt("expiryts", timestamp));
-        try {
-            return getHibernateTemplate().findByCriteria(criteria);
-        }
-        catch (final DataAccessException e) {
-            throw new SqlDatabaseSystemException(e);
-        }
-    }
-
-    /**
      * Checks if the provided {@link UserLoginData} objects are expired. The expired objects are removed from the
      * storage.
      *
@@ -1074,11 +1006,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao implements Use
      * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
      */
     private UserLoginData checkUserLoginData(final UserLoginData data) throws SqlDatabaseSystemException {
-
         UserLoginData result = data;
         if (result != null && isExpired(result)) {
-            delete(result);
-            securityHelper.clearUserDetails(data.getHandle());
             result = null;
         }
         return result;
