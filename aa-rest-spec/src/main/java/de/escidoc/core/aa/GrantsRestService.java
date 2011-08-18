@@ -3,14 +3,14 @@
  */
 package de.escidoc.core.aa;
 
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import org.escidoc.core.domain.aa.GrantListTO;
+import org.escidoc.core.domain.parameters.SruSearchRequestParametersTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -33,7 +33,7 @@ public interface GrantsRestService {
      * FIXME Map
      */
     @GET
-    GrantListTO retrieveGrants(Map<String, String[]> filter) throws MissingMethodParameterException,
+    GrantListTO retrieveGrants(@QueryParam("") SruSearchRequestParametersTO filter) throws MissingMethodParameterException,
     InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException;
 
 }
