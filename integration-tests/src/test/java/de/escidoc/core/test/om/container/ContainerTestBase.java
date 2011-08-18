@@ -706,4 +706,17 @@ public class ContainerTestBase extends OmTestBase {
         }
     }
 
+    /**
+     * Compares if the object is contained in given list.
+     * <p/>
+     *
+     * @param msg  Message for the exception.
+     * @param arg0 List one.
+     * @param arg1 List two.
+     */
+    public void assertListContains(final String msg, final List<String> arg0, final String arg1) {
+        if (!arg0.contains(arg1)) {
+            fail(msg);
+        }
+    }
 }

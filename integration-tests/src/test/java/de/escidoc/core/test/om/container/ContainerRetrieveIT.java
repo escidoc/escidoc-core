@@ -164,40 +164,113 @@ public class ContainerRetrieveIT extends ContainerTestBase {
     public void testOM_RFLMC_1_2() throws Exception {
 
         Document containerDoc = EscidocAbstractTest.getDocument(this.theContainerXml);
-        String versionNumber =
-            selectSingleNode(containerDoc, "/container/properties/version/number/text()").getNodeValue();
 
-        List<String> smMembersList = getStructMapMembers(this.theContainerXml);
+        List<String> smMembersList = getStructMapMembers(retrieve(this.theContainerId));
+        List<String> mlMembersList =
+            getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
+        assertEquals(1, smMembersList.size());
+        assertEquals(1, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
 
         // create a second version
+        String secondContainerId =
+            getObjidValue(create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest/",
+                "create_container.xml")));
         addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
-            + "\" >\n<id>" + createItem() + "</id>\n</param>");
+            + "\" >\n<id>" + secondContainerId + "</id>\n</param>");
 
-        // check retrieveMembers method (latest version)
-        String memberListXml = retrieveMembers(this.theContainerId, new HashMap<String, String[]>());
-        List<String> mlMembersList = getMemberListMembers(memberListXml);
+        String xml = handleXmlResult(retrieve(this.theContainerId));
+        xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
+        update(this.theContainerId, xml);
 
-        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList,
-            getStructMapMembers(retrieve(this.theContainerId)));
-        assertXmlValidSrwResponse(memberListXml);
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId));
+        mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
+        assertEquals(2, smMembersList.size());
+        assertEquals(2, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", smMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", mlMembersList,
+            "/ir/container/" + secondContainerId);
+
+        // create a third version
+        String secondItemId = createItem();
+        addMembers(theContainerId, "<param last-modification-date=\""
+            + getLastModificationDateValue(EscidocAbstractTest
+                .getDocument(handleXmlResult(retrieve(this.theContainerId)))) + "\" >\n<id>" + secondItemId
+            + "</id>\n</param>");
+
+        xml = handleXmlResult(retrieve(this.theContainerId));
+        xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
+        update(this.theContainerId, xml);
+
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId));
+        mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
+        assertEquals(3, smMembersList.size());
+        assertEquals(3, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", smMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + secondItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + secondItemId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", mlMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + secondItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + secondItemId);
 
         // check retrieveMembers method with version suffix (first version)
-        String memberListXmlFirst = retrieveMembers(this.theContainerId + ":1", new HashMap<String, String[]>());
-        List<String> mlMembersListFirst = getMemberListMembers(memberListXmlFirst);
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId + ":1"));
+        mlMembersList =
+            getMemberListMembers(retrieveMembers(this.theContainerId + ":1", new HashMap<String, String[]>()));
+        assertEquals(1, smMembersList.size());
+        assertEquals(1, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
 
-        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersListFirst,
-            smMembersList);
-        assertXmlValidSrwResponse(memberListXmlFirst);
+        // check retrieveMembers method with version suffix (second version)
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId + ":2"));
+        mlMembersList =
+            getMemberListMembers(retrieveMembers(this.theContainerId + ":2", new HashMap<String, String[]>()));
+        assertEquals(2, smMembersList.size());
+        assertEquals(2, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", smMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", mlMembersList,
+            "/ir/container/" + secondContainerId);
 
-        // check retrieveMembers method with version suffix (latest version)
-        String memberListXmlLatest =
-            retrieveMembers(this.theContainerId + ":" + versionNumber, new HashMap<String, String[]>());
-        List<String> mlMembersListLatest = getMemberListMembers(memberListXmlLatest);
-
-        assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersListLatest,
-            getStructMapMembers(this.theContainerId + ":" + versionNumber));
-        assertXmlValidSrwResponse(memberListXmlLatest);
-
+        // check retrieveMembers method with version suffix (third version)
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId + ":3"));
+        mlMembersList =
+            getMemberListMembers(retrieveMembers(this.theContainerId + ":3", new HashMap<String, String[]>()));
+        assertEquals(3, smMembersList.size());
+        assertEquals(3, mlMembersList.size());
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", smMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + secondItemId + " not contained in member list", smMembersList, "/ir/item/"
+            + secondItemId);
+        assertListContains("/ir/item/" + this.theItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + this.theItemId);
+        assertListContains("/ir/container/" + secondContainerId + " not contained in member list", mlMembersList,
+            "/ir/container/" + secondContainerId);
+        assertListContains("/ir/item/" + secondItemId + " not contained in member list", mlMembersList, "/ir/item/"
+            + secondItemId);
     }
 
     /**
