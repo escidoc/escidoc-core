@@ -21,6 +21,7 @@
 package de.escidoc.core.common.business.indexing;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -48,6 +49,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -725,12 +729,19 @@ public class IndexingHandler implements ResourceListener {
             final Properties indexProps = new Properties();
             InputStream propStream = null;
             try {
-                propStream =
-                    IndexingHandler.class.getResourceAsStream('/' + searchPropertiesDirectory + "/index/" + indexName
-                        + "/index.object-types.properties");
+                try {
+                    propStream =
+                        getInputStream('/' + searchPropertiesDirectory + "/index/" + indexName
+                            + "/index.object-types.properties");
+                }
+                catch (IOException e) {
+                    propStream =
+                        IndexingHandler.class.getResourceAsStream('/' + searchPropertiesDirectory + "/index/"
+                            + indexName + "/index.object-types.properties");
+                }
                 if (propStream == null) {
                     throw new SystemException(searchPropertiesDirectory + "/index/" + indexName
-                        + "/index.object-types.properties " + "not found in classpath");
+                        + "/index.object-types.properties " + "not found");
                 }
                 indexProps.load(propStream);
             }
@@ -827,6 +838,26 @@ public class IndexingHandler implements ResourceListener {
             }
         }
         return this.objectTypeParameters;
+    }
+
+    /**
+     * Get an InputStream for the given file.
+     *
+     * @param filename The name of the file.
+     * @return The InputStream or null if the file could not be located.
+     * @throws FileNotFoundException If access to the specified file fails.
+     */
+    private static InputStream getInputStream(final String filename) throws IOException {
+        final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
+        String escidocHome = System.getenv("ESCIDOC_HOME");
+        if (escidocHome == null) {
+            escidocHome = System.getProperty("ESCIDOC_HOME");
+        }
+        final Resource[] resource = applicationContext.getResources("file:///" + escidocHome + "/conf/" + filename);
+        if (resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
+        }
+        return resource[0].getInputStream();
     }
 
 }

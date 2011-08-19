@@ -217,16 +217,15 @@ Search:
 
 Run the fedoragsearch.war and srw.war on a different server (in the following called search-server):
 -both fedoragsearch.war and srw.war must run on the same search-server
--copy the directory containing the configuration below the search-servers config-directory
--make sure that config-directory of search-server is in classpath
- (Tomcat: edit catalina.properties in conf-dir of Tomcat:
-  add ${catalina.home}/conf to property common.loader)
--on the search-server, you can remove the index.object-types.properties-files in the index directories
+-copy the directory containing the configuration in your ESCIDOC_HOME directory. (ie complete directory conf)
+-make sure that ESCIDOC_HOME is set as environment variable.
+-conf-directory has to contain: escidoc-core.properties, complete subdirectory "search".
+-in the search config directory (default:conf/search/config), 
+ you can remove the index.object-types.properties-files in the index directories
 -on the core-framework server you have to keep the search-config-directory-structure and the index.object-types.properties-files,
  you can remove the rest.
--you have to have a file named escidoc-core.properties in the config-directory of the search-server.
  The escidoc-core.properties must contain the following properties:
-    -search.properties.directory (relative to the config directory of the search-server)
+    -search.properties.directory (relative to the config directory of ESCIDOC_HOME)
     -escidoc-core.selfurl (base-url of the escidoc-core framework)
     -gsearch.fedoraPass persistent handle of an system-inspector for access from fedoragsearch to eSciDoc-core framework.
  The escidoc-core.properties may contain:
