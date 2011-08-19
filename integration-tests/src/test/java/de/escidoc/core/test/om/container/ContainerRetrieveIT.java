@@ -182,7 +182,8 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
             + "\" >\n<id>" + secondContainerId + "</id>\n</param>");
 
-        String xml = handleXmlResult(retrieve(this.theContainerId));
+        // create a third version
+        String xml = retrieve(this.theContainerId);
         xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
         update(this.theContainerId, xml);
 
@@ -199,14 +200,14 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         assertListContains("/ir/container/" + secondContainerId + " not contained in member list", mlMembersList,
             "/ir/container/" + secondContainerId);
 
-        // create a third version
+        // create version 4
         String secondItemId = createItem();
         addMembers(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest
-                .getDocument(handleXmlResult(retrieve(this.theContainerId)))) + "\" >\n<id>" + secondItemId
-            + "</id>\n</param>");
+            + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(this.theContainerId)))
+            + "\" >\n<id>" + secondItemId + "</id>\n</param>");
 
-        xml = handleXmlResult(retrieve(this.theContainerId));
+        // create version 5
+        xml = retrieve(this.theContainerId);
         xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
         update(this.theContainerId, xml);
 
@@ -254,9 +255,9 @@ public class ContainerRetrieveIT extends ContainerTestBase {
             "/ir/container/" + secondContainerId);
 
         // check retrieveMembers method with version suffix (third version)
-        smMembersList = getStructMapMembers(retrieve(this.theContainerId + ":3"));
+        smMembersList = getStructMapMembers(retrieve(this.theContainerId + ":4"));
         mlMembersList =
-            getMemberListMembers(retrieveMembers(this.theContainerId + ":3", new HashMap<String, String[]>()));
+            getMemberListMembers(retrieveMembers(this.theContainerId + ":4", new HashMap<String, String[]>()));
         assertEquals(3, smMembersList.size());
         assertEquals(3, mlMembersList.size());
         assertListContains("/ir/item/" + this.theItemId + " not contained in member list", smMembersList, "/ir/item/"
