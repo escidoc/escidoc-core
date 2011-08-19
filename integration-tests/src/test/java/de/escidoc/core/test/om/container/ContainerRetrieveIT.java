@@ -183,10 +183,6 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
             + "\" >\n<id>" + secondContainerId + "</id>\n</param>");
 
-        String xml = handleXmlResult(retrieve(this.theContainerId));
-        xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
-        update(this.theContainerId, xml);
-
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
         assertEquals(2, smMembersList.size());
@@ -206,10 +202,6 @@ public class ContainerRetrieveIT extends ContainerTestBase {
             + getLastModificationDateValue(EscidocAbstractTest
                 .getDocument(handleXmlResult(retrieve(this.theContainerId)))) + "\" >\n<id>" + secondItemId
             + "</id>\n</param>");
-
-        xml = handleXmlResult(retrieve(this.theContainerId));
-        xml = xml.replaceAll("Schindlmayr", "Schindlmayr1");
-        update(this.theContainerId, xml);
 
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
