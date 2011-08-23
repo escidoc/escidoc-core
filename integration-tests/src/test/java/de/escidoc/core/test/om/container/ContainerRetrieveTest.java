@@ -1,5 +1,5 @@
 /*
- * CDDL HEADER START
+x * CDDL HEADER START
  *
  * The contents of this file are subject to the terms of the
  * Common Development and Distribution License, Version 1.0 only
@@ -135,7 +135,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         List<String> mlMembersList = getMemberListMembers(memberListXml);
 
         assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersList,
-            getStructMapMembers(this.theContainerId));
+            getStructMapMembers(retrieve(this.theContainerId)));
         assertXmlValidSrwResponse(memberListXml);
 
         // check retrieveMembers method with version suffix (first version)
@@ -152,7 +152,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         List<String> mlMembersListLatest = getMemberListMembers(memberListXmlLatest);
 
         assertListContentEqual("Member list does not contain the same IDs as struct map.", mlMembersListLatest,
-            getStructMapMembers(this.theContainerId + ":" + versionNumber));
+            getStructMapMembers(retrieve(this.theContainerId + ":" + versionNumber)));
         assertXmlValidSrwResponse(memberListXmlLatest);
     }
 
