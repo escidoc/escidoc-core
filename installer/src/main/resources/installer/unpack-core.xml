@@ -144,6 +144,7 @@
       <param name="target.dir" value="${install.dir}/fedora"/>
     </antcall>
     <move file="${install.dir}/fedora-${timestamp}/data/objects" tofile="${install.dir}/fedora/data/objects" failonerror="false" />
+    <move file="${install.dir}/fedora-${timestamp}/data/datastreams" tofile="${install.dir}/fedora/data/datastreams" failonerror="false" />
     <!-- patch fedora.war by replacing web.xml with customized version -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
     <!-- patch fedora.war by adding the database driver -->
