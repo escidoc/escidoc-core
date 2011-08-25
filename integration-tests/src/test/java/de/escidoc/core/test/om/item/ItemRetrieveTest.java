@@ -46,17 +46,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 @RunWith(value = Parameterized.class)
 public class ItemRetrieveTest extends ItemTestBase {
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public ItemRetrieveTest(final int transport) {
         super(transport);
@@ -64,8 +66,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving item with a component without valid-status. Issue 655.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveItemWithoutComponentValidStatus() throws Exception {
@@ -88,8 +91,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRi1a() throws Exception {
@@ -107,8 +111,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test declining retrieving item with not existing id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRi2a() throws Exception {
@@ -125,8 +130,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test declining retrieving item with wrong id (id refers to another object type).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRi5() throws Exception {
@@ -159,8 +165,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test declining retrieving item (input parameter item id is missing).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMDi3() throws Exception {
@@ -177,8 +184,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test declining retrieving depositor item as anonymous.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveAnonymous() throws Exception {
@@ -206,8 +214,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test declining retrieving depositor item as author.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveAuthor() throws Exception {
@@ -235,8 +244,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test decline retrieving depositor item as other depositor. Issue 608
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveOtherDepositor() throws Exception {
@@ -296,8 +306,9 @@ public class ItemRetrieveTest extends ItemTestBase {
      * Test retrieving Items via eSciDoc filter.
      * <p/>
      * See Bugzilla #586
-     *
-     * @throws Exception Thrown if the retrieved list is invalid.
+     * 
+     * @throws Exception
+     *             Thrown if the retrieved list is invalid.
      */
     @Test
     public void testRetrieveItems() throws Exception {
@@ -312,14 +323,19 @@ public class ItemRetrieveTest extends ItemTestBase {
 
         assertXmlValidSrwResponse(list);
 
-        // assert that the components elements has not empty (or $link etc.)
-        // values
+        // assert that the components elements has not empty (or $link etc.) values
+        int noOfResult =
+            Integer.valueOf(selectSingleNodeAsserted(getDocument(list), "/searchRetrieveResponse/numberOfRecords")
+                .getTextContent());
+        assertTrue("expected more than one result", noOfResult > 0);
+
     }
 
     /**
      * Test successfully retrieving md-record.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveMdRecord() throws Exception {
@@ -328,8 +344,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test decline retrieving md-record without item ID.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithoutItemID() throws Exception {
@@ -345,8 +362,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test decline retrieving md-record with no name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithoutName() throws Exception {
@@ -362,8 +380,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test decline retrieving md-record with empty name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveMdRecordWithEmptyName() throws Exception {
@@ -379,8 +398,9 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Test successfully retrieving md-record with non existing name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveMdRecordNonExistingName() throws Exception {
@@ -401,8 +421,9 @@ public class ItemRetrieveTest extends ItemTestBase {
      * <p/>
      * The tests creates an Item with one Component and uses then on the Item handler the ComponentID with and without
      * version suffix. The framework has to answer with ItemNotFoundException in all cases.
-     *
-     * @throws Exception If framework behavior is not as expected.
+     * 
+     * @throws Exception
+     *             If framework behavior is not as expected.
      */
     @Test
     public void testWrongObjid01() throws Exception {
@@ -439,10 +460,13 @@ public class ItemRetrieveTest extends ItemTestBase {
 
     /**
      * Creates an Item and retrieves the md-record by given name.
-     *
-     * @param resourceId If the retrieve should be done with resource ID.
-     * @param name       The name of the md-record to be retrieved.
-     * @throws Exception If an error occures.
+     * 
+     * @param resourceId
+     *            If the retrieve should be done with resource ID.
+     * @param name
+     *            The name of the md-record to be retrieved.
+     * @throws Exception
+     *             If an error occures.
      */
     private void retrieveMdRecord(final boolean resourceId, final String name) throws Exception {
         String xml =
