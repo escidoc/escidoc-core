@@ -41,7 +41,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.escidoc.core.aa.business.interfaces.UserLoginService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,8 +160,6 @@ public class Login extends HttpServlet {
      */
     private transient UserAccountDaoInterface dao;
 
-    private transient UserLoginService userLoginService;
-
     /**
      * The Policies-Cache object.
      */
@@ -181,7 +178,6 @@ public class Login extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        this.userLoginService = (UserLoginService) this.getServletContext().getAttribute("UserLoginService");
         this.dao = (UserAccountDaoInterface) this.getServletContext().getAttribute("persistence.UserAccountDao");
         this.securityHelper = (SecurityHelper) this.getServletContext().getAttribute("security.SecurityHelper");
         try {
@@ -254,10 +250,16 @@ public class Login extends HttpServlet {
         try {
             if (escidocHandleCookie != null) {
                 final String handle = escidocHandleCookie.getValue();
-                if (StringUtils.isNotEmpty(handle)) {
-                    this.userLoginService.logoutUser(handle);
+                try {
+                    if (StringUtils.isNotEmpty(handle)) {
+                        dao.deleteUserLoginData(handle);
+                    }
+                }
+                catch (final SystemException e) {
+                    throw new ServletException(e);
                 }
             }
+
             sendLoggedOut(request, response);
         }
         catch (final WebserverSystemException e) {
@@ -397,17 +399,20 @@ public class Login extends HttpServlet {
         if (Boolean.TRUE.equals(userAccount.getActive())) {
 
             final long timestamp = System.currentTimeMillis();
-            final String handle = "ESCIDOC-" + getUniqueID() + timestamp;
-            this.userLoginService.loginUser(userAccount, "ESCIDOC-" + getUniqueID() + timestamp);
+            final UserLoginData loginData = new UserLoginData();
+            loginData.setUserAccount(userAccount);
+            loginData.setHandle("ESCIDOC-" + getUniqueID() + timestamp);
+            loginData.setExpiryts(timestamp + getESciDocUserHandleLifetime());
+            dao.saveOrUpdate(loginData);
             try {
-                sendAuthenticated(request, response, handle);
+                sendAuthenticated(request, response, loginData.getHandle());
             }
             catch (final WebserverSystemException e) {
-                this.userLoginService.logoutUser(handle);
+                dao.delete(loginData);
                 throw e;
             }
             catch (final IOException e) {
-                this.userLoginService.logoutUser(handle);
+                dao.delete(loginData);
                 throw e;
             }
         }

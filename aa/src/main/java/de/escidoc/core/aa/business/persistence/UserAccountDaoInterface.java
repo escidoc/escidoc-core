@@ -329,6 +329,49 @@ public interface UserAccountDaoInterface {
     List<UserLoginData> retrieveUserLoginDataByUserId(final String id) throws SqlDatabaseSystemException;
 
     /**
+     * Save the login data.
+     *
+     * @param data The user login data.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    void saveOrUpdate(UserLoginData data) throws SqlDatabaseSystemException;
+
+    /**
+     * Delete the user login data.
+     *
+     * @param data The user login data.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    void delete(UserLoginData data) throws SqlDatabaseSystemException;
+
+    /**
+     * Delete the user login data.
+     *
+     * @param handle The handle identifying user login data.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    void deleteUserLoginData(String handle) throws SqlDatabaseSystemException;
+
+    /**
+     * Retrieve the user details of a user account that are used for authentication.
+     *
+     * @param handle The handle identifying the user account.
+     * @return Returns the {@link UserDetails} of the addressed {@link UserAccount}.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    UserDetails retrieveUserDetails(String handle) throws SqlDatabaseSystemException;
+
+    /**
+     * Retrieve the user login data whose expiry timestamp is less then the specified value.
+     *
+     * @param timestamp The timestamp (in milli seconds) to compare the login data timestamp with.
+     * @return Returns all login data that have an expiry timestamp that is less than the specified value. This list may
+     *         be empty, if no such login data exists.
+     * @throws SqlDatabaseSystemException Thrown in case of an internal database access error.
+     */
+    List<UserLoginData> retrieveExpiredUserLoginData(final long timestamp) throws SqlDatabaseSystemException;
+
+    /**
      * Retrieves the preferences of an user.<br>
      *
      * @param userId The id of the user whose preferences shall be retrieved.

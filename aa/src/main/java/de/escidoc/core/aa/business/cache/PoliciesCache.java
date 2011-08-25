@@ -218,6 +218,25 @@ public class PoliciesCache {
     }
 
     /**
+     * Gets the the user details for the provided handle.<br>
+     *
+     * @param handle The handle to use as key for HashMap.
+     * @return The details of the user as {@code UserDetails}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     */
+    @Cacheable(cacheName = "userDetailsCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
+    public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
+        EscidocUserDetails result = null;
+        final UserAccount userAccount = userAccountDao.retrieveUserAccountByHandle(handle);
+        if (userAccount != null) {
+            result = new EscidocUserDetails();
+            result.setId(userAccount.getId());
+            result.setRealName(userAccount.getName());
+        }
+        return result;
+    }
+
+    /**
      * Gets the the user groups for the provided userId.<br>
      *
      * @param userId The userId.

@@ -25,11 +25,6 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.search.Attribute;
-import net.sf.ehcache.search.Query;
-import net.sf.ehcache.search.Result;
-import net.sf.ehcache.search.Results;
-import net.sf.ehcache.search.expression.Criteria;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import java.util.List;
@@ -56,11 +51,12 @@ public final class FedoraServiceClientCacheEventListener implements CacheEventLi
         for(final String cacheName : CACHE_NAMES) {
             final Cache datastreamsCache = getCacheManager().getCache(cacheName);
             if(datastreamsCache != null) {
-                final Attribute pidAttribute = datastreamsCache.getSearchAttribute("pid");
-                final List<Result> results = datastreamsCache.createQuery().includeAttribute(pidAttribute).addCriteria(
-                        pidAttribute.eq(pid)).execute().all();
-                for(Result result : results) {
-                    datastreamsCache.removeQuiet(result.getKey());
+                final List datastreamCacheKeys = datastreamsCache.getKeys();
+                for(final Object datastreamCacheKeyObject : datastreamCacheKeys) {
+                    final DatastreamCacheKey datastreamCacheKey = (DatastreamCacheKey) datastreamCacheKeyObject;
+                    if(pid.equals(datastreamCacheKey.getPid())) {
+                        datastreamsCache.remove(datastreamCacheKey);
+                    }
                 }
             }
         }

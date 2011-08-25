@@ -173,6 +173,8 @@ public class AuthenticationInterceptor implements Ordered {
             // with privileges of the internal user (superuser).
             // They will not be further intercepted.
             wasExternalBefore = UserContext.runAsInternalUser();
+
+            userManagementWrapper.initHandleExpiryTimestamp(handle);
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);

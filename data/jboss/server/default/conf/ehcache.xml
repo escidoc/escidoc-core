@@ -5,12 +5,6 @@
     <diskStore path="java.io.tmpdir"/>
     <defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="1200" overflowToDisk="false"/>
 
-    <cache name="UserLoginDataCache"
-           maxElementsInMemory="1000"
-           timeToIdleSeconds="1200"
-           overflowToDisk="true">
-    </cache>
-
     <!-- caches resources for the indexer.
     Used by de.escidoc.core.om.business.indexer.IndexerResourceRequester -->
     <cache
@@ -19,12 +13,12 @@
             eternal="false"
             overflowToDisk="false"
             timeToIdleSeconds="1800">
-        <cacheEventListenerFactory
-                class="de.escidoc.core.common.util.ehcache.listener.ResourcesCacheEventListenerFactory"
-                properties=""
-                listenFor="all"/>
-        <searchable values="false"/>
-    </cache>
+    	<cacheEventListenerFactory 
+    		class="de.escidoc.core.common.util.ehcache.listener.ResourcesCacheEventListenerFactory" 
+    		properties="" 
+    		listenFor="all"/>
+		<searchable/>
+	</cache>
 
     <!-- caches roleIsGrantedEvaluationResults. (EvaluationResults for user/group,role,scope)
     Used by de.escidoc.core.aa.business.cache.PoliciesCache -->
@@ -168,54 +162,34 @@
     <cache name="Fedora.DatastreamLists"
            maxElementsInMemory="100"
            eternal="true"
-           overflowToDisk="false">
-        <searchable keys="false" values="false">
-            <searchAttribute name="pid" expression="key.getPid()"/>
-        </searchable>
-    </cache>
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastream profiles
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamProfiles"
            maxElementsInMemory="100"
            eternal="true"
-           overflowToDisk="false">
-        <searchable keys="false" values="false">
-            <searchAttribute name="pid" expression="key.getPid()"/>
-        </searchable>
-    </cache>
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastreams
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.Datastreams"
            maxElementsInMemory="100"
            eternal="true"
-           overflowToDisk="false">
-        <searchable keys="false" values="false">
-            <searchAttribute name="pid" expression="key.getPid()"/>
-        </searchable>
-    </cache>
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastream history
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamHistories"
            maxElementsInMemory="100"
            eternal="true"
-           overflowToDisk="false">
-        <searchable keys="false" values="false">
-            <searchAttribute name="pid" expression="key.getPid()"/>
-        </searchable>
-    </cache>
+           overflowToDisk="false"/>
 
     <!-- caches Fedora datastream binary content
     Used by org.escidoc.core.services.fedora.internal.FedoraServiceClientImpl -->
     <cache name="Fedora.DatastreamBinaryContent"
            maxElementsInMemory="100"
            eternal="true"
-           overflowToDisk="false">
-        <searchable keys="false" values="false">
-            <searchAttribute name="pid" expression="key.getPid()"/>
-        </searchable>
-    </cache>
+           overflowToDisk="false"/>
 
 </ehcache>

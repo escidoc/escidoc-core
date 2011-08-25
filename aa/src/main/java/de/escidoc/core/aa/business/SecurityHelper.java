@@ -371,6 +371,17 @@ public class SecurityHelper {
     }
 
     /**
+     * Gets the the user details for the provided handle.<br>
+     *
+     * @param handle The handle to use as key for HashMap.
+     * @return The details of the user as {@code UserDetails}, or {@code null}.
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     */
+    public UserDetails getUserDetails(final String handle) throws SqlDatabaseSystemException {
+        return policiesCache.getUserDetails(handle);
+    }
+
+    /**
      * Gets the the user groups for the provided userId.<br>
      *
      * @param userId The userId.

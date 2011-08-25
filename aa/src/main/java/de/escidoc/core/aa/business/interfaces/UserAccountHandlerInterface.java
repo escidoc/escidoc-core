@@ -54,4 +54,14 @@ public interface UserAccountHandlerInterface extends de.escidoc.core.aa.service.
     Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(String userId)
         throws UserAccountNotFoundException, SystemException;
 
+    /**
+     * Retrieves the current eScidoc user handles of an user.
+     *
+     * @param userId The User Account ID.
+     * @return Returns the current eSciDoc user handles of the specified User Account in a {@code Set}.
+     * @throws UserAccountNotFoundException Thrown if no user with the provided id exists.
+     * @throws SystemException              Thrown in case of an internal system error.
+     */
+    List<UserLoginData> retrieveUserHandles(String userId) throws UserAccountNotFoundException, SystemException;
+
 }
