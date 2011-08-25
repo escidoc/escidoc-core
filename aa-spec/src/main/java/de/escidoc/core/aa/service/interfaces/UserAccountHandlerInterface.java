@@ -237,8 +237,8 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID.
-     * @param taskParam The XML representation of task parameters including the last modification date and the new
-     *                  password. (see above)
+     * @param taskParam The XML representation according to update-password-task-param.xsd of task parameters including 
+     *                  the last modification date and the new password. (see above)
      * @throws InvalidStatusException       Thrown if the addressed User Account is not active.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException        Thrown in case of invalid xml data (corrupt data, schema validation failed
@@ -251,7 +251,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getUpdatePasswordTaskParamSchemaLocation")
     void updatePassword(String userId, String taskParam) throws UserAccountNotFoundException, InvalidStatusException,
         XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException, AuthenticationException,
         AuthorizationException, SystemException;

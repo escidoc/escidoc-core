@@ -2671,6 +2671,20 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task parameter for lock method.
+     * 
+     * @param timestamp
+     *            last-modification-date of the resource
+     * @return task param XML (lock-task-param.xsd)
+     */
+    public String getUpdatePasswordTaskParam(final DateTime timestamp, final String password) {
+
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" last-modification-date=\""
+            + DateTimeJaxbConverter.printDate(timestamp) + "\" >" + "<password>" + password + "</password>\n</param>\n";
+    }
+
+    /**
      * Assert that the before timestamp is lower than the after timestamp.
      * 
      * @param before

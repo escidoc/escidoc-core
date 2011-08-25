@@ -55,6 +55,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -1040,10 +1041,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final String password = "new-pass";
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
-        final String lastModificationDate = getLastModificationDateValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(createdDocument));
+        final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, password);
 
         updatePassword(id, taskParamXML);
 
@@ -1066,10 +1065,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final String password = "new-pass";
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
-        final String lastModificationDate = getLastModificationDateValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(createdDocument));
+        final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, password);
 
         try {
             updatePassword(null, taskParamXML);
@@ -1131,7 +1128,7 @@ public class UserAccountIT extends UserAccountTestBase {
     }
 
     /**
-     * Test declining updating the password of an UserAccount wiht an empty last-modification timestamp.
+     * Test declining updating the password of an UserAccount with an empty last-modification timestamp.
      * 
      * @throws Exception
      *             If anything fails.
@@ -1144,7 +1141,9 @@ public class UserAccountIT extends UserAccountTestBase {
         final String id = getObjidValue(createdDocument);
         final String lastModificationDate = "";
         final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>password </password> </param>";
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" "
+                + "last-modification-date=\"" + lastModificationDate + "\" ><password>password </password> </param>";
         try {
             updatePassword(id, taskParamXML);
             failMissingException("Updating the password of an UserAccount has not been declined!", ec);
@@ -1167,7 +1166,10 @@ public class UserAccountIT extends UserAccountTestBase {
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
-        final String taskParamXML = "<param><password>password </password> </param>";
+        final String taskParamXML =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" >"
+                + "<password>password </password> </param>";
         try {
             updatePassword(id, taskParamXML);
             failMissingException("Updating the password of an UserAccount has not been declined!", ec);
@@ -1191,10 +1193,9 @@ public class UserAccountIT extends UserAccountTestBase {
         final String password = "new-pass";
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
-        final String lastModificationDate = getLastModificationDateValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(createdDocument));
+        final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, password);
+
         try {
             updatePassword(UNKNOWN_ID, taskParamXML);
             failMissingException("Updating the password of an UserAccount has not been declined!", ec);
@@ -1223,11 +1224,10 @@ public class UserAccountIT extends UserAccountTestBase {
         String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" ></param>";
         deactivate(id, taskParamXML);
 
-        lastModificationDate = getLastModificationDateValue(getDocument(retrieve(id)));
+        DateTime lastModificationDate2 = new DateTime(getLastModificationDateValue(getDocument(retrieve(id))));
 
-        taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        taskParamXML = getUpdatePasswordTaskParam(lastModificationDate2, password);
+
         try {
             updatePassword(id, taskParamXML);
             failMissingException("Updating the password of an UserAccount has not been declined!", ec);
@@ -1252,10 +1252,7 @@ public class UserAccountIT extends UserAccountTestBase {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
-        final String lastModificationDate = getNowAsTimestamp();
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        final String taskParamXML = getUpdatePasswordTaskParam(new DateTime(), password);
 
         try {
             updatePassword(id, taskParamXML);
@@ -1276,15 +1273,12 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAAUup10() throws Exception {
 
-        final String lastModificationDate = getNowAsTimestamp();
         final Class<OptimisticLockingException> ec = OptimisticLockingException.class;
         final String password = "new-pass";
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + password
-                + "</password> </param>";
+        final String taskParamXML = getUpdatePasswordTaskParam(new DateTime(), password);
 
         try {
             updatePassword(id, taskParamXML);

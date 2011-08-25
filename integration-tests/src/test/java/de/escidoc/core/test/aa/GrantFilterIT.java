@@ -2441,10 +2441,9 @@ public class GrantFilterIT extends GrantTestBase {
             doTestCreateGrant(null, userId, null, ROLE_HREF_SYSTEM_ADMINISTRATOR, null);
 
             // update password
-            final String lastModificationDate = getLastModificationDateValue(user);
-            final String taskParamXML =
-                "<param last-modification-date=\"" + lastModificationDate + "\" ><password>" + SYSADMIN_PASSWORD
-                    + "</password> </param>";
+            final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(user));
+            final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, SYSADMIN_PASSWORD);
+
             updatePassword(userId, taskParamXML);
 
             // login to get handle
