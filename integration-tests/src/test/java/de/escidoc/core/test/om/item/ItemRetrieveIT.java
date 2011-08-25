@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the mock implementation of the item resource.
@@ -266,8 +267,11 @@ public class ItemRetrieveIT extends ItemTestBase {
 
         assertXmlValidSrwResponse(list);
 
-        // assert that the components elements has not empty (or $link etc.)
-        // values
+        // assert that the components elements has not empty (or $link etc.) values
+        int noOfResult =
+            Integer.valueOf(selectSingleNodeAsserted(getDocument(list), "/searchRetrieveResponse/numberOfRecords")
+                .getTextContent());
+        assertTrue("expected more than one result", noOfResult > 0);
     }
 
     /**
