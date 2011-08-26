@@ -225,7 +225,7 @@ public final class XmlUtility {
 
     private static String xmlSchemaSchemaLocation;
 
-    private static String aaTaskParamSchemaLocation;
+    private static String activationTaskParamSchemaLocation;
 
     private static String updatePasswordTaskParamSchemaLocation;
 
@@ -1931,11 +1931,11 @@ public final class XmlUtility {
      * @return Returns the AaTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAaTaskParamSchemaLocation() {
-        if (aaTaskParamSchemaLocation == null) {
-            aaTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/aa-task-param.xsd";
+    public static String getActivationTaskParamSchemaLocation() {
+        if (activationTaskParamSchemaLocation == null) {
+            activationTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/activation-task-param.xsd";
         }
-        return aaTaskParamSchemaLocation;
+        return activationTaskParamSchemaLocation;
     }
 
     /**

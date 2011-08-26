@@ -2671,17 +2671,31 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Get task parameter for lock method.
+     * Get task parameter for update password method.
      * 
      * @param timestamp
      *            last-modification-date of the resource
-     * @return task param XML (lock-task-param.xsd)
+     * @return task param XML (update-password-task-param.xsd)
      */
     public String getUpdatePasswordTaskParam(final DateTime timestamp, final String password) {
 
         return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" last-modification-date=\""
             + DateTimeJaxbConverter.printDate(timestamp) + "\" >" + "<password>" + password + "</password>\n</param>\n";
+    }
+
+    /**
+     * Get task parameter for activation (activate/deactivate) method.
+     * 
+     * @param timestamp
+     *            last-modification-date of the resource
+     * @return task param XML (activation-task-param.xsd)
+     */
+    public String getActivationTaskParam(final DateTime timestamp) {
+
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            + "<param xmlns=\"http://www.escidoc.org/schemas/activation-task-param/0.1\" last-modification-date=\""
+            + DateTimeJaxbConverter.printDate(timestamp) + "\" />";
     }
 
     /**

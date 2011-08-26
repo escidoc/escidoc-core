@@ -203,6 +203,7 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+    @Validate(param = 1, resolver = "getActivationTaskParamSchemaLocation")
     void activate(String groupId, String taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -240,6 +241,7 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+    @Validate(param = 1, resolver = "getActivationTaskParamSchemaLocation")
     void deactivate(String groupId, String taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;

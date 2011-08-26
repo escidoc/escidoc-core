@@ -313,7 +313,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getActivationTaskParamSchemaLocation")
     void activate(String userId, String taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -351,7 +351,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getActivationTaskParamSchemaLocation")
     void deactivate(String userId, String taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;

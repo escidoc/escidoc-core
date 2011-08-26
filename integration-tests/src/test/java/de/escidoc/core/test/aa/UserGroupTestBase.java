@@ -45,6 +45,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.joda.time.DateTime;
+
 /**
  * Base class for testing the AA.UserGroup component.
  *
@@ -478,9 +480,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(createdUserGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.activate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -511,8 +513,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
         throws Exception {
         try {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
-            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.deactivate(groupId, taskParamXml);
         }
         catch (final AlreadyDeactiveException e) {
@@ -522,8 +525,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.activate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -562,9 +566,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocAbstractTest.getDocument(createdUserGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.deactivate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -596,8 +600,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
 
         try {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
-            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.activate(groupId, taskParamXml);
         }
         catch (final AlreadyActiveException e) {
@@ -607,8 +612,9 @@ public abstract class UserGroupTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+            final DateTime lastModificationDate =
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
+            String taskParamXml = getActivationTaskParam(lastModificationDate);
             userGroupClient.deactivate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
