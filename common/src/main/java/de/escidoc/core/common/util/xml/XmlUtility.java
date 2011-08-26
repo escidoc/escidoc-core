@@ -229,7 +229,11 @@ public final class XmlUtility {
 
     private static String updatePasswordTaskParamSchemaLocation;
 
-    private static String assignTaskParamSchemaLocation;
+    private static String revokeGrantTaskParamSchemaLocation;
+    
+    private static String revokeGrantsTaskParamSchemaLocation;
+
+    private static String assignPidTaskParamSchemaLocation;
 
     private static String deletionTaskParamSchemaLocation;
 
@@ -1928,7 +1932,7 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the AaTaskParamSchemaLocation.
+     * @return Returns the ActivationTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
     public static String getActivationTaskParamSchemaLocation() {
@@ -1939,25 +1943,47 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the AaTaskParamSchemaLocation.
+     * @return Returns the UpdatePasswordTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
     public static String getUpdatePasswordTaskParamSchemaLocation() {
         if (updatePasswordTaskParamSchemaLocation == null) {
-            updatePasswordTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/aa-task-param.xsd";
+            updatePasswordTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/update-password-task-param.xsd";
         }
         return updatePasswordTaskParamSchemaLocation;
     }
 
     /**
-     * @return Returns the AssignTaskParamSchemaLocation.
+     * @return Returns the revoke-grant-task-param schema location.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getAssignTaskParamSchemaLocation() {
-        if (assignTaskParamSchemaLocation == null) {
-            assignTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/assign-task-param.xsd";
+    public static String getRevokeGrantTaskParamSchemaLocation() {
+        if (revokeGrantTaskParamSchemaLocation == null) {
+            revokeGrantTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/revoke-grant-task-param.xsd";
         }
-        return assignTaskParamSchemaLocation;
+        return revokeGrantTaskParamSchemaLocation;
+    }
+
+    /**
+     * @return Returns the revoke-grants-task-param schema location.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getRevokeGrantsTaskParamSchemaLocation() {
+        if (revokeGrantsTaskParamSchemaLocation == null) {
+            revokeGrantsTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/revoke-grants-task-param.xsd";
+        }
+        return revokeGrantsTaskParamSchemaLocation;
+    }
+    
+    /**
+     * @return Returns the AssignPidTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getAssignPidTaskParamSchemaLocation() {
+        if (assignPidTaskParamSchemaLocation == null) {
+            assignPidTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/assign-pid-task-param.xsd";
+        }
+        return assignPidTaskParamSchemaLocation;
     }
 
     /**
