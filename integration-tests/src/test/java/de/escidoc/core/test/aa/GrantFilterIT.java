@@ -250,7 +250,7 @@ public class GrantFilterIT extends GrantTestBase {
                             Document createdDocument = EscidocAbstractTest.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate = getLastModificationDateValue(createdDocument);
-                            String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+                            String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
                             revokeGrant(userId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(0).get("grantCount") == null) {
                                 revokerSysadmins.get(0).put("grantCount", "0");
@@ -274,7 +274,7 @@ public class GrantFilterIT extends GrantTestBase {
                             Document createdDocument = EscidocAbstractTest.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate = getLastModificationDateValue(createdDocument);
-                            String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" />";
+                            String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
                             revokeGrant(groupId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(1).get("grantCount") == null) {
                                 revokerSysadmins.get(1).put("grantCount", "0");

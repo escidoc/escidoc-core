@@ -48,6 +48,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.joda.time.DateTime;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -544,10 +546,8 @@ public abstract class GrantTestBase extends UserAccountTestBase {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
             String grantXml = retrieveGrant(id, grantId);
             Document document = EscidocAbstractTest.getDocument(grantXml);
-            String lastModificationDate = getLastModificationDateValue(document);
-            taskParamXml =
-                "<param last-modification-date=\"" + lastModificationDate + "\" >"
-                    + "<revocation-remark>Some revocation\n " + "remark</revocation-remark>" + "</param>";
+            final DateTime lastModificationDate = getLastModificationDateValue2(document);
+            taskParamXml = getRevokeGrantTaskParam(lastModificationDate, "Some revocation\n remark");
         }
         catch (final Exception e) {
             throw new Exception("couldnt retrieve grant");

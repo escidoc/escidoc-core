@@ -2699,6 +2699,31 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task parameter to revoke grant.
+     * 
+     * @param timestamp
+     *            last-modification-date of the resource
+     * @param revocationRemark
+     *            revocation remark for param. Set null to exclude revocation-remark element from XML
+     * @return task param XML (revoke-grant-task-param.xsd)
+     */
+    public String getRevokeGrantTaskParam(final DateTime timestamp, final String revocationRemark) {
+
+        String xml =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" last-modification-date=\""
+                + DateTimeJaxbConverter.printDate(timestamp) + "\">";
+
+        if (revocationRemark != null) {
+            xml += "<revocation-remark>" + revocationRemark + "</revocation-remark>\n";
+        }
+
+        xml += "</param>\n";
+
+        return xml;
+    }
+
+    /**
      * Assert that the before timestamp is lower than the after timestamp.
      * 
      * @param before
