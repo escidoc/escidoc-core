@@ -25,10 +25,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.escidoc.core</groupId>
     <artifactId>oum-rest-impl</artifactId>
     <name>eSciDoc Core - Organizational Unit REST Impl.</name>
-    <version>trunk-SNAPSHOT</version>
 
     <parent>
         <groupId>org.escidoc.core</groupId>

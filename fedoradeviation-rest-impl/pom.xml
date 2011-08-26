@@ -24,10 +24,8 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.escidoc.core</groupId>
   <artifactId>fedoradeviation-rest-impl</artifactId>
   <name>eSciDoc Core - Fedora Deviation REST Impl.</name>
-  <version>trunk-SNAPSHOT</version>
 
   <parent>
     <groupId>org.escidoc.core</groupId>

@@ -4,9 +4,7 @@
     
     <modelVersion>4.0.0</modelVersion>
 	
-    <groupId>org.escidoc.core</groupId>
     <artifactId>dataobjects-spec</artifactId>
-	<version>trunk-SNAPSHOT</version>
 	<name>eSciDoc Core - Dataobjects Spec.</name>
 	
 	<parent>

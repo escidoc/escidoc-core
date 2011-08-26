@@ -25,10 +25,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.escidoc.core</groupId>
     <artifactId>content-relation-rest-impl</artifactId>
     <name>eSciDoc Core - Content Relation REST Impl.</name>
-    <version>trunk-SNAPSHOT</version>
 
     <parent>
         <groupId>org.escidoc.core</groupId>

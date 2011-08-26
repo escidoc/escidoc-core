@@ -4,9 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.escidoc.core</groupId>
 	<artifactId>st</artifactId>
-	<version>trunk-SNAPSHOT</version>
 	<name>eSciDoc Core - Staging Impl.</name>
 
 	<parent>

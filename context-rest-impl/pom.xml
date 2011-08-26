@@ -24,10 +24,8 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.escidoc.core</groupId>
   <artifactId>context-rest-impl</artifactId>
   <name>eSciDoc Core - Context REST Impl.</name>
-  <version>trunk-SNAPSHOT</version>
 
   <parent>
     <groupId>org.escidoc.core</groupId>

@@ -9,11 +9,9 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.escidoc.core</groupId>
   <artifactId>escidoc-core-war</artifactId>
   <packaging>war</packaging>
   <name>eSciDoc Core - Web Archive</name>
-  <version>trunk-SNAPSHOT</version>
   <description>eSciDoc Core Web Archive package</description>
 
   <dependencies>

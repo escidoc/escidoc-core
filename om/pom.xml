@@ -3,10 +3,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.escidoc.core</groupId>
 	<artifactId>om</artifactId>
 	<name>eSciDoc Core - Object Service Impl.</name>
-	<version>trunk-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
@@ -20,7 +18,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.5</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
