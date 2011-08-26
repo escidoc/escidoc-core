@@ -478,6 +478,7 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
+    @Validate(param = 1, resolver = "getRevokeGrantsTaskParamSchemaLocation")
     void revokeGrants(String groupId, String taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;

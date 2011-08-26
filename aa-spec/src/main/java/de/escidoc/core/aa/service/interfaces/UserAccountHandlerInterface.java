@@ -670,7 +670,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-//    @Validate(param = 1, resolver = "getAaTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getRevokeGrantsTaskParamSchemaLocation")
     void revokeGrants(String userId, String taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;

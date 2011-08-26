@@ -715,7 +715,8 @@ public class ItemFilterIT extends ItemTestBase {
 
             UserAccountClient userAccountClient = new UserAccountClient();
 
-            userAccountClient.revokeGrants(userId, "<param><filter/>"
+            userAccountClient.revokeGrants(userId, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
                 + "<revocation-remark>some remark</revocation-remark></param>");
 
             UserGroupClient userGroupClient = new UserGroupClient();
@@ -733,7 +734,8 @@ public class ItemFilterIT extends ItemTestBase {
                 Node userGroup = userGroups.item(index);
                 String groupId = getObjidFromHref(userGroup.getNodeValue());
 
-                userGroupClient.revokeGrants(groupId, "<param><filter/>"
+                userGroupClient.revokeGrants(groupId, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                    + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
                     + "<revocation-remark>some remark</revocation-remark>" + "</param>");
             }
         }

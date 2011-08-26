@@ -100,6 +100,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2721,6 +2722,42 @@ public abstract class EscidocTestBase {
         xml += "</param>\n";
 
         return xml;
+    }
+
+    /**
+     * Get task parameter to revoke grants.
+     * 
+     * @param ids
+     *            ids for filter, Set null to exclude filter
+     * @param revocationRemark
+     *            revocation remark for param. Set null to exclude revocation-remark element from XML
+     * @return task param XML (revoke-grant-task-param.xsd)
+     */
+    public String getRevokeGrantsTaskParam(final Set<String> ids, final String revocationRemark) {
+
+        StringBuffer xml =
+            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">");
+
+        if (ids != null) {
+            xml.append("<filter>");
+            for (final String id : ids) {
+                xml.append("<id>");
+                xml.append(id);
+                xml.append("</id>");
+            }
+            xml.append("</filter>");
+        }
+
+        if (revocationRemark != null) {
+            xml.append("<revocation-remark>");
+            xml.append(revocationRemark);
+            xml.append("</revocation-remark>\n");
+        }
+
+        xml.append("</param>\n");
+
+        return xml.toString();
     }
 
     /**

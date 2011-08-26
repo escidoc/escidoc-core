@@ -313,8 +313,11 @@ public abstract class GrantTestBase extends UserAccountTestBase {
     public String revokeAllGrants(final String id) throws Exception {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+
         Object result =
-            client.revokeGrants(id, "<param><filter />" + "<revocation-remark>some remark</revocation-remark></param>");
+            client.revokeGrants(id, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter />"
+                + "<revocation-remark>some remark</revocation-remark></param>");
         String resultStr = handleResult(result);
         assertNumberOfGrants(id, 0);
         return resultStr;
