@@ -308,6 +308,10 @@
 					<groupId>org.apache.abdera</groupId>
 					<artifactId>abdera-extensions-main</artifactId>
 				</exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -653,6 +657,12 @@
 				<artifactId>maven-ear-plugin</artifactId>
 				<version>2.4.2</version>
 				<configuration>
+          <!-- isolation -->
+          <jboss>
+            <version>4</version>
+            <loader-repository>org.escidoc:loader=escidoc-core.ear</loader-repository>
+            <loader-repository-config>java2ParentDelegation=true</loader-repository-config>
+          </jboss>
 					<defaultLibBundleDir>META-INF/lib</defaultLibBundleDir>
 					<displayName>eSciDoc-Core</displayName>
 					<description>eSciDoc Infrastructure</description>
