@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.util.xml.Select;
@@ -44,6 +45,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -110,10 +112,18 @@ public class ItemVersioningIT extends ItemTestBase {
         assertEquals(comment, selectSingleNodeAsserted(getDocument(versionHistory),
             "/version-history/version[1]/comment/text()").getNodeValue());
 
-        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + theItemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+
+        assignObjectPid(theItemId, pidParam);
 
         String versionId = theItemId + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(theItemId, getTheLastModificationParam(true, theItemId, comment));
         xml = retrieve(theItemId);
@@ -311,10 +321,18 @@ public class ItemVersioningIT extends ItemTestBase {
         assertXmlExists("version status submitted", xml, "/item/properties/version/status[text() = 'submitted']");
         assertXmlValidItem(xml);
 
-        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + theItemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+
+        assignObjectPid(theItemId, pidParam);
 
         String versionId = theItemId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -406,7 +424,10 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // release again
         versionId = theItemId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1208,10 +1229,16 @@ public class ItemVersioningIT extends ItemTestBase {
         assertXmlExists("Missing status submitted within event", versionHistory,
             "/version-history/version[1]/events/event[1]/" + "eventType[text() = 'submitted']");
 
-        assignObjectPid(id, getPidParam(id, getFrameworkUrl() + "/ir/item/" + id));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + id));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
 
         String versionId = id + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(id, getTheLastModificationParam(false, theItemId));
         xml = retrieve(id);
@@ -1392,10 +1419,18 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // ---------------------------------------------------------------
 
-        assignObjectPid(theItemId, getPidParam(theItemId, getFrameworkUrl() + "/ir/item/" + theItemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + this.theItemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+
+        assignObjectPid(theItemId, pidParam);
 
         String versionId = theItemId + ":3";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1545,7 +1580,10 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // release again
         versionId = theItemId + ":5";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+        assignVersionPid(versionId, pidParam);
 
         release(theItemId, getTheLastModificationParam(false, theItemId));
         xml = retrieve(theItemId);
@@ -1737,11 +1775,17 @@ public class ItemVersioningIT extends ItemTestBase {
             + " last modification date of the latest task oriented method", lmdMethod, lmdRetrieve2);
 
         // assignPids
-        String pidParam = getPidParam(theItemId, "http://some/url");
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL("http://some/url"));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+
         resultXml = assignObjectPid(theItemId, pidParam);
         assertXmlValidResult(resultXml);
 
-        pidParam = getPidParam(theItemId, "http://some/url");
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
+
         resultXml = assignVersionPid(theItemId, pidParam);
         assertXmlValidResult(resultXml);
 
@@ -1874,9 +1918,20 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // change status of version 1 ------------------------------------
         submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(itemDocV1E1)));
-        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), assignPidParam);
+
+        assignObjectPid(objid, pidParam);
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
+        assignVersionPid(versionId, pidParam);
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -1926,9 +1981,20 @@ public class ItemVersioningIT extends ItemTestBase {
 
         submit(objid, getTheLastModificationParam(false, objid, "submit",
             getLastModificationDateValue(getDocument(itemV1E1))));
-        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), assignPidParam);
+
+        assignObjectPid(objid, pidParam);
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
+        assignVersionPid(versionId, pidParam);
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -2118,9 +2184,20 @@ public class ItemVersioningIT extends ItemTestBase {
 
         submit(objid, getTheLastModificationParam(false, objid, "submit",
             getLastModificationDateValue(getDocument(itemV1E1))));
-        assignObjectPid(objid, getPidParam(objid, getFrameworkUrl() + "/ir/item/" + objid));
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), assignPidParam);
+
+        assignObjectPid(objid, pidParam);
         String versionId = objid + ":1";
-        assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
+        assignVersionPid(versionId, pidParam);
         release(objid, getTheLastModificationParam(false, objid));
 
         itemXml = retrieve(objid);
@@ -2157,7 +2234,12 @@ public class ItemVersioningIT extends ItemTestBase {
                     "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
         String versionId2 = objid + ":2";
-        assignVersionPid(versionId2, getPidParam(versionId2, getFrameworkUrl() + "/ir/item/" + versionId2));
+
+        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId2));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId2))), assignPidParam);
+
+        assignVersionPid(versionId2, pidParam);
 
         /*
          * check data structure

@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
@@ -561,8 +562,15 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         // release Item to avoid authentication
         String itemId = getObjidValue(itemDoc);
         submit(itemId, getTheLastModificationParam(false, itemId));
-        assignObjectPid(itemId, getPidParam(itemId, "http://localhost/" + itemId));
-        assignVersionPid(itemId, getPidParam(itemId, "http://localhost/" + itemId));
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL("http://localhost" + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
+        assignObjectPid(itemId, pidParam);
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        assignVersionPid(itemId, pidParam);
         release(itemId, getTheLastModificationParam(false, itemId));
 
         // get URL to content

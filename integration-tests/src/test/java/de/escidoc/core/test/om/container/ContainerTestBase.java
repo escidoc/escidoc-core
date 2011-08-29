@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import static org.junit.Assert.fail;
 
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
 
@@ -407,9 +409,15 @@ public class ContainerTestBase extends OmTestBase {
         if (!getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             // prevent re-assigning
             Node pid = selectSingleNode(itemDoc, XPATH_CONTAINER_OBJECT_PID);
+
             if (pid == null) {
                 String itemId = getObjidWithoutVersion(id);
-                String pidParam = getPidParam(id, containerUrl + itemId);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(containerUrl + itemId));
+                String pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+
                 assignObjectPid(id, pidParam);
             }
         }
@@ -425,7 +433,13 @@ public class ContainerTestBase extends OmTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam = getPidParam(versionId, containerUrl + versionId);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(containerUrl + versionId));
+                String pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))),
+                        assignPidParam);
+
                 assignVersionPid(versionId, pidParam);
             }
         }

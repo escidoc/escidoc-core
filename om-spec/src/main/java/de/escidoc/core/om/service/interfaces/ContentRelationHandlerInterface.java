@@ -412,6 +412,7 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
      * @throws SystemException             Thrown in case of internal error.
      */
+    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException;

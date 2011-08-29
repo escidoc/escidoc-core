@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -39,6 +40,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.net.URL;
 import java.util.Vector;
 
 import static org.junit.Assert.assertEquals;
@@ -156,13 +158,26 @@ public class ItemDeleteIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(itemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 

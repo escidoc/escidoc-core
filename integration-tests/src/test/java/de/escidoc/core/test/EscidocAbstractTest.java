@@ -1070,55 +1070,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     /**
-     * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
-     * object.
-     * 
-     * @param id
-     *            The object Id
-     * @param url
-     *            URL of the resource (not checked)
-     * @return param XML snippet.
-     * @throws Exception
-     *             Thrown if getTheLastModificationDate() fails.
-     */
-    public final String getPidParam(final String id, final String url) throws Exception {
-
-        String extUrl = url;
-        if (!extUrl.endsWith("/")) {
-            extUrl += "/";
-        }
-        extUrl += System.nanoTime();
-
-        String param =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\""
-                + getTheLastModificationDate(id) + "\"><url>" + extUrl + "</url></param>";
-        return (param);
-    }
-
-    /**
-     * Create a Param structure for PID assignments.
-     * 
-     * @param lstModDate
-     *            The last-modification-date.
-     * @param url
-     *            URL of the resource (not checked)
-     * @return param XML snippet.
-     */
-    protected final String getPidParam2(final DateTime lstModDate, final URL url) {
-
-        String extUrl = url.toString();
-        if (!extUrl.endsWith("/")) {
-            extUrl += "/";
-        }
-        extUrl += System.nanoTime();
-
-        String param =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\"" + lstModDate.toString()
-                + "\"><url>" + extUrl + "</url></param>";
-        return (param);
-    }
-
-    /**
      * Gets the base url for all schema locations related to PDP requests.
      *
      * @return Returns the base url for all schema locations related to PDP requests.

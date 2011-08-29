@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWith
 import de.escidoc.core.common.exceptions.remote.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
 import org.junit.After;
@@ -45,6 +46,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -188,13 +190,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -330,13 +345,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -372,13 +400,24 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")) {
+
             // object pid
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
 
             // version pid
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
 
             String retrievedItem = retrieve(this.theItemId);
@@ -388,7 +427,11 @@ public class ItemLifecycleIT extends ItemTestBase {
                 getIdFromRootElement(toString(selectSingleNode(getDocument(retrievedItem), "//component[1]"), true));
             componentId = getObjidFromHref(componentId);
 
-            pidParam = getPidParam(this.theItemId, "http://somewhere/content/" + this.theItemId + "content");
+            assignPidParam.setUrl(new URL("http://somewhere/content/" + this.theItemId + "content"));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignContentPid(this.theItemId, componentId, pidParam);
         }
         else {
@@ -466,13 +509,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -517,13 +573,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -576,13 +645,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -664,15 +746,29 @@ public class ItemLifecycleIT extends ItemTestBase {
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
         String pidParam;
+
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -703,13 +799,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -902,13 +1011,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -1285,13 +1407,26 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -1380,13 +1515,25 @@ public class ItemLifecycleIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(itemId, "http://somewhere" + itemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
             assignObjectPid(itemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(cretaedItem);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 

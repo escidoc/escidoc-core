@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.resources.BinaryContent;
@@ -545,7 +546,11 @@ public class ItemTestBase extends OmTestBase {
             Node pid = selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID);
             if (pid == null) {
                 String itemId = getObjidWithoutVersion(id);
-                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(itemUrl + itemId));
+                String pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+
                 pidXml = assignObjectPid(id, pidParam);
                 assertXmlValidResult(pidXml);
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
@@ -564,7 +569,11 @@ public class ItemTestBase extends OmTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + versionId));
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(itemUrl + versionId));
+                String pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+
                 pidXml = assignVersionPid(versionId, pidParam);
                 assertXmlValidResult(pidXml);
 

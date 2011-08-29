@@ -33,6 +33,8 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
+
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -131,18 +133,28 @@ public class ContainerReleaseIT extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         // assign pid to member (item)
         if (getContainerClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            // pidParam =
-            // getPidParam(this.theSubcontainerId, "http://somewhere"
-            // + this.theSubcontainerId);
+
+            //            assignPidParam.setUrl(new URL("http://somewhere" + this.theSubcontainerId));
+            //            pidParam =
+            //                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theSubcontainerId))),
+            //                    assignPidParam);
             // assignObjectPid(this.theSubcontainerId, pidParam);
         }
         if (getContainerClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(retrieve(this.theSubcontainerId));
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -153,13 +165,24 @@ public class ContainerReleaseIT extends ContainerTestBase {
         // assign pid to container
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
+                    assignPidParam);
+
             assignObjectPid(this.theContainerId, pidParam);
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(retrieve(this.theContainerId));
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -202,15 +225,27 @@ public class ContainerReleaseIT extends ContainerTestBase {
     public void test_OM_RCON_2_2() throws Exception {
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
+                    assignPidParam);
             assignObjectPid(this.theContainerId, pidParam);
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -376,10 +411,15 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String versionPidXml = null;
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         // assign pid to member (Container)
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+
+            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
             objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
             assertXmlValidResult(objectPidXml);
             newLmd = getLastModificationDateValue(getDocument(objectPidXml));
@@ -387,7 +427,9 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
             versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
             assertXmlValidResult(versionPidXml);
             newLmd = getLastModificationDateValue(getDocument(versionPidXml));
@@ -413,10 +455,14 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String versionPidXml = null;
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         // assign pid to member (item)
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
             assertXmlValidResult(objectPidXml);
@@ -425,7 +471,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
             assertXmlValidResult(versionPidXml);

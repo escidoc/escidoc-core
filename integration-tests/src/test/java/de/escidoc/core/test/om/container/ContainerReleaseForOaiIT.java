@@ -29,6 +29,8 @@
 package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
+
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -213,10 +215,15 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         String versionPidXml = null;
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         // assign pid to member (Container)
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+
+            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
             objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
             assertXmlValidResult(objectPidXml);
             newLmd = getLastModificationDateValue(getDocument(objectPidXml));
@@ -224,7 +231,9 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
             versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
             assertXmlValidResult(versionPidXml);
             newLmd = getLastModificationDateValue(getDocument(versionPidXml));
@@ -250,10 +259,14 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         String versionPidXml = null;
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         // assign pid to member (item)
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
             assertXmlValidResult(objectPidXml);
@@ -262,7 +275,8 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
             assertXmlValidResult(versionPidXml);

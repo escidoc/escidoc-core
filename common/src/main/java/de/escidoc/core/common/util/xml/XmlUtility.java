@@ -230,7 +230,7 @@ public final class XmlUtility {
     private static String updatePasswordTaskParamSchemaLocation;
 
     private static String revokeGrantTaskParamSchemaLocation;
-    
+
     private static String revokeGrantsTaskParamSchemaLocation;
 
     private static String assignPidTaskParamSchemaLocation;
@@ -1948,7 +1948,8 @@ public final class XmlUtility {
      */
     public static String getUpdatePasswordTaskParamSchemaLocation() {
         if (updatePasswordTaskParamSchemaLocation == null) {
-            updatePasswordTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/update-password-task-param.xsd";
+            updatePasswordTaskParamSchemaLocation =
+                getSchemaBaseUrl() + "rest/common/0.1/update-password-task-param.xsd";
         }
         return updatePasswordTaskParamSchemaLocation;
     }
@@ -1974,7 +1975,7 @@ public final class XmlUtility {
         }
         return revokeGrantsTaskParamSchemaLocation;
     }
-    
+
     /**
      * @return Returns the AssignPidTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.

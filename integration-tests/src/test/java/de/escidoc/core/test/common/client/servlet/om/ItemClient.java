@@ -29,6 +29,8 @@
 package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -37,7 +39,11 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.net.URL;
 import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
@@ -528,7 +534,11 @@ public class ItemClient extends ClientBase
             Node pid = selectSingleNode(resDoc, xpathObjectPid);
             if (pid == null) {
                 String id = getObjidWithoutVersion(itemId);
-                String pidParam = getPidParam2(lmd, url + id);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(url + id));
+                String pidParam = EscidocTestBase.getAssignPidTaskParam(new DateTime(lmd), assignPidParam);
+
                 pidXml = handleXmlResult(assignObjectPid(id, pidParam));
 
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
@@ -547,7 +557,11 @@ public class ItemClient extends ClientBase
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(resDoc);
                 }
-                String pidParam = getPidParam2(lmd, url + versionId);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(url + versionId));
+                String pidParam = EscidocTestBase.getAssignPidTaskParam(new DateTime(lmd), assignPidParam);
+
                 pidXml = handleResult(assignVersionPid(versionId, pidParam));
 
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);

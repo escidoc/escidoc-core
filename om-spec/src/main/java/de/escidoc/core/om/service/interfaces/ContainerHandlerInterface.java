@@ -2396,6 +2396,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         SystemException, InvalidXmlException;
@@ -2506,6 +2507,7 @@ public interface ContainerHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;

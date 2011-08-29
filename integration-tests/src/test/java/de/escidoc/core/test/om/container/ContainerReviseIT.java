@@ -28,12 +28,16 @@
  */
 package de.escidoc.core.test.om.container;
 
+import java.net.URL;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -141,17 +145,30 @@ public class ContainerReviseIT extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
-                pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
+
+                assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+                pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
+                        assignPidParam);
+
                 assignObjectPid(this.theContainerId, pidParam);
             }
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -183,17 +200,30 @@ public class ContainerReviseIT extends ContainerTestBase {
         assertXmlValidResult(resultXml);
 
         String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
-                pidParam = getPidParam(this.theContainerId, "http://somewhere" + this.theContainerId);
+
+                assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+                pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
+                        assignPidParam);
+
                 assignObjectPid(this.theContainerId, pidParam);
             }
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 

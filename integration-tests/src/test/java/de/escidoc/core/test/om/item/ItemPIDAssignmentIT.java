@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.fedora.Client;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -102,13 +103,25 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(itemId, "http://somewhere" + itemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
             objectPid = assignObjectPid(itemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(itemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
         release(itemId, getTheLastModificationParam(itemId, false));
@@ -140,7 +153,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         String versionId = getObjidWithoutVersion(itemId) + ":1";
 
         assignObjectPid(versionId, pidParam);
@@ -174,11 +191,15 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
         assignObjectPid(itemId, pidParam);
 
-        pidParam = getPidParam(itemId, itemUrl + itemId);
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
         // re-assign objectPid
         try {
@@ -295,16 +316,25 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         itemDoc = EscidocAbstractTest.getDocument(itemXml);
         lmd = getTheLastModificationDate(itemDoc);
-        String pidParam = getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
 
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(itemId, "http://somewhere" + itemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
             pidXml = assignObjectPid(itemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(versionId, "http://somewhere" + versionId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + versionId));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
             pidXml = assignVersionPid(versionId, pidParam);
         }
 
@@ -325,7 +355,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         // re-assign PID to version versionNumber (2)
         // -----------------------------
         try {
-            pidParam = getPidParam(versionId, itemUrl + versionId);
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + versionId));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
             assignVersionPid(versionId, pidParam);
             fail("InvalidStatusException expected. ");
         }
@@ -542,7 +576,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         // assign PID without specifying the version number
         String pidXml = null;
         try {
-            String pidParam = getPidParam(id, itemUrl + id);
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL(this.itemUrl + id));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+
             pidXml = assignVersionPid(id, pidParam);
         }
         catch (final Exception e) {
@@ -680,7 +718,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String newItemXml = null;
 
         Node currentVersionPid = null;
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
         // create more versions -----------------------------------------------
         for (int i = 1; i < maxVersion; i++) {
@@ -695,7 +737,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         }
 
         // set object pid ---------------------------------------------------
-        pidParam = getPidParam(itemId, itemUrl + itemId);
+
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         pid = assignObjectPid(itemId, pidParam);
 
         // check
@@ -708,7 +752,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // set version pid ----------------------------------------------------
         String versionId = itemId + ":" + versionNumberPid;
-        pidParam = getPidParam(versionId, itemUrl + versionId);
+
+        assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
         pid = assignVersionPid(versionId, pidParam);
 
         // check if no other version was altered ------------------------------
@@ -812,12 +861,17 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Node node = selectSingleNode(itemDoc, XPATH_ITEM_VERSION_NUMBER);
         String versionId = itemId + ":" + node.getTextContent();
 
-        String pidParam = getPidParam(versionId, itemUrl + versionId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + versionId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
         assignVersionPid(itemId, pidParam);
         noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
         assertTrue("assignVersionPid has written a release/pid into RELS-EXT", noOfReleasePids == 0);
 
-        pidParam = getPidParam(itemId, itemUrl + itemId);
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         assignObjectPid(itemId, pidParam);
         noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
         assertTrue("assignObjectPid has written a release/pid into RELS-EXT", noOfReleasePids == 0);
@@ -855,7 +909,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
             assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
 
-            pidParam = getPidParam(itemId, itemUrl + i);
+            assignPidParam.setUrl(new URL(this.itemUrl + i));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
             assignVersionPid(itemId, pidParam);
             noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
             assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
@@ -1028,8 +1085,14 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
             // assign objectPid after release - if it is allowed through config
             if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidAfterRelease", "true")) {
+
                 String id = getObjidWithoutVersion(itemId);
-                String pidParam = getPidParam(id, itemUrl + id);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(this.itemUrl + id));
+                String pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+
                 String pidXML = assignObjectPid(id, pidParam);
 
                 assertXmlValidItem(itemXml);
@@ -1038,7 +1101,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             else {
                 // check if the right exception is thrown
                 String id = getObjidWithoutVersion(itemId);
-                String pidParam = getPidParam(id, itemUrl + id);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(this.itemUrl + id));
+                String pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
 
                 try {
                     assignObjectPid(id, pidParam);
@@ -1081,14 +1148,22 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(itemDoc);
                 }
-                String pidParam = getPidParam(versionId, itemUrl + versionId);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(this.itemUrl + versionId));
+                String pidParam =
+                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))),
+                        assignPidParam);
                 String pidXML = assignVersionPid(versionId, pidParam);
                 compareItemVersionPid(itemId, pidXML);
             }
 
             // release with objectPID
             String id = getObjidWithoutVersion(itemId);
-            String pidParam = getPidParam(id, itemUrl + id);
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL(this.itemUrl + id));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
             String pidXML = assignObjectPid(id, pidParam);
 
             assertXmlValidItem(itemXml);
@@ -1143,7 +1218,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemId = getObjidValue(itemDoc);
 
-        String pidParam = getPidParam2(new DateTime(lmdCreate, DateTimeZone.UTC), new URL(itemUrl + itemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam = getAssignPidTaskParam(new DateTime(lmdCreate, DateTimeZone.UTC), assignPidParam);
         String pidXML = assignObjectPid(itemId, pidParam);
 
         Document pidDoc = EscidocAbstractTest.getDocument(pidXML);
@@ -1172,7 +1249,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemVersionId = getObjidValue(itemDoc) + ":1";
 
-        String pidParam = getPidParam2(new DateTime(lmdCreate, DateTimeZone.UTC), new URL(itemUrl + itemVersionId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemVersionId));
+        String pidParam = getAssignPidTaskParam(new DateTime(lmdCreate, DateTimeZone.UTC), assignPidParam);
+
         String pidXML = assignVersionPid(itemVersionId, pidParam);
 
         Document pidDoc = EscidocAbstractTest.getDocument(pidXML);
@@ -1206,7 +1286,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemId = getObjidValue(itemDoc);
 
         String pidXml = null;
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         try {
             pidXml = assignVersionPid(itemId, pidParam);
         }
@@ -1242,7 +1325,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemVersionId = null;
         String newItemXml = null;
 
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
         // create more versions -----------------------------------------------
         for (int i = 1; i < maxVersion; i++) {
@@ -1257,7 +1343,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         }
 
         // set object pid ---------------------------------------------------
-        pidParam = getPidParam(itemId, itemUrl + itemId);
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         pid = assignObjectPid(itemId, pidParam);
 
         // check
@@ -1272,7 +1360,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Class<?> ec = ReadonlyVersionException.class;
 
         String versionId = itemId + ":" + versionNumberPid;
-        pidParam = getPidParam(versionId, itemUrl + versionId);
+
+        assignPidParam.setUrl(new URL(this.itemUrl + versionId));
+        pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
         try {
             pid = assignVersionPid(versionId, pidParam);
         }
@@ -1297,7 +1389,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         assertNull(itemDoc.getElementById(NAME_PID));
 
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         String resultXml = assignObjectPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
@@ -1330,7 +1426,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         assertNull(itemDoc.getElementById(NAME_PID));
 
-        String pidParam = getPidParam(itemId, itemUrl + itemId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         String resultXml = assignVersionPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
@@ -1347,7 +1447,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // now check last-modification-date for the whole assignment chain and
         // for later versions
-        pidParam = getPidParam2(new DateTime(lmdResult, DateTimeZone.UTC), new URL(itemUrl + itemId));
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        pidParam = getAssignPidTaskParam(new DateTime(lmdResult, DateTimeZone.UTC), assignPidParam);
+
         resultXml = assignObjectPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
         pidDoc = EscidocAbstractTest.getDocument(resultXml);
@@ -1363,7 +1465,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         itemXml = addElement(itemXml, xPath + "/nix");
         itemXml = update(itemId, itemXml);
 
-        pidParam = getPidParam(itemId, itemUrl + itemId);
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+
         resultXml = assignVersionPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
@@ -1392,7 +1496,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        String pidParam = getPidParam2(new DateTime(wrongLmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam = getAssignPidTaskParam(new DateTime(wrongLmd, DateTimeZone.UTC), assignPidParam);
+
         try {
             assignVersionPid(itemId, pidParam);
             fail("Missing OptimisticalLockingException");
@@ -1418,7 +1525,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        String pidParam = getPidParam2(new DateTime(wrongLmd, DateTimeZone.UTC), new URL(itemUrl + itemId));
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam = getAssignPidTaskParam(new DateTime(wrongLmd, DateTimeZone.UTC), assignPidParam);
+
         try {
             assignObjectPid(itemId, pidParam);
             fail("Missing OptimisticalLockingException");
@@ -1605,7 +1715,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         if (versionNumber == null) {
             versionId = getLatestVersionObjidValue(itemDoc);
         }
-        String pidParam = getPidParam(versionId, itemUrl + versionId);
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + versionId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
         String versionPid = assignVersionPid(versionId, pidParam);
         String retrievedItem = retrieve(versionId);
 
@@ -1649,8 +1762,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             assertNull(selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID));
         }
         String id = getObjidWithoutVersion(itemId);
-        String pidParam = getPidParam(id, itemUrl + id);
-        return (assignObjectPid(id, pidParam));
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + id));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+        return assignObjectPid(id, pidParam);
     }
 
     /**

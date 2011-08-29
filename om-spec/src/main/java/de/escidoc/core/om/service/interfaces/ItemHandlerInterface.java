@@ -2318,6 +2318,7 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided Item version id is not a latest version.
      */
+    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -2431,6 +2432,7 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -2549,6 +2551,7 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided item version id is not a latest version.
      */
+    @Validate(param = 2, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,

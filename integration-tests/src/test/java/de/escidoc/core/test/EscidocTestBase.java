@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test;
 
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -2717,6 +2718,34 @@ public abstract class EscidocTestBase {
 
         if (revocationRemark != null) {
             xml += "<revocation-remark>" + revocationRemark + "</revocation-remark>\n";
+        }
+
+        xml += "</param>\n";
+
+        return xml;
+    }
+
+    /**
+     * Get task param XML for assing PID methods (see assing-pid-task-param.xsd)
+     * 
+     * @param timestamp
+     *            Last modification date
+     * @param param
+     *            Assign PID parameter
+     * @return task param XML (assign-pid-task-param.xsd)
+     */
+    public static String getAssignPidTaskParam(final DateTime timestamp, final AssignParam param) {
+
+        String xml =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/assign-pid-task-param/0.1\" last-modification-date=\""
+                + DateTimeJaxbConverter.printDate(timestamp) + "\">";
+
+        if (param.getUrl() != null) {
+            xml += "<url>" + param.getUrl() + "</url>\n";
+        }
+        if (param.getPid() != null) {
+            xml += "<pid>" + param.getPid() + "</pid>\n";
         }
 
         xml += "</param>\n";

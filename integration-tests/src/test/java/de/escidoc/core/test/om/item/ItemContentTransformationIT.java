@@ -27,9 +27,13 @@
  */
 package de.escidoc.core.test.om.item;
 
+import java.net.URL;
+
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -73,7 +77,13 @@ public class ItemContentTransformationIT extends ItemTestBase {
 
             submit(itemId, getTheLastModificationParam(false, itemId));
             String versionId = itemId + ":1";
-            assignVersionPid(versionId, getPidParam(versionId, getFrameworkUrl() + "/ir/item/" + versionId));
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+
+            assignVersionPid(versionId, pidParam);
 
             release(itemId, getTheLastModificationParam(false, itemId));
 

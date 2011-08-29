@@ -28,7 +28,10 @@
  */
 package de.escidoc.core.test.om.item;
 
+import java.net.URL;
+
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
@@ -98,13 +101,26 @@ public class ItemReleaseOaiIT extends ItemTestBase {
                     String pidParam;
                     if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
                         && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-                        pidParam = getPidParam(this.theItemId, "http://somewhere" + this.theItemId);
+
+                        AssignParam assignPidParam = new AssignParam();
+                        assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+                        pidParam =
+                            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                                assignPidParam);
+
                         assignObjectPid(this.theItemId, pidParam);
                     }
                     if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
                         && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
                         String latestVersion = getLatestVersionObjidValue(theItemXml);
-                        pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+                        AssignParam assignPidParam = new AssignParam();
+                        assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+                        pidParam =
+                            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                                assignPidParam);
+
                         assignVersionPid(latestVersion, pidParam);
                     }
 

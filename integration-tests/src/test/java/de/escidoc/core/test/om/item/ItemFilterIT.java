@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
@@ -39,6 +40,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -640,13 +642,26 @@ public class ItemFilterIT extends ItemTestBase {
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam(theItemId, "http://somewhere" + this.theItemId);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+                    assignPidParam);
+
             assignObjectPid(theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
             String latestVersion = getLatestVersionObjidValue(theItemXml);
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 
@@ -679,7 +694,13 @@ public class ItemFilterIT extends ItemTestBase {
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
             String latestVersion = getLatestVersionObjidValue(retrieve(theItemId));
-            pidParam = getPidParam(latestVersion, "http://somewhere" + latestVersion);
+
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
+                    assignPidParam);
+
             assignVersionPid(latestVersion, pidParam);
         }
 

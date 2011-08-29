@@ -29,6 +29,8 @@
 package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -37,6 +39,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -490,7 +493,14 @@ public class ContainerClient extends ClientBase
             Node pid = selectSingleNode(resDoc, xpathObjectPid);
             if (pid == null) {
                 String id = getObjidWithoutVersion(containerId);
-                String pidParam = getPidParam(id, url + id);
+
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(url + id));
+                String pidParam =
+                    EscidocTestBase.getAssignPidTaskParam(EscidocTestBase
+                        .getLastModificationDateValue2(EscidocAbstractTest.getDocument(handleXmlResult(retrieve(id)))),
+                        assignPidParam);
+
                 assignObjectPid(id, pidParam);
             }
         }
@@ -506,7 +516,13 @@ public class ContainerClient extends ClientBase
                 if (versionNumber == null) {
                     versionId = getLatestVersionObjidValue(resDoc);
                 }
-                String pidParam = getPidParam(versionId, url + versionId);
+                AssignParam assignPidParam = new AssignParam();
+                assignPidParam.setUrl(new URL(url + versionId));
+                String pidParam =
+                    EscidocTestBase.getAssignPidTaskParam(EscidocTestBase
+                        .getLastModificationDateValue2(EscidocAbstractTest
+                            .getDocument(handleXmlResult(retrieve(versionId)))), assignPidParam);
+
                 assignVersionPid(versionId, pidParam);
             }
         }

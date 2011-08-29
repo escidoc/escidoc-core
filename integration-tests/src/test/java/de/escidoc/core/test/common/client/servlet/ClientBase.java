@@ -935,39 +935,6 @@ public abstract class ClientBase {
     }
 
     /**
-     * Create a Param structure for PID assignments. The last-modification-date is retrieved from the by id selected
-     * object.
-     * 
-     * @param id
-     *            The object Id
-     * @param url
-     *            URL of the resource (not checked)
-     * @return param XML snippet.
-     * @throws Exception
-     *             Thrown if getTheLastModificationDate() fails.
-     */
-    protected final String getPidParam(final String id, final String url) throws Exception {
-
-        String param =
-            "<param last-modification-date=\"" + getTheLastModificationDate(id) + "\"><url>" + url + "</url></param>";
-        return (param);
-    }
-
-    /**
-     * Create a Param structure for PID assignments.
-     * 
-     * @param lstModDate
-     *            The last-modification-date.
-     * @param url
-     *            URL of the resource (not checked)
-     * @return param XML snippet.
-     */
-    protected final String getPidParam2(final String lstModDate, final String url) {
-        String param = "<param last-modification-date=\"" + lstModDate + "\"><url>" + url + "</url></param>";
-        return (param);
-    }
-
-    /**
      * Returns the xml data of the provided result.
      * 
      * @param result

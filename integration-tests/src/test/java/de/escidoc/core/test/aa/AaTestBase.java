@@ -29,6 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -2255,11 +2256,12 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.assignObjectPid(getObjidValue(document),
-                    getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.assignObjectPid(getObjidValue(document), getAssignPidTaskParam(
+                    getLastModificationDateValue2(document), new AssignParam()));
             }
             else {
-                contentRelationClient.assignObjectPid(UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.assignObjectPid(UNKNOWN_ID, getAssignPidTaskParam(
+                    getLastModificationDateValue2(document), new AssignParam()));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
