@@ -377,9 +377,11 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(createItem());
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
-        String taskParam =
-            "<param last-modification-date=\"" + getLastModificationDateValue(itemDoc) + "\">\n" + "<pid></pid>\n"
-                + "</param>";
+        
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid("");
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
+
         Class<?> ec = XmlCorruptedException.class;
 
         try {
