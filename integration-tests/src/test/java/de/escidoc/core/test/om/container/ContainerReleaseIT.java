@@ -139,7 +139,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
-            //            assignPidParam.setUrl(new URL("http://somewhere" + this.theSubcontainerId));
+            //            assignPidParam.setUrl(new URL("http://somewhere/" + this.theSubcontainerId));
             //            pidParam =
             //                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theSubcontainerId))),
             //                    assignPidParam);
@@ -150,7 +150,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             String latestVersion = getLatestVersionObjidValue(retrieve(this.theSubcontainerId));
 
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -166,7 +166,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
                     assignPidParam);
@@ -178,7 +178,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             String latestVersion = getLatestVersionObjidValue(retrieve(this.theContainerId));
 
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -230,7 +230,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
                     assignPidParam);
@@ -241,7 +241,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
 
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -417,7 +417,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
@@ -427,7 +427,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
@@ -461,7 +461,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
@@ -471,7 +471,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));

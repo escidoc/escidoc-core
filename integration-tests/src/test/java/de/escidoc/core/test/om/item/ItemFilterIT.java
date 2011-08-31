@@ -644,7 +644,7 @@ public class ItemFilterIT extends ItemTestBase {
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + this.theItemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
                     assignPidParam);
@@ -657,7 +657,7 @@ public class ItemFilterIT extends ItemTestBase {
             String latestVersion = getLatestVersionObjidValue(theItemXml);
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -696,7 +696,7 @@ public class ItemFilterIT extends ItemTestBase {
             String latestVersion = getLatestVersionObjidValue(retrieve(theItemId));
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);

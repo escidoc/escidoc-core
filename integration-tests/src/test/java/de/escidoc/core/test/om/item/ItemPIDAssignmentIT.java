@@ -105,7 +105,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -117,7 +117,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             String latestVersion = getLatestVersionObjidValue(itemXml);
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -321,7 +321,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             String pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -331,7 +331,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + versionId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + versionId));
             String pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
 
@@ -356,7 +356,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         // -----------------------------
         try {
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL("http://somewhere" + versionId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + versionId));
             String pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
 

@@ -90,7 +90,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -162,7 +162,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -253,7 +253,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -303,7 +303,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -369,7 +369,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -463,7 +463,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         assignVersionPid(itemId, pidParam);
@@ -535,7 +535,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         assignVersionPid(itemId, pidParam);
@@ -559,13 +559,13 @@ public class SurrogateItemIT extends ItemTestBase {
         submit(surrogateId, param);
 
         // add object and version pid to release
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), assignPidParam);
 
         assignVersionPid(surrogateId, pidParam);
 
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), assignPidParam);
         assignObjectPid(surrogateId, pidParam);
@@ -607,7 +607,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -668,7 +668,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -731,7 +731,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
@@ -783,7 +783,7 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+        assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         assignVersionPid(itemId, pidParam);

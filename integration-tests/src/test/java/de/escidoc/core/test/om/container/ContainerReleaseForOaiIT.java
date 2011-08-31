@@ -221,7 +221,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
@@ -231,7 +231,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + containerId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
@@ -265,7 +265,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
@@ -275,7 +275,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + itemId));
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
             pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));

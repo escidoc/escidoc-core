@@ -151,7 +151,7 @@ public class ContainerReviseIT extends ContainerTestBase {
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
 
-                assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+                assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
                 pidParam =
                     getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
                         assignPidParam);
@@ -164,7 +164,7 @@ public class ContainerReviseIT extends ContainerTestBase {
 
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
 
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
@@ -206,7 +206,7 @@ public class ContainerReviseIT extends ContainerTestBase {
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
             if (selectSingleNode(EscidocAbstractTest.getDocument(theContainerXml), "/container/properties/pid") == null) {
 
-                assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId));
+                assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
                 pidParam =
                     getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
                         assignPidParam);
@@ -219,7 +219,7 @@ public class ContainerReviseIT extends ContainerTestBase {
 
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
 
-            assignPidParam.setUrl(new URL("http://somewhere" + latestVersion));
+            assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);

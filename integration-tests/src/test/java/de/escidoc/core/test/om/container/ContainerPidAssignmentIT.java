@@ -129,7 +129,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId + "/" + System.nanoTime()));
+            assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId + "/" + System.nanoTime()));
             pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
 
             objectPidXml = assignObjectPid(this.theContainerId, pidParam);
@@ -139,7 +139,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            assignPidParam.setUrl(new URL("http://somewhere" + this.theContainerId + "/" + System.nanoTime()));
+            assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId + "/" + System.nanoTime()));
             pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
 
             versionPidXml = assignVersionPid(this.theContainerId, pidParam);
@@ -487,9 +487,9 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         String containerId = getObjidValue(containerDoc);
         String lmd = getLastModificationDateValue(containerDoc);
 
-        String taskParam = "<param last-modification-date=\"" + lmd + "\">\n" + "<pid></pid>\n"
-        // +"<url>" + this.itemUrl + itemId + "</url>\n"
-            + "</param>";
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid("");
+        String taskParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
 
         Class<?> ec = XmlCorruptedException.class;
 
