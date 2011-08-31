@@ -349,9 +349,10 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
         String pidToRegister = "hdl:testPrefix/" + componentId;
-        String taskParam =
-            "<param last-modification-date=\"" + getLastModificationDateValue(itemDoc) + "\">\n" + "<pid>"
-                + pidToRegister + "</pid>\n" + "</param>";
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid(pidToRegister);
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
         String pidXML = assignContentPid(itemId, componentId, taskParam);
         Document pidDoc = getDocument(pidXML);
         Node returnedPid = selectSingleNode(pidDoc, XPATH_RESULT_PID);
