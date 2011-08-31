@@ -1551,12 +1551,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemXml = createItem();
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
-        String lmd = getLastModificationDateValue(itemDoc);
 
         String pidToRegister = "hdl:testPrefix/" + itemId;
-        String taskParam = "<param last-modification-date=\"" + lmd + "\">\n" + "<pid>" + pidToRegister + "</pid>\n"
-        // +"<url>" + this.itemUrl + itemId + "</url>\n"
-            + "</param>";
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid(pidToRegister);
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
 
         String pidXML = assignObjectPid(itemId, taskParam);
         compareItemObjectPid(itemId, pidXML);
@@ -1578,12 +1578,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemXml = createItem();
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
-        String lmd = getLastModificationDateValue(itemDoc);
 
         String pidToRegister = "hdl:testPrefix/" + itemId;
-        String taskParam = "<param last-modification-date=\"" + lmd + "\">\n" + "<pid>" + pidToRegister + "</pid>\n"
-        // +"<url>" + this.itemUrl + itemId + "</url>\n"
-            + "</param>";
+
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid(pidToRegister);
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
 
         String pidXML = assignVersionPid(itemId, taskParam);
         compareItemVersionPid(itemId, pidXML);
@@ -1607,8 +1607,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid("");
-        String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
 
         Class<?> ec = XmlCorruptedException.class;
 
@@ -1632,11 +1631,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemXml = createItem();
         Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
-        String lmd = getLastModificationDateValue(itemDoc);
 
-        String taskParam = "<param last-modification-date=\"" + lmd + "\">\n" + "<pid></pid>\n"
-        // +"<url>" + this.itemUrl + itemId + "</url>\n"
-            + "</param>";
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid("");
+        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
 
         Class<?> ec = XmlCorruptedException.class;
 

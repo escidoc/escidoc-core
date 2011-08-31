@@ -378,7 +378,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         Document itemDoc = EscidocAbstractTest.getDocument(createItem());
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
-        
+
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid("");
         String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
