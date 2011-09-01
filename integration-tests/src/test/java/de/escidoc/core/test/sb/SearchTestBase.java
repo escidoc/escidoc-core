@@ -29,6 +29,8 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -38,11 +40,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import static org.junit.Assert.assertEquals;
 
@@ -468,11 +474,15 @@ public class SearchTestBase extends SbTestBase {
      *             Thrown if anything fails.
      */
     protected final String getItemPidParam(final String itemId) throws Exception {
+
         String xml = item.retrieve(itemId);
-        String lastModDate = getLastModificationDate(xml);
-        String url = getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId;
-        String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
-        return (param);
+        DateTime lastModDate = new DateTime(getLastModificationDate(xml));
+
+        AssignParam assignPidParm = new AssignParam();
+        assignPidParm.setUrl(new URL(getFrameworkUrl()
+            + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId));
+
+        return EscidocTestBase.getAssignPidTaskParam(lastModDate, assignPidParm);
     }
 
     /**
@@ -486,12 +496,15 @@ public class SearchTestBase extends SbTestBase {
      *             Thrown if anything fails.
      */
     protected final String getContainerPidParam(final String containerId) throws Exception {
+
         String xml = container.retrieve(containerId);
-        String lastModDate = getLastModificationDate(xml);
-        String url =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId;
-        String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
-        return (param);
+        DateTime lastModDate = new DateTime(getLastModificationDate(xml));
+
+        AssignParam assignPidParm = new AssignParam();
+        assignPidParm.setUrl(new URL(getFrameworkUrl()
+            + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId));
+
+        return EscidocTestBase.getAssignPidTaskParam(lastModDate, assignPidParm);
     }
 
     /**
