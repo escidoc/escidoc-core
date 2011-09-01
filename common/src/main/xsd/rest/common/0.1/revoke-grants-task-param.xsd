@@ -29,7 +29,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="revocation-mark" type="xs:string" minOccurs="0"/>
+				<xs:element name="revocation-remark" type="xs:string" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
