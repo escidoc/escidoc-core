@@ -919,15 +919,15 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
     @Test
     public void testPidParameter02() throws Exception {
 
+        String pidToRegister = "hdl:testPrefix/" + containerId;
         String containerXml = this.theContainerXml;
         Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
         String containerId = getObjidValue(containerDoc);
-        String lmd = getLastModificationDateValue(containerDoc);
+        DateTime lmd = getLastModificationDateValue2(containerDoc);
 
-        String pidToRegister = "hdl:testPrefix/" + containerId;
-        String taskParam = "<param last-modification-date=\"" + lmd + "\">\n" + "<pid>" + pidToRegister + "</pid>\n"
-        // +"<url>" + this.itemUrl + itemId + "</url>\n"
-            + "</param>";
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setPid(pidToRegister);
+        String taskParam = getAssignPidTaskParam(lmd, assignPidParam);
 
         String pidXML = assignVersionPid(containerId, taskParam);
         compareContainerVersionPid(containerId, pidXML);
