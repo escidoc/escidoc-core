@@ -2681,9 +2681,16 @@ public abstract class EscidocTestBase {
      */
     public String getUpdatePasswordTaskParam(final DateTime timestamp, final String password) {
 
-        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-            + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" last-modification-date=\""
-            + DateTimeJaxbConverter.printDate(timestamp) + "\" >" + "<password>" + password + "</password>\n</param>\n";
+        String taskParamXml =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" "
+                + "last-modification-date=\"" + DateTimeJaxbConverter.printDate(timestamp) + "\" >\n";
+        if (password != null) {
+            taskParamXml += "<password>" + password + "</password>\n";
+        }
+        taskParamXml += "</param>\n";
+
+        return taskParamXml;
     }
 
     /**

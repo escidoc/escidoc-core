@@ -1108,8 +1108,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
-        final String lastModificationDate = getLastModificationDateValue(createdDocument);
-        final String taskParamXML = "<param last-modification-date=\"" + lastModificationDate + "\" ></param>";
+        final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(createdDocument));
+        final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, null);
 
         try {
             updatePassword(id, taskParamXML);
