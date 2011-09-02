@@ -419,10 +419,10 @@ public final class EscidocConfiguration {
      */
     private static Properties getInternProperties(final String filename) throws IOException {
 
-        final Properties result = new Properties();
+        final Properties result = new Properties(); 
         
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
-        final Resource[] resource = applicationContext.getResources("classpath://filename");
+        final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {
             throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }
