@@ -1188,7 +1188,7 @@ public class GrantIT extends GrantTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected=XmlSchemaValidationException.class)
     public void testAARvg7_2() throws Exception {
 
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
@@ -1198,12 +1198,7 @@ public class GrantIT extends GrantTestBase {
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" "
                 + " last-modification-date=\"2008-01-01\" />";
 
-        try {
-            revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException(e);
-        }
+        revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
     }
 
     /**
