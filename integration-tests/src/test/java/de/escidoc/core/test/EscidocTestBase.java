@@ -2780,9 +2780,9 @@ public abstract class EscidocTestBase {
             for (final String id : ids) {
                 xml.append("<id>");
                 xml.append(id);
-                xml.append("</id>");
+                xml.append("</id>\n");
             }
-            xml.append("</filter>");
+            xml.append("</filter>\n");
         }
 
         if (revocationRemark != null) {
