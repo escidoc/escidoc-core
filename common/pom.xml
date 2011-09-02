@@ -27,6 +27,24 @@
 	<build>
 		<plugins>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**/docbook/**/*</exclude>
+								<exclude>**/sql/**/*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- execute maven with hibernate3:hbm2java to generate Hibernate classes -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -58,7 +76,7 @@
 							<artifactId>aspects</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
-                    <verbose>true</verbose>
+					<verbose>true</verbose>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -78,34 +96,34 @@
 
 	<dependencies>
 		<dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>policies</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>aspects</artifactId>
-        </dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>policies</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>aspects</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aa-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>st-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>adm-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>index-service-spec</artifactId>
 		</dependency>
@@ -113,7 +131,7 @@
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>statistic-service-spec</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>fedora-service-client</artifactId>
 		</dependency>
@@ -255,10 +273,10 @@
 			<groupId>org.codehaus.woodstox</groupId>
 			<artifactId>woodstox-core-asl</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>xmlunit</groupId>
-            <artifactId>xmlunit</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>xmlunit</groupId>
+			<artifactId>xmlunit</artifactId>
+		</dependency>
 	</dependencies>
 
 </project>
