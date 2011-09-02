@@ -1127,10 +1127,9 @@ public class UserAccountIT extends UserAccountTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected=XmlSchemaValidationException.class)
     public void testAAUup5() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final String lastModificationDate = "";
@@ -1138,14 +1137,8 @@ public class UserAccountIT extends UserAccountTestBase {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" "
                 + "last-modification-date=\"" + lastModificationDate + "\" ><password>password </password> </param>";
-        try {
-            updatePassword(id, taskParamXML);
-            failMissingException("Updating the password of an UserAccount has not been declined!", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Updating the password of an UserAccount with an empty "
-                + "last-modification timestamp has not been declined correctly.", ec, e);
-        }
+
+        updatePassword(id, taskParamXML);
     }
 
     /**
