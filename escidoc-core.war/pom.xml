@@ -13,7 +13,6 @@
 	<artifactId>escidoc-core-war</artifactId>
 	<packaging>war</packaging>
 	<name>eSciDoc Core - Web Archive</name>
-	<version>1.3.2-SNAPSHOT</version>
 	<description>eSciDoc Core Web Archive package</description>
 
 	<build>
