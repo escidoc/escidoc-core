@@ -7,11 +7,11 @@
 	<artifactId>adm</artifactId>
 	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Administration Service</name>
-	<version>1.3.2-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
+        <version>1.3.2-SNAPSHOT</version>
 	</parent>
 
 	<description>Administration Service package of eSciDoc Core</description>
