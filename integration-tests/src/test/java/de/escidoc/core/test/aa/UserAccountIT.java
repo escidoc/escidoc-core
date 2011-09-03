@@ -1102,23 +1102,15 @@ public class UserAccountIT extends UserAccountTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected=XmlSchemaValidationException.class)
     public void testAAUup4() throws Exception {
 
-        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(createdDocument));
         final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, null);
 
-        try {
-            updatePassword(id, taskParamXML);
-            failMissingException("Updating the password of an UserAccount has not been declined!", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Updating the password of an UserAccount without password has not"
-                + " been declined correctly.", ec, e);
-        }
+        updatePassword(id, taskParamXML);
     }
 
     /**
