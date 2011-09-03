@@ -27,7 +27,7 @@
 				<xs:element name="revocation-remark" type="xs:string" minOccurs="0"/>
 			</xs:all>
 			<xs:attribute name="last-modification-date" type="xs:dateTime"
-				use="required" />
+				use="optional" />
 				
 		</xs:complexType>
 	</xs:element>
