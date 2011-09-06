@@ -2797,6 +2797,68 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task parameter for status methods.
+     * 
+     * @param timestamp
+     *            Last modification date
+     * @param comment
+     *            The comment.
+     * @return task param XML (status-task-param.xsd)
+     */
+    public String getStatusTaskParam(final DateTime timestamp, final String comment) {
+
+        StringBuffer xml =
+            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" last-modification-date=\""
+                + DateTimeJaxbConverter.printDate(timestamp) + "\">");
+
+        if (comment != null) {
+            xml.append("<comment>");
+            xml.append(comment);
+            xml.append("</comment>\n");
+        }
+
+        xml.append("</param>\n");
+
+        return xml.toString();
+    }
+
+    /**
+     * Get task parameter for relation methods.
+     * 
+     * @param timestamp
+     *            Last modification date
+     * @param targetId
+     *            targetId for the relation
+     * @param predicate
+     *            predicate for the relation
+     * @return task param XML (relation-task-param.xsd)
+     */
+    public String getRelationTaskParam(final DateTime timestamp, final String targetId, String predicate) {
+
+        StringBuffer xml =
+            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<param xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\" last-modification-date=\""
+                + DateTimeJaxbConverter.printDate(timestamp) + "\">");
+
+        xml.append("<relation>\n");
+
+        xml.append("<targetId>");
+        xml.append(targetId);
+        xml.append("</targetId>\n");
+
+        xml.append("<predicate>");
+        xml.append(predicate);
+        xml.append("</predicate>\n");
+
+        xml.append("</relation>\n");
+
+        xml.append("</param>\n");
+
+        return xml.toString();
+    }
+
+    /**
      * Assert that the before timestamp is lower than the after timestamp.
      * 
      * @param before
