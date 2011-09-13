@@ -2720,8 +2720,7 @@ public abstract class EscidocTestBase {
 
         String xml =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" last-modification-date=\""
-                + DateTimeJaxbConverter.printDate(timestamp) + "\">";
+                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\">";
 
         if (revocationRemark != null) {
             xml += "<revocation-remark>" + revocationRemark + "</revocation-remark>\n";

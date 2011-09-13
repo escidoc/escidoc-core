@@ -1102,7 +1102,7 @@ public class UserAccountIT extends UserAccountTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(expected=XmlSchemaValidationException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testAAUup4() throws Exception {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
@@ -1119,7 +1119,7 @@ public class UserAccountIT extends UserAccountTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(expected=XmlSchemaValidationException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testAAUup5() throws Exception {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
@@ -1139,7 +1139,7 @@ public class UserAccountIT extends UserAccountTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(expected=XmlSchemaValidationException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testAAUup6() throws Exception {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");

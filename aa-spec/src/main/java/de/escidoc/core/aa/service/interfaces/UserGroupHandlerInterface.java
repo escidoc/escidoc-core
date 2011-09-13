@@ -379,7 +379,7 @@ public interface UserGroupHandlerInterface {
      * request:</b> (example)<br/>
      * <p/>
      * <pre>
-     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
+     * &lt;param&gt;
      * </pre>
      * <p/>
      * <pre>
