@@ -392,6 +392,7 @@
           <version>1.0.7</version>
         </plugin>
 
+		<!-- Maven Eclipse plugin is updating itself everytime you use it. Why stopping this behavior? -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>
@@ -564,7 +565,7 @@
           <dependency>
             <groupId>org.codehaus.woodstox</groupId>
             <artifactId>woodstox-core-asl</artifactId>
-            <version>4.0.9</version>
+            <version>${wstx.version}</version>
           </dependency>
           <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -1060,10 +1061,12 @@
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <jaxb2-basics.version>0.6.1</jaxb2-basics.version>
+    <!-- do not update jaxb.version to 2.2.4 because this will not work on JBoss 6(+) -->
+    <jaxb.version>2.2.3</jaxb.version>
     <aspectj.version>1.6.11</aspectj.version>
     <spring.version>3.0.5.RELEASE</spring.version>
     <cxf.version>2.4.2</cxf.version>
-    <camel.version>2.7.2</camel.version>
+    <camel.version>2.8.0</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.3.2.GA</hibernate.version>
     <junit.version>4.8.2</junit.version>
@@ -1081,7 +1084,7 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
-    <saxon.version>1.0.4</saxon.version>
+    <saxon.version>1.0.5</saxon.version>
     <escidoc.fedoragsearch.version>1.5.10</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.5.3</escidoc.srw.version>
     <srw.version>1.5.1</srw.version>
@@ -1090,7 +1093,7 @@
     <lucene.version>3.3.0</lucene.version>
     <java.source.version>1.6</java.source.version>
     <java.target.version>1.6</java.target.version>
-    <wstx.version>3.2.9</wstx.version>
+    <wstx.version>4.1.1</wstx.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -1243,31 +1246,6 @@
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-jpa_1.0_spec</artifactId>
     </dependency>
-
-    <!-- TODO: Delete this dependency after refectoring. -->
-    <dependency>
-      <groupId>jboss</groupId>
-      <artifactId>jboss</artifactId>
-    </dependency>
-    <!-- TODO: Delete this dependency after refectoring. -->
-    <dependency>
-      <groupId>jboss</groupId>
-      <artifactId>jboss-system</artifactId>
-    </dependency>
-    <!-- TODO: Delete this dependency after refectoring. -->
-    <dependency>
-      <groupId>jboss</groupId>
-      <artifactId>jbossall-client</artifactId>
-    </dependency>
-    <!-- TODO: Delete this dependency after refectoring. -->
-    <dependency>
-      <groupId>jboss</groupId>
-      <artifactId>jbosssx</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.findbugs</groupId>
-      <artifactId>annotations</artifactId>
-    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -1373,36 +1351,12 @@
         <version>1.1.2</version>
         <scope>provided</scope>
       </dependency>
-
-      <!-- TODO: Delete this dependency after refectoring. -->
+      <!-- JMS -->
       <dependency>
-        <groupId>jboss</groupId>
-        <artifactId>jboss</artifactId>
-        <version>4.2.3.GA</version>
-        <scope>provided</scope>
+        <groupId>javax.jms</groupId>
+        <artifactId>jms-api</artifactId>
+        <version>1.1-rev-1</version>
       </dependency>
-      <!-- TODO: Delete this dependency after refectoring. -->
-      <dependency>
-        <groupId>jboss</groupId>
-        <artifactId>jboss-system</artifactId>
-        <version>4.3.0.GA_CP03</version>
-        <scope>provided</scope>
-      </dependency>
-      <!-- TODO: Delete this dependency after refectoring. -->
-      <dependency>
-        <groupId>jboss</groupId>
-        <artifactId>jbossall-client</artifactId>
-        <version>4.2.2.GA</version>
-        <scope>provided</scope>
-      </dependency>
-      <!-- TODO: Delete this dependency after refectoring. -->
-      <dependency>
-        <groupId>jboss</groupId>
-        <artifactId>jbosssx</artifactId>
-        <version>3.2.3</version>
-        <scope>provided</scope>
-      </dependency>
-
       <!-- Commons Libraries -->
       <dependency>
         <groupId>commons-lang</groupId>
@@ -1618,6 +1572,21 @@
         <artifactId>jaxb2-basics-runtime</artifactId>
         <version>${jaxb2-basics.version}</version>
       </dependency>
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb1-impl</artifactId>
+        <version>2.1</version>
+      </dependency>
 
       <!-- JAX-RS -->
       <dependency>
@@ -1691,8 +1660,8 @@
             <artifactId>commons-logging</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -1746,6 +1715,10 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
@@ -1779,22 +1752,6 @@
         <version>1.0</version>
       </dependency>
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb1-impl</artifactId>
-        <version>2.1</version>
-      </dependency>
-      <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-impl</artifactId>
-        <version>2.2.4-1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
         <groupId>xml-apis</groupId>
         <artifactId>xml-apis</artifactId>
         <version>1.3.04</version>
@@ -1803,6 +1760,12 @@
         <groupId>xalan</groupId>
         <artifactId>xalan</artifactId>
         <version>2.7.1</version>
+        <exclusions>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>jaxen</groupId>
@@ -1940,7 +1903,7 @@
       <dependency>
         <groupId>org.codehaus.woodstox</groupId>
         <artifactId>woodstox-core-asl</artifactId>
-        <version>4.1.1</version>
+        <version>${wstx.version}</version>
       </dependency>
       <dependency>
         <groupId>JhoveApp</groupId>
@@ -2231,12 +2194,18 @@
         <groupId>org.apache.xmlgraphics</groupId>
         <artifactId>batik-ext</artifactId>
         <version>1.7</version>
+        <exclusions>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
-      <dependency>
-        <groupId>org.codehaus.woodstox</groupId>
-        <artifactId>wstx-asl</artifactId>
-        <version>${wstx.version}</version>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.codehaus.woodstox</groupId>-->
+<!--        <artifactId>wstx-asl</artifactId>-->
+<!--        <version>${wstx.version}</version>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>javolution</groupId>
         <artifactId>javolution</artifactId>
@@ -2292,7 +2261,7 @@
       </activation>
       <properties>
         <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
-          -Xnoagent</cargo.jvmdebug>
+          -Xnoagent -verbose:class</cargo.jvmdebug>
         <cargo.wait>true</cargo.wait>
       </properties>
     </profile>
