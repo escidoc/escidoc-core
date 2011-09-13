@@ -13,13 +13,19 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextTO;
+import org.escidoc.core.domain.sru.ExplainRequestTO;
+import org.escidoc.core.domain.sru.ScanRequestTO;
+import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -100,11 +106,20 @@ public interface ContextRestService {
     String retrieveResources(@PathParam("id") String id) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    /**
-     * FIXME Map
-     */
     @GET
-    String retrieveContexts(final Map<String, String[]> filter) throws MissingMethodParameterException, SystemException;
+    Stream retrieveContexts(
+        @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("xinfo-roleId") String xInfoRoleId,
+        @QueryParam("xinfo-userId") String xInfoUserId, @QueryParam("xinfo-hightlighting") String xInfoHighlighting)
+        throws MissingMethodParameterException, SystemException;
+
+    /* SearchRetrieveResponseTO */Stream retrieveContexts(SearchRetrieveRequestTO searchRetrieveRequestTO)
+        throws MissingMethodParameterException, SystemException;
+
+    /* ScanResponseTO */Stream retrieveContexts(ScanRequestTO searchRetrieveRequestTO)
+        throws MissingMethodParameterException, SystemException;
+
+    /* ExplainResponseTO */Stream retrieveContexts(final ExplainRequestTO searchRetrieveRequestTO)
+        throws MissingMethodParameterException, SystemException;
 
     /**
      * FIXME Map
