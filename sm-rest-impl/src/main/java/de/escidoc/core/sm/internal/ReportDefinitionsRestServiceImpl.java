@@ -30,8 +30,8 @@ package de.escidoc.core.sm.internal;
 
 import java.util.Map;
 
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.ReportDefinitionListTO;
-import org.escidoc.core.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
