@@ -125,7 +125,7 @@ public class ServiceUtility {
         // TODO
     }
 
-    public static final Map<String, String> toMap(final ExplainRequestType request) {
+    public static final Map<String, String> toMap(final ExplainRequestTO request) {
         return null;
     }
 

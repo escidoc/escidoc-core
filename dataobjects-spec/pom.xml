@@ -1,71 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
-    <modelVersion>4.0.0</modelVersion>
-	
-    <artifactId>dataobjects-spec</artifactId>
-	<name>eSciDoc Core - Dataobjects Spec.</name>
-	
-	<parent>
-        <groupId>org.escidoc.core</groupId>
-		<artifactId>eSciDocCore</artifactId>
-        <version>trunk-SNAPSHOT</version>
-    </parent>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-                    <generateDirectory>target/generated-sources/java</generateDirectory>
-                    <removeOldOutput>true</removeOldOutput>
-                    <extension>true</extension>
-                    <strict>true</strict>
-                    <verbose>true</verbose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <configuration>
-                    <aspectLibraries>
-                        <aspectLibrary>
-                            <groupId>org.escidoc.core</groupId>
-                            <artifactId>policies</artifactId>
-                        </aspectLibrary>
-                        <aspectLibrary>
-                            <groupId>org.escidoc.core</groupId>
-                            <artifactId>aspects</artifactId>
-                        </aspectLibrary>
-                    </aspectLibraries>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-	
-    <dependencies>
-        <dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>policies</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>aspects</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>utilities</artifactId>
-        </dependency>
-    </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>dataobjects-spec</artifactId>
+  <name>eSciDoc Core - Dataobjects Spec.</name>
+
+  <parent>
+    <groupId>org.escidoc.core</groupId>
+    <artifactId>eSciDocCore</artifactId>
+    <version>trunk-SNAPSHOT</version>
+  </parent>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+          <generateDirectory>target/generated-sources/java</generateDirectory>
+          <removeOldOutput>true</removeOldOutput>
+          <extension>true</extension>
+          <strict>true</strict>
+          <verbose>true</verbose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.apache.axis</groupId>
+                  <artifactId>axis</artifactId>
+                  <version>1.4</version>
+                  <type>jar</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                  <includes>org/apache/axis/types/NonNegativeInteger.class,org/apache/axis/types/PositiveInteger.class</includes>
+                </artifactItem>
+              </artifactItems>
+              <includes>**/*.class</includes>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <configuration>
+          <aspectLibraries>
+            <aspectLibrary>
+              <groupId>org.escidoc.core</groupId>
+              <artifactId>policies</artifactId>
+            </aspectLibrary>
+            <aspectLibrary>
+              <groupId>org.escidoc.core</groupId>
+              <artifactId>aspects</artifactId>
+            </aspectLibrary>
+          </aspectLibraries>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>policies</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>aspects</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>utilities</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
