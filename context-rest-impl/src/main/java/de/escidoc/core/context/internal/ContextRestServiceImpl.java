@@ -3,14 +3,26 @@
  */
 package de.escidoc.core.context.internal;
 
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.ExplainRequestTO;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ScanRequestTO;
+import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -37,6 +49,7 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.context.ContextRestService;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
@@ -156,8 +169,57 @@ public class ContextRestServiceImpl implements ContextRestService {
      * @see de.escidoc.core.context.ContextRestService#retrieveContexts(java.util.Map)
      */
     @Override
-    public String retrieveContexts(final Map<String, String[]> filter) throws MissingMethodParameterException,
+    public Stream retrieveContexts(
+        final SruSearchRequestParametersBean parameters, final String xInfoRoleId, final String xInfoUserId,
+        final String xInfoHighlighting) throws MissingMethodParameterException, SystemException {
+
+        final List<String> additionalParams = new LinkedList<String>();
+        additionalParams.add(xInfoRoleId);
+        additionalParams.add(xInfoUserId);
+        additionalParams.add(xInfoHighlighting);
+
+        final JAXBElement<? extends RequestType> requestTO =
+            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+
+        final String xml = contextHandler.retrieveContexts(ServiceUtility.toMap(requestTO));
+        final Stream stream = new Stream();
+        try {
+            stream.write(xml.getBytes("UTF-8"));
+            stream.lock();
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        return stream;
+    }
+
+    @Override
+    public Stream retrieveContexts(final SearchRetrieveRequestTO searchRetrieveRequestTO)
+        throws MissingMethodParameterException, SystemException {
+
+        final String xml = contextHandler.retrieveContexts(ServiceUtility.toMap(searchRetrieveRequestTO));
+        // TODO remove this code as soon as the business level returns a Stream or the ResponseTO
+        final Stream stream = new Stream();
+        try {
+            stream.write(xml.getBytes("UTF-8"));
+            stream.lock();
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        return stream;
+    }
+
+    @Override
+    public Stream retrieveContexts(final ScanRequestTO searchRetrieveRequestTO) throws MissingMethodParameterException,
         SystemException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Stream retrieveContexts(final ExplainRequestTO searchRetrieveRequestTO)
+        throws MissingMethodParameterException, SystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -241,5 +303,4 @@ public class ContextRestServiceImpl implements ContextRestService {
         // TODO Auto-generated method stub
         return null;
     }
-
 }
