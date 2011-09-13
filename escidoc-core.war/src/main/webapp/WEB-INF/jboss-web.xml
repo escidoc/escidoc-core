@@ -23,7 +23,6 @@
     <class-loading>
         <loader-repository>
             org.escidoc:loader=escidocClassLoader
-            <loader-repository-config>java2ParentDelegation=true</loader-repository-config>
         </loader-repository>
     </class-loading>
 </jboss-web>
