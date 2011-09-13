@@ -26,7 +26,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.guard.Guarded;
-import org.hibernate.validator.NotEmpty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
