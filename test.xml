@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<param xmlns="http://www.escidoc.org/schemas/revoke-grants-task-param/0.1"
-	last-modification-date="1970-01-01T00:00:00.000Z">
-	<filter>
-		<id>escidoc:123</id>
-	</filter>
-</param>
