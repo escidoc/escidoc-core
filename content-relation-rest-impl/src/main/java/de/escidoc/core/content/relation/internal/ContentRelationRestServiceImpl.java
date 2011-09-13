@@ -21,7 +21,7 @@
 package de.escidoc.core.content.relation.internal;
 
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
