@@ -33,7 +33,7 @@ import org.escidoc.core.domain.aa.GrantTO;
 import org.escidoc.core.domain.aa.UserGroupResourcesTO;
 import org.escidoc.core.domain.aa.UserGroupSelectorsTO;
 import org.escidoc.core.domain.aa.UserGroupTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

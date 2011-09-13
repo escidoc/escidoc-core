@@ -39,7 +39,7 @@ import org.escidoc.core.domain.aa.UserAccountPreferenceListTO;
 import org.escidoc.core.domain.aa.UserAccountPreferenceTO;
 import org.escidoc.core.domain.aa.UserAccountResourcesTO;
 import org.escidoc.core.domain.aa.UserAccountTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

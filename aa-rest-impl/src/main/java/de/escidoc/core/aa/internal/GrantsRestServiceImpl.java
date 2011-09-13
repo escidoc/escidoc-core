@@ -32,8 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.escidoc.core.domain.aa.GrantListTO;
-import org.escidoc.core.domain.parameters.SruSearchRequestParametersTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -66,7 +66,7 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
      */
     @Override
-    public GrantListTO retrieveGrants(final SruSearchRequestParametersTO filter) throws MissingMethodParameterException,
+    public GrantListTO retrieveGrants(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
         Map<String, String[]> params = new HashMap<String, String[]>();
         String[] arr = new String[1];

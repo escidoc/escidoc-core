@@ -30,7 +30,7 @@ package de.escidoc.core.aa.internal;
 
 import org.escidoc.core.domain.aa.PdpRequestsTO;
 import org.escidoc.core.domain.aa.PdpResultsTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

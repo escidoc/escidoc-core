@@ -31,7 +31,7 @@ package de.escidoc.core.aa.internal;
 import java.util.Map;
 
 import org.escidoc.core.domain.aa.RoleListTO;
-import org.escidoc.core.service.ServiceUtility;
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
