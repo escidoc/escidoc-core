@@ -152,6 +152,8 @@
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
     <!-- patch fedora.war by adding a jboss-web.xml -->
     <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-web.xml" />
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-scanning.xml" />
+    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-classloading.xml" />
     <!-- deploy fedora.war in JBoss -->
     <move file="${install.dir}/install.tmp/fedora.war" tofile="${install.dir}/jboss/server/default/deploy/fedora.war" force="true" />
     <antcall target="move-file-with-save">
