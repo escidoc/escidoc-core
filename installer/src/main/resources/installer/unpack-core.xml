@@ -106,9 +106,9 @@
 
     <!-- change JBoss port numbers -->
     <replace file="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml" token="8080" value="${EscidocPort}"/>
-    <math result="connectorPort" operand1="${EscidocPort}" operation="add" operand2="9" datatype="int"/>
+<!--    <math result="connectorPort" operand1="${EscidocPort}" operation="add" operand2="9" datatype="int"/>
     <replace file="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml" token="8009" value="${connectorPort}"/>
-
+-->
     <antcall target="move-file-with-save">
       <param name="source" value="${install.dir}/install.tmp/escidoc-core.custom.properties" />
       <param name="target" value="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties" />
