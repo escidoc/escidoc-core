@@ -28,22 +28,6 @@
  */
 package de.escidoc.core.common.business.filter;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -53,6 +37,30 @@ import java.net.URLEncoder;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Vector;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.z3950.zing.cql.CQLNode;
+import org.z3950.zing.cql.CQLParseException;
+import org.z3950.zing.cql.CQLParser;
+import org.z3950.zing.cql.CQLSortNode;
+import org.z3950.zing.cql.Modifier;
+import org.z3950.zing.cql.ModifierSet;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Abstract super class for all types of SRU requests.
@@ -184,6 +192,28 @@ public class SRURequest {
         final Writer output, final ResourceType[] resourceTypes, final String query, final int limit, final int offset,
         final Map<String, String> extraData, final RecordPacking recordPacking) throws WebserverSystemException {
         try {
+            String queryWithoutSortBy = query;
+            StringBuilder sortBy = new StringBuilder();
+            if (queryWithoutSortBy != null && queryWithoutSortBy.length() > 0) {
+                CQLParser cqlParser = new CQLParser();
+                CQLNode rootNode = cqlParser.parse(query);
+                if (rootNode instanceof CQLSortNode) {
+                    queryWithoutSortBy = ((CQLSortNode) rootNode).subtree.toCQL();
+                    Vector<ModifierSet> sorts = ((CQLSortNode) rootNode).getSortIndexes();
+                    if (sorts != null && !sorts.isEmpty()) {
+                        sortBy.append(" sortBy ");
+                        for (ModifierSet modifierSet : sorts) {
+                            sortBy.append("\"").append(modifierSet.getBase()).append("\"");
+                            if (modifierSet.getModifiers() != null && !modifierSet.getModifiers().isEmpty()) {
+                                for (Modifier modifier : modifierSet.getModifiers()) {
+                                    sortBy.append("/").append(modifier.toCQL());
+                                }
+                            }
+                            sortBy.append(" ");
+                        }
+                    }
+                }
+            }
             final StringBuilder resourceTypeQuery = new StringBuilder();
 
             for (final ResourceType resourceType : resourceTypes) {
@@ -196,16 +226,16 @@ public class SRURequest {
 
             final StringBuilder internalQuery = new StringBuilder();
 
-            if (query != null && query.length() > 0) {
+            if (queryWithoutSortBy != null && queryWithoutSortBy.length() > 0) {
                 if (resourceTypeQuery.length() > 0) {
                     internalQuery.append('(');
                     internalQuery.append(resourceTypeQuery);
                     internalQuery.append(") AND ");
                 }
-                internalQuery.append('(').append(query).append(')');
+                internalQuery.append('(').append(queryWithoutSortBy).append(')').append(sortBy);
             }
             else {
-                internalQuery.append(resourceTypeQuery);
+                internalQuery.append(resourceTypeQuery).append(sortBy);
             }
 
             String url =
@@ -260,6 +290,9 @@ public class SRURequest {
             }
         }
         catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        catch (CQLParseException e) {
             throw new WebserverSystemException(e);
         }
     }
