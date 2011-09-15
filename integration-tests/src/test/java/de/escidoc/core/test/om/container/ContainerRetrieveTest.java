@@ -29,6 +29,7 @@ x * CDDL HEADER START
 package de.escidoc.core.test.om.container;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -118,7 +119,6 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      */
     @Test
     public void testOM_RFLMC_1_2() throws Exception {
-
 
         Document containerDoc = getDocument(this.theContainerXml);
         String versionNumber =
@@ -281,6 +281,44 @@ public class ContainerRetrieveTest extends ContainerTestBase {
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@objid");
         }
         assertContainers(nodes);
+    }
+
+    /**
+     * Test retrieving Containers sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveContainersSorted() throws Exception {
+
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { 
+            "\"PID\"=escidoc* "
+            + "sortBy "
+            + "\"/sort/properties/public-status\"/sort.ascending "
+            + "\"/sort/last-modification-date\"/sort.descending" });
+        String xml = retrieveContainers(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+//        NodeList primNodes =
+//            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
+//                XPATH_SRW_CONTAINER_LIST_CONTAINER + "/properties/public-status");
+//        NodeList secNodes =
+//            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
+//                XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@last-modification-date");
+//        String lastPrim = "";
+//        String lastSec = "zzzzzzzzzz";
+//        for (int count = 0; count < primNodes.getLength(); count++) {
+//            if (primNodes.item(count).getNodeValue().compareTo(lastPrim) < 1) {
+//                assertTrue("wrong sortorder", false);
+//            }
+//            if (secNodes.item(count).getNodeValue().compareTo(lastSec) > 1) {
+//                assertTrue("wrong sortorder", false);
+//            }
+//            lastPrim = primNodes.item(count).getNodeValue();
+//            lastSec = secNodes.item(count).getNodeValue();
+//        }
     }
 
     @Test
