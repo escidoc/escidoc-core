@@ -136,6 +136,10 @@
       <variable name="AdminToolVersion" value="${admin-tool.version}" />
       <variable name="MigrationToolVersion" value="${migration-tool.version}" />
 
+      <variable name="FedoraGsearchVersion" value="${escidoc.fedoragsearch.version}" />
+      <variable name="SrwVersion" value="${escidoc.srw.version}" />
+      <variable name="SaxonVersion" value="${escidoc.saxon.version}" />
+
       <!-- JDK checks -->
       <variable name="JDKPathPanel.minVersion" value="1.6.0" />
       <variable name="JDKPathPanel.maxVersion" value="1.6.99" />
@@ -429,17 +433,17 @@
             <file src="../fedora/install/fedora.war" targetdir="$INSTALL_PATH/install.tmp" />
             <!-- Configuration files -->
             <!--file src="fedora/mpt-mysql.jar" targetdir="$INSTALL_PATH/fedora/WEB-INF/lib" / -->
-            <file src="../web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
+            <file src="../web.xml" targetdir="$INSTALL_PATH/install.tmp/fedora/WEB-INF" />
             <!-- file src="fedora/RISearchServlet.class" targetdir="$INSTALL_PATH/fedora/WEB-INF/classes/fedora/server/access" / -->
-            <parsable targetfile="$INSTALL_PATH/install.tmp/WEB-INF/web.xml" />
-            <file src="../fedora-users.xml" targetdir="$INSTALL_PATH/install.tmp" />
-            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora-users.xml" />
-            <file src="../fedora.fcfg" targetdir="$INSTALL_PATH/install.tmp" />
-            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora.fcfg" />
-            <file src="../staging/fedora/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/WEB-INF" />
-            <parsable targetfile="$INSTALL_PATH/install.tmp/WEB-INF/jboss-web.xml" />
-            <file src="config/fedora/log4j.properties" targetdir="$INSTALL_PATH/install.tmp" />
-            <file src="config/fedora/deny-everything-if-not-administrator.xml" targetdir="$INSTALL_PATH/install.tmp" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora/WEB-INF/web.xml" />
+            <file src="../fedora-users.xml" targetdir="$INSTALL_PATH/install.tmp/fedora" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora/fedora-users.xml" />
+            <file src="../fedora.fcfg" targetdir="$INSTALL_PATH/install.tmp/fedora" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora/fedora.fcfg" />
+            <file src="../staging/fedora/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/fedora/WEB-INF" />
+            <parsable targetfile="$INSTALL_PATH/install.tmp/fedora/WEB-INF/jboss-web.xml" />
+            <file src="config/fedora/log4j.properties" targetdir="$INSTALL_PATH/install.tmp/fedora" />
+            <file src="config/fedora/deny-everything-if-not-administrator.xml" targetdir="$INSTALL_PATH/install.tmp/fedora" />
         </pack>
         
         <pack name="eSciDoc Infrastructure" id="core.package" parent="escidoc.package" required="yes">
@@ -482,6 +486,23 @@
         <pack name="Migration Tool" id="migrationtool.package" parent="tools.package" required="yes" condition="upgradeEscidoc">
             <description/>
             <file src="packages/migration-tool/migration-tool-${MigrationToolVersion}.zip" targetdir="$INSTALL_PATH/tools" />
+        </pack>
+
+        <pack name="Fedora GSearch" id="fedoragsearch.package" parent="tools.package" required="yes">
+            <description/>
+            <file src="packages/fedoragsearch/fedoragsearch_full-${FedoraGsearchVersion}.war" targetdir="$INSTALL_PATH/services" />
+        </pack>
+
+        <pack name="SRW" id="srw.package" parent="tools.package" required="yes">
+            <description/>
+            <file src="../staging/srw/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/srw/WEB-INF" />
+            <file src="packages/srw/srw_full-${SrwVersion}.war" targetdir="$INSTALL_PATH/services" />
+        </pack>
+        
+        <pack name="Saxon" id="saxon.package" parent="tools.package" required="yes">
+            <description/>
+            <file src="../staging/saxon/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/saxon/WEB-INF" />
+            <file src="packages/saxon/saxon-${SaxonVersion}.war" targetdir="$INSTALL_PATH/services" />
         </pack>
 
         <!--pack name="Documentation" id="doc.package" required="no">
