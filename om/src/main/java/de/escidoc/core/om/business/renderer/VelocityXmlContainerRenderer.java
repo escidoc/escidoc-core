@@ -224,8 +224,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final StringBuffer query = tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
         if (query.length() > 0) {
-            query.append(tsu
-                .getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, XmlUtility.getObjidWithoutVersion(containerId), null, null, null));
+            query.append(tsu.getRetrieveWhereClause(true, TripleStoreUtility.PROP_MEMBER, XmlUtility
+                .getObjidWithoutVersion(containerId), null, null, null));
             List<String> ids = new ArrayList<String>();
             try {
                 ids = tsu.retrieve(query.toString());
