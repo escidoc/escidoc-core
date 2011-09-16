@@ -94,7 +94,7 @@
 				    <configuration>
 		          <webResources>
 		            <webResource>
-		              <directory>${basedir}/src/main/webapp-filtered </directory>
+		              <directory>${basedir}/src/main/webapp-filtered</directory>
 		              <filtering>true</filtering>
 		            </webResource>
 		          </webResources>
@@ -102,10 +102,18 @@
 		              (See http://maven.apache.org/plugins/maven-war-plugin/examples/skinny-wars.html for more details)
 		           -->
 		          <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+              <!-- Include JARs in the WAR, which are provided as endorsed by JBoss because with active isolation,
+                   classes may not be loaded from the EAR if not provided by the WAR and therefore loaded from JBoss 
+                   endorsed, which may cause conflicts.
+               -->
+              <!-- 
+              <packagingIncludes>WEB-INF/lib/xalan-${xalan.version}.jar,WEB-INF/lib/xercesImpl-${xercesImpl.version}.jar,**/*.xml,**/*.xsd,**/*.xsl,**/*.xslt,**/*.properties,**/*.class,**/*.css,**/*.js,**/*.jsp,**/*.txt,**/*.html,**/*.MF,**/*.png,**/*.jpg</packagingIncludes>
+              -->
 		          <archive>
 		            <manifest>
 		              <addClasspath>true</addClasspath>
-		              <classpathPrefix>WEB-INF/lib/</classpathPrefix>
+                  <!-- ref to ear -->
+		              <classpathPrefix>lib/</classpathPrefix>
 		            </manifest>
 		          </archive>
 		        </configuration>

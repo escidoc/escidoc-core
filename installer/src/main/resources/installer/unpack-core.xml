@@ -30,6 +30,9 @@
     <!-- Initializing the database is an optional task, therefore it should not be part  -->
     <!-- of the default build target. See EscidocAntAction.xml for further details       -->
     <!--antcall target="db-create-scripts" /-->
+    <antcall target="fedoragsearch"/>
+    <antcall target="srw"/>
+  	<antcall target="saxon"/>
   </target>
 
   <target name="init" description="Intialize runtime environment">
@@ -146,35 +149,35 @@
     <move file="${install.dir}/fedora-${timestamp}/data/objects" tofile="${install.dir}/fedora/data/objects" failonerror="false" />
     <move file="${install.dir}/fedora-${timestamp}/data/datastreams" tofile="${install.dir}/fedora/data/datastreams" failonerror="false" />
     <!-- patch fedora.war by replacing web.xml with customized version -->
-    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
+    <jar basedir="${install.dir}/install.tmp/fedora" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/web.xml"/>
     <!-- patch fedora.war by adding the database driver -->
-    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
-    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
+    <jar basedir="${install.dir}/install.tmp/fedora" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${DatabaseDriverFile}" />
+    <jar basedir="${install.dir}/install.tmp/fedora" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/lib/${OracleDDLGenerator}" />
     <!-- patch fedora.war by adding a jboss-web.xml -->
-    <jar basedir="${install.dir}/install.tmp" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-web.xml" />
+    <jar basedir="${install.dir}/install.tmp/fedora" update="yes" destfile="${install.dir}/install.tmp/fedora.war" includes="WEB-INF/jboss-web.xml" />
     <!-- deploy fedora.war in JBoss -->
     <antcall target="move-file-with-save">
       <param name="source" value="${install.dir}/install.tmp/fedora.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/fedora.war" />
     </antcall>
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/install.tmp/fedora-users.xml" />
+      <param name="source" value="${install.dir}/install.tmp/fedora/fedora-users.xml" />
       <param name="target" value="${install.dir}/fedora/server/config/fedora-users.xml" />
     </antcall>
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/install.tmp/fedora.fcfg" />
+      <param name="source" value="${install.dir}/install.tmp/fedora/fedora.fcfg" />
       <param name="target" value="${install.dir}/fedora/server/config/fedora.fcfg" />
     </antcall>
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/install.tmp/log4j.properties" />
+      <param name="source" value="${install.dir}/install.tmp/fedora/log4j.properties" />
       <param name="target" value="${install.dir}/fedora/server/config/log4j.properties" />
     </antcall>
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/install.tmp/deny-everything-if-not-administrator.xml" />
+      <param name="source" value="${install.dir}/install.tmp/fedora/deny-everything-if-not-administrator.xml" />
       <param name="target" value="${install.dir}/fedora/data/fedora-xacml-policies/repository-policies/deny-everything-if-not-administrator.xml" />
     </antcall>
     <delete file="${install.dir}/install.tmp/fedora-fedora.zip"/>
-    <delete dir="${install.dir}/install.tmp/WEB-INF"/>
+    <delete dir="${install.dir}/install.tmp/fedora"/>
     <chmod dir="${install.dir}/fedora/client/bin" perm="ugo+rx" includes="*.sh"/>
     <chmod dir="${install.dir}/fedora/server/bin" perm="ugo+rx" includes="*.sh"/>
   </target>
@@ -183,6 +186,33 @@
     <antcall target="move-file-with-save">
       <param name="source" value="${install.dir}/tools/AdminTool-${AdminToolVersion}.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/AdminTool.war" />
+    </antcall>
+  </target>
+
+  <target name="fedoragsearch" depends="init" description="Installs Fedora gsearch">
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/services/fedoragsearch_full-${FedoraGsearchVersion}.war" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/fedoragsearch.war" />
+    </antcall>
+  </target>
+
+  <target name="srw" depends="init" description="Installs Search and Retrieval Webservice">
+  	<!-- add isolation -->
+  	<jar basedir="${install.dir}/install.tmp/srw" update="yes" 
+  	     destfile="${install.dir}/services/srw_full-${SrwVersion}.war" includes="WEB-INF/jboss-web.xml" />
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/services/srw_full-${SrwVersion}.war" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/srw.war" />
+    </antcall>
+  </target>
+
+  <target name="saxon" depends="init" description="Saxon Webservice">
+  	<!-- add isolation -->
+  	<jar basedir="${install.dir}/install.tmp/saxon" update="yes" 
+  	         destfile="${install.dir}/services/saxon-${SaxonVersion}.war" includes="WEB-INF/jboss-web.xml" />
+    <antcall target="move-file-with-save">
+      <param name="source" value="${install.dir}/services/saxon-${SaxonVersion}.war" />
+      <param name="target" value="${install.dir}/jboss/server/default/deploy/saxon.war" />
     </antcall>
   </target>
 

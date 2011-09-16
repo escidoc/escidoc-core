@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ~ CDDL HEADER START ~ ~ The contents of this file are subject to the terms of the Common Development and Distribution 
-  License, Version 1.0 ~ only (the "License"). You may not use this file except in compliance with the License. ~ ~ You can 
-  obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License ~ for the specific 
-  language governing permissions and limitations under the License. ~ ~ When distributing Covered Code, include this CDDL HEADER 
-  in each file and include the License file at ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL 
-  HEADER, with the fields enclosed by ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] 
-  [name of copyright owner] ~ ~ CDDL HEADER END ~ ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer 
-  wissenschaftlich-technische Information mbH ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights 
+<!-- ~ CDDL HEADER START ~ ~ The contents of this file are subject to the terms of the Common Development and Distribution
+  License, Version 1.0 ~ only (the "License"). You may not use this file except in compliance with the License. ~ ~ You can
+  obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License ~ for the specific
+  language governing permissions and limitations under the License. ~ ~ When distributing Covered Code, include this CDDL
+  HEADER
+  in each file and include the License file at ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL
+  HEADER, with the fields enclosed by ~ brackets "[]" replaced with your own identifying information: Portions Copyright
+  [yyyy]
+  [name of copyright owner] ~ ~ CDDL HEADER END ~ ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer
+  wissenschaftlich-technische Information mbH ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights
   reserved. Use is subject to license ~ terms. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,45 +40,45 @@
   </organization>
 
   <modules>
-        <module>jaxrs-framework</module>
-        <module>cache</module>
-        <module>jms-server</module>
-        <module>fedora-service-client</module>
-        <module>fedora-service-rest</module>
-        <module>aspects</module>
-        <module>utilities</module>
-        <module>index-service-spec</module>
-        <module>index-service-impl</module>
-        <module>statistic-service-spec</module>
-        <module>statistic-service-impl</module>
-        <module>purge-service-spec</module>
-        <module>purge-service-impl</module>
-        <module>common-spec</module>
-        <module>common</module>
-        <module>aa-spec</module>
-        <module>aa</module>
-        <module>adm-spec</module>
-        <module>adm-impl</module>
-        <module>cmm-spec</module>
-        <module>cmm</module>
-        <module>oai-spec</module>
-        <module>oai</module>
-        <module>om-spec</module>
-        <module>om</module>
-        <module>oum-spec</module>
-        <module>oum</module>
-        <module>sb</module>
-        <module>sm-spec</module>
-        <module>sm</module>
-        <module>st-spec</module>
-        <module>st</module>
-        <module>tme-spec</module>
-        <module>tme</module>
-        <module>escidoc-core.war</module>
-        <module>escidoc-core.ear</module>
-        <module>assembly</module>
-        <module>installer</module>
-        <module>integration-tests</module>
+    <module>jaxrs-framework</module>
+    <module>cache</module>
+    <module>jms-server</module>
+    <module>fedora-service-client</module>
+    <module>fedora-service-rest</module>
+    <module>aspects</module>
+    <module>utilities</module>
+    <module>index-service-spec</module>
+    <module>index-service-impl</module>
+    <module>statistic-service-spec</module>
+    <module>statistic-service-impl</module>
+    <module>purge-service-spec</module>
+    <module>purge-service-impl</module>
+    <module>common-spec</module>
+    <module>common</module>
+    <module>aa-spec</module>
+    <module>aa</module>
+    <module>adm-spec</module>
+    <module>adm-impl</module>
+    <module>cmm-spec</module>
+    <module>cmm</module>
+    <module>oai-spec</module>
+    <module>oai</module>
+    <module>om-spec</module>
+    <module>om</module>
+    <module>oum-spec</module>
+    <module>oum</module>
+    <module>sb</module>
+    <module>sm-spec</module>
+    <module>sm</module>
+    <module>st-spec</module>
+    <module>st</module>
+    <module>tme-spec</module>
+    <module>tme</module>
+    <module>escidoc-core.war</module>
+    <module>escidoc-core.ear</module>
+    <module>assembly</module>
+    <module>installer</module>
+    <module>integration-tests</module>
   </modules>
 
   <build>
@@ -89,16 +91,16 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>2.3.2</version>
           <configuration>
-              <source>${java.source.version}</source>
-              <target>${java.target.version}</target>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <verbose>true</verbose>
-              <fork>true</fork>
-              <meminitial>128m</meminitial>
-              <maxmem>512m</maxmem>
-              <debug>true</debug>
-              <optimize>true</optimize>
+            <source>${java.source.version}</source>
+            <target>${java.target.version}</target>
+            <showDeprecation>true</showDeprecation>
+            <showWarnings>true</showWarnings>
+            <verbose>true</verbose>
+            <fork>true</fork>
+            <meminitial>128m</meminitial>
+            <maxmem>512m</maxmem>
+            <debug>true</debug>
+            <optimize>true</optimize>
           </configuration>
         </plugin>
 
@@ -234,8 +236,9 @@
             <compilerTargetPlatform>1.6</compilerTargetPlatform>
             <lineEnding>CRLF</lineEnding>
             <encoding>UTF-8</encoding>
-            <!-- This plugin will be used by modules only, so that we can use ${project.parent.basedir} here. If we really 
-              would need this plugin on this (parent) level, we have to re-configure it at the plugin-definition in the build process. -->
+            <!-- This plugin will be used by modules only, so that we can use ${project.parent.basedir} here. If we really
+              would need this plugin on this (parent) level, we have to re-configure it at the plugin-definition in the build
+              process. -->
             <configFile>${project.parent.basedir}/etc/eSciDoc_codestyle.xml</configFile>
           </configuration>
         </plugin>
@@ -264,13 +267,13 @@
             <outxml>true</outxml>
             <showWeaveInfo>false</showWeaveInfo>
           </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>compile</goal>
-                    </goals>
-                </execution>
-            </executions>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
 
         <!-- maven-jaxb2-plugin [default config] (configure arguments and plugins in module) -->
@@ -329,7 +332,7 @@
         </plugin>
 
         <!-- maven-site-plugin [default config] -->
-        <!-- !!!NOTE!!!: since maven 3.x we should use maven-site-plugin:3.0-beta-3 because it will no longer be able to 
+        <!-- !!!NOTE!!!: since maven 3.x we should use maven-site-plugin:3.0-beta-3 because it will no longer be able to
           execute plugins of the reporting section -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -417,11 +420,12 @@
                 import java.text.SimpleDateFormat
                 import java.util.Locale
 
-                SimpleDateFormat sdfmt = new
+                SimpleDateFormat
+                sdfmt = new
                 SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss Z", Locale.US);
                 def vartimestamp = sdfmt.format(new Date());
                 project.properties['buildtimestamp'] = vartimestamp
-                     </source>
+              </source>
             </configuration>
           </execution>
         </executions>
@@ -444,8 +448,9 @@
         </executions>
       </plugin>
       <plugin>
-        <!-- Note: This plugin can't be moved to the reporting section as long as the javadoc doclet memory settings aren't 
-          passed on by the reporting plugin. TODO: There are many javadoc warnings due to misspelt or wrong javadoc tags. Those need 
+        <!-- Note: This plugin can't be moved to the reporting section as long as the javadoc doclet memory settings aren't
+          passed on by the reporting plugin. TODO: There are many javadoc warnings due to misspelt or wrong javadoc tags.
+          Those need
           to be fixed with the javadoc:fix goal. -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -477,7 +482,7 @@
           <source>${java.source.version}</source>
           <javadocVersion>1.6</javadocVersion>
 
-          <!-- APIViz doclet for UML graphs, only used if Graphviz is installed on local machine, otherwise automatic fallback 
+          <!-- APIViz doclet for UML graphs, only used if Graphviz is installed on local machine, otherwise automatic fallback
             to standard javadoc doclet -->
           <doclet>org.jboss.apiviz.APIviz</doclet>
           <docletArtifact>
@@ -533,12 +538,7 @@
           <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
-            <version>2.7.1</version>
-          </dependency>
-          <dependency>
-            <groupId>net.sourceforge.saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <version>9.1.0.8</version>
+            <version>${xalan.version}</version>
           </dependency>
           <dependency>
             <groupId>org.codehaus.woodstox</groupId>
@@ -767,7 +767,6 @@
             <phase>site</phase>
             <configuration>
               <target>
-
                 <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.dependency.classpath" />
                 <property name="dependency_classpath" refid="maven.dependency.classpath" />
                 <property name="plugin_classpath" refid="maven.plugin.classpath" />
@@ -1054,11 +1053,14 @@
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
     <escidoc.fedoragsearch.version>1.4.16</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.4.9</escidoc.srw.version>
-    <srw.version>1.4.3</srw.version>
+    <escidoc.srw.version>1.4.8</escidoc.srw.version>
+    <escidoc.saxon.version>1.0.1</escidoc.saxon.version>
+    <srw.version>1.4.2</srw.version>
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.3.0</lucene.version>
+    <xalan.version>2.7.1</xalan.version>
+    <xercesImpl.version>2.11.0</xercesImpl.version>
     <java.source.version>1.6</java.source.version>
     <java.target.version>1.6</java.target.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1695,6 +1697,10 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
@@ -1727,27 +1733,45 @@
         <artifactId>jsr173</artifactId>
         <version>1.0</version>
       </dependency>
+      
+      <!-- JAXB -->
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-impl</artifactId>
-        <version>2.2.4-1</version>
+        <version>2.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.2.3</version>
+      </dependency>
+      
+      <!-- ENDORSED BY JBOSS -->
+      <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>xalan</artifactId>
+        <version>2.7.0</version><!-- set back from 2.7.1 -->
+        <scope>provided</scope><!-- by JBoss 4 (EAR deployment) -->
         <exclusions>
           <exclusion>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>xml-apis</groupId>
-        <artifactId>xml-apis</artifactId>
-        <version>1.3.04</version>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.7.1</version><!-- set back from 2.11.0 -->
+        <scope>provided</scope><!-- by JBoss 4 (EAR deployment) -->
+        <exclusions>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
-      <dependency>
-        <groupId>xalan</groupId>
-        <artifactId>xalan</artifactId>
-        <version>2.7.1</version>
-      </dependency>
+
       <dependency>
         <groupId>jaxen</groupId>
         <artifactId>jaxen</artifactId>
@@ -1760,6 +1784,10 @@
           <exclusion>
             <groupId>xerces</groupId>
             <artifactId>xercesImpl</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -1862,11 +1890,6 @@
         <version>1.7</version>
       </dependency>
       <dependency>
-        <groupId>xerces</groupId>
-        <artifactId>xercesImpl</artifactId>
-        <version>2.11.0</version>
-      </dependency>
-      <dependency>
         <groupId>org.codehaus.woodstox</groupId>
         <artifactId>woodstox-core-asl</artifactId>
         <version>4.1.1</version>
@@ -1900,13 +1923,13 @@
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
-        <artifactId>fedoragsearch</artifactId>
+        <artifactId>fedoragsearch_full</artifactId>
         <type>war</type>
         <version>${escidoc.fedoragsearch.version}</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
-        <artifactId>srw</artifactId>
+        <artifactId>srw_full</artifactId>
         <type>war</type>
         <version>${escidoc.srw.version}</version>
       </dependency>
@@ -1914,7 +1937,7 @@
         <groupId>fedora.localservice</groupId>
         <artifactId>saxon</artifactId>
         <type>war</type>
-        <version>1.0.1</version>
+        <version>${escidoc.saxon.version}</version>
       </dependency>
 
       <!-- Internal Modules -->
@@ -1953,7 +1976,7 @@
         <artifactId>utilities</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>common-spec</artifactId>
         <version>${project.version}</version>
@@ -1963,7 +1986,7 @@
         <artifactId>common</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>cmm-spec</artifactId>
         <version>${project.version}</version>
@@ -1973,7 +1996,7 @@
         <artifactId>cmm</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>aa-spec</artifactId>
         <version>${project.version}</version>
@@ -1983,7 +2006,7 @@
         <artifactId>aa</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>om-spec</artifactId>
         <version>${project.version}</version>
@@ -1993,7 +2016,7 @@
         <artifactId>om</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>oum-spec</artifactId>
         <version>${project.version}</version>
@@ -2003,7 +2026,7 @@
         <artifactId>oum</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>adm-spec</artifactId>
         <version>${project.version}</version>
@@ -2013,7 +2036,7 @@
         <artifactId>adm-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>oai-spec</artifactId>
         <version>${project.version}</version>
@@ -2028,7 +2051,7 @@
         <artifactId>sb</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>sm-spec</artifactId>
         <version>${project.version}</version>
@@ -2038,7 +2061,7 @@
         <artifactId>sm</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>st-spec</artifactId>
         <version>${project.version}</version>
@@ -2048,7 +2071,7 @@
         <artifactId>st</artifactId>
         <version>${project.version}</version>
       </dependency>
-        <dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>tme-spec</artifactId>
         <version>${project.version}</version>
@@ -2104,21 +2127,32 @@
         <artifactId>xmlunit</artifactId>
         <version>1.3</version>
       </dependency>
-    <dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.7</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-contrib</artifactId>
-			<version>3.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-scratchpad</artifactId>
-			<version>3.7</version>
-		</dependency>		    
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-contrib</artifactId>
+        <version>3.6</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-scratchpad</artifactId>
+        <version>3.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-ext</artifactId>
+        <version>1.7</version>
+        <exclusions>
+          <exclusion>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -2169,7 +2203,7 @@
       </activation>
       <properties>
         <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
-          -Xnoagent</cargo.jvmdebug>
+          -Xnoagent -verbose:class</cargo.jvmdebug><!--  -verbose:class -Djaxp.debug=1 -->
         <cargo.wait>true</cargo.wait>
       </properties>
     </profile>
@@ -2198,26 +2232,26 @@
       </activation>
       <build>
         <pluginManagement>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <source>${java.source.version}</source>
-              <target>${java.target.version}</target>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <verbose>true</verbose>
-              <!-- fork must be set to true in order to use the mem-settings here! -->
-              <fork>true</fork>
-              <meminitial>128m</meminitial>
-              <maxmem>512m</maxmem>
-              <debug>true</debug>
-              <!-- optimized code for production -->
-              <optimize>true</optimize>
-            </configuration>
-          </plugin>
-        </plugins>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                <source>${java.source.version}</source>
+                <target>${java.target.version}</target>
+                <showDeprecation>true</showDeprecation>
+                <showWarnings>true</showWarnings>
+                <verbose>true</verbose>
+                <!-- fork must be set to true in order to use the mem-settings here! -->
+                <fork>true</fork>
+                <meminitial>128m</meminitial>
+                <maxmem>512m</maxmem>
+                <debug>true</debug>
+                <!-- optimized code for production -->
+                <optimize>true</optimize>
+              </configuration>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>
@@ -2232,26 +2266,26 @@
       </activation>
       <build>
         <pluginManagement>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <source>${java.source.version}</source>
-              <target>${java.target.version}</target>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <verbose>true</verbose>
-              <!-- fork must be set to true in order to use the mem-settings here! -->
-              <fork>true</fork>
-              <meminitial>128m</meminitial>
-              <maxmem>512m</maxmem>
-              <debug>true</debug>
-              <!-- optimized code for test environment because of testing if optimized code is not wrong -->
-              <optimize>true</optimize>
-            </configuration>
-          </plugin>
-        </plugins>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                <source>${java.source.version}</source>
+                <target>${java.target.version}</target>
+                <showDeprecation>true</showDeprecation>
+                <showWarnings>true</showWarnings>
+                <verbose>true</verbose>
+                <!-- fork must be set to true in order to use the mem-settings here! -->
+                <fork>true</fork>
+                <meminitial>128m</meminitial>
+                <maxmem>512m</maxmem>
+                <debug>true</debug>
+                <!-- optimized code for test environment because of testing if optimized code is not wrong -->
+                <optimize>true</optimize>
+              </configuration>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>
@@ -2265,26 +2299,26 @@
       </activation>
       <build>
         <pluginManagement>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <source>${java.source.version}</source>
-              <target>${java.target.version}</target>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <verbose>true</verbose>
-              <!-- fork must be set to true in order to use the mem-settings here! -->
-              <fork>true</fork>
-              <meminitial>128m</meminitial>
-              <maxmem>512m</maxmem>
-              <debug>true</debug>
-              <!-- do NOT optimize code in dev environment because of debugging purposes -->
-              <optimize>false</optimize>
-            </configuration>
-          </plugin>
-        </plugins>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <configuration>
+                <source>${java.source.version}</source>
+                <target>${java.target.version}</target>
+                <showDeprecation>true</showDeprecation>
+                <showWarnings>true</showWarnings>
+                <verbose>true</verbose>
+                <!-- fork must be set to true in order to use the mem-settings here! -->
+                <fork>true</fork>
+                <meminitial>128m</meminitial>
+                <maxmem>512m</maxmem>
+                <debug>true</debug>
+                <!-- do NOT optimize code in dev environment because of debugging purposes -->
+                <optimize>false</optimize>
+              </configuration>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>

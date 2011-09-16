@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
   <loader-repository>
-   org.fedora:loader=fedora.war
+   org.escidoc.saxon:loader=saxon.war
   </loader-repository>
 </jboss-web>
