@@ -72,6 +72,18 @@
 					</execution>
 				</executions>
 			</plugin>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <header>${project.parent.basedir}/etc/license_header.txt</header>
+          <strictCheck>true</strictCheck>
+          <includes>
+            <include>src/main/java/**/*.java</include>
+            <include>src/test/java/**/*.java</include>
+          </includes>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 
