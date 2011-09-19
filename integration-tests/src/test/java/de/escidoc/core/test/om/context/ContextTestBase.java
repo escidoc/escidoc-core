@@ -102,6 +102,33 @@ public class ContextTestBase extends OmTestBase {
     }
 
     /**
+     * Successfully creates an context with given type.
+     *
+     * @param templateName The name of the template to use.
+     * @param type The type of the context.
+     * @return Returns the XML representation of the created context.
+     * @throws Exception Thrown if anything fails.
+     */
+    protected String createSuccessfullyWithType(final String templateName, final String type) throws Exception {
+
+        final Document toBeCreatedDocument =
+            EscidocRestSoapTestBase.getTemplateAsDocument(
+                TEMPLATE_CONTEXT_PATH, getTransport(false) + "/" + templateName);
+        setUniqueValue(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME);
+        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_TYPE, type);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, true);
+
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException("Create of Context failed. ", e);
+        }
+        return createdXml;
+    }
+
+    /**
      * Assert that the organizational unit has all required elements.
      *
      * @param toBeAssertedXml         The created/updated organizational unit.
