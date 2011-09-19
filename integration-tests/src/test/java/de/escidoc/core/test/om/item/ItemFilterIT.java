@@ -28,23 +28,24 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
 import de.escidoc.core.test.security.client.PWCallback;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
@@ -582,6 +583,49 @@ public class ItemFilterIT extends ItemTestBase {
             catch (final ItemNotFoundException e) {
             }
 
+        }
+    }
+
+    /**
+     * Test retrieving Items sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveItemsSorted() throws Exception {
+        String itemXml = prepareItem(STATUS_PENDING, CONTEXT_ID, false, false);
+        String lmd = getLastModificationDateValue(getDocument(itemXml));
+        prepareItem(STATUS_SUBMITTED, CONTEXT_ID, false, false);
+        prepareItem(STATUS_PENDING, CONTEXT_ID, false, false);
+        prepareItem(STATUS_SUBMITTED, CONTEXT_ID, false, false);
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/public-status\"/sort.ascending "
+            + "\"/sort/last-modification-date\"/sort.descending" });
+        String xml = retrieveItems(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+        NodeList primNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_ITEM_LIST_ITEM + "/properties/public-status");
+        NodeList secNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_ITEM_LIST_ITEM + "/@last-modification-date");
+        assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
+        String lastPrim = LOWEST_COMPARABLE;
+        String lastSec = HIGHEST_COMPARABLE;
+
+        for (int count = 0; count < primNodes.getLength(); count++) {
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) < 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) > 0) {
+                lastSec = HIGHEST_COMPARABLE;
+            }
+            if (secNodes.item(count).getTextContent().compareTo(lastSec) > 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            lastPrim = primNodes.item(count).getTextContent();
+            lastSec = secNodes.item(count).getTextContent();
         }
     }
 

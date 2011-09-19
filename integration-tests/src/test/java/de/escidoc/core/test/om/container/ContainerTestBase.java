@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
@@ -41,6 +42,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
 
@@ -635,6 +637,99 @@ public class ContainerTestBase extends OmTestBase {
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
         return getObjidValue(theItemXml);
+    }
+
+    /**
+     * Prepares a container for a test.<br> The container is created and set into the specified state.
+     *
+     * @param creatorUserHandle    The eSciDoc user handle of the creator.
+     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
+     *                             <code>null</code> is returned.
+     * @param contextId            id of context to create container in.
+     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
+     *                             updated to create a new version.
+     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
+     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
+     *                             for objects in state release or withdrawn.
+     * @return Returns the XML representation of the created container. In case of withdrawn container, the released
+     *         container is returned.
+     * @throws Exception If anything fails.
+     */
+    protected String prepareContainer(
+        final String status, final String contextId, final boolean createVersionsBefore,
+        final boolean createVersionsAfter) throws Exception {
+
+        if (status == null) {
+            return null;
+        }
+
+        String createdXml = null;
+        try {
+            createdXml = create(prepareContainerData(contextId));
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.failException(e);
+        }
+        assertNotNull(createdXml);
+
+        if (!STATUS_PENDING.equals(status)) {
+            Document document = EscidocAbstractTest.getDocument(createdXml);
+            final String objidValue = getObjidValue(document);
+            if (createVersionsBefore) {
+                createdXml = createdXml.replaceAll("the title", "the title - updated");
+                createdXml = update(objidValue, createdXml);
+                document = EscidocAbstractTest.getDocument(createdXml);
+            }
+            submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+            createdXml = retrieve(objidValue);
+            if (createVersionsAfter) {
+                createdXml = createdXml.replaceAll("the title", "the title - updated");
+                createdXml = update(objidValue, createdXml);
+            }
+            if (!STATUS_SUBMITTED.equals(status)) {
+                if (createVersionsBefore) {
+                    createdXml = createdXml.replaceAll("the title", "the title - updated");
+                    createdXml = update(objidValue, createdXml);
+                }
+                document = EscidocAbstractTest.getDocument(createdXml);
+                releaseWithPid(objidValue);
+                createdXml = retrieve(objidValue);
+                if (!STATUS_RELEASED.equals(status)) {
+                    if (createVersionsBefore) {
+                        createdXml = createdXml.replaceAll("the title", "the title - updated");
+                        createdXml = update(objidValue, createdXml);
+                    }
+                    document = EscidocAbstractTest.getDocument(createdXml);
+                    final String taskParam =
+                        getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                    withdraw(getObjidValue(document), taskParam);
+                    createdXml = retrieve(objidValue);
+                }
+            }
+        }
+
+        return createdXml;
+    }
+
+    /**
+     * Prepares the data for a container.
+     *
+     * @param contextId context to create container in
+     * @return Returns the xml representation of a container. Depending on the current set transport of the class, the
+     *         data is created by either using the template file create_container_WithoutMembers_Restv1.1.xml or by
+     *         using the template file create_container_WithoutMembers_Soapv1.1.xml
+     * @throws Exception If anything fails.
+     */
+    private String prepareContainerData(final String contextId) throws Exception {
+
+        Document xmlContainer =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1.xml");
+        if (contextId != null && !contextId.equals("")) {
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(xmlContainer, "/container/properties/context/@href", contextHref);
+        }
+        return toString(xmlContainer, false);
     }
 
     /**

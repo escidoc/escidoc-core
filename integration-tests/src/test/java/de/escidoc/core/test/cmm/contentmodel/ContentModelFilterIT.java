@@ -28,17 +28,18 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test the implementation of the content model filters.
@@ -128,6 +129,59 @@ public class ContentModelFilterIT extends ContentModelTestBase {
 
         // delete the content model
         delete(modelId);
+    }
+
+    /**
+     * Test retrieving Content Models sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveContentModelsSorted() throws Exception {
+        String createdXml = createContentModel();
+        String lmd = getLastModificationDateValue(getDocument(createdXml));
+        String cmId = getObjidValue(createdXml);
+        update(cmId, createdXml.replaceAll("purpose", "purpose p"));
+
+        createdXml = createContentModel();
+
+        createdXml = createContentModel();
+        cmId = getObjidValue(createdXml);
+        update(cmId, createdXml.replaceAll("purpose", "purpose p"));
+
+        createdXml = createContentModel();
+
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/version/number\"/sort.ascending "
+            + "\"/sort/properties/creation-date\"/sort.descending" });
+        String xml = retrieveContentModels(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+        NodeList primNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL
+                + "/properties/version/number");
+        NodeList secNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL
+                + "/properties/creation-date");
+        assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
+        String lastPrim = LOWEST_COMPARABLE;
+        String lastSec = HIGHEST_COMPARABLE;
+
+        for (int count = 0; count < primNodes.getLength(); count++) {
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) < 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) > 0) {
+                lastSec = HIGHEST_COMPARABLE;
+            }
+            if (secNodes.item(count).getTextContent().compareTo(lastSec) > 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            lastPrim = primNodes.item(count).getTextContent();
+            lastSec = secNodes.item(count).getTextContent();
+        }
     }
 
     /**

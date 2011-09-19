@@ -28,17 +28,18 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.om.OmTestBase;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Map;
+
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Test the mock implementation of the context resource.
@@ -92,6 +93,32 @@ public class ContextTestBase extends OmTestBase {
             ret[i] = getObjidValue(createdDocument);
         }
         return ret;
+    }
+
+    /**
+     * Successfully creates an context with given type.
+     *
+     * @param templateName The name of the template to use.
+     * @param type The type of the context.
+     * @return Returns the XML representation of the created context.
+     * @throws Exception Thrown if anything fails.
+     */
+    protected String createSuccessfullyWithType(final String templateName, final String type) throws Exception {
+
+        final Document toBeCreatedDocument =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", templateName);
+        setUniqueValue(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME);
+        substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_TYPE, type);
+        final String toBeCreatedXml = toString(toBeCreatedDocument, true);
+
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.failException("Create of Context failed. ", e);
+        }
+        return createdXml;
     }
 
     /**

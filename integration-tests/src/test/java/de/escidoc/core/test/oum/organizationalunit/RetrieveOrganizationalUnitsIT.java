@@ -377,6 +377,61 @@ public class RetrieveOrganizationalUnitsIT extends OrganizationalUnitTestBase {
     }
 
     /**
+     * Test retrieving Organizational-Units sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveOusSorted() throws Exception {
+        String createdXml = createSuccessfully("escidoc_ou_create.xml");
+        String lmd = getLastModificationDateValue(getDocument(createdXml));
+        String ouId = getObjidValue(createdXml);
+        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId
+            + "'."));
+
+        createSuccessfully("escidoc_ou_create.xml");
+
+        createdXml = createSuccessfully("escidoc_ou_create.xml");
+        ouId = getObjidValue(createdXml);
+        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId
+            + "'."));
+
+        createSuccessfully("escidoc_ou_create.xml");
+
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/public-status\"/sort.ascending "
+            + "\"/sort/properties/creation-date\"/sort.descending" });
+        String xml = retrieveOrganizationalUnits(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+        NodeList primNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
+                + "/properties/public-status");
+        NodeList secNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
+                + "/properties/creation-date");
+        assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
+        String lastPrim = LOWEST_COMPARABLE;
+        String lastSec = HIGHEST_COMPARABLE;
+
+        for (int count = 0; count < primNodes.getLength(); count++) {
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) < 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) > 0) {
+                lastSec = HIGHEST_COMPARABLE;
+            }
+            if (secNodes.item(count).getTextContent().compareTo(lastSec) > 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            lastPrim = primNodes.item(count).getTextContent();
+            lastSec = secNodes.item(count).getTextContent();
+        }
+    }
+
+    /**
      * Test successfully retrieving an explain response.
      *
      * @throws Exception If anything fails.

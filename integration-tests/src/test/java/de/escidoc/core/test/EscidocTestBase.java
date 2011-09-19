@@ -813,6 +813,9 @@ public abstract class EscidocTestBase {
     public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
         XPATH_SRW_RESPONSE_OBJECT + NAME_ORGANIZATIONAL_UNIT;
 
+    public static final String XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL =
+        XPATH_SRW_RESPONSE_OBJECT + NAME_CONTENT_MODEL;
+
     public static final String XPATH_USER_GROUP_OBJID = XPATH_USER_GROUP + "/@objid";
 
     public static final String XPATH_USER_GROUP_XLINK_TITLE = XPATH_USER_GROUP + "/@title";

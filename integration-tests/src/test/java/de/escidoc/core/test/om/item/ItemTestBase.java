@@ -28,12 +28,13 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.common.resources.BinaryContent;
-import de.escidoc.core.test.om.OmTestBase;
-import etm.core.monitor.EtmPoint;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -43,11 +44,12 @@ import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.om.OmTestBase;
+import etm.core.monitor.EtmPoint;
 
 /**
  * Test the mock implementation of the item resource.
@@ -928,6 +930,97 @@ public class ItemTestBase extends OmTestBase {
             selectSingleNode(createdItem, "/item/components/component/content/@storage").getNodeValue();
         assertEquals("The attribute 'storage' has a wrong valuue", storageBeforeCreate, storageAfterCtreate);
         return new String[] { theItemId, componentId };
+    }
+
+    /**
+     * Prepares an item for a test.<br> The item is created and set into the specified state.
+     *
+     * @param creatorUserHandle    The eSciDoc user handle of the creator.
+     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
+     *                             <code>null</code> is returned.
+     * @param contextId            context to create container in
+     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
+     *                             updated to create a new version.
+     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
+     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
+     *                             for objects in state release or withdrawn.
+     * @return Returns the XML representation of the created item. In case of withdrawn item, the released item is
+     *         returned.
+     * @throws Exception If anything fails.
+     */
+    protected String prepareItem(
+        final String status, final String contextId, final boolean createVersionsBefore,
+        final boolean createVersionsAfter) throws Exception {
+
+        if (status == null) {
+            return null;
+        }
+        String createdXml = null;
+        try {
+            createdXml = create(prepareItemData(contextId));
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.failException(e);
+        }
+        assertNotNull(createdXml);
+
+        if (!STATUS_PENDING.equals(status)) {
+            Document document = EscidocAbstractTest.getDocument(createdXml);
+            final String objidValue = getObjidValue(document);
+            if (createVersionsBefore) {
+                createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
+                createdXml = update(objidValue, createdXml);
+                document = EscidocAbstractTest.getDocument(createdXml);
+            }
+            submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+            createdXml = retrieve(objidValue);
+            if (createVersionsAfter) {
+                createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
+                createdXml = update(objidValue, createdXml);
+            }
+            if (!STATUS_SUBMITTED.equals(status)) {
+                if (createVersionsBefore) {
+                    createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
+                    createdXml = update(objidValue, createdXml);
+                }
+                document = EscidocAbstractTest.getDocument(createdXml);
+                releaseWithPid(objidValue);
+                createdXml = retrieve(objidValue);
+                if (!STATUS_RELEASED.equals(status)) {
+                    if (createVersionsBefore) {
+                        createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
+                        createdXml = update(objidValue, createdXml);
+                    }
+                    if (STATUS_WITHDRAWN.equals(status)) {
+                        document = EscidocAbstractTest.getDocument(createdXml);
+                        final String taskParam =
+                            getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                        withdraw(getObjidValue(document), taskParam);
+                        createdXml = retrieve(objidValue);
+                    }
+                }
+            }
+        }
+
+        return createdXml;
+    }
+
+    /**
+     * Prepares the data for an item.
+     *
+     * @param contextId context to create container in
+     * @return Returns the xml representation of an item.
+     * @throws Exception If anything fails.
+     */
+    protected String prepareItemData(final String contextId) throws Exception {
+
+        final String templateName = "escidoc_item_198_for_create.xml";
+        Document itemDoc = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", templateName);
+        if (contextId != null && !contextId.equals("")) {
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            substitute(itemDoc, "/item/properties/context/@href", contextHref);
+        }
+        return toString(itemDoc, false);
     }
 
 }

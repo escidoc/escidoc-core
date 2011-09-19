@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.container;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
@@ -393,6 +394,51 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
 
         assertContainers(nodes);
+    }
+
+    /**
+     * Test retrieving Containers sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveContainersSorted() throws Exception {
+        String containerXml = prepareContainer(STATUS_PENDING, CONTEXT_ID, false, false);
+        String lmd = getLastModificationDateValue(getDocument(containerXml));
+        prepareContainer(STATUS_SUBMITTED, CONTEXT_ID, false, false);
+        prepareContainer(STATUS_PENDING, CONTEXT_ID, false, false);
+        prepareContainer(STATUS_SUBMITTED, CONTEXT_ID, false, false);
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/public-status\"/sort.ascending "
+            + "\"/sort/last-modification-date\"/sort.descending" });
+        String xml = retrieveContainers(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+        NodeList primNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER
+                + "/properties/public-status");
+        NodeList secNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER
+                + "/@last-modification-date");
+        assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
+        String lastPrim = LOWEST_COMPARABLE;
+        String lastSec = HIGHEST_COMPARABLE;
+
+        for (int count = 0; count < primNodes.getLength(); count++) {
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) < 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) > 0) {
+                lastSec = HIGHEST_COMPARABLE;
+            }
+            if (secNodes.item(count).getTextContent().compareTo(lastSec) > 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            lastPrim = primNodes.item(count).getTextContent();
+            lastSec = secNodes.item(count).getTextContent();
+        }
     }
 
     @Test
