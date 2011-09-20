@@ -343,21 +343,19 @@ public class RetrieveContextsTest extends ContextTestBase {
         createSuccessfullyWithType("context_create_without_admindescriptor.xml", "AAAA");
         createSuccessfullyWithType("context_create_without_admindescriptor.xml", "BBBB");
         HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { 
-            "\"PID\"=escidoc* and \"/last-modification-date\" >= " + lmd
-            + " sortBy "
-            + "\"/sort/properties/type\"/sort.ascending "
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/type\"/sort.ascending "
             + "\"/sort/properties/creation-date\"/sort.descending" });
         String xml = retrieveContexts(filterParams);
 
         assertXmlValidSrwResponse(xml);
-        
+
         NodeList primNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-                XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties/type");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                + "/properties/type");
         NodeList secNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-                XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties/creation-date");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                + "/properties/creation-date");
         assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
         String lastPrim = LOWEST_COMPARABLE;
         String lastSec = HIGHEST_COMPARABLE;

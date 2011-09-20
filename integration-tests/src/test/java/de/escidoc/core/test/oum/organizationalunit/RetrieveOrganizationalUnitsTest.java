@@ -387,31 +387,31 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         String createdXml = createSuccessfully("escidoc_ou_create.xml");
         String lmd = getLastModificationDateValue(getDocument(createdXml));
         String ouId = getObjidValue(createdXml);
-        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId + "'."));
+        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId
+            + "'."));
 
         createSuccessfully("escidoc_ou_create.xml");
 
         createdXml = createSuccessfully("escidoc_ou_create.xml");
         ouId = getObjidValue(createdXml);
-        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId + "'."));
+        open(getObjidValue(createdXml), getTheLastModificationParam(true, ouId, "Opened organizational unit '" + ouId
+            + "'."));
 
         createSuccessfully("escidoc_ou_create.xml");
 
         HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { 
-            "\"PID\"=escidoc* and \"/last-modification-date\" >= " + lmd
-            + " sortBy "
-            + "\"/sort/properties/public-status\"/sort.ascending "
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/public-status\"/sort.ascending "
             + "\"/sort/properties/creation-date\"/sort.descending" });
         String xml = retrieveOrganizationalUnits(filterParams);
 
         assertXmlValidSrwResponse(xml);
-        
+
         NodeList primNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
                 XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/properties/public-status");
         NodeList secNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
                 XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "/properties/creation-date");
         assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
         String lastPrim = LOWEST_COMPARABLE;

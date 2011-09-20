@@ -159,29 +159,27 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         update(cmId, createdXml.replaceAll("purpose", "purpose p"));
 
         createdXml = createContentModel();
-        
+
         createdXml = createContentModel();
         cmId = getObjidValue(createdXml);
         update(cmId, createdXml.replaceAll("purpose", "purpose p"));
 
         createdXml = createContentModel();
-        
+
         HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { 
-            "\"PID\"=escidoc* and \"/last-modification-date\" >= " + lmd
-            + " sortBy "
-            + "\"/sort/properties/version/number\"/sort.ascending "
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/version/number\"/sort.ascending "
             + "\"/sort/properties/creation-date\"/sort.descending" });
         String xml = retrieveContentModels(filterParams);
 
         assertXmlValidSrwResponse(xml);
-        
+
         NodeList primNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-                XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL + "/properties/version/number");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL
+                + "/properties/version/number");
         NodeList secNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-                XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL + "/properties/creation-date");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL
+                + "/properties/creation-date");
         assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
         String lastPrim = LOWEST_COMPARABLE;
         String lastSec = HIGHEST_COMPARABLE;

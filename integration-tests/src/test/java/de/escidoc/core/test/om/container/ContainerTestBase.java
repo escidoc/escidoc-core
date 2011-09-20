@@ -648,8 +648,9 @@ public class ContainerTestBase extends OmTestBase {
      *         container is returned.
      * @throws Exception If anything fails.
      */
-    protected String prepareContainer(final String status, final String contextId,
-        final boolean createVersionsBefore, final boolean createVersionsAfter) throws Exception {
+    protected String prepareContainer(
+        final String status, final String contextId, final boolean createVersionsBefore,
+        final boolean createVersionsAfter) throws Exception {
 
         if (status == null) {
             return null;

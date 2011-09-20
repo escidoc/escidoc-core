@@ -112,8 +112,8 @@ public class ContextTestBase extends OmTestBase {
     protected String createSuccessfullyWithType(final String templateName, final String type) throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH, getTransport(false) + "/" + templateName);
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH, getTransport(false) + "/"
+                + templateName);
         setUniqueValue(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME);
         substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_TYPE, type);
         final String toBeCreatedXml = toString(toBeCreatedDocument, true);

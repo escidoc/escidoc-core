@@ -978,8 +978,9 @@ public class ItemTestBase extends OmTestBase {
      *         returned.
      * @throws Exception If anything fails.
      */
-    protected String prepareItem(final String status, final String contextId,
-        final boolean createVersionsBefore, final boolean createVersionsAfter) throws Exception {
+    protected String prepareItem(
+        final String status, final String contextId, final boolean createVersionsBefore,
+        final boolean createVersionsAfter) throws Exception {
 
         if (status == null) {
             return null;
@@ -1044,8 +1045,8 @@ public class ItemTestBase extends OmTestBase {
     protected String prepareItemData(final String contextId) throws Exception {
 
         final String templateName = "escidoc_item_198_for_create.xml";
-        Document itemDoc = EscidocRestSoapTestBase.getTemplateAsDocument(
-        		TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        Document itemDoc =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
         if (contextId != null && !contextId.equals("")) {
             if (getTransport() == Constants.TRANSPORT_REST) {
                 String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;

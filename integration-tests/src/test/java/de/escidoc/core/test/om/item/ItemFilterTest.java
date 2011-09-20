@@ -675,21 +675,19 @@ public class ItemFilterTest extends ItemTestBase {
         prepareItem(STATUS_PENDING, CONTEXT_ID, false, false);
         prepareItem(STATUS_SUBMITTED, CONTEXT_ID, false, false);
         HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { 
-            "\"PID\"=escidoc* and \"/last-modification-date\" >= " + lmd
-            + " sortBy "
-            + "\"/sort/properties/public-status\"/sort.ascending "
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/public-status\"/sort.ascending "
             + "\"/sort/last-modification-date\"/sort.descending" });
         String xml = retrieveItems(filterParams);
 
         assertXmlValidSrwResponse(xml);
-        
+
         NodeList primNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-                XPATH_SRW_ITEM_LIST_ITEM + "/properties/public-status");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_ITEM_LIST_ITEM
+                + "/properties/public-status");
         NodeList secNodes =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), 
-            		XPATH_SRW_ITEM_LIST_ITEM + "/@last-modification-date");
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), XPATH_SRW_ITEM_LIST_ITEM
+                + "/@last-modification-date");
         assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
         String lastPrim = LOWEST_COMPARABLE;
         String lastSec = HIGHEST_COMPARABLE;
