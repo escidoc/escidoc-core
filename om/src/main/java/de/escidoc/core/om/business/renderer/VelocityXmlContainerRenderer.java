@@ -430,11 +430,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
         catch (final StreamNotFoundException e) {
             // This element is now optional.
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on getting container content model.");
-            }
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on getting container content model.", e);
+                LOGGER.debug("Error on getting container content modell specific.", e);
             }
         }
     }
