@@ -1732,6 +1732,7 @@
         <groupId>javax.xml</groupId>
         <artifactId>jsr173</artifactId>
         <version>1.0</version>
+        <scope>provided</scope>
       </dependency>
       
       <!-- JAXB -->
