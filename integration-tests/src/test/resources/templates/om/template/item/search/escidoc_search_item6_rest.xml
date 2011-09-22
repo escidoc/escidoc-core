@@ -426,7 +426,7 @@
             <properties:mime-type>text/xml</properties:mime-type>
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
-                                    xlink:href="http://localhost:8082/ir/xml/EPFull_1329818.xml"
+                                    xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1329818.xml"
                                     storage="internal-managed"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
@@ -815,7 +815,7 @@
             <properties:mime-type>application/pdf</properties:mime-type>
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
-                                    xlink:href="http://localhost:8082/ir/pdf/EPFull_1329818.pdf"
+                                    xlink:href="http://localhost:8080/testdata/testDocuments/ir/pdf/EPFull_1329818.pdf"
                                     storage="internal-managed"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"

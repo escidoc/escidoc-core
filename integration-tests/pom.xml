@@ -619,7 +619,7 @@
     <dependency>
       <groupId>org.escidoc</groupId>
       <artifactId>testdata</artifactId>
-      <version>0.0.2-alpha1</version>
+      <version>0.0.2-alpha2</version>
       <type>war</type>
     </dependency>
    <dependency>
