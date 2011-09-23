@@ -193,6 +193,8 @@ public final class EscidocConfiguration {
 
     private static final String PROPERTIES_CONSTANT_FILENAME = "escidoc-core.constant.properties";
 
+    public static final String ESCIDOC_HOME = "ESCIDOC_HOME";
+
     /**
      * Private Constructor, in order to prevent instantiation of this utility class. read the Properties and fill it in
      * properties attribute.
@@ -203,7 +205,8 @@ public final class EscidocConfiguration {
         System.setProperty("java.awt.headless", "true");
         try {
             this.properties = loadProperties();
-        } catch (final EscidocException e) {
+        }
+        catch (final EscidocException e) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Problem while loading properties.");
             }
@@ -419,8 +422,8 @@ public final class EscidocConfiguration {
      */
     private static Properties getInternProperties(final String filename) throws IOException {
 
-        final Properties result = new Properties(); 
-        
+        final Properties result = new Properties();
+
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource = applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {
@@ -431,7 +434,6 @@ public final class EscidocConfiguration {
         return result;
     }
 
-    
     /**
      * Get an InputStream for the given file.
      * 
@@ -444,7 +446,7 @@ public final class EscidocConfiguration {
     private static InputStream getInputStream(final String filename) throws IOException {
         final ResourcePatternResolver applicationContext = new ClassPathXmlApplicationContext(new String[] {});
         String escidocHome = System.getenv("ESCIDOC_HOME");
-        if(escidocHome == null) {
+        if (escidocHome == null) {
             escidocHome = System.getProperty("ESCIDOC_HOME");
         }
         final Resource[] resource = applicationContext.getResources("file:///" + escidocHome + "/conf/" + filename);
@@ -502,5 +504,17 @@ public final class EscidocConfiguration {
             selfUrl += path;
         }
         return selfUrl;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public static final String getEscidocHome() {
+        String escidocHome = System.getenv("ESCIDOC_HOME");
+        if (escidocHome == null) {
+            escidocHome = System.getProperty("ESCIDOC_HOME");
+        }
+        return escidocHome;
     }
 }
