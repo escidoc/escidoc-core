@@ -29,6 +29,7 @@
 package de.escidoc.core.adm.business.admin;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -59,7 +60,7 @@ import de.escidoc.core.purge.PurgeService;
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource cache and deletes objects physically from
  * the repository.
- *
+ * 
  * @author André Schenk
  */
 @Service("business.AdminHandler")
@@ -115,12 +116,14 @@ public class AdminHandler {
      * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
      * all depending components of the given items. The deletion runs synchronously and returns some useful information
      * for the user, e.g. the total number of objects deleted.
-     *
-     * @param taskParam list of object id's to be deleted boolean value to signal if the search index and the resource
-     *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
-     *                  should be run manually afterwards.
+     * 
+     * @param taskParam
+     *            list of object id's to be deleted boolean value to signal if the search index and the resource cache
+     *            have to be kept in sync. If this value is set to false then the re-indexing and re-caching should be
+     *            run manually afterwards.
      * @return total number of objects deleted, ...
-     * @throws SystemException thrown in case of an internal error
+     * @throws SystemException
+     *             thrown in case of an internal error
      * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     public String deleteObjects(final String taskParam) throws SystemException, XmlCorruptedException {
@@ -168,9 +171,10 @@ public class AdminHandler {
 
     /**
      * Get the current status of the running/finished purging process.
-     *
+     * 
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException thrown in case of an internal error
+     * @throws SystemException
+     *             thrown in case of an internal error
      */
     public String getPurgeStatus() {
         return this.utility.prepareReturnXml(purgeStatus.toString());
@@ -178,9 +182,10 @@ public class AdminHandler {
 
     /**
      * Get the current status of the running/finished reindexing process.
-     *
+     * 
      * @return current status (how many objects are still in the queue)
-     * @throws SystemException thrown in case of an internal error
+     * @throws SystemException
+     *             thrown in case of an internal error
      */
     public String getReindexStatus() {
         return this.utility.prepareReturnXml(reindexer.getStatus());
@@ -188,8 +193,9 @@ public class AdminHandler {
 
     /**
      * decrease the type of the current status of the running reindexing process by 1.
-     *
-     * @param objectType object-type to decrease
+     * 
+     * @param objectType
+     *            object-type to decrease
      */
     public void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
@@ -200,11 +206,14 @@ public class AdminHandler {
     /**
      * Reinitialize the search index. The initialization runs synchronously and returns some useful information for the
      * user, e.g. the total number of objects found.
-     *
-     * @param clearIndex      clear the index before adding objects to it
-     * @param indexNamePrefix name of the index (may be null for "all indexes")
+     * 
+     * @param clearIndex
+     *            clear the index before adding objects to it
+     * @param indexNamePrefix
+     *            name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
-     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
@@ -212,11 +221,14 @@ public class AdminHandler {
 
     /**
      * Provides a xml structure containing the index-configuration.
-     *
+     * 
      * @return xml structure with index configuration
-     * @throws WebserverSystemException   if anything goes wrong.
-     * @throws TripleStoreSystemException if anything goes wrong.
-     * @throws EncodingSystemException    if anything goes wrong.
+     * @throws WebserverSystemException
+     *             if anything goes wrong.
+     * @throws TripleStoreSystemException
+     *             if anything goes wrong.
+     * @throws EncodingSystemException
+     *             if anything goes wrong.
      */
     public String getIndexConfiguration() throws WebserverSystemException {
 
@@ -228,11 +240,14 @@ public class AdminHandler {
     /**
      * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
      * creation date of Escidoc repository objects.
-     *
+     * 
      * @return xml structure with escidoc configuration properties
-     * @throws WebserverSystemException   if anything go wrong.
-     * @throws TripleStoreSystemException if anything go wrong.
-     * @throws EncodingSystemException    if anything go wrong.
+     * @throws WebserverSystemException
+     *             if anything go wrong.
+     * @throws TripleStoreSystemException
+     *             if anything go wrong.
+     * @throws EncodingSystemException
+     *             if anything go wrong.
      */
     public String getRepositoryInfo() throws WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException {
@@ -300,7 +315,7 @@ public class AdminHandler {
 
     /**
      * Namespace of (important) schemas.
-     *
+     * 
      * @return Properties with name and Namespace URI of important eSciDoc schemas
      */
     private static Map<?, ?> schemaNamespaces() {
@@ -317,22 +332,33 @@ public class AdminHandler {
     }
 
     /**
-     * Loads an set of examples objects into the framework.
-     *
-     * @param type Specifies the type of example set which is to load.
+     * Loads an set of examples objects into the framework. The example set is located in the
+     * <tt>ESCIDOC_HOME/conf/examples</tt> directory. The common example set is located in the
+     * <tt>ESCIDOC_HOME/conf/examples/common</tt> directory. You may add other example sets by creating a new directory
+     * next to the <tt>common</tt> directory and use its name when calling this method to load this example set.<br>
+     * <br>
+     * Note, that all other example sets have to be exactly like the <tt>common</tt> example set and that their
+     * resources may change their state to <tt>released</tt> after being loaded by this method. Therefore you may only
+     * change the content of the resources but not their relations towards each other.
+     * 
+     * @param type
+     *            Specifies the type of example set to load.
      * @return some useful information
-     * @throws SystemException             Thrown if a framework internal error occurs.
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
      */
     public String loadExamples(final String type) throws SystemException {
         final StringBuilder result = new StringBuilder();
 
-        // select example package
-        if (!"common".equals(type)) {
+        final String path = EscidocConfiguration.getEscidocHome();
+        final File location = new File(path + "/conf/examples/" + type);
+
+        if (!location.exists()) {
             throw new SystemException("Example set '" + type + "' not supported.");
         }
 
         try {
-            result.append(examples.load(EscidocConfiguration.getInstance().appendToSelfURL("/examples/escidoc/")));
+            result.append(examples.load(location.getAbsolutePath() + "/"));
         }
         catch (final Exception e) {
             throw new SystemException(e);
