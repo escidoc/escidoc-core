@@ -15,12 +15,61 @@
     <version>trunk-SNAPSHOT</version>
   </parent>
 
+  <properties>
+    <escidoc.home>${project.build.directory}/escidoc/core</escidoc.home>
+  </properties>
+
   <build>
     <outputDirectory>target/test-classes</outputDirectory>
 
     <filters>
       <filter>${basedir}/src/test/filters/database-filter-values.properties</filter>
     </filters>
+
+    <pluginManagement>
+      <plugins>
+        <!-- DEFAULT CARGO CONFIG (profiles may overwrite only what has to change) -->
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
+          <configuration>
+            <skip>${skipITs}</skip>
+            <wait>${cargo.wait}</wait>
+            <container>
+              <containerId>tomcat6x</containerId>
+              <!-- The installer is installing the container (usually a zipUrlInstaller goes here) -->
+              <home>${project.build.directory}/escidoc/tomcat</home>
+              <timeout>600000</timeout>
+              <systemProperties>
+                <ESCIDOC_HOME>${escidoc.home}</ESCIDOC_HOME>
+              </systemProperties>
+            </container>
+            <configuration>
+              <type>existing</type>
+              <home>${project.build.directory}/escidoc/tomcat</home>
+              <properties>
+                <cargo.hostname>localhost</cargo.hostname>
+                <cargo.protocol>http</cargo.protocol>
+                <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
+                <cargo.rmi.port>1099</cargo.rmi.port>
+                <cargo.logging>medium</cargo.logging>
+                <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug} ${cargo.ucldebug}</cargo.jvmargs>
+              </properties>
+              <deployables>
+                <deployable>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>testdata</artifactId>
+                  <type>war</type>
+                  <properties>
+                    <context>testdata</context>
+                  </properties>
+                </deployable>
+              </deployables>
+            </configuration>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
     <plugins>
       <!-- EXTRA -->
@@ -56,8 +105,9 @@
         </executions>
       </plugin>
       <!-- [01] -->
-      <!-- Copy SQL files to local project and filter them. This could be done with sql-maven-plugin version 1.4 but this 
-        version has issues. For some reason, the resources plugin does not follow the defined plugin-order sometimes and to ensure 
+      <!-- Copy SQL files to local project and filter them. This could be done with sql-maven-plugin version 1.4 but this
+        version has issues. For some reason, the resources plugin does not follow the defined plugin-order sometimes and
+        to ensure
         build stability, the resources plugin's pre-integration-test actions have been shifted to the prepare-package phase. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -161,10 +211,8 @@
               <arguments>
                 <argument>-Dskip.validation=true</argument>
                 <argument>-jar</argument>
-                <argument>${project.basedir}/../installer/target/installer-${project.version}.jar
-								</argument>
-                <argument>${project.build.directory}/${escidoc.installer.config}
-								</argument>
+                <argument>${project.basedir}/../installer/target/installer-${project.version}.jar</argument>
+                <argument>${project.build.directory}/${escidoc.installer.config}</argument>
               </arguments>
               <outputFile>${project.build.directory}/escidoc-installer.log
 							</outputFile>
@@ -215,32 +263,32 @@
           <transformations>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/escidoc-core.custom.properties</input>
+              <input>${escidoc.home}/conf/escidoc-core.custom.properties</input>
               <config>src/test/resources/config-plugin/pid-settings.xml</config>
             </transformation>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/content_model_admin/index.object-types.properties</input>
+              <input>${escidoc.home}/conf/search/config/index/content_model_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/content_model_admin.xml</config>
             </transformation>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/content_relation_admin/index.object-types.properties</input>
+              <input>${escidoc.home}/conf/search/config/index/content_relation_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/content_relation_admin.xml</config>
             </transformation>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/context_admin/index.object-types.properties</input>
+              <input>${escidoc.home}/conf/search/config/index/context_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/context_admin.xml</config>
             </transformation>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/item_container_admin/index.object-types.properties</input>
+              <input>${escidoc.home}/conf/search/config/index/item_container_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/item_container_admin.xml</config>
             </transformation>
             <transformation>
               <type>properties</type>
-              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/ou_admin/index.object-types.properties</input>
+              <input>${escidoc.home}/conf/search/config/index/ou_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/ou_admin.xml</config>
             </transformation>
           </transformations>
@@ -415,7 +463,7 @@
               <settingsKey>escidoc-core-db-admin</settingsKey>
               <autocommit>true</autocommit>
               <srcFiles>
-                <!-- the initialize phase allows no filtering. Furthermore is creating database part of the test phase. That's 
+                <!-- the initialize phase allows no filtering. Furthermore is creating database part of the test phase. That's
                   why here should only be these tables are generated where hibernate depends on. -->
                 <srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.roles.sql</srcFile>
                 <srcFile>${project.build.directory}/sql-resources/postgres/test/test.aa.init.users.sql</srcFile>
@@ -473,40 +521,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <skip>${skipITs}</skip>
-          <wait>${cargo.wait}</wait>
-          <container>
-            <containerId>jboss42x</containerId>
-            <home>${project.build.directory}/escidoc/jboss</home>
-            <timeout>600000</timeout>
-            <systemProperties>
-              <ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME>
-            </systemProperties>
-          </container>
-
-          <configuration>
-            <type>standalone</type>
-            <properties>
-              <cargo.hostname>localhost</cargo.hostname>
-              <cargo.protocol>http</cargo.protocol>
-              <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
-              <cargo.rmi.port>1099</cargo.rmi.port>
-              <cargo.logging>medium</cargo.logging>
-              <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs>
-            </properties>
-            <deployables>
-              <deployable>
-                <groupId>org.escidoc</groupId>
-                <artifactId>testdata</artifactId>
-                <type>war</type>
-                <properties>
-                  <context>testdata</context>
-                </properties>
-              </deployable>
-            </deployables>
-          </configuration>
-        </configuration>
       </plugin>
 
       <plugin>
@@ -534,7 +548,7 @@
         </configuration>
       </plugin>
 
-      <!-- skip compiling integration test source because axis is to generate first (but compiling test-sources comes first 
+      <!-- skip compiling integration test source because axis is to generate first (but compiling test-sources comes first)
         in standard lifecycle) -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -587,47 +601,47 @@
       </plugin>
 
       <!-- [08] -->
-<!--       <plugin> -->
-<!--         <groupId>org.apache.jmeter</groupId> -->
-<!--         <artifactId>maven-jmeter-plugin</artifactId> -->
-<!--         <version>1.0-GA</version> -->
-<!--         <executions> -->
-<!--           <execution> -->
-<!--             <id>jmeter-tests</id> -->
-<!--             <phase>integration-test</phase> -->
-<!--             <goals> -->
-<!--               <goal>jmeter</goal> -->
-<!--             </goals> -->
-<!--             <configuration> -->
-<!--               <reportDir>${project.build.directory}/jmeter-reports</reportDir> -->
-<!--               <jmeterUserProperties> -->
-<!--                 <hostname>localhost</hostname> -->
-<!--                 <port>${escidoc.server.port}</port> -->
-<!--               </jmeterUserProperties> -->
-<!--             </configuration> -->
-<!--           </execution> -->
-<!--         </executions> -->
-<!--       </plugin> -->
+      <!-- <plugin> -->
+      <!-- <groupId>org.apache.jmeter</groupId> -->
+      <!-- <artifactId>maven-jmeter-plugin</artifactId> -->
+      <!-- <version>1.0-GA</version> -->
+      <!-- <executions> -->
+      <!-- <execution> -->
+      <!-- <id>jmeter-tests</id> -->
+      <!-- <phase>integration-test</phase> -->
+      <!-- <goals> -->
+      <!-- <goal>jmeter</goal> -->
+      <!-- </goals> -->
+      <!-- <configuration> -->
+      <!-- <reportDir>${project.build.directory}/jmeter-reports</reportDir> -->
+      <!-- <jmeterUserProperties> -->
+      <!-- <hostname>localhost</hostname> -->
+      <!-- <port>${escidoc.server.port}</port> -->
+      <!-- </jmeterUserProperties> -->
+      <!-- </configuration> -->
+      <!-- </execution> -->
+      <!-- </executions> -->
+      <!-- </plugin> -->
 
     </plugins>
   </build>
 
   <dependencies>
-      <dependency>
-          <groupId>org.escidoc.core</groupId>
-          <artifactId>policies</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.escidoc.core</groupId>
-          <artifactId>aspects</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>policies</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>aspects</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.escidoc</groupId>
       <artifactId>testdata</artifactId>
       <version>0.0.2-alpha1</version>
       <type>war</type>
     </dependency>
-   <dependency>
+    <dependency>
       <groupId>org.escidoc.core</groupId>
       <artifactId>common</artifactId>
     </dependency>
@@ -716,18 +730,18 @@
           <groupId>org.fcrepo</groupId>
           <artifactId>trippi-mulgara</artifactId>
         </exclusion>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>batik</groupId>
-					<artifactId>batik-swing</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>log4j-over-slf4j</artifactId>
-				</exclusion>
+        <exclusion>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-swing</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>log4j-over-slf4j</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -748,10 +762,10 @@
           <groupId>org.fcrepo</groupId>
           <artifactId>mulgara-core</artifactId>
         </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>fcrepo-generate</artifactId>
-              </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>fcrepo-generate</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -787,7 +801,7 @@
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
     </dependency>
-    <!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> <version>1.4</version> <type>jar</type> 
+    <!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> <version>1.4</version> <type>jar</type>
       <scope>test</scope> </dependency> -->
 
     <!-- for SB -->
@@ -841,158 +855,114 @@
       <version>1.7</version>
       <scope>test</scope>
     </dependency>
-     <dependency>
-         <groupId>org.escidoc.core</groupId>
-         <artifactId>escidoc-core-war</artifactId>
-         <type>war</type>
-     </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>escidoc-core-war</artifactId>
+      <type>war</type>
+    </dependency>
   </dependencies>
 
-    <profiles>
-        <profile>
-            <id>jboss42</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>container</name>
-                    <value>jboss42</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <wait>false</wait>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <skip>${skipITs}</skip>
-                            <wait>${cargo.wait}</wait>
-                            <container>
-                                <containerId>jboss42x</containerId>
-                                <home>${project.build.directory}/escidoc/jboss</home>
-                                <timeout>600000</timeout>
-				<systemProperties>
-					<ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME>
-				</systemProperties>
-                            </container>
-                            <configuration>
-                                <type>standalone</type>
-                                <properties>
-                                    <cargo.hostname>localhost</cargo.hostname>
-                                    <cargo.protocol>http</cargo.protocol>
-                                    <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
-                                    <cargo.rmi.port>1099</cargo.rmi.port>
-                                    <cargo.logging>medium</cargo.logging>
-                                    <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs>
-                                </properties>
-                                <deployables>
-                                    <deployable>
-                                        <groupId>org.escidoc</groupId>
-                                        <artifactId>testdata</artifactId>
-                                        <type>war</type>
-                                        <properties>
-                                            <context>testdata</context>
-                                        </properties>
-                                    </deployable>
-                                </deployables>
-                            </configuration>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>tomcat</id>
-            <activation>
-                <property>
-                    <name>container</name>
-                    <value>tomcat</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>start-container</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>start</goal>
-                                </goals>
-                                <configuration>
-                                    <wait>false</wait>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
-                                <goals>
-                                    <goal>stop</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <skip>${skipITs}</skip>
-                            <wait>${cargo.wait}</wait>
-                            <container>
-                                <containerId>tomcat7x</containerId>
-                                <zipUrlInstaller>
-                                    <url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.12/bin/apache-tomcat-7.0.12.zip</url>
-                                </zipUrlInstaller>
-                                <timeout>600000</timeout>
-				<systemProperties>
-					<ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME>
-				</systemProperties>
-                            </container>
-                            <configuration>
-                                <type>standalone</type>
-                                <properties>
-                                    <cargo.hostname>localhost</cargo.hostname>
-                                    <cargo.protocol>http</cargo.protocol>
-                                    <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
-                                    <cargo.logging>medium</cargo.logging>
-                                    <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs>
-                                </properties>
-                                <deployables>
-                                    <deployable>
-                                        <groupId>org.escidoc</groupId>
-                                        <artifactId>testdata</artifactId>
-                                        <type>war</type>
-                                        <properties>
-                                            <context>testdata</context>
-                                        </properties>
-                                    </deployable>
-                                    <deployable>
-                                        <groupId>org.escidoc.core</groupId>
-	                                    <artifactId>escidoc-core-war</artifactId>
-                                        <type>war</type>
-                                    </deployable>
-                                </deployables>
-                            </configuration>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+  <!-- <profiles> -->
+  <!-- <profile> -->
+  <!-- <id>jboss7</id> -->
+  <!-- <activation> -->
+  <!-- <activeByDefault>false</activeByDefault> -->
+  <!-- <property> -->
+  <!-- <name>container</name> -->
+  <!-- <value>jboss6</value> -->
+  <!-- </property> -->
+  <!-- </activation> -->
+  <!-- <build> -->
+  <!-- <pluginManagement> -->
+  <!-- <plugins> -->
+  <!-- <plugin> -->
+  <!-- <groupId>org.codehaus.cargo</groupId> -->
+  <!-- <artifactId>cargo-maven2-plugin</artifactId> -->
+  <!-- <configuration> -->
+  <!-- <container> -->
+  <!-- <containerId>jboss7x</containerId> -->
+  <!-- </container> -->
+  <!-- <configuration> -->
+  <!-- <type>standalone</type> -->
+  <!-- <properties> -->
+  <!-- <cargo.hostname>localhost</cargo.hostname> -->
+  <!-- <cargo.protocol>http</cargo.protocol> -->
+  <!-- <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port> -->
+  <!-- <cargo.rmi.port>1099</cargo.rmi.port> -->
+  <!-- <cargo.logging>medium</cargo.logging> -->
+  <!-- <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs> -->
+  <!-- </properties> -->
+  <!-- <deployables> -->
+  <!-- <deployable> -->
+  <!-- <groupId>org.escidoc</groupId> -->
+  <!-- <artifactId>testdata</artifactId> -->
+  <!-- <type>war</type> -->
+  <!-- <properties> -->
+  <!-- <context>testdata</context> -->
+  <!-- </properties> -->
+  <!-- </deployable> -->
+  <!-- </deployables> -->
+  <!-- </configuration> -->
+  <!-- </configuration> -->
+  <!-- </plugin> -->
+  <!-- </plugins> -->
+  <!-- </pluginManagement> -->
+  <!-- </build> -->
+  <!-- </profile> -->
+  <!-- <profile> -->
+  <!-- <id>tomcat7</id> -->
+  <!-- <activation> -->
+  <!-- <property> -->
+  <!-- <name>container</name> -->
+  <!-- <value>tomcat7</value> -->
+  <!-- </property> -->
+  <!-- </activation> -->
+  <!-- <build> -->
+  <!-- <pluginManagement> -->
+  <!-- <plugins> -->
+  <!-- <plugin> -->
+  <!-- <groupId>org.codehaus.cargo</groupId> -->
+  <!-- <artifactId>cargo-maven2-plugin</artifactId> -->
+  <!-- <configuration> -->
+  <!-- <container> -->
+  <!-- <containerId>tomcat7x</containerId> -->
+  <!-- <zipUrlInstaller> -->
+  <!-- <url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.12/bin/apache-tomcat-7.0.12.zip</url> -->
+  <!-- </zipUrlInstaller> -->
+  <!-- <systemProperties> -->
+  <!-- <ESCIDOC_HOME>${project.build.directory}/escidoc/core</ESCIDOC_HOME> -->
+  <!-- </systemProperties> -->
+  <!-- </container> -->
+  <!-- <configuration> -->
+  <!-- <type>standalone</type> -->
+  <!-- <properties> -->
+  <!-- <cargo.hostname>localhost</cargo.hostname> -->
+  <!-- <cargo.protocol>http</cargo.protocol> -->
+  <!-- <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port> -->
+  <!-- <cargo.logging>medium</cargo.logging> -->
+  <!-- <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug}</cargo.jvmargs> -->
+  <!-- </properties> -->
+  <!-- <deployables> -->
+  <!-- <deployable> -->
+  <!-- <groupId>org.escidoc</groupId> -->
+  <!-- <artifactId>testdata</artifactId> -->
+  <!-- <type>war</type> -->
+  <!-- <properties> -->
+  <!-- <context>testdata</context> -->
+  <!-- </properties> -->
+  <!-- </deployable> -->
+  <!-- <deployable> -->
+  <!-- <groupId>org.escidoc.core</groupId> -->
+  <!-- <artifactId>escidoc-core-war</artifactId> -->
+  <!-- <type>war</type> -->
+  <!-- </deployable> -->
+  <!-- </deployables> -->
+  <!-- </configuration> -->
+  <!-- </configuration> -->
+  <!-- </plugin> -->
+  <!-- </plugins> -->
+  <!-- </pluginManagement> -->
+  <!-- </build> -->
+  <!-- </profile> -->
+  <!-- </profiles> -->
 </project>
