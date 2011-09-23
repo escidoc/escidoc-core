@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:aop="http://www.springframework.org/schema/aop"
+      xmlns:security="http://www.springframework.org/schema/security"
+      xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
+
+  default-autowire="no"
+  default-lazy-init="true"
+>
+ 
+    <!-- DATABASE FILTER CHAIN #######################################################################################################-->
+    <bean id="springSecurityFilterChain"
+        class="org.springframework.security.web.FilterChainProxy">
+        <security:filter-chain-map path-type="regex">
+            <security:filter-chain pattern="/aa/login$|/aa/login[^/].*$|/aa/j_spring_security_check|/aa/spring_security_check" 
+                       filters="httpSessionContextIntegrationFilter,
+                                logoutFilter,
+                                x509PreAuthenticatedProcessingFilter,
+                                authenticationProcessingFilter,
+                                securityContextHolderAwareRequestFilter,
+                                exceptionTranslationFilter,
+                                filterSecurityInterceptor" />
+        </security:filter-chain-map>
+    </bean>
+    
+    <!-- END FILTER CHAIN #######################################################################################################-->
+    <!-- AUTHENTICATION MANAGER ######################################################################################################-->
+    <bean id="eSciDocAuthenticationManager"
+        class="org.springframework.security.authentication.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="preAuthenticatedAuthenticationProvider"/>
+                <ref local="ldapAuthenticationProvider"/>
+                <ref local="ldap1AuthenticationProvider"/>
+                <ref local="databaseAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="accessDecisionManager"  class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
+    <!-- END AUTHENTICATION MANAGER ######################################################################################################-->
+
+    <!-- AUTHENTICATION PROVIDERS ######################################################################################################-->
+    <!-- PRE AUTHENTICATED AUTHENTICATION PROVIDER ############### -->
+    <bean id="preAuthenticatedAuthenticationProvider"
+        class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+        <property name="preAuthenticatedUserDetailsService" ref="preAuthenticatedUserDetailsService" />
+    </bean>
+    <!-- END PRE AUTHENTICATED AUTHENTICATION PROVIDER ############### -->
+    
+    <!-- DATABASE AUTHENTICATION PROVIDER ############### -->
+    <bean id="databaseAuthenticationProvider"
+        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="dbUserService"/>
+    </bean>
+    <!-- END DATABASE AUTHENTICATION PROVIDER ############### -->
+    
+    <!-- LDAP AUTHENTICATION PROVIDER ############### -->
+    <bean id="ldapAuthenticationProvider"
+        class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <constructor-arg ref="contextSource"/>
+                <property name="userSearch" ref="userSearch" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+                <constructor-arg ref="contextSource"/>
+                <constructor-arg value="ou=group"/>
+                <property name="groupRoleAttribute" value="cn"/>
+                <property name="groupSearchFilter" value="(member={0})"/>
+                <property name="rolePrefix" value=""/>
+                <property name="convertToUpperCase" value="false"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDetailsContextMapper">
+            <bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/>
+        </property>
+    </bean>
+
+    <bean id="contextSource"
+        class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <constructor-arg value="ldap://escidev51.fiz-karlsruhe.de/dc=fiz-karlsruhe,dc=de"/>
+    </bean>
+
+    <bean id="userSearch"
+        class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <constructor-arg index="0" value="ou=people"/>
+        <constructor-arg index="1" value="(uid={0})"/>
+        <constructor-arg index="2" ref="contextSource" />
+    </bean>
+    <!-- END LDAP AUTHENTICATION PROVIDER ############### -->
+    <!-- LDAP1 AUTHENTICATION PROVIDER ############### -->
+    <bean id="ldap1AuthenticationProvider"
+        class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <constructor-arg ref="contextSource1"/>
+                <property name="userSearch" ref="userSearch1" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+                <constructor-arg ref="contextSource1"/>
+                <constructor-arg value="ou=group"/>
+                <property name="groupRoleAttribute" value="cn"/>
+                <property name="groupSearchFilter" value="(memberUid={1})"/>
+                <property name="rolePrefix" value=""/>
+                <property name="convertToUpperCase" value="false"/>
+            </bean>
+        </constructor-arg>
+        <property name="userDetailsContextMapper">
+            <bean class="de.escidoc.core.aa.ldap.EscidocLdapContextMapper"/>
+        </property>
+    </bean>
+
+    <bean id="contextSource1"
+        class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+        <constructor-arg value="ldap://141.66.11.51/dc=fiz-karlsruhe,dc=de"/>
+    </bean>
+
+    <bean id="userSearch1"
+        class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <constructor-arg index="0" value="ou=people"/>
+        <constructor-arg index="1" value="(uid={0})"/>
+        <constructor-arg index="2" ref="contextSource1" />
+    </bean>
+    <!-- END LDAP1 AUTHENTICATION PROVIDER ############### -->
+
+    <!-- ##USER DETAILS SERVICES ###########################################################################################################-->
+    <bean id="preAuthenticatedUserDetailsService"
+        class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+        <property name="userDetailsService" ref="dbUserService" />
+    </bean>
+
+    <bean id="dbUserService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">  
+        <property name="dataSource" ref="escidoc-core.DataSource"/>  
+        <property name="usersByUsernameQuery">  
+            <value>  
+                select loginname, password, 'true' as active from aa.user_account where loginname = ?  
+            </value>  
+        </property>  
+        <property name="authoritiesByUsernameQuery">  
+            <value>  
+                 select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?
+            </value>  
+        </property>  
+     </bean>  
+
+    <bean id="escidoc-core.DataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/escidoc-core"/>
+        <property name="username" value="escidoc"/>
+        <property name="password" value="escidoc"/>
+    </bean>
+    <!-- ##END USER DETAILS SERVICES ##################################################################################################-->
+    
+    <!-- ##FILTERS AND ENTRY POINTS####################################################################################################-->
+    <bean id="httpSessionContextIntegrationFilter" class="org.springframework.security.web.context.HttpSessionContextIntegrationFilter" />  
+
+    <bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />  
+
+    <bean id="logoutFilter"  
+        class="org.springframework.security.web.authentication.logout.LogoutFilter">  
+        <constructor-arg value="/aa/login/login.html" />  
+        <!-- URL redirected to after logout -->  
+        <constructor-arg>  
+            <list>                      
+                <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />  
+            </list>  
+        </constructor-arg>  
+    </bean>  
+
+    <bean id="authenticationProcessingFilter"  
+        class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">  
+        <property name="authenticationManager" ref="eSciDocAuthenticationManager"/>  
+ 		<property name="authenticationFailureHandler" ref="failureHandler"/>
+ 		<property name="authenticationSuccessHandler" ref="successHandler"/>
+        <property name="filterProcessesUrl" value="/aa/j_spring_security_check"/>  
+    </bean>         
+
+	<bean id="successHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+ 		<property name="defaultTargetUrl" value="/aa/login/missing-target.html" />
+	</bean>
+
+	<bean id="failureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+ 		<property name="defaultFailureUrl" value="/aa/login/login-repeated.html" />
+	</bean>
+	
+	<bean id="x509PreAuthenticatedProcessingFilter" 
+        class="org.springframework.security.web.authentication.preauth.x509.X509AuthenticationFilter">
+        <property name="authenticationManager" ref="eSciDocAuthenticationManager" />
+        <property name="principalExtractor">
+            <bean name="x509SubjectDNExtractor" 
+                class="org.springframework.security.web.authentication.preauth.x509.SubjectDnX509PrincipalExtractor">
+                <property name="subjectDnRegex" value="CN=(.*?)," />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="exceptionTranslationFilter"  
+        class="org.springframework.security.web.access.ExceptionTranslationFilter">  
+        <property name="authenticationEntryPoint" ref="authenticationProcessingFilterEntryPoint" />  
+        <property name="accessDeniedHandler">  
+            <bean  
+                class="org.springframework.security.web.access.AccessDeniedHandlerImpl">  
+                <property name="errorPage" value="/aa/login/login-repeated.html" />  
+            </bean>  
+        </property>  
+    </bean>  
+
+    <bean id="authenticationProcessingFilterEntryPoint" 
+            class="de.escidoc.core.aa.springsecurity.EscidocAuthenticationProcessingFilterEntryPoint">
+      <property name="loginFormUrl" value="/aa/login/login.html"/>
+    </bean>
+    
+    <bean id="filterSecurityInterceptor"  class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="authenticationManager" ref="eSciDocAuthenticationManager" />
+        <property name="accessDecisionManager" ref="accessDecisionManager" />
+        <property name="objectDefinitionSource">
+            <security:filter-invocation-definition-source path-type="regex">
+                <security:intercept-url pattern="/aa/login$|/aa/login[^/].*$|/aa/j_spring_security_check|/aa/spring_security_check" access="IS_AUTHENTICATED_FULLY"/>
+            </security:filter-invocation-definition-source>
+        </property>
+    </bean>
+
+    <!-- ##END FILTERS ######################################################################################################################-->
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organizational-unit:organizational-unit
+	xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+
+	<escidocMetadataRecords:md-records>
+		<escidocMetadataRecords:md-record
+			name="escidoc">
+			<mdou:organizational-unit
+				xmlns:mdou="http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit"
+				xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+				xmlns:eterms="http://purl.org/escidoc/metadata/terms/0.1/">
+				<dc:title>External Organizational Units</dc:title>
+				<dcterms:alternative>Ext</dcterms:alternative>
+				<dc:identifier>pubman:ext</dc:identifier>
+				<eterms:organization-type>Institute
+				</eterms:organization-type>
+				<eterms:country />
+				<eterms:city />
+				<kml:coordinates xmlns:kml="http://www.opengis.net/kml/2.2" />
+				<eterms:start-date>2010-01-01T00:00:01.111Z
+				</eterms:start-date>
+			</mdou:organizational-unit>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+
+</organizational-unit:organizational-unit>

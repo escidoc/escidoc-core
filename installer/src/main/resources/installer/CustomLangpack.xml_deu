@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <langpack>
   <str id="data.validation.error.title" txt="Plausibilit&#228;tsfehler"/>
+  
+  <str id="UserInputPanel.dir.nodirectory.message" txt="Sie m&#252;ssen ein valides Verzeichnis selektieren."/>
+  <str id="UserInputPanel.dir.nodirectory.caption" txt="Kein Verzeichnis selektiert"/>
+  <str id="UserInputPanel.dir.notdirectory.message" txt="Das gew&#228;hlte Verzeichnis existiert nicht oder ist nicht valide."/>
+  <str id="UserInputPanel.dir.notdirectory.caption" txt="Invalides Verzeichnis"/>
 
   <!-- packs -->
   <str id="escidoc.package" txt="eSciDoc"/>

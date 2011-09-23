@@ -2,6 +2,11 @@
 <langpack>
   <str id="data.validation.error.title" txt="Validation error"/>
 
+  <str id="UserInputPanel.dir.nodirectory.message" txt="You must select a valid directory."/>
+  <str id="UserInputPanel.dir.nodirectory.caption" txt="No Directory Selected"/>
+  <str id="UserInputPanel.dir.notdirectory.message" txt="The directory you have chosen either does not exist or is not valid."/>
+  <str id="UserInputPanel.dir.notdirectory.caption" txt="Invalid Directory"/>
+
   <!-- packs -->
   <str id="escidoc.package" txt="eSciDoc"/>
   <str id="escidoc.package.description" txt="Necessary installation scripts and configuration files"/>

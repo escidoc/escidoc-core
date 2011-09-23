@@ -69,6 +69,9 @@
   <str id="TriplestoreDatabaseUser" txt="Triplestore Database User"/>
   <str id="TriplestoreDatabaseUserText" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!"/>
 
+  <str id="eSciDocHomeSelection" txt="Location of the eSciDoc Home directoy"/>
+  <str id="eSciDocHomeSelectionText" txt="The eSciDoc Home directory represents the location, where to store the eSciDoc configurations, which can be manipulated by the administrator. This location can act independently of the installation location of eSciDoc."/>
+
   <str id="SystemAdministratorCredentials" txt="User Credentials for System Administrator User"/>
   <str id="SystemAdministratorCredentialsText" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them."/>
   <str id="SystemAdministratorUsername" txt="System Administrator Username:"/>
