@@ -28,6 +28,29 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.text.MessageFormat;
+import java.util.Date;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -69,28 +92,10 @@ import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.MessageFormat;
-import java.util.Date;
 
 /**
  * Load some example objects as resource XMLs into the eSciDoc repository.
- *
+ * 
  * @author André Schenk
  */
 @Service("admin.Examples")
@@ -138,8 +143,9 @@ public class Examples {
 
     /**
      * Create an XML snippet for a message that can be displayed on the Web page.
-     *
-     * @param message message text
+     * 
+     * @param message
+     *            message text
      * @return XML snippet
      */
     private static String createMessage(final String message) {
@@ -148,18 +154,26 @@ public class Examples {
 
     /**
      * Create a snippet for a task parameter XML including the last modification date.
-     *
-     * @param lastModificationDate the last modification date
+     * 
+     * @param lastModificationDate
+     *            the last modification date
      * @return XML snippet
      */
     private static String createTaskParam(final String lastModificationDate) {
-        return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
+        final StringBuilder sb = new StringBuilder();
+        sb.append(XmlUtility.DOCUMENT_START);
+        sb
+            .append("<param xmlns=\"http://www.escidoc.org/schemas/assign-pid-task-param/0.1\" last-modification-date=\"");
+        sb.append(lastModificationDate);
+        sb.append("\"/>");
+        return sb.toString();
     }
 
     /**
      * Extract the last modification date from the given result XML.
-     *
-     * @param xml result XML
+     * 
+     * @param xml
+     *            result XML
      * @return last modification date
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws javax.xml.xpath.XPathExpressionException
@@ -188,9 +202,11 @@ public class Examples {
 
     /**
      * Extract the last modification date from the given resource XML.
-     *
-     * @param xml  resource XML (item XML, container XML, ...)
-     * @param type resource type
+     * 
+     * @param xml
+     *            resource XML (item XML, container XML, ...)
+     * @param type
+     *            resource type
      * @return last modification date
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws javax.xml.xpath.XPathExpressionException
@@ -219,9 +235,11 @@ public class Examples {
 
     /**
      * Extract the object id from the given resource XML.
-     *
-     * @param xml  resource XML (item XML, container XML, ...)
-     * @param type resource type
+     * 
+     * @param xml
+     *            resource XML (item XML, container XML, ...)
+     * @param type
+     *            resource type
      * @return object id
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws javax.xml.xpath.XPathExpressionException
@@ -252,8 +270,9 @@ public class Examples {
 
     /**
      * Load all example objects.
-     *
-     * @param directory URL to the directory which contains the eSciDoc XML files (including the trailing slash).
+     * 
+     * @param directory
+     *            URL to the directory which contains the eSciDoc XML files (including the trailing slash).
      * @return some useful information to the user which objects were loaded
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
@@ -322,10 +341,13 @@ public class Examples {
 
     /**
      * Load the example container.
-     *
-     * @param xml            container XML
-     * @param contextId      context id
-     * @param contentModelId content model id
+     * 
+     * @param xml
+     *            container XML
+     * @param contextId
+     *            context id
+     * @param contentModelId
+     *            content model id
      * @return object id of the newly created container
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
@@ -359,8 +381,9 @@ public class Examples {
 
     /**
      * Load the example content model.
-     *
-     * @param xml content model XML
+     * 
+     * @param xml
+     *            content model XML
      * @return object id of the newly created content model
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
@@ -385,9 +408,11 @@ public class Examples {
 
     /**
      * Load the example context.
-     *
-     * @param xml  context XML
-     * @param ouId organizational unit id
+     * 
+     * @param xml
+     *            context XML
+     * @param ouId
+     *            organizational unit id
      * @return object id of the newly created context
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
@@ -426,24 +451,45 @@ public class Examples {
     }
 
     /**
-     * Load the file from the given URL into a string.
-     *
-     * @param url file URL
+     * Load the file from the given path into a string.
+     * 
+     * @param url
+     *            file URL
      * @return string which contains the file content
-     * @throws MalformedURLException    malformed URL
-     * @throws WebserverSystemException thrown if the file couldn't be loaded
+     * @throws MalformedURLException
+     *             malformed URL
+     * @throws WebserverSystemException
+     *             thrown if the file couldn't be loaded
      */
-    private String loadFile(final String url) throws WebserverSystemException, MalformedURLException {
-        return connectionUtility.getRequestURLAsString(new URL(url));
+    private String loadFile(final String path) throws WebserverSystemException, MalformedURLException, IOException {
+        // return connectionUtility.getRequestURLAsString(new URL(url));
+        final BufferedReader in =
+            new BufferedReader(
+                new InputStreamReader(new FileInputStream(new File(path)), XmlUtility.CHARACTER_ENCODING));
+        final StringBuilder buffer = new StringBuilder();
+        try {
+            String line;
+            while ((line = in.readLine()) != null) {
+                buffer.append(line);
+            }
+        }
+        finally {
+            in.close();
+        }
+        return buffer.toString();
     }
 
     /**
      * Load the example item.
-     *
-     * @param xml            item XML
-     * @param contextId      context id
-     * @param contentModelId content model id
-     * @param containerId    container id
+     * 
+     * @param xml
+     *            item XML
+     * @param contextId
+     *            context id
+     * @param contentModelId
+     *            content model id
+     * @param containerId
+     *            container id
      * @return object id of the newly created item
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
@@ -499,8 +545,9 @@ public class Examples {
 
     /**
      * Load the example organizational unit.
-     *
-     * @param xml organizational unit XML
+     * 
+     * @param xml
+     *            organizational unit XML
      * @return object id of the newly created organizational unit
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
@@ -528,14 +575,5 @@ public class Examples {
         this.organizationalUnitHandler.open(result,
             createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
         return result;
-    }
-
-    /**
-     * Ingest the ConnectionUtility object.
-     *
-     * @param connectionUtility ConnectionUtility object to be ingested
-     */
-    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
-        this.connectionUtility = connectionUtility;
     }
 }
