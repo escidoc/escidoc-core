@@ -1171,6 +1171,7 @@
     <skipJBoss>false</skipJBoss>
     <cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m</cargo.jvmargs>
     <cargo.jvmdebug></cargo.jvmdebug>
+    <cargo.ucldebug></cargo.ucldebug>
     <cargo.wait>false</cargo.wait>
   </properties>
 
@@ -1302,7 +1303,6 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.16</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
@@ -2279,8 +2279,22 @@
       </activation>
       <properties>
         <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
-          -Xnoagent -verbose:class</cargo.jvmdebug>
+          -Xnoagent</cargo.jvmdebug>
         <cargo.wait>true</cargo.wait>
+      </properties>
+    </profile>
+    
+    <profile>
+      <id>ucl</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>ucl</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <cargo.ucldebug>-verbose:class -Djaxp.debug=1</cargo.ucldebug>
       </properties>
     </profile>
 
