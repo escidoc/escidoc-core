@@ -58,15 +58,15 @@
 				<prop:mime-type>text/plain</prop:mime-type>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8080/mime-types/mimeTypes.txt"
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/downloadMe.txt"
 				storage="internal-managed" />
 			<md-records:md-records>
 				<md-records:md-record name="escidoc" md-type="DC">
 					<dc-metadata xmlns:some="http://escidoc.de"
 						xmlns:dc="http://purl.org/dc/elements/1.1/">
-						<dc:title>mimeTypesIANA.txt</dc:title>
+						<dc:title>downloadMe.txt</dc:title>
 						<dc:description>
-							List of mime-types copied from IANA website.
+							List of mime-types copied from IANA website. Replaced by another testdata text file.
 						</dc:description>
 					</dc-metadata>
 				</md-records:md-record>
