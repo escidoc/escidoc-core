@@ -37,6 +37,7 @@
             <excludes>
               <exclude>**/docbook/**/*</exclude>
               <exclude>**/sql/**/*</exclude>
+              <exclude>builddef.lst</exclude>
             </excludes>
           </configuration>
         </plugin>
