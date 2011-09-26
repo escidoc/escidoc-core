@@ -1052,7 +1052,7 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
-    <escidoc.fedoragsearch.version>1.4.18</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.4.20</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.4.9</escidoc.srw.version>
     <srw.version>1.4.3</srw.version>
     <escidoc.saxon.version>1.0.1</escidoc.saxon.version>
