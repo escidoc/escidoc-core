@@ -1459,6 +1459,20 @@ public class SearchTest extends SearchTestBase {
     }
 
     /**
+     * Test searching for component-metadata.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testSBSR52_1() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.fulltext=xmlfulltext");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("10", getNumberOfHits(response));
+    }
+
+    /**
      * Test searching for escidoc.most-recent-date.
      *
      * @throws Exception If anything fails.
