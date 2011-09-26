@@ -25,6 +25,6 @@
   <RepositoryLongName>Fedora demonstration objects at DTU</RepositoryLongName>
   <RepositoryDeveloper>Gert Schmeltz Pedersen, DTU/DTV</RepositoryDeveloper>
   <RepositoryContact>gsp@dtv.dk</RepositoryContact>
-  <SupportedMimeTypes>application/pdf application/msword text/xml application/xml text/plain</SupportedMimeTypes>
+  <SupportedMimeTypes>text/plain text/html text/xml application/xml application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document application/vnd.ms-powerpoint application/vnd.openxmlformats-officedocument.presentationml.presentation application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</SupportedMimeTypes>
  </repositoryInfo>
 </resultPage>
