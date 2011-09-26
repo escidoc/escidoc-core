@@ -53,7 +53,7 @@
                 <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
                 <cargo.rmi.port>1099</cargo.rmi.port>
                 <cargo.logging>medium</cargo.logging>
-                <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug} ${cargo.ucldebug}</cargo.jvmargs>
+                <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug} ${cargo.ucldebug} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager</cargo.jvmargs>
               </properties>
               <deployables>
                 <deployable>
