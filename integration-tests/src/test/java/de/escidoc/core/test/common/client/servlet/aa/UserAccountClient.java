@@ -28,22 +28,10 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.message.BasicNameValuePair;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
 /**
  * Offers access methods to the escidoc interface of the user resource.
@@ -51,8 +39,6 @@ import static junit.framework.Assert.assertTrue;
  * @author Michael Schneider
  */
 public class UserAccountClient extends GrantClient implements ResourceHandlerClientInterface {
-
-    private static final int THREE = 3;
 
     /**
      * Create an user.
@@ -275,59 +261,6 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
 
         return callEsciDoc("UserAccount.retrieveGrants", METHOD_RETRIEVE_GRANTS, Constants.HTTP_METHOD_GET,
             Constants.GRANTS_BASE_URI, new String[] {}, filter);
-    }
-
-    /**
-     * Login to the eSciDoc framework.
-     *
-     * @param login    The login name.
-     * @param password The password.
-     * @return The HttpMethod after the service call.
-     * @throws Exception If the service call fails.
-     */
-    public HttpResponse login(final String login, final String password) throws Exception {
-        HttpResponse result = null;
-        String url = EscidocTestBase.getFrameworkUrl() + Constants.UM_LOGIN_BASE_URI;
-        NameValuePair[] param = new NameValuePair[THREE];
-        NameValuePair loginParam = new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login);
-
-        param[0] = loginParam;
-        NameValuePair passwordParam = new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD, password);
-        param[1] = passwordParam;
-        NameValuePair redirectUrlParam = new BasicNameValuePair(Constants.PARAM_UM_REDIRECT_URL, password);
-        param[2] = redirectUrlParam;
-        result = HttpHelper.executeHttpRequest(getHttpClient(), Constants.HTTP_METHOD_POST, url, param, null, null);
-        return result;
-    }
-
-    /**
-     * Login to the eSciDoc framework.
-     *
-     * @param login    The login name.
-     * @param password The password.
-     * @param check    Indicates if the login was successful (handle != null, response-status == 200)
-     * @return A handle if login was successful.
-     * @throws Exception If the service call fails.
-     */
-    public String login(final String login, final String password, final boolean check) throws Exception {
-        HttpResponse httpRes = login(login, password);
-        Cookie handleCookie = HttpHelper.getCookie(getHttpClient());
-        if (check) {
-            assertEquals("Login to eSciDoc not successful! Wrong response status!", HttpServletResponse.SC_SEE_OTHER,
-                httpRes.getStatusLine().getStatusCode());
-            assertNotNull("Login to eSciDoc not successful! No handle" + " generated!", handleCookie);
-            Header location = httpRes.getFirstHeader("Location");
-            assertNotNull("No redirect location returned", location);
-            assertTrue("No authorization handle returned as parameter of" + " redirect URL", (location
-                .getValue().indexOf(Constants.PARAM_UM_AUTHORIZATION) != -1));
-            assertNotNull("No authorization handle parameter returned");
-        }
-
-        String result = null;
-        if (handleCookie != null) {
-            result = handleCookie.getValue();
-        }
-        return result;
     }
 
     /**

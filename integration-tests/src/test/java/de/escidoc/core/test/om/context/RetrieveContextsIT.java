@@ -28,8 +28,12 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,10 +41,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the task oriented method retrieveContexts.
@@ -316,6 +318,50 @@ public class RetrieveContextsIT extends ContextTestBase {
             label = "";
         }
         assertEquals("Wrong no of " + label + " Contexts found!", expectedNoOfContexts, no);
+    }
+
+    /**
+     * Test retrieving Contexts sorted from the repository.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveContextsSorted() throws Exception {
+        String contextXml = createSuccessfullyWithType("context_create_without_admindescriptor.xml", "AAAA");
+        String lmd = getLastModificationDateValue(getDocument(contextXml));
+        createSuccessfullyWithType("context_create_without_admindescriptor.xml", "BBBB");
+        createSuccessfullyWithType("context_create_without_admindescriptor.xml", "AAAA");
+        createSuccessfullyWithType("context_create_without_admindescriptor.xml", "BBBB");
+        HashMap<String, String[]> filterParams = new HashMap<String, String[]>();
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"PID\"=escidoc* and \"/last-modification-date\" >= "
+            + lmd + " sortBy " + "\"/sort/properties/type\"/sort.ascending "
+            + "\"/sort/properties/creation-date\"/sort.descending" });
+        String xml = retrieveContexts(filterParams);
+
+        assertXmlValidSrwResponse(xml);
+
+        NodeList primNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTEXT_LIST_CONTEXT + "/properties/type");
+        NodeList secNodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTEXT_LIST_CONTEXT
+                + "/properties/creation-date");
+        assertEquals("search result doesnt contain expected number of hits", 4, primNodes.getLength());
+        String lastPrim = LOWEST_COMPARABLE;
+        String lastSec = HIGHEST_COMPARABLE;
+
+        for (int count = 0; count < primNodes.getLength(); count++) {
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) < 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            if (primNodes.item(count).getTextContent().compareTo(lastPrim) > 0) {
+                lastSec = HIGHEST_COMPARABLE;
+            }
+            if (secNodes.item(count).getTextContent().compareTo(lastSec) > 0) {
+                assertTrue("wrong sortorder", false);
+            }
+            lastPrim = primNodes.item(count).getTextContent();
+            lastSec = secNodes.item(count).getTextContent();
+        }
     }
 
     /**

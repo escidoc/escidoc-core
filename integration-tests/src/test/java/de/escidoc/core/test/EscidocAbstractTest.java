@@ -182,6 +182,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public static final String XPATH_CONTEXT_PROPERTIES_NAME = XPATH_CONTEXT_PROPERTIES + "/" + NAME_NAME;
 
+    public static final String XPATH_CONTEXT_PROPERTIES_TYPE = XPATH_CONTEXT_PROPERTIES + "/" + NAME_TYPE;
+
     public static final String XPATH_CONTEXT_NAME = "";
 
     public static final String NAME_REPORT_DEFINITION = "report-definition";
@@ -341,6 +343,10 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     public static final String FILTER_TOP_LEVEL_OUS_ONLY = "top-level-organizational-units";
 
     public static final String FILTER_URI_TYPE = PROPERTIES_NS_URI_04 + NAME_TYPE;
+
+    public static final String LOWEST_COMPARABLE = "";
+
+    public static final String HIGHEST_COMPARABLE = "zzzzzzzzzz";
 
     public static final String XPATH_ORGANIZATIONAL_UNIT = "/" + NAME_ORGANIZATIONAL_UNIT;
 

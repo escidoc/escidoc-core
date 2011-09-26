@@ -446,15 +446,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         validateIngest(item);
         item.persist(true);
         final String objid = item.getObjid();
-        try {
-            if (EscidocConfiguration.getInstance().getAsBoolean(
-                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
-                fireItemCreated(objid, retrieve(objid));
-            }
-        }
-        catch (final ResourceNotFoundException e) {
-            throw new IntegritySystemException("The Item with id '" + objid + "', which was just ingested, "
-                + "could not be found for retrieve.", e);
+        if (EscidocConfiguration.getInstance().getAsBoolean(
+            EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
+            fireItemCreated(objid, null);
         }
         return objid;
 

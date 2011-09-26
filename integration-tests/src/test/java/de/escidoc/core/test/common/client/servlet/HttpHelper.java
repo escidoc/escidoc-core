@@ -536,7 +536,7 @@ public final class HttpHelper {
         client.getCookieStore().clear();
 
         final String loginServletUrl =
-            EscidocTestBase.getFrameworkUrl() + "/aa/login?target="
+            EscidocTestBase.getFrameworkUrl() + Constants.LOGIN_URI + "?target="
                 + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
         final HttpGet loginMethod = new HttpGet(loginServletUrl);
         httpRes = client.execute(loginMethod);
@@ -557,7 +557,8 @@ public final class HttpHelper {
             .indexOf("<input type=\"password\"") != -1);
 
         // Second step: Send filled login form
-        final HttpPost postMethod = new HttpPost((EscidocTestBase.getFrameworkUrl() + "/aa/j_spring_security_check"));
+        final HttpPost postMethod = new HttpPost((
+            EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + "/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
@@ -579,7 +580,7 @@ public final class HttpHelper {
         if (expectedAuthenticationFailure) {
             // redirect to repeated login page
             assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
-                EscidocTestBase.getFrameworkUrl() + "/aa/login/login-repeated.html", retrievedRedirectUrl);
+                EscidocTestBase.getFrameworkUrl() + Constants.LOGIN_URI + "/login-repeated.html", retrievedRedirectUrl);
             return httpRes;
         }
         else {

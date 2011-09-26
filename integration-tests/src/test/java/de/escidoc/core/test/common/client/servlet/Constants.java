@@ -52,6 +52,8 @@ public class Constants {
 
     public static final String INSTITUTIONAL_REPOSITORY_URI = "ir";
 
+    public static final String AA_URI = "aa";
+
     public static final String OAI_URI = "oai";
 
     public static final String ADMIN_URI = "adm";
@@ -77,6 +79,10 @@ public class Constants {
     public static final String QUERY = "/query";
 
     public static final String SPO = "/spo";
+
+    public static final String AA_BASE_URI = ESCIDOC_BASE_URI + AA_URI;
+
+    public static final String LOGIN_URI = AA_BASE_URI + "/login/database";
 
     public static final String CONTEXT_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/context";
 
@@ -138,23 +144,23 @@ public class Constants {
 
     public static final String CONTENT_MODELS_BASE_URI = ESCIDOC_BASE_URI + "cmm/content-models";
 
-    public static final String PDP_BASE_URI = ESCIDOC_BASE_URI + "aa/pdp";
+    public static final String PDP_BASE_URI = AA_BASE_URI + "/pdp";
 
-    public static final String ROLE_BASE_URI = ESCIDOC_BASE_URI + "aa/role";
+    public static final String ROLE_BASE_URI = AA_BASE_URI + "/role";
 
-    public static final String ROLES_BASE_URI = ESCIDOC_BASE_URI + "aa/roles";
+    public static final String ROLES_BASE_URI = AA_BASE_URI + "/roles";
 
     public static final String STAGING_FILE_BASE_URI = ESCIDOC_BASE_URI + "st/staging-file";
 
-    public static final String USER_ACCOUNT_BASE_URI = ESCIDOC_BASE_URI + "aa/user-account";
+    public static final String USER_ACCOUNT_BASE_URI = AA_BASE_URI + "/user-account";
 
-    public static final String USER_ACCOUNTS_BASE_URI = ESCIDOC_BASE_URI + "aa/user-accounts";
+    public static final String USER_ACCOUNTS_BASE_URI = AA_BASE_URI + "/user-accounts";
 
-    public static final String GRANTS_BASE_URI = ESCIDOC_BASE_URI + "aa/grants";
+    public static final String GRANTS_BASE_URI = AA_BASE_URI + "/grants";
 
-    public static final String USER_GROUP_BASE_URI = ESCIDOC_BASE_URI + "aa/user-group";
+    public static final String USER_GROUP_BASE_URI = AA_BASE_URI + "/user-group";
 
-    public static final String USER_GROUPS_BASE_URI = ESCIDOC_BASE_URI + "aa/user-groups";
+    public static final String USER_GROUPS_BASE_URI = AA_BASE_URI + "/user-groups";
 
     public static final String USER_MANAGEMENT_WRAPPER_BASE_URI = ESCIDOC_BASE_URI + "aa";
 

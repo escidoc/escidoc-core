@@ -52,7 +52,22 @@
 		############################ # Filter ############################
 	-->
 	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-name>springSecurityDatabaseFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>springSecurityLdapFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>springSecurityShibbolethFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>springSecurityOpenidFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 
@@ -74,48 +89,43 @@
 		############################ # Filter Mapping ############################
 	-->
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/aa/login/*</url-pattern>
+		<filter-name>springSecurityDatabaseFilterChain</filter-name>
+		<url-pattern>/aa/login/database/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/aa/j_spring_security_check/*</url-pattern>
+		<filter-name>springSecurityDatabaseFilterChain</filter-name>
+		<url-pattern>/aa/database/j_spring_security_check/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/aa/j_spring_openid_security_check/*</url-pattern>
+		<filter-name>springSecurityLdapFilterChain</filter-name>
+		<url-pattern>/aa/login/ldap/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/aa/spring_security_check/*</url-pattern>
+		<filter-name>springSecurityLdapFilterChain</filter-name>
+		<url-pattern>/aa/ldap/j_spring_security_check/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/aa/spring_security_login/*</url-pattern>
+		<filter-name>springSecurityShibbolethFilterChain</filter-name>
+		<url-pattern>/aa/login/shibboleth/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/j_spring_security_check/*</url-pattern>
+		<filter-name>springSecurityShibbolethFilterChain</filter-name>
+		<url-pattern>/aa/shibboleth/j_spring_security_check/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/j_spring_openid_security_check/*</url-pattern>
+		<filter-name>springSecurityOpenidFilterChain</filter-name>
+		<url-pattern>/aa/login/openid/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/spring_security_check/*</url-pattern>
-	</filter-mapping>
-
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/spring_security_login/*</url-pattern>
+		<filter-name>springSecurityOpenidFilterChain</filter-name>
+		<url-pattern>/aa/openid/j_spring_openid_security_check/*</url-pattern>
 	</filter-mapping>
 
     <filter-mapping>
@@ -144,6 +154,11 @@
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>de.escidoc.core.aa.servlet.Login</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>LoginSelect</servlet-name>
+		<jsp-file>/aa/login/login-select.jsp</jsp-file>
 	</servlet>
 
 	<servlet>
@@ -522,14 +537,34 @@
         </servlet-class>
     </servlet>
 
-    <!--
-         ############################ # Servlet Mappings
-         ############################
-     -->
+	<!--
+		############################ # Servlet Mappings
+		############################
+	-->
 
 	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
+		<servlet-name>LoginSelect</servlet-name>
 		<url-pattern>/aa/login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginSelect</servlet-name>
+		<url-pattern>/aa/login/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/login/database</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/login/ldap</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/login/shibboleth</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/aa/login/openid</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>

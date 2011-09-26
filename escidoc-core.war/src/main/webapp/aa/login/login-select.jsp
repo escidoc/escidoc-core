@@ -28,6 +28,20 @@
   * All rights reserved.  Use is subject to license terms.
   */
 %>
+<%
+ /*
+  * This jsp reads the filterBeans used for Authentication from the Application Context,
+  * checks if implementing Class is DisabledAuthenticationFilter
+  * and if not, displays an select-option for this login-method.
+  */
+
+ /*
+  * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+  * Gesellschaft zur Foerderung der Wissenschaft e.V.
+  * All rights reserved.  Use is subject to license terms.
+  */
+%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Map.Entry"%>
 <%@ page import="java.util.List"%>

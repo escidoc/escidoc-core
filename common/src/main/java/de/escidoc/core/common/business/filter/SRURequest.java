@@ -28,15 +28,16 @@
  */
 package de.escidoc.core.common.business.filter;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Writer;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.cookie.Cookie;
@@ -46,23 +47,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.z3950.zing.cql.CQLNode;
-import org.z3950.zing.cql.CQLParseException;
-import org.z3950.zing.cql.CQLParser;
-import org.z3950.zing.cql.CQLSortNode;
-import org.z3950.zing.cql.Modifier;
-import org.z3950.zing.cql.ModifierSet;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Vector;
-import java.util.Map.Entry;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Abstract super class for all types of SRU requests.
@@ -203,57 +197,12 @@ public class SRURequest {
         final Writer output, final ResourceType[] resourceTypes, final String query, final int limit, final int offset,
         final Map<String, String> extraData, final RecordPacking recordPacking) throws WebserverSystemException {
         try {
-            String queryWithoutSortBy = query;
-            StringBuilder sortBy = new StringBuilder();
-            if (queryWithoutSortBy != null && queryWithoutSortBy.length() > 0) {
-                CQLParser cqlParser = new CQLParser();
-                CQLNode rootNode = cqlParser.parse(query);
-                if (rootNode instanceof CQLSortNode) {
-                    queryWithoutSortBy = ((CQLSortNode) rootNode).subtree.toCQL();
-                    Vector<ModifierSet> sorts = ((CQLSortNode) rootNode).getSortIndexes();
-                    if (sorts != null && !sorts.isEmpty()) {
-                        sortBy.append(" sortBy ");
-                        for (ModifierSet modifierSet : sorts) {
-                            sortBy.append("\"").append(modifierSet.getBase()).append("\"");
-                            if (modifierSet.getModifiers() != null && !modifierSet.getModifiers().isEmpty()) {
-                                for (Modifier modifier : modifierSet.getModifiers()) {
-                                    sortBy.append("/").append(modifier.toCQL());
-                                }
-                            }
-                            sortBy.append(" ");
-                        }
-                    }
-                }
-            }
-            final StringBuilder resourceTypeQuery = new StringBuilder();
-
-            for (final ResourceType resourceType : resourceTypes) {
-                if (resourceTypeQuery.length() > 0) {
-                    resourceTypeQuery.append(" OR ");
-                }
-                resourceTypeQuery.append("\"type\"=");
-                resourceTypeQuery.append(resourceType.getLabel());
-            }
-
-            final StringBuilder internalQuery = new StringBuilder();
-
-            if (queryWithoutSortBy != null && queryWithoutSortBy.length() > 0) {
-                if (resourceTypeQuery.length() > 0) {
-                    internalQuery.append('(');
-                    internalQuery.append(resourceTypeQuery);
-                    internalQuery.append(") AND ");
-                }
-                internalQuery.append('(').append(queryWithoutSortBy).append(')').append(sortBy);
-            }
-            else {
-                internalQuery.append(resourceTypeQuery).append(sortBy);
-            }
-
+            FilterCqlDo filterCqlDo = new FilterCqlDo(query, resourceTypes);
             String url =
                 EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
                     + ADMIN_INDEXES.get(resourceTypes[0]) + '?' + Constants.SRU_PARAMETER_OPERATION
                     + "=searchRetrieve&" + Constants.SRU_PARAMETER_VERSION + "=1.1&" + Constants.SRU_PARAMETER_QUERY
-                    + '=' + URLEncoder.encode(internalQuery.toString(), XmlUtility.CHARACTER_ENCODING);
+                    + '=' + URLEncoder.encode(filterCqlDo.getTypedFilterQuery(), XmlUtility.CHARACTER_ENCODING);
 
             if (limit != LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS) {
                 url += '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
@@ -277,30 +226,9 @@ public class SRURequest {
             LOGGER.info("SRW URL: " + url);
 
             final Cookie cookie = new BasicClientCookie(EscidocServlet.COOKIE_LOGIN, UserContext.getHandle());
-            final HttpResponse response = connectionUtility.getRequestURL(new URL(url), cookie);
-
-            if (response != null) {
-                final HttpEntity entity = response.getEntity();
-                BufferedReader input = null;
-                try {
-                    input =
-                        new BufferedReader(new InputStreamReader(entity.getContent(), getCharset(entity
-                            .getContentType().getValue())));
-                    String line;
-                    while ((line = input.readLine()) != null) {
-                        output.write(line);
-                        output.write('\n');
-                    }
-                }
-                finally {
-                    IOUtils.closeStream(input);
-                }
-            }
+            output.write(connectionUtility.getRequestURLAsString(new URL(url), cookie));
         }
         catch (IOException e) {
-            throw new WebserverSystemException(e);
-        }
-        catch (CQLParseException e) {
             throw new WebserverSystemException(e);
         }
     }
