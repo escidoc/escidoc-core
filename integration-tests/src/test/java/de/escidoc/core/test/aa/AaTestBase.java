@@ -28,6 +28,43 @@
  */
 package de.escidoc.core.test.aa;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolException;
+import org.apache.http.client.RedirectHandler;
+import org.apache.http.client.protocol.RequestAddCookies;
+import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.junit.After;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
@@ -57,43 +94,10 @@ import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.sm.SmTestBase;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolException;
-import org.apache.http.client.RedirectHandler;
-import org.apache.http.client.protocol.RequestAddCookies;
-import org.apache.http.client.protocol.ResponseProcessCookies;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
-import org.junit.After;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * Base class for AA tests.
- *
+ * 
  * @author Torsten Tetteroo
  */
 public class AaTestBase extends EscidocAbstractTest {
@@ -160,7 +164,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
     protected static final String VISIBILITY_AUDIENCE = "audience";
 
-    //ROLE-HREFS
+    // ROLE-HREFS
     private static final String ROLE_HREF_PREFIX = "/aa/role/";
 
     public static final String ROLE_ID_ADMINISTRATOR = "escidoc:role-administrator";
@@ -251,17 +255,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public static final String ROLE_HREF_GRANT_TEST_5 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_5;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS =
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = ROLE_HREF_PREFIX
+        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS =
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = ROLE_HREF_PREFIX
+        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS =
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = ROLE_HREF_PREFIX
+        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS =
-        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = ROLE_HREF_PREFIX
+        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
 
     public static final String ROLE_HREF_DEPOSITOR = ROLE_HREF_PREFIX + ROLE_ID_DEPOSITOR;
 
@@ -287,8 +291,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public static final String ROLE_HREF_CONTENT_RELATION_MANAGER = ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MANAGER;
 
-    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER =
-        ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MODIFIER;
+    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER = ROLE_HREF_PREFIX
+        + ROLE_ID_CONTENT_RELATION_MODIFIER;
 
     public static final String ROLE_HREF_STATISTICS_EDITOR = ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_EDITOR;
 
@@ -346,8 +350,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
     private final String testUploadFileMimeType = "application/zip";
 
-    private final Pattern SCOPE_PATTERN =
-        Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL + Pattern.MULTILINE);
+    private final Pattern SCOPE_PATTERN = Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL
+        + Pattern.MULTILINE);
 
     public AaTestBase() {
 
@@ -376,9 +380,11 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Clean up after test.<br> This method resets the current user handle in PWCallback.
-     *
-     * @throws Exception If anything fails.
+     * Clean up after test.<br>
+     * This method resets the current user handle in PWCallback.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     @Override
@@ -510,15 +516,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public String create(final int handlerCode, final String xml) throws Exception {
 
-        Object result = getClient(handlerCode).create(xml);
+        final Object result = getClient(handlerCode).create(xml);
         return handleResult(result);
     }
 
     public void delete(final int handlerCode, final String id) throws Exception {
 
-        Object result = getClient(handlerCode).delete(id);
+        final Object result = getClient(handlerCode).delete(id);
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             if (httpRes.getEntity() != null) {
                 httpRes.getEntity().consumeContent();
             }
@@ -528,54 +534,56 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public String retrieve(final int handlerCode, final String id) throws Exception {
 
-        Object result = getClient(handlerCode).retrieve(id);
+        final Object result = getClient(handlerCode).retrieve(id);
         return handleResult(result);
     }
 
     public String update(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result = getClient(handlerCode).update(id, xml);
+        final Object result = getClient(handlerCode).update(id, xml);
         return handleResult(result);
     }
 
     public String submit(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).submit(id, xml);
+        final Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).submit(id, xml);
         return handleResult(result);
     }
 
     public String release(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).release(id, xml);
+        final Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).release(id, xml);
         return handleResult(result);
     }
 
     public String releaseWithPid(final int handlerCode, final String id, final String creatorUserHandle)
         throws Exception {
 
-        Object result =
+        final Object result =
             ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).releaseWithPid(id, creatorUserHandle);
         return handleResult(result);
     }
 
     public String withdraw(final int handlerCode, final String id, final String xml) throws Exception {
 
-        Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).withdraw(id, xml);
+        final Object result = ((SubmitReleaseReviseWithdrawClientInterface) getClient(handlerCode)).withdraw(id, xml);
         return handleResult(result);
     }
 
     /**
      * Handles the result of a base service access.
-     *
-     * @param result The result to handle.
+     * 
+     * @param result
+     *            The result to handle.
      * @return Returns the xml response.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected String handleResult(final Object result) throws Exception {
 
         String xmlResult = null;
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             httpRes.getEntity().consumeContent();
             assertHttpStatusOfMethod("", httpRes);
@@ -589,10 +597,12 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Gets the corresponding client for the provided handler code.
-     *
-     * @param handlerCode The code identifying the handler.
+     * 
+     * @param handlerCode
+     *            The code identifying the handler.
      * @return Returns the client.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected ClientBase getClient(final int handlerCode) throws Exception {
 
@@ -656,19 +666,23 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test creating a StagingFile.
-     *
-     * @param binaryContent The binary content of the staging file.
-     * @param mimeType      The mime type of the data.
-     * @param filename      The name of the file.
+     * 
+     * @param binaryContent
+     *            The binary content of the staging file.
+     * @param mimeType
+     *            The mime type of the data.
+     * @param filename
+     *            The name of the file.
      * @return The <code>HttpResponse</code> object.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected HttpResponse createStagingFile(
         final InputStream binaryContent, final String mimeType, final String filename) throws Exception {
 
-        Object result = getStagingFileClient().create(binaryContent, mimeType, filename);
+        final Object result = getStagingFileClient().create(binaryContent, mimeType, filename);
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             httpRes.getEntity().consumeContent();
             return httpRes;
         }
@@ -680,16 +694,19 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test deactivating an UserAccount.
-     *
-     * @param id  The id of the user account.
-     * @param xml The task param xml.
-     * @throws Exception If anything fails.
+     * 
+     * @param id
+     *            The id of the user account.
+     * @param xml
+     *            The task param xml.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void deactivateUserAccount(final String id, final String xml) throws Exception {
 
-        Object result = getUserAccountClient().deactivate(id, xml);
+        final Object result = getUserAccountClient().deactivate(id, xml);
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             httpRes.getEntity().consumeContent();
             assertHttpStatusOfMethod("", httpRes);
         }
@@ -710,20 +727,27 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares an item for a test.<br> The item is created and set into the specified state.
-     *
-     * @param creatorUserHandle    The eSciDoc user handle of the creator.
-     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
-     *                             <code>null</code> is returned.
-     * @param contextId            context to create container in
-     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
-     *                             updated to create a new version.
-     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
-     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
-     *                             for objects in state release or withdrawn.
+     * Prepares an item for a test.<br>
+     * The item is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status to set for the item. If this is <code>null</code>, no item is created and <code>null</code>
+     *            is returned.
+     * @param contextId
+     *            context to create container in
+     * @param createVersionsBefore
+     *            If this flag is set to <code>true</code>, before each status change, the item is updated to create a
+     *            new version.
+     * @param createVersionsAfter
+     *            If this flag is set to <code>true</code>, after each status change, the item is updated to create a
+     *            new version, if this is allowed. Currently, this is not allowed for objects in state release or
+     *            withdrawn.
      * @return Returns the XML representation of the created item. In case of withdrawn item, the released item is
      *         returned.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareItem(
         final String creatorUserHandle, final String status, final String contextId,
@@ -789,20 +813,27 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares a container for a test.<br> The container is created and set into the specified state.
-     *
-     * @param creatorUserHandle    The eSciDoc user handle of the creator.
-     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
-     *                             <code>null</code> is returned.
-     * @param contextId            id of context to create container in.
-     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the item is
-     *                             updated to create a new version.
-     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the item is
-     *                             updated to create a new version, if this is allowed. Currently, this is not allowed
-     *                             for objects in state release or withdrawn.
+     * Prepares a container for a test.<br>
+     * The container is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status to set for the item. If this is <code>null</code>, no item is created and <code>null</code>
+     *            is returned.
+     * @param contextId
+     *            id of context to create container in.
+     * @param createVersionsBefore
+     *            If this flag is set to <code>true</code>, before each status change, the item is updated to create a
+     *            new version.
+     * @param createVersionsAfter
+     *            If this flag is set to <code>true</code>, after each status change, the item is updated to create a
+     *            new version, if this is allowed. Currently, this is not allowed for objects in state release or
+     *            withdrawn.
      * @return Returns the XML representation of the created container. In case of withdrawn container, the released
      *         container is returned.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareContainer(
         final String creatorUserHandle, final String status, final String contextId,
@@ -873,15 +904,19 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares an organizational unit for a test.<br> The organizational unit is created and set into the specified
-     * state.
-     *
-     * @param creatorUserHandle The eSciDoc user handle of the creator.
-     * @param status            The status to set for the item. If this is <code>null</code>, no item is created and
-     *                          <code>null</code> is returned.
-     * @param parentIds         parentIds of this orgUnit
+     * Prepares an organizational unit for a test.<br>
+     * The organizational unit is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status to set for the item. If this is <code>null</code>, no item is created and <code>null</code>
+     *            is returned.
+     * @param parentIds
+     *            parentIds of this orgUnit
      * @return Returns the XML representation of the created organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String prepareOrgUnit(final String creatorUserHandle, final String status, final String[] parentIds)
         throws Exception {
@@ -902,7 +937,7 @@ public class AaTestBase extends EscidocAbstractTest {
             assertNotNull(createdXml);
 
             if (!STATUS_NEW.equals(status)) {
-                Document document = EscidocAbstractTest.getDocument(createdXml);
+                final Document document = EscidocAbstractTest.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 getOrganizationalUnitClient().open(objidValue,
                     orgUnitHelper.getTheLastModificationParam(false, objidValue));
@@ -922,12 +957,16 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares an user-account for a test.<br> The user-account is created and set into the specified state.
-     *
-     * @param creatorUserHandle The eSciDoc user handle of the creator.
-     * @param status            The status to set for the user-account.
+     * Prepares an user-account for a test.<br>
+     * The user-account is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status to set for the user-account.
      * @return Returns the XML representation of the created item.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareUserAccount(final String creatorUserHandle, final String status) throws Exception {
 
@@ -943,8 +982,8 @@ public class AaTestBase extends EscidocAbstractTest {
             assertNotNull(createdXml);
 
             if (!STATUS_ACTIVE.equals(status)) {
-                Document document = EscidocAbstractTest.getDocument(createdXml);
-                String objidValue = getObjidValue(document);
+                final Document document = EscidocAbstractTest.getDocument(createdXml);
+                final String objidValue = getObjidValue(document);
                 deactivateUserAccount(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
                 createdXml = retrieve(USER_ACCOUNT_HANDLER_CODE, objidValue);
             }
@@ -957,11 +996,14 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares an user-group for a test.<br> The user-group is created and set into the specified state.
-     *
-     * @param creatorUserHandle The eSciDoc user handle of the creator.
+     * Prepares an user-group for a test.<br>
+     * The user-group is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
      * @return Returns the XML representation of the created user-group.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareUserGroup(final String creatorUserHandle) throws Exception {
 
@@ -982,21 +1024,29 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Prepares a content-relation for a test.<br> The content-relation is created and set into the specified state.
-     *
-     * @param creatorUserHandle    The eSciDoc user handle of the creator.
-     * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
-     *                             <code>null</code> is returned.
-     * @param subjectHref          href to the subject of the content-relation.
-     * @param objectHref           href to the object of the content-relation.
-     * @param createVersionsBefore If this flag is set to <code>true</code>, before each status change, the
-     *                             content-relation is updated to create a new version.
-     * @param createVersionsAfter  If this flag is set to <code>true</code>, after each status change, the
-     *                             content-relation is updated to create a new version, if this is allowed. Currently,
-     *                             this is not allowed for objects in state released or withdrawn.
+     * Prepares a content-relation for a test.<br>
+     * The content-relation is created and set into the specified state.
+     * 
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status to set for the item. If this is <code>null</code>, no item is created and <code>null</code>
+     *            is returned.
+     * @param subjectHref
+     *            href to the subject of the content-relation.
+     * @param objectHref
+     *            href to the object of the content-relation.
+     * @param createVersionsBefore
+     *            If this flag is set to <code>true</code>, before each status change, the content-relation is updated
+     *            to create a new version.
+     * @param createVersionsAfter
+     *            If this flag is set to <code>true</code>, after each status change, the content-relation is updated to
+     *            create a new version, if this is allowed. Currently, this is not allowed for objects in state released
+     *            or withdrawn.
      * @return Returns the XML representation of the created content-relation. In case of withdrawn content-relation,
      *         the released content-relation is returned.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareContentRelation(
         final String creatorUserHandle, final String status, final String subjectHref, final String objectHref,
@@ -1023,8 +1073,8 @@ public class AaTestBase extends EscidocAbstractTest {
                 if (createVersionsBefore) {
                     createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
                     createdXml =
-                        handleResult(contentRelationClient.update(objidValue, prepareContentRelationData(subjectHref,
-                            objectHref)));
+                        handleResult(contentRelationClient.update(objidValue,
+                            prepareContentRelationData(subjectHref, objectHref)));
                     document = EscidocAbstractTest.getDocument(createdXml);
                 }
                 contentRelationClient.submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
@@ -1053,18 +1103,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Prepares the data for a container.
-     *
-     * @param contextId context to create container in
+     * 
+     * @param contextId
+     *            context to create container in
      * @return Returns the xml representation of a container.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String prepareContainerData(final String contextId) throws Exception {
 
-        Document xmlContainer =
+        final Document xmlContainer =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml");
         if (contextId != null && !contextId.equals("")) {
-            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            final String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlContainer, "/container/properties/context/@href", contextHref);
         }
         // deleteElement(xmlContainer, "/container/admin-descriptor");
@@ -1073,18 +1125,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Prepares the data for an item.
-     *
-     * @param contextId context to create container in
+     * 
+     * @param contextId
+     *            context to create container in
      * @return Returns the xml representation of an item.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareItemData(final String contextId) throws Exception {
 
         final String templateName;
         templateName = "escidoc_item_198_for_create_one_component_privateREST.xml";
-        Document itemDoc = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_AA_ITEM_PATH, templateName);
+        final Document itemDoc = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_AA_ITEM_PATH, templateName);
         if (contextId != null && !contextId.equals("")) {
-            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
+            final String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(itemDoc, "/item/properties/context/@href", contextHref);
         }
         return toString(itemDoc, false);
@@ -1092,16 +1146,19 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Prepares the data for an item.
-     *
-     * @param subjectHref subjectHref for contentRelation
-     * @param objectHref  objectHref for contentRelation
+     * 
+     * @param subjectHref
+     *            subjectHref for contentRelation
+     * @param objectHref
+     *            objectHref for contentRelation
      * @return Returns the xml representation of a contentRelation.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareContentRelationData(final String subjectHref, final String objectHref) throws Exception {
 
         final String contentRelationXml = getExampleTemplate("content-relation-01.xml");
-        Document contentRelationDoc = EscidocAbstractTest.getDocument(contentRelationXml);
+        final Document contentRelationDoc = EscidocAbstractTest.getDocument(contentRelationXml);
         if (subjectHref != null) {
             substitute(contentRelationDoc, "/content-relation/subject/@href", subjectHref);
         }
@@ -1113,34 +1170,36 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Prepares the data for an user-account.
-     *
+     * 
      * @return Returns the xml representation of an user-account. The data is created by using the template file
      *         escidoc_useraccount_for_create.xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String prepareUserAccountData() throws Exception {
 
-        Document document =
+        final Document document =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml");
         assertXmlExists("No login-name found in template data. ", document, XPATH_USER_ACCOUNT_LOGINNAME);
         final Node loginNameNode = selectSingleNode(document, XPATH_USER_ACCOUNT_LOGINNAME);
         String loginname = loginNameNode.getTextContent().trim();
         loginname += System.currentTimeMillis();
         loginNameNode.setTextContent(loginname);
-        String userAccountXml = toString(document, true);
+        final String userAccountXml = toString(document, true);
         return userAccountXml;
     }
 
     /**
      * Prepares the data for an user-group.
-     *
+     * 
      * @return Returns the xml representation of an user-group. The data is created by using the template file
      *         escidoc_usergroup_for_create.xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String prepareUserGroupData() throws Exception {
 
-        Document document =
+        final Document document =
             getTemplateAsFixedUserGroupDocument(TEMPLATE_USER_GROUP_PATH, "escidoc_usergroup_for_create.xml");
         insertUniqueLabel(document);
 
@@ -1149,10 +1208,12 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Prepares the data for an organizational unit.
-     *
-     * @param parentIds parentIds of this orgUnit
+     * 
+     * @param parentIds
+     *            parentIds of this orgUnit
      * @return Returns the xml representation of an organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String prepareOrgUnitData(final String[] parentIds) throws Exception {
 
@@ -1177,10 +1238,12 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Inserts a unique label into the provided document by adding the current timestamp to the contained label.
-     *
-     * @param document The document.
+     * 
+     * @param document
+     *            The document.
      * @return The inserted login name.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String insertUniqueLabel(final Document document) throws Exception {
 
@@ -1196,34 +1259,39 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
-     *                               tried to retrieve an unknown item.
-     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the item is
-     *                               updated to create a new version.
-     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
-     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
-     *                               the identifier of the resource.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, no item is created and it is tried to retrieve
+     *            an unknown item.
+     * @param createVersions
+     *            If this flag is set to <code>true</code>, before each status change, the item is updated to create a
+     *            new version.
+     * @param versionNumber
+     *            The version that shall be retrieved. If this is <code>null</code>, only the object id is sent to the
+     *            retrieve service. Otherwise, objectid:versionNumber is sent as the identifier of the resource.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String item xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestRetrieveItem(
         final String userHandle, final String creatorUserHandle, final String status, final boolean createVersions,
         final String versionNumber, final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXml = prepareItem(creatorUserHandle, status, null, createVersions, false);
+        final String createdXml = prepareItem(creatorUserHandle, status, null, createVersions, false);
 
         String retrievedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
-                        .getDocument(createdXml)), versionNumber));
+                    retrieve(ITEM_HANDLER_CODE,
+                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(ITEM_HANDLER_CODE, UNKNOWN_ID);
@@ -1249,23 +1317,30 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a content of an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
-     *                               tried to retrieve an unknown item.
-     * @param createVersionsBefore   If this flag is set to <code>true</code>, before each status change, the item is
-     *                               updated to create a new version.
-     * @param createVersionsAfter    If this flag is set to <code>true</code>, after each status change, the item is
-     *                               updated to create a new version, if this is allowed. Currently, this is not allowed
-     *                               for objects in state release or withdrawn.
-     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
-     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
-     *                               the identifier of the resource.
-     * @param visibility             the visibility of the component that shall be retrieved.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, no item is created and it is tried to retrieve
+     *            an unknown item.
+     * @param createVersionsBefore
+     *            If this flag is set to <code>true</code>, before each status change, the item is updated to create a
+     *            new version.
+     * @param createVersionsAfter
+     *            If this flag is set to <code>true</code>, after each status change, the item is updated to create a
+     *            new version, if this is allowed. Currently, this is not allowed for objects in state release or
+     *            withdrawn.
+     * @param versionNumber
+     *            The version that shall be retrieved. If this is <code>null</code>, only the object id is sent to the
+     *            retrieve service. Otherwise, objectid:versionNumber is sent as the identifier of the resource.
+     * @param visibility
+     *            the visibility of the component that shall be retrieved.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveContent(
         final String userHandle, final String creatorUserHandle, final String status,
@@ -1281,9 +1356,9 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
-                String resourceId =
+                final String resourceId =
                     createResourceId(getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber);
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
+                final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
                 dateFormat.format(new Date(System.currentTimeMillis()));
                 ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(resourceId, componentId);
             }
@@ -1309,16 +1384,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a content of an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param itemId                 the itemId
-     * @param componentId            the componentId to retrieve
-     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
-     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
-     *                               the identifier of the resource.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param itemId
+     *            the itemId
+     * @param componentId
+     *            the componentId to retrieve
+     * @param versionNumber
+     *            The version that shall be retrieved. If this is <code>null</code>, only the object id is sent to the
+     *            retrieve service. Otherwise, objectid:versionNumber is sent as the identifier of the resource.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveContent(
         final String userHandle, final String itemId, final String componentId, final String versionNumber,
@@ -1350,34 +1429,39 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a container.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the container. If this is <code>null</code>, no container is created
-     *                               and it is tried to retrieve an unknown container.
-     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the container
-     *                               is updated to create a new version.
-     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
-     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
-     *                               the identifier of the resource.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the container. If this is <code>null</code>, no container is created and it is tried to
+     *            retrieve an unknown container.
+     * @param createVersions
+     *            If this flag is set to <code>true</code>, before each status change, the container is updated to
+     *            create a new version.
+     * @param versionNumber
+     *            The version that shall be retrieved. If this is <code>null</code>, only the object id is sent to the
+     *            retrieve service. Otherwise, objectid:versionNumber is sent as the identifier of the resource.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String container xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestRetrieveContainer(
         final String userHandle, final String creatorUserHandle, final String status, final boolean createVersions,
         final String versionNumber, final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXml = prepareContainer(creatorUserHandle, status, null, createVersions, false);
+        final String createdXml = prepareContainer(creatorUserHandle, status, null, createVersions, false);
 
         String retrievedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(CONTAINER_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
-                        .getDocument(createdXml)), versionNumber));
+                    retrieve(CONTAINER_HANDLER_CODE,
+                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(CONTAINER_HANDLER_CODE, UNKNOWN_ID);
@@ -1403,17 +1487,19 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating a container.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String containerXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateContainer(final String userHandle, final Class<?> expectedExceptionClass)
         throws Exception {
 
-        String toBeCreatedXml = prepareContainerData(null);
+        final String toBeCreatedXml = prepareContainerData(null);
 
         String xml = null;
         try {
@@ -1439,29 +1525,35 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateItem(final String userHandle, final Class<?> expectedExceptionClass) throws Exception {
 
-        String itemWithoutComponents = prepareItemData(null);
+        final String itemWithoutComponents = prepareItemData(null);
 
         return doTestCreateItem(userHandle, expectedExceptionClass, itemWithoutComponents);
     }
 
     /**
      * Tests creating an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @param templatePath           The path to the directory containing the template.
-     * @param templateName           The name of the template to use.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @param templatePath
+     *            The path to the directory containing the template.
+     * @param templateName
+     *            The name of the template to use.
      * @return Returns the xml representation of the created item.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateItem(
         final String userHandle, final Class<?> expectedExceptionClass, final String templatePath,
@@ -1474,13 +1566,16 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @param xml                    The xml representation.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @param xml
+     *            The xml representation.
      * @return Returns the xml representation of the created item.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateItem(final String userHandle, final Class<?> expectedExceptionClass, final String xml)
         throws Exception {
@@ -1509,10 +1604,11 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Creates the resource id for the provided object id and version number.
-     *
-     * @param objid         The object id.
-     * @param versionNumber The version number. this may be <code>null</code>. In this case, the objid is returned,
-     *                      only.
+     * 
+     * @param objid
+     *            The object id.
+     * @param versionNumber
+     *            The version number. this may be <code>null</code>. In this case, the objid is returned, only.
      * @return Returns objid[:versionNumber]
      */
     protected String createResourceId(final String objid, final String versionNumber) {
@@ -1527,15 +1623,19 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests updating an item.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, it is tried to update an
-     *                               unknown item.
-     * @param versionNumber          TODO
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, it is tried to update an unknown item.
+     * @param versionNumber
+     *            TODO
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestUpdateItem(
         final String userHandle, final String creatorUserHandle, final String status, final String versionNumber,
@@ -1549,15 +1649,17 @@ public class AaTestBase extends EscidocAbstractTest {
             createdXml = prepareItem(creatorUserHandle, STATUS_PENDING, null, false, false);
         }
 
-        String toBeUpdatedXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
+        final String toBeUpdatedXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
 
         String updatedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 updatedXml =
-                    update(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
-                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml);
+                    update(
+                        ITEM_HANDLER_CODE,
+                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(toBeUpdatedXml)), versionNumber),
+                        toBeUpdatedXml);
             }
             else {
                 updatedXml = update(ITEM_HANDLER_CODE, UNKNOWN_ID, toBeUpdatedXml);
@@ -1583,14 +1685,18 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting an item.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, no item is created and it is
-     *                               tried to delete an unknown item.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, no item is created and it is tried to delete an
+     *            unknown item.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteItem(
         final String userHandle, final String creatorUserHandle, final String status,
@@ -1625,14 +1731,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests submitting an item.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, it is tried to submit an
-     *                               unknown item.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, it is tried to submit an unknown item.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestSubmitItem(
         final String userHandle, final String creatorUserHandle, final String status,
@@ -1674,14 +1783,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests releasing an item.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, it is tried to release an
-     *                               unknown item.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, it is tried to release an unknown item.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestReleaseItem(
         final String userHandle, final String creatorUserHandle, final String status,
@@ -1720,14 +1832,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests withdrawing an item.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, it is tried to withdraw an
-     *                               unknown item.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, it is tried to withdraw an unknown item.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestWithdrawItem(
         final String userHandle, final String creatorUserHandle, final String status,
@@ -1745,12 +1860,12 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                withdraw(ITEM_HANDLER_CODE, getObjidValue(document), getWithdrawTaskParam(
-                    getLastModificationDateValue(document), "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, getObjidValue(document),
+                    getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
             }
             else {
-                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getWithdrawTaskParam(getLastModificationDateValue(document),
-                    "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID,
+                    getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -1771,12 +1886,14 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating a content-relation.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the xml representation of the created content-relation.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateContentRelation(final String userHandle, final Class<?> expectedExceptionClass)
         throws Exception {
@@ -1805,17 +1922,23 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests updating a content-relation.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the item. If this is <code>null</code>, it is tried to update an
-     *                               unknown content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param versionNumber          TODO
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the item. If this is <code>null</code>, it is tried to update an unknown
+     *            content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param versionNumber
+     *            TODO
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return updated content-relation xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestUpdateContentRelation(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -1834,15 +1957,17 @@ public class AaTestBase extends EscidocAbstractTest {
             createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
 
-        String toBeUpdatedXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
+        final String toBeUpdatedXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
 
         String updatedXml = null;
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 updatedXml =
-                    handleResult(contentRelationClient.update(createResourceId(getObjidValue(EscidocAbstractTest
-                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml));
+                    handleResult(contentRelationClient
+                        .update(
+                            createResourceId(getObjidValue(EscidocAbstractTest.getDocument(toBeUpdatedXml)),
+                                versionNumber), toBeUpdatedXml));
             }
             else {
                 updatedXml = handleResult(contentRelationClient.update(UNKNOWN_ID, toBeUpdatedXml));
@@ -1868,15 +1993,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, no
-     *                               content-relation is created and it is tried to delete an unknown content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the content-relation. If this is <code>null</code>, no content-relation is created and
+     *            it is tried to delete an unknown content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteContentRelation(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -1917,22 +2047,27 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a content-relation.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param creatorUserHandle      The escidoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, no
-     *                               content-relation is created and it is tried to retrieve an unknown
-     *                               content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param createVersions         If this flag is set to <code>true</code>, before each status change, the
-     *                               content-relation is updated to create a new version.
-     * @param versionNumber          The version that shall be retrieved. If this is <code>null</code>, only the object
-     *                               id is sent to the retrieve service. Otherwise, objectid:versionNumber is sent as
-     *                               the identifier of the resource.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param creatorUserHandle
+     *            The escidoc user handle of the creator.
+     * @param status
+     *            The status of the content-relation. If this is <code>null</code>, no content-relation is created and
+     *            it is tried to retrieve an unknown content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param createVersions
+     *            If this flag is set to <code>true</code>, before each status change, the content-relation is updated
+     *            to create a new version.
+     * @param versionNumber
+     *            The version that shall be retrieved. If this is <code>null</code>, only the object id is sent to the
+     *            retrieve service. Otherwise, objectid:versionNumber is sent as the identifier of the resource.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String content-relation xml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestRetrieveContentRelation(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -1952,8 +2087,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    handleResult(contentRelationClient.retrieve(createResourceId(getObjidValue(EscidocAbstractTest
-                        .getDocument(createdXml)), versionNumber)));
+                    handleResult(contentRelationClient.retrieve(createResourceId(
+                        getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber)));
             }
             else {
                 retrievedXml = handleResult(contentRelationClient.retrieve(UNKNOWN_ID));
@@ -1979,13 +2114,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests submitting a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestSubmitContentRelation(
         final String userHandle, final String creatorUserHandle, final String contentRelationId,
@@ -2022,13 +2161,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests releasing a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestReleaseContentRelation(
         final String userHandle, final String creatorUserHandle, final String contentRelationId,
@@ -2066,13 +2209,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests withdrawing a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestReviseContentRelation(
         final String userHandle, final String creatorUserHandle, final String contentRelationId,
@@ -2089,8 +2236,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.revise(getObjidValue(document), getWithdrawTaskParam(
-                getLastModificationDateValue(document), "Some withdraw comment"));
+            contentRelationClient.revise(getObjidValue(document),
+                getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -2110,15 +2257,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests locking a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
-     *                               lock an unknown content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the content-relation. If this is <code>null</code>, it is tried to lock an unknown
+     *            content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestLockContentRelation(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -2166,15 +2318,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests unlocking a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
-     *                               unlock an unknown content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the content-relation. If this is <code>null</code>, it is tried to unlock an unknown
+     *            content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestUnlockContentRelation(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -2193,7 +2350,7 @@ public class AaTestBase extends EscidocAbstractTest {
             createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         Document document = EscidocAbstractTest.getDocument(createdXml);
-        String objId = getObjidValue(document);
+        final String objId = getObjidValue(document);
         createdXml =
             handleResult(contentRelationClient.lock(objId, getLockTaskParam(getLastModificationDateValue2(document))));
         document = EscidocAbstractTest.getDocument(createdXml);
@@ -2225,15 +2382,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests unlocking a content-relation.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the content-relation. If this is <code>null</code>, it is tried to
-     *                               assign objectPid to an unknown content-relation.
-     * @param contentRelationId      The contentRelationId (if <code>null</code>, contentRelation will be created).
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the content-relation. If this is <code>null</code>, it is tried to assign objectPid to
+     *            an unknown content-relation.
+     * @param contentRelationId
+     *            The contentRelationId (if <code>null</code>, contentRelation will be created).
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestContentRelationAssignObjectPid(
         final String userHandle, final String creatorUserHandle, final String status, final String contentRelationId,
@@ -2251,17 +2413,17 @@ public class AaTestBase extends EscidocAbstractTest {
         else {
             createdXml = handleResult(contentRelationClient.retrieve(contentRelationId));
         }
-        Document document = EscidocAbstractTest.getDocument(createdXml);
+        final Document document = EscidocAbstractTest.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.assignObjectPid(getObjidValue(document), getAssignPidTaskParam(
-                    getLastModificationDateValue2(document), new AssignParam()));
+                contentRelationClient.assignObjectPid(getObjidValue(document),
+                    getAssignPidTaskParam(getLastModificationDateValue2(document), new AssignParam()));
             }
             else {
-                contentRelationClient.assignObjectPid(UNKNOWN_ID, getAssignPidTaskParam(
-                    getLastModificationDateValue2(document), new AssignParam()));
+                contentRelationClient.assignObjectPid(UNKNOWN_ID,
+                    getAssignPidTaskParam(getLastModificationDateValue2(document), new AssignParam()));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -2282,22 +2444,24 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test creating a StagingFile.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestCreateStagingFile(final String userHandle, final Class<?> expectedExceptionClass)
         throws Exception {
 
         PWCallback.setHandle(userHandle);
 
-        File f =
+        final File f =
             downloadTempFile(new URL(PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
                 + "/" + testUploadFile));
 
-        InputStream fileInputStream = new FileInputStream(f);
+        final InputStream fileInputStream = new FileInputStream(f);
 
         try {
             createStagingFile(fileInputStream, getUploadFileMimeType(), getUploadFile());
@@ -2320,21 +2484,30 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test retrieving an UserAccount using the user id.
-     *
-     * @param userHandle             The eSciDoc user handle.
-     * @param identifier             The identifier addressing the user account to fetch.<br> If this parameter is not
-     *                               provided, a new user account will be created by the specified creator and set to
-     *                               the specified state. This account is the addressed as defined by the parameter
-     *                               identifierSelection.
-     * @param identifierSelection    This parameter specifies with what kind of identifier the account shall be
-     *                               addressed.<br> It is only used, if no user account identifier has been provided.
-     *                               Valid values are <ul> <li>byId</li> <li>byLoginName</li> <li>byHandle</li>. </ul>
-     *                               Note: Addressing by handle is currently not supported by this method.
-     * @param creatorUserHandle      The eSciDoc user handle of the creator.
-     * @param status                 The status of the item.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The eSciDoc user handle.
+     * @param identifier
+     *            The identifier addressing the user account to fetch.<br>
+     *            If this parameter is not provided, a new user account will be created by the specified creator and set
+     *            to the specified state. This account is the addressed as defined by the parameter identifierSelection.
+     * @param identifierSelection
+     *            This parameter specifies with what kind of identifier the account shall be addressed.<br>
+     *            It is only used, if no user account identifier has been provided. Valid values are
+     *            <ul>
+     *            <li>byId</li>
+     *            <li>byLoginName</li>
+     *            <li>byHandle</li>.
+     *            </ul>
+     *            Note: Addressing by handle is currently not supported by this method.
+     * @param creatorUserHandle
+     *            The eSciDoc user handle of the creator.
+     * @param status
+     *            The status of the item.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveUserAccount(
         final String userHandle, final String identifier, final String identifierSelection,
@@ -2342,7 +2515,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
         String accountIdentifier = identifier;
         if (accountIdentifier == null) {
-            String createdXml = prepareUserAccount(creatorUserHandle, status);
+            final String createdXml = prepareUserAccount(creatorUserHandle, status);
             if ("byId".equals(identifierSelection)) {
                 accountIdentifier = getObjidValue(EscidocAbstractTest.getDocument(createdXml));
             }
@@ -2382,12 +2555,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a content model.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param contentTypeId          The id of the content type.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param contentTypeId
+     *            The id of the content type.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveContentModel(
         final String userHandle, final String contentTypeId, final Class<?> expectedExceptionClass) throws Exception {
@@ -2414,12 +2590,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a scope.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param scopeId                The id of the scope.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param scopeId
+     *            The id of the scope.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveScope(
         final String userHandle, final String scopeId, final Class<?> expectedExceptionClass) throws Exception {
@@ -2446,12 +2625,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a aggregation-definition.
-     *
-     * @param userHandle              The escidoc user handle.
-     * @param aggregationDefinitionId The id of the aggregation-definition.
-     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
-     *                                success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param aggregationDefinitionId
+     *            The id of the aggregation-definition.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveAggregationDefinition(
         final String userHandle, final String aggregationDefinitionId, final Class<?> expectedExceptionClass)
@@ -2479,12 +2661,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a report-definition.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param reportDefinitionId     The id of the report-definition.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param reportDefinitionId
+     *            The id of the report-definition.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveReportDefinition(
         final String userHandle, final String reportDefinitionId, final Class<?> expectedExceptionClass)
@@ -2512,13 +2697,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a report.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           The name of the template to use.
-     * @param reportDefinitionId     The id of the report-definition.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param reportDefinitionId
+     *            The id of the report-definition.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveReport(
         final String userHandle, final String templateName, final String reportDefinitionId,
@@ -2528,7 +2717,7 @@ public class AaTestBase extends EscidocAbstractTest {
             smTestBase.getTemplateAsFixedReportParametersString(TEMPLATE_REP_PARAMETERS_PATH, templateName);
 
         if (reportDefinitionId != null) {
-            Document document = EscidocAbstractTest.getDocument(reportParametersXml);
+            final Document document = EscidocAbstractTest.getDocument(reportParametersXml);
             substituteId(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION, reportDefinitionId);
             reportParametersXml = toString(document, false);
         }
@@ -2553,25 +2742,29 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests creating a scope.<br> The scope is created using the template escidoc_scope3.xml
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           The name of the template to use.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * Tests creating a scope.<br>
+     * The scope is created using the template escidoc_scope3.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String scope-id
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateScope(
         final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
         String objidValue = null;
-        String scopeXml = smTestBase.getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, templateName);
+        final String scopeXml = smTestBase.getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, templateName);
 
         try {
             PWCallback.setHandle(userHandle);
-            String result = create(SCOPE_HANDLER_CODE, scopeXml);
-            Document document = EscidocAbstractTest.getDocument(result);
+            final String result = create(SCOPE_HANDLER_CODE, scopeXml);
+            final Document document = EscidocAbstractTest.getDocument(result);
             objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
@@ -2593,16 +2786,20 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests creating a aggregation definition.<br> The aggregation definition is created using the template
-     * escidoc_aggregation_definition1.xml
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           The name of the template to use.
-     * @param scopeId                The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * Tests creating a aggregation definition.<br>
+     * The aggregation definition is created using the template escidoc_aggregation_definition1.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param scopeId
+     *            The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String aggregation-definition-id
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateAggregationDefinition(
         final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
@@ -2613,15 +2810,15 @@ public class AaTestBase extends EscidocAbstractTest {
             smTestBase.getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document = EscidocAbstractTest.getDocument(aggregationDefinitionXml);
+            final Document document = EscidocAbstractTest.getDocument(aggregationDefinitionXml);
             substituteId(document, XPATH_AGGREGATION_DEFINITION_SCOPE, scopeId);
             aggregationDefinitionXml = toString(document, false);
         }
 
         try {
             PWCallback.setHandle(userHandle);
-            String result = create(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionXml);
-            Document document = EscidocAbstractTest.getDocument(result);
+            final String result = create(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionXml);
+            final Document document = EscidocAbstractTest.getDocument(result);
             objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
@@ -2643,29 +2840,34 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests creating a report definition.<br> The report definition is created using the template
-     * escidoc_report_definition1.xml
-     *
-     * @param userHandle              The escidoc user handle.
-     * @param templateName            The name of the template to use.
-     * @param scopeId                 The scope-id the template has to get substituted with.
-     * @param aggregationDefinitionId The aggregation-definition-Id the template has to get substituted with.
-     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
-     *                                success.
+     * Tests creating a report definition.<br>
+     * The report definition is created using the template escidoc_report_definition1.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param scopeId
+     *            The scope-id the template has to get substituted with.
+     * @param aggregationDefinitionId
+     *            The aggregation-definition-Id the template has to get substituted with.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return String report-definition-id
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateReportDefinition(
         final String userHandle, final String templateName, final String scopeId, final String aggregationDefinitionId,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
+        final String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
         String objidValue = null;
         String reportDefinitionXml =
             smTestBase.getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document = EscidocAbstractTest.getDocument(reportDefinitionXml);
+            final Document document = EscidocAbstractTest.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
@@ -2675,8 +2877,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            String result = create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
-            Document document = EscidocAbstractTest.getDocument(result);
+            final String result = create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
+            final Document document = EscidocAbstractTest.getDocument(result);
             objidValue = getObjidValue(document);
 
             if (expectedExceptionClass != null) {
@@ -2698,15 +2900,19 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests creating a statisticdata-record.<br> The statistic-data is created using the template
-     * escidoc_statistic_data1.xml
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           The name of the template to use.
-     * @param scopeId                The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * Tests creating a statisticdata-record.<br>
+     * The statistic-data is created using the template escidoc_statistic_data1.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param scopeId
+     *            The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestCreateStatisticData(
         final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
@@ -2716,7 +2922,7 @@ public class AaTestBase extends EscidocAbstractTest {
             toString(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_STAT_DATA_PATH, templateName), false);
 
         if (scopeId != null) {
-            Document document = EscidocAbstractTest.getDocument(statisticDataXml);
+            final Document document = EscidocAbstractTest.getDocument(statisticDataXml);
             substitute(document, XPATH_STATISTIC_DATA_SCOPE_OBJID, scopeId);
             statisticDataXml = toString(document, false);
         }
@@ -2743,14 +2949,19 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests updating a scope.<br> The scope is updated using the template escidoc_scope2.xml
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           The name of the template to use.
-     * @param scopeId                The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * Tests updating a scope.<br>
+     * The scope is updated using the template escidoc_scope2.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param scopeId
+     *            The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestUpdateScope(
         final String userHandle, final String templateName, final String scopeId, final Class<?> expectedExceptionClass)
@@ -2759,7 +2970,7 @@ public class AaTestBase extends EscidocAbstractTest {
         String scopeXml = smTestBase.getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH, templateName);
 
         if (scopeId != null) {
-            Document document = EscidocAbstractTest.getDocument(scopeXml);
+            final Document document = EscidocAbstractTest.getDocument(scopeXml);
             substituteId(document, XPATH_SCOPE, scopeId);
             scopeXml = toString(document, false);
         }
@@ -2785,29 +2996,35 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Tests updating a report-definition.<br> The report-definition is updated using the template
-     * escidoc_report_definition2.xml
-     *
-     * @param userHandle              The escidoc user handle.
-     * @param templateName            The name of the template to use.
-     * @param reportDefinitionId      The reportDefinitionId the template has to get substituted with.
-     * @param aggregationDefinitionId The aggregationDefinitionId the template has to get substituted with.
-     * @param scopeId                 The scope-id the template has to get substituted with.
-     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
-     *                                success.
-     * @throws Exception If anything fails.
+     * Tests updating a report-definition.<br>
+     * The report-definition is updated using the template escidoc_report_definition2.xml
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            The name of the template to use.
+     * @param reportDefinitionId
+     *            The reportDefinitionId the template has to get substituted with.
+     * @param aggregationDefinitionId
+     *            The aggregationDefinitionId the template has to get substituted with.
+     * @param scopeId
+     *            The scope-id the template has to get substituted with.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestUpdateReportDefinition(
         final String userHandle, final String templateName, final String reportDefinitionId,
         final String aggregationDefinitionId, final String scopeId, final Class<?> expectedExceptionClass)
         throws Exception {
 
-        String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
+        final String idWithoutSpecialSigns = aggregationDefinitionId.replaceAll("\\:", "");
         String reportDefinitionXml =
             smTestBase.getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH, templateName);
 
         if (scopeId != null) {
-            Document document = EscidocAbstractTest.getDocument(reportDefinitionXml);
+            final Document document = EscidocAbstractTest.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
             substituteId(document, XPATH_REPORT_DEFINITION, reportDefinitionId);
             reportDefinitionXml = toString(document, false);
@@ -2838,12 +3055,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting a scope.<br>
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param scopeId                The scopeId to delete.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param scopeId
+     *            The scopeId to delete.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteScope(
         final String userHandle, final String scopeId, final Class<?> expectedExceptionClass) throws Exception {
@@ -2870,12 +3090,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting a aggregation-definition.<br>
-     *
-     * @param userHandle              The escidoc user handle.
-     * @param aggregationDefinitionId The aggregationDefinitionId to delete.
-     * @param expectedExceptionClass  The class of the expected exception or <code>null</code> in case of expected
-     *                                success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param aggregationDefinitionId
+     *            The aggregationDefinitionId to delete.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteAggregationDefinition(
         final String userHandle, final String aggregationDefinitionId, final Class<?> expectedExceptionClass)
@@ -2903,12 +3126,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting a report-definition.<br>
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param reportDefinitionId     The reportDefinitionId to delete.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param reportDefinitionId
+     *            The reportDefinitionId to delete.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteReportDefinition(
         final String userHandle, final String reportDefinitionId, final Class<?> expectedExceptionClass)
@@ -2936,10 +3162,13 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a list of scopes.
-     *
-     * @param userHandle    The escidoc user handle.
-     * @param expectedScope only these scopes may be in the list.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedScope
+     *            only these scopes may be in the list.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveScopeList(final String userHandle, final String expectedScope) throws Exception {
 
@@ -2948,8 +3177,8 @@ public class AaTestBase extends EscidocAbstractTest {
             String xml = handleResult(scopeClient.retrieveScopes(new HashMap<String, String[]>()));
             xml = xml.replaceAll("(?s).*?(<[^>]*?scope[\\s|>].*)", "$1");
             xml = xml.replaceAll("(?s)(.*)</[^>]*?scope[\\s|>].*", "$1");
-            String[] parts = xml.split("<[^>]*?scope[^-]");
-            Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
+            final String[] parts = xml.split("<[^>]*?scope[^-]");
+            final Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
             for (int i = 1; i < parts.length; i++) {
                 scopeMatcher.reset("<scope " + parts[i]);
                 if (scopeMatcher.matches()) {
@@ -2966,21 +3195,24 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a list of aggregation-definitions.
-     *
-     * @param userHandle    The escidoc user handle.
-     * @param expectedScope only these scopes may be in the list.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedScope
+     *            only these scopes may be in the list.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveAggregationDefinitionList(final String userHandle, final String expectedScope)
         throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
-            String xml =
+            final String xml =
                 handleResult(aggregationDefinitionClient
                     .retrieveAggregationDefinitions(new HashMap<String, String[]>()));
-            String[] parts = xml.split("<[^>]*?aggregation-definition[\\s|>].*?>");
-            Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
+            final String[] parts = xml.split("<[^>]*?aggregation-definition[\\s|>].*?>");
+            final Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
             for (int i = 1; i < parts.length; i++) {
                 scopeMatcher.reset(parts[i]);
                 if (scopeMatcher.matches()) {
@@ -2997,20 +3229,23 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving a list of report-definitions.
-     *
-     * @param userHandle    The escidoc user handle.
-     * @param expectedScope only these scopes may be in the list.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param expectedScope
+     *            only these scopes may be in the list.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveReportDefinitionList(final String userHandle, final String expectedScope)
         throws Exception {
 
         try {
             PWCallback.setHandle(userHandle);
-            String xml =
+            final String xml =
                 handleResult(reportDefinitionClient.retrieveReportDefinitions(new HashMap<String, String[]>()));
-            String[] parts = xml.split("<[^>]*?report-definition[\\s|>].*?>");
-            Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
+            final String[] parts = xml.split("<[^>]*?report-definition[\\s|>].*?>");
+            final Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
             for (int i = 1; i < parts.length; i++) {
                 scopeMatcher.reset(parts[i]);
                 if (scopeMatcher.matches()) {
@@ -3027,26 +3262,30 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving children of an organizational unit.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param parentStatus           status of the parent org-unit to create.
-     * @param childStati             stati of the children org-unit to create.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param parentStatus
+     *            status of the parent org-unit to create.
+     * @param childStati
+     *            stati of the children org-unit to create.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveOrganizationalUnitChildren(
         final String userHandle, final String parentStatus, final String[] childStati,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String createdXmlParent = prepareOrgUnit(PWCallback.DEFAULT_HANDLE, parentStatus, null);
+        final String createdXmlParent = prepareOrgUnit(PWCallback.DEFAULT_HANDLE, parentStatus, null);
         Document document = EscidocAbstractTest.getDocument(createdXmlParent);
         final String objidValueParent = getObjidValue(document);
 
         if (childStati != null && childStati.length > 0) {
-            for (int i = 0; i < childStati.length; i++) {
-                String createdXmlChild =
-                    prepareOrgUnit(PWCallback.DEFAULT_HANDLE, childStati[i], new String[] { objidValueParent });
+            for (final String element : childStati) {
+                final String createdXmlChild =
+                    prepareOrgUnit(PWCallback.DEFAULT_HANDLE, element, new String[] { objidValueParent });
                 document = EscidocAbstractTest.getDocument(createdXmlChild);
             }
         }
@@ -3073,16 +3312,20 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating an organizational unit.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestCreateOu(
         final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         try {
             PWCallback.setHandle(userHandle);
 
@@ -3106,21 +3349,26 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteOu(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3144,21 +3392,26 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveOu(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3182,21 +3435,26 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving children of an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveChildOus(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3220,21 +3478,26 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving parents of an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestRetrieveParentOus(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3258,21 +3521,26 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests updating an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestUpdateOu(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
         String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
+        final String ouId = getObjidValue(createdOuXml);
         createdOuXml = createdOuXml.replaceAll("(<[^\\/>]*?)title>", "$1title>replaced");
 
         try {
@@ -3297,22 +3565,27 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests opening an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestOpenOu(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
-        String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
+        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3337,28 +3610,33 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests closing an organizational-unit.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestCloseOu(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
+        final String ouXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, templateName);
         PWCallback.setHandle(creatorHandle);
-        String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
-        String ouId = getObjidValue(createdOuXml);
-        String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
+        final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
+        final String ouId = getObjidValue(createdOuXml);
+        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
         organizationalUnitClient.open(ouId, getTheLastModificationParam(true, ouId, "comment", lastModificationDate));
 
         try {
             PWCallback.setHandle(userHandle);
-            organizationalUnitClient.close(ouId, getTheLastModificationParam(true, ouId, "Closed organizational unit '"
-                + ouId + "'."));
+            organizationalUnitClient.close(ouId,
+                getTheLastModificationParam(true, ouId, "Closed organizational unit '" + ouId + "'."));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3378,22 +3656,27 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests creating an context.
-     *
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCreateContext(
         final String userHandle, final String templateName, final Class<?> expectedExceptionClass) throws Exception {
 
-        Document context = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", templateName);
+        final Document context =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", templateName);
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
         try {
             PWCallback.setHandle(userHandle);
 
-            String contextXml = handleResult(contextClient.create(toString(context, false)));
+            final String contextXml = handleResult(contextClient.create(toString(context, false)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3415,20 +3698,25 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests updating an context.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the context.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the context.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestUpdateContext(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
-        String contextId = getObjidValue(contextXml);
+        final String contextId = getObjidValue(contextXml);
         contextXml = contextXml.replaceAll("(<[^\\/>]*?)name>", "$1name>replaced");
 
         try {
@@ -3455,20 +3743,25 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests retrieving an context.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the context.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the context.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestRetrieveContext(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
-        String contextId = getObjidValue(contextXml);
+        final String contextId = getObjidValue(contextXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3494,19 +3787,24 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests deleting an context.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the context.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the context.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestDeleteContext(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
-        String contextXml = doTestCreateContext(creatorHandle, templateName, null);
-        String contextId = getObjidValue(contextXml);
+        final String contextXml = doTestCreateContext(creatorHandle, templateName, null);
+        final String contextId = getObjidValue(contextXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3530,27 +3828,32 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests opening an context.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestOpenContext(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
-        String contextId = getObjidValue(contextXml);
-        String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
+        final String contextId = getObjidValue(contextXml);
+        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
 
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
-                    lastModificationDate)));
+                handleResult(contextClient.open(contextId,
+                    getTheLastModificationParam(true, contextId, "comment", lastModificationDate)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3572,31 +3875,38 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests closing an context.
-     *
-     * @param creatorHandle          The escidoc user handle that creates the org-unit.
-     * @param userHandle             The escidoc user handle.
-     * @param templateName           templateName.
-     * @param expectedExceptionClass expectedExceptionClass.
+     * 
+     * @param creatorHandle
+     *            The escidoc user handle that creates the org-unit.
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
      * @return String contextXml
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String doTestCloseContext(
         final String creatorHandle, final String userHandle, final String templateName,
         final Class<?> expectedExceptionClass) throws Exception {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
-        String contextId = getObjidValue(contextXml);
+        final String contextId = getObjidValue(contextXml);
         String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
-            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
-                lastModificationDate)));
+            handleResult(contextClient.open(contextId,
+                getTheLastModificationParam(true, contextId, "comment", lastModificationDate)));
         lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
 
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId,
-                    "Closed context '" + contextId + "'.", lastModificationDate)));
+                handleResult(contextClient.close(
+                    contextId,
+                    getTheLastModificationParam(true, contextId, "Closed context '" + contextId + "'.",
+                        lastModificationDate)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3618,35 +3928,40 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests preprocessing statistic-data.
-     *
-     * @param userHandle              The escidoc user handle.
-     * @param templateName            templateName.
-     * @param aggregationDefinitionIds aggregationDefinitionId to preprocess.
-     * @param expectedExceptionClass  expectedExceptionClass.
-     * @throws Exception If anything fails.
+     * 
+     * @param userHandle
+     *            The escidoc user handle.
+     * @param templateName
+     *            templateName.
+     * @param aggregationDefinitionIds
+     *            aggregationDefinitionId to preprocess.
+     * @param expectedExceptionClass
+     *            expectedExceptionClass.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestPreprocessStatisticData(
         final String userHandle, final String templateName, final List<String> aggregationDefinitionIds,
         final String startDate, final String endDate, final Class<?> expectedExceptionClass) throws Exception {
 
         List<String> usedAggregationDefinitionIds = aggregationDefinitionIds;
-        String preprocessingInformationXml =
+        final String preprocessingInformationXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH, templateName);
-        Document doc = EscidocAbstractTest.getDocument(preprocessingInformationXml);
+        final Document doc = EscidocAbstractTest.getDocument(preprocessingInformationXml);
         substitute(doc, "/preprocessing-information/start-date", startDate);
         substitute(doc, "/preprocessing-information/end-date", endDate);
         if (usedAggregationDefinitionIds == null || usedAggregationDefinitionIds.isEmpty()) {
             usedAggregationDefinitionIds = new ArrayList<String>();
-            String xml =
+            final String xml =
                 handleResult(aggregationDefinitionClient
                     .retrieveAggregationDefinitions(new HashMap<String, String[]>()));
             String objidPath = "aggregation-definition";
             objidPath += PART_XLINK_HREF;
 
-            NodeList aggregationDefinitions =
+            final NodeList aggregationDefinitions =
                 selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_RESPONSE_OBJECT + objidPath);
             for (int i = 0; i < aggregationDefinitions.getLength(); i++) {
-                Node aggregationDefinitionId = aggregationDefinitions.item(i);
+                final Node aggregationDefinitionId = aggregationDefinitions.item(i);
                 String nodeValue = aggregationDefinitionId.getNodeValue();
                 nodeValue = getObjidFromHref(nodeValue);
                 usedAggregationDefinitionIds.add(nodeValue);
@@ -3656,7 +3971,7 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
 
-            for (String aggregationDefinitionId : usedAggregationDefinitionIds) {
+            for (final String aggregationDefinitionId : usedAggregationDefinitionIds) {
                 preprocessingClient.preprocess(aggregationDefinitionId, toString(doc, false));
                 if (expectedExceptionClass != null) {
                     EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -3678,10 +3993,13 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Tests logging out an user. Before logging out, the user is logged in.
-     *
-     * @param loginname The login name of the user to log in and log out.
-     * @param password  The password of the user.
-     * @throws Exception If anything fails.
+     * 
+     * @param loginname
+     *            The login name of the user to log in and log out.
+     * @param password
+     *            The password of the user.
+     * @throws Exception
+     *             If anything fails.
      */
     protected void doTestLogout(final String loginname, final String password) throws Exception {
 
@@ -3699,11 +4017,11 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             logout(userHandle);
 
-            //Check status-code when requesting resource with invalid handle
-            String httpUrl =
+            // Check status-code when requesting resource with invalid handle
+            final String httpUrl =
                 getFrameworkUrl() + Constants.ROLE_BASE_URI + "/" + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
-            int statusCode = getStatusCode(httpUrl);
+            final int statusCode = getStatusCode(httpUrl);
             if (statusCode != HttpServletResponse.SC_FOUND) {
 
                 throw new Exception("Retrieving resource with invalid handle " + "returned wrong status " + statusCode);
@@ -3720,36 +4038,42 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Returns the status-code after calling the given url.
-     *
-     * @param url The url to call.
+     * 
+     * @param url
+     *            The url to call.
      * @return int status-code.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private int getStatusCode(final String url) throws Exception {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+        final DefaultHttpClient httpClient = new DefaultHttpClient();
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
         httpClient.setRedirectHandler(new RedirectHandler() {
-            public URI getLocationURI(HttpResponse response, HttpContext context) throws ProtocolException {
+            @Override
+            public URI getLocationURI(final HttpResponse response, final HttpContext context) throws ProtocolException {
                 return null;
             }
 
-            public boolean isRedirectRequested(HttpResponse response, HttpContext context) {
+            @Override
+            public boolean isRedirectRequested(final HttpResponse response, final HttpContext context) {
                 return false;
             }
         });
 
-        HttpResponse httpRes = HttpHelper.doGet(httpClient, url, null);
+        final HttpResponse httpRes = HttpHelper.doGet(httpClient, url, null);
 
         return httpRes.getStatusLine().getStatusCode();
     }
 
     /**
      * Extracts the id of the context found in the provided document.
-     *
-     * @param document The document holding the xml representation of an item.
+     * 
+     * @param document
+     *            The document holding the xml representation of an item.
      * @return Returns the extracted id.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String extractContextId(final Document document) throws Exception {
 
@@ -3761,11 +4085,14 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Extracts the id of the component with the specified visibility found in the provided document.
-     *
-     * @param itemDocument The document holding the xml representation of an item.
-     * @param visibility   if the id of a component shall be retrieved, that has given visibility.
+     * 
+     * @param itemDocument
+     *            The document holding the xml representation of an item.
+     * @param visibility
+     *            if the id of a component shall be retrieved, that has given visibility.
      * @return Returns the extracted id.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String extractComponentId(final Document itemDocument, final String visibility) throws Exception {
 
@@ -3779,14 +4106,16 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Extracts the ids of the components of the provided document.
-     *
-     * @param itemDocument The document holding the xml representation of an item.
+     * 
+     * @param itemDocument
+     *            The document holding the xml representation of an item.
      * @return Returns the extracted ids as string-array.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String[] extractComponentIds(final Document itemDocument) throws Exception {
 
-        String[] componentIds =
+        final String[] componentIds =
             getObjidValues(itemDocument, OmTestBase.XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT
                 + "[properties/visibility=\"public\"]");
 
@@ -3795,40 +4124,48 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Executs spo query to semantic store.
-     *
-     * @param queryParam The Xml data defining the query
+     * 
+     * @param queryParam
+     *            The Xml data defining the query
      * @return Returns the result of the method call.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected String spo(final String queryParam) throws Exception {
         return handleXmlResult(getSemanticStoreClient().spo(queryParam));
     }
 
     /**
-     * Retrieve a Template as a Document .<br> The used parser is NOT
-     * namespace aware!
-     *
-     * @param path         The Path of the Template.
-     * @param templateName The name of the template.
+     * Retrieve a Template as a Document .<br>
+     * The used parser is NOT namespace aware!
+     * 
+     * @param path
+     *            The Path of the Template.
+     * @param templateName
+     *            The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public Document getTemplateAsFixedUserGroupDocument(final String path, final String templateName) throws Exception {
 
-        //        return fixLinkAttributes(EscidocAbstractTest
-        //            .getTemplateAsDocument(path, templateName),
-        //            XPATH_USER_GROUP_SELECTORS);
+        // return fixLinkAttributes(EscidocAbstractTest
+        // .getTemplateAsDocument(path, templateName),
+        // XPATH_USER_GROUP_SELECTORS);
         return EscidocAbstractTest.getTemplateAsDocument(path, templateName);
     }
 
     /**
-     * Retrieve a Template as a String .<br> The used parser is NOT
-     * namespace aware!
-     *
-     * @param path         The Path of the Template.
-     * @param templateName The name of the template.
+     * Retrieve a Template as a String .<br>
+     * The used parser is NOT namespace aware!
+     * 
+     * @param path
+     *            The Path of the Template.
+     * @param templateName
+     *            The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String getTemplateAsFixedGrantString(final String path, final String templateName) throws Exception {
 
@@ -3837,13 +4174,16 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Retrieve a Template as a Document .<br> The used parser is NOT
-     * namespace aware!
-     *
-     * @param path         The Path of the Template.
-     * @param templateName The name of the template.
+     * Retrieve a Template as a Document .<br>
+     * The used parser is NOT namespace aware!
+     * 
+     * @param path
+     *            The Path of the Template.
+     * @param templateName
+     *            The name of the template.
      * @return The String representation of the Template.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public Document getTemplateAsFixedGrantDocument(final String path, final String templateName) throws Exception {
 
@@ -3853,17 +4193,19 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test logging out an user.
-     *
-     * @param userHandle The eSciDOc user handle that shall be sent in the cookie of the logout request.
+     * 
+     * @param userHandle
+     *            The eSciDOc user handle that shall be sent in the cookie of the logout request.
      * @return The response of the logout.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String logout(final String userHandle) throws Exception {
 
-        Object result = getUserManagementWrapperClient().logout(userHandle);
+        final Object result = getUserManagementWrapperClient().logout(userHandle);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
             assertNoRedirect(httpRes);
@@ -3878,14 +4220,18 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Test logging out an user.
-     *
-     * @param redirectUrl              The target to that the user shall be redirected after being logged out. This may
-     *                                 be <code>null</code> (no redirect).
-     * @param userHandle               The eSciDOc user handle that shall be sent in the cookie of the logout request.
-     * @param encodeRedirectUrlSlashes Flag indicating that the slashes contained in the redirectUrl shall be encoded
-     *                                 (<code>true</code>) or shall not be encoded (<code>false</code>).
+     * 
+     * @param redirectUrl
+     *            The target to that the user shall be redirected after being logged out. This may be <code>null</code>
+     *            (no redirect).
+     * @param userHandle
+     *            The eSciDOc user handle that shall be sent in the cookie of the logout request.
+     * @param encodeRedirectUrlSlashes
+     *            Flag indicating that the slashes contained in the redirectUrl shall be encoded (<code>true</code>) or
+     *            shall not be encoded (<code>false</code>).
      * @return The response of the logout.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String logout(final String redirectUrl, final String userHandle, final boolean encodeRedirectUrlSlashes)
         throws Exception {
@@ -3894,7 +4240,7 @@ public class AaTestBase extends EscidocAbstractTest {
             getUserManagementWrapperClient().logout(redirectUrl, userHandle, encodeRedirectUrlSlashes);
         String xmlResult = null;
         if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
+            final HttpResponse httpRes = (HttpResponse) result;
             xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
             assertRedirect(httpRes, redirectUrl);
@@ -3909,27 +4255,35 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Asserts that vthe expected cookies exists in a logout response.
-     *
-     * @param httpRes The {@link HttpResponse} to be asserted.
+     * 
+     * @param httpRes
+     *            The {@link HttpResponse} to be asserted.
      */
     private void assertLogoutCookies(final HttpResponse httpRes) {
 
         final Header[] cookieHeaders = httpRes.getHeaders("Set-Cookie");
         assertNotNull(cookieHeaders);
         assertEquals("Unexpected number of cookies (to delete cookies)", 2, cookieHeaders.length);
-        assertNotNull(cookieHeaders[0]);
-        assertEquals("Unexpected cookie (to delete cookie)",
-            "escidocCookie=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/", cookieHeaders[0].getValue());
-        assertNotNull(cookieHeaders[1]);
-        assertEquals("Unexpected cookie (to delete cookie)",
-            "JSESSIONID=null; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/", cookieHeaders[1].getValue());
+        // check escidocCookie and JSESSIONID
+        for (final Header header : cookieHeaders) {
+            assertNotNull(header.getElements());
+            assertTrue(header.getElements().length > 0);
+            for (final HeaderElement element : header.getElements()) {
+                assertNotNull(element.getName());
+                if (element.getName().equals("escidocCookie") || element.getName().equals("JSESSIONID")) {
+                    assertTrue(element.getValue() == null || element.getValue().equals(""));
+                }
+            }
+        }
     }
 
     /**
      * Asserts the redirect values.
-     *
-     * @param httpResponse              The {@link HttpResponse} to be asserted.
-     * @param expectedRedirectUrl The expected redirect url.
+     * 
+     * @param httpResponse
+     *            The {@link HttpResponse} to be asserted.
+     * @param expectedRedirectUrl
+     *            The expected redirect url.
      */
     private void assertRedirect(final HttpResponse httpResponse, final String expectedRedirectUrl) {
 
@@ -3940,8 +4294,9 @@ public class AaTestBase extends EscidocAbstractTest {
 
     /**
      * Asserts, that no redirect occurred for the provided {@link HttpResponse}.
-     *
-     * @param httpRes The {@link HttpResponse} to be asserted.
+     * 
+     * @param httpRes
+     *            The {@link HttpResponse} to be asserted.
      */
     private void assertNoRedirect(final HttpResponse httpRes) {
         assertNull("Unexpected loction header", httpRes.getFirstHeader("Location"));
