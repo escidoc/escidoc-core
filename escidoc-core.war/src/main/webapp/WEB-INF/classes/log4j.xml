@@ -1,125 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<!-- 
-    log4j configuration for the escidoc infrastructure services.
-    If this file is changed, the (jboss) server has to be restarted and the 
-    services have to be redeployed to let the changes take effect.
- -->
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-	debug="false">
-	<appender name="ESCIDOCCONSOLE"
-		class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-		<param name="Threshold" value="INFO" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern"
-				value="%-5p [%c{1}] %m%n" />
-		</layout>
-	</appender>
-    <appender name="FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Append" value="true"/>
-        <param name="Threshold" value="INFO" />
-        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${jboss.server.home.dir}/log/escidoc-core.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d (%c{1}) %m%n"/>
-        </layout>
-    </appender>
-    
-    <appender name="INDEXERERROR" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Append" value="true"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${jboss.server.home.dir}/log/indexer-errors.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d %m%n"/>
-        </layout>
-    </appender>
-    
-    <appender name="STATISTICSERROR" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Append" value="true"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${jboss.server.home.dir}/log/statistics-errors.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d %m%n"/>
-        </layout>
-    </appender>
-    
-    <appender name="STATISTICSPREPROCESSINGERROR" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Append" value="true"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${jboss.server.home.dir}/log/statistics-preprocessing-errors.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d %m%n"/>
-        </layout>
-    </appender>
+<!--
+  log4j configuration for the escidoc infrastructure services.
+  If this file is changed, the (jboss) server has to be restarted and the
+  services have to be redeployed to let the changes take effect.
+-->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
 
-    <appender name="TRACE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Append" value="true"/>
-        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
-        <param name="File" value="${jboss.server.home.dir}/log/trace.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d %m%n"/>
-        </layout>
-    </appender>
+  <appender name="ESCIDOCCONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out" />
+    <param name="Threshold" value="INFO" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%-5p [%c{1}] %m%n" />
+    </layout>
+  </appender>
+  
+  <appender name="ESCIDOC_FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="Threshold" value="INFO" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/escidoc-core.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d (%c{1}) %m%n" />
+    </layout>
+  </appender>
 
-    <category name="org.jboss">
-		<priority value="INFO" />
-	</category>
-    
-    <category name="org.apache">
-		<priority value="WARN" />
-	</category>
-    
-    <category name="org.hibernate">
-		<priority value="WARN" />
-	</category>
-    
-    <category name="org.nsdl">
-		<priority value="WARN" />
-	</category>
-    
-    <category name="org.springframework">
-		<priority value="WARN" />
-	</category>
+  <appender name="INDEXERERROR" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/indexer-errors.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <category name="de.escidoc.core.common.servlet">
-		<priority value="WARN" />
-	</category>
+  <appender name="STATISTICSERROR" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/statistics-errors.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <logger name="indexer-errors" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="INDEXERERROR"/>
-    </logger>
+  <appender name="STATISTICSPREPROCESSINGERROR" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/statistics-preprocessing-errors.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="STATISTICSERROR"/>
-    </logger>
+  <appender name="TRACE" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/trace.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="STATISTICSERROR"/>
-    </logger>
+  <appender name="HIBERNATE_FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/hibernate.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <logger name="statistics-errors" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="STATISTICSERROR"/>
-    </logger>
+  <appender name="HTTPCLIENT_FILEOUT" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="Append" value="true" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <param name="File" value="${ESCIDOC_HOME}/log/http-client.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%p %d %m%n" />
+    </layout>
+  </appender>
 
-    <logger name="statistics-preprocessing-errors" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="STATISTICSPREPROCESSINGERROR"/>
-    </logger>
+  <!-- Hibernate -->
+  <logger name="org.hibernate" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="HIBERNATE_FILEOUT" />
+  </logger>
 
-    <logger name="de.escidoc.core.trace" additivity="false">
-        <level value="ERROR"/>
-        <appender-ref ref="TRACE"/>
-    </logger>
+  <!-- HTTP Client -->
+  <logger name="org.apache.http.impl.conn" additivity="false">
+    <level value="DEBUG" />
+    <appender-ref ref="HTTPCLIENT_FILEOUT" />
+  </logger>
 
-	<root>
-        <priority value="WARN" />
-		<appender-ref ref="ESCIDOCCONSOLE" />
-		<appender-ref ref="FILEOUT" />
-	</root>
+  <logger name="org.apache.http.impl.client" additivity="false">
+    <level value="DEBUG" />
+    <appender-ref ref="HTTPCLIENT_FILEOUT" />
+  </logger>
+
+  <logger name="org.apache.http.client" additivity="false">
+    <level value="DEBUG" />
+    <appender-ref ref="HTTPCLIENT_FILEOUT" />
+  </logger>
+
+  <!-- ESCIDOC -->
+  <logger name="org.springframework" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="org.apache.axis" additivity="false">
+    <level value="'WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <!-- Limit JSF logging to DEBUG. FINER and FINEST will not be logged -->
+  <logger name="javax.enterprise.resource.webcontainer.jsf" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="org.springframework.aop.framework.Cglib2AopProxy" additivity="false">
+    <level value="ERROR" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="org.nsdl" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="de.escidoc" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="org.escidoc" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="de.escidoc.core.common.servlet" additivity="false">
+    <level value="WARN" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="com.mchange.v2.c3p0" additivity="false">
+    <level value="INFO" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </logger>
+
+  <logger name="de.escidoc.core.index.IndexService" additivity="false">
+    <level value="ERROR" />
+    <appender-ref ref="INDEXERERROR" />
+  </logger>
+
+  <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
+    <level value="ERROR" />
+    <appender-ref ref="STATISTICSERROR" />
+  </logger>
+
+  <logger name="statistics-preprocessing-errors" additivity="false">
+    <level value="ERROR" />
+    <appender-ref ref="STATISTICSPREPROCESSINGERROR" />
+  </logger>
+
+  <logger name="de.escidoc.core.trace" additivity="false">
+    <level value="ERROR" />
+    <appender-ref ref="TRACE" />
+  </logger>
+
+  <root>
+    <level value="ERROR" />
+    <appender-ref ref="ESCIDOC_FILEOUT" />
+  </root>
 
 </log4j:configuration>
