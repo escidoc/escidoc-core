@@ -27,24 +27,27 @@ public final class Stream extends OutputStream {
     private static final Logger LOG = LoggerFactory.getLogger(Stream.class);
 
     private static final File DEFAULT_TEMP_DIR;
+
     private static final int DEFAULT_THRESHOLD;
 
     static {
         final String thresholdString = System.getProperty("Stream.Threshold", "-1");
         int threshold = Integer.parseInt(thresholdString);
-        if(threshold <= 0) {
+        if (threshold <= 0) {
             threshold = 64 * 1024;
         }
         DEFAULT_THRESHOLD = threshold;
         final String outputDirectoryString = System.getProperty("Stream.OutputDirectory");
-        if(outputDirectoryString != null) {
+        if (outputDirectoryString != null) {
             final File outputDirectory = new File(outputDirectoryString);
-            if(outputDirectory.exists() && outputDirectory.isDirectory()) {
+            if (outputDirectory.exists() && outputDirectory.isDirectory()) {
                 DEFAULT_TEMP_DIR = outputDirectory;
-            } else {
+            }
+            else {
                 DEFAULT_TEMP_DIR = null;
             }
-        } else {
+        }
+        else {
             DEFAULT_TEMP_DIR = null;
         }
     }
@@ -123,7 +126,7 @@ public final class Stream extends OutputStream {
 
     /**
      * Returns the underlying output stream.
-     *
+     * 
      * @return the underlying output stream
      */
     public OutputStream getOutputStream() {
@@ -135,7 +138,7 @@ public final class Stream extends OutputStream {
      * obtained
      */
     public void lock() throws IOException {
-        if(this.isOutputLocked()) {
+        if (this.isOutputLocked()) {
             return;
         }
         this.currentStream.flush();
@@ -159,41 +162,47 @@ public final class Stream extends OutputStream {
      * Replace the original stream with the new one, optionally copying the content of the old one into the new one.
      * When with Attachment, needs to replace the xml writer stream with the stream used by AttachmentSerializer or copy
      * the cached output stream to the "real" output stream, i.e. onto the wire.
-     *
-     * @param out            the new output stream
-     * @param copyOldContent flag indicating if the old content should be copied
+     * 
+     * @param out
+     *            the new output stream
+     * @param copyOldContent
+     *            flag indicating if the old content should be copied
      */
     public void resetOut(OutputStream out, final boolean copyOldContent) throws IOException {
-        if(out == null) {
+        if (out == null) {
             out = new ByteArrayOutputStream();
         }
-        if(this.currentStream instanceof Stream) {
+        if (this.currentStream instanceof Stream) {
             final Stream ac = (Stream) this.currentStream;
             final InputStream in = ac.getInputStream();
             IOUtils.copyAndCloseInput(in, out);
-        } else {
-            if(isInMemory()) {
-                if(this.currentStream instanceof ByteArrayOutputStream) {
+        }
+        else {
+            if (isInMemory()) {
+                if (this.currentStream instanceof ByteArrayOutputStream) {
                     final ByteArrayOutputStream byteOut = (ByteArrayOutputStream) this.currentStream;
-                    if(copyOldContent && byteOut.size() > 0) {
+                    if (copyOldContent && byteOut.size() > 0) {
                         byteOut.writeTo(out);
                     }
-                } else if(this.currentStream instanceof PipedOutputStream) {
+                }
+                else if (this.currentStream instanceof PipedOutputStream) {
                     final PipedOutputStream pipeOut = (PipedOutputStream) this.currentStream;
                     IOUtils.copyAndCloseInput(new PipedInputStream(pipeOut), out);
-                } else {
+                }
+                else {
                     throw new IOException("Unknown format of currentStream");
                 }
-            } else {
+            }
+            else {
                 // read the file
                 this.currentStream.close();
-                if(copyOldContent) {
+                if (copyOldContent) {
                     final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
                     IOUtils.copyAndCloseInput(in, out);
                 }
                 final boolean sucessfull = this.tempFile.delete();
-                if(! sucessfull) {
-                    if(LOG.isInfoEnabled()) {
+                if (!sucessfull) {
+                    if (LOG.isInfoEnabled()) {
                         LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
                     }
                 }
@@ -211,13 +220,15 @@ public final class Stream extends OutputStream {
 
     public byte[] getBytes() throws IOException {
         flush();
-        if(this.isInMemory()) {
-            if(this.currentStream instanceof ByteArrayOutputStream) {
+        if (this.isInMemory()) {
+            if (this.currentStream instanceof ByteArrayOutputStream) {
                 return ((ByteArrayOutputStream) this.currentStream).toByteArray();
-            } else {
+            }
+            else {
                 throw new IOException("Unknown format of currentStream");
             }
-        } else {
+        }
+        else {
             // read the file
             final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             return IOUtils.readBytesFromStream(in);
@@ -226,13 +237,15 @@ public final class Stream extends OutputStream {
 
     public void writeCacheTo(final OutputStream out) throws IOException {
         flush();
-        if(isInMemory()) {
-            if(this.currentStream instanceof ByteArrayOutputStream) {
+        if (isInMemory()) {
+            if (this.currentStream instanceof ByteArrayOutputStream) {
                 ((ByteArrayOutputStream) this.currentStream).writeTo(out);
-            } else {
+            }
+            else {
                 throw new IOException("Unknown format of current stream.");
             }
-        } else {
+        }
+        else {
             // read the file
             final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             IOUtils.copyAndCloseInput(in, out);
@@ -245,38 +258,42 @@ public final class Stream extends OutputStream {
 
     public void writeCacheTo(final StringBuilder out, final String charsetName, final int limit) throws IOException {
         flush();
-        if(this.totalLength < limit || limit == - 1) {
+        if (this.totalLength < limit || limit == -1) {
             writeCacheTo(out);
             return;
         }
-        if(this.isInMemory()) {
-            if(this.currentStream instanceof ByteArrayOutputStream) {
+        if (this.isInMemory()) {
+            if (this.currentStream instanceof ByteArrayOutputStream) {
                 final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
                 out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, limit));
-            } else {
+            }
+            else {
                 throw new IOException("Unknown format of current stream.");
             }
-        } else {
+        }
+        else {
             // read the file
             final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             try {
                 final byte bytes[] = new byte[1024];
                 int x = in.read(bytes);
                 int count = 0;
-                while(x != - 1) {
-                    if((count + x) > limit) {
+                while (x != -1) {
+                    if (count + x > limit) {
                         x = limit - count;
                     }
                     out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
                     count += x;
-                    if(count >= limit) {
-                        x = - 1;
-                    } else {
+                    if (count >= limit) {
+                        x = -1;
+                    }
+                    else {
                         x = in.read(bytes);
                     }
                 }
-            } finally {
-                if(in != null) {
+            }
+            finally {
+                if (in != null) {
                     in.close();
                 }
             }
@@ -289,29 +306,31 @@ public final class Stream extends OutputStream {
 
     public void writeCacheTo(final StringBuilder out, final String charsetName) throws IOException {
         flush();
-        if(isInMemory()) {
-            if(this.currentStream instanceof ByteArrayOutputStream) {
+        if (isInMemory()) {
+            if (this.currentStream instanceof ByteArrayOutputStream) {
                 final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
                 out.append(IOUtils.newStringFromBytes(bytes, charsetName));
-            } else {
+            }
+            else {
                 throw new IOException("Unknown format of currentStream");
             }
-        } else {
+        }
+        else {
             // read the file
             final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             try {
                 final byte bytes[] = new byte[1024];
                 int x = in.read(bytes);
-                while(x != - 1) {
+                while (x != -1) {
                     out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
                     x = in.read(bytes);
                 }
-            } finally {
+            }
+            finally {
                 in.close();
             }
         }
     }
-
 
     public void writeCacheTo(final StringBuffer out) throws IOException {
         writeCacheTo(out, "UTF-8");
@@ -319,36 +338,38 @@ public final class Stream extends OutputStream {
 
     public void writeCacheTo(final StringBuffer out, final String charsetName) throws IOException {
         flush();
-        if(isInMemory()) {
-            if(this.currentStream instanceof ByteArrayOutputStream) {
+        if (isInMemory()) {
+            if (this.currentStream instanceof ByteArrayOutputStream) {
                 final byte[] bytes = ((ByteArrayOutputStream) this.currentStream).toByteArray();
                 out.append(IOUtils.newStringFromBytes(bytes, charsetName));
-            } else {
+            }
+            else {
                 throw new IOException("Unknown format of currentStream");
             }
-        } else {
+        }
+        else {
             // read the file
             final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
             try {
                 final byte bytes[] = new byte[1024];
                 int x = in.read(bytes);
-                while(x != - 1) {
+                while (x != -1) {
                     out.append(IOUtils.newStringFromBytes(bytes, charsetName, 0, x));
                     x = in.read(bytes);
                 }
-            } finally {
+            }
+            finally {
                 in.close();
             }
         }
     }
 
-
     @Override
     public void write(final byte[] b, final int off, final int len) throws IOException {
-        if(! this.isOutputLocked()) {
+        if (!this.isOutputLocked()) {
             this.totalLength += len;
-            if(isInMemory() && this.totalLength > this.threshold &&
-                    this.currentStream instanceof ByteArrayOutputStream) {
+            if (isInMemory() && this.totalLength > this.threshold
+                && this.currentStream instanceof ByteArrayOutputStream) {
                 createFileOutputStream();
             }
             this.currentStream.write(b, off, len);
@@ -357,10 +378,10 @@ public final class Stream extends OutputStream {
 
     @Override
     public void write(final byte[] b) throws IOException {
-        if(! this.isOutputLocked()) {
+        if (!this.isOutputLocked()) {
             this.totalLength += b.length;
-            if(isInMemory() && this.totalLength > this.threshold &&
-                    this.currentStream instanceof ByteArrayOutputStream) {
+            if (isInMemory() && this.totalLength > this.threshold
+                && this.currentStream instanceof ByteArrayOutputStream) {
                 createFileOutputStream();
             }
             this.currentStream.write(b);
@@ -369,10 +390,10 @@ public final class Stream extends OutputStream {
 
     @Override
     public void write(final int b) throws IOException {
-        if(! this.isOutputLocked()) {
+        if (!this.isOutputLocked()) {
             this.totalLength++;
-            if(isInMemory() && this.totalLength > this.threshold &&
-                    this.currentStream instanceof ByteArrayOutputStream) {
+            if (isInMemory() && this.totalLength > this.threshold
+                && this.currentStream instanceof ByteArrayOutputStream) {
                 createFileOutputStream();
             }
             this.currentStream.write(b);
@@ -380,21 +401,23 @@ public final class Stream extends OutputStream {
     }
 
     private void createFileOutputStream() {
-        if(tempFileFailed) {
+        if (tempFileFailed) {
             return;
         }
         final ByteArrayOutputStream bout = (ByteArrayOutputStream) currentStream;
         try {
-            if(this.outputDirectory == null) {
+            if (this.outputDirectory == null) {
                 this.tempFile = FileUtils.createTempFile("cos", "tmp");
-            } else {
+            }
+            else {
                 this.tempFile = FileUtils.createTempFile("cos", "tmp", this.outputDirectory, false);
             }
             this.currentStream = new BufferedOutputStream(new FileOutputStream(this.tempFile));
             bout.writeTo(this.currentStream);
             this.setInMemory(false);
-        } catch(final Exception e) {
-            if(LOG.isWarnEnabled()) {
+        }
+        catch (final Exception e) {
+            if (LOG.isWarnEnabled()) {
                 LOG.warn("Error creating temp file.", e);
             }
             // Could be IOException or SecurityException or other issues.
@@ -408,37 +431,43 @@ public final class Stream extends OutputStream {
 
     public InputStream getInputStream() throws IOException {
         flush();
-        if(isInMemory()) {
-            if(this.currentStream instanceof LoadingByteArrayOutputStream) {
+        if (isInMemory()) {
+            if (this.currentStream instanceof LoadingByteArrayOutputStream) {
                 return ((LoadingByteArrayOutputStream) this.currentStream).createInputStream();
-            } else if(this.currentStream instanceof ByteArrayOutputStream) {
+            }
+            else if (this.currentStream instanceof ByteArrayOutputStream) {
                 return new ByteArrayInputStream(((ByteArrayOutputStream) this.currentStream).toByteArray());
-            } else if(this.currentStream instanceof PipedOutputStream) {
+            }
+            else if (this.currentStream instanceof PipedOutputStream) {
                 return new PipedInputStream((PipedOutputStream) this.currentStream);
-            } else {
+            }
+            else {
                 return null;
             }
-        } else {
+        }
+        else {
             try {
                 return new BufferedInputStream(new FileInputStream(this.tempFile));
-            } catch(final FileNotFoundException e) {
-                throw new IOException("Cached file was deleted, " + e.toString());
+            }
+            catch (final FileNotFoundException e) {
+                throw new IOException("Cached file was deleted.", e);
             }
         }
     }
 
     private void maybeDeleteTempFile() {
-        if(! isInMemory() && this.tempFile != null) {
-            if(this.currentStream != null) {
+        if (!isInMemory() && this.tempFile != null) {
+            if (this.currentStream != null) {
                 try {
                     this.currentStream.close();
-                } catch(Exception e) {
-                    //ignore
+                }
+                catch (final Exception e) {
+                    // ignore
                 }
             }
             final boolean sucessfull = this.tempFile.delete();
-            if(! sucessfull) {
-                if(LOG.isInfoEnabled()) {
+            if (!sucessfull) {
+                if (LOG.isInfoEnabled()) {
                     LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
                 }
             }
@@ -452,15 +481,16 @@ public final class Stream extends OutputStream {
     protected void finalize() throws Throwable {
         try {
             this.close();
-        } finally {
+        }
+        finally {
             super.finalize();
         }
     }
 
     @Override
     public String toString() {
-        return "Stream{" + "inMemory=" + inMemory + ", threshold=" + threshold + ", totalLength=" + totalLength +
-                ", outputLocked=" + outputLocked + ", outputDirectory=" + outputDirectory + ", tempFile=" + tempFile +
-                ", tempFileFailed=" + tempFileFailed + '}';
+        return "Stream{" + "inMemory=" + inMemory + ", threshold=" + threshold + ", totalLength=" + totalLength
+            + ", outputLocked=" + outputLocked + ", outputDirectory=" + outputDirectory + ", tempFile=" + tempFile
+            + ", tempFileFailed=" + tempFileFailed + '}';
     }
 }
