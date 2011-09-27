@@ -68,7 +68,6 @@ public class EscidocBinaryContent {
      */
     public void setContent(final InputStream content) throws IOException {
         this.stream = new Stream();
-        this.stream.holdTempFile();
         IOUtils.copy(content, this.stream);
     }
 

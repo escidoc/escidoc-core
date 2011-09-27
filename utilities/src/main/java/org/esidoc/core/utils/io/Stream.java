@@ -72,9 +72,6 @@ public final class Stream extends OutputStream {
     @XmlTransient
     private File outputDirectory = DEFAULT_TEMP_DIR;
 
-    @XmlTransient
-    private boolean allowDeleteOfFile = true;
-
     public Stream(final PipedInputStream stream) throws IOException {
         this.currentStream = new PipedOutputStream(stream);
         this.setInMemory(true);
@@ -130,14 +127,6 @@ public final class Stream extends OutputStream {
      */
     public OutputStream getOutputStream() {
         return this.currentStream;
-    }
-
-    public void holdTempFile() {
-        this.allowDeleteOfFile = false;
-    }
-
-    public void releaseTempFileHold() {
-        this.allowDeleteOfFile = true;
     }
 
     /**
@@ -430,13 +419,7 @@ public final class Stream extends OutputStream {
             }
         } else {
             try {
-                return new BufferedInputStream(new FileInputStream(this.tempFile)) {
-                    @Override
-                    public void close() throws IOException {
-                        super.close();
-                        maybeDeleteTempFile();
-                    }
-                };
+                return new BufferedInputStream(new FileInputStream(this.tempFile));
             } catch(final FileNotFoundException e) {
                 throw new IOException("Cached file was deleted, " + e.toString());
             }
@@ -444,7 +427,7 @@ public final class Stream extends OutputStream {
     }
 
     private void maybeDeleteTempFile() {
-        if(! isInMemory() && this.tempFile != null && this.allowDeleteOfFile) {
+        if(! isInMemory() && this.tempFile != null) {
             if(this.currentStream != null) {
                 try {
                     this.currentStream.close();
@@ -477,6 +460,6 @@ public final class Stream extends OutputStream {
     public String toString() {
         return "Stream{" + "inMemory=" + inMemory + ", threshold=" + threshold + ", totalLength=" + totalLength +
                 ", outputLocked=" + outputLocked + ", outputDirectory=" + outputDirectory + ", tempFile=" + tempFile +
-                ", allowDeleteOfFile=" + allowDeleteOfFile + ", tempFileFailed=" + tempFileFailed + '}';
+                ", tempFileFailed=" + tempFileFailed + '}';
     }
 }
