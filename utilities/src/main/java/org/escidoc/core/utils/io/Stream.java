@@ -420,13 +420,7 @@ public final class Stream extends OutputStream {
             }
         } else {
             try {
-                return new BufferedInputStream(new FileInputStream(this.tempFile)) {
-                    @Override
-                    public void close() throws IOException {
-                        super.close();
-                        maybeDeleteTempFile();
-                    }
-                };
+                return new BufferedInputStream(new FileInputStream(this.tempFile));
             } catch(final FileNotFoundException e) {
                 throw new IOException("Cached file was deleted, " + e.toString());
             }
