@@ -506,6 +506,8 @@ public abstract class EscidocTestBase {
 
     public static final String TEMPLATE_AA_PATH = TEMPLATE_BASE_PATH + "/aa/template";
 
+    public static final String TEMPLATE_ST_PATH = TEMPLATE_BASE_PATH + "/st/template";
+
     public static final String TEMPLATE_REQUESTS_PATH = TEMPLATE_AA_PATH + "/requests";
 
     public static final String TEMPLATE_AA_ITEM_PATH = TEMPLATE_AA_PATH + "/item";
@@ -585,6 +587,8 @@ public abstract class EscidocTestBase {
     public static final String TEMPLATE_REP_PARAMETERS_PATH = TEMPLATE_SM_PATH + "/reportparameters";
 
     public static final String TEMPLATE_PREPROCESSING_INFO_PATH = TEMPLATE_SM_PATH + "/preprocessinginformation";
+
+    public static final String TEMPLATE_ST_ITEM_PATH = TEMPLATE_ST_PATH + "/item";
 
     public static final String ESCIDOC_OBJECTS_SAVE_PATH = "build/escidoc";
 

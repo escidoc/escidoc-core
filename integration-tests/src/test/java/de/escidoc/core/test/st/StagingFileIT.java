@@ -31,6 +31,8 @@ package de.escidoc.core.test.st;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.Header;
@@ -50,7 +52,7 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Torsten Tetteroo
  */
-public abstract class StagingFileIT extends StagingFileTestBase {
+public class StagingFileIT extends StagingFileTestBase {
 
     private final String testUploadFile = "UploadTest.zip";
 
@@ -64,7 +66,7 @@ public abstract class StagingFileIT extends StagingFileTestBase {
     @Test
     public void testSTCsf1() throws Exception {
 
-        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = retrieveTestData(testUploadFile);
 
         HttpResponse httpRes = null;
         try {
@@ -109,7 +111,7 @@ public abstract class StagingFileIT extends StagingFileTestBase {
     @Test
     public void testSTRsf1() throws Exception {
 
-        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = retrieveTestData(testUploadFile);
         HttpResponse httpRes = null;
         try {
             httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
@@ -202,7 +204,7 @@ public abstract class StagingFileIT extends StagingFileTestBase {
     @Test
     public void testSTRsf8() throws Exception {
 
-        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
+        InputStream fileInputStream = retrieveTestData(testUploadFile);
         HttpResponse httpRes = null;
         try {
             httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
@@ -231,6 +233,46 @@ public abstract class StagingFileIT extends StagingFileTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Upload Servlet's get method did not decline"
                 + " repeated retrieval of a staging file, correctly, ", StagingFileNotFoundException.class, e);
+        }
+
+    }
+
+    /**
+     * Test successfully creating a StagingFile.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testCreateItemWithStagingFileLink() throws Exception {
+
+        InputStream fileInputStream = retrieveTestData(testUploadFile);
+
+        HttpResponse httpRes = null;
+        try {
+            httpRes = create(fileInputStream, testUploadFileMimeType, testUploadFile);
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.failException(e);
+        }
+        assertNotNull("No HTTPMethod. ", httpRes);
+        assertHttpStatusOfMethod("Create failed", httpRes);
+        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+
+        EscidocAbstractTest.assertXmlValidStagingFile(stagingFileXml);
+        Document document = EscidocAbstractTest.getDocument(stagingFileXml);
+        String stagingFileHref =
+            Constants.PROTOCOL + "://" + EscidocTestBase.getFrameworkHost() + ":" + EscidocTestBase.getFrameworkPort()
+                + selectSingleNode(document, "/staging-file/@href").getTextContent();
+
+        Document itemDoc =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ST_ITEM_PATH, "escidoc_item_for_staging.xml");
+        substitute(itemDoc, "/item/components/component/content/@href", stagingFileHref);
+
+        try {
+            getItemClient().create(toString(itemDoc, false));
+        }
+        catch (final Exception e) {
+            EscidocAbstractTest.failException(e);
         }
 
     }

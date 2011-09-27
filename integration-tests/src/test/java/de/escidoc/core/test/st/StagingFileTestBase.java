@@ -28,29 +28,36 @@
  */
 package de.escidoc.core.test.st;
 
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import org.apache.http.HttpResponse;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.om.ItemClient;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
  * Base class for testing the implementation of the StagingFile.
  *
  * @author Torsten Tetteroo
  */
-public abstract class StagingFileTestBase extends EscidocTestBase {
+public class StagingFileTestBase extends EscidocAbstractTest {
 
     private StagingFileClient stagingFileClient = null;
 
+    private ItemClient itemClient = null;
+
     protected StagingFileTestBase() {
         this.stagingFileClient = new StagingFileClient();
+        this.itemClient = new ItemClient();
     }
 
     /**
@@ -58,6 +65,13 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
      */
     public StagingFileClient getStagingFileClient() {
         return stagingFileClient;
+    }
+
+    /**
+     * @return Returns the itemClient.
+     */
+    public ItemClient getItemClient() {
+        return itemClient;
     }
 
     /**
@@ -96,6 +110,29 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             return httpRes;
+        }
+        else {
+            fail("Unsupported result type [" + result.getClass().getName() + "]");
+            return null;
+        }
+
+    }
+
+    /**
+     * Test creating a StagingFile in the framework.
+     *
+     * @param binaryContent The binary content of the staging file.
+     * @param mimeType      The mime type of the data.
+     * @param filename      The name of the file.
+     * @return The <code>HttpMethod</code> object.
+     * @throws Exception If anything fails.
+     */
+    protected InputStream retrieveTestData(final String filename) throws Exception {
+
+        Object result = getStagingFileClient().retrieveTestData(filename);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            return new ByteArrayInputStream(EntityUtils.toByteArray(httpRes.getEntity()));
         }
         else {
             fail("Unsupported result type [" + result.getClass().getName() + "]");

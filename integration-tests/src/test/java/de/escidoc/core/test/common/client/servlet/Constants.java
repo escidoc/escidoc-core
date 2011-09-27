@@ -186,6 +186,8 @@ public class Constants {
 
     public static final String UNSECURED_ACTIONS_BASE_URI = ESCIDOC_BASE_URI + "aa/unsecured-actions";
 
+    public static final String TEST_DATA_BASE_URI = ESCIDOC_BASE_URI + "testdata/testDocuments";
+
     // *****************************************************************
     // * Sub Resource names
     // *

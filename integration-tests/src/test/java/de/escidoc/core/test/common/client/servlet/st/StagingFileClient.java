@@ -69,4 +69,17 @@ public class StagingFileClient extends ClientBase {
             Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
     }
 
+    /**
+     * Retrieve the binary content of a StagingFile.
+     *
+     * @param id The id of the StagingFile.
+     * @return The HttpMethod after the service call .
+     * @throws Exception If the service call fails.
+     */
+    public Object retrieveTestData(final String filename) throws Exception {
+
+        return callEsciDoc("StagingFile.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.TEST_DATA_BASE_URI, new String[] { filename }, null);
+    }
+
 }
