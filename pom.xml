@@ -1122,6 +1122,7 @@
     <skipJBoss>false</skipJBoss>
     <cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m</cargo.jvmargs>
     <cargo.jvmdebug></cargo.jvmdebug>
+    <cargo.ucldebug></cargo.ucldebug>
     <cargo.wait>false</cargo.wait>
   </properties>
 
@@ -2206,6 +2207,20 @@
         <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
           -Xnoagent -verbose:class</cargo.jvmdebug><!--  -verbose:class -Djaxp.debug=1 -->
         <cargo.wait>true</cargo.wait>
+      </properties>
+    </profile>
+    
+    <profile>
+      <id>ucl</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>ucl</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <cargo.ucldebug>-verbose:class -Djaxp.debug=1</cargo.ucldebug>
       </properties>
     </profile>
 
