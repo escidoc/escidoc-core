@@ -446,8 +446,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         validateIngest(item);
         item.persist(true);
         final String objid = item.getObjid();
-        if (EscidocConfiguration.getInstance().getAsBoolean(
-            EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
+        if (EscidocConfiguration.getInstance().getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
             fireItemCreated(objid, null);
         }
         return objid;
