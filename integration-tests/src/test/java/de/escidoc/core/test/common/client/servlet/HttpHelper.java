@@ -557,8 +557,8 @@ public final class HttpHelper {
             .indexOf("<input type=\"password\"") != -1);
 
         // Second step: Send filled login form
-        final HttpPost postMethod = new HttpPost((
-            EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + "/j_spring_security_check"));
+        final HttpPost postMethod =
+            new HttpPost((EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + "/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
