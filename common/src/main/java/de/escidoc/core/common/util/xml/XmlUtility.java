@@ -2032,7 +2032,7 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
-        return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(out);
+        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
     }
 
     /**
