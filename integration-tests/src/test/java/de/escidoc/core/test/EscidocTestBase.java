@@ -4284,24 +4284,6 @@ public abstract class EscidocTestBase {
     /**
      * Uploading file to Staging Service and get URL back.
      * 
-     * @param testUploadFile
-     *            The filename (which is to upload).
-     * @param mimeType
-     *            The mime type of the content.
-     * @return The URL fro the staging service.
-     * @throws Exception
-     *             Thrown if uploading failed.
-     */
-    public URL uploadFileToStagingServlet(final String testUploadFile, final String mimeType) throws Exception {
-
-        InputStream fileInputStream = StagingFileTestBase.getFileInputStream(testUploadFile);
-
-        return uploadFileToStagingServlet(fileInputStream, testUploadFile, mimeType);
-    }
-
-    /**
-     * Uploading file to Staging Service and get URL back.
-     * 
      * @param fileInputStream
      *            The filenInputStream (whic upload).
      * @param filename

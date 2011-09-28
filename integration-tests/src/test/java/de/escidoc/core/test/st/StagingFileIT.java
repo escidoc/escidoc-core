@@ -141,7 +141,7 @@ public class StagingFileIT extends StagingFileTestBase {
         assertNotNull("Retrieve failed! No returned mime type found", contentTypeHeader);
         assertEquals("Retrieve failed! The returned mime type is wrong,", testUploadFileMimeType, contentTypeHeader
             .getValue());
-        StagingFileTestBase.assertResponseContentMatchesSourceFile(httpRes, testUploadFile);
+        StagingFileTestBase.assertResponseContentMatchesSourceFile(httpRes, retrieveTestData(testUploadFile));
 
     }
 
@@ -220,6 +220,7 @@ public class StagingFileIT extends StagingFileTestBase {
 
         try {
             httpRes = retrieveStagingFile(objidValue);
+            httpRes.getEntity().getContent().close();
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
@@ -227,6 +228,7 @@ public class StagingFileIT extends StagingFileTestBase {
 
         try {
             httpRes = retrieveStagingFile(objidValue);
+            httpRes.getEntity().getContent().close();
             EscidocAbstractTest.failMissingException("Upload Servlet's get method did not decline"
                 + " repeated retrieval of a staging file, ", StagingFileNotFoundException.class);
         }

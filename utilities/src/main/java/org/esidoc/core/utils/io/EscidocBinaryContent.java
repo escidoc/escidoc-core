@@ -100,4 +100,12 @@ public class EscidocBinaryContent {
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType != null ? mimeType.trim() : null;
     }
+
+    /**
+     * @return the size of the stream
+     */
+    public long getContentLength() {
+        return this.stream.size();
+    }
+
 }

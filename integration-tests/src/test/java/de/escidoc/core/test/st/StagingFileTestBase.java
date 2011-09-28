@@ -142,19 +142,6 @@ public class StagingFileTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * Gets a file input stream for a source file identified by given file name.
-     *
-     * @param filename The file name of the source, e.g. UploadTest.zip
-     * @return Returns a file input stream to the source.
-     * @throws IOException Thrown if the resource cannot be found.
-     */
-    public static InputStream getFileInputStream(final String filename) throws IOException {
-
-        InputStream result = ResourceProvider.getFileInputStream(filename);
-        return result;
-    }
-
-    /**
      * Assert the content of the received response in givent http method object matches the conten of the last file
      * copied to staging area.
      *
@@ -162,13 +149,11 @@ public class StagingFileTestBase extends EscidocAbstractTest {
      * @param source  The name of the original source that shall be compared with the response's content.
      * @throws IOException If an i/O operation failed.
      */
-    public static void assertResponseContentMatchesSourceFile(final HttpResponse httpRes, final String source)
+    public static void assertResponseContentMatchesSourceFile(final HttpResponse httpRes, final InputStream origContent)
         throws IOException {
 
         InputStream responseContent = httpRes.getEntity().getContent();
         assertNotNull("GET failed! Response's content not found", responseContent);
-        InputStream origContent = StagingFileTestBase.getFileInputStream(source);
-        assertNotNull("Source not found! [" + source + "]", responseContent);
         byte[] bufferR = new byte[1];
         byte[] bufferO = new byte[1];
         int i = 0;
