@@ -73,6 +73,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
     public StaxParser(final String rootElementName) {
 
         this.expectedName = rootElementName;
+        // FIXME coalescing should be set to false (switched on for backward compatibility with 1.4)
+        this.factory.setProperty(XMLInputFactory.IS_COALESCING, Boolean.TRUE);
     }
 
     /**
