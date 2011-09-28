@@ -255,17 +255,17 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public static final String ROLE_HREF_GRANT_TEST_5 = ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_5;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = ROLE_HREF_PREFIX
-        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = ROLE_HREF_PREFIX
-        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = ROLE_HREF_PREFIX
-        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
 
-    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = ROLE_HREF_PREFIX
-        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
+    public static final String ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS =
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
 
     public static final String ROLE_HREF_DEPOSITOR = ROLE_HREF_PREFIX + ROLE_ID_DEPOSITOR;
 
@@ -291,8 +291,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
     public static final String ROLE_HREF_CONTENT_RELATION_MANAGER = ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MANAGER;
 
-    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER = ROLE_HREF_PREFIX
-        + ROLE_ID_CONTENT_RELATION_MODIFIER;
+    public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER =
+        ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MODIFIER;
 
     public static final String ROLE_HREF_STATISTICS_EDITOR = ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_EDITOR;
 
@@ -350,8 +350,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
     private final String testUploadFileMimeType = "application/zip";
 
-    private final Pattern SCOPE_PATTERN = Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL
-        + Pattern.MULTILINE);
+    private final Pattern SCOPE_PATTERN =
+        Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*", Pattern.DOTALL + Pattern.MULTILINE);
 
     public AaTestBase() {
 
@@ -1073,8 +1073,8 @@ public class AaTestBase extends EscidocAbstractTest {
                 if (createVersionsBefore) {
                     createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
                     createdXml =
-                        handleResult(contentRelationClient.update(objidValue,
-                            prepareContentRelationData(subjectHref, objectHref)));
+                        handleResult(contentRelationClient.update(objidValue, prepareContentRelationData(subjectHref,
+                            objectHref)));
                     document = EscidocAbstractTest.getDocument(createdXml);
                 }
                 contentRelationClient.submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
@@ -1290,8 +1290,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(ITEM_HANDLER_CODE,
-                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber));
+                    retrieve(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
+                        .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(ITEM_HANDLER_CODE, UNKNOWN_ID);
@@ -1460,8 +1460,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    retrieve(CONTAINER_HANDLER_CODE,
-                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber));
+                    retrieve(CONTAINER_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
+                        .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(CONTAINER_HANDLER_CODE, UNKNOWN_ID);
@@ -1656,10 +1656,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 updatedXml =
-                    update(
-                        ITEM_HANDLER_CODE,
-                        createResourceId(getObjidValue(EscidocAbstractTest.getDocument(toBeUpdatedXml)), versionNumber),
-                        toBeUpdatedXml);
+                    update(ITEM_HANDLER_CODE, createResourceId(getObjidValue(EscidocAbstractTest
+                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml);
             }
             else {
                 updatedXml = update(ITEM_HANDLER_CODE, UNKNOWN_ID, toBeUpdatedXml);
@@ -1860,12 +1858,12 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                withdraw(ITEM_HANDLER_CODE, getObjidValue(document),
-                    getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, getObjidValue(document), getWithdrawTaskParam(
+                    getLastModificationDateValue(document), "Some withdraw comment"));
             }
             else {
-                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID,
-                    getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getWithdrawTaskParam(getLastModificationDateValue(document),
+                    "Some withdraw comment"));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -1964,10 +1962,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 updatedXml =
-                    handleResult(contentRelationClient
-                        .update(
-                            createResourceId(getObjidValue(EscidocAbstractTest.getDocument(toBeUpdatedXml)),
-                                versionNumber), toBeUpdatedXml));
+                    handleResult(contentRelationClient.update(createResourceId(getObjidValue(EscidocAbstractTest
+                        .getDocument(toBeUpdatedXml)), versionNumber), toBeUpdatedXml));
             }
             else {
                 updatedXml = handleResult(contentRelationClient.update(UNKNOWN_ID, toBeUpdatedXml));
@@ -2087,8 +2083,8 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 retrievedXml =
-                    handleResult(contentRelationClient.retrieve(createResourceId(
-                        getObjidValue(EscidocAbstractTest.getDocument(createdXml)), versionNumber)));
+                    handleResult(contentRelationClient.retrieve(createResourceId(getObjidValue(EscidocAbstractTest
+                        .getDocument(createdXml)), versionNumber)));
             }
             else {
                 retrievedXml = handleResult(contentRelationClient.retrieve(UNKNOWN_ID));
@@ -2236,8 +2232,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.revise(getObjidValue(document),
-                getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment"));
+            contentRelationClient.revise(getObjidValue(document), getWithdrawTaskParam(
+                getLastModificationDateValue(document), "Some withdraw comment"));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -2418,12 +2414,12 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.assignObjectPid(getObjidValue(document),
-                    getAssignPidTaskParam(getLastModificationDateValue2(document), new AssignParam()));
+                contentRelationClient.assignObjectPid(getObjidValue(document), getAssignPidTaskParam(
+                    getLastModificationDateValue2(document), new AssignParam()));
             }
             else {
-                contentRelationClient.assignObjectPid(UNKNOWN_ID,
-                    getAssignPidTaskParam(getLastModificationDateValue2(document), new AssignParam()));
+                contentRelationClient.assignObjectPid(UNKNOWN_ID, getAssignPidTaskParam(
+                    getLastModificationDateValue2(document), new AssignParam()));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -3635,8 +3631,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            organizationalUnitClient.close(ouId,
-                getTheLastModificationParam(true, ouId, "Closed organizational unit '" + ouId + "'."));
+            organizationalUnitClient.close(ouId, getTheLastModificationParam(true, ouId, "Closed organizational unit '"
+                + ouId + "'."));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3852,8 +3848,8 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.open(contextId,
-                    getTheLastModificationParam(true, contextId, "comment", lastModificationDate)));
+                handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
+                    lastModificationDate)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3896,17 +3892,15 @@ public class AaTestBase extends EscidocAbstractTest {
         final String contextId = getObjidValue(contextXml);
         String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
-            handleResult(contextClient.open(contextId,
-                getTheLastModificationParam(true, contextId, "comment", lastModificationDate)));
+            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
+                lastModificationDate)));
         lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
 
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.close(
-                    contextId,
-                    getTheLastModificationParam(true, contextId, "Closed context '" + contextId + "'.",
-                        lastModificationDate)));
+                handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId,
+                    "Closed context '" + contextId + "'.", lastModificationDate)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
