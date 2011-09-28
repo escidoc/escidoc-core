@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
@@ -21,11 +22,16 @@ import org.escidoc.core.domain.sru.ScanRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.services.fedora.access.ObjectProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
+import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -63,6 +69,9 @@ public class ContextRestServiceImpl implements ContextRestService {
     @Qualifier("service.ContextHandler")
     private ContextHandlerInterface contextHandler;
 
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
+
     /**
      * 
      */
@@ -95,7 +104,29 @@ public class ContextRestServiceImpl implements ContextRestService {
     public ContextTO retrieve(final String id) throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
+        ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(id);
+
+        // check resource with id is context
+
+        ContextTO context = new ContextTO();
+        context.setHref(Constants.CONTEXT_URL_BASE + id);
+        context.getProperties().setCreationDate(objectProfile.getObjCreateDate());
+        context.getProperties().setLastModificationDate(objectProfile.getObjLastModDate());
+
+        DatastreamProfilesTO dprofiles = this.fedoraServiceClient.getDatastreamProfiles(id, null);
+        for (DatastreamProfileTO dprofile : dprofiles.getDatastreamProfile()) {
+            if (dprofile
+                .getDsAltID().contains(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID)) {
+
+                AdminDescriptorDatastreamHolderTO adminDescriptor = new AdminDescriptorDatastreamHolderTO();
+                adminDescriptor.setContent(this.fedoraServiceClient
+                    .getDatastream(id, dprofile.getDsID(), null).getStream());
+                context.getAdminDescriptors().getAdminDescriptor().add(adminDescriptor);
+            }
+        }
+
+        // return ServiceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
+        return context;
     }
 
     /*
