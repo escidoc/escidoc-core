@@ -34,6 +34,7 @@ package de.escidoc.core.common.business.fedora.resources;
  * @author André Schenk
  */
 public class Version {
+    
     private String versionNumber;
 
     // attribute timestamp
@@ -54,7 +55,7 @@ public class Version {
         return versionNumber;
     }
 
-    public void setVersionNumber(String versionNumber) {
+    public void setVersionNumber(final String versionNumber) {
         this.versionNumber = versionNumber;
     }
 
@@ -62,7 +63,7 @@ public class Version {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(final String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -70,7 +71,7 @@ public class Version {
         return versionDate;
     }
 
-    public void setVersionDate(String versionDate) {
+    public void setVersionDate(final String versionDate) {
         this.versionDate = versionDate;
     }
 
@@ -78,7 +79,7 @@ public class Version {
         return versionPid;
     }
 
-    public void setVersionPid(String versionPid) {
+    public void setVersionPid(final String versionPid) {
         this.versionPid = versionPid;
     }
 
@@ -86,7 +87,7 @@ public class Version {
         return versionStatus;
     }
 
-    public void setVersionStatus(String versionStatus) {
+    public void setVersionStatus(final String versionStatus) {
         this.versionStatus = versionStatus;
     }
 
@@ -94,7 +95,7 @@ public class Version {
         return validStatus;
     }
 
-    public void setValidStatus(String validStatus) {
+    public void setValidStatus(final String validStatus) {
         this.validStatus = validStatus;
     }
 
@@ -102,7 +103,7 @@ public class Version {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment(final String comment) {
         this.comment = comment;
     }
 }
