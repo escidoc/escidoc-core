@@ -1174,6 +1174,114 @@ public class SearchIT extends SearchTestBase {
     }
 
     /**
+     * : UTF-8 characters in fulltext extracted from word 2003 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_1() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"word 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
+     * : UTF-8 characters in fulltext extracted from word 2007 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_2() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"word 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
+     * : UTF-8 characters in fulltext extracted from powerpoint 2003 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_3() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"powerpoint 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
+     * : UTF-8 characters in fulltext extracted from powerpoint 2007 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_4() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"powerpoint 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
+     * : UTF-8 characters in fulltext extracted from excel 2003 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_5() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"excel 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
+     * : UTF-8 characters in fulltext extracted from excel 2007 document.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR33_6() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, new String(
+            "escidoc.fulltext=\"excel 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
+            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals(true, checkHighlighting(response));
+    }
+
+    /**
      * : UTF-8 characters as request-parameter .
      * 
      * @throws Exception
