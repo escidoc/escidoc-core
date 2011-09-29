@@ -1184,7 +1184,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"word 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1202,7 +1202,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"word 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1220,7 +1220,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"powerpoint 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1238,7 +1238,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"powerpoint 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1256,7 +1256,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"excel 2003 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -1274,7 +1274,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, new String(
             "escidoc.fulltext=\"excel 2007 dokument. \u00e4\u00f6\u00fc\u6c13\u4fb7\u67f5\u82d7\""
-            .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
+                .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
