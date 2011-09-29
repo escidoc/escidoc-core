@@ -192,17 +192,6 @@ public class ItemCreate extends GenericResourceCreate {
     }
 
     /**
-     * Persist whole Item to Repository and force TripleStore sync.
-     * 
-     * @throws FileNotFoundException
-     * @throws SystemException
-     * @throws InvalidContentException
-     */
-    public void persist() throws SystemException, FileNotFoundException, InvalidContentException {
-        persist(true);
-    }
-
-    /**
      * Persist whole Item to Repository.
      * 
      * @param forceSync

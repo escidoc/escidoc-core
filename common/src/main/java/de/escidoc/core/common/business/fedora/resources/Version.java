@@ -34,7 +34,7 @@ package de.escidoc.core.common.business.fedora.resources;
  * @author André Schenk
  */
 public class Version {
-    
+
     private String versionNumber;
 
     // attribute timestamp
