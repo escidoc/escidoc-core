@@ -107,7 +107,7 @@ public class GenericResource implements FedoraResource {
 
     // -----------------------
 
-    protected Datastream relsExt;
+    protected Datastream relsExtDs;
 
     protected Datastream dc;
 
@@ -456,10 +456,10 @@ public class GenericResource implements FedoraResource {
     @Override
     public Datastream getRelsExt() throws FedoraSystemException, StreamNotFoundException {
 
-        if (this.relsExt == null) {
-            this.relsExt = new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, null);
+        if (this.relsExtDs == null) {
+            this.relsExtDs = new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, null);
         }
-        return this.relsExt;
+        return this.relsExtDs;
     }
 
     /**
@@ -500,8 +500,8 @@ public class GenericResource implements FedoraResource {
     @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException, WebserverSystemException {
 
-        if (this.relsExt == null || !this.relsExt.equals(ds)) {
-            this.relsExt = ds;
+        if (this.relsExtDs == null || !this.relsExtDs.equals(ds)) {
+            this.relsExtDs = ds;
             this.needSync = true;
         }
     }
@@ -577,7 +577,7 @@ public class GenericResource implements FedoraResource {
      * Unset RELS-EXT datastream to prevent merge with repository.
      */
     protected void unsetRelsExt() {
-        this.relsExt = null;
+        this.relsExtDs = null;
     }
 
     /**
@@ -981,8 +981,8 @@ public class GenericResource implements FedoraResource {
 
         DateTime timestamp = null; // Maybe would it be better, if we use the
         // old timestamp instead of null.
-        if (this.relsExt != null) {
-            timestamp = new DateTime(this.relsExt.merge(), DateTimeZone.UTC);
+        if (this.relsExtDs != null) {
+            timestamp = new DateTime(this.relsExtDs.merge(), DateTimeZone.UTC);
         }
 
         return timestamp;
@@ -1228,7 +1228,7 @@ public class GenericResource implements FedoraResource {
             // The RELS-EXT in the Fedora repository is newer than the
             // version specified by versionDate. The difference between both
             // versions are timestamps (version/date, release/date).
-            this.relsExt = new Datastream(profile, getId());
+            this.relsExtDs = new Datastream(profile, getId());
         }
         // DC
         else if ("DC".equals(profile.getDsID()) && this.dc == null) {
