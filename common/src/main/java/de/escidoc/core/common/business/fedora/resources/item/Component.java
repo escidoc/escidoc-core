@@ -153,7 +153,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             this.mdRecords.put(profile.getDsID(), new Datastream(profile, getId(), this.parentVersionDate));
         }
         else if (Datastream.RELS_EXT_DATASTREAM.equals(profile.getDsID())) {
-            this.relsExt = new Datastream(profile, getId(), this.parentVersionDate);
+            this.relsExtDs = new Datastream(profile, getId(), this.parentVersionDate);
         }
         else if ("DC".equals(profile.getDsID())) {
             this.dc = new Datastream(profile, getId(), this.parentVersionDate);

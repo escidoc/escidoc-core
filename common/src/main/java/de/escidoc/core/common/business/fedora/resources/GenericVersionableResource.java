@@ -676,7 +676,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     @Override
     public Datastream getRelsExt() throws StreamNotFoundException, FedoraSystemException {
-        if (this.relsExt == null) {
+        if (this.relsExtDs == null) {
             try {
                 // Workaround until framework uses only one RELS-EXT per update
                 if (isLatestVersion()) {
@@ -1089,7 +1089,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             // The RELS-EXT in the Fedora repository is newer than the
             // version specified by versionDate. The difference between both
             // versions are timestamps (version/date, release/date).
-            this.relsExt =
+            this.relsExtDs =
                 isLatestVersion() ? new Datastream(profile, getId(), null) : new Datastream(profile, getId(),
                     versionDate);
         }
