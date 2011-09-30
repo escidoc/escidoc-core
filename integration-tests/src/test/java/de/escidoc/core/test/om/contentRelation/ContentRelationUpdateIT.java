@@ -357,4 +357,21 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         assertEquals("resource modified", lmdCreate, lmdUpdate);
         assertEquals("resource modified", lmdCreate, lmdRetrieve);
     }
+
+    /**
+     * Check if during update optimistic locking is checked.
+     * 
+     * @throws Exception
+     */
+    @Test(expected = OptimisticLockingException.class)
+    public void checkOptimisticLocking() throws Exception {
+
+        Document relationCreated = getDocument(relationXml);
+        Node lmd = selectSingleNode(relationCreated, "/content-relation/@last-modification-date");
+        lmd.setTextContent("2006-12-21T13:15:23.485Z");
+        String relationToUdate = toString(relationCreated, false);
+
+        // update
+        update(this.relationId, relationToUdate);
+    }
 }
