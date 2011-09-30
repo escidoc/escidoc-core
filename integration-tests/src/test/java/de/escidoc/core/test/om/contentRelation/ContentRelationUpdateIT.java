@@ -263,7 +263,7 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
     }
 
     /**
-     * Test update subject of Content Relation.
+     * Test update subject of Content Relation. Update of subject is not allowed.
      * 
      * @throws Exception
      *             Thrown if description is not updated or other (unexpected) values are changed.
@@ -292,7 +292,6 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
         String subjectValue = selectSingleNode(updatedRelationDoc, "/content-relation/subject/@href").getNodeValue();
 
-        // FIXME If updating the subject will be supported by the core then newSubject and subjectValue should be the same
         assertEquals(oldSubject, subjectValue);
 
         // retrieve
@@ -303,7 +302,6 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         Document retrieveDoc = getDocument(retrieveXml);
         subjectValue = selectSingleNode(retrieveDoc, "/content-relation/subject/@href").getNodeValue();
 
-        // FIXME If updating the subject will be supported by the core then newSubject and subjectValue should be the same
         assertEquals(oldSubject, subjectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);
@@ -314,7 +312,7 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
     }
 
     /**
-     * Test update object of Content Relation.
+     * Test update object of Content Relation. Update of object is not allowed.
      * 
      * @throws Exception
      *             Thrown if description is not updated or other (unexpected) values are changed.
@@ -343,7 +341,6 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
         String objectValue = selectSingleNode(updatedRelationDoc, "/content-relation/object/@href").getNodeValue();
 
-        // FIXME If updating the object will be supported by the core then newObject and objectValue should be the same
         assertEquals(oldObject, objectValue);
 
         // retrieve
@@ -354,7 +351,6 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         Document retrieveDoc = getDocument(retrieveXml);
         objectValue = selectSingleNode(retrieveDoc, "/content-relation/object/@href").getNodeValue();
 
-        // FIXME If updating the object will be supported by the core then newObject and objectValue should be the same
         assertEquals(oldObject, objectValue);
 
         String lmdCreate = getLastModificationDateValue(relationCreated);
