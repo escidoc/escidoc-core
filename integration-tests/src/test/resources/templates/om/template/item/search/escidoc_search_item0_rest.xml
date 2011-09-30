@@ -85,7 +85,7 @@
                <dc:title>Test of UTF8: Ümlaut € test@etc @etc. русские</dc:title>
             </publication:source>
             <publication:source>
-               <dc:title>Regextest $3</dc:title>
+               <dc:title>Regextest $3 3 &gt; 0 3&gt;0</dc:title>
             </publication:source>
             <publication:source>
                <dc:title>
@@ -452,7 +452,7 @@
             <properties:mime-type>text/xml</properties:mime-type>
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
-                                    xlink:href="http://localhost:8082/ir/xml/EPFull_1070827.xml"
+                                    xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1070827.xml"
                                     storage="internal-managed"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
@@ -504,7 +504,7 @@
                      <dc:title>Test of UTF8: Ümlaut € test@etc @etc. русские</dc:title>
                   </publication:source>
                   <publication:source>
-                     <dc:title>Regextest $3</dc:title>
+                     <dc:title>Regextest $3 3 &gt; 0 3&gt;0</dc:title>
                   </publication:source>
                   <publication:source>
                      <dc:title>
@@ -867,7 +867,7 @@
             <properties:mime-type>application/pdf</properties:mime-type>
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
-                                    xlink:href="http://localhost:8082/ir/pdf/EPFull_1070827.pdf"
+                                    xlink:href="http://localhost:8080/testdata/testDocuments/ir/pdf/EPFull_1070827.pdf"
                                     storage="internal-managed"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
@@ -919,7 +919,7 @@
                      <dc:title>Test of UTF8: Ümlaut € test@etc @etc. русские</dc:title>
                   </publication:source>
                   <publication:source>
-                     <dc:title>Regextest $3</dc:title>
+                     <dc:title>Regextest $3 3 &gt; 0 3&gt;0</dc:title>
                   </publication:source>
                   <publication:source>
                      <dc:title>
@@ -1270,5 +1270,6 @@
             </escidocMetadataRecords:md-record>
          </escidocMetadataRecords:md-records>
       </escidocComponents:component>
+
    </escidocComponents:components>
 </escidocItem:item>
