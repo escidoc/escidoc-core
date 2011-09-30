@@ -40,6 +40,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -413,11 +414,6 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         final int versionNumberWithPid = 2; // version where pid is assigned
         final int maxVersionNo = 6;
 
-        // get last-modification-date
-        String pidParam =
-            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
-                + "\" >" + "<url>http://escidoc.de</url>" + "</param>";
-
         // test if no pid is assigned already
         Node node = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), "/item/properties/version/pid");
         assertNull(node);
@@ -468,10 +464,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         itemVersionId = itemId + ":" + versionNumberWithPid;
         itemXml = retrieve(itemVersionId);
         try {
-            pidParam =
-                "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml)) + "\" >"
-                    + "<url>http://escidoc.de</url>" + "</param>";
+            // get last-modification-date
+            AssignParam assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+            String pidParam =
+                getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemXml)),
+                    assignPidParam);
 
             pid = assignVersionPid(itemVersionId, pidParam);
         }
@@ -488,13 +486,20 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         itemVersionId = getObjidValue(EscidocAbstractTest.getDocument(itemXml));
         itemXml = update(itemId, newItemXml);
 
-        pidParam =
-            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
-                + "\" >" + "<url>http://escidoc.de</url>" + "</param>";
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
+        String pidParam =
+            getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemXml)),
+                assignPidParam);
+
         assignObjectPid(itemId, pidParam);
+
+        assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         pidParam =
-            "<param last-modification-date=\"" + getTheLastModificationDate(itemId) + "\" >"
-                + "<url>http://escidoc.de</url>" + "</param>";
+            getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(retrieve(itemId))),
+                assignPidParam);
+
         assignVersionPid(itemId, pidParam);
 
         release(itemId, getTheLastModificationParam(itemId, false));
@@ -542,6 +547,8 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
     // - It is not allowed to address the item without specifying the version
     // number. In this case, an exception has to be thrown.
     // FIXME: re-enable this test if open problems (see above) are solved.
+    @Test
+    @Ignore("probably wrong test")
     public void notestOmAvp5() throws Exception {
 
         // create item
@@ -622,9 +629,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         final int maxVersionNo = 4;
 
         // get last-modification-date
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL("http://escidoc.de/" + System.nanoTime()));
         String pidParam =
-            "<param last-modification-date=\"" + getLastModificationDateValue(EscidocAbstractTest.getDocument(itemXml))
-                + "\" >" + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+            getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemXml)),
+                assignPidParam);
 
         // test if no pid is assigned already
         Node node = selectSingleNode(EscidocAbstractTest.getDocument(itemXml), "/item/properties/version/pid");
