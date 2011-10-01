@@ -337,13 +337,17 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
 
         // instance of stored Content Relation
         final ContentRelationCreate cr = setContentRelation(id);
+        // instance of the update representation
+        final ContentRelationCreate updatedCR = parseContentRelation(xmlData);
+
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), updatedCR
+            .getProperties().getLastModificationDate(), "Content Relation " + cr.getObjid());
+
         enrichWithMetadataContent(cr);
 
         checkLocked(cr);
         checkReleased(cr);
 
-        // instance of the update representation
-        final ContentRelationCreate updatedCR = parseContentRelation(xmlData);
         validate(updatedCR);
 
         // now compare this.contentRelation with updatedCR and transfer data
