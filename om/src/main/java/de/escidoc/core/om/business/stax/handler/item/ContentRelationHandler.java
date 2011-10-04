@@ -50,6 +50,8 @@ import javax.xml.stream.XMLStreamException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.joda.time.DateTime;
+
 /**
  * Handle ContentRelation XML to obtain all required values (Properties, Metadata, .. ).
  *
@@ -124,7 +126,22 @@ public class ContentRelationHandler extends DefaultHandler {
         else {
             final String currentPath = parser.getCurPath();
 
-            if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
+            if (XPATH_CONTENT_RELATION.equals(currentPath)) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION);
+                }
+                // set last-modification-date from root element to properties
+                try {
+                    String lmd = element.getAttribute("", "last-modification-date").getValue();
+                    this.contentRelation.getProperties().setLastModificationDate(new DateTime(lmd));
+                }
+                catch (NoSuchAttributeException e) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Wrong or missing last-modification-date in Content Relation", e);
+                    }
+                }
+            }
+            else if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION_PROPERTIES);
                 }
