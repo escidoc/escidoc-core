@@ -31,6 +31,7 @@ package de.escidoc.core.test.cmm.contentmodel;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -406,6 +407,27 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
         // TODO fails, INFR-933
         selectSingleNodeAsserted(cmDocV2E1, "/content-model/resource-definitions/resource-definition[@name='"
             + testDefinitionName + "']/md-record-name[text() = 'somemd']");
+    }
+
+    /**
+     * Check if during update optimistic locking is checked.
+     * 
+     * @throws Exception
+     */
+    @Test(expected = OptimisticLockingException.class)
+    public void checkOptimisticLocking() throws Exception {
+
+        String contentModelXml = getExampleTemplate("content-model-minimal-for-create.xml");
+        String cmV1E1 = create(contentModelXml);
+
+        Document cmDocV1E1 = getDocument(cmV1E1);
+        String objid = getObjidValue(cmV1E1);
+        Node lmd = selectSingleNode(cmDocV1E1, "/content-model/@last-modification-date");
+        lmd.setTextContent("2006-12-21T13:15:23.485Z");
+        String cmmToUdate = toString(cmDocV1E1, false);
+
+        // update
+        update(objid, cmmToUdate);
     }
 
 }
