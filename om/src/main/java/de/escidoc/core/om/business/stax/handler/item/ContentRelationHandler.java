@@ -50,9 +50,11 @@ import javax.xml.stream.XMLStreamException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.joda.time.DateTime;
+
 /**
  * Handle ContentRelation XML to obtain all required values (Properties, Metadata, .. ).
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationHandler extends DefaultHandler {
@@ -90,9 +92,11 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * ContentRelationHandler.
-     *
-     * @param parser StAX Parser.
-     * @throws WebserverSystemException Thrown if obtaining UserContext failed.
+     * 
+     * @param parser
+     *            StAX Parser.
+     * @throws WebserverSystemException
+     *             Thrown if obtaining UserContext failed.
      */
     public ContentRelationHandler(final StaxParser parser) throws WebserverSystemException {
 
@@ -102,14 +106,18 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML start element.
-     *
-     * @param element StAX Parser StartElement
+     * 
+     * @param element
+     *            StAX Parser StartElement
      * @return StartElement The StartElement.
-     * @throws InvalidContentException        Thrown if metadata content is invalid
-     * @throws MissingAttributeValueException Thrown if attributes of metadata elements are missing
-     * @throws XMLStreamException             Thrown if metadata stream is unable to parse
-     * @throws WebserverSystemException       Thrown if setting ContentRelationProperties failed (obtaining UserContext
-     *                                        error).
+     * @throws InvalidContentException
+     *             Thrown if metadata content is invalid
+     * @throws MissingAttributeValueException
+     *             Thrown if attributes of metadata elements are missing
+     * @throws XMLStreamException
+     *             Thrown if metadata stream is unable to parse
+     * @throws WebserverSystemException
+     *             Thrown if setting ContentRelationProperties failed (obtaining UserContext error).
      */
     @Override
     public StartElement startElement(final StartElement element) throws InvalidContentException,
@@ -123,8 +131,22 @@ public class ContentRelationHandler extends DefaultHandler {
         }
         else {
             final String currentPath = parser.getCurPath();
-
-            if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
+            if (XPATH_CONTENT_RELATION.equals(currentPath)) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION);
+                }
+                // set last-modification-date from root element to properties
+                try {
+                    String lmd = element.getAttribute("", "last-modification-date").getValue();
+                    this.contentRelation.getProperties().setLastModificationDate(new DateTime(lmd));
+                }
+                catch (NoSuchAttributeException e) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Wrong or missing last-modification-date in Content Relation", e);
+                    }
+                }
+            }
+            else if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION_PROPERTIES);
                 }
@@ -166,11 +188,14 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML end element.
-     *
-     * @param element StAX EndElement
+     * 
+     * @param element
+     *            StAX EndElement
      * @return StAX EndElement
-     * @throws InvalidContentException  Thrown if metadata has invalid content.
-     * @throws WebserverSystemException Thrown if streaming failed.
+     * @throws InvalidContentException
+     *             Thrown if metadata has invalid content.
+     * @throws WebserverSystemException
+     *             Thrown if streaming failed.
      */
     @Override
     public EndElement endElement(final EndElement element) throws InvalidContentException, WebserverSystemException {
@@ -224,12 +249,16 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
-     *
-     * @param s       XML character element.
-     * @param element StAX StartElement
+     * 
+     * @param s
+     *            XML character element.
+     * @param element
+     *            StAX StartElement
      * @return XML character element.
-     * @throws InvalidStatusException   Thrown if value of status is invalid text.
-     * @throws WebserverSystemException Thrown if streaming failed.
+     * @throws InvalidStatusException
+     *             Thrown if value of status is invalid text.
+     * @throws WebserverSystemException
+     *             Thrown if streaming failed.
      */
     @Override
     public String characters(final String s, final StartElement element) throws WebserverSystemException,
@@ -253,7 +282,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * <p/>
      * Attention! ContentRelationCreate is only a transition object. Later implementation has to return the
      * ContentRelationCreate class.
-     *
+     * 
      * @return ContentRelationCreate
      */
     public ContentRelationCreate getContentRelation() {
@@ -263,10 +292,12 @@ public class ContentRelationHandler extends DefaultHandler {
 
     /**
      * Handle href or objid references. Version number is kept.
-     *
-     * @param element StartElement
+     * 
+     * @param element
+     *            StartElement
      * @return objid (with version number if set)
-     * @throws MissingAttributeValueException Thrown if element has neither objid nor href attribute
+     * @throws MissingAttributeValueException
+     *             Thrown if element has neither objid nor href attribute
      */
     private static String handleReferences(final StartElement element) throws MissingAttributeValueException {
 
