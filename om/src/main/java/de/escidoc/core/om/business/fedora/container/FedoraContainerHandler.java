@@ -484,21 +484,20 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         String result = null;
 
-        try {
-            if (isCreate) {
+        if (isCreate) {
+            try {
                 result = retrieve(containerId);
-                fireContainerCreated(getContainer().getId(), result);
-                // Also reindex members
-                for (final String memberId : structMapEntries) {
-                    fireContainerMembersModified(memberId);
-                }
+            }
+            catch (final ResourceNotFoundException e) {
+                throw new IntegritySystemException("Newly created Container not available.", e);
+            }
+            fireContainerCreated(getContainer().getId(), result);
+            // Also reindex members
+            for (final String memberId : structMapEntries) {
+                fireContainerMembersModified(memberId);
             }
         }
-        catch (final ResourceNotFoundException e) {
-            throw new IntegritySystemException("Newly created Container not available.", e);
-        }
-
-        if (!isCreate) {
+        else {
             result = containerId;
         }
         return result;
@@ -886,7 +885,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
 
                 if (ids.isEmpty()) {
-                    // create an empty search response (problem: if no query is given, than are all resources returned. A useless query is not a solution, because the query is part of the response)
+                    // create an empty search response (problem: if no query is given, than are all resources returned.
+                    // A useless query is not a solution, because the query is part of the response)
                     sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
                         "\"/id\"=-1", parameters.getMaximumRecords(), parameters.getStartRecord(), parameters
                             .getExtraData(), parameters.getRecordPacking());
