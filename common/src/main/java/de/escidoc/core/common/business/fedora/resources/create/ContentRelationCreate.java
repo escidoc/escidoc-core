@@ -52,6 +52,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.joda.time.DateTime;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
@@ -98,6 +99,26 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private String subjectVersion;
 
     private String objectVersion;
+
+    private DateTime lastModificationDate;
+
+    /**
+     * Get last modification date of the resource.
+     * 
+     * @return
+     */
+    public DateTime getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    /**
+     * Set last modification date of the resource.
+     * 
+     * @param lastModificationDate
+     */
+    public void setLastModificationDate(final DateTime lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
     /**
      * @throws WebserverSystemException Thrown if obtaining UserContext failed.
