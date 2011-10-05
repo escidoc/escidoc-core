@@ -341,7 +341,7 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
         final ContentRelationCreate updatedCR = parseContentRelation(xmlData);
 
         Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(), updatedCR
-            .getProperties().getLastModificationDate(), "Content Relation " + cr.getObjid());
+            .getLastModificationDate(), "Content Relation " + cr.getObjid());
 
         enrichWithMetadataContent(cr);
 

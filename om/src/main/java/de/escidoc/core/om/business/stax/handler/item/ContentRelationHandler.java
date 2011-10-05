@@ -138,7 +138,7 @@ public class ContentRelationHandler extends DefaultHandler {
                 // set last-modification-date from root element to properties
                 try {
                     String lmd = element.getAttribute("", "last-modification-date").getValue();
-                    this.contentRelation.getProperties().setLastModificationDate(new DateTime(lmd));
+                    this.contentRelation.setLastModificationDate(new DateTime(lmd));
                 }
                 catch (NoSuchAttributeException e) {
                     if (LOGGER.isDebugEnabled()) {
