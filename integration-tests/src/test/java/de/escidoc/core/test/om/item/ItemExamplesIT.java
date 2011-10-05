@@ -118,7 +118,6 @@ public class ItemExamplesIT extends ItemTestBase {
         selectSingleNodeAsserted(xmlItem, xPath);
         xPath = "/item/properties/content-model[@href = " + "'/cmm/content-model/escidoc:ex4']";
         selectSingleNodeAsserted(xmlItem, xPath);
-        selectSingleNodeAsserted(xmlItem, "/item/properties/content-model-specific/cms-prop[@test = '1']");
 
         // md-records
         selectSingleNodeAsserted(xmlItem, "/item/md-records/md-record[@name = 'escidoc']");

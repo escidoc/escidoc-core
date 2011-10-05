@@ -668,10 +668,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // assign PID to version versionNumber (VERSION_NUMBER_PID) ------------
         try {
+            assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://escidoc.de/" + System.nanoTime()));
             pidParam =
-                "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId))) + "\" >"
-                    + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+                getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                    .getDocument(retrieve(itemVersionId))), assignPidParam);
 
             pid = assignVersionPid(itemVersionId, pidParam);
             String versionHistory = retrieveVersionHistory(itemId);
@@ -691,10 +692,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // re- assign PID to version versionNumber (VERSION_NUMBER_PID) --------
         try {
+            assignPidParam = new AssignParam();
+            assignPidParam.setUrl(new URL("http://escidoc.de/" + System.nanoTime()));
             pidParam =
-                "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(itemVersionId))) + "\" >"
-                    + "<url>http://escidoc.de/" + System.nanoTime() + "</url>" + "</param>";
+                getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                    .getDocument(retrieve(itemVersionId))), assignPidParam);
 
             pid = assignVersionPid(itemVersionId, pidParam);
             fail("InvalidStatusException expected.");
