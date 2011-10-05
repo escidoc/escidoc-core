@@ -580,7 +580,7 @@
           </systemproperties>
           <redirectTestOutputToFile>${project.build.directory}/test-output.log</redirectTestOutputToFile>
           <forkMode>always</forkMode>
-          <argLine>-Xmx1024m -XX:MaxPermSize=640m</argLine>
+          <argLine>-Xmx1024m -XX:MaxPermSize=320m</argLine>
           <failIfNoTests>true</failIfNoTests>
         </configuration>
       </plugin>
