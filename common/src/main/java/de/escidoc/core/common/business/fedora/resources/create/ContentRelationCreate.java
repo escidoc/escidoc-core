@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.joda.time.DateTime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -79,6 +80,26 @@ public class ContentRelationCreate extends GenericResourceCreate implements Clon
     private String subjectVersion;
 
     private String objectVersion;
+
+    private DateTime lastModificationDate;
+
+    /**
+     * Get last modification date of the resource.
+     * 
+     * @return
+     */
+    public DateTime getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    /**
+     * Set last modification date of the resource.
+     * 
+     * @param lastModificationDate
+     */
+    public void setLastModificationDate(final DateTime lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
     /**
      * @throws WebserverSystemException Thrown if obtaining UserContext failed.
