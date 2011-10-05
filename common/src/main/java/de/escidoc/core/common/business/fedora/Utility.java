@@ -162,8 +162,11 @@ public class Utility {
         final DateTime fedoraLatestVersionDate, final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, XmlCorruptedException {
 
-        if (fedoraLatestVersionDate == null || updateLatestVersionDate == null) {
-            throw new XmlCorruptedException("last-modification-date must not be null");
+        if (fedoraLatestVersionDate == null) {
+            throw new XmlCorruptedException("last-modification-date of latest version must not be null");
+        }
+        if (updateLatestVersionDate == null) {
+            throw new XmlCorruptedException("last-modification-date of update version must not be null");
         }
 
         if (!fedoraLatestVersionDate.isEqual((updateLatestVersionDate))) {
