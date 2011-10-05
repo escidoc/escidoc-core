@@ -90,7 +90,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             throw new MissingMethodParameterException("Missing staging file.");
         }
         try {
-            if (binaryContent == null || binaryContent.getContent() == null || binaryContent.getContentLength() == 0) {
+            if (binaryContent == null || binaryContent.getContent() == null) {
                 throw new MissingMethodParameterException("Binary content must be provided.");
             }
         }
