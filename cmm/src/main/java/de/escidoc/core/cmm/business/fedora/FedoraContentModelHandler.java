@@ -440,6 +440,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         catch (final InvalidContentException e) {
             throw e;
         }
+        catch (final OptimisticLockingException e) {
+            throw e;
+        }
         catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
