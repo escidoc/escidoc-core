@@ -60,6 +60,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     <property name="validator" ref="business.ingestValidator"/>
                 </bean>
                 <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
+                    <property name="resourceType" value="CONTAINER"/>
+                    <property name="resource" ref="business.FedoraContainerHandler"/>
+                    <property name="validator" ref="business.ingestValidator"/>
+                </bean>
+                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
                     <property name="resourceType" value="CONTEXT"/>
                     <property name="resource" ref="business.FedoraContextHandler"/>
                     <property name="validator" ref="business.ingestValidator"/>
@@ -67,11 +72,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                 <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
                     <property name="resourceType" value="CONTENT_RELATION"/>
                     <property name="resource" ref="business.FedoraContentRelationHandler"/>
-                    <property name="validator" ref="business.ingestValidator"/>
-                </bean>
-                <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
-                    <property name="resourceType" value="CONTAINER"/>
-                    <property name="resource" ref="business.FedoraContainerHandler"/>
                     <property name="validator" ref="business.ingestValidator"/>
                 </bean>
                 <bean class="de.escidoc.core.om.business.fedora.ingest.ResourceMapperBean">
