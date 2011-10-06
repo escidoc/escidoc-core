@@ -29,8 +29,8 @@ import java.io.InputStream;
  */
 public class EscidocBinaryContent {
 
-    private InputStream inputStream;
-    
+    private Stream stream;
+
     private String fileName;
 
     private String mimeType;
@@ -56,10 +56,10 @@ public class EscidocBinaryContent {
      * @return the content
      */
     public InputStream getContent() throws IOException {
-        if (this.inputStream == null) {
+        if (this.stream == null) {
             return null;
         }
-        return this.inputStream;
+        return this.stream.getInputStream();
     }
 
     /**
@@ -67,7 +67,8 @@ public class EscidocBinaryContent {
      *            the content to set
      */
     public void setContent(final InputStream content) throws IOException {
-        this.inputStream = content;
+        this.stream = new Stream();
+        IOUtils.copy(content, this.stream);
     }
 
     /**
@@ -98,6 +99,13 @@ public class EscidocBinaryContent {
      */
     public void setMimeType(final String mimeType) {
         this.mimeType = mimeType != null ? mimeType.trim() : null;
+    }
+
+    /**
+     * @return the size of the stream
+     */
+    public long getContentLength() {
+        return this.stream.size();
     }
 
 }
