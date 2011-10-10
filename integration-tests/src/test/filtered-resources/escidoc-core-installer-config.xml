@@ -101,7 +101,6 @@
       <entry key="DepositorUsername" value="depositor" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.InstallPanel id="EscidocInstall" />
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
     <userInput>
       <entry key="JBossUsername" value="escidoc" />
@@ -111,6 +110,7 @@
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
     <userInput/>
   </com.izforge.izpack.panels.UserInputPanel>
+  <com.izforge.izpack.panels.InstallPanel id="EscidocInstall" />
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
