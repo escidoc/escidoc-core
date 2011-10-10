@@ -22,8 +22,5 @@
             <ref bean="cachedOutputStreamMessageBodyWriter"/>
         </jaxrs:providers>
     </jaxrs:client>
-	<http-conf:conduit name="*.http-conduit">
-		<http-conf:client ConnectionTimeout="600000" ReceiveTimeout="600000" />
-	</http-conf:conduit>
 	
 </beans>
