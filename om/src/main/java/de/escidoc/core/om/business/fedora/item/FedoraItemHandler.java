@@ -1211,12 +1211,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // notify indexer
             // getUtility().notifyIndexerAddPublication(getItem().getHref());
-            try {
-                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
-                throw new SystemException(e);
-            }
+            fireItemModified(getItem().getId(), null);
+
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
             final List<String> surrogateItemIds = this.tripleStoreUtility.getSurrogates(getItem().getId());
@@ -1265,12 +1261,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getItem().persist();
 
-            try {
-                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
-                throw new SystemException(e);
-            }
+            fireItemModified(getItem().getId(), null);
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1297,12 +1288,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
             getItem().persist();
 
-            try {
-                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
-                throw new SystemException(e);
-            }
+            fireItemModified(getItem().getId(), null);
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
@@ -1350,12 +1336,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // getUtility().notifyIndexerDeletePublication(getItem().getHref());
 
-            try {
-                fireItemModified(getItem().getId(), retrieve(getItem().getId()));
-            }
-            catch (final AuthorizationException e) {
-                throw new SystemException(e);
-            }
+            fireItemModified(getItem().getId(), null);
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());

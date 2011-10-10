@@ -1458,7 +1458,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
 
         // getUtility().notifyIndexerAddPublication(getContainer().getHref());
-        fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+        fireContainerModified(getContainer().getId(), null);
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
     }
@@ -1620,7 +1620,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // only renew the timestamp and set status with version entry
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getContainer().persist();
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
@@ -1689,7 +1689,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION);
             getContainer().persist();
 
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
     }
@@ -1765,7 +1765,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // notify indexer
             // getUtility().notifyIndexerDeletePublication(
             // getContainer().getHref());
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
 
