@@ -21,6 +21,7 @@
     <ant-nodeps.version>1.8.1</ant-nodeps.version>
     <ant-launcher.version>1.8.2</ant-launcher.version>
     <ant-contrib.version>1.0b3</ant-contrib.version>
+    <ant-xmltask.version>1.14</ant-xmltask.version>
     <jboss.version>4.2.3.GA</jboss.version>
     <admin-tool.version>1.1.1</admin-tool.version>
     <migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
@@ -319,6 +320,14 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${staging.dir}/lib</outputDirectory>
                 </artifactItem>
+                
+                <artifactItem>
+                  <groupId>com.oopsconsultancy</groupId>
+                  <artifactId>xmltask</artifactId>
+                  <version>${ant-xmltask.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${staging.dir}/lib</outputDirectory>
+                </artifactItem>
 
                 <artifactItem>
                   <groupId>org.jboss</groupId>
@@ -364,7 +373,7 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${staging.dir}/packages/srw</outputDirectory>
                 </artifactItem>
-                
+
                 <artifactItem>
                   <groupId>fedora.localservice</groupId>
                   <artifactId>saxon</artifactId>
