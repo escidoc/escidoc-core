@@ -1090,6 +1090,9 @@
 
     <fedora.admin.user>fedoraAdmin</fedora.admin.user>
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
+    
+    <jboss.auth.basic.user>escidoc</jboss.auth.basic.user>
+    <jboss.auth.basic.pass>escidoc</jboss.auth.basic.pass>
 
     <escidoc.oracle.host>escidev5</escidoc.oracle.host>
     <escidoc.oracle.port>1521</escidoc.oracle.port>
@@ -2204,8 +2207,7 @@
         </property>
       </activation>
       <properties>
-        <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
-          -Xnoagent -verbose:class</cargo.jvmdebug><!--  -verbose:class -Djaxp.debug=1 -->
+        <cargo.jvmdebug>-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Xnoagent</cargo.jvmdebug>
         <cargo.wait>true</cargo.wait>
       </properties>
     </profile>

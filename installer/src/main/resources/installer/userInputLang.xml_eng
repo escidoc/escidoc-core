@@ -84,6 +84,16 @@
   <str id="DepositorUsername" txt="Depositor Username:"/>
   <str id="DepositorPassword" txt="Depositor Password:"/>
 
+  <str id="JBossSecurityTitle" txt="JBoss Security"/>
+  <str id="JBossSecurityTitleText" txt="Please choose the username and password to use to secure the JBoss JMX-Console and the JBoss Web Console."/>
+  <str id="JBossUsername" txt="JBoss Username:"/>
+  <str id="JBossPassword" txt="JBoss Password:"/>
+  
+  <str id="JBossHttpsTitle" txt="JBoss Security - HTTPS (optional)"/>
+  <str id="JBossHttpsTitleText" txt="If you like to use HTTPS (port 8443) for the JBoss JMX-Console and the JBoss Web Console, please choose a valid Keystore file or leave all fields empty to disable HTTPS."/>
+  <str id="JBossKeystore" txt="Keystore:"/>
+  <str id="JBossKeystorePassword" txt="Keystore Password:"/>
+
   <str id="Backup" txt="Backup"/>
   <str id="BackupText" txt="If you don't have a recent backup of your database and Fedora files we strongly recommend to stop here and make a backup now. This ensures you will not loose data if the migration fails."/>
 

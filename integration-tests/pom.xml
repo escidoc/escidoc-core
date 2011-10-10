@@ -93,7 +93,7 @@
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/test/filtered-resources</directory>
+                  <directory>${basedir}/src/test/filtered-resources</directory>
                   <filtering>true</filtering>
                   <includes>
                     <include>escidoc.properties</include>

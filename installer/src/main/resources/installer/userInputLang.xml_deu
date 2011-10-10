@@ -40,9 +40,9 @@
   <str id="UserCredentialsText2" txt="Bitte geben Sie die Daten eines Datenbankbenutzers mit ausreichenden Rechten an. Diese Daten werden nirgends gespeichert und nicht weiter verwendet, nachdem die notwendigen Datenbanken und Benutzerrollen angelegt wurden."/>
   <str id="DatabaseAdminUsername" txt="Datenbank-Admin-Benutzername:"/>
   <str id="UsernameValidator" txt="Benutzername darf nicht leer sein."/>
-  <str id="DatabaseAdminPassword" txt="Datenbank-Admin-Pa&#223;wort:"/>
-  <str id="RetypePassword" txt="Pa&#223;wort wiederholen:"/>
-  <str id="PasswordValidator" txt="Pa&#223;wort darf nicht leer sein."/>
+  <str id="DatabaseAdminPassword" txt="Datenbank-Admin-Passwort:"/>
+  <str id="RetypePassword" txt="Passwort wiederholen:"/>
+  <str id="PasswordValidator" txt="Passwort darf nicht leer sein."/>
   <str id="PasswordEqualityValidator" txt="Beide Pa&#223;w&#246;rter m&#252;ssen &#252;bereinstimmen."/>
 
   <str id="EscidocDatabaseUser" txt="eSciDoc-Datenbankbenutzer"/>
@@ -51,13 +51,13 @@
   <str id="TablespaceValidator" txt="Tablespace darf nicht leer sein."/>
 
   <str id="DatabaseUsername" txt="Datenbankbenutzername:"/>
-  <str id="DatabasePassword" txt="Datenbankpa&#223;wort:"/>
+  <str id="DatabasePassword" txt="DatenbankPasswort:"/>
 
   <str id="DatabaseDefaultTablespace" txt="Default-Datenbank-Tablespace:"/>
   <str id="DatabaseTemporaryTablespace" txt="tempor&#228;rer Datenbank-Tablespace:"/>
 
   <str id="FedoraUsername" txt="Fedora-Benutzername:"/>
-  <str id="FedoraPassword" txt="Fedora-Pa&#223;wort:"/>
+  <str id="FedoraPassword" txt="Fedora-Passwort:"/>
 
   <str id="EmailAddress" txt="eMail-Adresse:"/>
   <str id="EmailValidator" txt="eMail-Adresse darf nicht leer sein."/>
@@ -72,17 +72,27 @@
   <str id="SystemAdministratorCredentials" txt="Berechtigungen f&#252;r den Systemadministrator"/>
   <str id="SystemAdministratorCredentialsText" txt="Der Systemadministrator hat Zugriff auf alle Ressourcen in der eSciDoc-Infrastruktur. Er kann andere Benutzer anlegen sowie Rechte und Rollen zuweisen."/>
   <str id="SystemAdministratorUsername" txt="Systemadministrator-Benutzername:"/>
-  <str id="SystemAdministratorPassword" txt="Systemadministrator-Pa&#223;wort:"/>
+  <str id="SystemAdministratorPassword" txt="Systemadministrator-Passwort:"/>
 
   <str id="SystemInspectorCredentials" txt="Berechtigungen f&#252;r den Systeminspector"/>
   <str id="SystemInspectorCredentialsText" txt="Der Systeminspector besitzt nur Leserechte, darf aber auf alle Ressourcen im System zugreifen. Der Systeminspector wird f&#252;r interne Dienste wie z.B. Indexierung ben&#246;tigt."/>
   <str id="SystemInspectorUsername" txt="Systeminspector-Benutzername:"/>
-  <str id="SystemInspectorPassword" txt="Systeminspector-Pa&#223;wort:"/>
+  <str id="SystemInspectorPassword" txt="Systeminspector-Passwort:"/>
 
   <str id="DepositorCredentials" txt="Berechtigungen f&#252;r den Depositor"/>
   <str id="DepositorCredentialsText" txt="Der Depositor darf neue Ressourcen innerhalb der eSciDoc-Infrastruktur erzeugen. Das ist der Benutzer für die t&#228;gliche Arbeit."/>
   <str id="DepositorUsername" txt="Depositor-Benutzername:"/>
-  <str id="DepositorPassword" txt="Depositor-Pa&#223;wort:"/>
+  <str id="DepositorPassword" txt="Depositor-Passwort:"/>
+
+  <str id="JBossSecurityTitle" txt="JBoss Sicherheit"/>
+  <str id="JBossSecurityTitleText" txt="Bitte w&#228;hlen sie ein Benutzername und Passwort, um die JBoss JMX-Konsole und die JBoss Web Konsole abzusichern."/>
+  <str id="JBossUsername" txt="JBoss-Benutzername:"/>
+  <str id="JBossPassword" txt="JBoss-Passwort:"/>
+  
+  <str id="JBossHttpsTitle" txt="JBoss Sicherheit - HTTPS (optional)"/>
+  <str id="JBossHttpsTitleText" txt="Wenn Sie HTTPS (Port 8443) f&#252;r die JBoss JMX-Konsole und die JBoss Web Konsole verwenden m&#246;chten, w&#228;hlen Sie bitte eine Keystore-Datei aus oder ignorieren Sie diese Felder, um HTTPS nicht zu verwenden."/>
+  <str id="JBossKeystore" txt="Keystore:"/>
+  <str id="JBossKeystorePassword" txt="Keystore Passwort:"/>
 
   <str id="Backup" txt="Backup"/>
   <str id="BackupText" txt="Wenn Sie noch kein aktuelles Backup Ihrer Datenbank und Ihrer Fedora-Dateien besitzen, empfehlen wir Ihnen dringend, hier anzuhalten und ein Backup zu erzeugen. Das stellt sicher, da&#223; Sie keine Daten verlieren, falls die Migration fehlschl&#228;gt."/>

@@ -2,490 +2,547 @@
 
 <userInput>
 
-    <panel order="0" id="Install or upgrade eSciDoc">
-      <createForPack name="eSciDoc" />
-      <field type="title" id="installOrUpgrade" bold="true" size="1" />
-      <field type="divider" align="top" />
-      <field type="radio" variable="InstallationType">
-        <description align="left" id="installOrUpgradeQuestion" />
-        <spec>
-          <choice id="installOrUpgradeChoiceInstall" value="install" set="true" />
-          <choice id="installOrUpgradeChoiceUpgrade" value="upgrade" />
-        </spec>
-      </field>
-      <field type="space"/>
-      <field type="divider" align="bottom" />
-    </panel>
+  <panel order="0" id="Install or upgrade eSciDoc">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="installOrUpgrade" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="radio" variable="InstallationType">
+      <description align="left" id="installOrUpgradeQuestion" />
+      <spec>
+        <choice id="installOrUpgradeChoiceInstall" value="install" set="true" />
+        <choice id="installOrUpgradeChoiceUpgrade" value="upgrade" />
+      </spec>
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="1" id="Select eSciDoc host name and port number">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="escidocHostAndPort" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Hostname of the system onto which eSciDoc will be installed -->
-        <field type="staticText" align="left" id="escidocHost" />
-        <field type="staticText" align="left" id="escidocHostAlternative" />
-        <field type="text" align="left" variable="EscidocHost">
-          <spec id="escidocHostText" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="escidocHostValidator"/>
-        </field>
-        <!-- Port number of the system onto which eSciDoc will be installed -->
-        <field type="space"/>
-        <field type="staticText" align="left" id="escidocPort" />
-        <field type="text" align="left" variable="EscidocPort">
-          <spec id="escidocPortText" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.PortValidator" id="escidocPortValidator"/>
-        </field>
-        <!-- Bind address of the system onto which eSciDoc will be installed -->
-        <!-- field type="space"/>
-        <field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, which circumvents access from remote machines." />
-        <field type="staticText" align="left" txt="If you want to access the eSciDoc Infrastructure from another machine, check this box. This is typically the case for a production environment. The eSciDoc Infrastructure will then bind to all existing network interfaces." />
-        <field type="check" variable="jboss.bind.address">
-          <spec txt="Bind to all network interfaces" true="0.0.0.0" false="localhost" set="true"/>
-        </field -->
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="1" id="Select eSciDoc host name and port number">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="escidocHostAndPort" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Hostname of the system onto which eSciDoc will be installed -->
+    <field type="staticText" align="left" id="escidocHost" />
+    <field type="staticText" align="left" id="escidocHostAlternative" />
+    <field type="text" align="left" variable="EscidocHost">
+      <spec id="escidocHostText" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="escidocHostValidator" />
+    </field>
+    <!-- Port number of the system onto which eSciDoc will be installed -->
+    <field type="space" />
+    <field type="staticText" align="left" id="escidocPort" />
+    <field type="text" align="left" variable="EscidocPort">
+      <spec id="escidocPortText" size="25" set="" />
+      <validator class="com.izforge.izpack.util.PortValidator" id="escidocPortValidator" />
+    </field>
+    <!-- Bind address of the system onto which eSciDoc will be installed -->
+    <!-- field type="space"/>
+      <field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, 
+      which circumvents access from remote machines." />
+      <field type="staticText" align="left" txt="If you want to access the eSciDoc Infrastructure from another machine, check 
+      this box. This is typically the case for a production environment. The eSciDoc Infrastructure will then bind to all existing 
+      network interfaces." />
+      <field type="check" variable="jboss.bind.address">
+      <spec txt="Bind to all network interfaces" true="0.0.0.0" false="localhost" set="true"/>
+      </field -->
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="2" id="Select RDBMS for eSciDoc and Fedora">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="RelationalDatabase" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Underlying RDBMS -->
-        <field type="radio" variable="Database">
-          <description id="RelationalDatabaseDescription" />
-          <spec>
-            <choice txt="Oracle" value="Oracle"/>
-            <choice txt="PostgreSQL" value="PostgreSQL" set="true"/>
-          </spec>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="2" id="Select RDBMS for eSciDoc and Fedora">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="RelationalDatabase" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Underlying RDBMS -->
+    <field type="radio" variable="Database">
+      <description id="RelationalDatabaseDescription" />
+      <spec>
+        <choice txt="Oracle" value="Oracle" />
+        <choice txt="PostgreSQL" value="PostgreSQL" set="true" />
+      </spec>
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="3" id="Oracle JDBC driver">
-        <field type="title" id="OracleDriver" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="space"/>
-        <field type="staticText" id="OracleDriverDescription"/>
-        <field type="file" align="left" variable="jdbc.driver.oracle">
-            <spec id="OracleDriverText" size="25" set="" fileext="jar" fileextdesc="Oracle JDBC driver jar"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="3" id="Oracle JDBC driver">
+    <field type="title" id="OracleDriver" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="space" />
+    <field type="staticText" id="OracleDriverDescription" />
+    <field type="file" align="left" variable="jdbc.driver.oracle">
+      <spec id="OracleDriverText" size="25" set="" fileext="jar" fileextdesc="Oracle JDBC driver jar" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="4" id="Postgres connection">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="PostgresDatabase" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="space"/>
-        <field type="text" align="left" variable="DatabaseHost">
-          <spec id="DatabaseHost" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator"/>
-        </field>
-        <field type="text" align="left" variable="DatabasePortPostgres">
-          <spec id="DatabasePort" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Database Driver Class -->
-        <field type="text" align="left" variable="DatabaseDriverClassPostgres">
-          <spec id="DatabaseDriver" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Default Database Name -->
-        <field type="text" align="left" variable="RootDatabaseName">
-          <description id="PostgresRootDatabase" />
-          <spec id="PostgresRootDatabaseText" size="25" set="${RootDatabaseNamePostgres}"/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseNameValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="4" id="Postgres connection">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="PostgresDatabase" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="space" />
+    <field type="text" align="left" variable="DatabaseHost">
+      <spec id="DatabaseHost" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator" />
+    </field>
+    <field type="text" align="left" variable="DatabasePortPostgres">
+      <spec id="DatabasePort" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator" />
+    </field>
+    <field type="space" />
+    <!-- Database Driver Class -->
+    <field type="text" align="left" variable="DatabaseDriverClassPostgres">
+      <spec id="DatabaseDriver" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default Database Name -->
+    <field type="text" align="left" variable="RootDatabaseName">
+      <description id="PostgresRootDatabase" />
+      <spec id="PostgresRootDatabaseText" size="25" set="${RootDatabaseNamePostgres}" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseNameValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="5" id="Oracle connection">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="OracleDatabase" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="space"/>
-        <field type="text" align="left" variable="DatabaseHost">
-          <spec id="DatabaseHost" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator"/>
-        </field>
-        <field type="text" align="left" variable="DatabasePortOracle">
-          <spec id="DatabasePort" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Database Driver Class -->
-        <field type="text" align="left" variable="DatabaseDriverClassOracle">
-          <spec id="DatabaseDriver" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Default Database Name -->
-        <field type="text" align="left" variable="RootDatabaseName">
-          <description id="OracleRootDatabase"/>
-          <spec id="OracleRootDatabaseText" size="25" set="${RootDatabaseNameOracle}"/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator"  id="DatabaseNameValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="5" id="Oracle connection">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="OracleDatabase" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="space" />
+    <field type="text" align="left" variable="DatabaseHost">
+      <spec id="DatabaseHost" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseHostValidator" />
+    </field>
+    <field type="text" align="left" variable="DatabasePortOracle">
+      <spec id="DatabasePort" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabasePortValidator" />
+    </field>
+    <field type="space" />
+    <!-- Database Driver Class -->
+    <field type="text" align="left" variable="DatabaseDriverClassOracle">
+      <spec id="DatabaseDriver" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseDriverValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default Database Name -->
+    <field type="text" align="left" variable="RootDatabaseName">
+      <description id="OracleRootDatabase" />
+      <spec id="OracleRootDatabaseText" size="25" set="${RootDatabaseNameOracle}" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="DatabaseNameValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="6" id="Postgres admin user">
-        <createForPack name="Database Creation" />
-        <field type="title" id="UserCredentials" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Username -->
-        <field type="staticText" align="left" id="UserCredentialsText" />
-        <field type="space"/>
-        <field type="staticText" align="left" id="UserCredentialsText2" />
-        <field type="space"/>
-        <field type="text" align="left" variable="DatabaseAdminUsernamePostgres">
-          <spec id="DatabaseAdminUsername" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DatabaseAdminPassword">
-          <spec>
-            <pwd id="DatabaseAdminPassword" size="25" set="" />
-            <pwd id="RetypePassword" size="25" set="" />
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="6" id="Postgres admin user">
+    <createForPack name="Database Creation" />
+    <field type="title" id="UserCredentials" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Username -->
+    <field type="staticText" align="left" id="UserCredentialsText" />
+    <field type="space" />
+    <field type="staticText" align="left" id="UserCredentialsText2" />
+    <field type="space" />
+    <field type="text" align="left" variable="DatabaseAdminUsernamePostgres">
+      <spec id="DatabaseAdminUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="DatabaseAdminPassword">
+      <spec>
+        <pwd id="DatabaseAdminPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="7" id="Oracle admin user">
-        <createForPack name="Database Creation" />
-        <field type="title" id="UserCredentials" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Username -->
-        <field type="staticText" align="left" id="UserCredentialsText" />
-        <field type="space"/>
-        <field type="staticText" align="left" id="UserCredentialsText2" />
-        <field type="space"/>
-        <field type="text" align="left" variable="DatabaseAdminUsernameOracle">
-          <spec id="DatabaseAdminUsername" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DatabaseAdminPassword">
-          <spec>
-            <pwd id="DatabaseAdminPassword" size="25" set="" />
-            <pwd id="RetypePassword" size="25" set="" />
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="7" id="Oracle admin user">
+    <createForPack name="Database Creation" />
+    <field type="title" id="UserCredentials" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Username -->
+    <field type="staticText" align="left" id="UserCredentialsText" />
+    <field type="space" />
+    <field type="staticText" align="left" id="UserCredentialsText2" />
+    <field type="space" />
+    <field type="text" align="left" variable="DatabaseAdminUsernameOracle">
+      <spec id="DatabaseAdminUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="DatabaseAdminPassword">
+      <spec>
+        <pwd id="DatabaseAdminPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="8" id="eSciDoc database user for Postgres">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="EscidocDatabaseUser" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="EscidocDatabaseUserText" />
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="DatabaseUsername">
-          <spec id="DatabaseUsername" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DatabasePassword">
-          <spec>
-            <pwd id="DatabasePassword" size="25" set=""/>
-            <pwd id="RetypePassword" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="8" id="eSciDoc database user for Postgres">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="EscidocDatabaseUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="EscidocDatabaseUserText" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="DatabaseUsername">
+      <spec id="DatabaseUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="DatabasePassword">
+      <spec>
+        <pwd id="DatabasePassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="9" id="eSciDoc database user for Oracle">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="EscidocDatabaseUser" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="EscidocDatabaseUserText" />
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="DatabaseUsername">
-          <spec id="DatabaseUsername" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DatabasePassword">
-          <spec>
-            <pwd id="DatabasePassword" size="25" set=""/>
-            <pwd id="RetypePassword" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Default tablespace -->
-        <field type="text" align="left" variable="DatabaseDefaultTablespace">
-          <spec id="DatabaseDefaultTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Temporary tablespace -->
-        <field type="text" align="left" variable="DatabaseTempTablespace">
-          <spec id="DatabaseTemporaryTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="9" id="eSciDoc database user for Oracle">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="EscidocDatabaseUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="EscidocDatabaseUserText" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="DatabaseUsername">
+      <spec id="DatabaseUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="DatabasePassword">
+      <spec>
+        <pwd id="DatabasePassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default tablespace -->
+    <field type="text" align="left" variable="DatabaseDefaultTablespace">
+      <spec id="DatabaseDefaultTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <!-- Temporary tablespace -->
+    <field type="text" align="left" variable="DatabaseTempTablespace">
+      <spec id="DatabaseTemporaryTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="10" id="Fedora admin/database user for Postgres">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="FedoraAdminUser" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="FedoraAdminUserText"/>
-        <field type="space"/>
-        <field type="staticText" align="left" id="FedoraAdminUserText2"/>
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="FedoraUsername">
-          <spec id="FedoraUsername" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="FedoraPassword">
-          <spec>
-            <pwd id="FedoraPassword" size="25" set=""/>
-            <pwd id="RetypePassword" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- eMail Address -->
-        <field type="text" align="left" variable="FedoraAdminMailAddress">
-          <spec id="EmailAddress" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="EmailValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="10" id="Fedora admin/database user for Postgres">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="FedoraAdminUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="FedoraAdminUserText" />
+    <field type="space" />
+    <field type="staticText" align="left" id="FedoraAdminUserText2" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="FedoraUsername">
+      <spec id="FedoraUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="FedoraPassword">
+      <spec>
+        <pwd id="FedoraPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <!-- eMail Address -->
+    <field type="text" align="left" variable="FedoraAdminMailAddress">
+      <spec id="EmailAddress" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="EmailValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="11" id="Fedora admin/database user for Oracle">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="FedoraAdminUser" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="FedoraAdminUserText"/>
-        <field type="space"/>
-        <field type="staticText" align="left" id="FedoraAdminUserText2"/>
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="FedoraUsername">
-          <spec id="FedoraUsername" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="FedoraPassword">
-          <spec>
-            <pwd id="FedoraPassword" size="25" set=""/>
-            <pwd id="RetypePassword" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Default tablespace -->
-        <field type="text" align="left" variable="FedoraDefaultTablespace">
-          <spec id="DatabaseDefaultTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Temporary tablespace -->
-        <field type="text" align="left" variable="FedoraTempTablespace">
-          <spec id="DatabaseTemporaryTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- eMail Address -->
-        <field type="text" align="left" variable="FedoraAdminMailAddress">
-          <spec id="EmailAddress" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="EmailValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="11" id="Fedora admin/database user for Oracle">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="FedoraAdminUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="FedoraAdminUserText" />
+    <field type="space" />
+    <field type="staticText" align="left" id="FedoraAdminUserText2" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="FedoraUsername">
+      <spec id="FedoraUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="FedoraPassword">
+      <spec>
+        <pwd id="FedoraPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default tablespace -->
+    <field type="text" align="left" variable="FedoraDefaultTablespace">
+      <spec id="DatabaseDefaultTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <!-- Temporary tablespace -->
+    <field type="text" align="left" variable="FedoraTempTablespace">
+      <spec id="DatabaseTemporaryTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <!-- eMail Address -->
+    <field type="text" align="left" variable="FedoraAdminMailAddress">
+      <spec id="EmailAddress" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="EmailValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="12" id="riTriples database user">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="TriplestoreDatabaseUser" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="TriplestoreDatabaseUserText"/>
-        <field type="space"/>
-        <!-- Username -->
-        <field type="text" align="left" variable="TriplestoreUsernameOracle">
-          <spec id="DatabaseUsername" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="TriplestorePasswordOracle">
-          <spec>
-            <pwd id="DatabasePassword" size="25" set=""/>
-            <pwd id="RetypePassword" size="25" set=""/>
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Default tablespace -->
-        <field type="text" align="left" variable="TriplestoreDefaultTablespace">
-          <spec id="DatabaseDefaultTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Temporary tablespace -->
-        <field type="text" align="left" variable="TriplestoreTempTablespace">
-          <spec id="DatabaseTemporaryTablespace" size="25" set=""/>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="12" id="riTriples database user">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="TriplestoreDatabaseUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="TriplestoreDatabaseUserText" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="TriplestoreUsernameOracle">
+      <spec id="DatabaseUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="TriplestorePasswordOracle">
+      <spec>
+        <pwd id="DatabasePassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default tablespace -->
+    <field type="text" align="left" variable="TriplestoreDefaultTablespace">
+      <spec id="DatabaseDefaultTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <!-- Temporary tablespace -->
+    <field type="text" align="left" variable="TriplestoreTempTablespace">
+      <spec id="DatabaseTemporaryTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-<!--
+  <!--
     <panel order="13" id="Select authentication method">
-        <createForPack name="eSciDoc" />
-        <field type="title" txt="Authentication Method" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" txt="eSciDoc supports three different authentication frameworks. If you have doubts which method is the right one for you, chosse 'Form-based'. Please read the installation manual to learn more about the requirements for LDAP and Shibboleth. Both are not yet fully supported by the installer and require further manual configuration after the installer succeeds." />
-        <field type="space"/>
-        <field type="combo" variable="AuthenticationMethod">
-          <spec txt="Authentication Method:" id="authentication">
-            <choice txt="Form-based" value="form-based" set="true"/>
-            <choice txt="LDAP" value="ldap" set="true"/>
-            <choice txt="Shibboleth" value="shibboleth" set="true"/>
-          </spec>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
+    <createForPack name="eSciDoc" />
+    <field type="title" txt="Authentication Method" bold="true" size="1" />
+    <field type="divider" align="top"/>
+    <field type="staticText" align="left" txt="eSciDoc supports three different authentication frameworks. If you have doubts 
+    which method is the right one for you, chosse 'Form-based'. Please read the installation manual to learn more about the requirements 
+    for LDAP and Shibboleth. Both are not yet fully supported by the installer and require further manual configuration after 
+    the installer succeeds." />
+    <field type="space"/>
+    <field type="combo" variable="AuthenticationMethod">
+    <spec txt="Authentication Method:" id="authentication">
+    <choice txt="Form-based" value="form-based" set="true"/>
+    <choice txt="LDAP" value="ldap" set="true"/>
+    <choice txt="Shibboleth" value="shibboleth" set="true"/>
+    </spec>
+    </field>
+    <field type="space"/>
+    <field type="divider" align="bottom"/>
     </panel>
--->
+  -->
 
-    <panel order="14" id="System administrator user">
-        <createForPack name="Roles and Users Creation" />
-        <field type="title" id="SystemAdministratorCredentials" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Username -->
-        <field type="staticText" align="left" id="SystemAdministratorCredentialsText"/>
-        <field type="space"/>
-        <field type="text" align="left" variable="AdminUsername">
-          <spec id="SystemAdministratorUsername" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="AdminPassword">
-          <spec>
-            <pwd id="SystemAdministratorPassword" size="25" set="" />
-            <pwd id="RetypePassword" size="25" set="" />
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="14" id="System administrator user">
+    <createForPack name="Roles and Users Creation" />
+    <field type="title" id="SystemAdministratorCredentials" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Username -->
+    <field type="staticText" align="left" id="SystemAdministratorCredentialsText" />
+    <field type="space" />
+    <field type="text" align="left" variable="AdminUsername">
+      <spec id="SystemAdministratorUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="AdminPassword">
+      <spec>
+        <pwd id="SystemAdministratorPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="15" id="System inspector user">
-        <createForPack name="Install Scripts" />
-        <field type="title" id="SystemInspectorCredentials" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Username -->
-        <field type="staticText" align="left" id="SystemInspectorCredentialsText" />
-        <field type="space"/>
-        <field type="text" align="left" variable="InspectorUsername">
-          <spec id="SystemInspectorUsername" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="InspectorPassword">
-          <spec>
-            <pwd id="SystemInspectorPassword" size="25" set="" />
-            <pwd id="RetypePassword" size="25" set="" />
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="15" id="System inspector user">
+    <createForPack name="Install Scripts" />
+    <field type="title" id="SystemInspectorCredentials" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Username -->
+    <field type="staticText" align="left" id="SystemInspectorCredentialsText" />
+    <field type="space" />
+    <field type="text" align="left" variable="InspectorUsername">
+      <spec id="SystemInspectorUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="InspectorPassword">
+      <spec>
+        <pwd id="SystemInspectorPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="16" id="Depositor user">
-        <createForPack name="Roles and Users Creation" />
-        <field type="title" id="DepositorCredentials" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <!-- Username -->
-        <field type="staticText" align="left" id="DepositorCredentialsText"/>
-        <field type="space"/>
-        <field type="text" align="left" variable="DepositorUsername">
-          <spec id="DepositorUsername" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator"/>
-        </field>
-        <field type="space"/>
-        <!-- Password -->
-        <field type="password" align="left" variable="DepositorPassword">
-          <spec>
-            <pwd id="DepositorPassword" size="25" set="" />
-            <pwd id="RetypePassword" size="25" set="" />
-          </spec>
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator"/>
-          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="16" id="Depositor user">
+    <createForPack name="Roles and Users Creation" />
+    <field type="title" id="DepositorCredentials" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- Username -->
+    <field type="staticText" align="left" id="DepositorCredentialsText" />
+    <field type="space" />
+    <field type="text" align="left" variable="DepositorUsername">
+      <spec id="DepositorUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="DepositorPassword">
+      <spec>
+        <pwd id="DepositorPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
+  
+  <panel order="17" id="JBoss Security">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="JBossSecurityTitle" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <!-- username -->
+    <field type="staticText" align="left" id="JBossSecurityTitleText" />
+    <field type="space" />
+    <field type="text" align="left" variable="JBossUsername">
+      <spec id="JBossUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- password -->
+    <field type="password" align="left" variable="JBossPassword">
+      <spec>
+        <pwd id="JBossPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
+  
+  <panel order="18" id="JBoss HTTPS">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="JBossHttpsTitle" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="JBossHttpsTitleText" />
+    <!-- keystore file -->
+    <field type="file" align="left" variable="JBossKeystore">
+      <spec id="JBossKeystore" size="25" allowEmptyValue="true"/>
+    </field>
+    <field type="divider" align="top" />
+    <field type="password" align="left" variable="JBossKeystorePassword">
+      <spec>
+        <pwd id="JBossKeystorePassword" size="25" set=""/>
+        <pwd id="RetypePassword" size="25" set=""/>
+      </spec>
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordValidator"/>
+<!--      <validator class="com.izforge.izpack.util.PasswordKeystoreValidator" -->
+<!--        txt="Could not validate keystore with password and alias provided.">-->
+<!--        <param name="keystoreFile" value="${JBossKeystore}"/>-->
+<!--        <param name="keystorePassword" value="${JBossKeystorePassword}"/>        -->
+<!--      </validator>-->
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="17" id="Backup">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="Backup" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="BackupText"/>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="19" id="Backup">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="Backup" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="BackupText" />
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
-    <panel order="18" id="Migration">
-        <createForPack name="eSciDoc" />
-        <field type="title" id="Migration" bold="true" size="1" />
-        <field type="divider" align="top"/>
-        <field type="staticText" align="left" id="MigrationText"/>
-        <field type="staticText" align="left" id="MigrationText2"/>
-        <field type="space"/>
-        <field type="check" align="left" variable="RunDatabaseMigration">
-          <spec id="StartMigration" size="25" true="true" false="false" set="false"/>
-        </field>
-        <field type="space"/>
-        <field type="staticText" align="left" id="CreatorText"/>
-        <field type="space"/>
-        <field type="text" align="left" variable="CreatorUserid">
-          <spec id="CreatorId" size="25" set="" />
-          <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UseridValidator"/>
-        </field>
-        <field type="space"/>
-        <field type="divider" align="bottom"/>
-    </panel>
+  <panel order="20" id="Migration">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="Migration" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="MigrationText" />
+    <field type="staticText" align="left" id="MigrationText2" />
+    <field type="space" />
+    <field type="check" align="left" variable="RunDatabaseMigration">
+      <spec id="StartMigration" size="25" true="true" false="false" set="false" />
+    </field>
+    <field type="space" />
+    <field type="staticText" align="left" id="CreatorText" />
+    <field type="space" />
+    <field type="text" align="left" variable="CreatorUserid">
+      <spec id="CreatorId" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UseridValidator" />
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
 
 </userInput>

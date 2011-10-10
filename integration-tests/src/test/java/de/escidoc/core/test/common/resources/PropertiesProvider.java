@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.test.common.resources;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +35,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 /**
  * @author Michael Schneider
@@ -73,6 +73,10 @@ public class PropertiesProvider {
 
     public static final String PERFORMANCE_DB_PASSWORD = "escidoc.performance.db.password";
 
+    public static final String JBOSS_AUTH_BASIC_USER = "jboss.auth.basic.user";
+
+    public static final String JBOSS_AUTH_BASIC_PASS = "jboss.auth.basic.pass";
+
     private Properties properties = null;
 
     private final List<String> files;
@@ -95,22 +99,24 @@ public class PropertiesProvider {
 
     /**
      * Returns and perhaps initializes Object.
-     *
+     * 
      * @return EscidocConfiguration self
-     * @throws IOException Thrown if properties loading fails.
+     * @throws IOException
+     *             Thrown if properties loading fails.
      */
     public static PropertiesProvider getInstance() {
         return instance;
     }
 
     /**
-     * @throws Exception Thrown if init of properties failed.
+     * @throws Exception
+     *             Thrown if init of properties failed.
      */
     private PropertiesProvider() throws Exception {
 
         this.files = new LinkedList<String>();
         addFile("escidoc.properties");
-        String currentUser = System.getProperties().getProperty("user.name");
+        final String currentUser = System.getProperties().getProperty("user.name");
         if (currentUser != null) {
             addFile(currentUser + ".properties");
         }
@@ -120,8 +126,9 @@ public class PropertiesProvider {
 
     /**
      * Returns the property with the given name or null if property was not found.
-     *
-     * @param name The name of the Property.
+     * 
+     * @param name
+     *            The name of the Property.
      * @return Value of the given Property as String.
      */
     public String getProperty(final String name) {
@@ -131,9 +138,11 @@ public class PropertiesProvider {
 
     /**
      * Returns the property with the given name or the second parameter as default value if property was not found.
-     *
-     * @param name         The name of the Property.
-     * @param defaultValue The default vaule if property isn't given.
+     * 
+     * @param name
+     *            The name of the Property.
+     * @param defaultValue
+     *            The default vaule if property isn't given.
      * @return Value of the given Property as String.
      */
     public String getProperty(final String name, final String defaultValue) {
@@ -142,16 +151,17 @@ public class PropertiesProvider {
     }
 
     /**
-     * @throws Exception Thrown if init of properties failed.
+     * @throws Exception
+     *             Thrown if init of properties failed.
      */
     private synchronized void init() throws Exception {
 
-        Properties result = new Properties();
-        Iterator<String> fileIter = files.iterator();
+        final Properties result = new Properties();
+        final Iterator<String> fileIter = files.iterator();
         while (fileIter.hasNext()) {
-            String next = fileIter.next();
+            final String next = fileIter.next();
             try {
-                Properties prop = loadProperties(next);
+                final Properties prop = loadProperties(next);
                 result.putAll(prop);
             }
             catch (final Exception e) {
@@ -168,10 +178,12 @@ public class PropertiesProvider {
 
     /**
      * Get an InputStream for the given file.
-     *
-     * @param filename The name of the file.
+     * 
+     * @param filename
+     *            The name of the file.
      * @return The InputStream or null if the file could not be located.
-     * @throws IOException If access to the specified file fails.
+     * @throws IOException
+     *             If access to the specified file fails.
      */
     private synchronized InputStream getInputStream(final String filename) throws IOException {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[] {});
@@ -190,22 +202,25 @@ public class PropertiesProvider {
      * escidoc-core.properties.default. Afterwards tries to load specific properties from the file escidoc.properties
      * and merges them with the default properties. If any key is included in default and specific properties, the value
      * of the specific property will overwrite the default property.
-     *
-     * @param file The name of the properties file.
+     * 
+     * @param file
+     *            The name of the properties file.
      * @return The properties
-     * @throws Exception If the loading of the default properties (file escidoc-core.properties.default) fails.
+     * @throws Exception
+     *             If the loading of the default properties (file escidoc-core.properties.default) fails.
      */
     private synchronized Properties loadProperties(final String file) throws Exception {
-        Properties result = new Properties();
-        InputStream propertiesStream = getInputStream(file);
+        final Properties result = new Properties();
+        final InputStream propertiesStream = getInputStream(file);
         result.load(propertiesStream);
         return result;
     }
 
     /**
      * Add a properties file to the list of properties.
-     *
-     * @param name Name of properties file.
+     * 
+     * @param name
+     *            Name of properties file.
      */
     private synchronized void addFile(final String name) {
 

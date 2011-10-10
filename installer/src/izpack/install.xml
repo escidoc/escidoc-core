@@ -378,10 +378,12 @@
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
+        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="installEscidoc" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="upgradeEscidoc+runMigration" />
-        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc+runMigration" />
+        <panel classname="UserInputPanel" id="UserInputPanel.19" condition="upgradeEscidoc+runMigration" />
+        <panel classname="UserInputPanel" id="UserInputPanel.20" condition="upgradeEscidoc+runMigration" />
         <panel classname="ProcessPanel" condition="upgradeEscidoc+runMigration" />
         <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
         <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc+runMigration" />
@@ -425,6 +427,11 @@
             <parsable targetfile="$INSTALL_PATH/install.tmp/shutdown.bat" />
             <file src="config/jboss/shutdown.sh" targetdir="$INSTALL_PATH/install.tmp" />
             <parsable targetfile="$INSTALL_PATH/install.tmp/shutdown.sh" />
+            <!-- copy security settings -->
+            <fileset dir="config/jboss/security/" targetdir="$INSTALL_PATH/install.tmp/jboss-security/">
+              <include name="**/*.xml"/>
+              <include name="**/*.properties"/>
+            </fileset>
         </pack>
         
         <pack name="Fedora Repository" id="fedora.package" parent="escidoc.package" required="yes">
@@ -555,6 +562,7 @@
     <jar src="lib/ant-nodeps-${ant-nodeps.version}.jar" stage="install" />
     <jar src="lib/ant-launcher-${ant-launcher.version}.jar" stage="install" />
     <jar src="lib/ant-contrib-${ant-contrib.version}.jar" stage="install" />
+    <jar src="lib/xmltask-${ant-xmltask.version}.jar" stage="install" />
     <jar src="lib/postgresql-${escidoc.postgres.jdbc.version}.jar" stage="install" />
     <jar src="escidoc-validators.jar" stage="install" />
 
