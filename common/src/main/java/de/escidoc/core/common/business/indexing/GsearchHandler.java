@@ -553,14 +553,14 @@ public class GsearchHandler {
                 // create empty index directory and then recall
                 // gsearch
                 if (Constants.NO_INDEX_DIR_PATTERN.matcher(response).matches()) {
-                    if (StringUtils.isEmpty(myIndex)) {
+                    if (myIndex.isEmpty()) {
                         final Matcher noIndexDirIndexNameMatcher =
                             Constants.NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher(response);
                         if (!noIndexDirIndexNameMatcher.matches()) {
                             throw new ApplicationServerSystemException(response);
                         }
                         myIndex = noIndexDirIndexNameMatcher.group(1);
-                        if (StringUtils.isEmpty(myIndex)) {
+                        if (myIndex.isEmpty()) {
                             throw new ApplicationServerSystemException(response);
                         }
                     }
