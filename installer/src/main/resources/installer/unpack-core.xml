@@ -190,7 +190,7 @@
 	      <param name="target" value="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/jboss-web.xml" />
 	    </antcall>
 	    
-	    <available property="enableJBossHTTPS" file="${JBossKeystore}"/>
+	    <available property="enableJBossHTTPS" file="${JBossKeystore}" type="file"/>
 	    <antcall target="jboss-security-https"/>
 	  </target>
 	  
