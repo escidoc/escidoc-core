@@ -642,8 +642,8 @@ public final class HttpHelper {
         final String responseBody = ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
         assertEquals("Unexpected status of LoginServlet response, ", HttpServletResponse.SC_OK, status);
         assertNotNull("No response body received, ", responseBody);
-        assertTrue("Response does not contain the expected login" + " page. ",
-            responseBody.indexOf("<input type=\"password\"") != -1);
+        assertTrue("Response does not contain the expected login" + " page. ", responseBody
+            .indexOf("<input type=\"password\"") != -1);
 
         // Second step: Send filled login form
         final HttpPost postMethod = new HttpPost(("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
