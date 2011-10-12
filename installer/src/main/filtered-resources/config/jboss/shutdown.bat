@@ -16,7 +16,7 @@ if "%OS%" == "Windows_NT" set DIRNAME=%~dp0%
 set PROGNAME=run.bat
 if "%OS%" == "Windows_NT" set PROGNAME=%~nx0%
 
-set JAVA_HOME=${JDKPath}
+set JAVA_HOME={JDK_PATH}
 
 rem Read all command line arguments
 

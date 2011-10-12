@@ -77,7 +77,12 @@
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.JDKPathPanel id="CommonJDKPath" />
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
+    <userInput>
+      <entry key="JdkUseJavaHome" value="false" />
+      <entry key="JdkHome" value="${env.JAVA_HOME}" />
+    </userInput>
+  </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.TargetPanel id="EscidocTarget">
     <installpath>${project.build.directory}${file.separator}escidoc</installpath>
   </com.izforge.izpack.panels.TargetPanel>
@@ -94,38 +99,38 @@
     <pack index="9" name="Database Initialization" selected="true" />
     <pack index="10" name="Roles and Users Creation" selected="true" />
   </com.izforge.izpack.panels.TreePacksPanel>
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
     <userInput>
       <entry key="AdminPassword" value="eSciDoc" />
       <entry key="AdminUsername" value="sysadmin" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
     <userInput>
       <entry key="InspectorPassword" value="eSciDoc" />
       <entry key="InspectorUsername" value="inspector" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
     <userInput>
       <entry key="DepositorPassword" value="eSciDoc" />
       <entry key="DepositorUsername" value="depositor" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.InstallPanel id="EscidocInstall" />
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
     <userInput>
       <entry key="JBossUsername" value="escidoc" />
       <entry key="JBossPassword" value="escidoc" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
-    <userInput />
-  </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.20">
+    <userInput />
+  </com.izforge.izpack.panels.UserInputPanel>
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.21">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)" />

@@ -403,7 +403,26 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="14" id="System administrator user">
+  <panel order="14" id="JDK Setting">
+    <createForPack name="eSciDoc" />
+    <field type="title" txt="JDK Selection" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" txt="eSciDoc requires JDK 1.6.x. You can choose whether to use the JAVA_HOME environment variable or to select a specific JDK, which will be used to start the JBoss."/>
+    <field type="staticText" align="left" txt="JAVA_HOME is currently set to: ${ENV[JAVA_HOME]}"/>
+    <field type="space" />
+    <field type="radio" variable="JdkUseJavaHome">
+      <spec>
+        <choice txt="Use JAVA_HOME environment variable" value="true" set="true"/>
+        <choice txt="Use the selected JDK:" value="false"/>
+      </spec>
+    </field>
+    <field type="dir" align="left" variable="JdkHome">
+      <spec txt="" size="40" set="${ENV[JAVA_HOME]}" allowEmptyValue="true"/>
+    </field>
+    <field type="divider" align="bottom" />
+  </panel>
+
+  <panel order="15" id="System administrator user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" txt="User Credentials for System Administrator User" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -436,7 +455,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="15" id="System inspector user">
+  <panel order="16" id="System inspector user">
     <createForPack name="Install Scripts" />
     <field type="title" txt="User Credentials for System Inspector User" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -468,7 +487,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="16" id="Depositor user">
+  <panel order="17" id="Depositor user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" txt="User Credentials for Depositor User" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -494,7 +513,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="17" id="JBoss Security">
+  <panel order="18" id="JBoss Security">
     <createForPack name="eSciDoc" />
     <field type="title" txt="JBoss Security" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -520,7 +539,7 @@
     <field type="divider" align="bottom" />
   </panel>
   
-  <panel order="18" id="JBoss HTTPS">
+  <panel order="19" id="JBoss HTTPS">
     <createForPack name="eSciDoc" />
     <field type="title" txt="JBoss Security - HTTPS (optional)" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -546,7 +565,7 @@
     </field>
   </panel>
 
-  <panel order="19" id="Database backup">
+  <panel order="20" id="Database backup">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Database Backup" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -556,7 +575,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="20" id="Database migration">
+  <panel order="21" id="Database migration">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Database Migration" bold="true" size="1" />
     <field type="divider" align="top" />
