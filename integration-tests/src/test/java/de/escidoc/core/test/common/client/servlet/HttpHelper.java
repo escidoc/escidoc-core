@@ -157,8 +157,10 @@ public final class HttpHelper {
              * HTTP authentication added to the client since the introduction of HTTP authentication for the JBoss JMX-
              * and Web-Console.
              */
-            final String jBossUser = PropertiesProvider.getInstance().getProperty(PropertiesProvider.JBOSS_AUTH_BASIC_USER);
-            final String jBossPass = PropertiesProvider.getInstance().getProperty(PropertiesProvider.JBOSS_AUTH_BASIC_PASS);
+            final String jBossUser =
+                PropertiesProvider.getInstance().getProperty(PropertiesProvider.JBOSS_AUTH_BASIC_USER);
+            final String jBossPass =
+                PropertiesProvider.getInstance().getProperty(PropertiesProvider.JBOSS_AUTH_BASIC_PASS);
             if (jBossUser != null && jBossPass != null) {
                 final CredentialsProvider credsProvider = new BasicCredentialsProvider();
                 final Credentials creds = new UsernamePasswordCredentials(jBossUser, jBossPass);
