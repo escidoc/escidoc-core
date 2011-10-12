@@ -109,6 +109,9 @@
         </if>
       </sequential>
     </for>
+  	
+  	<!-- cleanup -->
+  	<delete dir="${install.dir}/install.tmp/lucene"/>
 
     <!-- change JBoss port numbers -->
     <replace file="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml" token="8080" value="${EscidocPort}"/>
@@ -120,25 +123,57 @@
       <param name="target" value="${install.dir}/jboss/server/default/conf/escidoc-core.custom.properties" />
     </antcall>
     <antcall target="jboss-oracle" />
-    <antcall target="move-file-with-save">
+    <antcall target="move-jboss-script">
       <param name="source" value="${install.dir}/install.tmp/run.conf" />
       <param name="target" value="${install.dir}/jboss/bin/run.conf" />
     </antcall>
-    <antcall target="move-file-with-save">
+    <antcall target="move-jboss-script">
       <param name="source" value="${install.dir}/install.tmp/run.bat" />
       <param name="target" value="${install.dir}/jboss/bin/run.bat" />
     </antcall>
-    <antcall target="move-file-with-save">
+    <antcall target="move-jboss-script">
       <param name="source" value="${install.dir}/install.tmp/shutdown.bat" />
       <param name="target" value="${install.dir}/jboss/bin/shutdown.bat" />
     </antcall>
-    <antcall target="move-file-with-save">
+    <antcall target="move-jboss-script">
       <param name="source" value="${install.dir}/install.tmp/shutdown.sh" />
       <param name="target" value="${install.dir}/jboss/bin/shutdown.sh" />
     </antcall>
     <delete file="${install.dir}/install.tmp/${jboss.patch.zip}"/>
     <delete dir="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}"/>
     <chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh"/>
+  </target>
+	
+	<target name="move-jboss-script" description="moves some jboss scripts to the bin directory of jboss manipulating them by setting the JDK to use">
+    <antcall target="move-file-with-save">
+      <param name="source" value="${source}" />
+      <param name="target" value="${target}" />
+    </antcall>
+    <condition property="useJDK">
+      <and>
+        <isfalse value="${JdkUseJavaHome}"/>
+        <available file="${JdkHome}" type="dir"/>
+      </and>
+    </condition>
+    <antcall target="use-java-home">
+      <param name="target" value="${target}" />
+    </antcall>
+    <antcall target="use-user-jdk">
+      <param name="target" value="${target}" />
+    </antcall>
+  </target>
+  
+  <target name="use-java-home" unless="useJDK" description="removes the setting of a JDK in the specified script">
+    <replace file="${target}" token="set JAVA_HOME={JDK_PATH}" value=""/>
+    <replace file="${target}" token='set JAVA_HOME="{JDK_PATH}"' value=""/>
+    <replace file="${target}" token="SET JAVA_HOME={JDK_PATH}" value=""/>
+    <replace file="${target}" token='SET JAVA_HOME="{JDK_PATH}"' value=""/>
+    <replace file="${target}" token='JAVA_HOME="{JDK_PATH}"' value=""/>
+    <replace file="${target}" token="JAVA_HOME={JDK_PATH}" value=""/>
+  </target>
+  
+  <target name="use-user-jdk" if="useJDK" description="sets the specified JDK as the JAVA_HOME to use in the specified script">
+    <replace file="${target}" token="{JDK_PATH}" value="${JdkHome}"/>
   </target>
 
 	<!-- JBoss Security -->
@@ -192,6 +227,9 @@
 	    
 	    <available property="enableJBossHTTPS" file="${JBossKeystore}" type="file"/>
 	    <antcall target="jboss-security-https"/>
+	  	
+	  	<!-- cleanup -->
+	  	<delete dir="${install.dir}/install.tmp/jboss-security"/>
 	  </target>
 	  
 	  <target name="jboss-security-https" depends="init" if="enableJBossHTTPS" description="Enables HTTPs for the JBoss JMX and Web Console">
@@ -287,6 +325,9 @@
       <param name="source" value="${install.dir}/services/srw_full-${SrwVersion}.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/srw.war" />
     </antcall>
+  	
+  	<!-- cleanup -->
+  	<delete dir="${install.dir}/install.tmp/srw"/>
   </target>
 
   <target name="saxon" depends="init" description="Saxon Webservice">
@@ -297,6 +338,9 @@
       <param name="source" value="${install.dir}/services/saxon-${SaxonVersion}.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/saxon.war" />
     </antcall>
+  	
+  	<!-- cleanup -->
+  	<delete dir="${install.dir}/install.tmp/saxon"/>
   </target>
 
   <target name="escidoc-core" depends="init" description="Installs eSciDoc Core Services">

@@ -371,8 +371,11 @@
         <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.12" condition="databaseIsOracle" />
-        <panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" />
-        <panel classname="JDKPathPanel" id="CommonJDKPath" />
+        <!-- panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" /-->
+        <panel classname="UserInputPanel" id="UserInputPanel.13">
+          <validator classname="JDKPathValidator" />
+        </panel>
+        <!-- panel classname="JDKPathPanel" id="CommonJDKPath" /-->
         <panel classname="TargetPanel" id="EscidocTarget" />
         <panel classname="TreePacksPanel" id="EscidocPacks" />
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />

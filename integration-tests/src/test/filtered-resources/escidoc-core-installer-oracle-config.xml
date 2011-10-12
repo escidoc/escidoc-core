@@ -76,9 +76,11 @@
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
-    <userInput />
+    <userInput>
+      <entry key="JdkUseJavaHome" value="false" />
+      <entry key="JdkHome" value="${env.JAVA_HOME}" />
+    </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.JDKPathPanel id="CommonJDKPath" />
   <com.izforge.izpack.panels.TargetPanel id="EscidocTarget">
     <installpath>${project.build.directory}${file.separator}escidoc</installpath>
   </com.izforge.izpack.panels.TargetPanel>

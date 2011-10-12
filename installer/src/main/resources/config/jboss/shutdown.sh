@@ -42,7 +42,7 @@ fi
 export JBOSS_HOME
 
 # Setup the JVM
-JAVA_HOME=${JDKPath}
+JAVA_HOME={JDK_PATH}
 export JAVA_HOME
 if [ "x$JAVA" = "x" ]; then
     if [ "x$JAVA_HOME" != "x" ]; then

@@ -43,7 +43,7 @@
   <str id="DatabaseAdminPassword" txt="Datenbank-Admin-Passwort:"/>
   <str id="RetypePassword" txt="Passwort wiederholen:"/>
   <str id="PasswordValidator" txt="Passwort darf nicht leer sein."/>
-  <str id="PasswordEqualityValidator" txt="Beide Pa&#223;w&#246;rter m&#252;ssen &#252;bereinstimmen."/>
+  <str id="PasswordEqualityValidator" txt="Beide Passw&#246;rter m&#252;ssen &#252;bereinstimmen."/>
 
   <str id="EscidocDatabaseUser" txt="eSciDoc-Datenbankbenutzer"/>
   <str id="EscidocDatabaseUserText" txt="Der hier angegebene Datenbankbenutzer wird bei der Erstinstallation erzeugt und zur Laufzeit von eSciDoc benutzt. Dieser Benutzer sollte keine Administrationsrechte besitzen."/>
@@ -63,11 +63,17 @@
   <str id="EmailValidator" txt="eMail-Adresse darf nicht leer sein."/>
 
   <str id="FedoraAdminUser" txt="Fedora-Admin-Benutzer"/>
-  <str id="FedoraAdminUserText" txt="Der Fedora- Admin-Benutzer wird zum Einloggen in Fedora und als zus&#228;tzlicher Datenbankbenutzer für Fedora-spezifische Tabellen benutzt."/>
+  <str id="FedoraAdminUserText" txt="Der Fedora- Admin-Benutzer wird zum Einloggen in Fedora und als zus&#228;tzlicher Datenbankbenutzer f&#252;r Fedora-spezifische Tabellen benutzt."/>
   <str id="FedoraAdminUserText2" txt="Typischerweise werden Sie diesen Benutzer nie direkt verwenden. Der Fedora-Admin-Benutzer wird haupts&#228;chlich innerhalb der eSciDoc-Infrastruktur verwendet. Die eMail-Adresse kann von Fedora zum Versenden von Fehlermeldungen benutzt werden."/>
 
   <str id="TriplestoreDatabaseUser" txt="Triplestore-Datenbankbenutzer"/>
   <str id="TriplestoreDatabaseUserText" txt="Dieser Datenbankbenutzer wird vom Installer angelegt und zur Laufzeit f&#252;r die Zugriffe auf die riTriples-Datenbank benutzt. Bitte achten Sie darauf, keinen schon vorhandenen Benutzer anzugeben, da der Installer den Benutzer zuerst l&#246;scht und dann neu anlegt!"/>
+  
+  <str id="JDKSelectionTitle" txt="JDK Selektion"/>
+  <str id="JDKSelectionDescription" txt="eSciDoc ben&#246;tigt JDK 1.6.x. Sie k&#246;nnen hier entscheiden, ob zur Laufzeit die JAVA_HOME Umgebungsvariable verwendet werden soll oder ob Sie ein spezielles JDK verwenden m&#246;chten."/>
+  <str id="JDKSelectionJavaHome" txt="JAVA_HOME ist zurzeit auf folgenden Wert gesetzt: ${ENV[JAVA_HOME]}"/>
+  <str id="JDKSelectionChoice_1" txt="Verwende die JAVA_HOME Umgebungsvariable"/>
+  <str id="JDKSelectionChoice_2" txt="Verwende folgendes JDK:"/>
 
   <str id="SystemAdministratorCredentials" txt="Berechtigungen f&#252;r den Systemadministrator"/>
   <str id="SystemAdministratorCredentialsText" txt="Der Systemadministrator hat Zugriff auf alle Ressourcen in der eSciDoc-Infrastruktur. Er kann andere Benutzer anlegen sowie Rechte und Rollen zuweisen."/>
@@ -80,7 +86,7 @@
   <str id="SystemInspectorPassword" txt="Systeminspector-Passwort:"/>
 
   <str id="DepositorCredentials" txt="Berechtigungen f&#252;r den Depositor"/>
-  <str id="DepositorCredentialsText" txt="Der Depositor darf neue Ressourcen innerhalb der eSciDoc-Infrastruktur erzeugen. Das ist der Benutzer für die t&#228;gliche Arbeit."/>
+  <str id="DepositorCredentialsText" txt="Der Depositor darf neue Ressourcen innerhalb der eSciDoc-Infrastruktur erzeugen. Das ist der Benutzer f&#252;r die t&#228;gliche Arbeit."/>
   <str id="DepositorUsername" txt="Depositor-Benutzername:"/>
   <str id="DepositorPassword" txt="Depositor-Passwort:"/>
 
@@ -102,7 +108,7 @@
   <str id="MigrationText" txt="Nun k&#246;nnen Sie die Migration starten. Bitte stoppen Sie dazu die Infrastruktur."/>
   <str id="MigrationText2" txt="Beobachten Sie die Ausgaben des Programms um zu sehen, ob die Migration erfolgreich war."/>
   <str id="StartMigration" txt="Migration jetzt starten"/>
-  <str id="CreatorText" txt="Einige Datenbankskripte enthalten einen Platzhalter für die ID des Benutzers, der den Datensatz erzeugt hat."/>
+  <str id="CreatorText" txt="Einige Datenbankskripte enthalten einen Platzhalter f&#252;r die ID des Benutzers, der den Datensatz erzeugt hat."/>
   <str id="CreatorId" txt="Erzeuger-Benutzer-ID:"/>
   <str id="UseridValidator" txt="Benutzer-ID darf nicht leer sein."/>
 </langpack>

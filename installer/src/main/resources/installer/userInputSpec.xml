@@ -388,6 +388,25 @@
     <field type="divider" align="bottom"/>
     </panel>
   -->
+  
+  <panel order="13" id="JDK Setting">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="JDKSelectionTitle" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="JDKSelectionDescription"/>
+    <field type="staticText" align="left" id="JDKSelectionJavaHome"/>
+    <field type="space" />
+    <field type="radio" variable="JdkUseJavaHome">
+      <spec>
+        <choice id="JDKSelectionChoice_1" value="true" set="true"/>
+        <choice id="JDKSelectionChoice_2" value="false"/>
+      </spec>
+    </field>
+    <field type="dir" align="left" variable="JdkHome">
+      <spec txt="" size="40" set="${ENV[JAVA_HOME]}" allowEmptyValue="true"/>
+    </field>
+    <field type="divider" align="bottom" />
+  </panel>
 
   <panel order="14" id="System administrator user">
     <createForPack name="Roles and Users Creation" />

@@ -17,7 +17,7 @@ pushd %DIRNAME%..
 set JBOSS_HOME=%CD%
 popd
 
-set JAVA_HOME=${JDKPath}
+set JAVA_HOME={JDK_PATH}
 set FEDORA_HOME=${INSTALL_PATH}\fedora
 
 REM Add bin/native to the PATH if present

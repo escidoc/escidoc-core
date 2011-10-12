@@ -68,6 +68,12 @@
 
   <str id="TriplestoreDatabaseUser" txt="Triplestore Database User"/>
   <str id="TriplestoreDatabaseUserText" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!"/>
+  
+  <str id="JDKSelectionTitle" txt="JDK Selection"/>
+  <str id="JDKSelectionDescription" txt="eSciDoc requires JDK 1.6.x. You can choose whether to use the JAVA_HOME environment variable or to select a specific JDK, which will be used to start the JBoss."/>
+  <str id="JDKSelectionJavaHome" txt="JAVA_HOME is currently set to: ${ENV[JAVA_HOME]}"/>
+  <str id="JDKSelectionChoice_1" txt="Use JAVA_HOME environment variable"/>
+  <str id="JDKSelectionChoice_2" txt="Use the selected JDK:"/>
 
   <str id="SystemAdministratorCredentials" txt="User Credentials for System Administrator User"/>
   <str id="SystemAdministratorCredentialsText" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them."/>
