@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
@@ -44,7 +47,7 @@ import javax.xml.transform.TransformerException;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.
- *
+ * 
  * @author Michael Schneider
  */
 public class OmTestBase extends EscidocAbstractTest {
@@ -196,10 +199,12 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Get the Id of the Context from the object.
-     *
-     * @param doc The Document of the resource.
+     * 
+     * @param doc
+     *            The Document of the resource.
      * @return Id of Context
-     * @throws TransformerException Thrown in case of XML Parser failure.
+     * @throws TransformerException
+     *             Thrown in case of XML Parser failure.
      */
     public String getContextId(final Document doc) throws TransformerException {
 
@@ -212,11 +217,14 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Set the Id of the Context for a resource.
-     *
-     * @param resDoc    The resource Document.
-     * @param contextId The new id of the Context.
+     * 
+     * @param resDoc
+     *            The resource Document.
+     * @param contextId
+     *            The new id of the Context.
      * @return The Document with the new Id.
-     * @throws Exception Thrown in case of substitution failure.
+     * @throws Exception
+     *             Thrown in case of substitution failure.
      */
     public Document setContextId(final Document resDoc, final String contextId) throws Exception {
         return (Document) substitute(resDoc, "//properties/context/@href", "/ir/context/" + contextId);
@@ -224,10 +232,12 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Get the status of retrieved version of object.
-     *
-     * @param doc The Document of the resource.
+     * 
+     * @param doc
+     *            The Document of the resource.
      * @return version status
-     * @throws TransformerException Thrown in case of XML Parser failure.
+     * @throws TransformerException
+     *             Thrown in case of XML Parser failure.
      */
     public String getVersionStatus(final Document doc) throws TransformerException {
 
@@ -240,10 +250,12 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Get the public-status of object.
-     *
-     * @param doc The Document of the resource.
+     * 
+     * @param doc
+     *            The Document of the resource.
      * @return public-status
-     * @throws TransformerException Thrown in case of XML Parser failure.
+     * @throws TransformerException
+     *             Thrown in case of XML Parser failure.
      */
     public String getPublicStatus(final Document doc) throws TransformerException {
 
@@ -256,10 +268,12 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Get the Id of the latest version of object.
-     *
-     * @param doc The Document of the resource.
+     * 
+     * @param doc
+     *            The Document of the resource.
      * @return Id of the latest version
-     * @throws TransformerException Thrown in case of XML Parser failure.
+     * @throws TransformerException
+     *             Thrown in case of XML Parser failure.
      */
     public String getLatestVersionId(final Document doc) throws TransformerException {
         String latestVersion = null;
@@ -271,10 +285,12 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Get the number of the latest version of object.
-     *
-     * @param doc The Document of the resource.
+     * 
+     * @param doc
+     *            The Document of the resource.
      * @return Number of the latest version
-     * @throws TransformerException Thrown in case of XML Parser failure.
+     * @throws TransformerException
+     *             Thrown in case of XML Parser failure.
      */
     public int getLatestVersionNumber(final Document doc) throws TransformerException {
 
@@ -287,14 +303,21 @@ public class OmTestBase extends EscidocAbstractTest {
 
     /**
      * Assert that the created MdRecord has all required elements.
-     *
-     * @param name                    The name of the md-record.
-     * @param resourceId              The id of the resource.
-     * @param resourceType            /ir/&lt;type of resource&gt;/..
-     * @param xmlCreatedMdRecord      The created md-record.
-     * @param xmlTemplateResource     The template resource used to create the context.
-     * @param timestampBeforeCreation A timestamp before the creation of the context.
-     * @throws Exception If anything fails.
+     * 
+     * @param name
+     *            The name of the md-record.
+     * @param resourceId
+     *            The id of the resource.
+     * @param resourceType
+     *            /ir/&lt;type of resource&gt;/..
+     * @param xmlCreatedMdRecord
+     *            The created md-record.
+     * @param xmlTemplateResource
+     *            The template resource used to create the context.
+     * @param timestampBeforeCreation
+     *            A timestamp before the creation of the context.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertCreatedMdRecord(
         final String name, final String resourceId, final String resourceType, final String xmlCreatedMdRecord,
@@ -319,6 +342,48 @@ public class OmTestBase extends EscidocAbstractTest {
             selectSingleNode(template, "/" + resourceType + "/md-records/md-record[@name = '" + name + "']/*[1]");
 
         assertXmlEquals(msg + "Content not equal.", toBeAssertedMdRecordContent, mdRecordContentTemplate);
+    }
+
+    /**
+     * 
+     * @param lastModDate
+     * @param targets
+     * @return
+     */
+    public String getTaskParameterForAddRelations(final String lastModDate, final Vector<String> targets) {
+
+        String taskParam = null;
+        if ((targets != null) && (targets.size() > 0)) {
+            taskParam = "<param last-modification-date=\"" + lastModDate + "\">\n";
+            Iterator<String> it = targets.iterator();
+            while (it.hasNext()) {
+                taskParam += "<relation><targetId>" + it.next() + "</targetId>\n";
+                taskParam +=
+                    "<predicate>" + "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
+                        + "</predicate></relation>";
+            }
+            taskParam += "</param>";
+        }
+        return taskParam;
+    }
+
+    /**
+     * 
+     * @param lastModDate
+     * @param ids
+     * @return
+     */
+    public String getTaskParameterForRemoveRelations(final String lastModDate, final Vector<String> ids) {
+        String taskParam = null;
+        if ((ids != null) && (ids.size() > 0)) {
+            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
+            Iterator<String> it = ids.iterator();
+            while (it.hasNext()) {
+                taskParam += "<id>" + it.next() + "</id>";
+            }
+            taskParam = taskParam + "</param>";
+        }
+        return taskParam;
     }
 
 }
