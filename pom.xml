@@ -954,6 +954,7 @@
     <!-- debugging (default: deactivated) -->
     <cargo.wait>false</cargo.wait>
     <cargo.jvmdebug></cargo.jvmdebug>
+    <cargo.ucldebug></cargo.ucldebug>
 
     <!-- escidoc.oracle.host>localhost</escidoc.oracle.host>
       <escidoc.oracle.port>1521</escidoc.oracle.port>
@@ -1976,6 +1977,19 @@
       <properties>
         <cargo.wait>true</cargo.wait>
         <cargo.jvmdebug>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Xnoagent -Djava.compiler=NONE</cargo.jvmdebug>
+      </properties>
+    </profile>
+    <profile>
+      <id>ucl</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>ucl</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <cargo.ucldebug>-verbose:class -Djaxp.debug=1</cargo.ucldebug>
       </properties>
     </profile>
   </profiles>
