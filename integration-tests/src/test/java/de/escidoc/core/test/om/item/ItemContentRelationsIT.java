@@ -567,6 +567,46 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
+     * Test successfully retrieving a last version of an item, which has an active relation in the last version but not
+     * in the old version.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testRelationsWithVersionedItem() throws Exception {
+        String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
+        param += "/>";
+
+        submit(this.itemId, param);
+        String submittedItem = retrieve(this.itemId);
+
+        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create.xml"));
+        String targetId = null;
+        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
+        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
+        if (m.find()) {
+            targetId = m.group(1);
+        }
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.itemId);
+        String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
+        String addedRelations = addContentRelations(this.itemId, taskParam);
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String submittedWithRelations = retrieve(this.itemId);
+        String newItemXml = addCtsElement(submittedWithRelations);
+
+        String updatedItem = update(itemId, newItemXml);
+        String itemVersion1 = retrieve(this.itemId + ":" + 1);
+        String item = retrieve(this.itemId);
+        Node relations = selectSingleNode(getDocument(itemVersion1), "/item/relations");
+        assertNull("relations may not exist", relations);
+        String retrievedRelationId =
+            selectSingleNode(getDocument(item), "/item/relations/relation[1]/@objid").getTextContent();
+        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+    }
+
+    /**
      * @param objectId
      *            The id of the object to which the relation should be added. The source id.
      * @param predicate
@@ -667,45 +707,6 @@ public class ItemContentRelationsIT extends ItemTestBase {
             taskParam = taskParam + "</param>";
         }
         return taskParam;
-    }
-
-    /**
-     * Test successfully retrieving a last version of an item, which has an active relation in the last version but not
-     * in the old version.
-     * 
-     * @throws Exception
-     */
-    public void testRelationsWithVersionedItem() throws Exception {
-        String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
-        param += "/>";
-
-        submit(this.itemId, param);
-        String submittedItem = retrieve(this.itemId);
-
-        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create.xml"));
-        String targetId = null;
-        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
-        if (m.find()) {
-            targetId = m.group(1);
-        }
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
-        String lastModDate = getTheLastModificationParam(this.itemId);
-        String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
-        String addedRelations = addContentRelations(this.itemId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
-        String submittedWithRelations = retrieve(this.itemId);
-        String newItemXml = addCtsElement(submittedWithRelations);
-
-        String updatedItem = update(itemId, newItemXml);
-        String itemVersion1 = retrieve(this.itemId + ":" + 1);
-        String item = retrieve(this.itemId);
-        Node relations = selectSingleNode(getDocument(itemVersion1), "/item/relations");
-        assertNull("relations may not exist", relations);
-        String retrievedRelationId =
-            selectSingleNode(getDocument(item), "/item/relations/relation[1]/@objid").getTextContent();
-        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
     }
 
 }
