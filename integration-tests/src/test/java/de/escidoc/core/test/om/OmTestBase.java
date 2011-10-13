@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om;
 
+import java.util.Iterator;
+import java.util.Vector;
+
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
@@ -319,6 +322,52 @@ public class OmTestBase extends EscidocAbstractTest {
             selectSingleNode(template, "/" + resourceType + "/md-records/md-record[@name = '" + name + "']/*[1]");
 
         assertXmlEquals(msg + "Content not equal.", toBeAssertedMdRecordContent, mdRecordContentTemplate);
+    }
+
+    /**
+     * 
+     * @param lastModDate
+     * @param targets
+     * @return
+     */
+    public String getTaskParameterForAddRelations(final String lastModDate, final Vector<String> targets) {
+        String taskParam = null;
+        if ((targets != null) && (targets.size() > 0)) {
+            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
+            Iterator<String> it = targets.iterator();
+            while (it.hasNext()) {
+                String target = it.next();
+                taskParam = taskParam + "<relation><targetId>";
+                taskParam = taskParam + target + "</targetId>";
+                taskParam =
+                    taskParam + "<predicate>"
+                        + "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
+                        + "</predicate></relation>";
+            }
+            taskParam = taskParam + "</param>";
+        }
+        return taskParam;
+    }
+
+    /**
+     * 
+     * @param lastModDate
+     * @param ids
+     * @return
+     */
+    public String getTaskParameterForRemoveRelations(final String lastModDate, final Vector<String> ids) {
+        String taskParam = null;
+        if ((ids != null) && (ids.size() > 0)) {
+            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
+            Iterator<String> it = ids.iterator();
+            while (it.hasNext()) {
+                String id = it.next();
+                taskParam = taskParam + "<id>";
+                taskParam = taskParam + id + "</id>";
+            }
+            taskParam = taskParam + "</param>";
+        }
+        return taskParam;
     }
 
 }
