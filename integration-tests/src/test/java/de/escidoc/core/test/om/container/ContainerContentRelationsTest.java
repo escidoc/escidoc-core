@@ -50,6 +50,8 @@ import org.w3c.dom.NodeList;
 
 import java.util.Iterator;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -59,7 +61,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 @RunWith(value = Parameterized.class)
@@ -70,7 +72,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     private String containerXml = null;
 
     /**
-     * @param transport The transport identifier.
+     * @param transport
+     *            The transport identifier.
      */
     public ContainerContentRelationsTest(final int transport) {
         super(transport);
@@ -78,8 +81,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -93,8 +97,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     @After
@@ -111,8 +116,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     }
 
-    // FIXME reactivate after 1.3
-    //@Test
+    @Test
     public void testIssueInfr1007() throws Exception {
         addRelation(this.containerId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
         addRelationToLatestVersion(this.containerId, "http://escidoc.org/examples/test1");
@@ -132,8 +136,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Tets successfully adding a new relation to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelation() throws Exception {
@@ -186,8 +191,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an existing relation to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddExistingRelation() throws Exception {
@@ -214,8 +220,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation with a non existing predicate to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingPredicate() throws Exception {
@@ -238,8 +245,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation with a non existing target to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithNonExistingTarget() throws Exception {
@@ -263,8 +271,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation with a non existing predicate to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithWrongPredicate() throws Exception {
@@ -290,8 +299,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation without container id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithoutId() throws Exception {
@@ -314,8 +324,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation without container id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithoutTaskParam() throws Exception {
@@ -332,8 +343,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining adding of an relation with a target id containing a version number.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddRelationWithTargetContainingVersionNumber() throws Exception {
@@ -356,8 +368,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test successfully removing an existing relation.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveRelation() throws Exception {
@@ -388,8 +401,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining removing of a already deleted relation.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveDeletedRelation() throws Exception {
@@ -420,8 +434,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Test declining removing of an existing relation, which belongs to another source resource.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveRelationWithWrongSource() throws Exception {
@@ -448,9 +463,11 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @param id The id of the resource.
+     * @param id
+     *            The id of the resource.
      * @return The date of last modification of the resource as string.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String getTheLastModificationParam(final String id) throws Exception {
         Document container = EscidocRestSoapTestBase.getDocument(retrieve(id));
@@ -464,8 +481,10 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @param lastModDate The last modification date of the source.
-     * @param targets     List of target ids. As much relations are added as there are tagets.
+     * @param lastModDate
+     *            The last modification date of the source.
+     * @param targets
+     *            List of target ids. As much relations are added as there are tagets.
      * @return The task parameter according to the given values.
      */
     private String getTaskParametr(final String lastModDate, final Vector<String> targets) {
@@ -474,9 +493,12 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @param lastModDate The last modification date of the source.
-     * @param targets     List of target ids. As much relations are added as there are tagets.
-     * @param predicate   The predicate of the relation.
+     * @param lastModDate
+     *            The last modification date of the source.
+     * @param targets
+     *            List of target ids. As much relations are added as there are tagets.
+     * @param predicate
+     *            The predicate of the relation.
      * @return The task parameter according to the given values.
      */
     private String getTaskParametr(final String lastModDate, final Vector<String> targets, final String predicate) {
@@ -504,187 +526,134 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         return taskParam;
     }
 
-    // Test method is obsolete, because it tests the obsolete
-    // interface methods
-    // /**
-    // * Tets successfully adding an existing "inactive" relation to the
-    // container.
-    // *
-    // * @throws Exception
-    // */
-    // public void testAddExistingInvalidRelation() throws Exception {
-    //
-    // String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml");
-    //
-    // String xml = create(xmlContainer);
-    //
-    // String targetId = selectSingleNode(getDocument(xml),
-    // "/container/@objid").getTextContent();
-    //
-    // Vector targets = new Vector();
-    // targets.add(targetId);
-    // String lastModDate = getTheLastModificationParam(this.containerId);
-    // String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // String addedRelations = addContentRelations(this.containerId, taskParam);
-    // String relationId = selectSingleNode(getDocument(addedRelations),
-    // "/param/relation[1]/@objid").getTextContent();
-    // String xmlWithRelation = retrieve(this.containerId);
-    // Document container = getDocument(xmlWithRelation);
-    // Node xmlContainerWithoutFirstRelations = deleteElement(container,
-    // "/container/relations");
-    // String updatedXml = update(this.containerId, toString(
-    // xmlContainerWithoutFirstRelations, true));
-    // lastModDate = getTheLastModificationParam(this.containerId);
-    // taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // addedRelations = addContentRelations(this.containerId, taskParam);
-    // String containerXml = retrieve(this.containerId);
-    // String retrivedRelationId = selectSingleNode(getDocument(containerXml),
-    // "/container/relations/relation[1]/@objid").getTextContent();
-    // assertEquals("relation ids are not equal", relationId,
-    // retrivedRelationId);
-    // }
+    /**
+     * Test successfully adding an existing "inactive" relation to the container.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testAddExistingInvalidRelation() throws Exception {
 
-    // /**
-    // * Test declining adding of an existing "active" relation to the
-    // container.
-    // *
-    // * @throws Exception
-    // */
-    // public void testAddExistingRelation() throws Exception {
-    // String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml");
-    //
-    // String xml = create(xmlContainer);
-    //
-    // String targetId = selectSingleNode(getDocument(xml),
-    // "/container/@objid").getTextContent();
-    //
-    // Vector targets = new Vector();
-    // targets.add(targetId);
-    // String lastModDate = getTheLastModificationParam(this.containerId);
-    // String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // String addedRelations = addContentRelations(this.containerId, taskParam);
-    // lastModDate = getTheLastModificationParam(this.containerId);
-    // taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // try {
-    // addedRelations = addContentRelations(this.containerId, taskParam);
-    // fail("No exception occurred on added an existing relation to the
-    // container");
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType("AlreadyExistException expected.",
-    // AlreadyExistsException.class, e);
-    // }
-    //
-    // }
+        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml");
 
-    // /**
-    // * Test declining removing of an non existing relation.
-    // */
-    // public void testRemoveNonExistingRelation() throws Exception {
-    //
-    // Vector ids = new Vector();
-    // ids.add("bla");
-    // String lastModDate = getTheLastModificationParam(this.containerId);
-    // String taskParam = getTaskParametr(lastModDate, ids);
-    // try {
-    // removeContentRelations(this.containerId, taskParam);
-    // fail("No exception occurred on remove of a nonexising relation.");
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType("ContentRelationNotFoundException expected.",
-    // ContentRelationNotFoundException.class, e);
-    // }
-    //
-    // }
-    // private String getTaskParametrForAddRelations(String lastModDate,
-    // Vector targets) {
-    // String taskParam = null;
-    // if ((targets != null) && (targets.size() > 0)) {
-    // taskParam = "<param last-modification-date=\"" + lastModDate
-    // + "\">";
-    // Iterator it = targets.iterator();
-    // while (it.hasNext()) {
-    // String target = (String) it.next();
-    // taskParam = taskParam + "<relation><targetId>";
-    // taskParam = taskParam + target + "</targetId>";
-    // taskParam = taskParam
-    // + "<predicate>"
-    // +
-    // "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
-    // + "</predicate></relation>";
-    // }
-    // taskParam = taskParam + "</param>";
-    // }
-    // return taskParam;
-    // }
-    //
-    // private String getTaskParametrForRemoveRelations(String lastModDate,
-    // Vector ids) {
-    // String taskParam = null;
-    // if ((ids != null) && (ids.size() > 0)) {
-    // taskParam = "<param last-modification-date=\"" + lastModDate
-    // + "\">";
-    // Iterator it = ids.iterator();
-    // while (it.hasNext()) {
-    // String id = (String) it.next();
-    // taskParam = taskParam + "<id>";
-    // taskParam = taskParam + id + "</id>";
-    // }
-    // taskParam = taskParam + "</param>";
-    // }
-    // return taskParam;
-    // }
+        String xml = create(xmlContainer);
 
-    // /**
-    // * Test successfully retrieving a last version of an container, which has
-    // an
-    // * active relation in the last version but not in the old version.
-    // *
-    // * @throws Exception
-    // */
-    // public void testRelationsWithVersionedContainer() throws Exception {
-    // String param = "<param last-modification-date=\""
-    // + getTheLastModificationParam(this.containerId) + "\" ";
-    // param += "/>";
-    //
-    // submit(this.containerId, param);
-    // String submittedcontainer = retrieve(this.containerId);
-    //
-    // String target = create(getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml"));
-    // String targetId = null;
-    // Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-    // Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
-    // if (m.find()) {
-    // targetId = m.group(1);
-    // }
-    // Vector targets = new Vector();
-    // targets.add(targetId);
-    // String lastModDate = getTheLastModificationParam(this.containerId);
-    // String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
-    // String addedRelations = addContentRelations(this.containerId, taskParam);
-    // String relationId = selectSingleNode(getDocument(addedRelations),
-    // "/param/relation[1]/@objid").getTextContent();
-    // String submittedWithRelations = retrieve(this.containerId);
-    // String newcontainerXml = addCtsElement(submittedWithRelations);
-    //
-    // String updatedcontainer = update(containerId, newcontainerXml);
-    // String containerVersion1 = retrieve(this.containerId + ":1");
-    // String container = retrieve(this.containerId);
-    // Node relations = selectSingleNode(getDocument(containerVersion1),
-    // "/container/relations");
-    // assertNull("relations may not exist", relations);
-    // String retrievedRelationId = selectSingleNode(getDocument(container),
-    // "/container/relations/relation[1]/@objid").getTextContent();
-    // assertEquals("relation ids are not equal", relationId,
-    // retrievedRelationId);
-    //
-    // }
+        String targetId = selectSingleNode(getDocument(xml), "/container/@objid").getTextContent();
+
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.containerId);
+        String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
+        String addedRelations = addContentRelations(this.containerId, taskParam);
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String xmlWithRelation = retrieve(this.containerId);
+        Document container = getDocument(xmlWithRelation);
+        Node xmlContainerWithoutFirstRelations = deleteElement(container, "/container/relations");
+        String updatedXml = update(this.containerId, toString(xmlContainerWithoutFirstRelations, true));
+        lastModDate = getTheLastModificationParam(this.containerId);
+        taskParam = getTaskParametrForAddRelations(lastModDate, targets);
+        addedRelations = addContentRelations(this.containerId, taskParam);
+        String containerXml = retrieve(this.containerId);
+        String retrivedRelationId =
+            selectSingleNode(getDocument(containerXml), "/container/relations/relation[1]/@objid").getTextContent();
+        assertEquals("relation ids are not equal", relationId, retrivedRelationId);
+    }
 
     /**
-     * @throws Exception If anything fails.
+     * Test declining adding of an existing "active" relation to the container.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testAddExistingRelation2() throws Exception {
+        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml");
+
+        String xml = create(xmlContainer);
+
+        String targetId = selectSingleNode(getDocument(xml), "/container/@objid").getTextContent();
+
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.containerId);
+        String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
+        String addedRelations = addContentRelations(this.containerId, taskParam);
+        lastModDate = getTheLastModificationParam(this.containerId);
+        taskParam = getTaskParametrForAddRelations(lastModDate, targets);
+        try {
+            addedRelations = addContentRelations(this.containerId, taskParam);
+            fail("No exception occurred on added an existing relation to the container");
+        }
+        catch (final Exception e) {
+            assertExceptionType("AlreadyExistException expected.", AlreadyExistsException.class, e);
+        }
+
+    }
+
+    /**
+     * Test declining removing of an non existing relation.
+     */
+    @Test
+    public void testRemoveNonExistingRelation() throws Exception {
+
+        Vector<String> ids = new Vector<String>();
+        ids.add("bla");
+        String lastModDate = getTheLastModificationParam(this.containerId);
+        String taskParam = getTaskParametr(lastModDate, ids);
+        try {
+            removeContentRelations(this.containerId, taskParam);
+            fail("No exception occurred on remove of a nonexising relation.");
+        }
+        catch (final Exception e) {
+            assertExceptionType("ContentRelationNotFoundException expected.", ContentRelationNotFoundException.class, e);
+        }
+
+    }
+
+    /**
+     * Test successfully retrieving a last version of an container, which has an active relation in the last version but
+     * not in the old version.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testRelationsWithVersionedContainer() throws Exception {
+        String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.containerId) + "\" ";
+        param += "/>";
+
+        submit(this.containerId, param);
+        String submittedcontainer = retrieve(this.containerId);
+
+        String target =
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+        String targetId = null;
+        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
+        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
+        if (m.find()) {
+            targetId = m.group(1);
+        }
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.containerId);
+        String taskParam = getTaskParametrForAddRelations(lastModDate, targets);
+        String addedRelations = addContentRelations(this.containerId, taskParam);
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String submittedWithRelations = retrieve(this.containerId);
+        String newcontainerXml = addCtsElement(submittedWithRelations);
+
+        String updatedcontainer = update(containerId, newcontainerXml);
+        String containerVersion1 = retrieve(this.containerId + ":1");
+        String container = retrieve(this.containerId);
+        Node relations = selectSingleNode(getDocument(containerVersion1), "/container/relations");
+        assertNull("relations may not exist", relations);
+        String retrievedRelationId =
+            selectSingleNode(getDocument(container), "/container/relations/relation[1]/@objid").getTextContent();
+        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+
+    }
+
+    /**
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveNonexistingRelations() throws Exception {
@@ -702,7 +671,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRelations() throws Exception {
@@ -714,7 +684,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRelationsWithoutId() throws Exception {
@@ -731,7 +702,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveRelationsWithWrongId() throws Exception {
@@ -749,8 +721,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Tets successfully adding a new relation to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testReturnValueOfAddRelation() throws Exception {
@@ -776,8 +749,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Tets successfully adding a new relation to the container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testReturnValueOfRemoveRelation() throws Exception {
@@ -809,9 +783,12 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     }
 
     /**
-     * @param objectId  The id of the object to which the relation should be added. The source id.
-     * @param predicate The predicate of the relation.
-     * @throws Exception If anything fails.
+     * @param objectId
+     *            The id of the object to which the relation should be added. The source id.
+     * @param predicate
+     *            The predicate of the relation.
+     * @throws Exception
+     *             If anything fails.
      */
     private void addRelation(final String objectId, final String predicate) throws Exception {
 
@@ -837,9 +814,10 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     /**
      * Create a Container.
-     *
+     * 
      * @return objid of container.
-     * @throws Exception Thrown if creation or objid exctraction fails.
+     * @throws Exception
+     *             Thrown if creation or objid exctraction fails.
      */
     private String createContainer() throws Exception {
         String xmlContainer =
