@@ -580,7 +580,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
         submit(this.itemId, param);
         String submittedItem = retrieve(this.itemId);
 
-        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create.xml"));
+        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
         String targetId = null;
         Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
         Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
@@ -604,6 +604,33 @@ public class ItemContentRelationsIT extends ItemTestBase {
         String retrievedRelationId =
             selectSingleNode(getDocument(item), "/item/relations/relation[1]/@objid").getTextContent();
         assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update().
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void addContentRelationbyItemUpdate() throws Exception {
+
+        final String targetItemXml = create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        String itemWithCR =
+            this.itemXml.replace("<relations:relations />", "<relations:relations><relations:relation "
+                + "predicate=\"http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf\" "
+                + "prefix-xlink:href=\"/ir/item/" + targetId + "\" />");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertEquals("relation id are not equal", "1", selectSingleNode(updatedItemDoc,
+            "/item/relations[count(./relation)]").getTextContent());
+        assertEquals("relation id are not equal", "/ir/item/" + targetId, selectSingleNode(updatedItemDoc,
+            "/item/relations/relation[1]/@href").getTextContent());
     }
 
     /**
@@ -679,7 +706,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @param lastModDate
      *            The last modification date of the source.
      * @param targets
-     *            List of target ids. As much relations are added as there are tagets.
+     *            List of target ids. As much relations are added as there are targets.
      * @param predicate
      *            The predicate of the relation.
      * @return The task parameter according to the given values.
