@@ -599,7 +599,7 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         String submittedcontainer = retrieve(this.containerId);
 
         String target =
-            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml"));
         String targetId = null;
         Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
         Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
