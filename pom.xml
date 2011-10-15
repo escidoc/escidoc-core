@@ -1037,7 +1037,7 @@
     <camel.version>2.7.3</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.3.2.GA</hibernate.version>
-    <junit.version>4.8.2</junit.version>
+    <junit.version>4.10</junit.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <mptstore.oracle.version>0.9.4</mptstore.oracle.version>
     <springsecurity.oauth.version>1.0.0.M3</springsecurity.oauth.version>
