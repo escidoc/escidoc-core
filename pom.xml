@@ -1041,7 +1041,6 @@
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <mptstore.oracle.version>0.9.4</mptstore.oracle.version>
     <springsecurity.oauth.version>1.0.0.M3</springsecurity.oauth.version>
-    <lucene.demos.version>3.0.3</lucene.demos.version>
     <geronimo.jaxrpc.version>2.1</geronimo.jaxrpc.version>
     <jrdf.version>0.3.4.3</jrdf.version>
     <pdfbox.version>1.6.0</pdfbox.version>
@@ -1058,7 +1057,6 @@
     <escidoc.saxon.version>1.0.7</escidoc.saxon.version>
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
-    <lucene.version>3.4.0</lucene.version>
     <xalan.version>2.7.1</xalan.version>
     <xercesImpl.version>2.11.0</xercesImpl.version>
     <java.source.version>1.6</java.source.version>
