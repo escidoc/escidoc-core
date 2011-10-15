@@ -790,7 +790,7 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         targets.add(targetId);
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameter(lastModDate, targets, predicate);
-        addContentRelations(this.containerId + ":" + 1, taskParam);
+        addContentRelations(this.containerId, taskParam);
     }
 
     /**
