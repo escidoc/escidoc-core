@@ -828,7 +828,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 final StartElementWithChildElements newContentRelationElement = new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-                newContentRelationElement.setNamespace(predicate[0] + '/');
+                newContentRelationElement.setNamespace(predicate[0]);
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
                         Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
