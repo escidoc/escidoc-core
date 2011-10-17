@@ -7,8 +7,8 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
 import de.escidoc.core.purge.PurgeService;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service("de.escidoc.core.purge.internal.PurgeServiceImpl")
 public class PurgeServiceImpl implements PurgeService {
 
-    private static final Log LOGGER = LogFactory.getLog(PurgeServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PurgeServiceImpl.class);
 
     @Autowired
     private FedoraServiceClient fedoraServiceClient;

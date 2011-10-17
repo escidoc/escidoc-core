@@ -1149,19 +1149,11 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.escidoc.core</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
     </dependency>
 
     <!-- AspectJ -->
@@ -1261,12 +1253,6 @@
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
-        <artifactId>jcl-over-slf4j</artifactId>
-        <version>${slf4j.version}</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
         <artifactId>jul-to-slf4j</artifactId>
         <version>${slf4j.version}</version>
         <scope>provided</scope>
@@ -1280,12 +1266,6 @@
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>1.2.16</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc.core</groupId>
-        <artifactId>jcl-over-slf4j</artifactId>
-        <version>1.0.4</version>
         <scope>provided</scope>
       </dependency>
 
