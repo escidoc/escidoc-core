@@ -69,7 +69,7 @@ import java.util.regex.Pattern;
 
 /**
  * Version PID handling for Generic Versionable Resources.
- *
+ * 
  * @author Steffen Wagner
  */
 @Configurable(preConstruction = true)
@@ -90,11 +90,15 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Generic Versionable Object.
-     *
-     * @param id The id of the object in the repository.
-     * @throws ResourceNotFoundException  Thrown if the resource with the provided objid was not found.
-     * @throws TripleStoreSystemException Thrown in case of TripleStore error.
-     * @throws WebserverSystemException   Thrown in case of internal error.
+     * 
+     * @param id
+     *            The id of the object in the repository.
+     * @throws ResourceNotFoundException
+     *             Thrown if the resource with the provided objid was not found.
+     * @throws TripleStoreSystemException
+     *             Thrown in case of TripleStore error.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
      */
     public GenericVersionableResourcePid(final String id) throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
@@ -113,9 +117,11 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * <p/>
      * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore). With RELS-EXT is the WOV updated with a new
      * timestamp for the latest version.
-     *
-     * @param pid The PID which is to assign as object PID.
-     * @throws SystemException Thrown in case of internal error.
+     * 
+     * @param pid
+     *            The PID which is to assign as object PID.
+     * @throws SystemException
+     *             Thrown in case of internal error.
      */
     @Override
     public void setObjectPid(final String pid) throws SystemException {
@@ -131,9 +137,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Get VersionPid for the current set resource version.
-     *
+     * 
      * @return versionPid for current version.
-     * @throws IntegritySystemException Thrown if the data integrity is violated.
+     * @throws IntegritySystemException
+     *             Thrown if the data integrity is violated.
      */
     public String getVersionPid() throws IntegritySystemException {
         return getVersionPid(getFullId());
@@ -141,10 +148,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Get versionPid for a defined resource version.
-     *
-     * @param fullId The id with version suffix to determine the versionPid.
+     * 
+     * @param fullId
+     *            The id with version suffix to determine the versionPid.
      * @return versionPid
-     * @throws IntegritySystemException Thrown if the integrity of WOV data is violated.
+     * @throws IntegritySystemException
+     *             Thrown if the integrity of WOV data is violated.
      */
     public String getVersionPid(final String fullId) throws IntegritySystemException {
 
@@ -200,8 +209,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Set the versionPID.
-     *
-     * @param pid The to assign PID.
+     * 
+     * @param pid
+     *            The to assign PID.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -230,6 +240,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Set the latest release pid. It's insert to the RELS-EXT.
      * <p/>
      * Precondition: The method checks not if the version is released! This check is part of the method caller.
+     * 
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -269,8 +280,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Set the latestReleasePid.
-     *
-     * @param pid The to PID of the latest released version.
+     * 
+     * @param pid
+     *            The to PID of the latest released version.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -304,10 +316,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Check if Item Version has Persistent Identifier (versionPID).
      * <p/>
      * VersionPid has in the XML representation of item the XPath /item/properties/version/pid
-     *
+     * 
      * @return true if Item Version has PID false otherwise.
-     * @throws WebserverSystemException Thrown in case of internal operation error. This exception encapsulates the
-     *                                  Parser exceptions.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal operation error. This exception encapsulates the Parser exceptions.
      */
     public boolean hasVersionPid() throws WebserverSystemException {
 
@@ -326,10 +338,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * <p/>
      * FIXME This method should not be part of the GenericVersionableResource because release is not a feature of this
      * class.
-     *
+     * 
      * @return version PID of the latest release.
-     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
-     * @throws WebserverSystemException   Thrown if calling instance of TripleStore connection failed.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request failed.
+     * @throws WebserverSystemException
+     *             Thrown if calling instance of TripleStore connection failed.
      */
     @Deprecated
     public String getLatestReleasePid() throws TripleStoreSystemException, WebserverSystemException {
@@ -343,8 +357,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Update RELS-EXT with version PID.
-     *
-     * @param pid Persistent Identifier
+     * 
+     * @param pid
+     *            Persistent Identifier
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
@@ -356,9 +371,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         IntegritySystemException, FedoraSystemException, XmlParserSystemException, WebserverSystemException {
 
         /*
-         * if (version == latest release) if (latest-release.pid == null) create
-         * new latest-release.pid element else if (latest-release.pid != null)
-         * update latest-release.pid element else if (pid == null) remove
+         * if (version == latest release) if (latest-release.pid == null) create new latest-release.pid element else if
+         * (latest-release.pid != null) update latest-release.pid element else if (pid == null) remove
          * latest-release.pid element fi
          */
 
@@ -386,12 +400,17 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Update Version History (WOV) with PID.
-     *
-     * @param pid       persistent identifier
-     * @param timestamp The timestamp of the assignment.
-     * @throws WebserverSystemException   In case of an internal error.
-     * @throws FedoraSystemException      If Fedora reports an error.
-     * @throws TripleStoreSystemException If the triple store request failed.
+     * 
+     * @param pid
+     *            persistent identifier
+     * @param timestamp
+     *            The timestamp of the assignment.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws FedoraSystemException
+     *             If Fedora reports an error.
+     * @throws TripleStoreSystemException
+     *             If the triple store request failed.
      */
     public void updatePidToWov(final String pid, final DateTime timestamp) throws WebserverSystemException {
 
@@ -432,12 +451,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Create a new version PID entry in RELS-EXT.
-     *
-     * @param pid The pid.
+     * 
+     * @param pid
+     *            The pid.
      * @return The new RELS-EXT.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS_ET fails.
-     * @throws WebserverSystemException   In case of an internal error.
-     * @throws TripleStoreSystemException If the triple store request failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS_ET fails.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws TripleStoreSystemException
+     *             If the triple store request failed.
      */
     private byte[] createVersionPid(final String pid) throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
@@ -513,12 +536,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Create a new LatestesRelease PID entry into RELS-EXT.
-     *
-     * @param pid The pid.
+     * 
+     * @param pid
+     *            The pid.
      * @return The new RELS-EXT.
-     * @throws XmlParserSystemException   Thrown if parsing of RELS_ET fails.
-     * @throws WebserverSystemException   In case of an internal error.
-     * @throws TripleStoreSystemException If the triple store request failed.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS_ET fails.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws TripleStoreSystemException
+     *             If the triple store request failed.
      */
     private byte[] createLatestReleasePid(final String pid) throws XmlParserSystemException {
 
@@ -557,10 +584,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Update versionPid entry within RELS-EXT.
-     *
-     * @param pid The PID.
+     * 
+     * @param pid
+     *            The PID.
      * @return The updated RELS-EXT
-     * @throws XmlParserSystemException Thrown if parsing of RELS_ET fails.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS_ET fails.
      */
     private byte[] updateVersionPid(final String pid) throws XmlParserSystemException {
 
@@ -597,10 +626,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Update release/pid entry within RELS-EXT (latest-release).
-     *
-     * @param pid The PID.
+     * 
+     * @param pid
+     *            The PID.
      * @return The updated RELS-EXT
-     * @throws XmlParserSystemException Thrown if parsing of RELS_ET fails.
+     * @throws XmlParserSystemException
+     *             Thrown if parsing of RELS_ET fails.
      */
     private byte[] updateLatestReleasePid(final String pid) throws XmlParserSystemException {
 
@@ -639,12 +670,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * Delete latest-release.pid entry from RELS-EXT.
      * <p/>
      * TODO release is not a feature of this class. Therefore is the method marked as deprecated.
-     *
+     * 
      * @return The updated RELS-EXT
-     * @throws IntegritySystemException Thrown if the data integrity is violated.
-     * @throws EncodingSystemException  Thrown if data encoding failed.
-     * @throws FedoraSystemException    Thrown if Fedora requests fail.
-     * @throws WebserverSystemException Thrown in case of internal failure.
+     * @throws IntegritySystemException
+     *             Thrown if the data integrity is violated.
+     * @throws EncodingSystemException
+     *             Thrown if data encoding failed.
+     * @throws FedoraSystemException
+     *             Thrown if Fedora requests fail.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
      */
     @Deprecated
     private byte[] deleteLatestReleasePid() throws IntegritySystemException, EncodingSystemException,
@@ -677,9 +712,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     /**
      * Expand a list with names of properties values with the propertiesNames for a versionated resource. These list
      * could be used to request the TripleStore.
-     *
-     * @param propertiesNames Collection of propertiesNames. The collection contains only the version resource specific
-     *                        propertiesNames.
+     * 
+     * @param propertiesNames
+     *            Collection of propertiesNames. The collection contains only the version resource specific
+     *            propertiesNames.
      * @return Parameter name collection
      */
     private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
@@ -696,8 +732,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     /**
      * Expand the map for the to mapping key names. The properties key names from the TripleStore differ to the internal
      * representation. Therefore we translate the key names to the internal.
-     *
-     * @param propertiesNamesMap The key is the to replace value. E.g. the &lt;oldKeyName, newKeyName&gt;
+     * 
+     * @param propertiesNamesMap
+     *            The key is the to replace value. E.g. the &lt;oldKeyName, newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
     private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
@@ -751,13 +788,19 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     /**
      * Set content relations in the provided resource.
-     *
-     * @param sp                A StaxParser instance. (TODO ?FRS)
-     * @param relationsToUpdate A list of relations.
-     * @throws IntegritySystemException If the integrity of the repository is violated.
-     * @throws XmlParserSystemException If parsing of xml data fails.
-     * @throws WebserverSystemException In case of an internal error.
-     * @throws FedoraSystemException    If the Fedora reports an error
+     * 
+     * @param sp
+     *            A StaxParser instance. (TODO ?FRS)
+     * @param relationsToUpdate
+     *            A list of relations.
+     * @throws IntegritySystemException
+     *             If the integrity of the repository is violated.
+     * @throws XmlParserSystemException
+     *             If parsing of xml data fails.
+     * @throws WebserverSystemException
+     *             In case of an internal error.
+     * @throws FedoraSystemException
+     *             If the Fedora reports an error
      */
     public void setContentRelations(final StaxParser sp, final Collection<String> relationsToUpdate)
         throws XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
@@ -851,6 +894,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
             for (final Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment
                 .entrySet()) {
+
+                Iterator<StartElementWithChildElements> it = e.getValue().iterator();
+                while (it.hasNext()) {
+                    StartElementWithChildElements selement = it.next();
+                    selement.setNamespace(removeTrainlingSlash(selement.getNamespace()));
+                }
                 toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }
@@ -872,4 +921,19 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
     }
 
+    /**
+     * Remove trainling slash from string.
+     * 
+     * @param uri
+     *            String/URI
+     * @return String/URI without slash at the end.
+     */
+    private String removeTrainlingSlash(final String uri) {
+
+        if (uri == null || !uri.endsWith("/")) {
+            return uri;
+        }
+
+        return uri.substring(0, uri.length() - 1);
+    }
 }
