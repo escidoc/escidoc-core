@@ -989,11 +989,19 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
     </dependency>
 
     <!-- Joda Time -->
@@ -1082,7 +1090,7 @@
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
         <version>${slf4j.version}</version>
-        <scope>test</scope>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -1105,7 +1113,7 @@
         <groupId>org.escidoc.core</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
         <version>1.0.4</version>
-        <scope>test</scope>
+        <scope>provided</scope>
       </dependency>
 
       <!-- Joda Time -->
@@ -1968,8 +1976,7 @@
       </activation>
       <properties>
         <cargo.wait>true</cargo.wait>
-        <cargo.jvmdebug>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Xnoagent 
-        -Djava.compiler=NONE -verbose:class</cargo.jvmdebug>
+        <cargo.jvmdebug>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000 -Xnoagent -Djava.compiler=NONE</cargo.jvmdebug>
       </properties>
     </profile>
     <profile>
