@@ -1033,7 +1033,7 @@
     <jaxb2-basics.version>0.6.2</jaxb2-basics.version>
     <aspectj.version>1.6.11</aspectj.version>
     <spring.version>3.0.6.RELEASE</spring.version>
-    <cxf.version>2.4.3</cxf.version>
+    <cxf.version>2.4.2</cxf.version>
     <camel.version>2.7.3</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.3.2.GA</hibernate.version>
