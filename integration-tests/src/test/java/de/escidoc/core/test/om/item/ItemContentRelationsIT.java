@@ -810,7 +810,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      */
     private String getTaskParameterWithUmlaut(final String lastModDate, final Vector<String> targets) {
 
-        return getTaskParameter(lastModDate, targets, "http://www.escidoc.de/ontologies/mpdl-ontologies/"
+        return getTaskParameter(lastModDate, targets, "http://www.escidoc.org/ontologies/test/"
             + "content-relations#isTest\u00dc\u00c4\u00d6");
     }
 

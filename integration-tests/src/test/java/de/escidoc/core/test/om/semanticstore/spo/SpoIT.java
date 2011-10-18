@@ -173,7 +173,7 @@ public class SpoIT extends SpoTestBase {
         String targetId = createItemHelper();
         // String p =
         // "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isTest\u00dc\u00c4\u00d6";
+        String p = "http://www.escidoc.org/ontologies/test/content-relations#isTest\u00dc\u00c4\u00d6";
         addRelation(sourceId, p, targetId);
         String o = "*";
         String format = "N-Triples";
