@@ -624,7 +624,7 @@
     <dependency>
       <groupId>org.escidoc</groupId>
       <artifactId>testdata</artifactId>
-      <version>0.0.2-alpha3</version>
+      <version>0.0.2-alpha4</version>
       <type>war</type>
     </dependency>
    <dependency>
