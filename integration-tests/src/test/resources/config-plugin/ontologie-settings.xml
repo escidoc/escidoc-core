@@ -1,7 +1,7 @@
 <processor>
     <add>
         <name>escidoc-core.ontology.url</name>
-        <value>/testdata/testDocuments/ontologies/test/test-relations.xml /testdata/testDocuments/ontologies/test/content-relations.xml</value>
+        <value>/testdata/testDocuments/ontologies/test/test-relations.xml /testdata/testDocuments/ontologies/test/content-relations.xml /ontologies/mpdl-ontologies/content-relations.xml</value>
 	    <last/>
     </add>
 </processor>
