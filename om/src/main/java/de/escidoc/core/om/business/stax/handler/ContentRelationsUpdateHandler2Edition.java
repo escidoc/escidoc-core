@@ -64,7 +64,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final StaxParser parser;
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     private boolean inContentRelation;
 
@@ -108,8 +108,8 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
                 if (href.length() == 0) {
-                    throw new InvalidContentException("The value of attribute 'xlink:href' of " + " the element '"
-                        + theName + "' may not be an empty string");
+                    throw new InvalidContentException("The value of attribute 'xlink:href' of the element '" + theName
+                        + "' may not be an empty string");
                 }
             }
 
@@ -117,7 +117,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
                 if (objid.length() == 0) {
-                    throw new InvalidContentException("The value of attribute 'objid' of " + " the element '" + theName
+                    throw new InvalidContentException("The value of attribute 'objid' of  the element '" + theName
                         + "' may not be an empty string");
                 }
             }

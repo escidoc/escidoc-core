@@ -222,6 +222,11 @@
             </transformation>
             <transformation>
               <type>properties</type>
+              <input>${project.build.directory}/escidoc/jboss/server/default/conf/escidoc-core.custom.properties</input>
+              <config>src/test/resources/config-plugin/ontologie-settings.xml</config>
+            </transformation>
+            <transformation>
+              <type>properties</type>
               <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/content_model_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/content_model_admin.xml</config>
             </transformation>
@@ -619,7 +624,7 @@
     <dependency>
       <groupId>org.escidoc</groupId>
       <artifactId>testdata</artifactId>
-      <version>0.0.2-alpha2</version>
+      <version>0.0.2-alpha3</version>
       <type>war</type>
     </dependency>
    <dependency>

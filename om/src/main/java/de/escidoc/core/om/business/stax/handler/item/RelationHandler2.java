@@ -29,6 +29,7 @@
 package de.escidoc.core.om.business.stax.handler.item;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.Predicate;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.create.RelationCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -43,7 +44,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
-import java.util.regex.Pattern;
 
 /**
  * Obtains Content Relations values from XML.
@@ -51,8 +51,6 @@ import java.util.regex.Pattern;
  * @author Steffen Wagner
  */
 public class RelationHandler2 extends DefaultHandler {
-
-    private static final Pattern SPLIT_PATTERN = Pattern.compile("#");
 
     private final StaxParser parser;
 
@@ -91,22 +89,13 @@ public class RelationHandler2 extends DefaultHandler {
 
         if (this.relationXPath.equals(parser.getCurPath()) && element.indexOfAttribute(null, "inherited") < 0) {
 
-            String predicateNs = null;
-            String predicate = null;
-
+            Predicate predicate = null;
             try {
                 final String predicateUri = element.getAttributeValue(null, Elements.ATTRIBUTE_PREDICATE);
 
                 if (predicateUri != null) {
-                    final String[] predicateAndTarget = SPLIT_PATTERN.split(predicateUri);
-                    if (predicateAndTarget.length != 2) {
-                        throw new InvalidContentException("Attribute has invalid predicate.");
-                    }
-
-                    predicateNs = predicateAndTarget[0];
-                    predicate = predicateAndTarget[1];
+                    predicate = new Predicate(predicateUri);
                 }
-
             }
             catch (final NoSuchAttributeException e) {
                 if (LOGGER.isWarnEnabled()) {
@@ -134,11 +123,10 @@ public class RelationHandler2 extends DefaultHandler {
             // handle objid
             if (XmlUtility.getVersionNumberFromObjid(id) != null) {
                 throw new InvalidContentException("A relation target may not be referenced by an "
-                    + " identifier containing a version number. " + "Use a floating identifier like 'escidoc:123' "
+                    + " identifier containing a version number. Use a floating identifier like 'escidoc:123' "
                     + "to reference a target");
             }
-            this.relation = new RelationCreate(predicateNs, predicate, id);
-
+            this.relation = new RelationCreate(predicate.getNamespace().toString(), predicate.getLocalname(), id);
         }
         return element;
     }

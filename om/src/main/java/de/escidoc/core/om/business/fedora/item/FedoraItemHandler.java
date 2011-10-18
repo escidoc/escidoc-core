@@ -230,7 +230,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             loadOrigin("You cannot update a full surrogate Item representation "
                 + "because you have no access rights on the Item '" + originId
                 + "'. Subressources which are part of the surrogate Item "
-                + "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
+                + "(and not the origin Item) are still accessible. Try using subresource methods.");
 
         try {
             final StaxParser sp = new StaxParser();
@@ -2025,7 +2025,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             while (it.hasNext()) {
                 final RelationCreate relation = it.next();
                 checkRefElement(relation.getTarget());
-                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + '#' + relation.getPredicate())) {
+                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + relation.getPredicate())) {
                     throw new RelationPredicateNotFoundException("Predicate '" + relation.getPredicate()
                         + "' is invalid. ");
                 }

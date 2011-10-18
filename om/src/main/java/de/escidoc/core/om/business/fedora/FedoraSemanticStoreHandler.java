@@ -29,6 +29,7 @@
 package de.escidoc.core.om.business.fedora;
 
 import de.escidoc.core.common.business.TripleStoreConnector;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -120,7 +121,15 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
         final String query = qh.getQuery();
         // check predicate
         final String predicate = qh.getPredicate();
-        if (!"*".equals(predicate) && !OntologyUtility.checkPredicate(predicate)) {
+        boolean accept;
+        try {
+            accept = OntologyUtility.checkPredicate(predicate);
+        }
+        catch (InvalidContentException e) {
+            throw new WebserverSystemException("Predicate '" + predicate + "' is invalid.", e);
+        }
+
+        if (!"*".equals(predicate) && !accept) {
             throw new InvalidTripleStoreQueryException("Predicate '"
                 + XmlUtility.escapeForbiddenXmlCharacters(predicate) + "' not allowed.");
         }
@@ -133,7 +142,15 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
                 final StringBuilder stringBuffer = new StringBuilder();
                 for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
-                    if (tripleParts.length >= 2 && OntologyUtility.checkPredicate(tripleParts[1])) {
+
+                    try {
+                        accept = OntologyUtility.checkPredicate(tripleParts[1]);
+                    }
+                    catch (InvalidContentException e) {
+                        throw new WebserverSystemException("Predicate '" + tripleParts[1] + "' is invalid.", e);
+                    }
+
+                    if (tripleParts.length >= 2 && accept) {
                         stringBuffer.append(triple);
                         stringBuffer.append(".\n");
                     }

@@ -29,30 +29,37 @@
 package de.escidoc.core.om.business.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.Predicate;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.XMLConstants;
-import java.util.regex.Pattern;
 
+/**
+ * Check if predicate is defined in XML (Ontology).
+ * 
+ * @author ?
+ * 
+ */
 public class OntologyHandler extends DefaultHandler {
-
-    private static final Pattern SPLIT_PATTERN = Pattern.compile("#");
 
     private final StaxParser parser;
 
-    private final String predicateWithoutBase;
+    private Predicate predicate;
 
-    private String base = "";
-
-    private final String predicate;
-
-    private final String predicateBase;
+    private String base;
 
     private boolean exist;
 
-    public OntologyHandler(final StaxParser parser, final String predicate) {
+    /**
+     * 
+     * @param parser
+     * @param predicate
+     * @throws InvalidContentException
+     */
+    public OntologyHandler(final StaxParser parser, final String predicate) throws InvalidContentException {
 
         this.parser = parser;
         String p = predicate;
@@ -63,20 +70,7 @@ public class OntologyHandler extends DefaultHandler {
             p = p.substring(0, p.length() - 1);
         }
 
-        // TODO: If a predicate contains character #, this character will be
-        // thrown away
-        final String[] predicateArray = SPLIT_PATTERN.split(p);
-        if (predicateArray.length == 2) {
-            this.predicateBase = predicateArray[0];
-            this.predicateWithoutBase = predicateArray[1];
-            this.predicate = p;
-        }
-        else {
-            this.exist = false;
-            this.predicateBase = null;
-            this.predicateWithoutBase = null;
-            this.predicate = null;
-        }
+        this.predicate = new Predicate(p);
     }
 
     @Override
@@ -97,7 +91,7 @@ public class OntologyHandler extends DefaultHandler {
 
             if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
-                if (id.equals(this.predicateWithoutBase) && base.equals(this.predicateBase)
+                if (id.equals(this.predicate.getLocalname()) && base.equals(this.predicate.getNamespace())
                     || id.equals(this.predicate)) {
                     this.exist = true;
                 }
@@ -106,6 +100,11 @@ public class OntologyHandler extends DefaultHandler {
         return element;
     }
 
+    /**
+     * Existence of predicate in ontology.
+     * 
+     * @return True if predicate exist in parsed XML (ontology), false otherwise.
+     */
     public boolean isExist() {
         return this.exist;
     }

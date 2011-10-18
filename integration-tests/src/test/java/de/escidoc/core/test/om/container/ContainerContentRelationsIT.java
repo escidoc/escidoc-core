@@ -509,7 +509,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     @Test
     public void testAddExistingInvalidRelation() throws Exception {
 
-        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
+        String xmlContainer =
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
 
         String xml = create(xmlContainer);
 

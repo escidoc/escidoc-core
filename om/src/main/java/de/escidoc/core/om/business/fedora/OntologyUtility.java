@@ -29,6 +29,7 @@
 package de.escidoc.core.om.business.fedora;
 
 import de.escidoc.core.common.exceptions.application.ApplicationException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -42,13 +43,19 @@ import de.escidoc.core.om.business.stax.handler.OntologyHandler;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Rozita Friedman
  */
 public final class OntologyUtility {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsUtility.class);
 
     /**
      * Private constructor to avoid instantiation.
@@ -58,47 +65,139 @@ public final class OntologyUtility {
 
     /**
      * Check if content-relations ontologie contains predicate.
-     *
-     * @param predicateUriReference The predicate with uri reference
+     * 
+     * @param predicateUriReference
+     *            The predicate with uri reference
      * @return true if predicate is defined within ontologie, false otherwise.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.XmlParserSystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
+     * @throws InvalidContentException
      */
     public static boolean checkPredicate(final String predicateUriReference) throws WebserverSystemException,
-        EncodingSystemException, XmlParserSystemException {
-
-        final InputStream in;
-        try {
-            final String ontologyLocation =
-                EscidocConfiguration.getInstance().appendToSelfURL("/ontologies/mpdl-ontologies/content-relations.xml");
-            final URLConnection conn = new URL(ontologyLocation).openConnection();
-            in = conn.getInputStream();
-        }
-        catch (final IOException e) {
-            throw new WebserverSystemException(e);
-        }
+        EncodingSystemException, XmlParserSystemException, InvalidContentException {
 
         final StaxParser sp = new StaxParser();
 
         final OntologyHandler ontologyHandler = new OntologyHandler(sp, predicateUriReference);
         sp.addHandler(ontologyHandler);
-        try {
-            sp.parse(in);
-        }
-        catch (final ApplicationException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final XMLStreamException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final IntegritySystemException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (final TripleStoreSystemException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
+
+        final String[] locations = getLocations();
+
+        for (final String location : locations) {
+            final InputStream in = getInputStream(location);
+
+            try {
+                sp.parse(in);
+            }
+            catch (final ApplicationException e) {
+                XmlUtility.handleUnexpectedStaxParserException("", e);
+            }
+            catch (final XMLStreamException e) {
+                XmlUtility.handleUnexpectedStaxParserException("", e);
+            }
+            catch (final IntegritySystemException e) {
+                XmlUtility.handleUnexpectedStaxParserException("", e);
+            }
+            catch (final TripleStoreSystemException e) {
+                XmlUtility.handleUnexpectedStaxParserException("", e);
+            }
+            try {
+                in.close();
+            }
+            catch (IOException e) {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Could not close stream.");
+                }
+                else if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Could not close stream.", e);
+                }
+            }
         }
 
         return ontologyHandler.isExist();
     }
+
+    /**
+     * Get location of ontology/predicate list for content relations.
+     * 
+     * @return location of file with PREDICATES
+     * @throws WebserverSystemException
+     *             Thrown if loading escidoc configuration failed.
+     */
+    private static String[] getLocations() {
+
+        String[] locations;
+        String location = EscidocConfiguration.getInstance().get(EscidocConfiguration.CONTENT_RELATIONS_URL);
+
+        // default location
+        // FIXME use a more qualified place for default configurations
+        if (location == null) {
+            locations =
+                new String[] { EscidocConfiguration.getInstance().appendToSelfURL(
+                    "/ontologies/mpdl-ontologies/content-relations.xml") };
+        }
+        else {
+            locations = location.split("\\s+");
+
+            // expand local paths with selfUrl
+            for (int i = 0; i < locations.length; i++) {
+                if (!locations[i].startsWith("http://")) {
+                    locations[i] = EscidocConfiguration.getInstance().appendToSelfURL(locations[i]);
+                }
+            }
+        }
+
+        return locations;
+    }
+
+    /**
+     * Get InputStream from location.
+     * 
+     * @param location
+     *            file location
+     * @return InputStream from location
+     * @throws WebserverSystemException
+     *             Thrown if open of InputStream failed.
+     */
+    private static InputStream getInputStream(final String location) throws WebserverSystemException {
+
+        final URLConnection conn;
+        try {
+            conn = new URL(location).openConnection();
+        }
+        catch (final MalformedURLException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
+            throw new WebserverSystemException(e);
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
+            throw new WebserverSystemException(e);
+        }
+        final InputStream in;
+        try {
+            in = conn.getInputStream();
+        }
+        catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
+            throw new WebserverSystemException(e);
+        }
+        return in;
+    }
+
 }

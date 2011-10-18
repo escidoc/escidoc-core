@@ -101,7 +101,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             final String resourceValue = element.getAttribute(indexOfResource).getValue();
             final String[] target = SPLIT_PATTERN.split(resourceValue);
             this.targetId = target[1];
-            this.predicate = removeTrailingSlash(element.getNamespace()) + '#' + element.getLocalName();
+            this.predicate = element.getNamespace() + element.getLocalName();
         }
         return element;
     }
@@ -122,26 +122,4 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
         return element;
     }
-
-    /**
-     * Remove trainling slash from String.
-     * 
-     * @param uri
-     * @return
-     */
-    private String removeTrailingSlash(final String uri) {
-
-        if (uri == null) {
-            return uri;
-        }
-
-        String uniformUri = uri;
-
-        if (uri.endsWith("/")) {
-            uniformUri = uri.substring(0, uri.length() - 1);
-        }
-
-        return uniformUri;
-    }
-
 }

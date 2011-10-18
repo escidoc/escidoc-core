@@ -337,14 +337,12 @@ public class OmTestBase extends EscidocAbstractTest {
             Iterator<String> it = targets.iterator();
             while (it.hasNext()) {
                 String target = it.next();
-                taskParam = taskParam + "<relation><targetId>";
-                taskParam = taskParam + target + "</targetId>";
-                taskParam =
-                    taskParam + "<predicate>"
-                        + "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
+                taskParam += "<relation><targetId>" + target + "</targetId>";
+                taskParam +=
+                    "<predicate>" + "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
                         + "</predicate></relation>";
             }
-            taskParam = taskParam + "</param>";
+            taskParam += "</param>";
         }
         return taskParam;
     }

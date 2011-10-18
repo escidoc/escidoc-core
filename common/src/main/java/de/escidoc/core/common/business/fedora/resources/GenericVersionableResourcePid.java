@@ -22,9 +22,11 @@ package de.escidoc.core.common.business.fedora.resources;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
+import de.escidoc.core.common.business.fedora.Predicate;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -74,8 +76,6 @@ import java.util.regex.Pattern;
  */
 @Configurable(preConstruction = true)
 public class GenericVersionableResourcePid extends GenericVersionableResource {
-
-    private static final Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");
 
     private static final Pattern SPLIT_PATTERN_PREDICATE_AND_TARGET = Pattern.compile("###");
 
@@ -803,7 +803,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *             If the Fedora reports an error
      */
     public void setContentRelations(final StaxParser sp, final Collection<String> relationsToUpdate)
-        throws XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException {
+        throws XmlParserSystemException, WebserverSystemException, IntegritySystemException, FedoraSystemException,
+        InvalidContentException {
 
         final Datastream relsExt;
         try {
@@ -842,11 +843,11 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (final String relation : relationsToUpdate) {
                 final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
-                final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
+                final Predicate predicate = new Predicate(predicateAndTarget[0]);
                 final StartElementWithChildElements newContentRelationElement = new StartElementWithChildElements();
-                newContentRelationElement.setLocalName(predicate[1]);
+                newContentRelationElement.setLocalName(predicate.getLocalname());
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-                newContentRelationElement.setNamespace(predicate[0]);
+                newContentRelationElement.setNamespace(predicate.getNamespace().toString());
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
                         Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
@@ -866,26 +867,26 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             while (iterator.hasNext()) {
                 final String relation = iterator.next();
                 final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
-                final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
+                final Predicate predicate = new Predicate(predicateAndTarget[0]);
 
                 final StartElementWithChildElements newContentRelationElement = new StartElementWithChildElements();
-                newContentRelationElement.setLocalName(predicate[1]);
+                newContentRelationElement.setLocalName(predicate.getLocalname());
                 newContentRelationElement.setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-                newContentRelationElement.setNamespace(predicate[0] + '/');
+                newContentRelationElement.setNamespace(predicate.getNamespace().toString());
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI, Constants.RDF_NAMESPACE_PREFIX,
                         Constants.IDENTIFIER_PREFIX + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
-                if (predicateValuesVectorAssignment.containsKey(predicate[1])) {
+                if (predicateValuesVectorAssignment.containsKey(predicate.getLocalname())) {
                     final List<StartElementWithChildElements> vector =
-                        predicateValuesVectorAssignment.get(predicate[1]);
+                        predicateValuesVectorAssignment.get(predicate.getLocalname());
                     vector.add(newContentRelationElement);
                 }
                 else {
                     final List<StartElementWithChildElements> vector = new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
-                    predicateValuesVectorAssignment.put(predicate[1], vector);
+                    predicateValuesVectorAssignment.put(predicate.getLocalname(), vector);
                 }
             }
 
@@ -894,12 +895,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
             for (final Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment
                 .entrySet()) {
-
-                Iterator<StartElementWithChildElements> it = e.getValue().iterator();
-                while (it.hasNext()) {
-                    StartElementWithChildElements selement = it.next();
-                    selement.setNamespace(removeTrainlingSlash(selement.getNamespace()));
-                }
                 toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }
@@ -919,21 +914,5 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             }
         }
 
-    }
-
-    /**
-     * Remove trainling slash from string.
-     * 
-     * @param uri
-     *            String/URI
-     * @return String/URI without slash at the end.
-     */
-    private String removeTrainlingSlash(final String uri) {
-
-        if (uri == null || !uri.endsWith("/")) {
-            return uri;
-        }
-
-        return uri.substring(0, uri.length() - 1);
     }
 }

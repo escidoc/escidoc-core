@@ -108,11 +108,24 @@ public final class ContentRelationsUtility {
     private static void loadOntology() throws XmlCorruptedException, WebserverSystemException,
         XmlParserSystemException, InvalidContentException {
 
-        final String location = getLocation();
-        final InputStream in = getInputStream(location);
-
         PREDICATES.clear();
-        PREDICATES.addAll(parseOntology(in));
+        final String[] locations = getLocations();
+
+        for (final String location : locations) {
+            final InputStream in = getInputStream(location);
+            PREDICATES.addAll(parseOntology(in));
+            try {
+                in.close();
+            }
+            catch (IOException e) {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Could not close stream.");
+                }
+                else if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Could not close stream.", e);
+                }
+            }
+        }
     }
 
     /**
@@ -121,13 +134,30 @@ public final class ContentRelationsUtility {
      * @return location of file with PREDICATES
      * @throws WebserverSystemException Thrown if loading escidoc configuration failed.
      */
-    private static String getLocation() {
+    private static String[] getLocations() {
+
+        String[] locations;
         String location = EscidocConfiguration.getInstance().get(EscidocConfiguration.CONTENT_RELATIONS_URL);
+
+        // default location
+        // FIXME use a more qualified place for default configurations
         if (location == null) {
-            location =
-                EscidocConfiguration.getInstance().appendToSelfURL("/ontologies/mpdl-ontologies/content-relations.xml");
+            locations =
+                new String[] { EscidocConfiguration.getInstance().appendToSelfURL(
+                    "/ontologies/mpdl-ontologies/content-relations.xml") };
         }
-        return location;
+        else {
+            locations = location.split("\\s+");
+
+            // expand local paths with selfUrl 
+            for (int i = 0; i < locations.length; i++) {
+                if (!locations[i].startsWith("http://")) {
+                    locations[i] = EscidocConfiguration.getInstance().appendToSelfURL(locations[i]);
+                }
+            }
+        }
+
+        return locations;
     }
 
     /**
@@ -144,9 +174,21 @@ public final class ContentRelationsUtility {
             conn = new URL(location).openConnection();
         }
         catch (final MalformedURLException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
             throw new WebserverSystemException(e);
         }
         catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
             throw new WebserverSystemException(e);
         }
         final InputStream in;
@@ -154,6 +196,12 @@ public final class ContentRelationsUtility {
             in = conn.getInputStream();
         }
         catch (final IOException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading resource '" + location + "'.");
+            }
+            else if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading resource '" + location + "'.", e);
+            }
             throw new WebserverSystemException(e);
         }
         return in;
@@ -177,12 +225,21 @@ public final class ContentRelationsUtility {
             sp.parse(in);
         }
         catch (final XmlCorruptedException e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while parsing.", e);
+            }
             throw new XmlCorruptedException(e);
         }
         catch (final InvalidContentException e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while parsing.", e);
+            }
             throw new InvalidContentException(e);
         }
         catch (final XMLStreamException e) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while parsing.", e);
+            }
             throw new XmlParserSystemException(e);
         }
         catch (final Exception e) {

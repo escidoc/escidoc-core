@@ -94,7 +94,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                 final int indexOfResource = element.indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource");
                 if (indexOfResource == -1) {
                     throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml. "
-                        + "The element 'rdf:type' must have " + "the attribute 'resource'.");
+                        + "The element 'rdf:type' must have the attribute 'resource'.");
                 }
                 else {
                     final String resourceValue = element.getAttribute(indexOfResource).getValue();
@@ -109,7 +109,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             setPredicate(element);
             if (this.predicate == null) {
                 throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
-                    + "The element 'rdf:Property' must have " + "one of the attributes 'id' or 'about'");
+                    + "The element 'rdf:Property' must have one of the attributes 'id' or 'about'");
             }
         }
         else if (DESCRIPTION_PATH.equals(currentPath) && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
@@ -117,7 +117,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             setPredicate(element);
             if (this.predicate == null) {
                 throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
-                    + "The element 'rdf:Description' must have " + "one of the attributes 'id' or 'about'");
+                    + "The element 'rdf:Description' must have one of the attributes 'id' or 'about'");
             }
         }
         return element;

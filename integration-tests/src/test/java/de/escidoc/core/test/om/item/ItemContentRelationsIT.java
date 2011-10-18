@@ -442,7 +442,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
     @Test
     public void testRetrieveRelations2() throws Exception {
 
-        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations/isPartOf";
+        final String predicate = "http://escidoc.org/examples/test1";
         String targetId = addRelation(itemId, predicate);
 
         String relationsElementXml = retrieveRelations(this.itemId);
@@ -651,7 +651,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
             create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
         final String targetId = getObjidValue(targetItemXml);
 
-        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations/isPartOf";
+        final String predicate = "http://escidoc.org/examples/test1";
 
         String itemWithCR =
             this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
@@ -717,7 +717,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
     @Test
     public void removeContentRelationbyItemUpdate2() throws Exception {
 
-        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations/isPartOf";
+        final String predicate = "http://escidoc.org/examples/test1";
 
         final String targetItemXml =
             create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
