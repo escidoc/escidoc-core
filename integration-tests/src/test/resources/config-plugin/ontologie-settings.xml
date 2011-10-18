@@ -1,6 +1,7 @@
 <processor>
-    <modify>
+    <add>
         <name>escidoc-core.ontology.url</name>
         <value>/testdata/testDocuments/ontologies/test/test-relations.xml /testdata/testDocuments/ontologies/test/content-relations.xml</value>
-    </modify>
+	    <last/>
+    </add>
 </processor>
