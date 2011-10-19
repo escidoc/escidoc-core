@@ -35,7 +35,7 @@
 #end #end
 #if( ${contentRelations} )
 #foreach( $relation in $contentRelations)
-	<${contentRelationsNamespacePrefix}:$relation.predicateValue rdf:resource="info:fedora/$relation.target" xmlns:${contentRelationsNamespacePrefix}="${relation.predicateNs}/"/>
+	<${contentRelationsNamespacePrefix}:$relation.predicateValue rdf:resource="info:fedora/$relation.target" xmlns:${contentRelationsNamespacePrefix}="${relation.predicateNs}"/>
 #end #end
 </rdf:Description>
 </rdf:RDF>
