@@ -81,7 +81,7 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestNTriples() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
         String format = "N-Triples";
         // String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
@@ -299,23 +299,22 @@ public class SpoIT extends SpoTestBase {
         testBase.getItemClient().releaseWithPid(id, null);
     }
 
-    private void addRelation(String sourceId, String predicate, String targetId) throws Exception {
+    private void addRelation(final String sourceId, final String predicate, final String targetId) throws Exception {
         OmTestBase testBase = new OmTestBase();
         String taskParam =
             "<param last-modification-date=\""
                 + getLastModificationDateValue(EscidocAbstractTest.getDocument(handleXmlResult(testBase
-                    .getItemClient().retrieve(sourceId)))) + "\">";
-        taskParam = taskParam + "<relation><targetId>" + targetId + "</targetId>";
-        taskParam = taskParam + "<predicate>";
+                    .getItemClient().retrieve(sourceId)))) + "\">\n";
+        taskParam += "<relation><targetId>" + targetId + "</targetId>\n";
+        taskParam += "<predicate>";
         if (predicate != null) {
-            taskParam = taskParam + predicate;
+            taskParam += predicate;
         }
         else {
-            taskParam = taskParam + "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isPartOf";
-
+            taskParam += "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
         }
-        taskParam = taskParam + "</predicate></relation>";
-        taskParam = taskParam + "</param>";
+        taskParam += "</predicate></relation>\n";
+        taskParam += "</param>";
 
         testBase.getItemClient().addContentRelations(sourceId, taskParam);
     }
