@@ -83,27 +83,6 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         this.containerId = getObjidValue(containerXml);
     }
 
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-
-        try {
-            delete(this.containerId);
-        }
-        catch (final Exception e) {
-            // do nothing
-        }
-
-    }
-
     @Test
     public void testIssueInfr1007() throws Exception {
         addRelation(this.containerId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
@@ -527,15 +506,17 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         Document container = getDocument(xmlWithRelation);
 
         // assert relation exist
+        assertXmlExists("relation missing", container, "/container/relations[count(./relation) = '1']");
         assertXmlExists("relation missing", container, "/container/relations/relation[@href = '" + relationId + "']");
 
         Node xmlContainerWithoutFirstRelations = deleteElement(container, "/container/relations");
         String updatedXml = update(this.containerId, toString(xmlContainerWithoutFirstRelations, true));
 
         // assert relation was deleted
+        container = EscidocAbstractTest.getDocument(updatedXml);
         assertXmlExists("relation missing", container, "/container/relations[count(./relation) = '0']");
 
-        lastModDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(updatedXml));
+        lastModDate = getLastModificationDateValue(container);
         taskParam = getTaskParameterForAddRelations(lastModDate, targets);
         addContentRelations(this.containerId, taskParam);
         String containerXml = retrieve(this.containerId);
@@ -609,7 +590,6 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         param += "/>";
 
         submit(this.containerId, param);
-        String submittedcontainer = retrieve(this.containerId);
 
         String targetId =
             getObjidValue(create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
@@ -619,6 +599,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         targets.add(targetId);
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
+
+        // add cr (updated to version 2)
         addContentRelations(this.containerId, taskParam);
 
         String relationId = "/ir/container/" + targetId;
@@ -631,14 +613,23 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         String newcontainerXml = addCtsElement(submittedWithRelations);
 
         String updatedcontainer = update(containerId, newcontainerXml);
-        String containerVersion1 = retrieve(this.containerId + ":1");
-        String container = retrieve(this.containerId);
 
-        Node relations = selectSingleNode(getDocument(containerVersion1), "/container/relations");
-        assertNull("relations may not exist", relations);
-        String retrievedRelationId =
-            selectSingleNode(getDocument(container), "/container/relations/relation[1]/@href").getTextContent();
-        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+        // check that version 1 has still no content relations
+        assertXmlExists("wrong relations", getDocument(retrieve(this.containerId + ":1")),
+            "/container/relations[count(./relation) = 0]");
+
+        // test if relation still exits in version 2 if container is updated to version 3
+        Document containerV2 = getDocument(retrieve(this.containerId + ":2"));
+        assertXmlExists("wrong relations", containerV2, "/container/relations[count(./relation) = 1]");
+        assertXmlExists("relation missing", containerV2, "/container/relations/relation[@href = '" + relationId + "']");
+
+        Document containerV3 = getDocument(retrieve(this.containerId));
+        assertXmlExists("wrong relations", containerV3, "/container/relations[count(./relation) = 1]");
+        assertXmlExists("relation missing", containerV3, "/container/relations/relation[@href = '" + relationId + "']");
+
+        containerV3 = getDocument(retrieve(this.containerId + ":3"));
+        assertXmlExists("wrong relations", containerV3, "/container/relations[count(./relation) = 1]");
+        assertXmlExists("relation missing", containerV3, "/container/relations/relation[@href = '" + relationId + "']");
     }
 
     /**
