@@ -588,22 +588,23 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
-        String lastModDate = getTheLastModificationParam(this.itemId);
+        String lastModDate = getLastModificationDateValue(getDocument(submittedItem));
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
-        String addedRelations = addContentRelations(this.itemId, taskParam);
+        addContentRelations(this.itemId, taskParam);
+
         String submittedWithRelations = retrieve(this.itemId);
+        assertXmlExists("relation ids are not equal", getDocument(submittedWithRelations),
+            "/item/relations/relation[@href = '/ir/item/" + targetId + "']");
+
         String newItemXml = addCtsElement(submittedWithRelations);
 
         String updatedItem = update(itemId, newItemXml);
         String itemVersion1 = retrieve(this.itemId + ":" + 1);
         String item = retrieve(this.itemId);
-        Node relations = selectSingleNode(getDocument(itemVersion1), "/item/relations");
-        assertNull("relations may not exist", relations);
-        String retrievedRelationId =
-            selectSingleNode(getDocument(item), "/item/relations/relation[1]/@href").getTextContent();
-
-        assertEquals("relation ids are not equal", selectSingleNode(getDocument(submittedWithRelations),
-            "/item/relations/relation[1]/@href").getTextContent(), retrievedRelationId);
+        Document itemDoc = getDocument(item);
+        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='0']");
+        assertXmlExists("relation ids are not equal", itemDoc, "/item/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
     }
 
     /**
