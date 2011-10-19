@@ -105,7 +105,7 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestRdfXml() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/" + "content-relations#isRevisionOf";
+        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
         String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
         String param = getTaskParametrSpo("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt; *", format);

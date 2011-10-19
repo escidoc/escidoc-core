@@ -195,7 +195,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final String message =
             "You cannot access a full surrogate item representation"
                 + " because you have no access rights on the item " + getOriginId()
-                + " . You can access subressourcess owned by a " + "surrogate item using retrieve methods on "
+                + " . You can access subressourcess owned by a surrogate item using retrieve methods on "
                 + "subresources.";
         loadOrigin(message);
 
@@ -335,7 +335,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             final Map<String, ByteArrayOutputStream> mdRecordsStreams =
                 (Map<String, ByteArrayOutputStream>) streams.get(XmlUtility.NAME_MDRECORDS);
             if (mdRecordsStreams != null && !mdRecordsStreams.containsKey("escidoc") && !origin) {
-                throw new MissingMdRecordException("No escidoc internal metadata found " + "(md-record/@name='escidoc'");
+                throw new MissingMdRecordException("No escidoc internal metadata found (md-record/@name='escidoc'");
             }
             final Map<String, Map<String, String>> mdRecordsAttributes = mdHandler.getMetadataAttributes();
             final String escidocMdNsUri = mdHandler.getEscidocMdRecordNameSpace();
@@ -491,7 +491,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         loadOrigin("You cannot retrieve md-records of the surrogate Item "
             + "because you have no access rights on the Item '" + originId
             + "'. Subressources which are part of the surrogate Item "
-            + "(and not the origin Item) are still accessible. Try " + "using subresource methods.");
+            + "(and not the origin Item) are still accessible. Try using subresource methods.");
 
         return renderMdRecords(true);
     }
@@ -518,7 +518,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 final String message =
                     "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId()
                         + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                        + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+                        + getOriginId() + ". Therefore you cannot access any md-records of this item.";
                 loadOrigin(message);
                 mdRecord = renderMdRecord(mdRecordId, true, true);
             }
@@ -551,7 +551,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             String message =
                 "Md-record with name " + mdRecordId + " is owned by the item " + getOriginId()
                     + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                    + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+                    + getOriginId() + ". Therefore you cannot access any md-records of this item.";
             final boolean origin = loadOrigin(message);
             if (origin) {
                 mdRecord = retrieveMdRecord(mdRecordId, true);
@@ -582,15 +582,15 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         }
         catch (final MdRecordNotFoundException e) {
             String message =
-                "Md-record with name DC" + " is owned by the item " + getOriginId()
+                "Md-record with name DC is owned by the item " + getOriginId()
                     + ", which is reffered by a surrogate item " + id + ". You have no access rights on the item "
-                    + getOriginId() + ". Therefore you cannot access any md-records " + "of this item.";
+                    + getOriginId() + ". Therefore you cannot access any md-records of this item.";
             final boolean origin = loadOrigin(message);
             if (origin) {
                 dc = getOriginItem().getDc().toString();
             }
             else {
-                message = "Metadata record with name DC" + " not found in item " + id + '.';
+                message = "Metadata record with name DC not found in item " + id + '.';
                 throw new MdRecordNotFoundException(message, e);
             }
 
@@ -795,8 +795,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         setItem(id);
-        filterParams.put("query", new String[] { "\"/subject/id\"=" + getItem().getId() + " or " + "\"/subject/id\"="
-            + getItem().getFullId() + " or " + "\"/object/id\"=" + getItem().getId() + " or " + "\"/object/id\"="
+        filterParams.put("query", new String[] { "\"/subject/id\"=" + getItem().getId() + " or \"/subject/id\"="
+            + getItem().getFullId() + " or \"/object/id\"=" + getItem().getId() + " or \"/object/id\"="
             + getItem().getFullId() });
 
         final String searchResponse =
@@ -1253,7 +1253,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             final String curStatus = getItem().getVersionStatus();
             if (!(Constants.STATUS_PENDING.equals(curStatus) || Constants.STATUS_IN_REVISION.equals(curStatus))) {
                 throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING + "' or '"
-                    + Constants.STATUS_IN_REVISION + "' and can not be" + " submitted.");
+                    + Constants.STATUS_IN_REVISION + "' and can not be submitted.");
             }
 
             // set status "submited"
@@ -1310,7 +1310,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             throw new AlreadyWithdrawnException("The object is already withdrawn");
         }
         if (!curStatus.equals(Constants.STATUS_RELEASED)) {
-            throw new NotPublishedException("The object is not in state 'released' and can not be " + "withdrawn.");
+            throw new NotPublishedException("The object is not in state 'released' and can not be withdrawn.");
         }
 
         setItem(id);
@@ -2066,7 +2066,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
             else if (publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
                 throw new InvalidStatusException("The referenced Item '" + origin
-                    + "' is in status 'withdrawn'. The surrogate Item can " + "not be created.");
+                    + "' is in status 'withdrawn'. The surrogate Item can not be created.");
             }
 
             final String latestReleaseNumber =
@@ -2079,8 +2079,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             }
 
             if (!checkUserRights(origin)) {
-                throw new AuthorizationException("You can not create a surrogate Item based " + "on the Item '"
-                    + origin + "' because you have no access " + "rights on this Item.");
+                throw new AuthorizationException("You can not create a surrogate Item based on the Item '" + origin
+                    + "' because you have no access rights on this Item.");
             }
             try {
                 setOriginItem(origin);
@@ -2098,7 +2098,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 getOriginItem().getResourceProperties().get(PropertyMapKeys.CURRENT_VERSION_STATUS);
             if (!versionStatus.equals(Constants.STATUS_RELEASED)) {
                 throw new InvalidStatusException("The referenced Item version is not released. "
-                    + "You can create a surrogate Item only based on a " + "released Item version.");
+                    + "You can create a surrogate Item only based on a released Item version.");
             }
         }
 
@@ -2125,7 +2125,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if (mdRecords == null || mdRecords.size() < 1) {
             if (item.getProperties().getObjectProperties().getOrigin() == null) {
                 throw new MissingMdRecordException("The Item representation doesn't contain a "
-                    + "mandatory md-record. A regular Item must contain a " + "mandatory md-record.");
+                    + "mandatory md-record. A regular Item must contain a mandatory md-record.");
             }
 
         }
@@ -2147,7 +2147,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             if (!mdRecordNames.contains(Elements.MANDATORY_MD_RECORD_NAME)
                 && item.getProperties().getObjectProperties().getOrigin() == null) {
                 throw new MissingMdRecordException("The item representation doesn't contain a "
-                    + "mandatory md-record. A regular item must contain a " + "mandatory md-record. ");
+                    + "mandatory md-record. A regular item must contain a mandatory md-record. ");
             }
 
         }
