@@ -514,14 +514,14 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String xml = create(xmlContainer);
 
-        String targetId = selectSingleNode(getDocument(xml), "/container/@objid").getTextContent();
+        String targetId = getObjidValue(getDocument(xml));
 
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
         String addedRelations = addContentRelations(this.containerId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@href").getTextContent();
         String xmlWithRelation = retrieve(this.containerId);
         Document container = getDocument(xmlWithRelation);
         Node xmlContainerWithoutFirstRelations = deleteElement(container, "/container/relations");
@@ -531,7 +531,7 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         addedRelations = addContentRelations(this.containerId, taskParam);
         String containerXml = retrieve(this.containerId);
         String retrivedRelationId =
-            selectSingleNode(getDocument(containerXml), "/container/relations/relation[1]/@objid").getTextContent();
+            selectSingleNode(getDocument(containerXml), "/container/relations/relation[1]/@href").getTextContent();
         assertEquals("relation ids are not equal", relationId, retrivedRelationId);
     }
 
