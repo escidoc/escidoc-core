@@ -1093,10 +1093,6 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String containerForCreateWithRelationsXml =
             getContainerTemplate("create_container_WithoutMembers_v1.1_WithRelations.xml");
         containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", containerId1);
-        containerForCreateWithRelationsXml =
-            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", containerId2);
-        containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);

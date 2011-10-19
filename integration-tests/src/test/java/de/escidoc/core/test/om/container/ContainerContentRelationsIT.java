@@ -521,18 +521,29 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
         String addedRelations = addContentRelations(this.containerId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@href").getTextContent();
+
+        String relationId = "/ir/container/" + targetId;
         String xmlWithRelation = retrieve(this.containerId);
         Document container = getDocument(xmlWithRelation);
+
+        // assert relation exist
+        assertXmlExists("relation missing", container, "/container/relations/relation[@href = '" + relationId + "']");
+
         Node xmlContainerWithoutFirstRelations = deleteElement(container, "/container/relations");
         String updatedXml = update(this.containerId, toString(xmlContainerWithoutFirstRelations, true));
-        lastModDate = getTheLastModificationParam(this.containerId);
+
+        // assert relation was deleted
+        assertXmlExists("relation missing", container, "/container/relations[count(./relation) = '0']");
+
+        lastModDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(updatedXml));
         taskParam = getTaskParameterForAddRelations(lastModDate, targets);
-        addedRelations = addContentRelations(this.containerId, taskParam);
+        addContentRelations(this.containerId, taskParam);
         String containerXml = retrieve(this.containerId);
-        String retrivedRelationId =
-            selectSingleNode(getDocument(containerXml), "/container/relations/relation[1]/@href").getTextContent();
-        assertEquals("relation ids are not equal", relationId, retrivedRelationId);
+
+        // assert relation exist
+        container = EscidocAbstractTest.getDocument(containerXml);
+        assertXmlExists("relation missing", container, "/container/relations[count(./relation) = '1']");
+        assertXmlExists("relation missing", container, "/container/relations/relation[@href = '" + relationId + "']");
     }
 
     /**
@@ -542,7 +553,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
      */
     @Test
     public void testAddExistingRelation2() throws Exception {
-        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
+        String xmlContainer =
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
 
         String xml = create(xmlContainer);
 
@@ -599,21 +611,29 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         submit(this.containerId, param);
         String submittedcontainer = retrieve(this.containerId);
 
-        String targetId = getObjidValue(
-            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml")));
+        String targetId =
+            getObjidValue(create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1.xml")));
 
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
-        String addedRelations = addContentRelations(this.containerId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@href").getTextContent();
+        addContentRelations(this.containerId, taskParam);
+
+        String relationId = "/ir/container/" + targetId;
         String submittedWithRelations = retrieve(this.containerId);
+
+        // assert relation exist
+        assertXmlExists("relation missing", getDocument(submittedWithRelations),
+            "/container/relations/relation[@href = '" + relationId + "']");
+
         String newcontainerXml = addCtsElement(submittedWithRelations);
 
         String updatedcontainer = update(containerId, newcontainerXml);
         String containerVersion1 = retrieve(this.containerId + ":1");
         String container = retrieve(this.containerId);
+
         Node relations = selectSingleNode(getDocument(containerVersion1), "/container/relations");
         assertNull("relations may not exist", relations);
         String retrievedRelationId =
