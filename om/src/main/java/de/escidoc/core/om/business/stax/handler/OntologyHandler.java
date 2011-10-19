@@ -91,7 +91,7 @@ public class OntologyHandler extends DefaultHandler {
 
             if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
-                if (id.equals(this.predicate.getLocalname()) && base.equals(this.predicate.getNamespace())
+                if (id.equals(this.predicate.getLocalname()) && (base + '#').equals(this.predicate.getNamespace())
                     || id.equals(this.predicate)) {
                     this.exist = true;
                 }
