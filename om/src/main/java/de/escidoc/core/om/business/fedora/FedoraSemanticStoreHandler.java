@@ -143,7 +143,7 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
                 for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
 
-                    if (tripleParts.length == 3) {
+                    if (tripleParts.length >= 2) {
                         try {
                             accept = OntologyUtility.checkPredicate(tripleParts[1]);
                         }
@@ -151,7 +151,7 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
                             throw new WebserverSystemException("Predicate '" + tripleParts[1] + "' is invalid.", e);
                         }
 
-                        if (tripleParts.length >= 2 && accept) {
+                        if (accept) {
                             stringBuffer.append(triple);
                             stringBuffer.append(".\n");
                         }
