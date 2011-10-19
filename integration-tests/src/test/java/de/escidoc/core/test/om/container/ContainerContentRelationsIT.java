@@ -542,11 +542,11 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
      */
     @Test
     public void testAddExistingRelation2() throws Exception {
-        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml");
+        String xmlContainer = getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml");
 
         String xml = create(xmlContainer);
 
-        String targetId = selectSingleNode(getDocument(xml), "/container/@objid").getTextContent();
+        String targetId = getObjidValue(getDocument(xml));
 
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
