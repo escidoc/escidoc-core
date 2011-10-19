@@ -143,16 +143,18 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
                 for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
 
-                    try {
-                        accept = OntologyUtility.checkPredicate(tripleParts[1]);
-                    }
-                    catch (InvalidContentException e) {
-                        throw new WebserverSystemException("Predicate '" + tripleParts[1] + "' is invalid.", e);
-                    }
+                    if (tripleParts.length == 3) {
+                        try {
+                            accept = OntologyUtility.checkPredicate(tripleParts[1]);
+                        }
+                        catch (InvalidContentException e) {
+                            throw new WebserverSystemException("Predicate '" + tripleParts[1] + "' is invalid.", e);
+                        }
 
-                    if (tripleParts.length >= 2 && accept) {
-                        stringBuffer.append(triple);
-                        stringBuffer.append(".\n");
+                        if (tripleParts.length >= 2 && accept) {
+                            stringBuffer.append(triple);
+                            stringBuffer.append(".\n");
+                        }
                     }
                 }
                 result = stringBuffer.toString();
