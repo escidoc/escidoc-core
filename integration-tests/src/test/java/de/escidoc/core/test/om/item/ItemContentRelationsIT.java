@@ -590,19 +590,40 @@ public class ItemContentRelationsIT extends ItemTestBase {
         targets.add(targetId);
         String lastModDate = getLastModificationDateValue(getDocument(submittedItem));
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
+
+        // update tu version 2
         addContentRelations(this.itemId, taskParam);
 
         String submittedWithRelations = retrieve(this.itemId);
-        assertXmlExists("relation ids are not equal", getDocument(submittedWithRelations),
+        Document submittedWithRelationsDoc = getDocument(submittedWithRelations);
+        assertXmlExists("number of relations is wrong", submittedWithRelationsDoc,
+            "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", submittedWithRelationsDoc,
             "/item/relations/relation[@href = '/ir/item/" + targetId + "']");
 
+        // update to version 3
         String newItemXml = addCtsElement(submittedWithRelations);
-
         String updatedItem = update(itemId, newItemXml);
-        String itemVersion1 = retrieve(this.itemId + ":" + 1);
-        String item = retrieve(this.itemId);
+        Document updatedItemDoc = getDocument(updatedItem);
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+
+        // check version 1
+        Document itemVersion1Doc = getDocument(retrieve(this.itemId + ":1"));
+        assertXmlExists("number of relations is wrong", itemVersion1Doc, "/item/relations[count(./relation)='0']");
+
+        // check version 2
+        String item = retrieve(this.itemId + ":2");
         Document itemDoc = getDocument(item);
-        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='0']");
+        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", itemDoc, "/item/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
+
+        // check version 3
+        item = retrieve(this.itemId);
+        itemDoc = getDocument(item);
+        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='1']");
         assertXmlExists("relation ids are not equal", itemDoc, "/item/relations/relation[@href = '/ir/item/" + targetId
             + "']");
     }
