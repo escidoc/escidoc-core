@@ -599,20 +599,15 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         submit(this.containerId, param);
         String submittedcontainer = retrieve(this.containerId);
 
-        String target =
-            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml"));
-        String targetId = null;
-        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
-        if (m.find()) {
-            targetId = m.group(1);
-        }
+        String targetId = getObjidValue(
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml")));
+
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
         String lastModDate = getTheLastModificationParam(this.containerId);
         String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
         String addedRelations = addContentRelations(this.containerId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
+        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@href").getTextContent();
         String submittedWithRelations = retrieve(this.containerId);
         String newcontainerXml = addCtsElement(submittedWithRelations);
 
@@ -622,9 +617,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         Node relations = selectSingleNode(getDocument(containerVersion1), "/container/relations");
         assertNull("relations may not exist", relations);
         String retrievedRelationId =
-            selectSingleNode(getDocument(container), "/container/relations/relation[1]/@objid").getTextContent();
+            selectSingleNode(getDocument(container), "/container/relations/relation[1]/@href").getTextContent();
         assertEquals("relation ids are not equal", relationId, retrievedRelationId);
-
     }
 
     /**
