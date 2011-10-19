@@ -4087,10 +4087,10 @@ public abstract class EscidocTestBase {
     }
 
     public static String getTaskParametrSpo(final String query, final String format) {
-        String taskParam = "<param>";
-        taskParam = taskParam + "<query>" + query + "</query>";
-        taskParam = taskParam + "<format>" + format + "</format>";
-        taskParam = taskParam + "</param>";
+        String taskParam = "<param>\n";
+        taskParam += "<query>" + query + "</query>\n";
+        taskParam += "<format>" + format + "</format>\n";
+        taskParam += "</param>";
         return taskParam;
     }
 
