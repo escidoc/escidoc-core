@@ -264,7 +264,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         try {
             InputStream inputStream = (InputStream)response.getEntity();
             Stream stream = new Stream();
-            IOUtils.copy(inputStream, stream);
+            IOUtils.copyAndCloseInput(inputStream, stream);
             result = new MimeStream(stream, contentType);
         }
         catch (IOException e) {
@@ -563,7 +563,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         try {
             final InputStream inputStream = (InputStream) response.getEntity();
             final Stream stream = new Stream();
-            IOUtils.copy(inputStream, stream);
+            IOUtils.copyAndCloseInput(inputStream, stream);
             result = new MimeStream(stream, contentType);
         }
         catch (final IOException e) {

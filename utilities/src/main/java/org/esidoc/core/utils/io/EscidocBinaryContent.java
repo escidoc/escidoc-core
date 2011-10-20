@@ -68,7 +68,7 @@ public class EscidocBinaryContent {
      */
     public void setContent(final InputStream content) throws IOException {
         this.stream = new Stream();
-        IOUtils.copy(content, this.stream);
+        IOUtils.copyAndCloseInput(content, this.stream);
     }
 
     /**
