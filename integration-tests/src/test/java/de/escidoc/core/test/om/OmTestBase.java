@@ -359,9 +359,7 @@ public class OmTestBase extends EscidocAbstractTest {
             taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
             Iterator<String> it = ids.iterator();
             while (it.hasNext()) {
-                String id = it.next();
-                taskParam = taskParam + "<id>";
-                taskParam = taskParam + id + "</id>";
+                taskParam += "<id>" + it.next() + "</id>";
             }
             taskParam = taskParam + "</param>";
         }
