@@ -29,6 +29,7 @@
 package de.escidoc.core.om.business.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.Predicate;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -141,7 +142,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      * @return The element.
      */
     @Override
-    public EndElement endElement(final EndElement element) {
+    public EndElement endElement(final EndElement element) throws InvalidContentException {
         if (this.inContentRelation) {
             this.inContentRelation = false;
             final String relationDataCheck = this.predicate + "###" + this.targetId;
@@ -149,11 +150,10 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 relationsDataCheck.add(relationDataCheck);
                 final Map<String, String> relationData = new HashMap<String, String>();
                 relationsData.add(relationData);
-                final int index = predicate.lastIndexOf('#');
-                final String predicateNs = predicate.substring(0, index);
-                final String predicateValue = predicate.substring(index + 1);
-                relationData.put("predicateNs", predicateNs);
-                relationData.put("predicateValue", predicateValue);
+
+                Predicate p = new Predicate(this.predicate);
+                relationData.put("predicateNs", p.getNamespace().toString());
+                relationData.put("predicateValue", p.getLocalname());
                 relationData.put("target", this.targetId);
             }
             this.targetId = null;

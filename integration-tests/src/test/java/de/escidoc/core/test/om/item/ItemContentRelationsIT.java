@@ -38,7 +38,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNot
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -88,12 +87,6 @@ public class ItemContentRelationsIT extends ItemTestBase {
         // this.itemId = itemId;
     }
 
-    /**
-     * reactivated after version 1.4
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
     @Test
     public void testIssueInfr1007() throws Exception {
         addRelation(itemId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
@@ -125,11 +118,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
 
-        String xml1 = create(itemWithoutComponents);
-
-        String xml2 = create(itemWithoutComponents);
-        String targetId1 = getObjidValue(xml1);
-        String targetId2 = getObjidValue(xml2);
+        String targetId1 = getObjidValue(create(itemWithoutComponents));
+        String targetId2 = getObjidValue(create(itemWithoutComponents));
 
         Vector<String> targets = new Vector<String>();
         targets.add(targetId1);
@@ -157,8 +147,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         }
 
-        assertTrue("added relation targetId1 is not container the " + "+ relation list ", contains1);
-        assertTrue("added relation targetId2 is not container the " + "+ relation list ", contains2);
+        assertTrue("added relation targetId1 is not container the relation list ", contains1);
+        assertTrue("added relation targetId2 is not container the relation list ", contains2);
 
         // and retrieve relations only and check
         String relationsElementXml = retrieveRelations(this.itemId);
@@ -212,7 +202,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ReferencedResourceNotFoundException.class)
     public void testAddRelationWithNonExistingTarget() throws Exception {
         String targetId = "bla";
         Vector<String> targets = new Vector<String>();
@@ -220,14 +210,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
         String lastModDate = getTheLastModificationParam(this.itemId);
         String taskParam = getTaskParameter(lastModDate, targets);
 
-        try {
-            addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with non " + "existing target to the item");
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("ReferencedResourceNotFoundException.",
-                ReferencedResourceNotFoundException.class, e);
-        }
+        addContentRelations(this.itemId, taskParam);
     }
 
     /**
@@ -236,7 +219,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = RelationPredicateNotFoundException.class)
     public void testAddRelationWithNonExistingPredicate() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -255,15 +238,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
         String lastModDate = getTheLastModificationParam(this.itemId);
         String taskParam = getTaskParameter(lastModDate, targets, "bla");
 
-        try {
-            addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with non " + "existing predicate to the item");
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("RelationPredicateNotFoundException.",
-                RelationPredicateNotFoundException.class, e);
-        }
-
+        addContentRelations(this.itemId, taskParam);
     }
 
     /**
@@ -272,7 +247,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = InvalidContentException.class)
     public void testAddRelationWithTargetContainingVersionNumber() throws Exception {
 
         Vector<String> targets = new Vector<String>();
@@ -281,13 +256,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
         String lastModDate = getTheLastModificationParam(this.itemId);
         String taskParam = getTaskParameter(lastModDate, targets);
 
-        try {
-            addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an relation with target" + " containing version number to the item");
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("InvalidContentException.", InvalidContentException.class, e);
-        }
+        addContentRelations(this.itemId, taskParam);
     }
 
     /**
@@ -296,7 +265,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = AlreadyExistsException.class)
     public void testAddExistingRelation() throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -313,14 +282,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
         addContentRelations(this.itemId, taskParam);
         lastModDate = getTheLastModificationParam(this.itemId);
         taskParam = getTaskParameter(lastModDate, targets);
-        try {
-            addContentRelations(this.itemId, taskParam);
-            fail("No exception occurred on added an existing relation to the item");
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("AlreadyExistException expected.", AlreadyExistsException.class, e);
-        }
 
+        addContentRelations(this.itemId, taskParam);
     }
 
     /**
@@ -435,19 +398,55 @@ public class ItemContentRelationsIT extends ItemTestBase {
     }
 
     /**
+     * Test retrieveRelations. A relation is created via addContentRelationMethod. 
+     * Predicate contains '#'.
+     *   
      * @throws Exception
      *             If anything fails.
      */
     @Test
     public void testRetrieveRelations() throws Exception {
-        addRelation(itemId, null);
+
+        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
+        String targetId = addRelation(itemId, predicate);
 
         String relationsElementXml = retrieveRelations(this.itemId);
         selectSingleNodeAsserted(EscidocAbstractTest.getDocument(relationsElementXml), "/relations");
         assertXmlValidItem(relationsElementXml);
+        Document relationsDoc = getDocument(relationsElementXml);
+        assertXmlExists("relation ids are not equal", relationsDoc, "/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
+        assertXmlExists("relation predicate is not equal", relationsDoc, "/relations/relation[@predicate = '"
+            + predicate + "']");
     }
 
     /**
+     * Test retrieveRelations. A relation is created via addContentRelationMethod. 
+     * Predicate contains '/'.
+     *   
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveRelations2() throws Exception {
+
+        final String predicate = "http://escidoc.org/examples/test1";
+        String targetId = addRelation(itemId, predicate);
+
+        String relationsElementXml = retrieveRelations(this.itemId);
+        selectSingleNodeAsserted(EscidocAbstractTest.getDocument(relationsElementXml), "/relations");
+        assertXmlValidItem(relationsElementXml);
+        Document relationsDoc = getDocument(relationsElementXml);
+        assertXmlExists("relation ids are not equal", relationsDoc, "/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
+        assertXmlExists("relation predicate is not equal", relationsDoc, "/relations/relation[@predicate = '"
+            + predicate + "']");
+    }
+
+    /**
+     * Test retrieveRelations. A relation is created via addContentRelationMethod. 
+     * Predicate contains '/'.
+     *   
      * @throws Exception
      *             If anything fails.
      */
@@ -548,7 +547,6 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Ignore
     @Test
     public void testRelationsWithVersionedItem() throws Exception {
         String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
@@ -557,30 +555,187 @@ public class ItemContentRelationsIT extends ItemTestBase {
         submit(this.itemId, param);
         String submittedItem = retrieve(this.itemId);
 
-        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create.xml"));
-        String targetId = null;
-        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-        Matcher m = PATTERN_OBJID_ATTRIBUTE.matcher(target);
-        if (m.find()) {
-            targetId = m.group(1);
-        }
+        String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        String targetId = getObjidValue(target);
+
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
-        String lastModDate = getTheLastModificationParam(this.itemId);
-        String taskParam = getTaskParameter(lastModDate, targets, null);
-        String addedRelations = addContentRelations(this.itemId, taskParam);
-        String relationId = selectSingleNode(getDocument(addedRelations), "/param/relation[1]/@objid").getTextContent();
-        String submittedWithRelations = retrieve(this.itemId);
-        String newItemXml = addCtsElement(submittedWithRelations);
+        String lastModDate = getLastModificationDateValue(getDocument(submittedItem));
+        String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
 
+        // update tu version 2
+        addContentRelations(this.itemId, taskParam);
+
+        String submittedWithRelations = retrieve(this.itemId);
+        Document submittedWithRelationsDoc = getDocument(submittedWithRelations);
+        assertXmlExists("number of relations is wrong", submittedWithRelationsDoc,
+            "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", submittedWithRelationsDoc,
+            "/item/relations/relation[@href = '/ir/item/" + targetId + "']");
+
+        // update to version 3
+        String newItemXml = addCtsElement(submittedWithRelations);
         String updatedItem = update(itemId, newItemXml);
-        String itemVersion1 = retrieve(this.itemId + ":" + 1);
-        String item = retrieve(this.itemId);
-        Node relations = selectSingleNode(getDocument(itemVersion1), "/item/relations");
-        assertNull("relations may not exist", relations);
-        String retrievedRelationId =
-            selectSingleNode(getDocument(item), "/item/relations/relation[1]/@objid").getTextContent();
-        assertEquals("relation ids are not equal", relationId, retrievedRelationId);
+        Document updatedItemDoc = getDocument(updatedItem);
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+
+        // check version 1
+        Document itemVersion1Doc = getDocument(retrieve(this.itemId + ":1"));
+        assertXmlExists("number of relations is wrong", itemVersion1Doc, "/item/relations[count(./relation)='0']");
+
+        // check version 2
+        String item = retrieve(this.itemId + ":2");
+        Document itemDoc = getDocument(item);
+        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", itemDoc, "/item/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
+
+        // check version 3
+        item = retrieve(this.itemId);
+        itemDoc = getDocument(item);
+        assertXmlExists("number of relations is wrong", itemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", itemDoc, "/item/relations/relation[@href = '/ir/item/" + targetId
+            + "']");
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update().
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void addContentRelationbyItemUpdate() throws Exception {
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+        assertXmlExists("relation predicate is not equal", updatedItemDoc, "/item/relations/relation[@predicate = '"
+            + predicate + "']");
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update().
+     * This test checks if a slash (instead of #) as separator is well handled.
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void addContentRelationbyItemUpdate2() throws Exception {
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        final String predicate = "http://escidoc.org/examples/test1";
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+        assertXmlExists("relation predicate is not equal", updatedItemDoc, "/item/relations/relation[@predicate = '"
+            + predicate + "']");
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update() and remove is afterwards.
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     *             Thrown if add or remove behavior is not as expected
+     */
+    @Test
+    public void removeContentRelationbyItemUpdate() throws Exception {
+
+        final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+        assertXmlExists("relation predicate is not equal", updatedItemDoc, "/item/relations/relation[@predicate = '"
+            + predicate + "']");
+
+        deleteNodes(updatedItemDoc, "/item/relations/relation");
+
+        updatedItemXml = update(this.itemId, toString(updatedItemDoc, true));
+        updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='0']");
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update() and remove is afterwards.
+     * This test checks if a slash (instead of #) as separator is well handled.
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     *             Thrown if add or remove behavior is not as expected
+     */
+    @Test
+    public void removeContentRelationbyItemUpdate2() throws Exception {
+
+        final String predicate = "http://escidoc.org/examples/test1";
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+        assertXmlExists("relation predicate is not equal", updatedItemDoc, "/item/relations/relation[@predicate = '"
+            + predicate + "']");
+
+        deleteNodes(updatedItemDoc, "/item/relations/relation");
+
+        updatedItemXml = update(this.itemId, toString(updatedItemDoc, true));
+        updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='0']");
     }
 
     /**
@@ -591,7 +746,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    private void addRelation(final String objectId, final String predicate) throws Exception {
+    private String addRelation(final String objectId, final String predicate) throws Exception {
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents = deleteElement(xmlItem, "/item/components");
@@ -606,6 +761,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         addContentRelations(this.itemId, taskParam);
 
+        return targetId;
     }
 
     /**
@@ -648,7 +804,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      */
     private String getTaskParameterWithUmlaut(final String lastModDate, final Vector<String> targets) {
 
-        return getTaskParameter(lastModDate, targets, "http://www.escidoc.de/ontologies/mpdl-ontologies/"
+        return getTaskParameter(lastModDate, targets, "http://www.escidoc.org/ontologies/test/"
             + "content-relations#isTest\u00dc\u00c4\u00d6");
     }
 
@@ -656,7 +812,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
      * @param lastModDate
      *            The last modification date of the source.
      * @param targets
-     *            List of target ids. As much relations are added as there are tagets.
+     *            List of target ids. As much relations are added as there are targets.
      * @param predicate
      *            The predicate of the relation.
      * @return The task parameter according to the given values.

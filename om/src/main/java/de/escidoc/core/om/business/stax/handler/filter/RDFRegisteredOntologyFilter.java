@@ -29,6 +29,7 @@
 package de.escidoc.core.om.business.stax.handler.filter;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 import org.slf4j.Logger;
@@ -52,7 +53,15 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     public boolean accept(final XMLEvent event) {
         if (event instanceof StartElement) {
             final StartElement element = event.asStartElement();
-            return accept(element);
+
+            boolean exist;
+            try {
+                exist = accept(element);
+            }
+            catch (InvalidContentException e) {
+                return false;
+            }
+            return exist;
         }
         else if (event instanceof EndElement) {
             final EndElement element = event.asEndElement();
@@ -71,7 +80,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         return true;
     }
 
-    public boolean accept(final StartElement element) {
+    private boolean accept(final StartElement element) throws InvalidContentException {
         try {
             if (this.workaroundForItemList && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;

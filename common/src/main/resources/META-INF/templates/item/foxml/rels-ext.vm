@@ -30,7 +30,7 @@
 #end#end
 #if($!{CONTENT_RELATIONS})
 #foreach( ${RELATION} in ${CONTENT_RELATIONS})
-<${contentRelationsNamespacePrefix}:${RELATION.PREDICATE} rdf:resource="info:fedora/${RELATION.OBJID}" xmlns:${contentRelationsNamespacePrefix}="${RELATION.PREDICATE_NS}/"/>
+<${contentRelationsNamespacePrefix}:${RELATION.PREDICATE} rdf:resource="info:fedora/${RELATION.OBJID}" xmlns:${contentRelationsNamespacePrefix}="${RELATION.PREDICATE_NS}"/>
 #end #end
 #if($!{originObjectId})
 <${escidocRelationsNamespacePrefix}:origin rdf:resource="info:fedora/${originObjectId}"/>

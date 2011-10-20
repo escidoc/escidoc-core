@@ -483,23 +483,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
         String result = null;
 
-        try {
-            if (isCreate) {
+        if (isCreate) {
+            try {
                 result = retrieve(containerId);
-                fireContainerCreated(getContainer().getId(), result);
-                // Also reindex members
-                for (final String memberId : structMapEntries) {
-                    fireContainerMembersModified(memberId);
-                }
+            }
+            catch (final ResourceNotFoundException e) {
+                throw new IntegritySystemException("Newly created Container not available.", e);
+            }
+            fireContainerCreated(getContainer().getId(), result);
+            // Also reindex members
+            for (final String memberId : structMapEntries) {
+                fireContainerMembersModified(memberId);
             }
         }
-        catch (final ResourceNotFoundException e) {
-            throw new IntegritySystemException("Newly created Container not available.", e);
-        }
-
-        if (!isCreate) {
+        else {
             result = containerId;
         }
+
         return result;
     }
 
@@ -885,7 +885,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
 
                 if (ids.isEmpty()) {
-                    // create an empty search response (problem: if no query is given, than are all resources returned. A useless query is not a solution, because the query is part of the response)
+                    // create an empty search response (problem: if no query is given, than are all resources returned.
+                    // A useless query is not a solution, because the query is part of the response)
                     sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.CONTAINER, ResourceType.ITEM },
                         "\"/id\"=-1", parameters.getMaximumRecords(), parameters.getStartRecord(), parameters
                             .getExtraData(), parameters.getRecordPacking());
@@ -1457,7 +1458,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         }
 
         // getUtility().notifyIndexerAddPublication(getContainer().getHref());
-        fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+        fireContainerModified(getContainer().getId(), null);
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
     }
@@ -1619,7 +1620,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // only renew the timestamp and set status with version entry
             getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED, getContainer());
             getContainer().persist();
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
@@ -1688,7 +1689,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             getUtility().makeVersion(taskParameter.getComment(), Constants.STATUS_IN_REVISION, getContainer());
             getContainer().persist();
 
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
     }
@@ -1764,7 +1765,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // notify indexer
             // getUtility().notifyIndexerDeletePublication(
             // getContainer().getHref());
-            fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
+            fireContainerModified(getContainer().getId(), null);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
 
@@ -2431,7 +2432,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             catch (final InvalidStatusException e) {
                 throw new InvalidStatusException("Members can not be removed, because the "
                     + "container is in an inappropriate state.", e);
-
             }
 
             final StaxParser sp = new StaxParser();

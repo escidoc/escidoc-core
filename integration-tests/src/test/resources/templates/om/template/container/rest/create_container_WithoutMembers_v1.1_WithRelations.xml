@@ -41,12 +41,12 @@
 			</collection>
 		</prefix-metadata-records:md-record>
 	</prefix-metadata-records:md-records>
+  <!-- relations:relations -->
+  <!-- will be completed later -->
 	<prefix-relations:relations>
 	<prefix-relations:relation predicate="http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf" prefix-xlink:href="##CONTAINER_HREF1##"/>
 	<prefix-relations:relation predicate="http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf" prefix-xlink:href="##CONTAINER_HREF2##"/>
 	</prefix-relations:relations>
-	<!-- relations:relations -->
-	<!-- will be defined later -->
 	<!--  struct-map:struct-map  -->
 	<!--  struct-map:struct-map  (or "members")-->
 </prefix-container:container>

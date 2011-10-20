@@ -119,7 +119,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.5</version>
+          <version>1.7</version>
         </plugin>
 
         <!-- gmaven-plugin [default config] -->
@@ -147,7 +147,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.9</version>
+          <version>2.10</version>
         </plugin>
 
         <!-- maven-config-processor-plugin [default config] -->
@@ -160,7 +160,7 @@
         <!-- maven-assembly-plugin [default config] -->
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2</version>
+          <version>2.2.1</version>
         </plugin>
 
         <!-- maven-jar-plugin [default config] -->
@@ -174,7 +174,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.2</version>
+          <version>2.3</version>
         </plugin>
 
         <!-- izpack-maven-plugin [default config] -->
@@ -257,7 +257,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>aspectj-maven-plugin</artifactId>
-          <version>1.3</version>
+          <version>1.3.1</version>
           <dependencies>
             <dependency>
               <groupId>org.aspectj</groupId>
@@ -291,7 +291,7 @@
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
           <artifactId>maven-jaxb2-plugin</artifactId>
-          <version>0.7.4</version>
+          <version>0.7.5</version>
           <configuration>
             <schemaDirectory>${project.build.sourceDirectory}/../resources/xsd</schemaDirectory>
             <generateDirectory>${project.build.directory}/generated-sources/java</generateDirectory>
@@ -369,7 +369,7 @@
         <!-- maven-ear-plugin [default config] -->
         <plugin>
           <artifactId>maven-ear-plugin</artifactId>
-          <version>2.4.2</version>
+          <version>2.6</version>
         </plugin>
 
         <!-- cargo-maven2-plugin [default config] -->
@@ -762,7 +762,7 @@
           <dependency>
             <groupId>com.googlecode.ehcache-spring-annotations</groupId>
             <artifactId>ehcache-spring-annotations</artifactId>
-            <version>1.1.2</version>
+            <version>1.2.0</version>
           </dependency>
           <dependency>
             <groupId>commons-pool</groupId>
@@ -1077,13 +1077,13 @@
   <properties>
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
-    <jaxb2-basics.version>0.6.1</jaxb2-basics.version>
+    <jaxb2-basics.version>0.6.2</jaxb2-basics.version>
     <!-- do not update jaxb.version to 2.2.4 because this will not work on JBoss 6(+) -->
     <jaxb.version>2.2.3</jaxb.version>
     <aspectj.version>1.6.11</aspectj.version>
     <spring.version>3.0.6.RELEASE</spring.version>
     <cxf.version>2.4.2</cxf.version>
-    <camel.version>2.8.0</camel.version>
+    <camel.version>2.8.1</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.3.2.GA</hibernate.version>
     <junit.version>4.10</junit.version>
@@ -1094,7 +1094,7 @@
     <jrdf.version>0.3.4.3</jrdf.version>
     <pdfbox.version>1.6.0</pdfbox.version>
     <xmlunit.version>1.3</xmlunit.version>
-    <escidoc.analyzers.version>1.4.2</escidoc.analyzers.version>
+    <escidoc.analyzers.version>1.4.3</escidoc.analyzers.version>
     <sen.version>1.0.0</sen.version>
     <dbutils.version>1.0.0</dbutils.version>
     <copylibstask.version>1.0.0</copylibstask.version>
@@ -1195,19 +1195,11 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.escidoc.core</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
     </dependency>
 
     <!-- AspectJ -->
@@ -1284,7 +1276,7 @@
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
         <version>${slf4j.version}</version>
-        <scope>provided</scope>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -1306,7 +1298,7 @@
         <groupId>org.escidoc.core</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
         <version>1.0.4</version>
-        <scope>provided</scope>
+        <scope>test</scope>
       </dependency>
 
       <!-- Joda Time -->
@@ -1398,7 +1390,7 @@
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
-        <version>4.1.1</version>
+        <version>4.1.2</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>
@@ -1656,7 +1648,7 @@
       <dependency>
         <groupId>com.sun.xml.fastinfoset</groupId>
         <artifactId>FastInfoset</artifactId>
-        <version>1.2.9</version>
+        <version>1.2.10</version>
       </dependency>
 
       <!-- Apache Camel -->
@@ -1753,12 +1745,12 @@
       <dependency>
         <groupId>net.sf.ehcache</groupId>
         <artifactId>ehcache-core</artifactId>
-        <version>2.4.2</version>
+        <version>2.4.6</version>
       </dependency>
       <dependency>
         <groupId>com.googlecode.ehcache-spring-annotations</groupId>
         <artifactId>ehcache-spring-annotations</artifactId>
-        <version>1.1.2</version>
+        <version>1.2.0</version>
       </dependency>
 
       <dependency>

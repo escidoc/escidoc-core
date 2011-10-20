@@ -101,10 +101,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             final String resourceValue = element.getAttribute(indexOfResource).getValue();
             final String[] target = SPLIT_PATTERN.split(resourceValue);
             this.targetId = target[1];
-            String predicateNs = element.getNamespace();
-            predicateNs = predicateNs.substring(0, predicateNs.length() - 1);
-            final String predicateValue = element.getLocalName();
-            this.predicate = predicateNs + '#' + predicateValue;
+            this.predicate = element.getNamespace() + element.getLocalName();
         }
         return element;
     }
@@ -125,5 +122,4 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
         return element;
     }
-
 }
