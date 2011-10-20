@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class OntologyUtility {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsUtility.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OntologyUtility.class);
 
     /**
      * Private constructor to avoid instantiation.
