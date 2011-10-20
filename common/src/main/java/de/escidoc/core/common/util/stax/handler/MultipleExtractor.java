@@ -200,9 +200,24 @@ public class MultipleExtractor extends WriteHandler {
                 // September 2009, changed logic: if prefix or namespace
                 // of elementToDelete is null it is not compared with
                 // the current element and handled as match. (FRS)
+
+                // Workaround to handle defect content relations which came from version <= 1.3.3 and where fixed
+                // with 1.4 (see issue INFR-1329)
+                // TODO remove if FoXML is fixed (e.g. by migration)
+                String ns = element.getNamespace();
+                if (!(ns.endsWith("#") || ns.endsWith("/"))) {
+                    // we can at this point only guess how it should be ('#' or '/'). '#' is probable.
+                    ns += "#";
+                }
+
                 if ((elementToDelete.getPrefix() == null || elementToDelete.getPrefix().equals(element.getPrefix()))
-                    && (elementToDelete.getNamespace() == null || elementToDelete.getNamespace().equals(
-                        element.getNamespace()))) {
+                    && (elementToDelete.getNamespace() == null || elementToDelete.getNamespace().equals(ns))) {
+
+                    // end workaround
+                    // original code
+                    //                if ((elementToDelete.getPrefix() == null || elementToDelete.getPrefix().equals(element.getPrefix()))
+                    //                    && (elementToDelete.getNamespace() == null || elementToDelete.getNamespace().equals(
+                    //                        element.getNamespace()))) {
 
                     final int attCount2 = elementToDelete.getAttributeCount();
                     if (attCount2 == 0) {
