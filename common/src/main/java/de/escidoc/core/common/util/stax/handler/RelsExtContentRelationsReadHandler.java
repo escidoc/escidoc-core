@@ -101,7 +101,18 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             final String resourceValue = element.getAttribute(indexOfResource).getValue();
             final String[] target = SPLIT_PATTERN.split(resourceValue);
             this.targetId = target[1];
-            this.predicate = element.getNamespace() + element.getLocalName();
+
+            // Workaround to handle defect content relations which came from version <= 1.3.3 and where fixed
+            // with 1.4 (see issue INFR-1329)
+            // TODO remove if FoXML is fixed (e.g. by migration)
+            if (!(element.getNamespace().endsWith("#") || element.getNamespace().endsWith("/"))) {
+                // we can at this point only guess how it should be ('#' or '/'). '#' is probable.
+                this.predicate = element.getNamespace() + "#" + element.getLocalName();
+            }
+            else {
+                // end workaround
+                this.predicate = element.getNamespace() + element.getLocalName();
+            }
         }
         return element;
     }
