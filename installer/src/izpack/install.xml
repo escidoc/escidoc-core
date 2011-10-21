@@ -363,8 +363,8 @@
         <panel classname="UserInputPanel" id="UserInputPanel.15" condition="installEscidoc+authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc+authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="installEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.19" condition="installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" />
+        <panel classname="UserInputPanel" id="UserInputPanel.19" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
         <panel classname="UserInputPanel" id="UserInputPanel.20" condition="upgradeEscidoc" />
