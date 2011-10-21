@@ -1412,215 +1412,131 @@ public interface ItemHandlerInterface {
      * <p/>
      * 
      * <pre>
-     * &lt;escidocVersions:version-history&quot;&gt;
+     * &lt;escidocVersions:version-history&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;!-- namespaces omitted for readability --&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;escidocVersions:version objid=&quot;escidoc:13164:5&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * timestamp = &quot;2007-08-24T15:11:45.218Z&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *      xlink:href=&quot;/ir/Item/escidoc:13164:5&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *      xlink:title=&quot;Version 5&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *      xml:base=&quot;http://localhost:8080&quot; xlink:type=&quot;simple&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *      last-modification-date=&quot;2007-08-24T15:11:45.218Z&quot; &gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:version-number&gt;5&lt;/escidocVersions:version-number&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:timestamp&gt;2007-08-24T15:11:45.218Z
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;/escidocVersions:timestamp&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:version-status&gt;released&lt;/escidocVersions:version-status&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:valid-status&gt;valid&lt;/escidocVersions:valid-status&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:comment&gt;Update comment&lt;/escidocVersions:comment&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;escidocVersions:events&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *       &lt;premis:event xmlId=&quot;v5e1&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:eventIdentifier&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;premis:eventIdentifierType&gt;URL&lt;/premis:eventIdentifierType&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;premis:eventIdentifierValue&gt;/ir/Item/version-history#v5e1
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;/premis:eventIdentifierValue&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;/premis:eventIdentifier&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:eventType&gt;update&lt;/premis:eventType&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:eventDateTime&gt;2007-08-24T15:11:45.218Z&lt;/premis:eventDateTime&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:eventDetail&gt;Update comment&lt;/premis:eventDetail&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:linkingAgentIdentifier
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *                 xlink:href=&quot;/aa/user-account/escidoc:user42&quot;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *                 xlink:title=&quot;roland&quot; xlink:type=&quot;simple&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:linkingAgentIdentifierType&gt;escidoc-internal
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;/premis:linkingAgentIdentifierType&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;premis:linkingAgentIdentifierValue&gt;escidoc:user42
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;/premis:linkingAgentIdentifierValue&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;/premis:linkingAgentIdentifier&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;premis:linkingObjectIdentifier&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;premis:linkingObjectIdentifierType&gt;escidoc-internal
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;/premis:linkingObjectIdentifierType&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;premis:linkingObjectIdentifierValue&gt;escidoc:13164
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *           &lt;/premis:linkingObjectIdentifierValue&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *         &lt;/premis:linkingObjectIdentifier&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *       &lt;/premis:event&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     &lt;/escidocVersions:events&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;/escidocVersions:version&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;!-- some more versions --&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/escidocVersions:version-history&gt;
      * </pre>
