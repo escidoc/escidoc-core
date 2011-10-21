@@ -7,9 +7,8 @@
     virtual resources:</para>
 
     <itemizedlist mark="opencircle" spacing="compact">
-      <listitem>
-        <para>relations</para>
-        <para>version-history</para>
-      </listitem>
+      <listitem>relations</listitem>
+      <listitem>version-history</listitem>
+      <listitem>..</listitem>
     </itemizedlist>
   </section>
