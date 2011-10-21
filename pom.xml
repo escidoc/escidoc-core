@@ -1051,9 +1051,9 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
-    <escidoc.fedoragsearch.version>swa-1.4.6</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.4.9</escidoc.srw.version>
-    <srw.version>swa-1.4.2</srw.version>
+    <escidoc.fedoragsearch.version>1.4.22</escidoc.fedoragsearch.version>
+    <escidoc.srw.version>1.4.10</escidoc.srw.version>
+    <srw.version>1.4.10</srw.version>
     <escidoc.saxon.version>1.0.7</escidoc.saxon.version>
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
