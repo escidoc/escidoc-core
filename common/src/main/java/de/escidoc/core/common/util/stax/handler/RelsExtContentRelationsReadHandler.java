@@ -124,7 +124,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     }
 
     /**
-     * Remove trainling slash from String.
+     * Remove trainling '/' or '#' from String.
      * 
      * @param uri
      * @return
