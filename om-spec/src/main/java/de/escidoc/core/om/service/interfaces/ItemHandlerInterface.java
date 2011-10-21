@@ -270,8 +270,8 @@ public interface ItemHandlerInterface {
      * <li>A relations section contains a list of "relation" elements with existing relations data of the provided Item,
      * which should remain after update and a new relations data. The framework will remove all existing relations of
      * the provided Item, which are not on the list. It is checked, if provided relation targets and provided relation
-     * predicates exist. The attribute "xlink:href" of the "relation" element is set to a REST-url and respectively the
-     * attribute "objid" is set to id of the target. A target id may not contain a version number.</li>
+     * predicates exist. The attribute "xlink:href" of the "relation" element is set to a REST-url 
+     * of the target. A target id may not contain a version number.</li>
      * <li>A Components section contains the Components of the provided Item, which should remain after update and new
      * Components. The framework will remove all existing Components of the specified Item, which are not in this
      * section inside the provided XML data.</li>
@@ -279,10 +279,8 @@ public interface ItemHandlerInterface {
      * data is used and the new Components are created.</li>
      * <li>For existing Components if new references are specified the linked files are downloaded <b> or </b>extracted
      * from the XML representation (inline delivered) and the Components are created.</li>
-     * <p/>
      * <li>Differences between modifiable elements in the delivered XML data and the XML representation of the currently
      * stored Item are taken to modify the Item in the system.</li>
-     * <p/>
      * <li>If the Item is modified a new version of the Item is created.</li>
      * <li>If the status of the latest version is "released" a new version is created and gets the status "pending"
      * otherwise a new version is created with the same version status as before. This also applies to the public-status
@@ -1807,7 +1805,7 @@ public interface ItemHandlerInterface {
      * once set to "released".</li>
      * <li>Latest version date is updated.</li>
      * <li>No new version is created.</li>
-     * <li>No data is returned.</li>
+     * <li>returns last-modification-date within XML (result.xsd)</li>
      * </ul>
      * <p/>
      * <b>Parameter for request:</b> (example)<br/>
@@ -1816,13 +1814,9 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;comment&gt;Submit comment.&lt;/comment&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -1868,15 +1862,15 @@ public interface ItemHandlerInterface {
      * <p/>
      * <b>Prerequisites:</b><br/>
      * <p/>
-     * The Item must exist<br/>
+     * The Item must exist
      * <p/>
-     * The the latest-version-status is "submitted".<br/>
+     * The the latest-version-status is "submitted".
      * <p/>
      * The Item is not locked.<br/>
      * <p/>
-     * The public-status is not "withdrawn".<br/>
+     * The public-status is not "withdrawn".
      * <p/>
-     * Only the lastest version can be used here.<br/>
+     * Only the lastest version can be used here.
      * <p/>
      * <b>Tasks:</b><br/>
      * <ul>
@@ -1885,7 +1879,7 @@ public interface ItemHandlerInterface {
      * <li>The status of the latest-version is changed to "in-revision".</li>
      * <li>Latest version date is updated.</li>
      * <li>No new version is created.</li>
-     * <li>No data is returned.</li>
+     * <li>returns last-modification-date within XML (result.xsd)</li>
      * </ul>
      * <p/>
      * <b>Parameter for request:</b> (example)<br/>
@@ -1894,13 +1888,9 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;comment&gt;Revise comment.&lt;/comment&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -1948,15 +1938,15 @@ public interface ItemHandlerInterface {
      * <p/>
      * <b>Prerequisites:</b><br/>
      * <p/>
-     * The Item must exist<br/>
+     * The Item must exist
      * <p/>
-     * The public-status is "released".<br/>
+     * The public-status is "released".
      * <p/>
-     * The Item is not locked.<br/>
+     * The Item is not locked.
      * <p/>
-     * The public-status is not "withdrawn".<br/>
+     * The public-status is not "withdrawn".
      * <p/>
-     * Only the lastest version can be used here.<br/>
+     * Only the lastest version can be used here.
      * <p/>
      * <b>Tasks:</b><br/>
      * <ul>
@@ -1964,7 +1954,7 @@ public interface ItemHandlerInterface {
      * <li>Optimistic Locking criteria is checked.</li>
      * <li>The public-status of the Item is changed to "withdrawn".</li>
      * <li>No new version is created.</li>
-     * <li>No data is returned.</li>
+     * <li>returns last-modification-date within XML (result.xsd)</li>
      * </ul>
      * <p/>
      * <b>Parameter for request:</b> (example)<br/>
@@ -1973,13 +1963,9 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;comment&gt;Withdraw comment.&lt;/comment&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -2231,30 +2217,20 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;url&gt;http://application.url/some/resource&lt;/url&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
      * <p/>
      * <b>Response:</b> (example)<br/>
-     * <p/>
-     * 
      * <pre>
      * &lt;result last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;pid&gt;hdl:12345/98765&lt;/pid&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/result&gt;
      * </pre>
@@ -2271,17 +2247,12 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;pid&gt;somePid&lt;/pid&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
-     * <p/>
      * The value of the pid element is used within the framework as PID. Be aware that the value of the pid element is
      * not checked!
      * 
@@ -2577,7 +2548,7 @@ public interface ItemHandlerInterface {
      * contain a version number. In this case an InvalidContentException will be thrown. Then framework checks if
      * resources with a provided id and provided predicate from provided ontology exist in the system.</li>
      * <li>New relations will be created.</li>
-     * <li>No data is returned.</li>
+     * <li>returns last-modification-date within XML (result.xsd)</li>
      * </ul>
      * <p/>
      * <b>Parameter for request:</b> (example)<br/>
@@ -2586,58 +2557,36 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;targetId&gt;escidoc:500&lt;/targetId&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;predicate&gt;http://www.escidoc.de/ontologies/mpdl-ontologies/
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     content-relations#isAnnotationOf&lt;/predicate&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;/relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;targetId&gt;escidoc:340&lt;/targetId&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;predicate&gt;http://www.escidoc.de/ontologies/mpdl-ontologies/
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     content-relations #isRevisionOf&lt;/predicate&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;/relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -2699,7 +2648,7 @@ public interface ItemHandlerInterface {
      * <li>The relations will be deleted from the source Item.</li>
      * <li>Latest version date is updated.</li>
      * <li>A new version is created.</li>
-     * <li>No data is returned.</li>
+     * <li>returns last-modification-date within XML (result.xsd)</li>
      * </ul>
      * <p/>
      * <b>Parameter for request:</b> (example)<br/>
@@ -2708,58 +2657,36 @@ public interface ItemHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;targetId&gt;escidoc:500&lt;/targetId&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;predicate&gt;http://www.escidoc.de/ontologies/mpdl-ontologies/
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     content-relations#isAnnotationOf&lt;/predicate&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;/relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;targetId&gt;escidoc:340&lt;/targetId&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *   &lt;predicate&gt;http://www.escidoc.de/ontologies/mpdl-ontologies/
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *     content-relations #isRevisionOf&lt;/predicate&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      *  &lt;/relation&gt;
      * </pre>
-     * <p/>
-     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>

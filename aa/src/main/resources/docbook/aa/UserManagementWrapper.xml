@@ -173,10 +173,6 @@
 				</tbody>
 			</tgroup>
 		</table>
-		<para>
-			This service is not available via SOAP as direct
-			communication with the user is needed.
-		</para>
 	</section>
 	<section>
 		<title>logout</title>
@@ -187,11 +183,9 @@
 			<listitem>
 				<para>
 					Authenticate the user by using the provided
-					eSciDocUserHandle. This handle is either provided in
+					eSciDocUserHandle. This handle is provided in
 					a cookie named
-					<emphasis>escidocCookie</emphasis>
-					(in case of a REST access) or in a webservice
-					security parameter (in case of a SOAP access).
+					<emphasis>escidocCookie</emphasis>.
 				</para>
 			</listitem>
 			<listitem>
@@ -365,12 +359,6 @@
 				</tbody>
 			</tgroup>
 		</table>
-
-		<para>
-			For information about how to send the eSciDoc user handle in
-			the SOAP request, please see
-			<xref linkend="AAviaSOAP" />
-		</para>
 
 	</section>
 </chapter>

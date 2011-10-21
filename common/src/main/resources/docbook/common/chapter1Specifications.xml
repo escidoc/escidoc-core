@@ -403,7 +403,7 @@ version-id  = DIGIT , { DIGIT | ZERO } ;
 				XML specification and does not change the semantics of the XML
 				structure.
 				Please see section 2.4, Character Data and Markup, of the XML
-				specification<footnoteref linkend="XmlSpec" />.
+				specification.
 			</para>
 
 			<para>Currently, the eSciDoc Infrastructure always replaces all five

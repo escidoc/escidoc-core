@@ -7,9 +7,7 @@
 
     <para>While retrieving an item, the binary content is not provided inline
     in its representation. Instead, it can be downloaded by retrieving the
-    "content" subresource of the item's components. This subresource is
-    accessible via the REST interface, only. It is not possible to retrieve
-    binary content via the SOAP interface.</para>
+    "content" subresource of the item's components.</para>
 
     <para>The URI to retrieve a digital object of an item with id
     &lt;item-id&gt; that is stored in the item's component with id
@@ -95,8 +93,11 @@
       interface. To this staging area, the files can be uploaded by the
       services before calling the create or update methods: <programlisting>HTTP PUT http://www.escidoc.de/st/staging-file</programlisting>
       The result of this request is an XML structure describing the location
-      of the uploaded file: <programlisting>&lt;staging-file:staging-file xml:base="http://www.escidoc.de/" xlink:type="simple" 
-    xlink:href="/st/staging-file/&lt;staging-file-id&gt;" last-modification-date="&lt;date&gt;"&gt;</programlisting>
+      of the uploaded file: 
+      <programlisting>&lt;staging-file:staging-file xml:base="http://www.escidoc.de/" 
+  xlink:type="simple" xlink:href="/st/staging-file/&lt;staging-file-id&gt;" 
+  last-modification-date="&lt;date&gt;"&gt;
+      </programlisting>
       In this case, the references to the files provided within the item
       representation are the URLs to the file in the staging area:
       <programlisting>&lt;item:item ...&gt;
@@ -105,7 +106,7 @@
     &lt;components:component ...&gt;
       ...
       &lt;components:content xlink:type="simple" xlink:title="Content"
-          xlink:href="http://www.escidoc.de/st/staging-file/&lt;staging-file-id&gt;"/&gt;
+      xlink:href="http://&lt;HOST&gt;/st/staging-file/&lt;staging-file-id&gt;"/&gt;
       ...
     &lt;/components:component&gt;
     ...

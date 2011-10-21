@@ -75,8 +75,8 @@
               <row>
                 <entry>context</entry>
 
-                <entry>Every Container has to reference exactly one Context. Please provide either 
-                the xlink:href (REST) objid (SOAP) of the Context in this property. The reference
+                <entry>Every Container has to reference exactly one Context. Please provide 
+                the xlink:href of the Context in this property. The reference
                 to the Context resource is mandatory.</entry>
               </row>
 

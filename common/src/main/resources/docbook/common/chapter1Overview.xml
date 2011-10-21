@@ -28,10 +28,10 @@
       invoking methods of services remotely in a language-independent manner.
       You work with resources and a restricted set of verbs (e.g., the verbs defined by HTTP).</para>
 
-      <para>A second option is the Java Interface Connector, which is targeted at
+      <para>A second option is the eSciDoc Interface Java Connector, which is targeted at
       Java developers. This connector hides the networking layer between
       eSciDoc Infrastructure and the application completely and provides a
-      true object-oriented programming interface. The Java Interface Connector is
+      true object-oriented programming interface. The eSciDoc Interface Java Connector is
       not part of the eSciDoc Infrastructure and may be downloaded separately
       from the eSciDoc website (http://www.escidoc.org/). It comes with its
       own documentation and is thus not covered in this document.</para>

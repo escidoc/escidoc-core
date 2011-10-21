@@ -95,12 +95,12 @@
 			this values is not supported.
 		</para>
 		<para>
-		The following snippet give an example for SOAP how predecessors with form &quot;fusion&quot; 
-		are to define. For the REST representation is the objid to replace against xlink:href.  
+		The following snippet give an example how predecessors with form &quot;fusion&quot; 
+		are to define.  
 		<programlisting>
 			&lt;predecessors&gt;
-			&lt;predecessor form=&quot;fusion&quot; objid=&quot;escidoc:123&quot; /&gt;
-			&lt;predecessor form=&quot;fusion&quot; objid=&quot;escidoc:124&quot; /&gt;
+			&lt;predecessor form=&quot;fusion&quot; xlink:href=&quot;/oum/organizational-unit/escidoc:123&quot; /&gt;
+			&lt;predecessor form=&quot;fusion&quot; xlink:href=&quot;/oum/organizational-unit/escidoc:124&quot; /&gt;
 			&lt;/predecessors&gt;
 		</programlisting>
 		</para>

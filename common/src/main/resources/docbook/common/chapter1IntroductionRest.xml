@@ -51,7 +51,9 @@
 
 <section id="Overview.BasicResourceOperations">
   <title>Basic Resource Operations</title>
-  <para>Each eSciDoc resource is identifiable by its URI represented as an 
+  <para>Each eSciDoc resource is identifiable by its URI<footnote id="URI">
+  <para>Uniform Resource Identifier, see http://tools.ietf.org/html/rfc3986</para>
+  </footnote> represented as an 
   XLink<footnote id="XLinkSpec"><para>XML Linking Language (XLink) Version 1.0,
   see http://www.w3.org/TR/xlink/</para></footnote> and is accessible 
   via the Hyper Text Transfer Protocol (HTTP). HTTP verbs are used to
