@@ -157,13 +157,13 @@
       <variable name="RootDatabaseNamePostgres" value="postgres" />
 
       <!-- MySQL -->
-      <variable name="jdbc.driver.mysql" value="" />
-      <variable name="DatabaseAdminUsernameMySQL" value="root" />
-      <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" />
-      <variable name="DatabasePortMySQL" value="3306" />
-      <variable name="SqlScriptDelimiterMySQL" value=";" />
-      <variable name="SqlScriptDelimiterTypeMySQL" value="normal" />
-      <variable name="SqlScriptKeepFormatMySQL" value="false" />
+<!--       <variable name="jdbc.driver.mysql" value="" /> -->
+<!--       <variable name="DatabaseAdminUsernameMySQL" value="root" /> -->
+<!--       <variable name="DatabaseDriverClassMySQL" value="com.mysql.jdbc.Driver" /> -->
+<!--       <variable name="DatabasePortMySQL" value="3306" /> -->
+<!--       <variable name="SqlScriptDelimiterMySQL" value=";" /> -->
+<!--       <variable name="SqlScriptDelimiterTypeMySQL" value="normal" /> -->
+<!--       <variable name="SqlScriptKeepFormatMySQL" value="false" /> -->
 
       <!-- Oracle -->
       <variable name="DatabaseAdminUsernameOracle" value="oraesci_adm" />
@@ -381,8 +381,8 @@
         <panel classname="UserInputPanel" id="UserInputPanel.14" condition="installEscidoc+authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.15" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="installEscidoc+authMethodIsFormBased" />
-        <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc" />
-        <panel classname="UserInputPanel" id="UserInputPanel.18" condition="installEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.17" />
+        <panel classname="UserInputPanel" id="UserInputPanel.18" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
         <panel classname="UserInputPanel" id="UserInputPanel.19" condition="upgradeEscidoc+runMigration" />
