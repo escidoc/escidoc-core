@@ -152,12 +152,4 @@ public final class IOUtils {
             LOG.error("Error on closing stream.", e);
         }
     }
-
-    // TODO: Temporal workaround!
-    public static StringBuffer convertStreamToStringBuffer(final Stream stream) throws IOException {
-        StringBuffer resultXml = new StringBuffer();
-        stream.writeCacheTo(resultXml);
-        return resultXml;
-    }
-
 }
