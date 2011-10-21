@@ -385,9 +385,9 @@ public final class Stream extends OutputStream {
         final ByteArrayOutputStream bout = (ByteArrayOutputStream) currentStream;
         try {
             if(this.outputDirectory == null) {
-                this.tempFile = FileUtils.createTempFile("cos", "tmp");
+                this.tempFile = FileUtils.createTempFile("ir", "tmp");
             } else {
-                this.tempFile = FileUtils.createTempFile("cos", "tmp", this.outputDirectory, false);
+                this.tempFile = FileUtils.createTempFile("ir", "tmp", this.outputDirectory, false);
             }
             this.currentStream = new BufferedOutputStream(new FileOutputStream(this.tempFile));
             bout.writeTo(this.currentStream);
@@ -451,6 +451,13 @@ public final class Stream extends OutputStream {
     protected void finalize() throws Throwable {
         try {
             this.close();
+            if(this.tempFile != null) {
+                if(!this.tempFile.delete()) {
+                    if(LOG.isInfoEnabled()) {
+                        LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
+                    }
+                }
+            }
         } finally {
             super.finalize();
         }
