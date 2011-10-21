@@ -454,7 +454,7 @@ public final class Stream extends OutputStream {
             if(this.tempFile != null) {
                 if(!this.tempFile.delete()) {
                     if(LOG.isInfoEnabled()) {
-                        LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
+                        LOG.info("Error on deleting temp file '" + tempFile.getName() + "' at finalize.");
                     }
                 }
             }
