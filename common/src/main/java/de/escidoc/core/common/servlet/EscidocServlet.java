@@ -554,7 +554,7 @@ public class EscidocServlet extends HttpServlet {
             if (externalContentRedirectUrl != null) {
                 // redirect
                 doRedirect(httpResponse, null, "<html><body><a href=\"" + externalContentRedirectUrl
-                    + "\">The requested binary content" + " is externally available under this location: "
+                    + "\">The requested binary content is externally available under this location: "
                     + externalContentRedirectUrl + "</a></body></html>", externalContentRedirectUrl,
                     HttpServletResponse.SC_MOVED_TEMPORARILY, compressionIsAccepted);
             }
@@ -568,9 +568,7 @@ public class EscidocServlet extends HttpServlet {
                     httpResponse.setHeader("Content-Disposition", "inline;filename=\"" + binaryContent.getFileName()
                         + '\"');
                 }
-                final ServletOutputStream out = httpResponse.getOutputStream();
-                final InputStream content = binaryContent.getContent();
-                IOUtils.copyAndCloseInput(content, out);
+                IOUtils.copyAndCloseInput(binaryContent.getContent(), httpResponse.getOutputStream());
             }
         }
         else {
