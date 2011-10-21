@@ -81,10 +81,11 @@
 			set via cmm.Item.objectPid.releaseWithoutPid.
 		</para>
 		<programlisting>
-			cmm.[Container|Item].[objectPid|versionPid].[setPidBeforeRelease|
-      setPidAfterRelease|releaseWithoutPid]
+			cmm.[Container|Item].[objectPid|versionPid]
+			.[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
          
-			cmm.Item.contentPid.[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
+			cmm.Item.contentPid
+			.[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
 		</programlisting>
 	</section>
 
