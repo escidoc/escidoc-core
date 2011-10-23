@@ -25,10 +25,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.escidoc.core</groupId>
     <artifactId>common-spec</artifactId>
     <name>eSciDoc Core - Common Spec.</name>
-    <version>1.4-SNAPSHOT</version>
 
     <parent>
         <artifactId>eSciDocCore</artifactId>

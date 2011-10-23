@@ -25,10 +25,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.escidoc.core</groupId>
     <artifactId>oum-spec</artifactId>
     <name>eSciDoc Core - Organizational Unit Service Spec.</name>
-    <version>1.4-SNAPSHOT</version>
 
     <parent>
         <artifactId>eSciDocCore</artifactId>

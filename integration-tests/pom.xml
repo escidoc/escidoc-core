@@ -4,11 +4,9 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.escidoc.core</groupId>
   <artifactId>integration-tests</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core - Integration Tests</name>
-  <version>1.4-SNAPSHOT</version>
   <description>Integration Tests of eSciDoc Core</description>
 
   <parent>

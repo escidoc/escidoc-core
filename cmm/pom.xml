@@ -3,10 +3,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.escidoc.core</groupId>
 	<artifactId>cmm</artifactId>
 	<name>eSciDoc Core - Content Model Service Impl.</name>
-	<version>1.4-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
