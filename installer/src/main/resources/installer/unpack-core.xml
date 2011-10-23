@@ -181,8 +181,10 @@
 	    <echo level="info">Enabling Authentication for the JBoss JMX and Web Console</echo>
 	    <!-- replace default setting-files from ./props to ./ (not sure why they are in the wrong directory or why they are 
 	         not loaded from the props-directory) -->
-	    <delete file="${install.dir}/jboss/server/default/conf/props/defaultRoles.properties" />
-	    <delete file="${install.dir}/jboss/server/default/conf/props/defaultUsers.properties" />
+	    <move file="${install.dir}/jboss/server/default/conf/props/defaultRoles.properties" 
+	    	toFile="${install.dir}/jboss/server/default/conf/props/defaultRoles.properties.bak" failonerror="false" />
+	    <move file="${install.dir}/jboss/server/default/conf/props/defaultUsers.properties" 
+	    	toFile="${install.dir}/jboss/server/default/conf/props/defaultUsers.properties.bak" failonerror="false" />
 	    
 	    <replace file="${install.dir}/install.tmp/jboss-security/roles.properties" token="{JBOSS_USERNAME}" value="${JBossUsername}"/>
 	    <replace file="${install.dir}/install.tmp/jboss-security/users.properties" token="{JBOSS_USERNAME}" value="${JBossUsername}"/>
@@ -194,12 +196,26 @@
 	        tofile="${install.dir}/jboss/server/default/conf/defaultUsers.properties"/>
 	    
 	    <!-- replace username/passwd settings for jmx-console -->
-	    <copy file="${install.dir}/install.tmp/jboss-security/roles.properties"
+	  	<!-- backup old config files -->
+	    <move file="${install.dir}/jboss/server/default/conf/props/jmx-console-roles.properties"
+	        tofile="${install.dir}/jboss/server/default/conf/props/jmx-console-roles.properties.bak" failonerror="false" />
+	    <move file="${install.dir}/jboss/server/default/conf/props/jmx-console-users.properties"
+	        tofile="${install.dir}/jboss/server/default/conf/props/jmx-console-users.properties.bak" failonerror="false" />
+		<!-- install new -->
+	  	<copy file="${install.dir}/install.tmp/jboss-security/roles.properties"
 	        tofile="${install.dir}/jboss/server/default/conf/props/jmx-console-roles.properties"/>
 	    <copy file="${install.dir}/install.tmp/jboss-security/users.properties"
 	        tofile="${install.dir}/jboss/server/default/conf/props/jmx-console-users.properties"/>
 	    
 	    <!-- replace username/passwd settings for web-console -->
+	  	<!-- backup old config files -->
+	    <move file="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes/web-console-roles.properties"
+	        tofile="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes/web-console-roles.properties.bak"
+	    	failonerror="false" />
+	    <move file="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes/web-console-users.properties"
+	        tofile="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes/web-console-users.properties.bak"
+	    	failonerror="false" />
+		<!-- install new -->
 	    <copy file="${install.dir}/install.tmp/jboss-security/roles.properties"
 	        tofile="${install.dir}/jboss/server/default/deploy/management/console-mgr.sar/web-console.war/WEB-INF/classes/web-console-roles.properties"/>
 	    <copy file="${install.dir}/install.tmp/jboss-security/users.properties"
@@ -231,11 +247,20 @@
 	  	<!-- cleanup -->
 	  	<delete dir="${install.dir}/install.tmp/jboss-security"/>
 	  </target>
-	  
+	
 	  <target name="jboss-security-https" depends="init" if="enableJBossHTTPS" description="Enables HTTPs for the JBoss JMX and Web Console">
 	    <echo level="info">Enabling HTTPs for the JBoss JMX and Web Console</echo>
-	    <copy file="${JBossKeystore}" tofile="${install.dir}/jboss/server/default/conf/escidoc.keystore"/>
-	    
+		<!-- Backup old keystore -->
+	  	<copy file="${install.dir}/jboss/server/default/conf/escidoc.keystore" 
+	  		tofile="${install.dir}/jboss/server/default/conf/escidoc.keystore.bak" 
+	  		failonerror="false" />
+	  	<copy file="${JBossKeystore}" tofile="${install.dir}/jboss/server/default/conf/escidoc.keystore"/>
+
+	  	<!-- Backup server.xml -->
+	  	<copy file="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml" 
+	  		tofile="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml.bak" 
+	  		failonerror="false" />
+	  	<!-- alter server.xml -->
 	    <xmltask source="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml"
 	      dest="${install.dir}/jboss/server/default/deploy/jboss-web.deployer/server.xml"> 
 	      <insert path="/Server/Service"> <!-- [name()='jboss.web'] --> 
