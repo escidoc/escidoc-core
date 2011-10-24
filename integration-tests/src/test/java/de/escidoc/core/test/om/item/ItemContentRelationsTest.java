@@ -102,7 +102,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     @Test
-	@Ignore("Test is wrong implemented")
+    @Ignore("Test is wrong implemented")
     public void testIssueInfr1007() throws Exception {
         addRelation(itemId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
         addRelation(itemId, "http://escidoc.org/examples/test1");
@@ -326,7 +326,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      */
     @Test
-	@Ignore("Test is wrong implemented")
+    @Ignore("Test is wrong implemented")
     public void testAddExistingInvalidRelation() throws Exception {
         Document xmlItem =
             getTemplateAsDocument(TEMPLATE_ITEM_PATH, "escidoc_item_198_for_create" + getTransport(true) + ".xml");
@@ -743,8 +743,8 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-     @Test
-	@Ignore("Test is wrong implemented")
+    @Test
+    @Ignore("Test is wrong implemented")
     public void testRelationsWithVersionedItem() throws Exception {
         String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
         param += "/>";
