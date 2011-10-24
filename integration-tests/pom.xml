@@ -12,7 +12,7 @@
   <parent>
     <artifactId>eSciDocCore</artifactId>
     <groupId>org.escidoc.core</groupId>
-    <version>1.4</version>
+    <version>1.4.1-SNAPSHOT</version>
   </parent>
 
   <build>
@@ -789,7 +789,7 @@
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
     </dependency>
-    <!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> <version>1.4</version> <type>jar</type> 
+    <!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> <version>1.4.1-SNAPSHOT</version> <type>jar</type> 
       <scope>test</scope> </dependency> -->
 
     <!-- for SB -->
