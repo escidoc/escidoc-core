@@ -35,6 +35,7 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -153,7 +154,7 @@ public class RetrieveMembersIT extends ContextTestBase {
 
         }
         else if (CONTEXT_STATUS_OPENED.equals(expectedState)) {
-            open(objId, getTaskParam(getLastModificationDateValue(created)));
+            open(objId, getStatusTaskParam(getLastModificationDateValue2(created), null));
         }
         else if (CONTEXT_STATUS_CLOSED.equals(expectedState)) {
             // open(objId, getTaskParam(getLastModificationDateValue(created)));
@@ -199,21 +200,21 @@ public class RetrieveMembersIT extends ContextTestBase {
         }
         else if (STATUS_SUBMITTED.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getTaskParam(getLastModificationDateValue(item)));
+            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
         }
         else if (STATUS_RELEASED.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getTaskParam(getLastModificationDateValue(item)));
+            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
             log("Release item '" + result + "'");
             itemBase.releaseWithPid(result);
         }
         else if (STATUS_WITHDRAWN.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getTaskParam(getLastModificationDateValue(item)));
+            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
             log("Release item '" + result + "'");
             itemBase.releaseWithPid(result);
             log("Withdraw item '" + result + "'");
-            itemBase.withdraw(result, getWithdrawTaskParam(getLastModificationDateValue(EscidocAbstractTest
+            itemBase.withdraw(result, getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
                 .getDocument(itemBase.retrieve(result))), "Withdrawn for Context retrieve members tests!"));
         }
         else {
@@ -259,22 +260,22 @@ public class RetrieveMembersIT extends ContextTestBase {
         }
         else if (STATUS_SUBMITTED.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getTaskParam(getLastModificationDateValue(container)));
+            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
         }
         else if (STATUS_RELEASED.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getTaskParam(getLastModificationDateValue(container)));
+            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
             log("Release container '" + objID + "'");
             containerBase.releaseWithPid(objID);
         }
         else if (STATUS_WITHDRAWN.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getTaskParam(getLastModificationDateValue(container)));
+            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
             log("Release container '" + objID + "'");
 
             containerBase.releaseWithPid(objID);
             log("Withdraw container '" + objID + "'");
-            containerBase.withdraw(objID, getWithdrawTaskParam(getLastModificationDateValue(EscidocAbstractTest
+            containerBase.withdraw(objID, getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
                 .getDocument(containerBase.retrieve(objID))), "Withdrawn for Context retrieve members tests!"));
         }
         else {

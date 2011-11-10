@@ -541,7 +541,7 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testOM_UCI_2_1() throws Exception {
 
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         releaseWithPid(theItemId);
         theItemXml = retrieve(theItemId);
 

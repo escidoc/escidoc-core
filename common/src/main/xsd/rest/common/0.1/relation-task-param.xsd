@@ -21,8 +21,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.escidoc.org/schemas/relation-task-param/0.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="param">
 		<xs:complexType>
-			<xs:all>
-				<xs:element name="relation" minOccurs="1">
+			<xs:sequence>
+				<xs:element name="relation" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:all>
 							<xs:element name="targetId" type="xs:token" minOccurs="1"/>
@@ -30,7 +30,7 @@
 						</xs:all>
 					</xs:complexType>
 				</xs:element>
-			</xs:all>
+			</xs:sequence>
 			<xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
 		</xs:complexType>
 	</xs:element>

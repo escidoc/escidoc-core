@@ -238,7 +238,7 @@ public interface UserAccountHandlerInterface {
      *
      * @param userId    The User Account ID.
      * @param taskParam The XML representation according to update-password-task-param.xsd of task parameters including 
-     *                  the last modification date and the new password. (see above)
+     *                  the last modification date attribute and the new password. (see above)
      * @throws InvalidStatusException       Thrown if the addressed User Account is not active.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException        Thrown in case of invalid xml data (corrupt data, schema validation failed
@@ -299,7 +299,9 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID to be acivated.
-     * @param taskParam The XML representation of task parameters including the last modification date. (see above)
+     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Account is active.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException          Thrown if the provided XML representation of task parameters are invalid.
@@ -309,7 +311,7 @@ public interface UserAccountHandlerInterface {
      *                                        modification date.
      * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
-     *                                        eSciDocUserHandle.
+     *                                 eSciDocUserHandle.
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
@@ -336,7 +338,9 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID to be deacivated.
-     * @param taskParam The XML representation of task parameters including the last modification date. (see above)
+     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Account is deactive.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException          Thrown in case of invalid xml data (corrupt data, schema validation failed
@@ -588,7 +592,9 @@ public interface UserAccountHandlerInterface {
      *
      * @param userId    The User Account ID for that a grant shall be revoked.
      * @param grantId   The Grant ID that shall be revoked.
-     * @param taskParam The remark for the revocation of the Grant in an XML-Structure: (see above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and a revocation-remark. (see example above)
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Account cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -654,8 +660,9 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID for that a grant shall be revoked.
-     * @param taskParam The filter for grants to revoke and the remark for the revocation of the Grant in an
-     *                  XML-Structure: (see above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd. 
+     * Containing the filter for grants to revoke and a revocation-remark.
+     * The filter consists of an id and name (url), see example above.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Account cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.

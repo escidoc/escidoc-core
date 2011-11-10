@@ -1947,8 +1947,8 @@ public class UserGroupIT extends UserGroupTestBase {
         Document createdDocument = getDocument(ouXml);
         String ouId = getObjidValue(createdDocument);
         String ouTitle = getTitleValue(createdDocument);
-        String lastModDate = getLastModificationDateValue(createdDocument);
-        organizationalUnitTestBase.open(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
+
+        organizationalUnitTestBase.open(ouId, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
 
         //create ou with parent=otherOu
         String[] parentValues = new String[2];
@@ -1965,8 +1965,8 @@ public class UserGroupIT extends UserGroupTestBase {
         ouXml = organizationalUnitTestBase.create(toBeCreatedXml);
         createdDocument = getDocument(ouXml);
         String ouId1 = getObjidValue(createdDocument);
-        lastModDate = getLastModificationDateValue(createdDocument);
-        organizationalUnitTestBase.open(ouId1, "<param last-modification-date=\"" + lastModDate + "\" />");
+        organizationalUnitTestBase
+            .open(ouId1, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
 
         //create user with child ou
         Document createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_create1.xml");

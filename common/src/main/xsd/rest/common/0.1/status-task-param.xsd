@@ -24,9 +24,7 @@ targetNamespace="http://www.escidoc.org/schemas/status-task-param/0.1"
 	<xs:element name="param">
 		<xs:complexType>
 			<xs:all>
-<!-- 				<xs:element name="withdraw-comment" type="xs:string" minOccurs="0"/> -->
 				<xs:element name="comment" type="xs:string" minOccurs="0"/>
-<!-- 				<xs:element name="revokation-remark" minOccurs="0"/> -->
 			</xs:all>
 			<xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
 		</xs:complexType>

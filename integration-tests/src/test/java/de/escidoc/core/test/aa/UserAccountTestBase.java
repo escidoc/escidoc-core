@@ -860,11 +860,11 @@ public abstract class UserAccountTestBase extends AaTestBase {
     protected String createClosedOrganizationalUnit() throws Exception {
         String orgUnitXml = createOrganizationalUnit();
         final String ouId = getObjidValue(orgUnitXml);
-        String lastModDate = getLastModificationDateValue(getDocument(orgUnitXml));
+        DateTime lastModDate = getLastModificationDateValue2(getDocument(orgUnitXml));
 
         // open ou
         try {
-            getOrganizationalUnitClient().open(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
+            getOrganizationalUnitClient().open(ouId, getStatusTaskParam(lastModDate, null));
         }
         catch (final Exception e) {
             failException("Init: OU open failed. [" + ouId + "]", e);
@@ -873,8 +873,8 @@ public abstract class UserAccountTestBase extends AaTestBase {
         // close ou
         try {
             orgUnitXml = handleXmlResult(getOrganizationalUnitClient().retrieve(ouId));
-            lastModDate = getLastModificationDateValue(getDocument(orgUnitXml));
-            getOrganizationalUnitClient().close(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
+            lastModDate = getLastModificationDateValue2(getDocument(orgUnitXml));
+            getOrganizationalUnitClient().close(ouId, getStatusTaskParam(lastModDate, null));
         }
         catch (final Exception e) {
             failException("Init: OU close failed.", e);

@@ -87,7 +87,8 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
 
             lmdSubCont = prepareContainerPid(subContainerId, lmdSubCont);
             String param = getTheLastModificationParam(false, this.theContainerId, "", lmdSubCont);
-            submit(subContainerId, param);
+            submit(subContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(subContainerId))), null));
 
             // prepare the Container it self to release
             param = getTheLastModificationParam(false, theContainerId, "");
@@ -187,7 +188,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
      */
     private String submitItemHelp(final String itemId, final String lmd) throws Exception {
 
-        String param = getTaskParam(lmd);
+        String param = getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null);
 
         Object result = getItemClient().submit(itemId, param);
         if (result instanceof HttpResponse) {

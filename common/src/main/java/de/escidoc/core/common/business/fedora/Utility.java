@@ -1252,8 +1252,8 @@ public class Utility {
         }
 
         String xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result " + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI
-                + "\" " + "last-modification-date=\"" + lastModificationDate.toString() + '\"';
+            Constants.XML_HEADER + "<result " + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI + "\" "
+                + "last-modification-date=\"" + lastModificationDate.toString() + '\"';
 
         xml += content == null ? " />" : ">\n" + content + "</result>\n";
 

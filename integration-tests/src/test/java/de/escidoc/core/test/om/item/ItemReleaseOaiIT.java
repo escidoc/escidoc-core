@@ -80,10 +80,6 @@ public class ItemReleaseOaiIT extends ItemTestBase {
         // TODO purge object from Fedora
     }
 
-    private String getTheLastModificationParam(boolean includeWithdrawComment) throws Exception {
-        return getTheLastModificationParam(includeWithdrawComment, theItemId);
-    }
-
     /**
      *
      * @throws Exception
@@ -96,8 +92,8 @@ public class ItemReleaseOaiIT extends ItemTestBase {
             for (int i = 0; i < 20; i++) {
                 try {
                     setUp();
-                    String param = getTheLastModificationParam(false);
-                    submit(theItemId, param);
+                    submit(theItemId, getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
                     String pidParam;
                     if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
                         && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -124,8 +120,8 @@ public class ItemReleaseOaiIT extends ItemTestBase {
                         assignVersionPid(latestVersion, pidParam);
                     }
 
-                    param = getTheLastModificationParam(false);
-                    release(theItemId, param);
+                    release(theItemId, getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
                 }
                 catch (Exception e) {
 

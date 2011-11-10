@@ -533,13 +533,13 @@ public class ItemTestBase extends OmTestBase {
     public String releaseWithPid(final String id) throws Exception {
 
         Document itemDoc = null;
-        String lmd = null;
+        DateTime lmd = null;
         String pidXml = null;
 
         if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")
             || !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
-            lmd = getLastModificationDateValue(itemDoc);
+            lmd = getLastModificationDateValue2(itemDoc);
         }
 
         // assign objectPid
@@ -551,12 +551,12 @@ public class ItemTestBase extends OmTestBase {
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(itemUrl + itemId));
-                String pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+                String pidParam = getAssignPidTaskParam(lmd, assignPidParam);
 
                 pidXml = assignObjectPid(id, pidParam);
                 assertXmlValidResult(pidXml);
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
-                lmd = getLastModificationDateValue(pidDoc);
+                lmd = getLastModificationDateValue2(pidDoc);
             }
         }
 
@@ -574,18 +574,18 @@ public class ItemTestBase extends OmTestBase {
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(itemUrl + versionId));
-                String pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+                String pidParam = getAssignPidTaskParam(lmd, assignPidParam);
 
                 pidXml = assignVersionPid(versionId, pidParam);
                 assertXmlValidResult(pidXml);
 
                 // assignVersionPid does not alter the last-modification-date
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
-                lmd = getLastModificationDateValue(pidDoc);
+                lmd = getLastModificationDateValue2(pidDoc);
             }
         }
 
-        String param = getTaskParam(lmd);
+        String param = getStatusTaskParam(lmd, null);
 
         Object result = getItemClient().release(id, param);
         if (result instanceof HttpResponse) {
@@ -981,7 +981,7 @@ public class ItemTestBase extends OmTestBase {
                 createdXml = update(objidValue, createdXml);
                 document = EscidocAbstractTest.getDocument(createdXml);
             }
-            submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+            submit(objidValue, getStatusTaskParam(getLastModificationDateValue2(document), null));
             createdXml = retrieve(objidValue);
             if (createVersionsAfter) {
                 createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
@@ -1003,7 +1003,7 @@ public class ItemTestBase extends OmTestBase {
                     if (STATUS_WITHDRAWN.equals(status)) {
                         document = EscidocAbstractTest.getDocument(createdXml);
                         final String taskParam =
-                            getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                            getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
                         withdraw(getObjidValue(document), taskParam);
                         createdXml = retrieve(objidValue);
                     }

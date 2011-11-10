@@ -45,6 +45,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -451,9 +452,9 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
             String objectId = getId(xml);
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
-            String lastModDate = getLastModificationDate(xml);
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
             returnHash.put("itemId", objectId);
+
             for (int i = 1;; i++) {
                 try {
                     String componentId = getComponentObjidValue(itemDoc, i);
@@ -469,7 +470,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit item
-                item.submit(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                item.submit(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
                 xml = item.retrieve(objectId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = item.update(objectId, xml);
@@ -477,29 +478,29 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                 if (!status.equals(STATUS_SUBMITTED)) {
                     if (status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
-                        lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        item.revise(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                        item
+                            .revise(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     else {
                         // assignPids
                         xml = item.retrieve(objectId);
-                        String componentId = getComponentObjidValue(itemDoc, 1);
-                        String pidParam = getItemPidParam(objectId);
-                        item.assignContentPid(objectId, componentId, pidParam);
-                        pidParam = getItemPidParam(objectId);
-                        item.assignObjectPid(objectId, pidParam);
                         Node n = selectSingleNode(getDocument(xml), "/item/properties/version/number");
+
+                        String componentId = getComponentObjidValue(itemDoc, 1);
+                        String pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
+                        xml = item.assignContentPid(objectId, componentId, pidParam);
+                        pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
+                        xml = item.assignObjectPid(objectId, pidParam);
                         String versionNumber = n.getTextContent();
                         String versionId = objectId + ":" + versionNumber;
-                        pidParam = getItemPidParam(versionId);
-                        item.assignVersionPid(versionId, pidParam);
+                        pidParam = getItemPidParam(versionId, getLastModificationDateValue2(getDocument(xml)));
+                        xml = item.assignVersionPid(versionId, pidParam);
                         // }
 
                         // release item
-                        xml = item.retrieve(objectId);
-                        lastModDate = getLastModificationDate(xml);
-                        item.release(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                        item.release(objectId,
+                            getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_WITHDRAWN)
                         && !status.equals(STATUS_IN_REVISION)) {
@@ -509,20 +510,23 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                     }
                     else if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
-                        lastModDate = getLastModificationDate(xml);
-                        item.withdraw(objectId, "<param last-modification-date=\"" + lastModDate
-                            + "\"><withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment></param>");
+                        String taskParam =
+                            getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
+                                "This is a withdraw comment.");
+
+                        item.withdraw(objectId, taskParam);
                     }
                 }
             }
             if (containerIds != null) {
                 for (int i = 0; i < containerIds.length; i++) {
                     xml = container.retrieve(containerIds[i]);
-                    lastModDate = getLastModificationDate(xml);
-                    String taskParam =
-                        "<param last-modification-date=\"" + lastModDate + "\">" + "<id>" + objectId + "</id></param>";
 
-                    container.addMembers(containerIds[i], taskParam);
+                    List<String> ids = new ArrayList<String>();
+                    ids.add(objectId);
+
+                    container.addMembers(containerIds[i], getMembersTaskParam(
+                        getLastModificationDateValue2(getDocument(xml)), ids));
                 }
             }
             return returnHash;
@@ -568,11 +572,11 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
             resourceId = getId(xml);
             xml = xml.replaceAll("Meier", "Meier1");
             xml = contentRelation.update(resourceId, xml);
-            String lastModDate = getLastModificationDate(xml);
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit content-relation
-                contentRelation.submit(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                contentRelation.submit(resourceId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+                    null));
                 xml = contentRelation.retrieve(resourceId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = contentRelation.update(resourceId, xml);
@@ -580,15 +584,15 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                 if (!status.equals(STATUS_SUBMITTED)) {
                     if (status.equals(STATUS_IN_REVISION)) {
                         xml = contentRelation.retrieve(resourceId);
-                        lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        contentRelation.revise(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                        contentRelation.revise(resourceId, getStatusTaskParam(
+                            getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     else {
                         // release item
                         xml = contentRelation.retrieve(resourceId);
-                        lastModDate = getLastModificationDate(xml);
-                        contentRelation.release(resourceId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                        contentRelation.release(resourceId, getStatusTaskParam(
+                            getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = contentRelation.retrieve(resourceId);

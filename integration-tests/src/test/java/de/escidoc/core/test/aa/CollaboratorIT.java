@@ -33,6 +33,7 @@ import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +41,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -172,15 +174,17 @@ public class CollaboratorIT extends GrantTestBase {
         privateComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + privateComponentId;
 
         //add container2 to container
-        String lastModificationDate = getLastModificationDateValue(containerDocument);
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + containerId2 + "</id></param>";
-        getContainerClient().addMembers(containerId, taskParam);
+        DateTime lastModificationDate = getLastModificationDateValue2(containerDocument);
+
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(containerId2);
+        getContainerClient().addMembers(containerId, getMembersTaskParam(lastModificationDate, ids));
 
         //add item to container2
-        lastModificationDate = getLastModificationDateValue(containerDocument2);
-        taskParam = "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
-        getContainerClient().addMembers(containerId2, taskParam);
+        lastModificationDate = getLastModificationDateValue2(containerDocument2);
+        ids = new ArrayList<String>();
+        ids.add(itemId);
+        getContainerClient().addMembers(containerId2, getMembersTaskParam(lastModificationDate, ids));
 
         //update item to create new version
         itemXml = itemXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");

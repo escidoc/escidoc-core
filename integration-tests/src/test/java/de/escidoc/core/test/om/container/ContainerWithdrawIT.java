@@ -41,6 +41,9 @@ import de.escidoc.core.test.common.AssignParam;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+
+import org.joda.time.DateTime;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,10 +76,9 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOM_WAC_2_1() throws Exception {
 
-        String param = getTheLastModificationParam(true, theContainerId);
-
         try {
-            withdraw("bla", param);
+            withdraw("bla", getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+                null));
             fail("No exception occurred on withdraw with non" + "existing container id.");
         }
         catch (final Exception e) {
@@ -91,8 +93,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void test_OM_WAC_2_2() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, param);
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -120,16 +122,17 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false, theContainerId);
-        release(theContainerId, param);
+        release(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        param = getTheLastModificationParam(true, theContainerId);
-        param =
-            param.replaceFirst("<param last-modification-date=\"([0-9TZ:\\.-])+\"",
-                "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
+        //        String param = getTheLastModificationParam(true, theContainerId);
+        //        param =
+        //            param.replaceFirst("<param last-modification-date=\"([0-9TZ:\\.-])+\"",
+        //                "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
 
         try {
-            withdraw(theContainerId, param);
+            withdraw(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on withdraw with " + "wrong time stamp.");
         }
         catch (final Exception e) {
@@ -144,10 +147,9 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOM_WAC_3_1() throws Exception {
 
-        String param = getTheLastModificationParam(true, theContainerId);
-
         try {
-            withdraw(null, param);
+            withdraw(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+                null));
             fail("No exception occurred on withdraw with missing " + "container id.");
         }
         catch (final Exception e) {
@@ -178,12 +180,12 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOMWAC3_3() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, param);
-        param = getTheLastModificationParam(true, theContainerId);
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         try {
-            withdraw(theContainerId, param);
+            withdraw(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on withdraw bevore submit.");
         }
         catch (final Exception e) {
@@ -223,14 +225,12 @@ public class ContainerWithdrawIT extends ContainerTestBase {
 
     @Test
     public void testOM_WAC_1() throws Exception {
-        String param = null;
-
         submitItemHelp();
-        param = getTheLastModificationParam(false, theSubcontainerId);
-        submit(theSubcontainerId, param);
+        submit(theSubcontainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        param = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, param);
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -258,10 +258,11 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false, theContainerId);
-        release(theContainerId, param);
+        String responseXML =
+            release(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        param = getTheLastModificationParam(true, theContainerId);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(responseXML)), WITHDRAW_COMMENT);
         withdraw(theContainerId, param);
         try {
             String withdrawnContainer = retrieve(theContainerId);
@@ -308,7 +309,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            submit(theContainerId, getTheLastModificationParam(false, theContainerId));
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("Submit after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -324,7 +326,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            release(theContainerId, getTheLastModificationParam(false, theContainerId));
+            release(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("Release after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -349,25 +352,14 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     }
 
     /**
-     * Clean up after test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
      */
-    @Override
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        theContainerXml = null;
-
-        theContainerId = null;
-
-        theSubcontainerId = null;
-        // TODO purge object from Fedora
-    }
-
     private void submitItemHelp() throws Exception {
-        String param = getTheLastModificationParam(false, theItemId);
+        DateTime lmd =
+            getLastModificationDateValue2(getDocument(handleXmlResult(getItemClient().retrieve(this.theItemId))));
+        String param = getStatusTaskParam(lmd, null);
+
         Object result1 = getItemClient().submit(theItemId, param);
         if (result1 instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result1;
@@ -381,14 +373,12 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOM_WAC_4() throws Exception {
 
-        String param = null;
-
         submitItemHelp();
-        param = getTheLastModificationParam(false, theSubcontainerId);
-        submit(theSubcontainerId, param);
+        submit(theSubcontainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theSubcontainerId))), null));
 
-        param = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, param);
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -416,13 +406,14 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false, theContainerId);
-        release(theContainerId, param);
+        release(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        param = getTheLastModificationParam(true, theContainerId);
-        withdraw(theContainerId, param);
+        withdraw(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         try {
-            withdraw(theContainerId, param);
+            withdraw(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on second withdraw.");
         }
         catch (final Exception e) {
@@ -430,50 +421,5 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
-    }
-
-    // TODO FRS: I reinserted this because it is not clear for me, how to
-    // retrieve last-mod-date for item and/or container from EscidocTestBase
-    @Override
-    public String getTheLastModificationParam(boolean includeWithdrawComment, String id) throws Exception {
-        String lastModificationDate = null;
-        try {
-            Document container = EscidocAbstractTest.getDocument(retrieve(id));
-
-            // get last-modification-date
-            NamedNodeMap atts = container.getDocumentElement().getAttributes();
-            Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-            lastModificationDate = lastModificationDateNode.getNodeValue();
-        }
-        catch (final ContainerNotFoundException e) {
-            // nothing to do
-        }
-        if (lastModificationDate == null) {
-            Object result = getItemClient().retrieve(id);
-            String xmlResult = null;
-            if (result instanceof HttpResponse) {
-                HttpResponse httpRes = (HttpResponse) result;
-                assertHttpStatusOfMethod("", httpRes);
-                xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-
-            }
-            else if (result instanceof String) {
-                xmlResult = (String) result;
-            }
-            Document item = EscidocAbstractTest.getDocument(xmlResult);
-            // get last-modification-date
-            NamedNodeMap atts = item.getDocumentElement().getAttributes();
-            Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-            lastModificationDate = lastModificationDateNode.getNodeValue();
-        }
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        param += ">";
-        if (includeWithdrawComment) {
-            param += "<withdraw-comment>" + WITHDRAW_COMMENT + "</withdraw-comment>";
-            // param += "withdraw-comment=\"" + WITHDRAW_COMMENT + "\"";
-        }
-        param += "</param>";
-
-        return param;
     }
 }

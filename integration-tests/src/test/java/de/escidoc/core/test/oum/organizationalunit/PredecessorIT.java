@@ -55,6 +55,8 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
     private static final String INVALID = "invalid";
 
+    private static final String OPEN_COMMENT = "Opened organizational unit.";
+
     /**
      * Test creating predecessor relation.
      *
@@ -67,7 +69,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         Document toBeCreatedDocument =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
@@ -116,12 +118,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
 
-        open(ou2Id, getTheLastModificationParam(true, ou2Id, "Opened organizational unit."));
+        open(ou2Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou2Xml)), OPEN_COMMENT));
 
         // creating successor
 
@@ -192,12 +194,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
 
-        open(ou2Id, getTheLastModificationParam(true, ou2Id, "Opened organizational unit."));
+        open(ou2Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou2Xml)), OPEN_COMMENT));
 
         // creating successor
 
@@ -249,7 +251,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         // create second OU and set OU1 as predecessor
         Document toBeCreatedDocument =
@@ -278,7 +280,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou3Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou3Id = getObjidValue(getDocument(ou3Xml));
 
-        open(ou3Id, getTheLastModificationParam(true, ou3Id, "Opened organizational unit."));
+        open(ou3Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou3Xml)), OPEN_COMMENT));
 
         // update OU2
         Document ou2doc = getDocument(retrieve(ou2Id));
@@ -313,7 +315,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         Document ou1doc = getDocument(retrieve(ou1Id));
 
@@ -349,13 +351,13 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
      */
     @Ignore("Test updating predecessor relation")
     @Test
-    public void notestOumPredecessorUpdate03() throws Exception {
+    public void testOumPredecessorUpdate03() throws Exception {
 
         // create OU1
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou1Id = getObjidValue(getDocument(ou1Xml));
 
-        open(ou1Id, getTheLastModificationParam(true, ou1Id, "Opened organizational unit."));
+        open(ou1Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou1Xml)), OPEN_COMMENT));
 
         Document toBeCreatedDocument =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
@@ -385,7 +387,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String ou3Xml = createSuccessfully("escidoc_ou_create.xml");
         final String ou3Id = getObjidValue(getDocument(ou3Xml));
 
-        open(ou3Id, getTheLastModificationParam(true, ou3Id, "Opened organizational unit."));
+        open(ou3Id, getStatusTaskParam(getLastModificationDateValue2(getDocument(ou3Xml)), OPEN_COMMENT));
 
         // append OU3 as predecessor to OU
 

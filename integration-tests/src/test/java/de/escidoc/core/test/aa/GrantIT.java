@@ -1171,7 +1171,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         String taskParamXML =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" >\n"
                 + "<revocation-remark>some remark</revocation-remark></param>";
 
@@ -1194,7 +1194,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         String taskParamXML =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" "
                 + " last-modification-date=\"2008-01-01\" />";
 
@@ -1244,6 +1244,10 @@ public class GrantIT extends GrantTestBase {
 
         //revoke 2 grants
         String taskParam = getRevokeGrantsTaskParam(expectedGrants.keySet(), "Some revocation\n remark");
+
+        System.out.println("========================================");
+        System.out.println(taskParam);
+        System.out.println("========================================");
 
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
@@ -1328,7 +1332,7 @@ public class GrantIT extends GrantTestBase {
 
         //revoke all grants
         String taskParam =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\" />";
 
         try {
@@ -1358,7 +1362,7 @@ public class GrantIT extends GrantTestBase {
 
         //revoke no grants
         StringBuffer taskParamXML =
-            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
         taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
         taskParamXML
@@ -1393,7 +1397,7 @@ public class GrantIT extends GrantTestBase {
         //revoke 2 existing grants and 2 grants that do not exist
         //check Transactional Functionality
         StringBuffer taskParamXML =
-            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
         taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
         int count = 0;
@@ -1438,7 +1442,7 @@ public class GrantIT extends GrantTestBase {
         //revoke 2 existing grants and 2 grants that do not exist
         //check Transactional Functionality
         StringBuffer taskParamXML =
-            new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
         taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
         int count = 0;

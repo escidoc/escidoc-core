@@ -41,32 +41,6 @@ import org.w3c.dom.Node;
 public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
 
     /**
-     * @param xml The org-unit as xml.
-     * @return String org-unit-xml
-     * @throws Exception e
-     */
-    public String create(final String xml) throws Exception {
-        return super.create(xml);
-    }
-
-    /**
-     * @param id The org-unit-id.
-     * @return String org-unit-xml
-     * @throws Exception e
-     */
-    public String retrieve(final String id) throws Exception {
-        return super.retrieve(id);
-    }
-
-    /**
-     * @param id The org-unit-id.
-     * @throws Exception e
-     */
-    public void delete(final String id) throws Exception {
-        super.delete(id);
-    }
-
-    /**
      * @param xmlName String name of xml file
      * @return String path to org-unit-xmls.
      * @throws Exception e
@@ -92,17 +66,4 @@ public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
         throws Exception {
         return super.insertParentsElement(document, xpathBefore, parentValues, withRestReadOnly);
     }
-
-    /**
-     * Gets the task param containing the last modification date of the specified object.
-     *
-     * @param includeComment Flag indicating if the comment shall be additionally included.
-     * @param id             The id of the object.
-     * @return Returns the created task param xml.
-     * @throws Exception Thrown if anything fails.
-     */
-    public String getTheLastModificationParam(final boolean includeComment, final String id) throws Exception {
-        return super.getTheLastModificationParam(includeComment, id);
-    }
-
 }

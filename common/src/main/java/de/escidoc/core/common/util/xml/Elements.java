@@ -95,7 +95,7 @@ public final class Elements {
 
     public static final String ELEMENT_PARAM_FORMAT = "format";
 
-    public static final String ELEMENT_PARAM_WITHDRAW_COMMENT = "withdraw-comment";
+    public static final String ELEMENT_PARAM_WITHDRAW_COMMENT = "comment";
 
     public static final String ELEMENT_PARAM_REVOKATION_REMARK = "revocation-remark";
 

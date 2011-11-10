@@ -34,7 +34,9 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +47,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -91,31 +94,20 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOmSi1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
+        DateTime t1 = getLastModificationDateValue2(getDocument(this.relationXml));
 
-        try {
-            submit(this.relationId, paramXml);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Submitting the pending Content relation failed. ", e);
-        }
+        String xml = submit(this.relationId, getStatusTaskParam(t1, null));
+        DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
-        String submittedXml = null;
-        try {
-            submittedXml = retrieve(this.relationId);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Retrieving the submitted content relation failed. ", e);
-        }
-        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
-        // assertEquals(pendingLastModificationDate,
-        // getLastModificationDateValue(submittedDocument));
-        assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
+
+        final Document submittedDocument = EscidocAbstractTest.getDocument(retrieve(this.relationId));
+        DateTime t2a = getLastModificationDateValue2(submittedDocument);
+
+        assertTrue("Timestamp not equal", t2.compareTo(t2a) == 0);
+
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTENT_RELATION + "/properties/public-status",
             STATE_SUBMITTED);
-
     }
 
     /**
@@ -126,11 +118,13 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testSubmitAfterRelease() throws Exception {
 
-        submit(this.relationId, getTheLastModificationParam(false));
-        release(this.relationId, getTheLastModificationParam(false));
+        String xml =
+            submit(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)),
+                null));
+        xml = release(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
         try {
-            submit(this.relationId, getTheLastModificationParam(false));
+            submit(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
             fail("No exception on submit of a content relation in " + "a state 'released'");
         }
         catch (final Exception e) {
@@ -147,17 +141,17 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOmSi1_2() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false, this.relationId);
-        submit(this.relationId, paramXml);
-        paramXml = getTheLastModificationParam(false, this.relationId);
-        revise(this.relationId, paramXml);
-        paramXml = getTheLastModificationParam(false, this.relationId);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String xml = submit(this.relationId, param);
 
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        xml = revise(this.relationId, param);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+
+        final String revisedLastModificationDate = getLastModificationDateValue(getDocument(xml));
 
         try {
-            submit(this.relationId, paramXml);
+            submit(this.relationId, param);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Submitting the revised content relation failed. ", e);
@@ -185,7 +179,9 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testSubmitComment() throws Exception {
 
-        String paramXml = getTheLastModificationParam(ENTITY_REFERENCES);
+        String paramXml =
+            getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)),
+                EscidocTestBase.ENTITY_REFERENCES);
 
         submit(this.relationId, paramXml);
         String submittedXml = retrieve(this.relationId);
@@ -197,10 +193,14 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
         assertEquals(ENTITY_REFERENCES, commentString);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testReleaseBeforeSubmitContentRelation() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             release(this.relationId, param);
@@ -220,7 +220,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testReleaseContentRelation() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
 
         // validate escidoc XML
@@ -232,7 +232,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
             + "[text() = 'submitted']");
         assertXmlNotNull("Status comment missing", getDocument(submitXml), XPATH_CONTENT_RELATION_STATUS_COMMENT);
 
-        param = getTheLastModificationParam(false);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(submitXml)), null);
         release(this.relationId, param);
 
         // validate escidoc XML
@@ -253,11 +253,12 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false);
-        submit(this.relationId, paramXml);
-        paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
+        String paramXml = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String response = submit(this.relationId, paramXml);
+
+        final Document responseDoc = getDocument(response);
+        final String submittedLastModificationDate = getLastModificationDateValue(responseDoc);
+        paramXml = getStatusTaskParam(getLastModificationDateValue2(responseDoc), null);
 
         try {
             revise(this.relationId, paramXml);
@@ -282,7 +283,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi2() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             revise(this.relationId, param);
@@ -302,12 +303,12 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi3() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(this.relationId, param);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String xml = submit(this.relationId, param);
 
-        param = getTheLastModificationParam(false);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
         release(this.relationId, param);
-        param = getTheLastModificationParam(false);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
 
         try {
             revise(this.relationId, param);
@@ -327,7 +328,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi5() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             revise(UNKNOWN_ID, param);
@@ -347,7 +348,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi6() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getTheLastModificationParam(false, this.relationId);
 
         try {
             revise(null, param);
@@ -367,9 +368,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi7() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
-        param = getTheLastModificationParam(false);
 
         try {
             revise(this.relationId, null);
@@ -389,7 +389,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi8() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
         param = "<param />";
 
@@ -411,7 +411,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi9() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
         param = "<param";
 
@@ -433,7 +433,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi10() throws Exception {
 
-        String param = getTheLastModificationParam(false);
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
 
         try {
@@ -469,9 +469,9 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
             String contentRelationXml = getExampleTemplate("content-relation-01.xml");
             relationXml = create(contentRelationXml);
             relationId = getObjidValue(relationXml);
-            String param = getTheLastModificationParam(false);
+            String param = getTheLastModificationParam(false, this.relationId);
             submit(relationId, param);
-            param = getTheLastModificationParam(false);
+            param = getTheLastModificationParam(false, this.relationId);
 
             // revise the content relation by an administrator
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -500,7 +500,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
                 EscidocAbstractTest.failException("Updating the revised content relation by the "
                     + "depositor failed with exception. ", e);
             }
-            param = getTheLastModificationParam(false);
+            param = getTheLastModificationParam(false, this.relationId);
             try {
                 submit(this.relationId, param);
             }
@@ -521,12 +521,13 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
      */
     @Test
     public void testUpdateAfterReleaseItem() throws Exception {
-        String param = getTheLastModificationParam(false);
-        submit(this.relationId, param);
-        param = getTheLastModificationParam(false);
+
+        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String xml = submit(this.relationId, param);
+        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
         release(this.relationId, param);
 
-        String xml = retrieve(this.relationId);
+        xml = retrieve(this.relationId);
         assertXmlExists("Properties status released", xml, XPATH_CONTENT_RELATION + "/properties/public-status"
             + "[text() = 'released']");
         Document relation = getDocument(xml);
@@ -544,25 +545,4 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
         }
 
     }
-
-    /**
-     *
-     * @param includeWithdrawComment
-     * @return
-     * @throws Exception
-     */
-    private String getTheLastModificationParam(boolean includeWithdrawComment) throws Exception {
-        return getTheLastModificationParam(includeWithdrawComment, this.relationId);
-    }
-
-    /**
-     *
-     * @param comment
-     * @return
-     * @throws Exception
-     */
-    private String getTheLastModificationParam(final String comment) throws Exception {
-        return getTheLastModificationParam(true, this.relationId, comment);
-    }
-
 }

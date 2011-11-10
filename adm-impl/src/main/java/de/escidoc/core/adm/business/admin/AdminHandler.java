@@ -252,7 +252,6 @@ public class AdminHandler {
     public String getRepositoryInfo() throws WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException {
 
-        final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
         final EscidocConfiguration config;
         config = EscidocConfiguration.getInstance();
 
@@ -279,7 +278,16 @@ public class AdminHandler {
         if (email != null) {
             properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
         }
-        properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
+
+        // handle case where nothing is in the repository 
+        final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
+        if (earliestCreationDate != null) {
+            properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
+        }
+        else {
+            properties.setProperty("escidoc-core.earliest-date", "n/o");
+        }
+
         properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
         try {
             properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));

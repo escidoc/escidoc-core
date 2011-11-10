@@ -447,7 +447,7 @@ public class ContainerTestBase extends OmTestBase {
         }
 
         itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
-        String param = getTaskParam(getLastModificationDateValue(itemDoc));
+        String param = getStatusTaskParam(getLastModificationDateValue2(itemDoc), null);
 
         Object result = getContainerClient().release(id, param);
         if (result instanceof HttpResponse) {
@@ -694,7 +694,7 @@ public class ContainerTestBase extends OmTestBase {
                 createdXml = update(objidValue, createdXml);
                 document = EscidocAbstractTest.getDocument(createdXml);
             }
-            submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+            submit(objidValue, getStatusTaskParam(getLastModificationDateValue2(document), null));
             createdXml = retrieve(objidValue);
             if (createVersionsAfter) {
                 createdXml = createdXml.replaceAll("the title", "the title - updated");
@@ -715,7 +715,7 @@ public class ContainerTestBase extends OmTestBase {
                     }
                     document = EscidocAbstractTest.getDocument(createdXml);
                     final String taskParam =
-                        getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                        getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
                     withdraw(getObjidValue(document), taskParam);
                     createdXml = retrieve(objidValue);
                 }

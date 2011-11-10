@@ -60,6 +60,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+
+import org.joda.time.DateTime;
+
 import org.junit.After;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -92,6 +95,7 @@ import de.escidoc.core.test.common.client.servlet.sm.StatisticDataClient;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.OmTestBase;
+import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.sm.SmTestBase;
 
@@ -342,7 +346,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
     protected final PolicyDecisionPointClient policyDecisionPointClient;
 
-    protected final OrganizationalUnitHelper orgUnitHelper;
+    protected final OrganizationalUnitTestBase orgUnitHelper;
 
     private SmTestBase smTestBase = null;
 
@@ -375,7 +379,7 @@ public class AaTestBase extends EscidocAbstractTest {
         this.preprocessingClient = new PreprocessingClient();
         this.contentRelationClient = new ContentRelationClient();
         this.policyDecisionPointClient = new PolicyDecisionPointClient();
-        this.orgUnitHelper = new OrganizationalUnitHelper();
+        this.orgUnitHelper = new OrganizationalUnitTestBase();
         this.smTestBase = new SmTestBase();
     }
 
@@ -775,7 +779,7 @@ public class AaTestBase extends EscidocAbstractTest {
                     createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
                     document = EscidocAbstractTest.getDocument(createdXml);
                 }
-                submit(ITEM_HANDLER_CODE, objidValue, getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, objidValue, getStatusTaskParam(getLastModificationDateValue2(document), null));
                 createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
                 if (createVersionsAfter) {
                     createdXml = createdXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
@@ -797,7 +801,7 @@ public class AaTestBase extends EscidocAbstractTest {
                         if (STATUS_WITHDRAWN.equals(status)) {
                             document = EscidocAbstractTest.getDocument(createdXml);
                             final String taskParam =
-                                getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                                getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
                             withdraw(ITEM_HANDLER_CODE, getObjidValue(document), taskParam);
                             createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
                         }
@@ -862,7 +866,8 @@ public class AaTestBase extends EscidocAbstractTest {
                     createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                     document = EscidocAbstractTest.getDocument(createdXml);
                 }
-                submit(CONTAINER_HANDLER_CODE, objidValue, getTaskParam(getLastModificationDateValue(document)));
+                submit(CONTAINER_HANDLER_CODE, objidValue, getStatusTaskParam(getLastModificationDateValue2(document),
+                    null));
                 createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                 if (createVersionsAfter) {
                     createdXml = createdXml.replaceAll("the title", "the title - updated");
@@ -889,7 +894,7 @@ public class AaTestBase extends EscidocAbstractTest {
                         }
                         document = EscidocAbstractTest.getDocument(createdXml);
                         final String taskParam =
-                            getWithdrawTaskParam(getLastModificationDateValue(document), "Some withdraw comment");
+                            getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
                         withdraw(CONTAINER_HANDLER_CODE, getObjidValue(document), taskParam);
                         createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                     }
@@ -984,7 +989,8 @@ public class AaTestBase extends EscidocAbstractTest {
             if (!STATUS_ACTIVE.equals(status)) {
                 final Document document = EscidocAbstractTest.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
-                deactivateUserAccount(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
+                deactivateUserAccount(getObjidValue(document), getStatusTaskParam(
+                    getLastModificationDateValue2(document), null));
                 createdXml = retrieve(USER_ACCOUNT_HANDLER_CODE, objidValue);
             }
 
@@ -1077,7 +1083,8 @@ public class AaTestBase extends EscidocAbstractTest {
                             objectHref)));
                     document = EscidocAbstractTest.getDocument(createdXml);
                 }
-                contentRelationClient.submit(objidValue, getTaskParam(getLastModificationDateValue(document)));
+                contentRelationClient.submit(objidValue, getStatusTaskParam(getLastModificationDateValue2(document),
+                    null));
                 createdXml = handleResult(contentRelationClient.retrieve(objidValue));
                 if (createVersionsAfter) {
                     createdXml = createdXml.replaceAll("Demo content relation", "Demo content relation u");
@@ -1089,7 +1096,8 @@ public class AaTestBase extends EscidocAbstractTest {
                         createdXml = handleResult(contentRelationClient.update(objidValue, createdXml));
                     }
                     document = EscidocAbstractTest.getDocument(createdXml);
-                    contentRelationClient.release(objidValue, getTaskParam(getLastModificationDateValue(document)));
+                    contentRelationClient.release(objidValue, getStatusTaskParam(
+                        getLastModificationDateValue2(document), null));
                     createdXml = handleResult(contentRelationClient.retrieve(objidValue));
                 }
             }
@@ -1757,10 +1765,11 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                submit(ITEM_HANDLER_CODE, getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, getObjidValue(document), getStatusTaskParam(
+                    getLastModificationDateValue2(document), null));
             }
             else {
-                submit(ITEM_HANDLER_CODE, UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
+                submit(ITEM_HANDLER_CODE, UNKNOWN_ID, getStatusTaskParam(getLastModificationDateValue2(document), null));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -1809,7 +1818,8 @@ public class AaTestBase extends EscidocAbstractTest {
                 releaseWithPid(ITEM_HANDLER_CODE, getObjidValue(document), userHandle);
             }
             else {
-                release(ITEM_HANDLER_CODE, UNKNOWN_ID, getTaskParam(getLastModificationDateValue(document)));
+                release(ITEM_HANDLER_CODE, UNKNOWN_ID,
+                    getStatusTaskParam(getLastModificationDateValue2(document), null));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -1858,11 +1868,11 @@ public class AaTestBase extends EscidocAbstractTest {
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                withdraw(ITEM_HANDLER_CODE, getObjidValue(document), getWithdrawTaskParam(
-                    getLastModificationDateValue(document), "Some withdraw comment"));
+                withdraw(ITEM_HANDLER_CODE, getObjidValue(document), getStatusTaskParam(
+                    getLastModificationDateValue2(document), "Some withdraw comment"));
             }
             else {
-                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getWithdrawTaskParam(getLastModificationDateValue(document),
+                withdraw(ITEM_HANDLER_CODE, UNKNOWN_ID, getStatusTaskParam(getLastModificationDateValue2(document),
                     "Some withdraw comment"));
             }
             if (expectedExceptionClass != null) {
@@ -2137,7 +2147,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.submit(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
+            contentRelationClient.submit(getObjidValue(document), getStatusTaskParam(
+                getLastModificationDateValue2(document), null));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -2184,8 +2195,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient
-                .release(getObjidValue(document), getTaskParam(getLastModificationDateValue(document)));
+            contentRelationClient.release(getObjidValue(document), getStatusTaskParam(
+                getLastModificationDateValue2(document), null));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -2232,8 +2243,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
         try {
             PWCallback.setHandle(userHandle);
-            contentRelationClient.revise(getObjidValue(document), getWithdrawTaskParam(
-                getLastModificationDateValue(document), "Some withdraw comment"));
+            contentRelationClient.revise(getObjidValue(document), getStatusTaskParam(
+                getLastModificationDateValue2(document), "Some withdraw comment"));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3581,12 +3592,12 @@ public class AaTestBase extends EscidocAbstractTest {
         PWCallback.setHandle(creatorHandle);
         final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         final String ouId = getObjidValue(createdOuXml);
-        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
+        final DateTime lastModificationDate =
+            getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdOuXml));
 
         try {
             PWCallback.setHandle(userHandle);
-            organizationalUnitClient.open(ouId,
-                getTheLastModificationParam(true, ouId, "comment", lastModificationDate));
+            organizationalUnitClient.open(ouId, getStatusTaskParam(lastModificationDate, "comment"));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3626,8 +3637,9 @@ public class AaTestBase extends EscidocAbstractTest {
         PWCallback.setHandle(creatorHandle);
         final String createdOuXml = handleResult(organizationalUnitClient.create(ouXml));
         final String ouId = getObjidValue(createdOuXml);
-        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(createdOuXml));
-        organizationalUnitClient.open(ouId, getTheLastModificationParam(true, ouId, "comment", lastModificationDate));
+        final DateTime lastModificationDate =
+            getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdOuXml));
+        organizationalUnitClient.open(ouId, getStatusTaskParam(lastModificationDate, "comment"));
 
         try {
             PWCallback.setHandle(userHandle);
@@ -3843,13 +3855,13 @@ public class AaTestBase extends EscidocAbstractTest {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         final String contextId = getObjidValue(contextXml);
-        final String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
+        final DateTime lastModificationDate =
+            getLastModificationDateValue2(EscidocAbstractTest.getDocument(contextXml));
 
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
-                    lastModificationDate)));
+                handleResult(contextClient.open(contextId, getStatusTaskParam(lastModificationDate, "comment")));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -3890,17 +3902,15 @@ public class AaTestBase extends EscidocAbstractTest {
 
         String contextXml = doTestCreateContext(creatorHandle, templateName, null);
         final String contextId = getObjidValue(contextXml);
-        String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
-        contextXml =
-            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
-                lastModificationDate)));
-        lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
+        DateTime lastModificationDate = getLastModificationDateValue2(EscidocAbstractTest.getDocument(contextXml));
+        contextXml = handleResult(contextClient.open(contextId, getStatusTaskParam(lastModificationDate, "comment")));
+        lastModificationDate = getLastModificationDateValue2(EscidocAbstractTest.getDocument(contextXml));
 
         try {
             PWCallback.setHandle(userHandle);
             contextXml =
-                handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId,
-                    "Closed context '" + contextId + "'.", lastModificationDate)));
+                handleResult(contextClient.close(contextId, getStatusTaskParam(lastModificationDate, "Closed context '"
+                    + contextId + "'.")));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }

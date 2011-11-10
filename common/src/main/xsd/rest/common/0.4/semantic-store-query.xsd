@@ -19,18 +19,17 @@
   ~ terms.
   -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.escidoc.org/schemas/semantic-store-query/0.4"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:element name="param">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="query" minOccurs="1"
-					maxOccurs="1">
-					</xs:element>
-				<xs:element name="format" minOccurs="1"
-					maxOccurs="1">	
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="query" minOccurs="1" maxOccurs="1">
+        </xs:element>
+        <xs:element name="format" minOccurs="1" maxOccurs="1">
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -163,7 +163,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        submit(itemId, getTheLastModificationParam(false, itemId));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         releaseWithPid(itemId);
 
         Vector<String> componentIds = getAllComponents(itemId);
@@ -561,7 +561,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
 
         // release Item to avoid authentication
         String itemId = getObjidValue(itemDoc);
-        submit(itemId, getTheLastModificationParam(false, itemId));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://localhost" + itemId));
@@ -571,7 +571,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         assignObjectPid(itemId, pidParam);
         pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
         assignVersionPid(itemId, pidParam);
-        release(itemId, getTheLastModificationParam(false, itemId));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // get URL to content
         String hrefContent = selectSingleNode(itemDoc, "/item/components/component/content/@href").getNodeValue();

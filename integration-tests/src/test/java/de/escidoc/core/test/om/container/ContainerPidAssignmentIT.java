@@ -122,7 +122,9 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         String versionPidXml = null;
         AssignParam assignPidParam = new AssignParam();
 
-        String resultXml = submit(theContainerId, getTheLastModificationParam(false));
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
 
@@ -179,7 +181,9 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         String objectPidXml = null;
         String lmd = null;
 
-        String resultXml = submit(theContainerId, getTheLastModificationParam(false));
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
 
@@ -589,7 +593,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         // release Container and assign PID
         // ----------------------------------------
-        submit(theContainerId, getTheLastModificationParam(false));
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
@@ -638,7 +643,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         pid = assignObjectPid(theContainerId, pidParam);
 
-        submit(theContainerId, getTheLastModificationParam(false));
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
 
         // assign version PID
         assignPidParam = new AssignParam();
@@ -648,7 +654,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
                 assignPidParam);
         assertXmlValidResult(assignVersionPid(theContainerId, pidParam));
 
-        release(theContainerId, getTheLastModificationParam(false));
+        release(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         // check if returned pid equals RELS-EXT entry
         theContainerXml = retrieve(theContainerId);
@@ -705,7 +712,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
     @Test
     public void testObjectPidInStatusWithdrawn() throws Exception {
 
-        submit(theContainerId, getTheLastModificationParam(false));
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
         theContainerXml = retrieve(theContainerId);
         assertXmlValidContainer(theContainerXml);
 
@@ -724,7 +732,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         assignVersionPid(versionId, pidParam);
 
-        release(theContainerId, getTheLastModificationParam(false));
+        release(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         String param = getTheLastModificationParam(true, theContainerId);
         withdraw(theContainerId, param);
@@ -824,12 +833,14 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         pidDoc = EscidocAbstractTest.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
-        resultXml = submit(containerId, getTheLastModificationParam(false, containerId, "comment", lmdResult));
+        //resultXml = submit(containerId, getTheLastModificationParam(false, containerId, "comment", lmdResult));
+        resultXml = submit(containerId, getStatusTaskParam(getLastModificationDateValue2(pidDoc), "comment"));
         assertXmlValidResult(resultXml);
         pidDoc = EscidocAbstractTest.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
-        release(containerId, getTheLastModificationParam(false, containerId, "comment", lmdResult));
+        release(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))),
+            "comment"));
         containerXml = retrieve(containerId);
         containerXml = addCtsElement(containerXml);
         containerXml = update(containerId, containerXml);
@@ -935,31 +946,6 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         Document pidDoc = getDocument(pidXML);
         Node returnedPid = selectSingleNode(pidDoc, XPATH_RESULT_PID);
         assertEquals(pidToRegister, returnedPid.getTextContent());
-    }
-
-    /**
-     * Create last-modification parameter with or without withdrawn comment.
-     *
-     * @param includeWithdrawComment set true if a withdrawn comment is to include.
-     * @return last-modification-param XML
-     * @throws Exception If anything fails.
-     */
-    private String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
-        Document doc = EscidocAbstractTest.getDocument(retrieve(theContainerId));
-
-        // get last-modification-date
-        NamedNodeMap atts = doc.getDocumentElement().getAttributes();
-        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-        String lastModificationDate = lastModificationDateNode.getNodeValue();
-
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        param += ">";
-        if (includeWithdrawComment) {
-            param += "<withdraw-comment>" + "WITHDRAW_COMMENT" + "</withdraw-comment>";
-        }
-        param += "</param>";
-
-        return param;
     }
 
     /**

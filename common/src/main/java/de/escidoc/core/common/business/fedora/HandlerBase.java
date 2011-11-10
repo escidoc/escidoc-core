@@ -24,9 +24,13 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
+
 import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.escidoc.core.utils.xml.DateTimeJaxbConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import org.joda.time.DateTime;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -38,6 +42,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Abstract base class for handlers.
@@ -115,4 +120,59 @@ public abstract class HandlerBase {
     protected Utility getUtility() {
         return this.utility;
     }
+
+    /**
+     * Create a snippet for a task parameter XML including the last modification date.
+     * 
+     * @param lastModificationDate
+     *            the last modification date
+     * @return XML snippet
+     */
+    public static String createStatusTaskParam(final DateTime lastModificationDate, final String comment) {
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append(XmlUtility.DOCUMENT_START);
+        sb.append("<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" last-modification-date=\"");
+        sb.append(DateTimeJaxbConverter.printDate(lastModificationDate));
+        sb.append("\">");
+
+        if (comment != null) {
+            sb.append("<comment>");
+            sb.append(comment);
+            sb.append("</comment>");
+        }
+
+        sb.append("</param>");
+
+        return sb.toString();
+    }
+
+    /**
+     * Create a snippet for a task parameter XML including the last modification date.
+     * 
+     * @param lastModificationDate
+     *            the last modification date
+     * @return XML snippet
+     */
+    public static String membersTaskParam(final DateTime lastModificationDate, final List<String> ids) {
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append(XmlUtility.DOCUMENT_START);
+        sb.append("<param xmlns=\"http://www.escidoc.org/schemas/members-task-param/0.1\" last-modification-date=\"");
+        sb.append(DateTimeJaxbConverter.printDate(lastModificationDate));
+        sb.append("\">\n");
+
+        if (ids != null) {
+            for (String id : ids) {
+                sb.append("<id>");
+                sb.append(id);
+                sb.append("</id>\n");
+            }
+        }
+
+        sb.append("</param>");
+
+        return sb.toString();
+    }
+
 }

@@ -28,10 +28,9 @@ public class IngestReturnValueFormatter implements ValueFormatter {
     public String format(final Map<String, String> values) {
         final StringBuilder xml = new StringBuilder();
         xml
-            .append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n").append("<result xmlns=\"").append(
-                Constants.RESULT_NAMESPACE_URI).append("\" ").append('>').append("<objid resourceType=\"").append(
-                values.get(Constants.INGEST_RESOURCE_TYPE)).append("\">").append(values.get(Constants.INGEST_OBJ_ID))
-            .append("</objid></result>");
+            .append(Constants.XML_HEADER).append("<result xmlns=\"").append(Constants.RESULT_NAMESPACE_URI).append(
+                "\" ").append('>').append("<objid resourceType=\"").append(values.get(Constants.INGEST_RESOURCE_TYPE))
+            .append("\">").append(values.get(Constants.INGEST_OBJ_ID)).append("</objid></result>");
         return xml.toString();
     }
 

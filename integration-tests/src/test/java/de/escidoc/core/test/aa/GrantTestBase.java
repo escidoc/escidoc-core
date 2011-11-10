@@ -43,7 +43,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -315,7 +317,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
         Object result =
-            client.revokeGrants(id, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            client.revokeGrants(id, de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter />"
                 + "<revocation-remark>some remark</revocation-remark></param>");
         String resultStr = handleResult(result);
@@ -831,10 +833,8 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         //2. retrieve container for lastModificationDate
         String containerXml = retrieve(CONTAINER_HANDLER_CODE, containerId);
         Document document = EscidocAbstractTest.getDocument(containerXml);
-        String lastModificationDate = getTheLastModificationDate(document);
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + getObjidValue(xml)
-                + "</id></param>";
+        List<String> ids = new ArrayList<String>();
+        ids.add(getObjidValue(xml));
 
         //test adding member to container
         String result = null;
@@ -842,7 +842,8 @@ public abstract class GrantTestBase extends UserAccountTestBase {
             PWCallback.setHandle(handle);
 
             //add as member
-            getContainerClient().addMembers(containerId, taskParam);
+            getContainerClient().addMembers(containerId,
+                getMembersTaskParam(getLastModificationDateValue2(document), ids));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }

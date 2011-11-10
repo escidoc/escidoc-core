@@ -1126,7 +1126,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final String id = getObjidValue(createdDocument);
         final String lastModificationDate = "";
         final String taskParamXML =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" "
                 + "last-modification-date=\"" + lastModificationDate + "\" ><password>password </password> </param>";
 
@@ -1145,7 +1145,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final String taskParamXML =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" >"
                 + "<password>password </password> </param>";
 
@@ -2269,8 +2269,8 @@ public class UserAccountIT extends UserAccountTestBase {
         Document createdDocument = getDocument(ouXml);
         String ouId = getObjidValue(createdDocument);
         String ouTitle = getTitleValue(createdDocument);
-        String lastModDate = getLastModificationDateValue(createdDocument);
-        organizationalUnitTestBase.open(ouId, "<param last-modification-date=\"" + lastModDate + "\" />");
+
+        organizationalUnitTestBase.open(ouId, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
 
         // create ou with parent=otherOu
         String[] parentValues = new String[2];
@@ -2287,23 +2287,25 @@ public class UserAccountIT extends UserAccountTestBase {
         ouXml = organizationalUnitTestBase.create(toBeCreatedXml);
         createdDocument = getDocument(ouXml);
         String ouId1 = getObjidValue(createdDocument);
-        lastModDate = getLastModificationDateValue(createdDocument);
-        organizationalUnitTestBase.open(ouId1, "<param last-modification-date=\"" + lastModDate + "\" />");
+
+        organizationalUnitTestBase
+            .open(ouId1, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
 
         // create user with child ou
         Document createdUser = createSuccessfully("escidoc_useraccount_for_create1.xml");
         userAccountFilterUser = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountFilterUser, "<attribute xmlns="
-            + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1 + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountFilterUser, de.escidoc.core.test.Constants.XML_HEADER
+            + "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1
+            + "</attribute>");
 
         // create user with attribute
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
         String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
         createdUser = createSuccessfully("escidoc_useraccount_for_create.xml");
         userAccountFilterUser1 = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountFilterUser1, "<attribute xmlns="
-            + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName + "\">" + attributeValue
-            + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountFilterUser1, de.escidoc.core.test.Constants.XML_HEADER
+            + "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName
+            + "\">" + attributeValue + "</attribute>");
 
         // create searchable users with no group
         for (int i = 0; i < additonalGroupFilterSearchUsersCount; i++) {

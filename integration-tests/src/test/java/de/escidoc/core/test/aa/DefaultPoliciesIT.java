@@ -635,7 +635,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
     @Test
     public void testAaDef2() throws Exception {
 
-        final String param = getTaskParametrSpo("&lt;info:fedora/escidov:user1" + "&gt;  * * ooo", "N-Triples");
+        final String param = getSemanticStoreQuery("&lt;info:fedora/escidov:user1" + "&gt;  * * ooo", "N-Triples");
         PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
         try {
             spo(param);

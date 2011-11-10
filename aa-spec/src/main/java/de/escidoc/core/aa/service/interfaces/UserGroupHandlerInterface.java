@@ -189,7 +189,9 @@ public interface UserGroupHandlerInterface {
      * </pre>
      *
      * @param groupId   The User Group ID to be activated.
-     * @param taskParam The XML representation of task parameters including the last modification date. (see above)
+     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Group is active.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided id exists.
      * @throws XmlCorruptedException          Thrown if the provided XML representation of task parameters are invalid.
@@ -226,7 +228,9 @@ public interface UserGroupHandlerInterface {
      * </pre>
      *
      * @param groupId   The User Group ID to be deacivated.
-     * @param taskParam The XML representation of task parameters including the last modification date. (see above)
+     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Group is deactive.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided id exists.
      * @throws XmlCorruptedException          Thrown in case of invalid XML data (corrupt data, schema validation failed
@@ -396,7 +400,9 @@ public interface UserGroupHandlerInterface {
      *
      * @param groupId   The User Group ID for that a Grant shall be revoked.
      * @param grantId   The Grant ID that shall be revoked.
-     * @param taskParam The remark for the revocation of the Grant in an XML structure: (see above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and a revocation-remark. (see example above)
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Group cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -462,8 +468,9 @@ public interface UserGroupHandlerInterface {
      * </pre>
      *
      * @param groupId   The User Group ID for that a grant shall be revoked.
-     * @param taskParam The filter for Grants to revoke and the remark for the revocation of the Grant in an XML
-     *                  structure: (see above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd. 
+     * Containing the filter for grants to revoke and a revocation-remark.
+     * The filter consists of an id and name (url), see example above.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Group cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.

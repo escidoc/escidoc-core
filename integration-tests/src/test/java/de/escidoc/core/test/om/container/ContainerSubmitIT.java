@@ -32,11 +32,13 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -71,26 +73,17 @@ public class ContainerSubmitIT extends ContainerTestBase {
     @Test
     public void testOM_SC_1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
+        DateTime t1 = getLastModificationDateValue2(getDocument(this.theContainerXml));
+        String xml = submit(theContainerId, getStatusTaskParam(t1, null));
+        DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
-        try {
-            submit(theContainerId, paramXml);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Submitting the pending item failed. ", e);
-        }
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
 
-        String submittedXml = null;
-        try {
-            submittedXml = retrieve(theContainerId);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
-        }
-        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
-        assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
+        final Document submittedDocument = EscidocAbstractTest.getDocument(retrieve(theContainerId));
+        DateTime t2a = getLastModificationDateValue2(submittedDocument);
+
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2a) < 0);
+
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
             STATE_SUBMITTED);
@@ -104,30 +97,27 @@ public class ContainerSubmitIT extends ContainerTestBase {
     @Test
     public void testOM_SC_1_2() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, paramXml);
-        paramXml = getTheLastModificationParam(false, theContainerId);
-        revise(theContainerId, paramXml);
-        paramXml = getTheLastModificationParam(false, theContainerId);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
+        String xml =
+            submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)),
+                null));
+        DateTime t1 = getLastModificationDateValue2(getDocument(xml));
+        xml = revise(theContainerId, getStatusTaskParam(t1, null));
 
-        try {
-            submit(theContainerId, paramXml);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Submitting the revised item failed. ", e);
-        }
+        DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
-        String submittedXml = null;
-        try {
-            submittedXml = retrieve(theContainerId);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
-        }
-        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
-        assertDateBeforeAfter(revisedLastModificationDate, getLastModificationDateValue(submittedDocument));
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
+
+        xml = submit(theContainerId, getStatusTaskParam(t2, null));
+        DateTime t3 = getLastModificationDateValue2(getDocument(xml));
+
+        assertTrue("Timestamp of submitted not after in-revision", t2.compareTo(t3) < 0);
+
+        final Document submittedDocument = EscidocAbstractTest.getDocument(retrieve(theContainerId));
+        DateTime t3a = getLastModificationDateValue2(submittedDocument);
+
+        assertTrue("Timestamp of submitted not after in-revision", t2.compareTo(t3a) < 0);
+        assertTrue("Timestamp not equal", t3.compareTo(t3a) == 0);
+
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_CONTAINER_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_CONTAINER_CURRENT_VERSION_STATUS,
             STATE_SUBMITTED);
@@ -139,10 +129,9 @@ public class ContainerSubmitIT extends ContainerTestBase {
     @Test
     public void testOM_SC_2_1() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-
         try {
-            submit("bla", param);
+            submit("bla",
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occured on submit with non existing id.");
         }
         catch (final Exception e) {
@@ -157,13 +146,9 @@ public class ContainerSubmitIT extends ContainerTestBase {
     @Test
     public void test_OM_SC_2_2() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-        param =
-            param.replaceFirst("<param last-modification-date=\"([0-9TZ:\\.-])+\"",
-                "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
-
         try {
-            submit(theContainerId, param);
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occured on submit with wrong time stamp.");
         }
         catch (final Exception e) {
@@ -178,10 +163,8 @@ public class ContainerSubmitIT extends ContainerTestBase {
     @Test
     public void testOM_SC_3_1() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-
         try {
-            submit(null, param);
+            submit(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occured on submit with missing id.");
         }
         catch (final Exception e) {
@@ -205,22 +188,4 @@ public class ContainerSubmitIT extends ContainerTestBase {
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
-
-    /**
-     * Clean up after test.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Override
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        theContainerXml = null;
-
-        theContainerId = null;
-
-        // TODO purge object from Fedora
-    }
-
 }

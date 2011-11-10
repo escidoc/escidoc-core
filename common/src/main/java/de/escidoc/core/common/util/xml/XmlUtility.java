@@ -185,8 +185,6 @@ public final class XmlUtility {
 
     private static String containerRestSchemaLocation;
 
-    private static String updateRelationsSchemaLocation;
-
     private static String relationsSchemaLocation;
 
     private static String itemRestSchemaLocation;
@@ -207,7 +205,7 @@ public final class XmlUtility {
 
     private static String containersFilterRestSchemaLocation;
 
-    private static String spoTaskParamSchemaLocation;
+    private static String semanticStoreQuerySchemaLocation;
 
     private static String containerMembersFilterRestSchemaLocation;
 
@@ -232,6 +230,8 @@ public final class XmlUtility {
     private static String revokeGrantTaskParamSchemaLocation;
 
     private static String revokeGrantsTaskParamSchemaLocation;
+
+    private static String membersTaskParamSchemaLocation;
 
     private static String assignPidTaskParamSchemaLocation;
 
@@ -1529,14 +1529,14 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the spoTaskParamSchemaLocation.
+     * @return Returns the Semantic Store Schema Location.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getSpoTaskParamSchemaLocation() {
-        if (spoTaskParamSchemaLocation == null) {
-            spoTaskParamSchemaLocation = getSchemaBaseUrl() + "common/0.3/query.xsd";
+    public static String getSematicStoreQuerySchemaLocation() {
+        if (semanticStoreQuerySchemaLocation == null) {
+            semanticStoreQuerySchemaLocation = getSchemaBaseUrl() + "rest/common/0.4/semantic-store-query.xsd";
         }
-        return spoTaskParamSchemaLocation;
+        return semanticStoreQuerySchemaLocation;
     }
 
     /**
@@ -1670,17 +1670,6 @@ public final class XmlUtility {
                 getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
         }
         return itemRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the itemsFilterSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getUpdateRelationsSchemaLocation() {
-        if (updateRelationsSchemaLocation == null) {
-            updateRelationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/update-relations.xsd";
-        }
-        return updateRelationsSchemaLocation;
     }
 
     /**
@@ -1974,6 +1963,17 @@ public final class XmlUtility {
             revokeGrantsTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/revoke-grants-task-param.xsd";
         }
         return revokeGrantsTaskParamSchemaLocation;
+    }
+
+    /**
+     * @return Returns the MembersTaskParamSchemaLocation.
+     * @throws WebserverSystemException In case of an error.
+     */
+    public static String getMembersTaskParamSchemaLocation() {
+        if (membersTaskParamSchemaLocation == null) {
+            membersTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/members-task-param.xsd";
+        }
+        return membersTaskParamSchemaLocation;
     }
 
     /**

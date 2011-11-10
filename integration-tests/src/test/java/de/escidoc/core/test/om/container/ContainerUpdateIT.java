@@ -55,8 +55,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+
 import java.net.URL;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -118,18 +121,11 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String lmdRetrieve1 = getLastModificationDateValue(containerDoc);
         String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-        String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
-        taskParam += ">";
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(itemToAddID);
 
-        // taskParam += "<member XLINK_NS_DECL_ESCIDOC
-        // + XLINK_TYPE_ESCIDOC + "=\"simple\" " + XLINK_HREF_ESCIDOC+
-        // "=\"/ir/item/" + itemToAddID
-        // + "\"/>";
-        taskParam += "<id>" + itemToAddID + "</id>";
-
-        taskParam += "</param>";
-
-        String resultXml = addMembers(theContainerId, taskParam);
+        String resultXml =
+            addMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
 
         // check if item with id theItemId is member of theContainer
         String containerXml = retrieve(theContainerId);
@@ -160,19 +156,24 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
         String createdContainerXml = create(xmlData);
         String subContainerId = getObjidValue(createdContainerXml);
-        String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
-        taskParam += ">";
-        taskParam += "<id>" + subContainerId + "</id>";
-        taskParam += "</param>";
-        String resultXml = addMembers(theContainerId, taskParam);
+
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(subContainerId);
+
+        String resultXml =
+            addMembers(theContainerId, getMembersTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+
         Document resultDoc = getDocument(resultXml);
         String lmdMethod1 = getLastModificationDateValue(resultDoc);
-        taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
-        taskParam += ">";
-        taskParam += "<id>" + subContainerId + "</id>";
-        taskParam += "<id>" + theItemId + "</id>";
-        taskParam += "</param>";
-        String resultXmlAfterRemoveMembers = removeMembers(theContainerId, taskParam);
+
+        ids = new ArrayList<String>();
+        ids.add(subContainerId);
+        ids.add(theItemId);
+        String resultXmlAfterRemoveMembers =
+            removeMembers(theContainerId, getMembersTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+
         assertXmlValidResult(resultXml);
         Document resultDocAfterRemoveMembers = getDocument(resultXmlAfterRemoveMembers);
         String lmdMethod2 = getLastModificationDateValue(resultDocAfterRemoveMembers);
@@ -206,15 +207,15 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String containerId = getObjidValue(createdContainerWithouMembers);
 
         Document containerDoc = getDocument(container);
-        String lmd = getLastModificationDateValue(containerDoc);
-        String taskParam = "<param last-modification-date=\"" + lmd + "\" ";
-        taskParam += ">";
-        taskParam += "<id>" + containerId + "</id>";
-        taskParam += "</param>";
-        String resultXml = removeMembers(theContainerId, taskParam);
+
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(containerId);
+
+        String resultXml =
+            removeMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
         Document resultDoc = getDocument(resultXml);
         String lmdMethod1 = getLastModificationDateValue(resultDoc);
-        assertEquals(lmd, lmdMethod1);
+        assertEquals(getLastModificationDateValue(containerDoc), lmdMethod1);
     }
 
     @Ignore("test adding 600 members")
@@ -223,14 +224,11 @@ public class ContainerUpdateIT extends ContainerTestBase {
         for (int i = 0; i < 600; i++) {
             String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-            String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
-            taskParam += ">";
+            ArrayList<String> ids = new ArrayList<String>();
+            ids.add(itemToAddID);
 
-            taskParam += "<id>" + itemToAddID + "</id>";
-
-            taskParam += "</param>";
-
-            addMembers(theContainerId, taskParam);
+            addMembers(theContainerId, getMembersTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
 
         }
 
@@ -677,8 +675,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
      */
     @Test
     public void testOM_UCO_1_2() throws Exception {
-        submit(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(theContainerXml)) + "\"/>");
+
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         String testStatus = "submitted";
         String xml = retrieve(theContainerId);
@@ -773,8 +771,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
      */
     @Test
     public void testOM_UCO_1_3() throws Exception {
-        submit(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(theContainerXml)) + "\"/>");
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -802,9 +799,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(theContainerId))) + "\"/>");
-
+        release(theContainerId, getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         String testStatus = "released";
         String xml = retrieve(theContainerId);
         Document newContainer = EscidocAbstractTest.getDocument(xml);
@@ -995,21 +991,23 @@ public class ContainerUpdateIT extends ContainerTestBase {
         update(theContainerId, null);
     }
 
-    // /**
-    // * Resource is locked - update not allowed.
-    // *
-    // * @test.name Resource is locked - update not allowed.
-    // * @test.id OM_UCO_5_1
-    // * @test.input Container ID, XML representation of the container.
-    // * @test.expected Error message with reason(s) for failure.
-    // *
-    // * @test.status Not Implemented, no lock in first release
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void notestOM_UCO_5_1() throws Exception {
-    // }
+    /**
+     * Resource is locked - update not allowed.
+     *
+     * @test.name Resource is locked - update not allowed.
+     * @test.id OM_UCO_5_1
+     * @test.input Container ID, XML representation of the container.
+     * @test.expected Error message with reason(s) for failure.
+     *
+     * @test.status Not Implemented, no lock in first release
+     *
+     * @throws Exception
+     * If anything fails.
+     */
+    @Test
+    @Ignore("missing implementation")
+    public void notestOM_UCO_5_1() throws Exception {
+    }
 
     /**
      * Optimistic Locking Test.
@@ -1039,8 +1037,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
      */
     @Test
     public void testOM_UCO_6() throws Exception {
-        submit(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(theContainerXml)) + "\"/>");
+
+        String xml =
+            submit(theContainerId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         // FIXME replace this code through releaseWithPid();
         String pidParam;
@@ -1049,11 +1049,9 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignObjectPid(this.theContainerId, pidParam);
+            xml = assignObjectPid(this.theContainerId, pidParam);
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
@@ -1062,27 +1060,23 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignVersionPid(latestVersion, pidParam);
+            xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(theContainerId))) + "\"/>");
-        withdraw(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(theContainerId)))
-            + "\"><withdraw-comment>Example withdraw comment.</withdraw-comment></param>");
+        xml = release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml = withdraw(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+
+        xml = retrieve(this.theContainerId);
 
         try {
             // remove try-catch if update of released containers is allowed
-            update(theContainerId, theContainerXml);
+            update(theContainerId, xml);
             fail("No exception on update withdrawn container.");
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            // Class<?> ec = ContainerNotFoundException.class;
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
@@ -1687,80 +1681,74 @@ public class ContainerUpdateIT extends ContainerTestBase {
     // Test methods are obsolete, because they test the obsolete
     // interface methods
 
-    //
-    // /*
-    // * Test declining update of container with two existing relations. Adding
-    // of a
-    // * new relation to th container, which has the same target and predicate
-    // as one
-    // * of the existing containers relations is declining.
-    // */
-    // public void testRelationsAdd() throws Exception {
-    // String containerXml1 =
-    // create(getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml"));
-    // String containerXml2 =
-    // create(getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml"));
-    //
-    // String createdContainerId1 = null;
-    // String createdContainerId2 = null;
-    //
-    // Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-    // Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml1);
-    // if (m1.find()) {
-    // createdContainerId1 = m1.group(1);
-    // }
-    // Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml2);
-    // if (m2.find()) {
-    // createdContainerId2 = m2.group(1);
-    // }
-    //
-    // String href1 = "/ir/container/" + createdContainerId1;
-    // String href2 = "/ir/container/" + createdContainerId2;
-    // String containerForCreateWithRelationsXml = getTemplateAsString(
-    // TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1_WithRelations.xml");
-    //
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_ID1##", createdContainerId1);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_ID2##", createdContainerId2);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_HREF1##", href1);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_HREF2##", href2);
-    //
-    // String xml = create(containerForCreateWithRelationsXml);
-    // String createdContainerId3 = null;
-    // Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(xml);
-    // if (m3.find()) {
-    // createdContainerId3 = m3.group(1);
-    // }
-    // Document container = getDocument(xml);
-    //
-    // Node withoutRelationObjId = deleteAttribute(container,
-    // "/container/relations/relation[1]/@objid");
-    // Node targetObjectId = selectSingleNode(withoutRelationObjId,
-    // "/container/relations/relation[1]/target/@objid");
-    //
-    // targetObjectId.setNodeValue(createdContainerId2);
-    // Node targetHref = selectSingleNode(withoutRelationObjId,
-    // "/container/relations/relation[1]/target/@href");
-    // targetHref.setNodeValue(href2);
-    // String xmlNeu = toString(withoutRelationObjId, true);
-    //
-    // try {
-    // update(createdContainerId3, toString(withoutRelationObjId, true));
-    // fail("No exception occured on container update with relations, which " +
-    // "has the same target and predicate as one existing container " +
-    // "relation");
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType("AlreadyExistException expected.",
-    // AlreadyExistsException.class, e);
-    // }
-    //
-    // }
-    //
+    /**
+     * Test declining update of container with two existing relations. Adding
+    of a
+     * new relation to th container, which has the same target and predicate
+    as one
+     * of the existing containers relations is declining.
+     */
+    @Test
+    @Ignore("was commented out, unknown wy")
+    public void testRelationsAdd() throws Exception {
+        String containerXml1 =
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+        String containerXml2 =
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+
+        String createdContainerId1 = null;
+        String createdContainerId2 = null;
+
+        Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
+        Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml1);
+        if (m1.find()) {
+            createdContainerId1 = m1.group(1);
+        }
+        Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml2);
+        if (m2.find()) {
+            createdContainerId2 = m2.group(1);
+        }
+
+        String href1 = "/ir/container/" + createdContainerId1;
+        String href2 = "/ir/container/" + createdContainerId2;
+        String containerForCreateWithRelationsXml =
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1_WithRelations.xml");
+
+        containerForCreateWithRelationsXml =
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);
+        containerForCreateWithRelationsXml =
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID2##", createdContainerId2);
+        containerForCreateWithRelationsXml =
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF1##", href1);
+        containerForCreateWithRelationsXml =
+            containerForCreateWithRelationsXml.replaceAll("##CONTAINER_HREF2##", href2);
+
+        String xml = create(containerForCreateWithRelationsXml);
+        String createdContainerId3 = null;
+        Matcher m3 = PATTERN_OBJID_ATTRIBUTE.matcher(xml);
+        if (m3.find()) {
+            createdContainerId3 = m3.group(1);
+        }
+        Document container = getDocument(xml);
+
+        Node withoutRelationObjId = deleteAttribute(container, "/container/relations/relation[1]/@objid");
+        Node targetObjectId = selectSingleNode(withoutRelationObjId, "/container/relations/relation[1]/target/@objid");
+
+        targetObjectId.setNodeValue(createdContainerId2);
+        Node targetHref = selectSingleNode(withoutRelationObjId, "/container/relations/relation[1]/target/@href");
+        targetHref.setNodeValue(href2);
+        String xmlNeu = toString(withoutRelationObjId, true);
+
+        try {
+            update(createdContainerId3, toString(withoutRelationObjId, true));
+            fail("No exception occured on container update with relations, which "
+                + "has the same target and predicate as one existing container " + "relation");
+        }
+        catch (final Exception e) {
+            //            assertExceptionType("AlreadyExistException expected.", AlreadyExistsException.class, e);
+            throw e;
+        }
+
+    }
+
 }

@@ -433,13 +433,13 @@ public class ContextAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(CONTEXT_STATUS_CREATED) && !status.equals(CONTEXT_STATUS_DELETED)) {
                 // open context
-                context.open(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                context.open(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
 
                 if (!status.equals(CONTEXT_STATUS_OPENED)) {
                     // close item
                     xml = context.retrieve(objectId);
                     lastModDate = getLastModificationDate(xml);
-                    context.close(objectId, "<param last-modification-date=\"" + lastModDate + "\" />");
+                    context.close(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
                 }
             }
             else if (status.equals(CONTEXT_STATUS_DELETED)) {

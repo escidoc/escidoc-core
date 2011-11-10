@@ -668,7 +668,7 @@ public class ItemFilterIT extends ItemTestBase {
      */
     private String createSubmittedItem() throws Exception {
         theItemId = createItem();
-        submit(theItemId, getTheLastModificationParam(false, theItemId, null));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -709,7 +709,7 @@ public class ItemFilterIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theItemId, getTheLastModificationParam(false, theItemId, null));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -725,7 +725,7 @@ public class ItemFilterIT extends ItemTestBase {
 
     private String createReleasedSubmittedItem() throws Exception {
         theItemId = createReleasedPendingItem();
-        submit(theItemId, getTheLastModificationParam(false, theItemId, null));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -748,14 +748,15 @@ public class ItemFilterIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theItemId, getTheLastModificationParam(false, theItemId, null));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
 
     private String createReleasedReleasedWithdrawnItem() throws Exception {
         theItemId = createReleasedReleasedItem();
-        withdraw(theItemId, getTheLastModificationParam(true, theItemId));
+        withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+            WITHDRAW_COMMENT));
 
         return theItemId;
     }
@@ -780,7 +781,7 @@ public class ItemFilterIT extends ItemTestBase {
 
             UserAccountClient userAccountClient = new UserAccountClient();
 
-            userAccountClient.revokeGrants(userId, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            userAccountClient.revokeGrants(userId, de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
                 + "<revocation-remark>some remark</revocation-remark></param>");
 
@@ -799,7 +800,7 @@ public class ItemFilterIT extends ItemTestBase {
                 Node userGroup = userGroups.item(index);
                 String groupId = getObjidFromHref(userGroup.getNodeValue());
 
-                userGroupClient.revokeGrants(groupId, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                userGroupClient.revokeGrants(groupId, de.escidoc.core.test.Constants.XML_HEADER
                     + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
                     + "<revocation-remark>some remark</revocation-remark>" + "</param>");
             }

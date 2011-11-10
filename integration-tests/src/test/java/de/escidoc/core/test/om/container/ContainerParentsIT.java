@@ -28,14 +28,17 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test retrieving parents of the Container resource.
@@ -84,60 +87,40 @@ public class ContainerParentsIT extends ContainerTestBase {
     private void prepare() throws Exception {
         String xmlData = getContainerTemplate("create_container.xml");
 
-        String taskParam = "<param last-modification-date=\"${lastModificationDate}\">" + "${idParams}</param>";
-        String idParam = "<id>${id}</id>";
-
         String containerXml = create(xmlData);
         topLevelContainerId = getObjidValue(containerXml);
 
+        ArrayList<String> middleLevelIds = new ArrayList<String>();
         for (int i = 0; i < 3; i++) {
             containerXml = create(xmlData);
             middleLevelContainerIds[i] = getObjidValue(containerXml);
+            middleLevelIds.add(middleLevelContainerIds[i]);
         }
+
+        ArrayList<String> lowLevelIds = new ArrayList<String>();
         for (int i = 0; i < 2; i++) {
             containerXml = create(xmlData);
             lowLevelContainerIds[i] = getObjidValue(containerXml);
+            lowLevelIds.add(lowLevelContainerIds[i]);
         }
 
         //Add members to TopLevelContainer
-        StringBuffer idParams = new StringBuffer("");
-        for (int i = 0; i < 3; i++) {
-            idParams.append(idParam.replaceFirst("\\$\\{id\\}", middleLevelContainerIds[i]));
-        }
-        String replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", getTheLastModificationDate(topLevelContainerId));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        addMembers(topLevelContainerId, replacedTaskParam);
+        addMembers(topLevelContainerId, getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(topLevelContainerId))), middleLevelIds));
 
         //Add members to middleLevelContainer[0]
-        idParams = new StringBuffer("");
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", lowLevelContainerIds[0]));
-        replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}",
-                getTheLastModificationDate(middleLevelContainerIds[0]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        addMembers(middleLevelContainerIds[0], replacedTaskParam);
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(lowLevelContainerIds[0]);
+        addMembers(middleLevelContainerIds[0], getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[0]))), ids));
 
         //Add members to middleLevelContainer[1]
-        idParams = new StringBuffer("");
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", lowLevelContainerIds[0]));
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", lowLevelContainerIds[1]));
-        replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}",
-                getTheLastModificationDate(middleLevelContainerIds[1]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        addMembers(middleLevelContainerIds[1], replacedTaskParam);
+        addMembers(middleLevelContainerIds[1], getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[1]))), lowLevelIds));
 
         //Add members to middleLevelContainer[2]
-        idParams = new StringBuffer("");
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", lowLevelContainerIds[0]));
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", lowLevelContainerIds[1]));
-        replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}",
-                getTheLastModificationDate(middleLevelContainerIds[2]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        addMembers(middleLevelContainerIds[2], replacedTaskParam);
-
+        addMembers(middleLevelContainerIds[2], getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[2]))), lowLevelIds));
     }
 
     /**
@@ -266,5 +249,4 @@ public class ContainerParentsIT extends ContainerTestBase {
             EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
-
 }

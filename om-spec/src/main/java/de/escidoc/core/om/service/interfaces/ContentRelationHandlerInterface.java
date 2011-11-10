@@ -224,8 +224,9 @@ public interface ContentRelationHandlerInterface {
      * returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
-     * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
-     *                  locking purpose. (see example above)
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the content-relation (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws AuthenticationException    Thrown if authentication fails.
      * @throws AuthorizationException     Thrown if authorization fails.
@@ -261,8 +262,9 @@ public interface ContentRelationHandlerInterface {
      * is returned.</li> </ul>
      *
      * @param id        The id of the content-relation to be revised.
-     * @param taskParam The time stamp of the last modification of the content-relation. Necessary for optimistic
-     *                  locking purpose. (see example above)
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the content-relation (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws AuthenticationException    Thrown if authentication fails.
      * @throws AuthorizationException     Thrown if authorization fails.
@@ -316,6 +318,7 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException;
@@ -353,6 +356,7 @@ public interface ContentRelationHandlerInterface {
      * @throws XmlCorruptedException      Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, XmlCorruptedException, InvalidContentException;
@@ -390,6 +394,7 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException;

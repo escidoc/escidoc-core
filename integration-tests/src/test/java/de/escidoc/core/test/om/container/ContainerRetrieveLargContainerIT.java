@@ -28,13 +28,16 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Before;
+import java.util.ArrayList;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import de.escidoc.core.test.EscidocAbstractTest;
 
 /**
  * Test stability by increasing the number of versions of the Container resource.
@@ -75,14 +78,11 @@ public class ContainerRetrieveLargContainerIT extends ContainerTestBase {
         for (int i = 0; i < 10000; i++) {
             String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-            String taskParam = "<param last-modification-date=\"" + getTheLastModificationDate() + "\" ";
-            taskParam += ">";
-
-            taskParam += "<id>" + itemToAddID + "</id>";
-
-            taskParam += "</param>";
+            ArrayList<String> ids = new ArrayList<String>();
+            ids.add(itemToAddID);
             try {
-                addMembers(theContainerId, taskParam);
+                addMembers(theContainerId, getMembersTaskParam(
+                    getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
             }
             catch (final Exception e) {
                 throw new Exception(e);

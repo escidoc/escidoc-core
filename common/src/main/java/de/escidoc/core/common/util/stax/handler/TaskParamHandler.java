@@ -43,8 +43,6 @@ public class TaskParamHandler extends DefaultHandler {
 
     private DateTime lastModificationDate;
 
-    private String withdrawComment;
-
     private String revokationRemark;
 
     private String comment;
@@ -75,7 +73,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     private static final String LAST_MODIFICATION_DATE_ATT = "last-modification-date";
 
-    // private static final String WITHDRAW_COMMENT_ATT = "withdraw-comment";
+    // private static final String WITHDRAW_COMMENT_ATT = "comment";
 
     private boolean checkLastModificationDate = true;
 
@@ -145,14 +143,11 @@ public class TaskParamHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
         final String curPath = parser.getCurPath();
 
-        if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
-            this.withdrawComment = data;
+        if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_COMMENT)) {
+            this.comment = data;
         }
         else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
             this.revokationRemark = data;
-        }
-        else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_COMMENT)) {
-            this.comment = data;
         }
         else if (curPath.equals(PARAM_PATH + '/' + Elements.ELEMENT_PARAM_FORMAT)) {
             this.format = data;
@@ -187,15 +182,6 @@ public class TaskParamHandler extends DefaultHandler {
      */
     public DateTime getLastModificationDate() {
         return this.lastModificationDate;
-    }
-
-    /**
-     * Get the withdraw comment.
-     *
-     * @return withdraw comment
-     */
-    public String getWithdrawComment() {
-        return this.withdrawComment;
     }
 
     /**

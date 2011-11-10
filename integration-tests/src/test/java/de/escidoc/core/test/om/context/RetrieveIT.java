@@ -33,6 +33,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -78,7 +80,7 @@ public class RetrieveIT extends ContextTestBase {
             contextId = getObjidValue(created);
 
             String lastModified = getLastModificationDateValue(created);
-            open(contextId, getTaskParam(lastModified));
+            open(contextId, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
 
             // String test = null;
             // String test2 = null;

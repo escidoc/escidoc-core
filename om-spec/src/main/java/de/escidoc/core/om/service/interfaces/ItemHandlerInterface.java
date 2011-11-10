@@ -1751,9 +1751,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be released.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -1780,6 +1780,7 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
@@ -1829,9 +1830,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be submitted.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -1858,6 +1859,7 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
@@ -1907,9 +1909,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be revised.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
@@ -1938,6 +1940,7 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException, InvalidContentException, OptimisticLockingException,
@@ -1986,9 +1989,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be withdrawn.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -2019,6 +2022,7 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         NotPublishedException, LockingException, AlreadyWithdrawnException, AuthenticationException,
         AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException,
@@ -2053,9 +2057,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be locked.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the Item (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -2115,9 +2119,9 @@ public interface ItemHandlerInterface {
      * 
      * @param id
      *            The id of the Item to be unlocked.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose. (see
-     *            example above)
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the Item (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -2674,7 +2678,7 @@ public interface ItemHandlerInterface {
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
      */
-    @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
+    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String taskParameter) throws SystemException,
         ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
@@ -2794,7 +2798,7 @@ public interface ItemHandlerInterface {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
      */
-    @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
+    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,
         ComponentNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         InvalidContentException, InvalidXmlException, ContentRelationNotFoundException, AlreadyDeletedException,

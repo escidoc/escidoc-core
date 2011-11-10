@@ -541,15 +541,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
         // remove member entries referring this
         final List<String> containers = this.tripleStoreUtility.getContainers(getContainer().getId());
-        for (final String parent : containers) {
+        for (final String parentId : containers) {
             try {
-                final Container container = new Container(parent);
+                final Container parentContainer = new Container(parentId);
                 // call removeMember with current user context (access rights)
-                final String param =
-                    "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
-                        + getContainer().getId() + "</id></param>";
+                ArrayList<String> ids = new ArrayList<String>();
+                ids.add(getContainer().getId());
+
+                final String param = membersTaskParam(parentContainer.getLastModificationDate(), ids);
                 final BeanMethod method =
-                    methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
+                    methodMapper.getMethod("/ir/container/" + parentId + "/members/remove", null, null, "POST", param);
                 method.invokeWithProtocol(UserContext.getHandle());
             }
             catch (final InvocationTargetException e) {
@@ -562,8 +563,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 }
                 else {
                     throw new SystemException("An error occured removing member entries for container "
-                        + getItem().getId() + ". Container can not be deleted.", cause); // Ignore
-                    // FindBugs
+                        + getContainer().getId() + ". Container can not be deleted.", cause);
                 }
             }
             catch (final Exception e) {
@@ -1495,7 +1495,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 catch (final ResourceNotFoundException e1) {
                     throw new WebserverSystemException(e1);
                 }
-                final String param = "<param last-modification-date=\"" + container.getLastModificationDate() + "\"/>";
+                final String param = createStatusTaskParam(container.getLastModificationDate(), null);
                 try {
                     release(memberId, param);
                 }
@@ -1541,7 +1541,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                     // // do nothing
                     // continue;
                 }
-                final String param = "<param last-modification-date=\"" + getItem().getLastModificationDate() + "\"/>";
+                final String param = createStatusTaskParam(getItem().getLastModificationDate(), null);
 
                 try {
                     itemHandler.release(memberId, param);
@@ -1752,7 +1752,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // Look for content-type-type not for name.
             if (this.tripleStoreUtility.getPropertiesElements(id, TripleStoreUtility.PROP_CONTENT_MODEL_TITLE).equals(
                 COLLECTION)) {
-                withdrawMembers(id, taskParameter.getWithdrawComment());
+                withdrawMembers(id, taskParameter.getComment());
                 setContainer(id);
             }
 
@@ -1798,9 +1798,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 final String lastModificationDate =
                     this.tripleStoreUtility
                         .getPropertiesElements(memberId, TripleStoreUtility.PROP_LATEST_VERSION_DATE);
-                final String param =
-                    "<param last-modification-date=\"" + lastModificationDate + "\"><withdraw-comment>"
-                        + withdrawComment + "</withdraw-comment></param>";
+                final String param = createStatusTaskParam(new DateTime(lastModificationDate), withdrawComment);
 
                 try {
                     withdraw(memberId, param);
@@ -1835,9 +1833,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
                 final DateTime lastModificationDate = getItem().getLastModificationDate();
 
-                final String param =
-                    "<param last-modification-date=\"" + lastModificationDate + "\"><withdraw-comment>"
-                        + withdrawComment + "</withdraw-comment></param>";
+                final String param = createStatusTaskParam(lastModificationDate, withdrawComment);
 
                 try {
                     itemHandler.withdraw(memberId, param);

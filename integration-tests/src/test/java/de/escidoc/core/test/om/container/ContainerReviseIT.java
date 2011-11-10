@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import java.net.URL;
 
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -37,6 +38,8 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNo
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
+
+import org.joda.time.DateTime;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -67,19 +70,6 @@ public class ContainerReviseIT extends ContainerTestBase {
     }
 
     /**
-     * Gets the task param including the last modification date of the resource object identified by the field
-     * <code>containerId</code>.
-     *
-     * @param includeWithdrawComment Flag indicating if the withdrawal comment shall be additionally included.
-     * @return Returns the created task param
-     * @throws Exception Thrown if anything fails.
-     */
-    protected String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
-
-        return super.getTheLastModificationParam(includeWithdrawComment, this.theContainerId);
-    }
-
-    /**
      * Test successful revising a container.
      *
      * @throws Exception If anything fails.
@@ -87,16 +77,16 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false);
-        String resultXml = submit(theContainerId, paramXml);
+        String resultXml =
+            submit(theContainerId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
         assertXmlValidResult(resultXml);
 
-        paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
+        Document doc = getDocument(resultXml);
+        final String submittedLastModificationDate = getLastModificationDateValue(doc);
 
         try {
-            resultXml = revise(theContainerId, paramXml);
+            resultXml = revise(theContainerId, getStatusTaskParam(getLastModificationDateValue2(doc), "comment"));
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Revising the submitted container failed", e);
@@ -120,10 +110,9 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc2() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(theContainerId, param);
+            revise(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -140,8 +129,9 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc3() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        String resultXml = submit(theContainerId, param);
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
         String pidParam;
@@ -172,13 +162,14 @@ public class ContainerReviseIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        resultXml = release(theContainerId, param);
+        resultXml =
+            release(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
-        param = getTheLastModificationParam(false);
         try {
-            revise(theContainerId, param);
+            revise(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -195,8 +186,9 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc4() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        String resultXml = submit(theContainerId, param);
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
         String pidParam;
@@ -227,18 +219,19 @@ public class ContainerReviseIT extends ContainerTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        resultXml = release(theContainerId, param);
+        resultXml =
+            release(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
-        param = getTheLastModificationParam(true);
-        resultXml = withdraw(theContainerId, param);
+        resultXml =
+            withdraw(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
-
-        param = getTheLastModificationParam(false);
 
         try {
-            revise(theContainerId, param);
+            revise(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -255,10 +248,9 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc5() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(UNKNOWN_ID, param);
+            revise(UNKNOWN_ID, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(UNKNOWN_ID))),
+                null));
             EscidocAbstractTest.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
@@ -275,10 +267,8 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc6() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(null, param);
+            revise(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
@@ -295,11 +285,10 @@ public class ContainerReviseIT extends ContainerTestBase {
     @Test
     public void testOMRvc7() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        String resultXml = submit(theContainerId, param);
+        String resultXml =
+            submit(theContainerId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
         assertXmlValidResult(resultXml);
-
-        param = getTheLastModificationParam(false);
 
         try {
             revise(theContainerId, null);
@@ -316,24 +305,17 @@ public class ContainerReviseIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOMRvc8() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        String resultXml = submit(theContainerId, param);
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
-        param = "<param />";
+        String param = getStatusTaskParam(null, null);
 
-        try {
-            revise(theContainerId, param);
-            // TODO should be XmlCorruptedException ???
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Revising without last modification date failed with"
-                + " unexpected exception. ", XmlCorruptedException.class, e);
-        }
+        revise(theContainerId, param);
     }
 
     /**
@@ -341,22 +323,14 @@ public class ContainerReviseIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlCorruptedException.class)
     public void testOMRvc9() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theContainerId, param);
-        param = "<param";
+        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
+            null));
+        String param = "<param";
 
-        try {
-            revise(theContainerId, param);
-            // TODO should be XmlCorruptedException ???
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Revising without last modification date failed with"
-                + " unexpected exception. ", XmlCorruptedException.class, e);
-        }
+        revise(theContainerId, param);
     }
 
     /**
@@ -364,19 +338,12 @@ public class ContainerReviseIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOMRvc10() throws Exception {
 
-        String param = getTheLastModificationParam(false, theContainerId);
-        submit(theContainerId, param);
+        DateTime lmd = getLastModificationDateValue2(getDocument(retrieve(theContainerId)));
+        submit(theContainerId, getStatusTaskParam(lmd, null));
 
-        try {
-            revise(theContainerId, param);
-            EscidocAbstractTest.failMissingException(OptimisticLockingException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Revising with outdated last modification date failed "
-                + "with unexpected exception. ", OptimisticLockingException.class, e);
-        }
+        revise(theContainerId, getStatusTaskParam(lmd, null));
     }
 }

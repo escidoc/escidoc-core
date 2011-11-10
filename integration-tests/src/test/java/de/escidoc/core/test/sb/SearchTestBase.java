@@ -473,16 +473,13 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             Thrown if anything fails.
      */
-    protected final String getItemPidParam(final String itemId) throws Exception {
-
-        String xml = item.retrieve(itemId);
-        DateTime lastModDate = new DateTime(getLastModificationDate(xml));
+    protected final String getItemPidParam(final String itemId, final DateTime lastModificationDate) throws Exception {
 
         AssignParam assignPidParm = new AssignParam();
         assignPidParm.setUrl(new URL(getFrameworkUrl()
             + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId));
 
-        return EscidocTestBase.getAssignPidTaskParam(lastModDate, assignPidParm);
+        return EscidocTestBase.getAssignPidTaskParam(lastModificationDate, assignPidParm);
     }
 
     /**
@@ -495,16 +492,14 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             Thrown if anything fails.
      */
-    protected final String getContainerPidParam(final String containerId) throws Exception {
-
-        String xml = container.retrieve(containerId);
-        DateTime lastModDate = new DateTime(getLastModificationDate(xml));
+    protected final String getContainerPidParam(final String containerId, final DateTime lastModificationDate)
+        throws Exception {
 
         AssignParam assignPidParm = new AssignParam();
         assignPidParm.setUrl(new URL(getFrameworkUrl()
             + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId));
 
-        return EscidocTestBase.getAssignPidTaskParam(lastModDate, assignPidParm);
+        return EscidocTestBase.getAssignPidTaskParam(lastModificationDate, assignPidParm);
     }
 
     /**

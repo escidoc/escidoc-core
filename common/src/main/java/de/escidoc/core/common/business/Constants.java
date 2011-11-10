@@ -31,7 +31,7 @@ public final class Constants {
 
     public static final int MAX_THREADS = 4;
 
-    public static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+    public static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     /**
      * Format of all timestamps which are delivered by framework.

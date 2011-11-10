@@ -39,6 +39,7 @@ import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.util.xml.Select;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -103,7 +104,7 @@ public class ItemVersioningIT extends ItemTestBase {
         String xml;
         String versionHistory;
 
-        submit(theItemId, getTheLastModificationParam(true, theItemId, comment));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(theItemXml)), comment));
         xml = retrieve(theItemId);
         versionHistory = retrieveVersionHistory(theItemId);
 
@@ -125,7 +126,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), assignPidParam);
         assignVersionPid(versionId, pidParam);
 
-        release(theItemId, getTheLastModificationParam(true, theItemId, comment));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), comment));
         xml = retrieve(theItemId);
         versionHistory = retrieveVersionHistory(theItemId);
 
@@ -287,7 +288,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
         tsv.itemTripleStoreValues(itemDoc);
 
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
 
         tsv.itemTripleStoreValues(getDocument(xml));
@@ -334,7 +335,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
         assignVersionPid(versionId, pidParam);
 
-        release(theItemId, getTheLastModificationParam(false, theItemId));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         tsv.itemTripleStoreValues(getDocument(xml));
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '3']");
@@ -378,7 +379,7 @@ public class ItemVersioningIT extends ItemTestBase {
         assertXmlValidItem(xml);
 
         // submit again
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '4']");
         assertXmlExists("Properties status released", xml, "/item/properties/public-status[text() = 'released']");
@@ -429,7 +430,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
         assignVersionPid(versionId, pidParam);
 
-        release(theItemId, getTheLastModificationParam(false, theItemId));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         tsv.itemTripleStoreValues(getDocument(xml));
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '5']");
@@ -438,7 +439,7 @@ public class ItemVersioningIT extends ItemTestBase {
         assertXmlExists("Released item latest-release", xml, "/item/properties/latest-release");
         assertXmlValidItem(xml);
 
-        withdraw(theItemId, getTheLastModificationParam(true, theItemId));
+        withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), WITHDRAW_COMMENT));
         xml = retrieve(theItemId);
         tsv.itemTripleStoreValues(getDocument(xml));
         assertXmlExists("Properties status withdrawn", xml, "/item/properties/public-status[text() = 'withdrawn']");
@@ -582,7 +583,7 @@ public class ItemVersioningIT extends ItemTestBase {
          * *********************************************************************
          */
         PWCallback.setHandle(handle);
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
 
         xml = retrieve(objid);
         validateItemVersion1Submitted(objid, xml);
@@ -685,7 +686,7 @@ public class ItemVersioningIT extends ItemTestBase {
          * *********************************************************************
          */
         PWCallback.setHandle(handle);
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
         releaseWithPid(objid);
 
         xml = retrieve(objid);
@@ -853,7 +854,7 @@ public class ItemVersioningIT extends ItemTestBase {
         String handle = PWCallback.getHandle();
         String xml = create(itemTempl);
         String objid = getObjidValue(xml);
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
         releaseWithPid(objid);
         xml = retrieve(objid);
 
@@ -920,7 +921,7 @@ public class ItemVersioningIT extends ItemTestBase {
          * pending version 3: 2 Components, pending, submitted, released
          */
         PWCallback.setHandle(handle);
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
         releaseWithPid(objid);
 
         /*
@@ -1033,7 +1034,7 @@ public class ItemVersioningIT extends ItemTestBase {
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
             "<http://escidoc.de/core/01/properties/release/pid>");
 
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
             "<http://escidoc.de/core/01/properties/pid>");
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
@@ -1059,7 +1060,7 @@ public class ItemVersioningIT extends ItemTestBase {
         tsv.compareValueWithTripleStore(objid, "hdl:someHandle/test/" + objid + ":1", "/RDF/Description/pid",
             "<http://escidoc.de/core/01/properties/release/pid>");
 
-        submit(objid, getTheLastModificationParam(false, objid));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
         tsv.compareValueWithTripleStore(objid, "hdl:someHandle/test/" + objid, "/RDF/Description/pid",
             "<http://escidoc.de/core/01/properties/pid>");
         tsv.compareValueWithTripleStore(objid, null, "/RDF/Description/pid",
@@ -1105,7 +1106,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
     @Test
     public void testIncrementVersionNumberByUpdateCMSSubmitted() throws Exception {
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         theItemXml = retrieve(theItemId);
         testIncrementVersionNumber(10, "/item/properties/content-model-specific");
     }
@@ -1117,7 +1118,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
     @Test
     public void testIncrementVersionNumberByUpdateMdRecordWhenSubmitted() throws Exception {
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         theItemXml = retrieve(theItemId);
         testIncrementVersionNumber(10, "/item/md-records/md-record[@name='escidoc']/*[1]");
     }
@@ -1218,7 +1219,7 @@ public class ItemVersioningIT extends ItemTestBase {
         String xml;
         String versionHistory;
 
-        submit(id, getTheLastModificationParam(false, theItemId));
+        submit(id, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(id);
         assertXmlExists("Properties status submitted", xml, "/item/properties/public-status[text() = 'submitted']");
         assertXmlExists("version status submitted", xml, "/item/properties/version/status[text() = 'submitted']");
@@ -1231,16 +1232,16 @@ public class ItemVersioningIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + id));
-        String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        xml = assignObjectPid(id, pidParam);
 
         String versionId = id + ":1";
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
         pidParam =
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
-        assignVersionPid(versionId, pidParam);
+        xml = assignVersionPid(versionId, pidParam);
 
-        release(id, getTheLastModificationParam(false, theItemId));
+        release(id, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(id);
         assertXmlExists("Properties status released", xml, "/item/properties/public-status[text() = 'released']");
         assertXmlExists("version status released", xml, "/item/properties/version/status[text() = 'released']");
@@ -1252,7 +1253,7 @@ public class ItemVersioningIT extends ItemTestBase {
         assertXmlExists("Event submitted ", versionHistory, "/version-history/version[1]/events/event[1]/"
             + "eventType[text() = 'released']");
 
-        withdraw(id, getTheLastModificationParam(true, theItemId));
+        withdraw(id, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), "comment"));
         xml = retrieve(id);
 
         assertXmlExists("Properties status withdrawn", xml, "/item/properties/public-status[text() = 'withdrawn']");
@@ -1345,7 +1346,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // ---------------------------------------------------------------
 
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '2']");
@@ -1432,7 +1433,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
         assignVersionPid(versionId, pidParam);
 
-        release(theItemId, getTheLastModificationParam(false, theItemId));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '3']");
@@ -1507,7 +1508,7 @@ public class ItemVersioningIT extends ItemTestBase {
         // ---------------------------------------------------------------
 
         // submit again
-        submit(theItemId, getTheLastModificationParam(false, theItemId));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '4']");
@@ -1585,7 +1586,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
         assignVersionPid(versionId, pidParam);
 
-        release(theItemId, getTheLastModificationParam(false, theItemId));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         xml = retrieve(theItemId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, "/item/properties/version/number[text() = '5']");
@@ -1626,7 +1627,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
         // ---------------------------------------------------------------
 
-        withdraw(theItemId, getTheLastModificationParam(true, theItemId));
+        withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(xmlDoc), WITHDRAW_COMMENT));
         xml = retrieve(theItemId);
         xmlDoc = getDocument(xml);
         assertXmlValidItem(xml);
@@ -1664,6 +1665,9 @@ public class ItemVersioningIT extends ItemTestBase {
         // ---------------------------------------------------------------
         // test update withdrawn Item
         // see also (issue INFR-710)
+
+        DateTime lmd = getLastModificationDateValue2(xmlDoc);
+
         try {
             xml = addElement(xml, xPath + "/nix");
             update(theItemId, xml);
@@ -1674,7 +1678,7 @@ public class ItemVersioningIT extends ItemTestBase {
         }
 
         try {
-            submit(theItemId, getTheLastModificationParam(false, theItemId));
+            submit(theItemId, getStatusTaskParam(lmd, null));
             fail("Submit after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -1682,7 +1686,7 @@ public class ItemVersioningIT extends ItemTestBase {
         }
 
         try {
-            revise(theItemId, getTheLastModificationParam(false, theItemId));
+            revise(theItemId, getStatusTaskParam(lmd, null));
             fail("Revise after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -1690,7 +1694,7 @@ public class ItemVersioningIT extends ItemTestBase {
         }
 
         try {
-            release(theItemId, getTheLastModificationParam(false, theItemId));
+            release(theItemId, getStatusTaskParam(lmd, null));
             fail("Release after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -1706,7 +1710,7 @@ public class ItemVersioningIT extends ItemTestBase {
         }
 
         try {
-            lock(theItemId, getTheLastModificationParam(false, theItemId));
+            lock(theItemId, getLockTaskParam(lmd));
             fail("Lock after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -1733,7 +1737,8 @@ public class ItemVersioningIT extends ItemTestBase {
         // check first version
 
         // submit
-        String resultXml = submit(theItemId, getTheLastModificationParam(false, theItemId));
+        String resultXml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         assertXmlValidResult(resultXml);
         Document resultDoc = getDocument(resultXml);
         String lmdMethod = getLastModificationDateValue(resultDoc);
@@ -1761,7 +1766,9 @@ public class ItemVersioningIT extends ItemTestBase {
             + " last modification date of the latest task oriented method", lmdMethod, lmdRetrieve2);
 
         // submit again
-        resultXml = submit(theItemId, getTheLastModificationParam(false, theItemId, "comment", lmdMethod));
+        resultXml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+                "comment"));
         assertXmlValidResult(resultXml);
         resultDoc = getDocument(resultXml);
         lmdMethod = getLastModificationDateValue(resultDoc);
@@ -1917,7 +1924,8 @@ public class ItemVersioningIT extends ItemTestBase {
             "/version-history/version[version-number='1']" + "/events/event[last()]/eventDateTime").getTextContent());
 
         // change status of version 1 ------------------------------------
-        submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(itemDocV1E1)));
+        //submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(itemDocV1E1)));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(itemDocV1E1), "submit"));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
@@ -1932,7 +1940,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
 
         assignVersionPid(versionId, pidParam);
-        release(objid, getTheLastModificationParam(false, objid));
+        release(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
 
         itemXml = retrieve(objid);
         // update to version 2
@@ -1979,8 +1987,8 @@ public class ItemVersioningIT extends ItemTestBase {
 
         String objid = getObjidValue(itemV1E1);
 
-        submit(objid, getTheLastModificationParam(false, objid, "submit",
-            getLastModificationDateValue(getDocument(itemV1E1))));
+        // submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(getDocument(itemV1E1))));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(itemV1E1)), "submit"));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
@@ -1995,7 +2003,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
 
         assignVersionPid(versionId, pidParam);
-        release(objid, getTheLastModificationParam(false, objid));
+        release(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
 
         itemXml = retrieve(objid);
         Document itemDocV1E5 = getDocument(itemXml);
@@ -2182,8 +2190,7 @@ public class ItemVersioningIT extends ItemTestBase {
 
         String objid = getObjidValue(itemV1E1);
 
-        submit(objid, getTheLastModificationParam(false, objid, "submit",
-            getLastModificationDateValue(getDocument(itemV1E1))));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(itemV1E1)), "submit"));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + objid));
@@ -2198,7 +2205,7 @@ public class ItemVersioningIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
 
         assignVersionPid(versionId, pidParam);
-        release(objid, getTheLastModificationParam(false, objid));
+        release(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
 
         itemXml = retrieve(objid);
 
@@ -2218,7 +2225,7 @@ public class ItemVersioningIT extends ItemTestBase {
             XPathAPI.selectSingleNode(wovDocV2E1,
                 "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
-        submit(objid, getTheLastModificationParam(false, objid, "submit", getLastModificationDateValue(itemDocV2E1)));
+        submit(objid, getStatusTaskParam(getLastModificationDateValue2(wovDocV2E1), "submit"));
 
         /*
          * check data structure
@@ -2254,7 +2261,7 @@ public class ItemVersioningIT extends ItemTestBase {
             .selectSingleNode(wovDocV2E3,
                 "/version-history/version[version-number='1']" + "/events/event[1]/eventDateTime").getTextContent());
 
-        release(objid, getTheLastModificationParam(false, objid));
+        release(objid, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(objid))), null));
 
         /*
          * check data structure

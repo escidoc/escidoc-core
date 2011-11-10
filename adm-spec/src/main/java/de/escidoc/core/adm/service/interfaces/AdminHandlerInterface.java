@@ -63,9 +63,8 @@ public interface AdminHandlerInterface {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param taskParam list of object ids to delete<br/> boolean value to signal if the search index and the Resource
-     *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
-     *                  should be run manually afterwards.
+     * @param taskParam The XML representation of task parameters conforming to members-task-param.xsd.
+     * Including a id list of the objects to be deleted from Fedora. (example above)
      * @return total number of objects deleted, ...
      * @throws InvalidXmlException     Thrown if the taskParam has an invalid structure
      * @throws SystemException         Thrown in case of an internal error.

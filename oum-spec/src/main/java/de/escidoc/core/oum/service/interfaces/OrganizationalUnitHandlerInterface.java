@@ -538,6 +538,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String open(String id, String taskParam) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitNotFoundException, SystemException;
@@ -570,6 +571,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String close(String id, String taskParam) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitNotFoundException, SystemException;

@@ -99,7 +99,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         lock(theItemId, param);
 
         String itemXml = retrieve(theItemId);
@@ -113,7 +113,6 @@ public class ItemLockIT extends ItemTestBase {
         assertXmlValidItem(itemXml);
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getLockTaskParam(theItemId);
         try {
             update(theItemId, itemXml);
             fail("No exception on update after lock.");
@@ -123,6 +122,7 @@ public class ItemLockIT extends ItemTestBase {
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
+        param = getLockTaskParam(getLastModificationDateValue2(itemDoc));
         unlock(theItemId, param);
     }
 
@@ -133,23 +133,23 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         lock(theItemId, param);
 
-        String containerXml = retrieve(theItemId);
-        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc, "/item/properties/lock-status", "locked");
-        assertXmlNotNull("lock-date", containerDoc, "/item/properties/lock-date");
+        String itemXml = retrieve(theItemId);
+        Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
+        assertXmlEquals("Container lock status not as expected", itemDoc, "/item/properties/lock-status", "locked");
+        assertXmlNotNull("lock-date", itemDoc, "/item/properties/lock-date");
 
         String lockOwner =
-            getObjidFromHref(selectSingleNode(containerDoc, "/item/properties/lock-owner/@href").getTextContent());
+            getObjidFromHref(selectSingleNode(itemDoc, "/item/properties/lock-owner/@href").getTextContent());
         assertNotNull(lockOwner);
 
-        assertXmlValidItem(containerXml);
+        assertXmlValidItem(itemXml);
 
-        param = getLockTaskParam(theItemId);
-        update(theItemId, containerXml);
-        param = getLockTaskParam(theItemId);
+        param = getLockTaskParam(getLastModificationDateValue2(itemDoc));
+        itemXml = update(theItemId, itemXml);
+        param = getLockTaskParam(getLastModificationDateValue2(getDocument(itemXml)));
         unlock(theItemId, param);
 
     }
@@ -163,7 +163,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_1() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         try {
             lock(theItemId, param);
         }
@@ -190,7 +190,6 @@ public class ItemLockIT extends ItemTestBase {
 
         // try to call update by System-Administrator
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getLockTaskParam(theItemId);
 
         try {
             update(theItemId, containerXml);
@@ -210,7 +209,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_2() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+
         try {
             lock(theItemId, param);
         }
@@ -228,21 +228,17 @@ public class ItemLockIT extends ItemTestBase {
             EscidocAbstractTest.failException("Unlocking item failed with exception. ", e);
         }
 
-        String containerXml = retrieve(theItemId);
+        String itemXml = retrieve(theItemId);
 
-        Document containerDoc = EscidocAbstractTest.getDocument(containerXml);
-        assertXmlEquals("Container lock status not as expected", containerDoc, "/item/properties/lock-status",
-            "unlocked");
+        Document itemDoc = EscidocAbstractTest.getDocument(itemXml);
+        assertXmlEquals("Container lock status not as expected", itemDoc, "/item/properties/lock-status", "unlocked");
 
-        assertXmlNotExists("Unexpected element lock-date in unlocked item.", containerDoc, "/item/properties/lock-date");
-        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", containerDoc,
-            "/item/properties/lock-owner");
+        assertXmlNotExists("Unexpected element lock-date in unlocked item.", itemDoc, "/item/properties/lock-date");
+        assertXmlNotExists("Unexpected element lock-owner in unlocked item.", itemDoc, "/item/properties/lock-owner");
 
         // try to call update by System-Administrator
-        param = getLockTaskParam(theItemId);
-
         try {
-            update(theItemId, containerXml);
+            update(theItemId, itemXml);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Updating unlocked item failed with exception. ", e);
@@ -261,7 +257,7 @@ public class ItemLockIT extends ItemTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         try {
             lock(theItemId, param);
         }
@@ -292,7 +288,7 @@ public class ItemLockIT extends ItemTestBase {
 
         Class<?> ec = ItemNotFoundException.class;
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
 
         try {
             lock("escidoc:noExist", param);
@@ -319,7 +315,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
 
         try {
             lock(null, param);
@@ -340,7 +336,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getLockTaskParam(theItemId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         String resultXml = lock(theItemId, param);
         assertXmlValidResult(resultXml);
 

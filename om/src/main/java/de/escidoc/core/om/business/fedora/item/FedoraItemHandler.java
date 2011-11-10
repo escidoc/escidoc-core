@@ -1317,12 +1317,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
-        String withdrawComment = taskParameter.getWithdrawComment();
-        if (withdrawComment == null) {
-            withdrawComment = taskParameter.getComment();
-            if (withdrawComment == null) {
-                throw new MissingMethodParameterException("No withdraw comment found.");
-            }
+        if (taskParameter.getComment() == null) {
+            throw new MissingMethodParameterException("No withdraw comment found.");
         }
 
         checkLatestVersion();

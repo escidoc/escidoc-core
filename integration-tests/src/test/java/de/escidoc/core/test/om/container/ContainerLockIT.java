@@ -108,7 +108,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         lock(theContainerId, param);
 
         String containerXml = retrieve(theContainerId);
@@ -137,7 +137,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_ULC_1_1() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -167,7 +167,6 @@ public class ContainerLockIT extends ContainerTestBase {
 
         // try to call update by System-Administrator
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        param = getLockTaskParam(theContainerId);
 
         try {
             update(theContainerId, containerXml);
@@ -186,7 +185,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_ULC_1_2() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -217,7 +216,6 @@ public class ContainerLockIT extends ContainerTestBase {
         assertXmlValidContainer(containerXml);
 
         // try to call update by System-Administrator
-        param = getLockTaskParam(theContainerId);
 
         try {
             update(theContainerId, containerXml);
@@ -238,7 +236,7 @@ public class ContainerLockIT extends ContainerTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -264,7 +262,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test(expected = ContainerNotFoundException.class)
     public void testOM_C_lockWrongID() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
 
         lock("escidoc:noExist", param);
     }
@@ -285,7 +283,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test(expected = MissingMethodParameterException.class)
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         lock(null, param);
     }
 
@@ -297,7 +295,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getLockTaskParam(theContainerId);
+        String param = getLockTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         String resultXml = lock(theContainerId, param);
         assertXmlValidResult(resultXml);
 
@@ -327,8 +325,9 @@ public class ContainerLockIT extends ContainerTestBase {
     }
 
     private void submitItemHelp() throws Exception {
-        String param = getLockTaskParam(theItemId);
-        Object result1 = getItemClient().submit(theItemId, param);
+        Object result1 =
+            getItemClient().submit(theItemId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         if (result1 instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result1;
             assertHttpStatusOfMethod("", httpRes);

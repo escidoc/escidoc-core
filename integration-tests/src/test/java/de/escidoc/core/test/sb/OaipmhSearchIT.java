@@ -127,18 +127,22 @@ public class OaipmhSearchIT extends SearchTestBase {
                 containerIds[i] = getId(xml);
 
                 // submit container
-                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                xml =
+                    container.submit(containerIds[i], getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC),
+                        null));
 
                 // assign pids
-                String pidParam = getContainerPidParam(containerIds[i]);
-                container.assignObjectPid(containerIds[i], pidParam);
-                pidParam = getContainerPidParam(containerIds[i]);
+                String pidParam =
+                    getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
+                xml = container.assignObjectPid(containerIds[i], pidParam);
+                pidParam = getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
                 container.assignVersionPid(containerIds[i] + ":1", pidParam);
 
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i],
+                    getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
 
             }
             Thread.sleep(30000);
@@ -159,36 +163,34 @@ public class OaipmhSearchIT extends SearchTestBase {
                 String lastModDate = getLastModificationDate(xml);
                 itemIds[i] = getId(xml);
 
-                // submit item
-                item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
-
-                // assignPids
                 Document itemDoc = EscidocAbstractTest.getDocument(xml);
                 String componentId = getComponentObjidValue(itemDoc, 1);
-                String pidParam = getItemPidParam(itemIds[i]);
-                item.assignContentPid(itemIds[i], componentId, pidParam);
-                pidParam = getItemPidParam(itemIds[i]);
-                item.assignObjectPid(itemIds[i], pidParam);
+
+                // submit item
+                xml = item.submit(itemIds[i], getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+
+                // assignPids
+                String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
+                xml = item.assignContentPid(itemIds[i], componentId, pidParam);
+                pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
+                xml = item.assignObjectPid(itemIds[i], pidParam);
                 // version pid to item[0] is assigned in a later test
                 // Sorry, but it depends on configuration if a release of an
                 // Item/container is possible without versionPid. Therefore has
                 // the 'later' test to operate on it own item.
                 // if (i > 0) {
                 String versionId = itemIds[i] + ":1";
-                pidParam = getItemPidParam(versionId);
-                item.assignVersionPid(versionId, pidParam);
+                pidParam = getItemPidParam(versionId, getLastModificationDateValue2(getDocument(xml)));
+                xml = item.assignVersionPid(versionId, pidParam);
                 // }
 
                 // release item
-                xml = item.retrieve(itemIds[i]);
-                lastModDate = getLastModificationDate(xml);
-                item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
                 Thread.sleep(10000);
 
                 if (i % 2 == 0) {
                     xml = item.retrieve(itemIds[i]);
-                    lastModDate = getLastModificationDate(xml);
                     xml = xml.replaceAll("Gollmer", "Gollmer1");
                     item.update(itemIds[i], xml);
                 }
@@ -202,26 +204,26 @@ public class OaipmhSearchIT extends SearchTestBase {
             // release container with items as new members
             // triggers indexing
             String xml = container.retrieve(containerIds[0]);
-            String lastModDate = getLastModificationDate(xml);
-            // submit container
-            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
-
             String version =
                 selectSingleNode(EscidocAbstractTest.getDocument(xml), "/container/properties/version/number")
                     .getTextContent();
+
+            // submit container
+            xml =
+                container.submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+                    null));
+
             // assign pids
-            String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
+            String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
+            xml = container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
             // release container
-            xml = container.retrieve(containerIds[0]);
-            lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0],
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
             Thread.sleep(10000);
 
             xml = container.retrieve(containerIds[0]);
-            lastModDate = getLastModificationDate(xml);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[0], xml);
         }
@@ -930,9 +932,11 @@ public class OaipmhSearchIT extends SearchTestBase {
             for (int i = 0; i < itemIds.length; i++) {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
-                    String lastModDate = getLastModificationDate(xml);
-                    item.withdraw(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
-                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
+                    String taskParam =
+                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
+                            "This is a withdraw comment.");
+
+                    item.withdraw(itemIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
 
                 }
@@ -958,9 +962,11 @@ public class OaipmhSearchIT extends SearchTestBase {
             for (int i = 0; i < containerIds.length; i++) {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
-                    String lastModDate = getLastModificationDate(xml);
-                    container.withdraw(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
-                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
+                    String taskParam =
+                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
+                            "This is a withdraw comment.");
+
+                    container.withdraw(containerIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
 
                 }

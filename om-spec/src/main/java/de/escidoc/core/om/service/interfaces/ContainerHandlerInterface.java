@@ -465,8 +465,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the container.
-     * @param taskParam
-     *            The list of Members to add to the container. (See example above.)
+     * @param taskParam The XML representation of task parameters conforming to members-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and the the list of Members id to be add to the container. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if a container with the provided id does not exist in the framework.
@@ -490,6 +491,7 @@ public interface ContainerHandlerInterface {
      * @throws OptimisticLockingException
      *             If the provided latest-modification-date does not match.
      */
+    @Validate(param = 1, resolver = "getMembersTaskParamSchemaLocation")
     String addMembers(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, InvalidContextException,
         AuthenticationException, AuthorizationException, OptimisticLockingException, MissingAttributeValueException;
@@ -571,6 +573,7 @@ public interface ContainerHandlerInterface {
      * @throws OptimisticLockingException
      *             If the provided latest-modification-date does not match.
      */
+    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
     String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, InvalidContextException,
         AuthenticationException, AuthorizationException, OptimisticLockingException, MissingAttributeValueException;
@@ -624,8 +627,10 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the container.
-     * @param taskParam
-     *            The list of Members to add to the container. (See example above.)
+     * @param taskParam The XML representation of task parameters conforming to members-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and the list of Members id to be removed from the container.
+     *  (example above) (See example above.)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContextNotFoundException
      *             Thrown if provided Context could not be found
@@ -650,6 +655,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidContentException
      *             Thrown if the taskParam has invalid content
      */
+    @Validate(param = 1, resolver = "getMembersTaskParamSchemaLocation")
     String removeMembers(final String id, final String taskParam) throws ContextNotFoundException, LockingException,
         XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException,
         AuthenticationException, AuthorizationException, SystemException, ContainerNotFoundException,
@@ -1444,9 +1450,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be released.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if a Container with the specified id cannot be found.
@@ -1469,6 +1475,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, ReadonlyVersionException, InvalidXmlException;
@@ -1516,9 +1523,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be submitted.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if a Container with the specified id cannot be found.
@@ -1541,6 +1548,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, ReadonlyVersionException, InvalidXmlException;
@@ -1588,9 +1596,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be revised.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if a Container with the specified id cannot be found.
@@ -1609,6 +1617,7 @@ public interface ContainerHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, XmlCorruptedException;
@@ -1656,9 +1665,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be withdrawn.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to status-task-param.xsd. 
+     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
+     * and an optional comment. (see example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if a Container with the specified id cannot be found.
@@ -1683,6 +1692,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, AlreadyWithdrawnException, ReadonlyVersionException,
@@ -1717,9 +1727,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be locked.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the container (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if the Container was not found.
@@ -1773,9 +1783,9 @@ public interface ContainerHandlerInterface {
      * 
      * @param id
      *            The id of the Container to be unlocked.
-     * @param taskParam
-     *            The timestamp of the last modification of the Container and a comment. The timestamp is necessary for
-     *            optimistic locking purpose.
+     * @param taskParam The XML representation of task parameters conforming to lock-task-param.xsd. 
+     * Including the timestamp of the last modification of the container (attribute 'last-modification-date', required).
+     * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @return last-modification-date within XML (result.xsd)
      * @throws ContainerNotFoundException
      *             Thrown if the Container was not found.
@@ -2160,7 +2170,7 @@ public interface ContainerHandlerInterface {
      * @throws MissingMethodParameterException
      *             Thrown if one of expected input parameter is missing.
      */
-    @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
+    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String param) throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
         AlreadyExistsException, InvalidStatusException, InvalidXmlException, MissingElementValueException,
@@ -2285,7 +2295,7 @@ public interface ContainerHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
-    @Validate(param = 1, resolver = "getUpdateRelationsSchemaLocation")
+    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException,
         ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         InvalidXmlException, ContentRelationNotFoundException, LockingException, ReadonlyVersionException,

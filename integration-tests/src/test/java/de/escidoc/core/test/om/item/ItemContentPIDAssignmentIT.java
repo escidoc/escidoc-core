@@ -153,7 +153,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         final String itemId = getObjidValue(itemDoc);
 
         // release item
-        submit(itemId, getTheLastModificationParam(false, itemId));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
@@ -164,7 +164,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
 
         assignVersionPid(itemId, pidParam);
-        release(itemId, getTheLastModificationParam(false, itemId));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // create component
         itemDoc = EscidocAbstractTest.getDocument(update(itemId, addComponent(retrieve(itemId))));
@@ -207,7 +207,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         final String itemId = getObjidValue(itemDoc);
 
         // assign PIDs, release item
-        submit(itemId, getTheLastModificationParam(false, itemId));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
@@ -229,7 +229,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
                 .getTextContent();
 
         assertNotNull(contentPid1);
-        release(itemId, getTheLastModificationParam(false, itemId));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // check if returned content PID equals RELS-EXT entry
         String contentPid2 =

@@ -40,12 +40,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Test suite for the role CollaboratorModifierAddRemoveMembers.
- *
+ * 
  * @author Michael Hoppe
  */
 @RunWith(Parameterized.class)
@@ -53,7 +55,7 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Initializes test-class with data.
-     *
+     * 
      * @return Collection with data.
      */
     @Parameterized.Parameters
@@ -102,10 +104,13 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * The constructor.
-     *
-     * @param handlerCode   handlerCode of either UserAccountHandler or UserGroupHandler.
-     * @param userOrGroupId userOrGroupId for grantCreation.
-     * @throws Exception If anything fails.
+     * 
+     * @param handlerCode
+     *            handlerCode of either UserAccountHandler or UserGroupHandler.
+     * @param userOrGroupId
+     *            userOrGroupId for grantCreation.
+     * @throws Exception
+     *             If anything fails.
      */
     public CollaboratorModifierAddRemoveMembersIT(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
@@ -114,8 +119,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void initialize() throws Exception {
@@ -127,8 +133,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @After
     public void deinitialize() throws Exception {
@@ -138,29 +145,30 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * insert data into system for the tests.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     protected void prepare() throws Exception {
 
-        //create 1. container in status pending
+        // create 1. container in status pending
         String containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
         Document containerDocument = EscidocAbstractTest.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
-        //create 2. container in status pending
+        // create 2. container in status pending
         containerXml = prepareContainer(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
         Document containerDocument2 = EscidocAbstractTest.getDocument(containerXml);
         containerId2 = getObjidValue(containerDocument2);
         containerHref2 = Constants.CONTAINER_BASE_URI + "/" + containerId2;
 
-        //create item in status pending
+        // create item in status pending
         // in context /ir/context/escidoc:persistent3
         String itemXml = prepareItem(PWCallback.DEFAULT_HANDLE, STATUS_PENDING, null, false, false);
         Document document = EscidocAbstractTest.getDocument(itemXml);
 
-        //save ids
+        // save ids
         contextId = extractContextId(document);
         contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
         itemId = getObjidValue(document);
@@ -170,18 +178,19 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
         privateComponentId = extractComponentId(document, VISIBILITY_PRIVATE);
         privateComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + privateComponentId;
 
-        //add container2 to container
-        String lastModificationDate = getLastModificationDateValue(containerDocument);
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + containerId2 + "</id></param>";
-        getContainerClient().addMembers(containerId, taskParam);
+        // add container2 to container
+        List<String> ids = new ArrayList<String>();
+        ids.add(containerId2);
+        getContainerClient().addMembers(containerId,
+            getMembersTaskParam(getLastModificationDateValue2(containerDocument), ids));
 
-        //add item to container2
-        lastModificationDate = getLastModificationDateValue(containerDocument2);
-        taskParam = "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
-        getContainerClient().addMembers(containerId2, taskParam);
+        // add item to container2
+        ids = new ArrayList<String>();
+        ids.add(itemId);
+        getContainerClient().addMembers(containerId2,
+            getMembersTaskParam(getLastModificationDateValue2(containerDocument2), ids));
 
-        //update item to create new version
+        // update item to create new version
         itemXml = itemXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");
         itemXml = update(ITEM_HANDLER_CODE, itemId, itemXml);
 
@@ -189,8 +198,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers retrieving an item with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveItemWithContainerScopeDecline() throws Exception {
@@ -200,8 +210,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers retrieving an item with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveItemWithParentContainerScopeDecline() throws Exception {
@@ -211,8 +222,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers retrieving an item with no scope.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveItemWithNoScope() throws Exception {
@@ -222,8 +234,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers retrieving an container with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveContainerWithContainerScope() throws Exception {
@@ -233,8 +246,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers retrieving an container with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRetrieveContainerWithParentContainerScopeDecline() throws Exception {
@@ -244,8 +258,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an item with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateItemWithContainerScopeDecline() throws Exception {
@@ -256,8 +271,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an item with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateItemWithParentContainerScopeDecline() throws Exception {
@@ -268,8 +284,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an item with no scope.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateItemWithNoScope() throws Exception {
@@ -279,8 +296,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an container with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateContainerWithContainerScope() throws Exception {
@@ -290,8 +308,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an container with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateContainerWithParentContainerScopeDecline() throws Exception {
@@ -302,8 +321,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an container with scope on child-container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateContainerWithChildContainerScopeDecline() throws Exception {
@@ -314,8 +334,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers updating an container with no scope.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testUpdateContainerWithNoScope() throws Exception {
@@ -325,8 +346,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an item with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockItemWithContainerScopeDecline() throws Exception {
@@ -336,8 +358,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an item with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockItemWithParentContainerScopeDecline() throws Exception {
@@ -347,8 +370,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an item with no scope.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockItemWithNoScope() throws Exception {
@@ -358,8 +382,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an container with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockContainerWithContainerScope() throws Exception {
@@ -369,8 +394,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an container with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockContainerWithParentContainerScopeDecline() throws Exception {
@@ -380,8 +406,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an container with scope on child-container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockContainerWithChildContainerScopeDecline() throws Exception {
@@ -391,8 +418,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers locking/unlocking an container with no scope.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testLockUnlockContainerWithNoScope() throws Exception {
@@ -402,8 +430,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers adding an item to a container with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddItemToContainerWithContainerScope() throws Exception {
@@ -413,8 +442,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers adding an item to a container with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddItemToContainerWithParentContainerScopeDecline() throws Exception {
@@ -424,8 +454,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers adding an item to a container with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddContainerToContainerWithContainerScope() throws Exception {
@@ -435,8 +466,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test CollaboratorModifierAddRemoveMembers adding an item to a container with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAddContainerToContainerWithParentContainerScopeDecline() throws Exception {
@@ -446,8 +478,9 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test logging out a CollaboratorModifierAddRemoveMembers.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testAaCollaboratorLogout() throws Exception {
@@ -457,17 +490,18 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test collaborator with scope on container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(timeout = 100000)
     public void testRetrieveContentWithContainerScopeDecline() throws Exception {
 
-        //create grant collaborator for user USER_ID and scope of container
+        // create grant collaborator for user USER_ID and scope of container
         doTestCreateGrant(null, grantCreationUserOrGroupId, containerHref2,
             ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS, null);
 
-        //test declining retrieving content
+        // test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);
@@ -484,17 +518,18 @@ public class CollaboratorModifierAddRemoveMembersIT extends GrantTestBase {
 
     /**
      * Test collaborator with scope on parent container.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(timeout = 30000)
     public void testRetrieveContentWithParentContainerScopeDecline() throws Exception {
 
-        //create grant collaborator for user USER_ID and scope of container
+        // create grant collaborator for user USER_ID and scope of container
         doTestCreateGrant(null, grantCreationUserOrGroupId, containerHref,
             ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS, null);
 
-        //test declining retrieving content
+        // test declining retrieving content
         try {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(itemId, privateComponentId);

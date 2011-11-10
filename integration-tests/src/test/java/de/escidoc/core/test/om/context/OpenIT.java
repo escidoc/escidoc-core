@@ -30,10 +30,16 @@ package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.utils.DateTimeJaxbConverter;
+import de.escidoc.core.test.Constants;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -73,7 +79,7 @@ public class OpenIT extends ContextTestBase {
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
-        open(id, getTaskParam(lastModified));
+        open(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
         String opened = retrieve(id);
         Document openedDoc = EscidocAbstractTest.getDocument(opened);
 
@@ -95,9 +101,9 @@ public class OpenIT extends ContextTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test(expected = ContextNotFoundException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmOc2() throws Exception {
-        open("escidoc:UnknownContext", getTaskParam(null));
+        open("escidoc:UnknownContext", getStatusTaskParam(null, null));
     }
 
     /**
@@ -114,8 +120,7 @@ public class OpenIT extends ContextTestBase {
         assertXmlValidContext(created);
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
-        // String lastModified = getLastModificationDateValue(createdDoc);
-        open(id, getTaskParam(null));
+        open(id, getStatusTaskParam(new DateTime(), null));
     }
 
     /**
@@ -123,7 +128,7 @@ public class OpenIT extends ContextTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test(expected = XmlCorruptedException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmOc3b() throws Exception {
         Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
@@ -132,8 +137,8 @@ public class OpenIT extends ContextTestBase {
         assertXmlValidContext(created);
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
-        // String lastModified = getLastModificationDateValue(createdDoc);
-        open(id, getTaskParam("incorrect timestamp"));
+        open(id, Constants.XML_HEADER + "<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" "
+            + "last-modification-date=\"incorrect timestamp\">");
     }
 
     /**
@@ -141,7 +146,7 @@ public class OpenIT extends ContextTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test(expected = XmlCorruptedException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmOc3c() throws Exception {
         Document context = EscidocAbstractTest.getTemplateAsDocument(this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
@@ -150,11 +155,7 @@ public class OpenIT extends ContextTestBase {
         assertXmlValidContext(created);
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
-        // String lastModified = getLastModificationDateValue(createdDoc);
-        String param =
-            toString(deleteAttribute(EscidocAbstractTest.getDocument(getTaskParam("incorrect timestamp")), "/param",
-                "last-modification-date"), false);
-        open(id, param);
+        open(id, Constants.XML_HEADER + "<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" />");
     }
 
     /**
@@ -164,7 +165,7 @@ public class OpenIT extends ContextTestBase {
      */
     @Test(expected = MissingMethodParameterException.class)
     public void testOmOc4a() throws Exception {
-        open(null, getTaskParam(null));
+        open(null, getStatusTaskParam(null, null));
     }
 
     /**
@@ -211,9 +212,9 @@ public class OpenIT extends ContextTestBase {
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
-        open(id, getTaskParam(lastModified));
+        open(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
 
-        open(id, getTaskParam(getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(id)))));
+        open(id, getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(retrieve(id))), null));
     }
 
     /**
@@ -234,11 +235,11 @@ public class OpenIT extends ContextTestBase {
         String contextId = getObjidValue(createdDoc);
 
         String lmd = getLastModificationDateValue(createdDoc);
-        String resultXml = open(contextId, getTaskParam(lmd));
+        String resultXml = open(contextId, getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null));
         assertXmlValidResult(resultXml);
         String lmdOpen = getLastModificationDateValue(getDocument(resultXml));
 
-        resultXml = close(contextId, getTaskParam(lmdOpen));
+        resultXml = close(contextId, getStatusTaskParam(new DateTime(lmdOpen, DateTimeZone.UTC), null));
         assertXmlValidResult(resultXml);
         String lmdClose = getLastModificationDateValue(getDocument(resultXml));
 

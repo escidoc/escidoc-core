@@ -40,6 +40,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -166,11 +167,10 @@ public class AudienceIT extends GrantTestBase {
         audienceComponentHref = itemHref + "/" + Constants.SUB_COMPONENT + "/" + audienceComponentId;
 
         //add item to container
-        String lastModificationDate = getLastModificationDateValue(containerDocument);
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
-        getContainerClient().addMembers(containerId, taskParam);
-
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(itemId);
+        getContainerClient().addMembers(containerId,
+            getMembersTaskParam(getLastModificationDateValue2(containerDocument), ids));
     }
 
     /**

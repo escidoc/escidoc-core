@@ -57,30 +57,6 @@ public class ItemDeleteIT extends ItemTestBase {
     private String theItemId;
 
     /**
-     * Get the param with last-modification-date.
-     *
-     * @param includeWithdrawComment Set true if a withdraw comment is to include.
-     * @return param with last-modification-date
-     * @throws Exception Thrown if converting of XML to Document format fails.
-     */
-    private String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
-        Document item = EscidocAbstractTest.getDocument(retrieve(theItemId));
-
-        // get last-modification-date
-        NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-        String lastModificationDate = lastModificationDateNode.getNodeValue();
-
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        if (includeWithdrawComment) {
-            param += "withdraw-comment=\"this is a withdraw comment\"";
-        }
-        param += "/>";
-
-        return param;
-    }
-
-    /**
      * Test successfully deleting item in status "pending".
      *
      * @throws Exception If anything fails.
@@ -151,9 +127,9 @@ public class ItemDeleteIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-        String param = getTheLastModificationParam(false);
 
-        submit(this.theItemId, param);
+        submit(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
+            null));
 
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
@@ -181,8 +157,8 @@ public class ItemDeleteIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(true);
-        release(this.theItemId, param);
+        release(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+            null));
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
@@ -206,8 +182,8 @@ public class ItemDeleteIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
-        String param = getTheLastModificationParam(false);
-        submit(this.theItemId, param);
+
+        submit(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(itemXml)), null));
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);

@@ -510,7 +510,7 @@ public class ItemClient extends ClientBase
         String xpathVersionPid = "/item/properties/version/pid";
         String url = "http://somewhere/dir/";
 
-        String lmd = null;
+        DateTime lmd = null;
         String pidXml = null;
 
         Document resDoc = null;
@@ -525,7 +525,7 @@ public class ItemClient extends ClientBase
             || !getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             String objXml = handleXmlResult(retrieve(itemId));
             resDoc = EscidocAbstractTest.getDocument(objXml);
-            lmd = getLastModificationDateValue(resDoc);
+            lmd = EscidocTestBase.getLastModificationDateValue2(resDoc);
         }
 
         // assign objectPid
@@ -537,12 +537,12 @@ public class ItemClient extends ClientBase
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + id));
-                String pidParam = EscidocTestBase.getAssignPidTaskParam(new DateTime(lmd), assignPidParam);
+                String pidParam = EscidocTestBase.getAssignPidTaskParam(lmd, assignPidParam);
 
                 pidXml = handleXmlResult(assignObjectPid(id, pidParam));
 
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
-                lmd = getLastModificationDateValue(pidDoc);
+                lmd = EscidocTestBase.getLastModificationDateValue2(pidDoc);
             }
         }
 
@@ -560,20 +560,20 @@ public class ItemClient extends ClientBase
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + versionId));
-                String pidParam = EscidocTestBase.getAssignPidTaskParam(new DateTime(lmd), assignPidParam);
+                String pidParam = EscidocTestBase.getAssignPidTaskParam(lmd, assignPidParam);
 
                 pidXml = handleResult(assignVersionPid(versionId, pidParam));
 
                 Document pidDoc = EscidocAbstractTest.getDocument(pidXml);
-                lmd = getLastModificationDateValue(pidDoc);
+                lmd = EscidocTestBase.getLastModificationDateValue2(pidDoc);
             }
         }
 
-        String param = getTaskParam(lmd);
+        String param = EscidocTestBase.getStatusTaskParam(lmd, null);
 
         PWCallback.setHandle(creatorUserHandle);
         // now the actually method: release
-        return (releaseWithoutPid(itemId, param));
+        return releaseWithoutPid(itemId, param);
     }
 
     /**

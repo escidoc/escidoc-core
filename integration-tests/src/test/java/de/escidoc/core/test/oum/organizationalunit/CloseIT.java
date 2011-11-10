@@ -28,10 +28,15 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+
+import org.joda.time.DateTime;
+
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -168,7 +173,7 @@ public class CloseIT extends OrganizationalUnitTestBase {
 
         final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
         try {
-            close(UNKNOWN_ID, "<param />");
+            close(UNKNOWN_ID, getStatusTaskParam(new DateTime(), null));
             failMissingException("Closing OU with unknown id has not been declined", ec);
         }
         catch (final Exception e) {
@@ -207,7 +212,7 @@ public class CloseIT extends OrganizationalUnitTestBase {
 
         final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         try {
-            close(null, "<param />");
+            close(null, getStatusTaskParam(new DateTime(), null));
             failMissingException("Closing OU without an id has not been declined", ec);
         }
         catch (final Exception e) {
@@ -238,17 +243,10 @@ public class CloseIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOumCou3c() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
-        try {
-            close(ORGANIZATIONAL_UNIT_ID, "<param />");
-            failMissingException("Closing OU with an invalid task param has not been declined", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Closing OU with an invalid task param has not been declined correctly.", ec, e);
-        }
+        close(ORGANIZATIONAL_UNIT_ID, getStatusTaskParam(null, null));
     }
 
     /**
@@ -256,17 +254,10 @@ public class CloseIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOumCou3d() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
-        try {
-            close(ORGANIZATIONAL_UNIT_ID, "<task-parm />");
-            failMissingException("Closing OU with an invalid task param has not been declined", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Closing OU with an invalid task param has not been declined correctly.", ec, e);
-        }
+        close(ORGANIZATIONAL_UNIT_ID, "<task-parm />");
     }
 
     /**

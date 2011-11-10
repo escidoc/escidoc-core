@@ -124,8 +124,7 @@ public class ItemCreateReleaseStressIT extends ItemTestBase {
             getDocument(handleXmlResult(getContextClient().create(
                 getExampleTemplate("context-minimal-for-create-01.xml"))));
         String contextId = getObjidValue(contextDoc);
-        String contextLmd = getLastModificationDateValue(contextDoc);
-        getContextClient().open(contextId, "<param last-modification-date=\"" + contextLmd + "\" />");
+        getContextClient().open(contextId, getStatusTaskParam(getLastModificationDateValue2(contextDoc), null));
 
         // create an item an replace the value of the public-status element
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
@@ -155,8 +154,13 @@ public class ItemCreateReleaseStressIT extends ItemTestBase {
         // submit and release all Items
         for (int i = 0; i < NUM_OF_ITEMS; i++) {
             try {
-                String param = getTheLastModificationParam(false, ids[i].getObjid(), "", ids[i].getLmdAsString());
-                String xml = submit(ids[i].getObjid(), param);
+                //                String param = getTheLastModificationParam(false, ids[i].getObjid(), "", ids[i].getLmdAsString());
+                //                String xml = submit(ids[i].getObjid(), param);
+
+                String xml =
+                    submit(ids[i].getObjid(), getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(retrieve(ids[i].getObjid()))), null));
+
                 ids[i].setLmd(getLastModificationDateValue(getDocument(xml)));
                 System.out.println("Item submitted " + ids[i].getObjid());
             }

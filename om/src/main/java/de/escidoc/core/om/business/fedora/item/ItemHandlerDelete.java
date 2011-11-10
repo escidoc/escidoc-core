@@ -52,6 +52,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,15 +94,16 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
 
         // remove member entries referring this
         final List<String> containers = getTripleStoreUtility().getContainers(getItem().getId());
-        for (final String parent : containers) {
+        for (final String parentId : containers) {
             try {
-                final Container container = new Container(parent);
+                final Container parentContainer = new Container(parentId);
                 // call removeMember with current user context (access rights)
-                final String param =
-                    "<param last-modification-date=\"" + container.getLastModificationDate() + "\"><id>"
-                        + getItem().getId() + "</id></param>";
+                ArrayList<String> ids = new ArrayList<String>();
+                ids.add(getItem().getId());
+                final String param = membersTaskParam(parentContainer.getLastModificationDate(), ids);
+
                 final BeanMethod method =
-                    methodMapper.getMethod("/ir/container/" + parent + "/members/remove", null, null, "POST", param);
+                    methodMapper.getMethod("/ir/container/" + parentId + "/members/remove", null, null, "POST", param);
                 method.invokeWithProtocol(UserContext.getHandle());
             }
             catch (final InvocationTargetException e) {

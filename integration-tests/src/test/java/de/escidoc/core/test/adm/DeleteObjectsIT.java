@@ -56,7 +56,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
 
         // delete item
         xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/deletion-task-param/0.1\">\n" + "<id>" + itemId
                 + "</id></param>";
         deleteObjects(xml);

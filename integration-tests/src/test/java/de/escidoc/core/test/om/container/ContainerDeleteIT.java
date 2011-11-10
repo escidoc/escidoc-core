@@ -77,10 +77,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
     public void testOM_DC_7() throws Exception {
 
         String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String paramXml = getTheLastModificationParam(false, containerId);
-        submit(containerId, paramXml);
-        paramXml = getTheLastModificationParam(false, containerId);
-        revise(containerId, paramXml);
+        submit(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
+        revise(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
         delete(containerId);
 
         try {
@@ -163,8 +161,7 @@ public class ContainerDeleteIT extends ContainerTestBase {
     public void testOM_DC_6() throws Exception {
 
         String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        String param = getTheLastModificationParam(false, containerId);
-        submit(containerId, param);
+        submit(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
         try {
             delete(containerId);
             EscidocAbstractTest.failMissingException("No exception occurred on delete submitted container.",

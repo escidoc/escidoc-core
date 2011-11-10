@@ -1241,32 +1241,6 @@ public abstract class ClientBase {
     }
 
     /**
-     * Get the task param including the last-modification-date.
-     * 
-     * @param timestamp
-     *            If not null the last-modification-date is set to timestamp.
-     * @return The task param.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getTaskParam(final String timestamp) throws Exception {
-        String result = null;
-
-        if (timestamp != null) {
-            final Node document =
-                substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
-                    "task_param_last_modification_date.xml"), "/param/@last-modification-date", timestamp);
-            result = toString(document, false);
-        }
-        else {
-            result =
-                EscidocAbstractTest.getTemplateAsString(TEMPLATE_OM_COMMON_PATH,
-                    "task_param_last_modification_date.xml");
-        }
-        return result;
-    }
-
-    /**
      * Serialize the given Dom Object to a String.
      * 
      * @param xml

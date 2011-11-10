@@ -28,11 +28,15 @@
  */
 package de.escidoc.core.test.om.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,52 +94,39 @@ public class ItemParentsIT extends ItemTestBase {
         String containerData = containerTestBase.getContainerTemplate("create_container.xml");
         String itemData = getItemTemplate("create_item_minimal.xml");
 
-        String taskParam = "<param last-modification-date=\"${lastModificationDate}\">" + "${idParams}</param>";
-        String idParam = "<id>${id}</id>";
-
         String containerXml = null;
         String itemXml = null;
+        DateTime[] containerLmds = new DateTime[3];
 
         for (int i = 0; i < 3; i++) {
             containerXml = containerTestBase.create(containerData);
-            containerIds[i] = getObjidValue(containerXml);
+            Document doc = getDocument(containerXml);
+            containerIds[i] = getObjidValue(doc);
+            containerLmds[i] = getLastModificationDateValue2(doc);
         }
         for (int i = 0; i < 4; i++) {
             itemXml = create(itemData);
             itemIds[i] = getObjidValue(itemXml);
         }
 
+        List<String> ids = new ArrayList<String>();
         //Add members to containerIds[0]
-        StringBuffer idParams = new StringBuffer("");
         for (int i = 0; i < 2; i++) {
-            idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[i]));
+            ids.add(itemIds[i]);
         }
-        String replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
-                .getTheLastModificationDate(containerIds[0]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        containerTestBase.addMembers(containerIds[0], replacedTaskParam);
+        containerTestBase.addMembers(containerIds[0], getMembersTaskParam(containerLmds[0], ids));
 
         //Add members to containerIds[1]
-        idParams = new StringBuffer("");
+        ids = new ArrayList<String>();
         for (int i = 0; i < 3; i++) {
-            idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[i]));
+            ids.add(itemIds[i]);
         }
-        replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
-                .getTheLastModificationDate(containerIds[1]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        containerTestBase.addMembers(containerIds[1], replacedTaskParam);
+        containerTestBase.addMembers(containerIds[1], getMembersTaskParam(containerLmds[1], ids));
 
         //Add members to containerIds[2]
-        idParams = new StringBuffer("");
-        idParams.append(idParam.replaceFirst("\\$\\{id\\}", itemIds[0]));
-        replacedTaskParam =
-            taskParam.replaceFirst("\\$\\{lastModificationDate\\}", containerTestBase
-                .getTheLastModificationDate(containerIds[2]));
-        replacedTaskParam = replacedTaskParam.replaceFirst("\\$\\{idParams\\}", idParams.toString());
-        containerTestBase.addMembers(containerIds[2], replacedTaskParam);
-
+        ids = new ArrayList<String>();
+        ids.add(itemIds[0]);
+        containerTestBase.addMembers(containerIds[2], getMembersTaskParam(containerLmds[2], ids));
     }
 
     /**

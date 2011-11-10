@@ -202,7 +202,12 @@ public class SbTestBase extends EscidocAbstractTest {
      * @throws Exception Thrown if anything fails.
      */
     protected String openOrgUnit(final String objidValue) throws Exception {
-        getOrganizationalUnitClient().open(objidValue, orgUnitHelper.getTheLastModificationParam(false, objidValue));
+
+        String param =
+            getStatusTaskParam(getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient()
+                .retrieve(objidValue)))), "comment");
+
+        getOrganizationalUnitClient().open(objidValue, param);
         String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;
     }
@@ -215,7 +220,11 @@ public class SbTestBase extends EscidocAbstractTest {
      * @throws Exception Thrown if anything fails.
      */
     protected String closeOrgUnit(final String objidValue) throws Exception {
-        getOrganizationalUnitClient().close(objidValue, orgUnitHelper.getTheLastModificationParam(false, objidValue));
+
+        String param =
+            getStatusTaskParam(getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient()
+                .retrieve(objidValue)))), "comment");
+        getOrganizationalUnitClient().close(objidValue, param);
         String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;
     }

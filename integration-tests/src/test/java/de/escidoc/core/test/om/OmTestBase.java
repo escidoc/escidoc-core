@@ -345,45 +345,36 @@ public class OmTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * 
      * @param lastModDate
+     *            The last modification date of the source.
      * @param targets
-     * @return
+     *            List of target ids. As much relations are added as there are tagets.
+     * @param predicate
+     *            The predicate of the relation.
+     * @return The task parameter according to the given values.
      */
-    public String getTaskParameterForAddRelations(final String lastModDate, final Vector<String> targets) {
-
+    public String getRelationTaskParameter(
+        final String lastModDate, final Vector<String> targets, final String predicate) {
         String taskParam = null;
         if ((targets != null) && (targets.size() > 0)) {
-            taskParam = "<param last-modification-date=\"" + lastModDate + "\">\n";
+            taskParam =
+                de.escidoc.core.test.Constants.XML_HEADER
+                    + "<param xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\" "
+                    + "last-modification-date=\"" + lastModDate + "\">\n";
             Iterator<String> it = targets.iterator();
             while (it.hasNext()) {
-                taskParam += "<relation><targetId>" + it.next() + "</targetId>\n";
-                taskParam +=
-                    "<predicate>" + "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf"
-                        + "</predicate></relation>";
+                taskParam += "<relation><targetId>" + it.next() + "</targetId><predicate>";
+                if (predicate != null) {
+                    taskParam += predicate;
+                }
+                else {
+                    taskParam += "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
+
+                }
+                taskParam += "</predicate></relation>\n";
             }
             taskParam += "</param>";
         }
         return taskParam;
     }
-
-    /**
-     * 
-     * @param lastModDate
-     * @param ids
-     * @return
-     */
-    public String getTaskParameterForRemoveRelations(final String lastModDate, final Vector<String> ids) {
-        String taskParam = null;
-        if ((ids != null) && (ids.size() > 0)) {
-            taskParam = "<param last-modification-date=\"" + lastModDate + "\">";
-            Iterator<String> it = ids.iterator();
-            while (it.hasNext()) {
-                taskParam += "<id>" + it.next() + "</id>";
-            }
-            taskParam = taskParam + "</param>";
-        }
-        return taskParam;
-    }
-
 }

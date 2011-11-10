@@ -247,28 +247,8 @@ public class ResourceBase {
         // get last-modification-date
         NamedNodeMap atts = resource.getDocumentElement().getAttributes();
         Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-        return (lastModificationDateNode.getNodeValue());
+        return lastModificationDateNode.getNodeValue();
 
-    }
-
-    /**
-     * Get the last modification XML param.
-     *
-     * @param comment              The comment.
-     * @param lastModificationDate The timestamp of the resource.
-     * @return Returns the created task param xml.
-     * @throws Exception Thrown if anything fails.
-     */
-    public String getTheLastModificationParam(final String comment, final String lastModificationDate) throws Exception {
-
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        param += ">";
-        if (comment != null) {
-            param += "<comment>" + comment + "</comment>";
-        }
-        param += "</param>";
-
-        return param;
     }
 
 }

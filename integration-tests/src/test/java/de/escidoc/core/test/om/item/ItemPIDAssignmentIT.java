@@ -97,7 +97,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemId = getObjidValue(itemDoc);
         assertNull(selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID));
 
-        submit(itemId, getTheLastModificationParam(itemId, false));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         String pidParam;
         String objectPid = null;
@@ -125,7 +125,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
             assignVersionPid(latestVersion, pidParam);
         }
-        release(itemId, getTheLastModificationParam(itemId, false));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         itemXml = retrieve(itemId);
         assertXmlValidItem(itemXml);
@@ -341,8 +341,8 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // check if only the decided version has versionPid
 
-        submit(versionId, getTheLastModificationParam(versionId, false));
-        release(itemId, getTheLastModificationParam(itemId, false));
+        submit(versionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), null));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // create more versions -----------------------------------------------
         itemXml = retrieve(itemId);
@@ -432,8 +432,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemVersionId = itemId + ":" + versionNumberWithPid;
         // release Item -------------------------------------------------------
         try {
-            submit(itemVersionId, getTheLastModificationParam(itemId, false));
-            release(itemVersionId, getTheLastModificationParam(itemId, false));
+            submit(itemVersionId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            release(itemVersionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                null));
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
@@ -451,8 +453,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         }
         // release Item -------------------------------------------------------
         try {
-            submit(itemVersionId, getTheLastModificationParam(itemId, false));
-            release(itemVersionId, getTheLastModificationParam(itemId, false));
+            submit(itemVersionId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            release(itemVersionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                null));
         }
         catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
@@ -492,17 +496,17 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemXml)),
                 assignPidParam);
 
-        assignObjectPid(itemId, pidParam);
+        itemXml = assignObjectPid(itemId, pidParam);
 
         assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(retrieve(itemId))),
+            getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemXml)),
                 assignPidParam);
 
-        assignVersionPid(itemId, pidParam);
+        itemXml = assignVersionPid(itemId, pidParam);
 
-        release(itemId, getTheLastModificationParam(itemId, false));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(itemXml)), null));
 
         itemXml = retrieve(itemId);
         String returnedPid =
@@ -566,7 +570,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // submit item
         try {
-            submit(versionId, getTheLastModificationParam(false, id));
+            submit(versionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), null));
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Prepare: Submitting item failed.", e);
@@ -574,7 +578,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
         // release item
         try {
-            release(versionId, getTheLastModificationParam(false, id));
+            release(versionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), null));
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Prepare: Releasing item failed.", e);
@@ -652,9 +656,10 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         String itemVersionId = itemId + ":" + versionNumberWithPid;
 
         // release Item -------------------------------------------------------
-        submit(itemVersionId, getTheLastModificationParam(itemId, false));
+        submit(itemVersionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         if (!getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")) {
-            release(itemVersionId, getTheLastModificationParam(itemId, false));
+            release(itemVersionId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                null));
         }
 
         // create more versions -----------------------------------------------
@@ -887,11 +892,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
         assertTrue("assignObjectPid has written a release/pid into RELS-EXT", noOfReleasePids == 0);
 
-        submit(itemId, getTheLastModificationParam(itemId, false));
+        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
         assertTrue("submit has written a release/pid into RELS-EXT", noOfReleasePids == 0);
 
-        release(itemId, getTheLastModificationParam(itemId, false));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
         assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
 
@@ -928,11 +933,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
             assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
 
-            submit(itemId, getTheLastModificationParam(itemId, false));
+            submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
             assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
 
-            release(itemId, getTheLastModificationParam(itemId, false));
+            release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             noOfReleasePids = checkRelsExtForReleasePidEntries(itemId);
             assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
         }
@@ -1089,8 +1094,8 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
          */
         if (getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "true")) {
             // release without objectPID
-            submit(itemId, getTheLastModificationParam(itemId, false));
-            release(itemId, getTheLastModificationParam(itemId, false));
+            submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             assertXmlValidItem(itemXml);
             assertNull("Item has objectPid without assignment.", getObjectPid(itemId));
 
@@ -1130,9 +1135,9 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         }
         else { // cmm.Item.objectPid.releaseWithoutPid = false ---------------
             // check exception for release without objectPID
-            submit(itemId, getTheLastModificationParam(itemId, false));
+            submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             try {
-                release(itemId, getTheLastModificationParam(itemId, false));
+                release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
                 if (getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "true").equals("false")) {
                     fail("Through the configuration is the Item not releasable" + " without objectPid.");
                 }
@@ -1145,7 +1150,8 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
             if (!getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "true")) {
                 try {
-                    release(itemId, getTheLastModificationParam(itemId, false));
+                    release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                        null));
                     fail("Through the configuration is the Item not releasable" + " without versionPid.");
                 }
                 catch (final Exception e) {
@@ -1180,7 +1186,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
             assertXmlValidItem(itemXml);
             compareItemObjectPid(itemId, pidXML);
             if (getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "true").equals("true")) {
-                release(itemId, getTheLastModificationParam(itemId, false));
+                release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             }
 
         }
@@ -1201,7 +1207,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         assertNull("Item has already an objectPid.", getObjectPid(itemId));
 
         try {
-            release(itemId, getTheLastModificationParam(itemId, false));
+            release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
             if (!getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
                 fail("release without objectPid is possible but forbidden by " + "configuration.");
             }
@@ -1467,11 +1473,12 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
         lmdResult = getLastModificationDateValue(pidDoc);
 
         resultXml = submit(itemId, getTheLastModificationParam(false, itemId, "comment", lmdResult));
+        //        resultXml = submit(getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), "comment"));
         assertXmlValidResult(resultXml);
         pidDoc = EscidocAbstractTest.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
-        release(itemId, getTheLastModificationParam(false, itemId, "comment", lmdResult));
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), "comment"));
         itemXml = retrieve(itemId);
         itemXml = addElement(itemXml, xPath + "/nix");
         itemXml = update(itemId, itemXml);
@@ -1659,20 +1666,6 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
     }
 
     /**
-     * Create the last modification request parameter.
-     *
-     * @param itemId                 The id of the Item.
-     * @param includeWithdrawComment Set if withdraw comment is to include or not.
-     * @return last modification request parameter
-     * @throws Exception Thrown if anything fails.
-     */
-    private String getTheLastModificationParam(final String itemId, final boolean includeWithdrawComment)
-        throws Exception {
-
-        return getTheLastModificationParam(includeWithdrawComment, itemId);
-    }
-
-    /**
      * Delivers integer random value from range 100 to 9999.
      *
      * @return integer random number [100-9999]
@@ -1706,9 +1699,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
                 if (!status.equals(STATE_RELEASED)) {
                     if (!status.equals(STATE_SUBMITTED)) {
-                        submit(itemId, getTheLastModificationParam(itemId, false));
+                        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                            null));
                     }
-                    release(itemId, getTheLastModificationParam(itemId, false));
+                    release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                        null));
                 }
             }
         }
@@ -1756,9 +1751,11 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
 
                 if (!status.equals(STATE_RELEASED)) {
                     if (!status.equals(STATE_SUBMITTED)) {
-                        submit(itemId, getTheLastModificationParam(itemId, false));
+                        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                            null));
                     }
-                    release(itemId, getTheLastModificationParam(itemId, false));
+                    release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))),
+                        null));
                 }
             }
         }

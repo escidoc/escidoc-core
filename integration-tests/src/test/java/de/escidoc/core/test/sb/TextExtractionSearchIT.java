@@ -110,33 +110,31 @@ public class TextExtractionSearchIT extends SearchTestBase {
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH,
                     "escidoc_text_extractor_error_item_rest.xml");
             String xml = item.create(xmlData);
-            String lastModDate = getLastModificationDate(xml);
             itemId = getId(xml);
 
-            // submit item
-            item.submit(itemId, "<param last-modification-date=\"" + lastModDate + "\" />");
-
-            // assignPids
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
             String componentId = getComponentObjidValue(itemDoc, 1);
-            String pidParam = getItemPidParam(itemId);
-            item.assignContentPid(itemId, componentId, pidParam);
-            pidParam = getItemPidParam(itemId);
-            item.assignObjectPid(itemId, pidParam);
+
+            // submit item
+            xml = item.submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+
+            // assignPids
+            String pidParam = getItemPidParam(itemId, getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignContentPid(itemId, componentId, pidParam);
+            pidParam = getItemPidParam(itemId, getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignObjectPid(itemId, pidParam);
             // version pid to item[0] is assigned in a later test
             // Sorry, but it depends on configuration if a release of an
             // Item/container is possible without versionPid. Therefore has
             // the 'later' test to operate on it own item.
             // if (i > 0) {
             String versionId = itemId + ":1";
-            pidParam = getItemPidParam(versionId);
-            item.assignVersionPid(versionId, pidParam);
+            pidParam = getItemPidParam(versionId, getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignVersionPid(versionId, pidParam);
             // }
 
             // release item
-            xml = item.retrieve(itemId);
-            lastModDate = getLastModificationDate(xml);
-            item.release(itemId, "<param last-modification-date=\"" + lastModDate + "\" />");
+            item.release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
             // ////////////////////////////////////////////////////////////
         }

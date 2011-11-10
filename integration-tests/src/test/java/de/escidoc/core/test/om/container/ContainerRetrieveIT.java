@@ -32,6 +32,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -180,8 +182,10 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         String secondContainerId =
             getObjidValue(create(EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest/",
                 "create_container.xml")));
-        addMembers(theContainerId, "<param last-modification-date=\"" + getLastModificationDateValue(containerDoc)
-            + "\" >\n<id>" + secondContainerId + "</id>\n</param>");
+
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(secondContainerId);
+        addMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
 
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
@@ -198,10 +202,10 @@ public class ContainerRetrieveIT extends ContainerTestBase {
 
         // create a third version
         String secondItemId = createItem();
-        addMembers(theContainerId, "<param last-modification-date=\""
-            + getLastModificationDateValue(EscidocAbstractTest
-                .getDocument(handleXmlResult(retrieve(this.theContainerId)))) + "\" >\n<id>" + secondItemId
-            + "</id>\n</param>");
+        ids = new ArrayList<String>();
+        ids.add(secondItemId);
+        addMembers(theContainerId, getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
 
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
@@ -556,11 +560,10 @@ public class ContainerRetrieveIT extends ContainerTestBase {
             ids.add(id);
         }
 
-        Document containerDoc = getDocument(retrieve(containerId));
-        String lmd = getLastModificationDateValue(containerDoc);
-
-        String taskParam = createAddMemberTaskParam(ids, lmd);
-        addMembers(containerId, taskParam);
+        List<String> paramIds = new ArrayList<String>();
+        Collections.copy(paramIds, ids);
+        addMembers(containerId, getMembersTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))),
+            paramIds));
 
         // check if retrieveMembers contains exactly the kind of objects -------
         String memberListXml = retrieveMembers(containerId, new HashMap<String, String[]>());
@@ -655,26 +658,6 @@ public class ContainerRetrieveIT extends ContainerTestBase {
      * private methods
      * **********************************************************************
      */
-
-    /**
-     * Prepare the TaskParam for addMember.
-     *
-     * @param members              Vector with id of member candidates.
-     * @param lastModificationDate The last modification date of the resource (Container).
-     * @return TaskParam
-     */
-    private String createAddMemberTaskParam(final Vector<String> members, final String lastModificationDate) {
-
-        String taskParam = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        taskParam += ">\n";
-
-        for (int i = 0; i < members.size(); i++) {
-            taskParam += "<id>" + members.get(i) + "</id>\n";
-        }
-        taskParam += "</param>";
-
-        return taskParam;
-    }
 
     /**
      * Get the ids of the StructMap members.

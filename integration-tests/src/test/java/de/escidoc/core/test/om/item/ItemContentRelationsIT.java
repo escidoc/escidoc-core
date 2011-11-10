@@ -549,10 +549,8 @@ public class ItemContentRelationsIT extends ItemTestBase {
      */
     @Test
     public void testRelationsWithVersionedItem() throws Exception {
-        String param = "<param last-modification-date=\"" + getTheLastModificationParam(this.itemId) + "\" ";
-        param += "/>";
 
-        submit(this.itemId, param);
+        submit(this.itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.itemXml)), null));
         String submittedItem = retrieve(this.itemId);
 
         String target = create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
@@ -561,7 +559,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
         Vector<String> targets = new Vector<String>();
         targets.add(targetId);
         String lastModDate = getLastModificationDateValue(getDocument(submittedItem));
-        String taskParam = getTaskParameterForAddRelations(lastModDate, targets);
+        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
 
         // update tu version 2
         addContentRelations(this.itemId, taskParam);
@@ -821,15 +819,18 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         StringBuffer taskParam = new StringBuffer();
         if ((targets != null) && (targets.size() > 0)) {
-            taskParam.append("<param last-modification-date=\"");
+            taskParam.append(de.escidoc.core.test.Constants.XML_HEADER);
+            taskParam.append("<param ");
+            taskParam.append("xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\"");
+            taskParam.append(" last-modification-date=\"");
             taskParam.append(lastModDate);
             taskParam.append("\">");
             Iterator<String> it = targets.iterator();
             while (it.hasNext()) {
                 String target = it.next();
-                taskParam.append("<relation><targetId>");
+                taskParam.append("<relation>\n<targetId>");
                 taskParam.append(target);
-                taskParam.append("</targetId>");
+                taskParam.append("</targetId>\n");
                 taskParam.append("<predicate>");
                 if (predicate != null) {
                     taskParam.append(predicate);
@@ -838,7 +839,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
                     taskParam.append("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf");
 
                 }
-                taskParam.append("</predicate></relation>");
+                taskParam.append("</predicate>\n</relation>\n");
             }
             taskParam.append("</param>");
         }

@@ -48,8 +48,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -346,12 +348,13 @@ public class DepositorIT extends GrantTestBase {
         String containerId = getObjidValue(containerXml);
         final Document container = EscidocAbstractTest.getDocument(containerXml);
 
-        String lastModificationDate = getLastModificationDateValue(container);
-        String taskParam =
-            "<param last-modification-date=\"" + lastModificationDate + "\"><id>" + itemId + "</id></param>";
+        List<String> ids = new ArrayList<String>();
+        ids.add(itemId);
+
         try {
             PWCallback.setHandle(HANDLE);
-            getContainerClient().addMembers(containerId, taskParam);
+            getContainerClient().addMembers(containerId,
+                getMembersTaskParam(getLastModificationDateValue2(container), ids));
         }
         finally {
             PWCallback.resetHandle();

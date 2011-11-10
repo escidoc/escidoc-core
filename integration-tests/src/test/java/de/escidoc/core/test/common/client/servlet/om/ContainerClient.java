@@ -529,7 +529,8 @@ public class ContainerClient extends ClientBase
 
         String containerXml = handleResult(retrieve(containerId));
         Document document = EscidocAbstractTest.getDocument(containerXml);
-        String param = getTaskParam(getRootElementAttributeValue(document, "last-modification-date"));
+        String param =
+            EscidocTestBase.getStatusTaskParam(EscidocTestBase.getLastModificationDateValue2(document), null);
 
         PWCallback.setHandle(creatorUserHandle);
         // now the actually method: release

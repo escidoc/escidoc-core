@@ -30,6 +30,8 @@ package de.escidoc.core.test.om.container;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import java.util.ArrayList;
+import org.joda.time.DateTime;
 import org.w3c.dom.Document;
 
 /**
@@ -53,22 +55,14 @@ public class ContainerMemberStressIT extends ContainerTestBase {
         String xmlData = getContainerTemplate("create_container.xml");
         Document containerDoc = getDocument(create(xmlData));
         String containerId = getObjidValue(containerDoc);
-        String lmd = getLastModificationDateValue(containerDoc);
 
-        StringBuilder taskParam = new StringBuilder("<param last-modification-date=\"");
-        taskParam.append(lmd);
-        taskParam.append("\">");
-
+        ArrayList<String> ids = new ArrayList<String>();
         for (int i = 0; i < NO_MEMBERS; i++) {
             final String memberId = createItem();
-            taskParam.append("<id>");
-            taskParam.append(memberId);
-            taskParam.append("</id>");
+            ids.add(memberId);
         }
 
-        taskParam.append("</param>");
-
-        addMembers(containerId, taskParam.toString());
+        addMembers(containerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
     }
 
     /**

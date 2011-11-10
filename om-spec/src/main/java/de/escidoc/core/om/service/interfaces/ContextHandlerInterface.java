@@ -439,6 +439,7 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String open(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;
@@ -476,6 +477,7 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
+    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String close(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;

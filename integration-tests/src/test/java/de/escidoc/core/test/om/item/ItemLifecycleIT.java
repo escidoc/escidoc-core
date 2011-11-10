@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
@@ -37,9 +38,11 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWith
 import de.escidoc.core.common.exceptions.remote.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,11 +54,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class ItemLifecycleIT extends ItemTestBase {
@@ -66,8 +70,9 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -80,8 +85,9 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     @After
@@ -93,32 +99,25 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test successful submitting an Item in state "pending".
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOmSi1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
+        DateTime t1 = getLastModificationDateValue2(getDocument(this.theItemXml));
 
-        try {
-            submit(theItemId, paramXml);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Submitting the pending Item failed. ", e);
-        }
+        String xml = submit(theItemId, getStatusTaskParam(t1, null));
+        DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
-        String submittedXml = null;
-        try {
-            submittedXml = retrieve(theItemId);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Retrieving the revised, submitted item failed. ", e);
-        }
-        final Document submittedDocument = EscidocAbstractTest.getDocument(submittedXml);
-        assertDateBeforeAfter(pendingLastModificationDate, getLastModificationDateValue(submittedDocument));
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
+
+        final Document submittedDocument = EscidocAbstractTest.getDocument(retrieve(theItemId));
+        DateTime t2a = getLastModificationDateValue2(submittedDocument);
+
+        assertTrue("Timestamp not equal", t2.compareTo(t2a) == 0);
+
         assertXmlEquals("Unexpected status. ", submittedDocument, XPATH_ITEM_STATUS, STATE_SUBMITTED);
         assertXmlEquals("Unexpected current version status", submittedDocument, XPATH_ITEM_CURRENT_VERSION_STATUS,
             STATE_SUBMITTED);
@@ -176,17 +175,16 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testSubmitAfterRelease() throws Exception {
 
         final String xPath = "/item/properties/content-model-specific";
-        final Document paramDocument = EscidocAbstractTest.getDocument(getTheLastModificationParam(false));
-        final String pendingLastModificationDate = getLastModificationDateValue(paramDocument);
+        final String pendingLastModificationDate = getLastModificationDateValue(getDocument(this.theItemXml));
 
-        submit(theItemId, getTheLastModificationParam(false));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -213,11 +211,11 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theItemId, getTheLastModificationParam(false));
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         String xml = addElement(retrieve(theItemId), xPath + "/nix");
         assertXmlValidItem(xml);
         update(theItemId, xml);
-        submit(theItemId, getTheLastModificationParam(false));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         String submittedXml = null;
         try {
@@ -244,30 +242,28 @@ public class ItemLifecycleIT extends ItemTestBase {
 
         assertXmlValidItem(xml);
         update(theItemId, xml);
-        submit(theItemId, getTheLastModificationParam(false));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
-        submit(theItemId, getTheLastModificationParam(false));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
     }
 
     /**
      * Test successful submitting an item in state "in-revision".
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOmSi1_2() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false, theItemId);
-        submit(theItemId, paramXml);
-        paramXml = getTheLastModificationParam(false, theItemId);
-        revise(theItemId, paramXml);
-        paramXml = getTheLastModificationParam(false, theItemId);
-        paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String revisedLastModificationDate = getLastModificationDateValue(paramDocument);
+        String xml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
+        xml = revise(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+
+        final String revisedLastModificationDate = getLastModificationDateValue(getDocument(xml));
 
         try {
-            submit(theItemId, paramXml);
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Submitting the pending container failed. ", e);
@@ -289,15 +285,15 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test handling of non-ASCII character within submit comment.
-     *
-     * @throws Exception Thrown if escaping of non-ASCII character failed.
+     * 
+     * @throws Exception
+     *             Thrown if escaping of non-ASCII character failed.
      */
     @Test
     public void testSubmitComment() throws Exception {
 
-        String paramXml = getTheLastModificationParam(ENTITY_REFERENCES);
-
-        submit(theItemId, paramXml);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)),
+            ENTITY_REFERENCES));
         String submittedXml = retrieve(theItemId);
         String commentString = null;
         Matcher m = Pattern.compile(":comment[^>]*>([^<]*)</").matcher(submittedXml);
@@ -307,25 +303,16 @@ public class ItemLifecycleIT extends ItemTestBase {
         assertEquals(ENTITY_REFERENCES, commentString);
     }
 
-    private String getTheLastModificationParam(final boolean includeWithdrawComment) throws Exception {
-        return getTheLastModificationParam(includeWithdrawComment, theItemId);
-    }
-
-    private String getTheLastModificationParam(final String comment) throws Exception {
-        return getTheLastModificationParam(true, theItemId, comment);
-    }
-
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testReleaseBeforeSubmitItem() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            release(theItemId, param);
+            release(theItemId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
             fail("No exception occured on release befor submit.");
         }
         catch (final Exception e) {
@@ -335,24 +322,23 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testReleaseItem() throws Exception {
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+
+        String xml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                    assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignObjectPid(this.theItemId, pidParam);
+            xml = assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
@@ -365,13 +351,12 @@ public class ItemLifecycleIT extends ItemTestBase {
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
 
-            assignVersionPid(latestVersion, pidParam);
+            xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
-        String xml = retrieve(theItemId);
+        xml = retrieve(theItemId);
         assertXmlExists("Properties status released", xml, XPATH_ITEM_STATUS + "[text() = 'released']");
         assertXmlExists("current-version status released", xml, XPATH_ITEM_CURRENT_VERSION_STATUS
             + "[text() = 'released']");
@@ -388,14 +373,14 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Related to Issue 600.
-     *
-     * @throws Exception Thrown if releasing of Item with PID failed.
+     * 
+     * @throws Exception
+     *             Thrown if releasing of Item with PID failed.
      */
     @Test
     public void testReleaseItemWith3PIDs() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
 
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
@@ -438,8 +423,7 @@ public class ItemLifecycleIT extends ItemTestBase {
             fail("Can not test pid before release.");
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         String xml = retrieve(theItemId);
         assertXmlExists("Properties status released", xml, XPATH_ITEM_STATUS + "[text() = 'released']");
@@ -456,16 +440,15 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testWithdrawBeforSubmitItem() throws Exception {
 
-        String param = getTheLastModificationParam(true);
-
         try {
-            withdraw(theItemId, param);
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+                null));
             fail("No exception occurred on withdraw before submit.");
         }
         catch (final Exception e) {
@@ -475,19 +458,17 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testWithdrawBeforReleaseItem() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-
-        param = getTheLastModificationParam(true);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         try {
-            withdraw(theItemId, param);
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+                null));
             fail("No exception occured on withdraw befor release.");
         }
         catch (final Exception e) {
@@ -497,26 +478,25 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testWithdrawItem() throws Exception {
+
         final String xPath = "/item/properties/content-model-specific";
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        String xml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                    assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignObjectPid(this.theItemId, pidParam);
+            xml = assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
@@ -529,16 +509,14 @@ public class ItemLifecycleIT extends ItemTestBase {
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
 
-            assignVersionPid(latestVersion, pidParam);
+            xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
+        xml = release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), WITHDRAW_COMMENT));
 
-        param = getTheLastModificationParam(true);
-        withdraw(theItemId, param);
-
-        String xml = retrieve(theItemId);
+        xml = retrieve(theItemId);
 
         assertXmlExists("Properties status withdrawn", xml, XPATH_ITEM_STATUS + "[text() = 'withdrawn']");
         assertXmlExists("current-version status must still be released", xml, XPATH_ITEM_CURRENT_VERSION_STATUS
@@ -562,14 +540,13 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testWithdrawItemWithoutComment() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -596,13 +573,11 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
-
-        param = getTheLastModificationParam(false);
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         try {
-            withdraw(theItemId, param);
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+                null));
             fail("No exception occured on withdraw without comment.");
         }
         catch (final Exception e) {
@@ -613,16 +588,14 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testWithdrawNonExistingItem() throws Exception {
 
-        String param = getTheLastModificationParam(true);
-
         try {
-            withdraw("escidoc:item0", param);
+            withdraw("escidoc:item0", getStatusTaskParam(new DateTime(), WITHDRAW_COMMENT));
             fail("No exception occured on withdraw non existing item.");
         }
         catch (final Exception e) {
@@ -634,25 +607,23 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testSecondWithdrawItem() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        String xml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                    assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignObjectPid(this.theItemId, pidParam);
+            xml = assignObjectPid(this.theItemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
@@ -665,17 +636,15 @@ public class ItemLifecycleIT extends ItemTestBase {
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
 
-            assignVersionPid(latestVersion, pidParam);
+            xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
-
-        param = getTheLastModificationParam(true);
-        withdraw(theItemId, param);
+        xml = release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), WITHDRAW_COMMENT));
 
         try {
-            withdraw(theItemId, param);
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), WITHDRAW_COMMENT));
             fail("No exception occured on second withdraw.");
         }
         catch (final Exception e) {
@@ -687,46 +656,43 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test successful revising an item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi1() throws Exception {
 
-        String paramXml = getTheLastModificationParam(false);
-        submit(theItemId, paramXml);
-        paramXml = getTheLastModificationParam(false);
-        final Document paramDocument = EscidocAbstractTest.getDocument(paramXml);
-        final String submittedLastModificationDate = getLastModificationDateValue(paramDocument);
+        String xml =
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
+        DateTime t1 = getLastModificationDateValue2(getDocument(xml));
 
-        try {
-            revise(theItemId, paramXml);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException("Revising the submitted item failed", e);
-        }
+        xml = revise(theItemId, getStatusTaskParam(t1, null));
+        DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
-        final String revisedXml = retrieve(theItemId);
-        final Document revisedDocument = EscidocAbstractTest.getDocument(revisedXml);
-        assertDateBeforeAfter(submittedLastModificationDate, getLastModificationDateValue(revisedDocument));
-        // assertXmlEquals("Unexpected status. ", revisedDocument,
-        // XPATH_ITEM_STATUS, STATE_IN_REVISION);
+        assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
+
+        final Document revisedDocument = EscidocAbstractTest.getDocument(retrieve(theItemId));
+        DateTime t2a = getLastModificationDateValue2(revisedDocument);
+
+        assertTrue("Timestamp not equal", t2.compareTo(t2a) == 0);
+
+        assertXmlEquals("Unexpected status. ", revisedDocument, XPATH_ITEM_STATUS, STATE_IN_REVISION);
         assertXmlEquals("Unexpected current version status", revisedDocument, XPATH_ITEM_CURRENT_VERSION_STATUS,
             STATE_IN_REVISION);
     }
 
     /**
      * Test declining revising an item in state pending.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi2() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(theItemId, param);
+            revise(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -737,14 +703,14 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining revising an item in state released.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi3() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         String pidParam;
 
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
@@ -772,12 +738,12 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
-        param = getTheLastModificationParam(false);
+        String xml =
+            release(theItemId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         try {
-            revise(theItemId, param);
+            revise(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -788,14 +754,14 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining revising an item in state withdrawn.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi4() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -822,14 +788,14 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
-        param = getTheLastModificationParam(true);
-        withdraw(theItemId, param);
-        param = getTheLastModificationParam(false);
+        String xml =
+            release(theItemId,
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        xml =
+            withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), WITHDRAW_COMMENT));
 
         try {
-            revise(theItemId, param);
+            revise(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
             EscidocAbstractTest.failMissingException(InvalidStatusException.class);
         }
         catch (final Exception e) {
@@ -840,16 +806,15 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining revising an unknown item.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi5() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(UNKNOWN_ID, param);
+            revise(UNKNOWN_ID, getStatusTaskParam(new DateTime(), null));
             EscidocAbstractTest.failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
@@ -860,16 +825,15 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining revising an item without providing an item id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi6() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-
         try {
-            revise(null, param);
+            revise(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
@@ -880,67 +844,62 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining revising an item without providing task param.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(expected = MissingMethodParameterException.class)
     public void testOMRvi7() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-        param = getTheLastModificationParam(false);
-
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         revise(theItemId, null);
     }
 
     /**
      * Test declining revising an item without providing last modification date in task param.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test(expected = MissingMethodParameterException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOMRvi8() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-        param = "<param />";
-
-        revise(theItemId, null);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
+        revise(theItemId, getStatusTaskParam(null, null));
     }
 
     /**
      * Test declining revising an item with corrupted task param.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(expected = XmlCorruptedException.class)
     public void testOMRvi9() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-        param = "<param";
-
-        revise(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
+        revise(theItemId, "<param");
     }
 
     /**
      * Test declining revising an item with providing outdated last modification date in task param.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test(expected = OptimisticLockingException.class)
     public void testOMRvi10() throws Exception {
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
-
-        revise(theItemId, param);
+        DateTime lmd = getLastModificationDateValue2(getDocument(this.theItemXml));
+        submit(theItemId, getStatusTaskParam(lmd, null));
+        revise(theItemId, getStatusTaskParam(lmd, null));
     }
 
     /**
      * Test successful revising an item (created by a depositor) by an administrator.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRvi11() throws Exception {
@@ -954,46 +913,20 @@ public class ItemLifecycleIT extends ItemTestBase {
             theItemXml = create(toBeCreatedXml);
             theItemId = getObjidValue(theItemXml);
 
-            String param = getTheLastModificationParam(false);
-            submit(theItemId, param);
-            param = getTheLastModificationParam(false);
+            String xml =
+                submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
 
             // revise the item by an administrator
             PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
 
-            try {
-                revise(theItemId, param);
-            }
-            catch (final Exception e) {
-                EscidocAbstractTest.failException("Revising the submitted item failed", e);
-            }
+            xml = revise(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
             // retrieve, update and submit the item by the depositor
             PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-            try {
-                theItemXml = retrieve(theItemId);
-            }
-            catch (final Exception e) {
-                EscidocAbstractTest.failException(
-                    "Retrieving the revised item by the depositor failed with exception. ", e);
-            }
+            theItemXml = retrieve(theItemId);
             theItemXml.replaceFirst("", "");
-            try {
-                theItemXml = update(theItemId, theItemXml);
-            }
-            catch (final Exception e) {
-                EscidocAbstractTest.failException("Updating the revised item by the depositor failed with exception. ",
-                    e);
-            }
-            param = getTheLastModificationParam(false);
-            try {
-                submit(theItemId, param);
-            }
-            catch (final Exception e) {
-                EscidocAbstractTest.failException(
-                    "Submitting the revised, updated item by the depositor failed with exception. ", e);
-            }
-
+            theItemXml = update(theItemId, theItemXml);
+            submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         }
         finally {
             PWCallback.resetHandle();
@@ -1001,13 +934,12 @@ public class ItemLifecycleIT extends ItemTestBase {
     }
 
     /**
-     *
+     * 
      * @throws Exception
      */
     @Test
     public void testUpdateAfterReleaseItem() throws Exception {
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -1034,8 +966,7 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         String xml = retrieve(theItemId);
         assertXmlExists("Properties status released", xml, XPATH_ITEM_STATUS + "[text() = 'released']");
@@ -1186,7 +1117,7 @@ public class ItemLifecycleIT extends ItemTestBase {
         testElementsAfterUpdate02();
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        submit(theItemId, getTheLastModificationParam(false));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         releaseWithPid(this.theItemId);
 
         // retrieve latest version (role: author)
@@ -1402,8 +1333,7 @@ public class ItemLifecycleIT extends ItemTestBase {
         this.theItemXml = create(xmlData);
         this.theItemId = getObjidValue(theItemXml);
 
-        String param = getTheLastModificationParam(false);
-        submit(theItemId, param);
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
@@ -1430,8 +1360,7 @@ public class ItemLifecycleIT extends ItemTestBase {
             assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false);
-        release(theItemId, param);
+        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         // retrieve with object ref (latest version for author)
         String releasedItemXml = retrieve(theItemId);
@@ -1493,8 +1422,9 @@ public class ItemLifecycleIT extends ItemTestBase {
 
     /**
      * Test declining retrieving of released item with component visibility "private".
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOMRContentVisibilityPrivate() throws Exception {
@@ -1506,22 +1436,20 @@ public class ItemLifecycleIT extends ItemTestBase {
         String cretaedItem = create(itemXml);
         Document itemDocument = getDocument(cretaedItem);
         String componentId =
-            selectSingleNode(itemDocument, "/item/components/component" + "[properties/visibility='private']/@href")
+            selectSingleNode(itemDocument, "/item/components/component[properties/visibility='private']/@href")
                 .getNodeValue();
         componentId = getIdFromHrefValue(componentId);
         String itemId = getObjidValue(cretaedItem);
-        String param = getTheLastModificationParam(false, itemId);
-        submit(itemId, param);
+        String xml = submit(itemId, getStatusTaskParam(getLastModificationDateValue2(itemDocument), null));
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-            pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
 
-            assignObjectPid(itemId, pidParam);
+            xml = assignObjectPid(itemId, pidParam);
         }
         if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
@@ -1534,12 +1462,10 @@ public class ItemLifecycleIT extends ItemTestBase {
                 getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
                     assignPidParam);
 
-            assignVersionPid(latestVersion, pidParam);
+            xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        param = getTheLastModificationParam(false, itemId);
-
-        release(itemId, param);
+        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
         // PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         PWCallback.setHandle("");

@@ -110,7 +110,7 @@ public interface SemanticStoreHandlerInterface {
      * @deprecated
      */
     @Deprecated
-    @Validate(param = 0, resolver = "getSpoTaskParamSchemaLocation")
+    @Validate(param = 0, resolver = "getSematicStoreQuerySchemaLocation")
     String spo(final String taskParam) throws SystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException,
         AuthenticationException, AuthorizationException;

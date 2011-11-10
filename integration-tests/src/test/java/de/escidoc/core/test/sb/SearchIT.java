@@ -128,149 +128,151 @@ public class SearchIT extends SearchTestBase {
         // /////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(DateTimeZone.UTC);
-        // Create Container/////////////////////////////////////////////////////
-        try {
-            containerIds = new String[Constants.NUM_CONTAINERS];
-            for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
-                String xmlData =
-                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container"
-                        + i + "_rest.xml");
-                String xml = container.create(xmlData);
-                String lastModDate = getLastModificationDate(xml);
-                containerIds[i] = getId(xml);
 
-                // submit container
-                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+        prepareContainer();
+        prepareItem();
+        releaseTestObjects();
 
-                // assign pids
-                String pidParam = getContainerPidParam(containerIds[i]);
-                container.assignObjectPid(containerIds[i], pidParam);
-                pidParam = getContainerPidParam(containerIds[i]);
-                container.assignVersionPid(containerIds[i] + ":1", pidParam);
+        waitForIndexerToAppear(itemIds[Constants.NUM_ITEMS - 1], INDEX_NAME);
+        Thread.sleep(60000);
+    }
 
-                // release container
-                xml = container.retrieve(containerIds[i]);
-                lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
-                xml = container.retrieve(containerIds[i]);
-                lastModDate = getLastModificationDate(xml);
-                xml = xml.replaceAll("Hoppe", "Hoppe1");
-                container.update(containerIds[i], xml);
-                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[i], new HashMap<String, String>() {
-                    private static final long serialVersionUID = -615466009125477112L;
+    /**
+     * 
+     */
+    private void prepareContainer() throws Exception {
+        containerIds = new String[Constants.NUM_CONTAINERS];
+        for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
+            String xmlData =
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container" + i
+                    + "_rest.xml");
+            String xml = container.create(xmlData);
+            DateTime lastModDate = getLastModificationDateValue2(getDocument(xml));
+            containerIds[i] = getId(xml);
+
+            // submit container
+            xml = container.submit(containerIds[i], getStatusTaskParam(lastModDate, null));
+
+            // assign pids
+            String pidParam = getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
+            xml = container.assignObjectPid(containerIds[i], pidParam);
+            pidParam = getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
+            container.assignVersionPid(containerIds[i] + ":1", pidParam);
+
+            // release container
+            xml = container.retrieve(containerIds[i]);
+            lastModDate = getLastModificationDateValue2(getDocument(xml));
+            container.release(containerIds[i], getStatusTaskParam(lastModDate, null));
+            xml = container.retrieve(containerIds[i]);
+            xml = xml.replaceAll("Hoppe", "Hoppe1");
+            container.update(containerIds[i], xml);
+            versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
+                + containerIds[i], new HashMap<String, String>() {
+                private static final long serialVersionUID = -615466009125477112L;
+
+                {
+                    put("objectType", "container");
+                    put("expectedPublicStatus", "released");
+                    put("expectedVersionNumber", "12");
+                    put("expectedLatestVersionNumber", "12");
+                }
+            });
+        }
+
+    }
+
+    /**
+     * 
+     */
+    void prepareItem() throws Exception {
+        itemIds = new String[Constants.NUM_ITEMS];
+        for (int i = 0; i < Constants.NUM_ITEMS; i++) {
+            // Create Item submit and release it //////////////////////////
+            String xmlData =
+                EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
+                    + "_rest.xml");
+            String xml = container.createItem(containerIds[0], xmlData);
+            DateTime lastModDate = getLastModificationDateValue2(getDocument(xml));
+            itemIds[i] = getId(xml);
+
+            Document itemDoc = EscidocAbstractTest.getDocument(xml);
+            String componentId = getComponentObjidValue(itemDoc, 1);
+
+            // submit item
+            xml = item.submit(itemIds[i], getStatusTaskParam(lastModDate, null));
+
+            // assignPids
+            String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignContentPid(itemIds[i], componentId, pidParam);
+            pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignObjectPid(itemIds[i], pidParam);
+            // version pid to item[0] is assigned in a later test
+            // Sorry, but it depends on configuration if a release of an
+            // Item/container is possible without versionPid. Therefore has
+            // the 'later' test to operate on it own item.
+            // if (i > 0) {
+            String versionId = itemIds[i] + ":1";
+            pidParam = getItemPidParam(versionId, getLastModificationDateValue2(getDocument(xml)));
+            xml = item.assignVersionPid(versionId, pidParam);
+            // }
+
+            // release item
+            item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            if (i % 2 == 0) {
+                xml = item.retrieve(itemIds[i]);
+                xml = xml.replaceAll("Huffman", "Huffman1");
+                item.update(itemIds[i], xml);
+                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
+                    + itemIds[i] + ":1", new HashMap<String, String>() {
+                    private static final long serialVersionUID = -5739781891807617223L;
 
                     {
-                        put("objectType", "container");
+                        put("objectType", "item");
                         put("expectedPublicStatus", "released");
-                        put("expectedVersionNumber", "12");
-                        put("expectedLatestVersionNumber", "12");
+                        put("expectedVersionNumber", "1");
+                        put("expectedLatestVersionNumber", "2");
+                    }
+                });
+            }
+            else {
+                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
+                    + itemIds[i], new HashMap<String, String>() {
+                    private static final long serialVersionUID = -562673198784019069L;
+
+                    {
+                        put("objectType", "item");
+                        put("expectedPublicStatus", "released");
+                        put("expectedVersionNumber", "1");
+                        put("expectedLatestVersionNumber", "1");
                     }
                 });
             }
         }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-        }
-        // /////////////////////////////////////////////////////////////////////
+    }
 
-        try {
-            itemIds = new String[Constants.NUM_ITEMS];
-            for (int i = 0; i < Constants.NUM_ITEMS; i++) {
-                // Create Item submit and release it //////////////////////////
-                String xmlData =
-                    EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
-                        + "_rest.xml");
-                String xml = container.createItem(containerIds[0], xmlData);
-                String lastModDate = getLastModificationDate(xml);
-                itemIds[i] = getId(xml);
+    /**
+     * 
+     */
+    private void releaseTestObjects() throws Exception {
 
-                // submit item
-                item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+        // release container with items as new members
+        // triggers indexing
+        String xml = container.retrieve(containerIds[0]);
+        String version =
+            selectSingleNode(EscidocAbstractTest.getDocument(xml), "/container/properties/version/number")
+                .getTextContent();
 
-                // assignPids
-                Document itemDoc = EscidocAbstractTest.getDocument(xml);
-                String componentId = getComponentObjidValue(itemDoc, 1);
-                String pidParam = getItemPidParam(itemIds[i]);
-                item.assignContentPid(itemIds[i], componentId, pidParam);
-                pidParam = getItemPidParam(itemIds[i]);
-                item.assignObjectPid(itemIds[i], pidParam);
-                // version pid to item[0] is assigned in a later test
-                // Sorry, but it depends on configuration if a release of an
-                // Item/container is possible without versionPid. Therefore has
-                // the 'later' test to operate on it own item.
-                // if (i > 0) {
-                String versionId = itemIds[i] + ":1";
-                pidParam = getItemPidParam(versionId);
-                item.assignVersionPid(versionId, pidParam);
-                // }
+        // submit container
+        xml =
+            container
+                .submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
-                // release item
-                xml = item.retrieve(itemIds[i]);
-                lastModDate = getLastModificationDate(xml);
-                item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
-                if (i % 2 == 0) {
-                    xml = item.retrieve(itemIds[i]);
-                    lastModDate = getLastModificationDate(xml);
-                    xml = xml.replaceAll("Huffman", "Huffman1");
-                    item.update(itemIds[i], xml);
-                    versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
-                        + itemIds[i] + ":1", new HashMap<String, String>() {
-                        private static final long serialVersionUID = -5739781891807617223L;
+        // assign pids
+        String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
+        xml = container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
-                        {
-                            put("objectType", "item");
-                            put("expectedPublicStatus", "released");
-                            put("expectedVersionNumber", "1");
-                            put("expectedLatestVersionNumber", "2");
-                        }
-                    });
-                }
-                else {
-                    versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
-                        + itemIds[i], new HashMap<String, String>() {
-                        private static final long serialVersionUID = -562673198784019069L;
-
-                        {
-                            put("objectType", "item");
-                            put("expectedPublicStatus", "released");
-                            put("expectedVersionNumber", "1");
-                            put("expectedLatestVersionNumber", "1");
-                        }
-                    });
-                }
-
-                // ////////////////////////////////////////////////////////////
-            }
-        }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-        }
-        try {
-            // release container with items as new members
-            // triggers indexing
-            String xml = container.retrieve(containerIds[0]);
-            String lastModDate = getLastModificationDate(xml);
-            // submit container
-            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
-            String version =
-                selectSingleNode(EscidocAbstractTest.getDocument(xml), "/container/properties/version/number")
-                    .getTextContent();
-
-            // assign pids
-            String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
-
-            // release container
-            xml = container.retrieve(containerIds[0]);
-            lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
-        }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-        }
-        waitForIndexerToAppear(itemIds[Constants.NUM_ITEMS - 1], INDEX_NAME);
-        Thread.sleep(60000);
+        // release container
+        container.release(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
     }
 
     /**
@@ -298,23 +300,23 @@ public class SearchIT extends SearchTestBase {
                     EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container"
                         + i + "_rest.xml");
                 String xml = container.create(xmlData);
-                String lastModDate = getLastModificationDate(xml);
                 containerIds[i] = getId(xml);
 
                 // submit container
-                container.submit(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                xml =
+                    container.submit(containerIds[i], getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(xml)), null));
 
                 // assign pids
-                String pidParam = getContainerPidParam(containerIds[i]);
-                container.assignObjectPid(containerIds[i], pidParam);
-                pidParam = getContainerPidParam(containerIds[i]);
-                container.assignVersionPid(containerIds[i] + ":1", pidParam);
+                String pidParam =
+                    getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
+                xml = container.assignObjectPid(containerIds[i], pidParam);
+                pidParam = getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
+                xml = container.assignVersionPid(containerIds[i] + ":1", pidParam);
 
                 // release container
-                xml = container.retrieve(containerIds[i]);
-                lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
-
+                container.release(containerIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+                    null));
             }
         }
         catch (final Exception e) {
@@ -345,19 +347,18 @@ public class SearchIT extends SearchTestBase {
                     }
                     String xmlData = itemXml.toString();
                     String xml = container.createItem(containerIds[0], xmlData);
-                    String lastModDate = getLastModificationDate(xml);
                     itemIds[i] = getId(xml);
 
                     // submit item
-                    item.submit(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                    item.submit(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
                     // assignPids
                     Document itemDoc = EscidocAbstractTest.getDocument(xml);
                     String componentId = getComponentObjidValue(itemDoc, 1);
-                    String pidParam = getItemPidParam(itemIds[i]);
-                    item.assignContentPid(itemIds[i], componentId, pidParam);
-                    pidParam = getItemPidParam(itemIds[i]);
-                    item.assignObjectPid(itemIds[i], pidParam);
+                    String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(itemDoc));
+                    xml = item.assignContentPid(itemIds[i], componentId, pidParam);
+                    pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
+                    xml = item.assignObjectPid(itemIds[i], pidParam);
                     // version pid to item[0] is assigned in a later test
                     // Sorry, but it depends on configuration if a release of an
                     // Item/container is possible without versionPid. Therefore
@@ -365,14 +366,12 @@ public class SearchIT extends SearchTestBase {
                     // the 'later' test to operate on it own item.
                     // if (i > 0) {
                     String versionId = itemIds[i] + ":1";
-                    pidParam = getItemPidParam(versionId);
-                    item.assignVersionPid(versionId, pidParam);
+                    pidParam = getItemPidParam(versionId, getLastModificationDateValue2(getDocument(xml)));
+                    xml = item.assignVersionPid(versionId, pidParam);
                     // }
 
                     // release item
-                    xml = item.retrieve(itemIds[i]);
-                    lastModDate = getLastModificationDate(xml);
-                    item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                    item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
                     // ////////////////////////////////////////////////////////////
                     i++;
@@ -387,18 +386,18 @@ public class SearchIT extends SearchTestBase {
             // release container with items as new members
             // triggers indexing
             String xml = container.retrieve(containerIds[0]);
-            String lastModDate = getLastModificationDate(xml);
             // submit container
-            container.submit(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
+            xml =
+                container.submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+                    null));
 
             // assign pids
-            String pidParam = getContainerPidParam(containerIds[0]);
-            container.assignVersionPid(containerIds[0] + ":" + (Constants.NUM_ITEMS + 1), pidParam);
+            String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
+            xml = container.assignVersionPid(containerIds[0] + ":" + (Constants.NUM_ITEMS + 1), pidParam);
 
             // release container
-            xml = container.retrieve(containerIds[0]);
-            lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0],
+                getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -1895,9 +1894,11 @@ public class SearchIT extends SearchTestBase {
             for (int i = 0; i < itemIds.length; i++) {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
-                    String lastModDate = getLastModificationDate(xml);
-                    item.withdraw(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
-                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
+                    String taskParam =
+                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
+                            "This is a withdraw comment.");
+
+                    item.withdraw(itemIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
 
                 }
@@ -1921,9 +1922,11 @@ public class SearchIT extends SearchTestBase {
             for (int i = 0; i < containerIds.length; i++) {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
-                    String lastModDate = getLastModificationDate(xml);
-                    container.withdraw(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\">"
-                        + "<withdraw-comment>" + "This is a withdraw comment." + "</withdraw-comment>" + "</param>");
+                    String taskParam =
+                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
+                            "This is a withdraw comment.");
+
+                    container.withdraw(containerIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
 
                 }

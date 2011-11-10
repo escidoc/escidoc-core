@@ -159,7 +159,23 @@ public class Examples {
      *            the last modification date
      * @return XML snippet
      */
-    private static String createTaskParam(final String lastModificationDate) {
+    private static String createStatusTaskParam(final String lastModificationDate) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(XmlUtility.DOCUMENT_START);
+        sb.append("<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" last-modification-date=\"");
+        sb.append(lastModificationDate);
+        sb.append("\"/>");
+        return sb.toString();
+    }
+
+    /**
+     * Create a snippet for a task parameter XML including the last modification date.
+     * 
+     * @param lastModificationDate
+     *            the last modification date
+     * @return XML snippet
+     */
+    private static String createAssignPidTaskParam(final String lastModificationDate) {
         final StringBuilder sb = new StringBuilder();
         sb.append(XmlUtility.DOCUMENT_START);
         sb
@@ -446,7 +462,8 @@ public class Examples {
         ReadonlyAttributeViolationException, MissingMethodParameterException {
         final String createXml = this.contextHandler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
         final String result = getObjectId(createXml, ResourceType.CONTEXT);
-        this.contextHandler.open(result, createTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
+        this.contextHandler.open(result,
+            createStatusTaskParam(getLastModificationDate(createXml, ResourceType.CONTEXT)));
         return result;
     }
 
@@ -534,12 +551,13 @@ public class Examples {
             this.containerHandler.createItem(containerId, MessageFormat.format(xml, contextId, contentModelId));
         final String result = getObjectId(createXml, ResourceType.ITEM);
         final String submitXml =
-            this.itemHandler.submit(result, createTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
+            this.itemHandler.submit(result,
+                createStatusTaskParam(getLastModificationDate(createXml, ResourceType.ITEM)));
         final String objectPidXml =
-            this.itemHandler.assignObjectPid(result, createTaskParam(getLastModificationDate(submitXml)));
+            this.itemHandler.assignObjectPid(result, createAssignPidTaskParam(getLastModificationDate(submitXml)));
         final String versionPidXml =
-            this.itemHandler.assignVersionPid(result, createTaskParam(getLastModificationDate(objectPidXml)));
-        this.itemHandler.release(result, createTaskParam(getLastModificationDate(versionPidXml)));
+            this.itemHandler.assignVersionPid(result, createAssignPidTaskParam(getLastModificationDate(objectPidXml)));
+        this.itemHandler.release(result, createStatusTaskParam(getLastModificationDate(versionPidXml)));
         return result;
     }
 
@@ -572,8 +590,8 @@ public class Examples {
         MissingMethodParameterException {
         final String createXml = this.organizationalUnitHandler.create(xml);
         final String result = getObjectId(createXml, ResourceType.OU);
-        this.organizationalUnitHandler.open(result,
-            createTaskParam(getLastModificationDate(createXml, ResourceType.OU)));
+        this.organizationalUnitHandler.open(result, createStatusTaskParam(getLastModificationDate(createXml,
+            ResourceType.OU)));
         return result;
     }
 }
