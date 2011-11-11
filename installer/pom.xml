@@ -36,6 +36,12 @@
       <artifactId>fcrepo-installer</artifactId>
       <version>${fcrepo.version}-${fcrepo.patchlevel}</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>fcrepo-generate</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.izpack</groupId>

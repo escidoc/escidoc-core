@@ -730,6 +730,10 @@
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>fcrepo-generate</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -750,10 +754,10 @@
           <groupId>org.fcrepo</groupId>
           <artifactId>mulgara-core</artifactId>
         </exclusion>
-              <exclusion>
-                <groupId>org.fcrepo</groupId>
-                <artifactId>fcrepo-generate</artifactId>
-              </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>fcrepo-generate</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -765,6 +769,10 @@
         <exclusion>
           <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>fcrepo-generate</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
