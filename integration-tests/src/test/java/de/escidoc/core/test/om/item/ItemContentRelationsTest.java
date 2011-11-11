@@ -634,6 +634,68 @@ public class ItemContentRelationsTest extends ItemTestBase {
     }
 
     /**
+     * Test add lightweigth content relation by Item.update().
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void addContentRelationbyItemUpdate() throws Exception {
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation "
+                + "predicate=\"http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+    }
+
+    /**
+     * Test add lightweigth content relation by Item.update() and remove is afterwards.
+     * 
+     * (issue INFR-1329)
+     * 
+     * @throws Exception
+     *             Thrown if add or remove behavior is not as expected
+     */
+    @Test
+    public void removeContentRelationbyItemUpdate() throws Exception {
+
+        final String targetItemXml =
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+        final String targetId = getObjidValue(targetItemXml);
+
+        String itemWithCR =
+            this.itemXml.replace("</relations:relations>", "<relations:relation "
+                + "predicate=\"http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf\" "
+                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+
+        String updatedItemXml = update(itemId, itemWithCR);
+        Document updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
+            + targetId + "']");
+
+        deleteNodes(updatedItemDoc, "/item/relations/relation");
+
+        updatedItemXml = update(this.itemId, toString(updatedItemDoc, true));
+        updatedItemDoc = getDocument(updatedItemXml);
+
+        assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='0']");
+    }
+
+    /**
      * @param objectId
      *            The id of the object to which the relation should be added. The source id.
      * @param predicate
@@ -707,7 +769,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @param lastModDate
      *            The last modification date of the source.
      * @param targets
-     *            List of target ids. As much relations are added as there are tagets.
+     *            List of target ids. As much relations are added as there are targets.
      * @param predicate
      *            The predicate of the relation.
      * @return The task parameter according to the given values.
