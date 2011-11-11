@@ -33,7 +33,7 @@ public interface IngestHandlerInterface {
     /**
      * Ingests a resource<br/>
      * <p/>
-     * The resource to be ingested can be either one of Item, Container, Organizational Unit or Context.<br/>
+     * The resource to be ingested can be either one of Item, Container, Content Model, Organizational Unit or Context.<br/>
      * <p/>
      * If the XML document is an eScicDoc Item, it can be directly released by setting its public-status to
      * "released".<br/>
@@ -44,7 +44,7 @@ public interface IngestHandlerInterface {
      * documentation of the respective resource.
      *
      * @param xmlData The XML representation of the resource to be ingested. The resource can be either one of Item,
-     *                Container, Organizational Unit or Context.
+     *                Container, Content Model, Organizational Unit or Context.
      * @return Returns an XML document with the generated object id (objid).
      * @throws EscidocException Thrown if the ingest fails for any reason.
      */

@@ -131,48 +131,48 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
         ouIds = new String[14];
         // FOR DEFAULT-USER TESTS
         ouIds[0] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou0.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, null));
         ouIds[1] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou1.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] { ouIds[0] }));
         ouIds[2] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou2.xml"), ORGANIZATIONAL_UNIT_STATUS_OPENED, new String[] { ouIds[0] }));
         ouIds[3] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou3.xml"), ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] { ouIds[1] }));
         ouIds[4] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou4.xml"), ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] { ouIds[1] }));
         ouIds[5] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou5.xml"), ORGANIZATIONAL_UNIT_STATUS_CLOSED, new String[] { ouIds[2] }));
         ouIds[6] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou6.xml"), ORGANIZATIONAL_UNIT_STATUS_DELETED, new String[] { ouIds[2] }));
 
         //FOR OU-ADMIN TESTS
         ouIds[7] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou0.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, null));
         ouIds[8] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou1.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[7] }));
         ouIds[9] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou2.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[7] }));
         ouIds[10] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou3.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[8] }));
         ouIds[11] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou4.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[8] }));
         ouIds[12] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou5.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[9], ouIds[8] }));
         ouIds[13] =
-            getId(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
+            getObjidValue(prepareOrgUnit(handle, getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_search_ou6.xml"), ORGANIZATIONAL_UNIT_STATUS_CREATED, new String[] { ouIds[9] }));
 
         // /////////////////////////////////////////////////////////////////////

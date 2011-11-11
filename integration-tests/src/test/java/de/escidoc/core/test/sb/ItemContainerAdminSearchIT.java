@@ -3889,7 +3889,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                 de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
-            String objectId = getId(xml);
+            String objectId = getObjidValue(xml);
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
             String lastModDate = getLastModificationDate(xml);
@@ -4011,7 +4011,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                     de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
                 substitute(xmlData, "/container/properties/context/@href", contextHref);
                 xml = container.create(toString(xmlData, false));
-                objectId = getId(xml);
+                objectId = getObjidValue(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");
                 xml = container.update(objectId, xml);
                 lastModDate = getLastModificationDate(xml);

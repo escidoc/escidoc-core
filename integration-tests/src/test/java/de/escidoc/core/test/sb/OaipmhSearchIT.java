@@ -124,7 +124,7 @@ public class OaipmhSearchIT extends SearchTestBase {
                         + i + "_rest.xml");
                 String xml = container.create(xmlData);
                 String lastModDate = getLastModificationDate(xml);
-                containerIds[i] = getId(xml);
+                containerIds[i] = getObjidValue(xml);
 
                 // submit container
                 xml =
@@ -161,7 +161,7 @@ public class OaipmhSearchIT extends SearchTestBase {
                         + "_rest.xml");
                 String xml = container.createItem(containerIds[0], xmlData);
                 String lastModDate = getLastModificationDate(xml);
-                itemIds[i] = getId(xml);
+                itemIds[i] = getObjidValue(xml);
 
                 Document itemDoc = EscidocAbstractTest.getDocument(xml);
                 String componentId = getComponentObjidValue(itemDoc, 1);

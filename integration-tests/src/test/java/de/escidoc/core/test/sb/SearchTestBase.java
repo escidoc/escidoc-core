@@ -217,31 +217,6 @@ public class SearchTestBase extends SbTestBase {
     }
 
     /**
-     * extract id out of item-xml.
-     * 
-     * @param xml
-     *            String xml
-     * @return String id
-     */
-    protected String getId(final String xml) {
-        String id = null;
-        Pattern objidAttributePattern = Pattern.compile("objid=\"([^\"]*)\"");
-        Matcher m = objidAttributePattern.matcher(xml);
-        if (m.find()) {
-            id = m.group(1);
-        }
-        else {
-            Pattern hrefPattern = Pattern.compile("xlink:href=\"([^\"]*)\"");
-            m = hrefPattern.matcher(xml);
-            if (m.find()) {
-                id = m.group(1);
-                id = id.replaceFirst(".*\\/", "");
-            }
-        }
-        return id;
-    }
-
-    /**
      * get last-modification-date from xml String.
      * 
      * @param xml

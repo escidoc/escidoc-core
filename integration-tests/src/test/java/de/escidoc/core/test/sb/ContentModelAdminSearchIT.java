@@ -343,7 +343,7 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
             }
             Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
             String xml = contentModel.create(toString(xmlData, false));
-            String objectId = getId(xml);
+            String objectId = getObjidValue(xml);
 
             if (!status.equals(CONTENT_MODEL_STATUS_CREATED) && !status.equals(CONTENT_MODEL_STATUS_DELETED)) {
                 // update content model

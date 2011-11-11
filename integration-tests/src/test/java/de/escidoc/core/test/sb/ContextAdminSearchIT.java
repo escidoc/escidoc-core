@@ -429,7 +429,7 @@ public class ContextAdminSearchIT extends SearchTestBase {
             substitute(xmlData, "/context/properties/name", getUniqueName("PubMan Context "));
             String xml = context.create(toString(xmlData, false));
             String lastModDate = getLastModificationDate(xml);
-            String objectId = getId(xml);
+            String objectId = getObjidValue(xml);
 
             if (!status.equals(CONTEXT_STATUS_CREATED) && !status.equals(CONTEXT_STATUS_DELETED)) {
                 // open context

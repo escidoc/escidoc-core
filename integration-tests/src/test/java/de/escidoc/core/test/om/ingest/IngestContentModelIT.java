@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 
 import org.junit.Test;
@@ -51,31 +50,44 @@ import static org.junit.Assert.fail;
  * 
  * @author Steffen Wagner, KST
  */
-public class IngestIT extends IngestTestBase {
+public class IngestContentModelIT extends IngestTestBase {
+
+    private static final Pattern OBJECT_PATTERN =
+        Pattern.compile("<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>", Pattern.MULTILINE);
 
     /**
-     * Test what happens if an invalid but well formed XML fragment gets ingested. An InvalidResourceException has to be
-     * thrown as a result.
+     * Test if a valid Content Model gets ingested. The return value must be a XML fragment containing the object id and
+     * conforming the the result.xsd schema.
      * 
      * @throws Exception
-     *             the Exception, in this case InvalidResourceException
+     *             Throws Exception if test fail.
      */
-    @Test(expected = InvalidResourceException.class)
-    public void testIngestXmlNotValid() throws Exception {
-        String toBeCreatedXml = Constants.XML_HEADER + "<root><a/></root>";
-        ingest(toBeCreatedXml);
-    }
+    @Test
+    public void ingestContentModel() throws Exception {
+        String cmmTempl = getExampleTemplate("content-model-minimal-for-create.xml");
 
-    /**
-     * Tests what happens if a not well formed xml fragment gets ingested. First the exception type gets checked, then
-     * the content of the exception message gets checked. If either fail the test fails.
-     */
-    @Test(expected = InvalidResourceException.class)
-    public void testIngestXmlNotWellFormed() throws Exception {
+        String createdXml = ingest(cmmTempl);
 
-        String toBeCreatedXml = Constants.XML_HEADER + "<roo><a/></root>";
+        // assert document is well formed and valid
+        assertXmlValidResult(createdXml);
 
-        ingest(toBeCreatedXml);
+        Matcher matcher = OBJECT_PATTERN.matcher(createdXml);
+
+        if (matcher.find()) {
+            String resourceType = matcher.group(1);
+            String objectId = matcher.group(2);
+
+            // Have we just ingested a content model ?
+            assert resourceType.equals("CONTENT_MODEL") : "expected resource type \"CONTENT_MODEL\" but got \""
+                + resourceType + "\"";
+
+            // We can't assume anything about the object's id except not being
+            // null, can we ?
+            assert (objectId != null);
+        }
+        else {
+            fail("no match for content model found, return value " + "of ingest could not be matched successfully.");
+        }
     }
 
     /**

@@ -449,7 +449,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                 de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
-            String objectId = getId(xml);
+            String objectId = getObjidValue(xml);
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
@@ -569,7 +569,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
             substitute(xmlData, "/content-relation/subject/@href", subjectHref);
             substitute(xmlData, "/content-relation/object/@href", objectHref);
             String xml = contentRelation.create(toString(xmlData, false));
-            resourceId = getId(xml);
+            resourceId = getObjidValue(xml);
             xml = xml.replaceAll("Meier", "Meier1");
             xml = contentRelation.update(resourceId, xml);
 

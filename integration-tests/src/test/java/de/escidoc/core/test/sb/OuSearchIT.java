@@ -169,8 +169,8 @@ public class OuSearchIT extends SearchTestBase {
      * @param i   number of org-unit.
      * @param xml org-unit-xml.
      */
-    private void writeVariables(final int i, final String xml) {
-        String id = getId(xml);
+    private void writeVariables(final int i, final String xml) throws Exception {
+        String id = getObjidValue(xml);
         orgUnitIds[i] = id;
         switch (i) {
             case 0:

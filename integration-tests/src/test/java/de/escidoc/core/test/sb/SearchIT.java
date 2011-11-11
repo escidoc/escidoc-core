@@ -141,14 +141,16 @@ public class SearchIT extends SearchTestBase {
      * 
      */
     private void prepareContainer() throws Exception {
+
         containerIds = new String[Constants.NUM_CONTAINERS];
+
         for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
             String xmlData =
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container" + i
                     + "_rest.xml");
             String xml = container.create(xmlData);
             DateTime lastModDate = getLastModificationDateValue2(getDocument(xml));
-            containerIds[i] = getId(xml);
+            containerIds[i] = getObjidValue(xml);
 
             // submit container
             xml = container.submit(containerIds[i], getStatusTaskParam(lastModDate, null));
@@ -185,17 +187,21 @@ public class SearchIT extends SearchTestBase {
      * 
      */
     void prepareItem() throws Exception {
+
         itemIds = new String[Constants.NUM_ITEMS];
+
         for (int i = 0; i < Constants.NUM_ITEMS; i++) {
-            // Create Item submit and release it //////////////////////////
-            String xmlData =
+
+            final String xmlData =
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
                     + "_rest.xml");
-            String xml = container.createItem(containerIds[0], xmlData);
-            DateTime lastModDate = getLastModificationDateValue2(getDocument(xml));
-            itemIds[i] = getId(xml);
 
+            // Create Item submit and release it //////////////////////////
+            String xml = container.createItem(containerIds[0], xmlData);
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
+            DateTime lastModDate = getLastModificationDateValue2(itemDoc);
+            itemIds[i] = getObjidValue(itemDoc);
+
             String componentId = getComponentObjidValue(itemDoc, 1);
 
             // submit item
@@ -300,7 +306,7 @@ public class SearchIT extends SearchTestBase {
                     EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container"
                         + i + "_rest.xml");
                 String xml = container.create(xmlData);
-                containerIds[i] = getId(xml);
+                containerIds[i] = getObjidValue(xml);
 
                 // submit container
                 xml =
@@ -347,7 +353,7 @@ public class SearchIT extends SearchTestBase {
                     }
                     String xmlData = itemXml.toString();
                     String xml = container.createItem(containerIds[0], xmlData);
-                    itemIds[i] = getId(xml);
+                    itemIds[i] = getObjidValue(xml);
 
                     // submit item
                     item.submit(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));

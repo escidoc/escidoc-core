@@ -110,7 +110,7 @@ public class TextExtractionSearchIT extends SearchTestBase {
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH,
                     "escidoc_text_extractor_error_item_rest.xml");
             String xml = item.create(xmlData);
-            itemId = getId(xml);
+            itemId = getObjidValue(xml);
 
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
             String componentId = getComponentObjidValue(itemDoc, 1);
