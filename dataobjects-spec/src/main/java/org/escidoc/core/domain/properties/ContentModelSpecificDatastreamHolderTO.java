@@ -31,6 +31,6 @@ public class ContentModelSpecificDatastreamHolderTO extends ContentModelSpecific
     }
 
     public void setContent(@NotNull final Stream datastream) {
-        this.stream = stream;
+        this.stream = datastream;
     }
 }

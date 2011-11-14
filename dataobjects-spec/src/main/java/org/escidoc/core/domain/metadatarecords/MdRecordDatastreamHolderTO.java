@@ -31,6 +31,6 @@ public class MdRecordDatastreamHolderTO extends MdRecordTO implements StreamHold
     }
 
     public void setContent(@NotNull final Stream datastream) {
-        this.stream = stream;
+        this.stream = datastream;
     }
 }
