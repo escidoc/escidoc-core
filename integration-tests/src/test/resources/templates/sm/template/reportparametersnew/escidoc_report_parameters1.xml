@@ -5,10 +5,13 @@
     xmlns:srel="http://escidoc.de/core/01/structural-relations/"
     xmlns:param="http://escidoc.de/core/01/parameter/">
 	<srel:report-definition xlink:href="/statistic/report-definition/escidoc:repdef3" />
-	<param:parameter name="userid">
+	<param:parameter name="string_placeholder">
 		<param:stringvalue>escidoc:3434</param:stringvalue>
 	</param:parameter>
-	<param:parameter name="itemid">
-			<param:stringvalue>escidoc:4421</param:stringvalue>
+	<param:parameter name="numeric_placeholder">
+		<param:decimalvalue>1.5</param:decimalvalue>
+	</param:parameter>
+	<param:parameter name="date_placeholder">
+		<param:datevalue>2001-10-21T21:32:52</param:datevalue>
 	</param:parameter>
 </report-parameters>
