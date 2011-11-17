@@ -375,7 +375,7 @@ public class ReportDefinitionHandler implements ReportDefinitionHandlerInterface
      * @return String replacedSql
      */
     private static String generateFakeSql(final String sql) {
-        return sql.replaceAll("(?s)'?\"?\\{.*?\\}'?\"?", "'1'");
+        return sql.replaceAll("(?s)'?\"?\\{.*?\\}'?\"?", " null ");
     }
 
 }

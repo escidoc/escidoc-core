@@ -5,11 +5,12 @@
 	<name>Report Definition for Report Test2</name>
 	<scope xlink:href="/statistic/scope/1"/>
 	<sql>
-        select 
-        date_field, year, requests, sessions   
-        from Report_Test1
-        where requests = {numeric_placeholder} 
-        or date_field = {date_placeholder} 
-        order by date_field desc;
+		select 
+		page,year,sum(requests) as requests,sum(sessions) as sessions 
+		from Report_Test 
+		where year &lt; 5000 
+		and page = {string_placeholder} 
+		and year = {numeric_placeholder}
+		group by page,year order by page, year;
 	</sql> 
 </report-definition>
