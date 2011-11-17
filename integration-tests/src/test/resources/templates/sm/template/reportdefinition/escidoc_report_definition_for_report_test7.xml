@@ -8,8 +8,7 @@
         select 
         date_field, year, requests, sessions   
         from Report_Test1
-        where requests = {numeric_placeholder} 
-        or date_field = {date_placeholder} 
+        where requests = {placeholder} 
         order by date_field desc;
 	</sql> 
 </report-definition>

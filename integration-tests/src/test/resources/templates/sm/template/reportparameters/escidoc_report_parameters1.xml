@@ -3,10 +3,13 @@
     xmlns="http://www.escidoc.de/schemas/reportparameters/0.4"
     xmlns:xlink="http://www.w3.org/1999/xlink">
 	<report-definition xlink:href="/statistic/report-definition/escidoc:repdef3" />
-	<parameter name="userid">
+	<parameter name="string_placeholder">
 		<stringvalue>escidoc:3434</stringvalue>
 	</parameter>
-	<parameter name="itemid">
-			<stringvalue>escidoc:4421</stringvalue>
+	<parameter name="numeric_placeholder">
+		<decimalvalue>1.5</decimalvalue>
+	</parameter>
+	<parameter name="date_placeholder">
+		<datevalue>2001-10-21T21:32:52</datevalue>
 	</parameter>
 </report-parameters>

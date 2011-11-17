@@ -59,6 +59,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
         }
         else if ("parameter".equals(element.getLocalName())) {
             this.parameterVo = new ParameterVo();
+            this.parameterVo.setName(element.getAttributeValue(null, "name"));
         }
         return element;
     }

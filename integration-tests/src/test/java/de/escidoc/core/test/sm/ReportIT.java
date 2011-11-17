@@ -63,7 +63,7 @@ public class ReportIT extends ReportTestBase {
 
     private static final int aggregationDefinitionsCount = 3;
 
-    private static final int reportDefinitionsCount = 5;
+    private static final int reportDefinitionsCount = 7;
 
     private static String[][] reportDefinitionIds = new String[aggregationDefinitionsCount][reportDefinitionsCount];
 
@@ -275,30 +275,12 @@ public class ReportIT extends ReportTestBase {
             results.append(checkReport(i, 3, 12, xml));
         }
 
-        // check reportDefinition with wrong placeholder////////////////////////
-        try {
-            xml = replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[0][4].toString());
-            retrieve(xml);
-            results.append("NO EXCEPTION");
-
-        }
-        catch (final Exception e) {
-            String exceptionType = e.getClass().getSimpleName();
-            if (exceptionType.equals("MissingMethodParameterException")) {
-                results.append("OK");
-            }
-            else {
-                results.append("WRONG");
-            }
-            assertEquals(exceptionType, "MissingMethodParameterException");
-        }
         StringBuffer assertion = new StringBuffer("");
         for (int i = 0; i < aggregationDefinitionIds.length * 3; i++) {
             for (int j = 0; j < 4; j++) {
                 assertion.append("OK");
             }
         }
-        assertion.append("OK");
         assertEquals("results not as expected: " + results.toString(), assertion.toString(), results.toString());
     }
 
@@ -338,6 +320,36 @@ public class ReportIT extends ReportTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Retrieving report without providing corrupted xml not declined,"
                 + " properly.", ec, e);
+        }
+    }
+
+    /**
+     * Tests retrieving a report with placeholders.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testSMRP4() throws Exception {
+
+        final String xml =
+            getTemplateAsFixedReportParametersString(TEMPLATE_REP_PARAMETERS_PATH, "escidoc_report_parameters1.xml");
+
+        //Test retrieving report with date and numeric placeholder
+        String replacedXml = replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[0][4]);
+        retrieve(replacedXml);
+
+        //Test retrieving report with string and numeric placeholder
+        replacedXml = replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[0][5]);
+        retrieve(replacedXml);
+
+        // check reportDefinition with wrong placeholder////////////////////////
+        try {
+            replacedXml = replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[0][6]);
+            retrieve(replacedXml);
+        }
+        catch (final Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("MissingMethodParameterException", exceptionType);
         }
     }
 
