@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -455,7 +456,8 @@ public class SearchIT extends SearchTestBase {
 
         }
         catch (final Exception e) {
-            // FIXME: Assert exception
+            assertExceptionType(
+                "Exception not as expected.", EscidocException.class, e);
         }
     }
 
@@ -511,7 +513,8 @@ public class SearchIT extends SearchTestBase {
             fail("No exception occured on search in non-existing database.");
         }
         catch (final Exception e) {
-            // FIXME: assert exception
+            assertExceptionType(
+                "Exception not as expected.", EscidocException.class, e);
         }
     }
 
@@ -543,14 +546,9 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "0");
-        String response = null;
-        try {
-            response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
-            assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
     }
 
     /**
@@ -582,17 +580,12 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "0");
-        String response = null;
-        try {
-            response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
 
-            assertEquals(
-                "1/java.lang.IllegalArgumentException: " + "numHits must be &gt; 0; please use TotalHitCountCollector "
-                    + "if you just need the total hit count", getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        assertEquals("1/java.lang.IllegalArgumentException: "
+            + "numHits must be &gt; 0; please use TotalHitCountCollector " + "if you just need the total hit count",
+            getDiagnostics(response));
     }
 
     /**
@@ -606,13 +599,9 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "-1");
-        try {
-            String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
-            assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
     }
 
     /**
@@ -1761,13 +1750,9 @@ public class SearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
         parameters.put(FILTER_PARAMETER_RESPONSEPOSITION, "0");
-        try {
-            String response = scan(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
-            assertEquals(null, getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        String response = scan(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(null, getDiagnostics(response));
     }
 
     /**
@@ -1800,13 +1785,9 @@ public class SearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
         parameters.put(FILTER_PARAMETER_RESPONSEPOSITION, "-2");
-        try {
-            String response = scan(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
-            assertEquals(FILTER_PARAMETER_RESPONSEPOSITION, getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        String response = scan(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(FILTER_PARAMETER_RESPONSEPOSITION, getDiagnostics(response));
     }
 
     /**
@@ -1839,13 +1820,9 @@ public class SearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
         parameters.put(FILTER_PARAMETER_MAXIMUMTERMS, "-2");
-        try {
-            String response = scan(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
-            assertEquals(FILTER_PARAMETER_MAXIMUMTERMS, getDiagnostics(response));
-        }
-        catch (final Exception e) {
-        }
+        String response = scan(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(FILTER_PARAMETER_MAXIMUMTERMS, getDiagnostics(response));
     }
 
     /**
