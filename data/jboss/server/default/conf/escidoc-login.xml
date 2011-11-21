@@ -194,7 +194,11 @@ default-lazy-init="false">
     <!--###########################################################################################################################-->
     <!--########OPENID-LOGIN###################################################################################################################-->
     
-    <!-- Uncomment this to enable login using openId.-->
+    <!-- Uncomment this to enable login using openId.
+    Set openidProviderRegex in bean with id=openidAuthenticationProcessingFilter to restrict allowed openId-Providers
+    Set List of OpenID-Attributes in bean with id=myOpenID4JavaConsumer to set supported OpenID-Attributes.
+    Set escidoc-core.proxyHost and escidoc-core.proxyPort in escidoc-core.properties if http-requests need to use a proxy.
+    -->
     <!-- 
     <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" />
     <security:http auto-config="false"
