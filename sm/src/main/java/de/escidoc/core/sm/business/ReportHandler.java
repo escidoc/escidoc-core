@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.sm.business;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
@@ -42,10 +46,6 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ParameterVo;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersStaxHandler;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersVo;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * An statistic Report resource handler.
@@ -116,10 +116,12 @@ public class ReportHandler implements ReportHandlerInterface {
      * @return String sql
      * @throws MissingMethodParameterException
      *          e
+     * @throws SqlDatabaseSystemException
+     *          e
      */
-    private static String generateSql(
+    private String generateSql(
         final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
-        throws MissingMethodParameterException {
+        throws MissingMethodParameterException, SqlDatabaseSystemException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
             throw new MissingMethodParameterException("sql in reportDefinition may not be null");
@@ -146,7 +148,9 @@ public class ReportHandler implements ReportHandlerInterface {
                     if (type != null) {
                         String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
-                            replacementString = parameterVo.getDateValue().toString("yyyy-MM-dd HH:mm:ss.SSS");
+                            replacementString = parameterVo.getDateValue().toString(
+                                de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                            replacementString = dbAccessor.convertDateForSelect(replacementString);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
                             replacementString = parameterVo.getDecimalValue().toString();
