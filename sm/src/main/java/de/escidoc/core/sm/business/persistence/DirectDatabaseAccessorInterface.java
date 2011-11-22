@@ -43,6 +43,15 @@ import java.util.List;
 public interface DirectDatabaseAccessorInterface {
 
     /**
+     * Converts xmldate into database-specific format. Eg for where-clauses
+     *
+     * @param xmldate date in xml-format
+     * @return String date in database-specific format
+     * @throws SqlDatabaseSystemException e
+     */
+    String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException;
+
+        /**
      * Create a new Table according to the Informations in the databaseTableVo.
      *
      * @param databaseTableVo databaseTableVo with information about tablename, fieldnames and indexnames.

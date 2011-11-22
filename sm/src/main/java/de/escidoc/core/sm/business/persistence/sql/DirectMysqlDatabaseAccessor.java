@@ -34,6 +34,8 @@ import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+
+import org.joda.time.DateTime;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import javax.sql.DataSource;
@@ -100,19 +102,45 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
     }
 
     /**
-     * Converts xmldate into database-specific format. Method is synchronized because SimpleDateFormatter is not
-     * Thread-Safe!
+     * Converts xmldate into database-specific format.
      *
      * @param xmldate date in xml-format
      * @return String date in database-specific format
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
-    private static String convertDate(final String xmldate) throws SqlDatabaseSystemException {
+    public String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
+        String dateFormatString = "yyyy-MM-dd";
+        if (xmldate.contains(":")) {
+            dateFormatString = "yyyy-MM-dd HH:mm:ss";
+        }
         try {
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
+                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
+        }
+        catch (final Exception e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+    }
+
+    /**
+     * Converts xmldate into database-specific format.
+     *
+     * @param xmldate date in xml-format
+     * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     */
+    private String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
+        String dateFormatString = "yyyy-MM-dd";
+        if (xmldate.contains(":")) {
+            dateFormatString = "yyyy-MM-dd HH:mm:ss";
+        }
+        try {
+            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
+            final Calendar cal = xmlCal.toGregorianCalendar();
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
+                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -191,7 +219,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
                 // Case type=date and value=sysdate => sysdate
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDateForInsert(value);
                 }
                 else if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -562,7 +590,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
             else {
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
-            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
+            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDateForSelect(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
