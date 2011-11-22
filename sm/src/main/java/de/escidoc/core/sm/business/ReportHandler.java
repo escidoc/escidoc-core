@@ -177,10 +177,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString = parameterVo.getDecimalValue().toString();
                         }
                         else if (parameterVo.getStringValue() != null) {
-                            replacementString = parameterVo.getStringValue();
-                        }
-                        if (!type.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
-                            replacementString = '\'' + replacementString + '\'';
+                            replacementString = '\'' + parameterVo.getStringValue() + '\'';
                         }
                         sql =
                             sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName() + "\\}'?\"?", Matcher
