@@ -136,10 +136,12 @@ public class ReportHandler implements ReportHandlerInterface {
      * @return String sql
      * @throws MissingMethodParameterException
      *          e
+     * @throws SqlDatabaseSystemException
+     *          e
      */
-    private static String generateSql(
+    private String generateSql(
         final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
-        throws MissingMethodParameterException {
+        throws MissingMethodParameterException, SqlDatabaseSystemException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
             throw new MissingMethodParameterException("sql in reportDefinition may not be null");
@@ -169,6 +171,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString =
                                 parameterVo.getDateValue().withZone(DateTimeZone.UTC).toString(
                                     de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                            replacementString = dbAccessor.convertDateForSelect(replacementString);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
                             replacementString = parameterVo.getDecimalValue().toString();

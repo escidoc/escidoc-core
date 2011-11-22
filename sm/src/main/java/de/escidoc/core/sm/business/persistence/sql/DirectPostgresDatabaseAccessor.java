@@ -42,6 +42,7 @@ import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.joda.time.DateTime;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -121,7 +122,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
      * @return String date in database-specific format
      * @throws SqlDatabaseSystemException e
      */
-    private static String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
+    public String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
         try {
             String dateFormatString = "yyyy-MM-dd";
             if (xmldate.contains(":")) {
@@ -129,8 +130,8 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
             }
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
+                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -144,7 +145,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
      * @return String date in database-specific format
      * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
-    private static String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
+    private String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
         try {
             String dateFormatString = "yyyy-MM-dd";
             if (xmldate.contains(":")) {
@@ -152,8 +153,8 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
             }
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            final SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatString);
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
+                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);

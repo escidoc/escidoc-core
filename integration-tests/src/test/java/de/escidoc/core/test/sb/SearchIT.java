@@ -461,8 +461,7 @@ public class SearchIT extends SearchTestBase {
 
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Exception not as expected.", EscidocException.class, e);
+            assertExceptionType("Exception not as expected.", EscidocException.class, e);
         }
     }
 
@@ -518,8 +517,7 @@ public class SearchIT extends SearchTestBase {
             fail("No exception occured on search in non-existing database.");
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Exception not as expected.", EscidocException.class, e);
+            assertExceptionType("Exception not as expected.", EscidocException.class, e);
         }
     }
 
@@ -588,9 +586,9 @@ public class SearchIT extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
 
-        assertEquals(
-            "1/java.lang.IllegalArgumentException: " + "numHits must be &gt; 0; please use TotalHitCountCollector "
-                + "if you just need the total hit count", getDiagnostics(response));
+        assertEquals("1/java.lang.IllegalArgumentException: "
+            + "numHits must be &gt; 0; please use TotalHitCountCollector " + "if you just need the total hit count",
+            getDiagnostics(response));
     }
 
     /**
