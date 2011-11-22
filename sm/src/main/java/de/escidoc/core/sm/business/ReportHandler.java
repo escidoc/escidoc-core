@@ -139,8 +139,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * @throws SqlDatabaseSystemException
      *          e
      */
-    private String generateSql(
-        final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
+    private String generateSql(final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
         throws MissingMethodParameterException, SqlDatabaseSystemException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
@@ -177,10 +176,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString = parameterVo.getDecimalValue().toString();
                         }
                         else if (parameterVo.getStringValue() != null) {
-                            replacementString = parameterVo.getStringValue();
-                        }
-                        if (!type.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
-                            replacementString = '\'' + replacementString + '\'';
+                            replacementString = '\'' + parameterVo.getStringValue() + '\'';
                         }
                         sql =
                             sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName() + "\\}'?\"?", Matcher
