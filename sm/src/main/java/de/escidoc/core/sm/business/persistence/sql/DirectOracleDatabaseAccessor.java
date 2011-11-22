@@ -122,8 +122,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             }
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
-                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", new DateTime(cal.getTimeInMillis())
+                .toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -145,8 +145,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             }
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            return INSERT_DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
-                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
+            return INSERT_DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", new DateTime(cal.getTimeInMillis())
+                .toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
