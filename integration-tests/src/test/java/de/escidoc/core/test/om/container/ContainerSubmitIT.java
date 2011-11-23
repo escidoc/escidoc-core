@@ -147,8 +147,7 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void test_OM_SC_2_2() throws Exception {
 
         try {
-            submit(theContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            submit(theContainerId, getStatusTaskParam(new DateTime(), null));
             fail("No exception occured on submit with wrong time stamp.");
         }
         catch (final Exception e) {

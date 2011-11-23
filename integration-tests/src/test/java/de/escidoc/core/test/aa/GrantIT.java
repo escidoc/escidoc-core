@@ -55,6 +55,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
@@ -1243,7 +1244,16 @@ public class GrantIT extends GrantTestBase {
         retrieveGrantsSuccessfully(defaultUserAccountOrGroupId, expectedGrants.size());
 
         //revoke 2 grants
-        String taskParam = getRevokeGrantsTaskParam(expectedGrants.keySet(), "Some revocation\n remark");
+        Set<String> grantsToRemove = new HashSet<String>();
+        int grantCount = 0;
+        for (String grantId : expectedGrants.keySet()) {
+            grantsToRemove.add(grantId);
+            grantCount++;
+            if (grantCount == 2) {
+                break;
+            }
+        }
+        String taskParam = getRevokeGrantsTaskParam(grantsToRemove, "Some revocation\n remark");
 
         System.out.println("========================================");
         System.out.println(taskParam);

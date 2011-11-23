@@ -80,6 +80,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
+import de.escidoc.core.common.util.stax.handler.filter.ExtendedFilterHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
@@ -1446,7 +1447,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         tph.setCheckLastModificationDate(false);
         fp.addHandler(tph);
 
-        final FilterHandler fh = new FilterHandler(fp);
+        final ExtendedFilterHandler fh = new ExtendedFilterHandler(fp);
 
         fp.addHandler(fh);
         try {
@@ -1459,7 +1460,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        final Map<String, Object> filters = fh.getRules();
+        final Map<String, Set<String>> filters = fh.getRules();
         final Collection<String> grantIds;
 
         if (filters.isEmpty()) {

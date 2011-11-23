@@ -233,6 +233,10 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String pidParam;
         AssignParam assignPidParam = new AssignParam();
 
+        String resultXml =
+            submit(theContainerId, getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+        assertXmlValidResult(resultXml);
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
@@ -256,8 +260,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         }
 
         try {
-            release(theContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            release(theContainerId, getStatusTaskParam(new DateTime(), null));
             fail("No exception occurred on release with wrong time stamp.");
         }
         catch (final Exception e) {

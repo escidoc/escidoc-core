@@ -561,7 +561,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         }
 
         List<String> paramIds = new ArrayList<String>();
-        Collections.copy(paramIds, ids);
+        paramIds.addAll(ids);
         addMembers(containerId, getMembersTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))),
             paramIds));
 

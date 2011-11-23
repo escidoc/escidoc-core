@@ -2745,7 +2745,7 @@ public abstract class EscidocTestBase {
             new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
                 + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">");
 
-        if (ids != null) {
+        if (ids != null && !ids.isEmpty()) {
             xml.append("<filter name=\"" + DC_NS_URI + "identifier\">");
             for (final String id : ids) {
                 xml.append("<id>");

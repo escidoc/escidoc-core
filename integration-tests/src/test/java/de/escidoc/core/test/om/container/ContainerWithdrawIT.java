@@ -131,8 +131,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         //                "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
 
         try {
-            withdraw(theContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            withdraw(theContainerId, getStatusTaskParam(new DateTime(), null));
             fail("No exception occurred on withdraw with " + "wrong time stamp.");
         }
         catch (final Exception e) {
