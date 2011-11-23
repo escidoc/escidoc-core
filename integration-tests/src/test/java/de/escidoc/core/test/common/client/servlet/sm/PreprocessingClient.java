@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
+import org.w3c.dom.Document;
+
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -51,6 +55,23 @@ public class PreprocessingClient extends ClientBase {
         return callEsciDoc("Preprocessing.preprocess", METHOD_PREPROCESS_STATISTICS, Constants.HTTP_METHOD_POST,
             Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
             changeToString(preprocessingInformationXml));
+    }
+
+    /**
+     * triggers preprocessing via framework-interface.
+     *
+     * @param aggrDefinitionId aggrDefinitionId
+     * @param date             date
+     * @throws Exception If anything fails.
+     */
+    public void triggerPreprocessing(final String aggrDefinitionId, final String date) throws Exception {
+        String preprocessingInformationXml =
+            EscidocAbstractTest.getTemplateAsString(EscidocTestBase.TEMPLATE_PREPROCESSING_INFO_PATH,
+                "escidoc_preprocessing_information1.xml");
+        Document doc = EscidocAbstractTest.getDocument(preprocessingInformationXml);
+        substitute(doc, "/preprocessing-information/start-date", date);
+        substitute(doc, "/preprocessing-information/end-date", date);
+        preprocess(aggrDefinitionId, toString(doc, false));
     }
 
 }

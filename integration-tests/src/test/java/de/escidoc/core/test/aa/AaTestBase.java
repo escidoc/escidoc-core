@@ -512,6 +512,13 @@ public class AaTestBase extends EscidocAbstractTest {
     }
 
     /**
+     * @return Returns the preprocessingClient.
+     */
+    public PreprocessingClient getPreprocessingClient() {
+        return preprocessingClient;
+    }
+
+    /**
      * @return Returns the policyDecisionPointClient.
      */
     public PolicyDecisionPointClient getPolicyDecisionPointClient() {

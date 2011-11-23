@@ -28,22 +28,19 @@
  */
 package de.escidoc.core.test.aa;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+
+import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for testing access-rights to statistic-reports.
@@ -104,14 +101,6 @@ public class StatisticReaderIT extends GrantTestBase {
     private static final String STATISTIC_DATA_TEMPLATE_NAME = "escidoc_statistic_data1.xml";
 
     private static final String REPORT_PARAMETERS_TEMPLATE_NAME = "escidoc_report_parameters0.xml";
-
-    private static final String PREPROCESSING_URL =
-        "jmx-console/HtmlAdaptor?action=invokeOp" + "&name=eSciDocCore%3Aname%3DStatisticPreprocessorService"
-            + "&methodIndex=${methodIndex}&arg0=";
-
-    private static final String STATISTIC_PREPROCESSR_METHOD_INDEX = "0";
-
-    private static final Pattern METHOD_INDEX_PATTERN = Pattern.compile("\\$\\{methodIndex\\}");
 
     /**
      * The constructor.
@@ -197,42 +186,10 @@ public class StatisticReaderIT extends GrantTestBase {
         }
 
         // trigger preprocessing of statistic_data
-        triggerPreprocessing(STATISTIC_PREPROCESSR_METHOD_INDEX);
+        String now = new DateTime(new Date().getTime()).toString("yyyy-MM-dd");
+        getPreprocessingClient().triggerPreprocessing(aggregationDefinitionId, now);
+        getPreprocessingClient().triggerPreprocessing(newAggregationDefinitionId, now);
 
-    }
-
-    /**
-     * triggers preprocessing.
-     *
-     * @param methodIndex methodIndex
-     * @throws Exception If anything fails.
-     */
-    private void triggerPreprocessing(final String methodIndex) throws Exception {
-        String urlParameters = PREPROCESSING_URL + System.currentTimeMillis();
-
-        Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
-        urlParameters = methodIndexMatcher.replaceAll(methodIndex);
-
-        String httpUrl = getFrameworkUrl() + Constants.ESCIDOC_BASE_URI + urlParameters;
-        long time = System.currentTimeMillis();
-        HttpResponse httpRes =
-            HttpHelper.executeHttpRequest(null, Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
-        String response = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-        httpRes.getEntity().consumeContent();
-        response = " preprocessing needed " + (System.currentTimeMillis() - time) + response;
-        try {
-            assertMatches("String does not match es expected. " + response,
-                "Operation completed successfully without a return value", response);
-
-        }
-        catch (final AssertionError e) {
-            if (methodIndex.equals(STATISTIC_PREPROCESSR_METHOD_INDEX)) {
-                triggerPreprocessing("1");
-            }
-            else {
-                throw e;
-            }
-        }
     }
 
     /**

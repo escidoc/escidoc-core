@@ -28,27 +28,19 @@
  */
 package de.escidoc.core.test.sm;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.Locale;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Report resource.
@@ -71,14 +63,6 @@ public class ReportIT extends ReportTestBase {
 
     private static int methodCounter = 0;
 
-    private static final String PREPROCESSING_URL =
-        "jmx-console/HtmlAdaptor?action=invokeOp" + "&name=eSciDocCore%3Aname%3DStatisticPreprocessorService"
-            + "&methodIndex=${methodIndex}&arg0=";
-
-    private static final String STATISTIC_PREPROCESSOR_METHOD_INDEX = "0";
-
-    private static final Pattern METHOD_INDEX_PATTERN = Pattern.compile("\\$\\{methodIndex\\}");
-
     /**
      * Set up servlet test.
      *
@@ -94,7 +78,7 @@ public class ReportIT extends ReportTestBase {
             createAggregationDefinition("escidoc_aggregation_definition3_2.xml", 2);
             createReportDefinitions();
             for (int i = 0; i < aggregationDefinitionIds.length; i++) {
-                triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-01");
+                getPreprocessingClient().triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-01");
             }
         }
     }
@@ -156,59 +140,6 @@ public class ReportIT extends ReportTestBase {
     }
 
     /**
-     * triggers preprocessing via jmx-console.
-     *
-     * @param methodIndex methodIndex
-     * @throws Exception If anything fails.
-     */
-    private void triggerPreprocessing(final String methodIndex) throws Exception {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, 1);
-        cal.set(Calendar.YEAR, 2009);
-
-        String urlParameters = PREPROCESSING_URL + cal.getTimeInMillis();
-
-        Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
-        urlParameters = methodIndexMatcher.replaceAll(methodIndex);
-
-        String httpUrl = getFrameworkUrl() + Constants.ESCIDOC_BASE_URI + urlParameters;
-        long time = System.currentTimeMillis();
-        HttpResponse result = HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, "", null);
-        String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);
-        response = " preprocessing needed " + (System.currentTimeMillis() - time) + response;
-        try {
-            assertMatches("String does not match es expected. " + response,
-                "Operation completed successfully without a return value", response);
-        }
-        catch (final AssertionError e) {
-            if (methodIndex.equals(STATISTIC_PREPROCESSOR_METHOD_INDEX)) {
-                triggerPreprocessing("1");
-            }
-            else {
-                throw e;
-            }
-        }
-    }
-
-    /**
-     * triggers preprocessing via framework-interface.
-     *
-     * @param aggrDefinitionId aggrDefinitionId
-     * @param date             date
-     * @throws Exception If anything fails.
-     */
-    private void triggerPreprocessing(final String aggrDefinitionId, final String date) throws Exception {
-        String preprocessingInformationXml =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_PREPROCESSING_INFO_PATH,
-                "escidoc_preprocessing_information1.xml");
-        Document doc = EscidocAbstractTest.getDocument(preprocessingInformationXml);
-        substitute(doc, "/preprocessing-information/start-date", date);
-        substitute(doc, "/preprocessing-information/end-date", date);
-        getPreprocessingClient().preprocess(aggrDefinitionId, toString(doc, false));
-    }
-
-    /**
      * delete report-definitions.
      *
      * @throws Exception If anything fails.
@@ -252,7 +183,9 @@ public class ReportIT extends ReportTestBase {
         }
 
         // trigger Preprocessing once again/////////////////////////////////////
-        triggerPreprocessing(STATISTIC_PREPROCESSOR_METHOD_INDEX);
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            getPreprocessingClient().triggerPreprocessing(aggregationDefinitionIds[i], "2009-02-01");
+        }
         // /////////////////////////////////////////////////////////////////////
 
         for (int i = 0; i < aggregationDefinitionIds.length; i++) {
@@ -264,7 +197,7 @@ public class ReportIT extends ReportTestBase {
 
         // trigger Preprocessing once again/////////////////////////////////////
         for (int i = 0; i < aggregationDefinitionIds.length; i++) {
-            triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-02");
+            getPreprocessingClient().triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-02");
         }
         // /////////////////////////////////////////////////////////////////////
 
