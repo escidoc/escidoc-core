@@ -180,7 +180,7 @@ public class CollaboratorModifierIT extends GrantTestBase {
         //add item to container2
         ids = new ArrayList<String>();
         ids.add(itemId);
-        getContainerClient().addMembers(containerId,
+        getContainerClient().addMembers(containerId2,
             getMembersTaskParam(getLastModificationDateValue2(containerDocument2), ids));
 
         //update item to create new version
