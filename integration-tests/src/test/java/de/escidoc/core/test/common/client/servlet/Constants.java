@@ -82,7 +82,9 @@ public class Constants {
 
     public static final String AA_BASE_URI = ESCIDOC_BASE_URI + AA_URI;
 
-    public static final String LOGIN_URI = AA_BASE_URI + "/login/database";
+    public static final String LOGIN_DEFAULT_PROVIDER = "/database";
+
+    public static final String LOGIN_URI = AA_BASE_URI + "/login" + LOGIN_DEFAULT_PROVIDER;
 
     public static final String CONTEXT_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/context";
 

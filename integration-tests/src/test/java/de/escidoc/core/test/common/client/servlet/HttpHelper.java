@@ -558,7 +558,8 @@ public final class HttpHelper {
 
         // Second step: Send filled login form
         final HttpPost postMethod =
-            new HttpPost((EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + "/j_spring_security_check"));
+            new HttpPost(
+                (EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
