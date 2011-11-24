@@ -49,7 +49,7 @@ public interface DirectDatabaseAccessorInterface {
      * @return String date in database-specific format
      * @throws SqlDatabaseSystemException e
      */
-    String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException;
+    String convertDate(final String xmldate) throws SqlDatabaseSystemException;
 
         /**
      * Create a new Table according to the Informations in the databaseTableVo.

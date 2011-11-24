@@ -171,7 +171,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString =
                                 parameterVo.getDateValue().withZone(DateTimeZone.UTC).toString(
                                     de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-                            replacementString = dbAccessor.convertDateForSelect(replacementString);
+                            replacementString = dbAccessor.convertDate(replacementString);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
                             replacementString = parameterVo.getDecimalValue().toString();

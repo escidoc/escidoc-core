@@ -121,30 +121,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
      * @return String date in database-specific format
      * @throws SqlDatabaseSystemException e
      */
-    public String convertDateForSelect(final String xmldate) throws SqlDatabaseSystemException {
-        try {
-            String dateFormatString = "yyyy-MM-dd";
-            if (xmldate.contains(":")) {
-                dateFormatString = "yyyy-MM-dd HH:mm:ss";
-            }
-            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
-            final Calendar cal = xmlCal.toGregorianCalendar();
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
-                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
-        }
-        catch (final Exception e) {
-            throw new SqlDatabaseSystemException(e);
-        }
-    }
-
-    /**
-     * Converts xmldate into database-specific format.
-     *
-     * @param xmldate date in xml-format
-     * @return String date in database-specific format
-     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
-     */
-    private String convertDateForInsert(final String xmldate) throws SqlDatabaseSystemException {
+    public String convertDate(final String xmldate) throws SqlDatabaseSystemException {
         try {
             String dateFormatString = "yyyy-MM-dd";
             if (xmldate.contains(":")) {
@@ -232,7 +209,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
                 // Case type=date and value=sysdate => sysdate
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDateForInsert(value);
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
                 }
                 else if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -610,7 +587,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport implements Di
                         Matcher.quoteReplacement(longFieldName.toString()));
                 whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
-            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDateForSelect(fieldValue);
+            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
