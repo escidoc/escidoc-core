@@ -150,7 +150,7 @@ public class ReportHandler implements ReportHandlerInterface {
                         if (parameterVo.getDateValue() != null) {
                             replacementString = parameterVo.getDateValue().toString(
                                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
-                            replacementString = dbAccessor.convertDateForSelect(replacementString);
+                            replacementString = dbAccessor.convertDate(replacementString);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
                             replacementString = parameterVo.getDecimalValue().toString();
