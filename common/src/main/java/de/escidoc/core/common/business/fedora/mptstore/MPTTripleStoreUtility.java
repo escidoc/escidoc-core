@@ -1633,6 +1633,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
             final List<String> res = executeSqlQuery(select.toString());
+            if (!res.isEmpty()) {
+                for (final String item : res) {
+                    result = item;
+                }
+            }
             if (getLogger().isDebugEnabled()) {
                 if (res.isEmpty()) {
                     getLogger().debug("found no records");

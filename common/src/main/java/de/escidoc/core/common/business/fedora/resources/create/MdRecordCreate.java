@@ -351,7 +351,7 @@ public class MdRecordCreate implements Serializable {
 
         // namespace
         if (this.nameSpace == null) {
-            if (mdrecord.getNameSpace() != null) {
+            if (mdrecord.getNameSpace() != null && !mdrecord.getNameSpace().isEmpty()) {
                 setNameSpace(mdrecord.getNameSpace());
                 changes++;
             }

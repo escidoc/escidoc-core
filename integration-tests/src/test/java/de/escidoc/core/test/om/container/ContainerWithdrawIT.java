@@ -226,7 +226,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     public void testOM_WAC_1() throws Exception {
         submitItemHelp();
         submit(theSubcontainerId, getStatusTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            getLastModificationDateValue2(getDocument(retrieve(theSubcontainerId))), null));
 
         submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
             null));
@@ -342,7 +342,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            lock(theContainerId, getTheLastModificationParam(false, theContainerId));
+            lock(theContainerId, getLockTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
             fail("Lock after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {

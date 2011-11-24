@@ -736,7 +736,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
                 assignPidParam);
 
         xml = assignObjectPid(theContainerId, pidParam);
-        String containerId = theContainerId + ":3";
+        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        xml = assignVersionPid(theContainerId, pidParam);
 
         release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(theContainerId);
