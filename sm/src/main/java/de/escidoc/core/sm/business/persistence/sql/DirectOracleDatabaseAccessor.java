@@ -122,9 +122,9 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
             }
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            return TO_DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
-                new DateTime(cal.getTimeInMillis()).toString(dateFormatString))
-                .replaceFirst("\\$\\{format_placeholder\\}", dbDateFormatString);
+            return TO_DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}",
+                new DateTime(cal.getTimeInMillis()).toString(dateFormatString)).replaceFirst(
+                "\\$\\{format_placeholder\\}", dbDateFormatString);
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -568,20 +568,18 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
                 final String dayOfMonthFunction =
-                    TO_CHAR_FUNCTION.replaceFirst(
-                        "\\$\\{FIELD_NAME\\}", 
-                        Matcher.quoteReplacement(longFieldName.toString()))
-                            .replaceFirst("\\$\\{format_placeholder\\}", DATE_FORMAT);
+                    TO_CHAR_FUNCTION.replaceFirst("\\$\\{FIELD_NAME\\}",
+                        Matcher.quoteReplacement(longFieldName.toString())).replaceFirst("\\$\\{format_placeholder\\}",
+                        DATE_FORMAT);
 
                 whereClause.append(dayOfMonthFunction).append(operator).append(' ');
             }
             else {
                 final String dateToCharFunction =
-                    TO_CHAR_FUNCTION.replaceFirst(
-                        "\\$\\{FIELD_NAME\\}", 
-                        Matcher.quoteReplacement(longFieldName.toString()))
-                            .replaceFirst("\\$\\{format_placeholder\\}", TIME_FORMAT);
-                
+                    TO_CHAR_FUNCTION.replaceFirst("\\$\\{FIELD_NAME\\}",
+                        Matcher.quoteReplacement(longFieldName.toString())).replaceFirst("\\$\\{format_placeholder\\}",
+                        TIME_FORMAT);
+
                 whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
             final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
