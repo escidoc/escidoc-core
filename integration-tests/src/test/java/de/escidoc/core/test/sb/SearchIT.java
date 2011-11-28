@@ -456,8 +456,7 @@ public class SearchIT extends SearchTestBase {
 
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Exception not as expected.", EscidocException.class, e);
+            assertExceptionType("Exception not as expected.", EscidocException.class, e);
         }
     }
 
@@ -513,8 +512,7 @@ public class SearchIT extends SearchTestBase {
             fail("No exception occured on search in non-existing database.");
         }
         catch (final Exception e) {
-            assertExceptionType(
-                "Exception not as expected.", EscidocException.class, e);
+            assertExceptionType("Exception not as expected.", EscidocException.class, e);
         }
     }
 
