@@ -644,20 +644,31 @@ public class ItemContentRelationsTest extends ItemTestBase {
     public void addContentRelationbyItemUpdate() throws Exception {
 
         final String targetItemXml =
-            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml"));
         final String targetId = getObjidValue(targetItemXml);
+
+        String targetRef;
+        String targetXpath;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            targetRef = "xlink:href=\"/ir/item/" + targetId + "\" ";
+            targetXpath = "[@href='/ir/item/" + targetId + "']";
+        }
+        else {
+            targetRef = "objid=\"" + targetId + "\" ";
+            targetXpath = "[@objid='" + targetId + "']";
+        }
 
         String itemWithCR =
             this.itemXml.replace("</relations:relations>", "<relations:relation "
                 + "predicate=\"http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+                + targetRef + "/></relations:relations>");
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
 
         assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
-        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
-            + targetId + "']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation" + targetXpath);
     }
 
     /**
@@ -672,20 +683,31 @@ public class ItemContentRelationsTest extends ItemTestBase {
     public void removeContentRelationbyItemUpdate() throws Exception {
 
         final String targetItemXml =
-            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
+            create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create.xml"));
         final String targetId = getObjidValue(targetItemXml);
+
+        String targetRef;
+        String targetXpath;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            targetRef = "xlink:href=\"/ir/item/" + targetId + "\" ";
+            targetXpath = "[@href='/ir/item/" + targetId + "']";
+        }
+        else {
+            targetRef = "objid=\"" + targetId + "\" ";
+            targetXpath = "[@objid='" + targetId + "']";
+        }
 
         String itemWithCR =
             this.itemXml.replace("</relations:relations>", "<relations:relation "
                 + "predicate=\"http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+                + targetRef + "/></relations:relations>");
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
 
         assertXmlExists("number of relations is wrong", updatedItemDoc, "/item/relations[count(./relation)='1']");
-        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation[@href = '/ir/item/"
-            + targetId + "']");
+        assertXmlExists("relation ids are not equal", updatedItemDoc, "/item/relations/relation" + targetXpath);
 
         deleteNodes(updatedItemDoc, "/item/relations/relation");
 
