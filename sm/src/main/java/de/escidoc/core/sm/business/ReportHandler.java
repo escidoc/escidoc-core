@@ -119,8 +119,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * @throws SqlDatabaseSystemException
      *          e
      */
-    private String generateSql(
-        final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
+    private String generateSql(final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
         throws MissingMethodParameterException, SqlDatabaseSystemException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
@@ -148,8 +147,9 @@ public class ReportHandler implements ReportHandlerInterface {
                     if (type != null) {
                         String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
-                            replacementString = parameterVo.getDateValue().toString(
-                                de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
+                            replacementString =
+                                parameterVo.getDateValue().toString(
+                                    de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT);
                             replacementString = dbAccessor.convertDate(replacementString);
                         }
                         else if (parameterVo.getDecimalValue() != null) {
