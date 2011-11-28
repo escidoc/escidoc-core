@@ -59,6 +59,20 @@
 			name="DC-MAPPING" xlink:type="simple" xlink:title=""
 			xlink:href="/cmm/content-model/escidoc:64002/content-streams/content-stream/DC-MAPPING/content"
 			mime-type="text/xml" storage="external-managed" />
+		<escidocContentStreams:content-stream 
+				name="toc" xlink:type="simple" xlink:title="A minimal TOC" 
+				mime-type="text/xml" 
+				storage="internal-managed">
+			<toc:toc ID="meins" TYPE="LOGICAL" LABEL="A minimal TOC (Label)" 
+				xml:base="http://localhost:8080" 
+				xmlns:toc="http://www.escidoc.de/schemas/toc/0.4" 
+				xmlns:xlink="http://www.w3.org/1999/xlink">
+				<toc:div ID="rootNode" LABEL="[the containers title]" TYPE="monograph">
+					<toc:ptr ID="rootNodePtr" USE="DEFAULT" LOCTYPE="URL" 
+						xlink:href="/ir/container/escidoc:10" xlink:title="[the containers title]"/>
+				</toc:div>
+			</toc:toc>
+		</escidocContentStreams:content-stream>
 	</escidocContentStreams:content-streams>
 
 	<escidocContentModel:resources
