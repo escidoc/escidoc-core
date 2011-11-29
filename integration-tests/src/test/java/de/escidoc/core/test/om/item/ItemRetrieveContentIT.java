@@ -82,7 +82,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
-    @Ignore
     public void testOmRtrEscidocCnt1() throws Exception {
         String itemId = "escidoc:ex5";
         String componentId = "escidoc:ex6";
@@ -112,7 +111,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
-    @Ignore
     public void testOmRtrEscidocCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -126,7 +124,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
-    @Ignore
     public void testOmRtrEscidocCnt3() throws Exception {
 
         String components = "";
@@ -313,7 +310,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
     }
 
     /**
-     * Test the retrive of transformed binary content from the eSciDoc framework through another client implementation.
+     * Test the retrieve of transformed binary content from the eSciDoc framework through another client implementation.
      *
      * @throws Exception Thrown if anythings failed.
      */
@@ -479,7 +476,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
-    @Ignore
     public void testFedoraRtrCnt1() throws Exception {
 
         String componentId = "escidoc:ex6";
@@ -538,7 +534,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      * @throws Exception If anything fails.
      */
     @Test
-    @Ignore
     public void testFedoraRtrCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
