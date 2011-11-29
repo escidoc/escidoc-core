@@ -28,10 +28,14 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -41,14 +45,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.EscidocException;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the implementation of the search resource.
@@ -242,17 +242,11 @@ public class OuSearchIT extends SearchTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBOUSR2() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=mitte-rechts");
-        try {
-            search(parameters, "escidoc_fault");
-            fail("No exception occured on search in non-existing database.");
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        search(parameters, "escidoc_fault");
     }
 
     /**

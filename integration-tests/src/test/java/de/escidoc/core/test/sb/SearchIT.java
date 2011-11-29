@@ -28,18 +28,8 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -49,9 +39,19 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
+import de.escidoc.core.common.exceptions.remote.EscidocException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
  * Test the implementation of the search resource.
@@ -451,18 +451,11 @@ public class SearchIT extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBEX3() throws Exception {
         HashMap<String, String[]> parameters = new HashMap<String, String[]>();
         parameters.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
-        try {
-            explain(parameters, "zzz");
-            fail("No exception occurred on explain in non-existing database.");
-
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        explain(parameters, "zzz");
     }
 
     /**
@@ -508,17 +501,11 @@ public class SearchIT extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBSR2() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=motor");
-        try {
-            search(parameters, "escidoc_fault");
-            fail("No exception occured on search in non-existing database.");
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        search(parameters, "escidoc_fault");
     }
 
     /**
