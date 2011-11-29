@@ -446,18 +446,11 @@ public class SearchIT extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBEX3() throws Exception {
         HashMap<String, String[]> parameters = new HashMap<String, String[]>();
         parameters.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
-        try {
-            explain(parameters, "zzz");
-            fail("No exception occurred on explain in non-existing database.");
-
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        explain(parameters, "zzz");
     }
 
     /**
@@ -503,17 +496,11 @@ public class SearchIT extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBSR2() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=motor");
-        try {
-            search(parameters, "escidoc_fault");
-            fail("No exception occured on search in non-existing database.");
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        search(parameters, "escidoc_fault");
     }
 
     /**

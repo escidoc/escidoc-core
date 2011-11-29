@@ -242,17 +242,11 @@ public class OuSearchIT extends SearchTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = EscidocException.class)
     public void testSBOUSR2() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=mitte-rechts");
-        try {
-            search(parameters, "escidoc_fault");
-            fail("No exception occured on search in non-existing database.");
-        }
-        catch (final Exception e) {
-            assertExceptionType("Exception not as expected.", EscidocException.class, e);
-        }
+        search(parameters, "escidoc_fault");
     }
 
     /**
