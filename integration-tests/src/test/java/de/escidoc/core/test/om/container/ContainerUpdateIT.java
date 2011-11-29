@@ -218,7 +218,11 @@ public class ContainerUpdateIT extends ContainerTestBase {
         assertEquals(getLastModificationDateValue(containerDoc), lmdMethod1);
     }
 
-    @Ignore("test adding 600 members")
+    /**
+     * Test to add 600 member to a Container (in one step).
+     * 
+     * @throws Exception
+     */
     @Test
     public void testAddALLMembers() throws Exception {
         for (int i = 0; i < 600; i++) {
@@ -228,7 +232,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
             ids.add(itemToAddID);
 
             addMembers(theContainerId, getMembersTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+                getLastModificationDateValue2(getDocument(this.theContainerXml)), ids));
 
         }
 
