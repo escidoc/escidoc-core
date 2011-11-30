@@ -230,7 +230,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
         ArrayList<String> ids = new ArrayList<String>();
 
         for (int i = 0; i < 600; i++) {
-            String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
+            String itemToAddID = createItemFromTemplate("create_item_minimal.xml");
 
             ids.add(itemToAddID);
         }
@@ -254,7 +254,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
         DateTime lmd = getLastModificationDateValue2(getDocument(this.theContainerXml));
 
         for (int i = 0; i < 100; i++) {
-            String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
+            String itemToAddID = createItemFromTemplate("create_item_minimal.xml");
 
             ArrayList<String> ids = new ArrayList<String>();
             ids.add(itemToAddID);
