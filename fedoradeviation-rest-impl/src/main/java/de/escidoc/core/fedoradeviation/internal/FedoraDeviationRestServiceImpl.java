@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.fedoradeviation.internal;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -63,24 +64,26 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#export(java.lang.String, java.util.Map)
      */
     @Override
-    public String export(final String id, final Map<String, String[]> parameters) throws SystemException {
-        return fedoraRestDeviationHandler.export(id, parameters);
+    public String export(final String id) throws SystemException {
+        return fedoraRestDeviationHandler.export(id, new HashMap<String, String[]>());
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getDatastreamDissemination(java.lang.String, java.lang.String, java.util.Map)
      */
     @Override
-    public EscidocBinaryContent getDatastreamDissemination(final String id, final String dsId, final Map<String, String[]> parameters)
+    public EscidocBinaryContent getDatastreamDissemination(final String id, final String dsId)
         throws SystemException {
-        return fedoraRestDeviationHandler.getDatastreamDissemination(id, dsId, parameters);
+        return fedoraRestDeviationHandler.getDatastreamDissemination(id, dsId, new HashMap<String, String[]>());
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getFedoraDescription(java.util.Map)
+     * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getFedoraDescription(boolean)
      */
     @Override
-    public String getFedoraDescription(final Map<String, String[]> parameters) throws Exception {
+    public String getFedoraDescription(final String xml) throws Exception {
+        Map<String, String[]> parameters = new HashMap<String, String[]>();
+        parameters.put("xml", new String[] {xml});
         return fedoraDescribeDeviationHandler.getFedoraDescription(parameters);
     }
 

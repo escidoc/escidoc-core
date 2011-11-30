@@ -3,13 +3,12 @@
  */
 package de.escidoc.core.fedoradeviation;
 
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -26,23 +25,18 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface FedoraDeviationRestService {
 
-    /**
-     * FIXME Map
-     */
     @GET
     @Path("/objects/{id}/export")
-    String export(@PathParam("id") String id, Map<String, String[]> parameters) throws SystemException;
+    String export(@PathParam("id") String id) throws SystemException;
 
-    /**
-     * FIXME Map
-     */
+
     @GET
     @Path("/objects/{id}/datastreams/{ds-id}/content")
-    EscidocBinaryContent getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId, Map<String, String[]> parameters)
+    EscidocBinaryContent getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId)
         throws SystemException;
 
     @GET
     @Path("/describe")
-    String getFedoraDescription(Map<String, String[]> parameters) throws Exception;
+    String getFedoraDescription(@QueryParam("xml") String xml) throws Exception;
 
 }
