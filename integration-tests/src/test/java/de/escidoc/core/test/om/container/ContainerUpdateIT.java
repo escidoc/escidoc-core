@@ -54,6 +54,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
@@ -96,7 +97,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String xmlData = getContainerTemplate("create_container_v1.1-forItem.xml");
         String replaced = xmlData.replaceAll("##ITEMID##", theItemId);
 
-        theContainerXml = create(replaced);
+        this.theContainerXml = create(replaced);
         this.theContainerId = getObjidValue(this.theContainerXml);
 
     }
@@ -224,7 +225,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
      * @throws Exception
      */
     @Test
-    public void testAddALLMembers() throws Exception {
+    public void addLargeNumberOfMembers01() throws Exception {
+
         for (int i = 0; i < 600; i++) {
             String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
@@ -233,10 +235,36 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
             addMembers(theContainerId, getMembersTaskParam(
                 getLastModificationDateValue2(getDocument(this.theContainerXml)), ids));
-
         }
 
         String containerXml = retrieve(theContainerId);
+
+        // TODO count members
+    }
+
+    /**
+     * Test to add 100 member to a Container (each member in a single step).
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void addLargeNumberOfMembers02() throws Exception {
+
+        DateTime lmd = getLastModificationDateValue2(getDocument(this.theContainerXml));
+
+        for (int i = 0; i < 100; i++) {
+            String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
+
+            ArrayList<String> ids = new ArrayList<String>();
+            ids.add(itemToAddID);
+
+            String result = addMembers(theContainerId, getMembersTaskParam(lmd, ids));
+            lmd = getLastModificationDateValue2(getDocument(result));
+        }
+
+        String containerXml = retrieve(theContainerId);
+
+        // TODO count members
     }
 
     @Test
@@ -257,7 +285,11 @@ public class ContainerUpdateIT extends ContainerTestBase {
                 + "']");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = XmlSchemaValidationException.class)
     public void testCreateItemWithInvalidItemXml() throws Exception {
 
         String xmlData = getItemTemplate("escidoc_item_198_for_create.xml");
@@ -265,15 +297,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
             xmlData.replaceFirst("xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.10",
                 "xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.8");
 
-        try {
-            createItem(theContainerId, xmlData);
-            fail("No exception on createItem with invalid item xml.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = XmlSchemaValidationException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
-
+        createItem(theContainerId, xmlData);
     }
 
     @Test
@@ -294,62 +318,48 @@ public class ContainerUpdateIT extends ContainerTestBase {
                 + memberContainerId + "']");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testCreateItemWithoutContainerId() throws Exception {
 
         String xmlData = getItemTemplate("escidoc_item_198_for_create.xml");
 
-        try {
-            createItem(null, xmlData);
-            fail("No exception on createItem without container id..");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
-
+        createItem(null, xmlData);
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testCreateContainerWithoutContainerId() throws Exception {
 
         String xmlData = getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
-        try {
-            createContainer(null, xmlData);
-            fail("No exception on createItem without container id..");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
-
+        createContainer(null, xmlData);
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testCreateItemWithoutItem() throws Exception {
-        try {
-            createItem(theContainerId, null);
-            fail("No exception on createItem without item.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
 
+        createItem(theContainerId, null);
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testCreateContainerWithoutContainer() throws Exception {
-        try {
-            createContainer(theContainerId, null);
-            fail("No exception on createContainer without container.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
 
+        createContainer(theContainerId, null);
     }
 
     /**
@@ -387,6 +397,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
             .getNodeValue());
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Ignore("test update read-only properties")
     @Test
     public void dotestUpdateReadonlyProperties() throws Exception {
@@ -578,21 +592,6 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
     }
 
-    private String getTheLastModificationDate() throws Exception {
-        Document item = EscidocAbstractTest.getDocument(retrieve(theContainerId));
-
-        // get last-modification-date
-        NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode = atts.getNamedItem("last-modification-date");
-        String lastModificationDate = lastModificationDateNode.getNodeValue();
-
-        return lastModificationDate;
-    }
-
-    protected String getTheContainerId() {
-        return theContainerId;
-    }
-
     /**
      * Update container with Version status "pending".
      *
@@ -635,41 +634,36 @@ public class ContainerUpdateIT extends ContainerTestBase {
      */
     @Test
     public void testOmUCO_1_6() throws Exception {
-        try {
-            String xml = retrieve(theContainerId);
-            assertXmlValidContainer(xml);
-            Document toBeUpdatedDocument = EscidocAbstractTest.getDocument(xml);
 
-            String id = getObjidValue(toBeUpdatedDocument);
-            String updateTile = "' > < &";
-            // Node updatedAdminDescDescription =
-            // substitute(toBeUpdatedDocument,
-            // "container/admin-descriptor/properties/description", updateTile);
+        String xml = retrieve(theContainerId);
+        assertXmlValidContainer(xml);
+        Document toBeUpdatedDocument = EscidocAbstractTest.getDocument(xml);
 
-            Node updateContentModelSpec =
-                substitute(toBeUpdatedDocument, "container/properties/content-model-specific/xxx", updateTile);
+        String id = getObjidValue(toBeUpdatedDocument);
+        String updateTile = "' > < &";
+        // Node updatedAdminDescDescription =
+        // substitute(toBeUpdatedDocument,
+        // "container/admin-descriptor/properties/description", updateTile);
 
-            String updated = update(id, toString(updateContentModelSpec, false));
-            assertXmlValidContainer(updated);
-            Document updatedDoc = EscidocAbstractTest.getDocument(updated);
+        Node updateContentModelSpec =
+            substitute(toBeUpdatedDocument, "container/properties/content-model-specific/xxx", updateTile);
 
-            // String admindescrDescriptionValue = selectSingleNode(updatedDoc,
-            // "container/admin-descriptor/properties/description")
-            // .getTextContent();
+        String updated = update(id, toString(updateContentModelSpec, false));
+        assertXmlValidContainer(updated);
+        Document updatedDoc = EscidocAbstractTest.getDocument(updated);
 
-            String contentTypeSpecValue =
-                selectSingleNode(updatedDoc, "container/properties/content-model-specific/xxx").getTextContent();
+        // String admindescrDescriptionValue = selectSingleNode(updatedDoc,
+        // "container/admin-descriptor/properties/description")
+        // .getTextContent();
 
-            // assertEquals("Titles are not equal", admindescrDescriptionValue,
-            // updateTile);
+        String contentTypeSpecValue =
+            selectSingleNode(updatedDoc, "container/properties/content-model-specific/xxx").getTextContent();
 
-            assertEquals("Cmses are not equal", contentTypeSpecValue, updateTile);
+        // assertEquals("Titles are not equal", admindescrDescriptionValue,
+        // updateTile);
 
-        }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-            EscidocAbstractTest.failException("No error expected!", e);
-        }
+        assertEquals("Cmses are not equal", contentTypeSpecValue, updateTile);
+
     }
 
     /**
@@ -885,16 +879,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = ContainerNotFoundException.class)
     public void testOM_UCO_2() throws Exception {
-        try {
-            update("escidoc:nonexist1", retrieve(theContainerId));
-            fail("No exception on update with non existing id.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = ContainerNotFoundException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+
+        update("escidoc:nonexist1", retrieve(theContainerId));
     }
 
     /**
@@ -972,16 +960,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOM_UCO_4_1() throws Exception {
-        try {
-            update(null, retrieve(theContainerId));
-            fail("No exception on update without id. (id=null)");
-        }
-        catch (final Exception e) {
-            Class<?> ec = MissingMethodParameterException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+
+        update(null, retrieve(theContainerId));
     }
 
     /**
@@ -1014,24 +996,18 @@ public class ContainerUpdateIT extends ContainerTestBase {
     }
 
     /**
-     * Optimistic Locking Test.
-     *
+     * Optimistic Locking Test. 
+     * 
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOM_UCO_5_2() throws Exception {
-        Document container = EscidocAbstractTest.getDocument(theContainerXml);
 
-        container = (Document) substitute(container, "/container/@last-modification-date", "1970-01-01T01:00:00.000Z");
+        Document container =
+            (Document) substitute(getDocument(theContainerXml), "/container/@last-modification-date",
+                "1970-01-01T01:00:00.000Z");
 
-        try {
-            update(theContainerId, toString(container, true));
-            fail("No exception on update with invalid values in admin descriptor.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = OptimisticLockingException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        update(theContainerId, toString(container, true));
     }
 
     /**
