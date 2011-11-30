@@ -227,15 +227,16 @@ public class ContainerUpdateIT extends ContainerTestBase {
     @Test
     public void addLargeNumberOfMembers01() throws Exception {
 
+        ArrayList<String> ids = new ArrayList<String>();
+
         for (int i = 0; i < 600; i++) {
             String itemToAddID = createItemFromTemplate("escidoc_item_198_for_create.xml");
 
-            ArrayList<String> ids = new ArrayList<String>();
             ids.add(itemToAddID);
-
-            addMembers(theContainerId, getMembersTaskParam(
-                getLastModificationDateValue2(getDocument(this.theContainerXml)), ids));
         }
+
+        addMembers(theContainerId, getMembersTaskParam(
+            getLastModificationDateValue2(getDocument(this.theContainerXml)), ids));
 
         String containerXml = retrieve(theContainerId);
 
