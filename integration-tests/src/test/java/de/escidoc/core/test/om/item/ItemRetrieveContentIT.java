@@ -503,9 +503,6 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         assertEquals("image/jpeg", mimeType);
         InputStream ins = conn.getInputStream();
 
-        // add the file extention
-        // tempFileName += "." + getFileExtentionFromContentType(mimeType);
-
         // write out file
         File temp = File.createTempFile(tempFileName, "tmp");
         ByteArrayOutputStream barray = readBinaryContent(ins);
