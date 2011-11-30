@@ -40,6 +40,9 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.BinaryContent;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -264,6 +267,10 @@ public class ItemUpdateIT extends ItemTestBase {
         assertXmlEquals("Title in Item root element not updated!", updatedDocument, "/item/@title", newTitle);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @Test
     public void testUpdateCts() throws Exception {
 
@@ -460,12 +467,7 @@ public class ItemUpdateIT extends ItemTestBase {
                 "withdrawn");
         String newItemXml = toString(newItem, false);
 
-        try {
-            update(theItemId, newItemXml);
-        }
-        catch (final Exception e) {
-            fail("No exception expected on update with public-status set to 'withdrawn'. " + e);
-        }
+        update(theItemId, newItemXml);
     }
 
     /**
@@ -541,7 +543,7 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testOM_UCI_2_1() throws Exception {
 
-        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         releaseWithPid(theItemId);
         theItemXml = retrieve(theItemId);
 
@@ -730,7 +732,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String newComponentXml = toString(newComponent, true);
         newComponentXml =
             newComponentXml.replaceFirst("<escidocComponents:component",
-                "<escidocComponents:component xmlns:prefix-xlink=\"" + "http://www.w3.org/1999/xlink\" ");
+                "<escidocComponents:component xmlns:prefix-xlink=\"http://www.w3.org/1999/xlink\" ");
         // add new component to item
         // string op start
         String theItemXmlX =
@@ -1000,18 +1002,37 @@ public class ItemUpdateIT extends ItemTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore
     public void testOM_UCI_10_3() throws Exception {
+
         Document newItem = getDocument(theItemXml);
+        Vector<String> componentIds = obtainComponentIds(newItem);
+
+        // we expect 2 components in test Item
+        assertTrue("Wrong number ", componentIds.size() == 2);
+
+        final String updatedComponentId = componentIds.firstElement();
+
+        String imageUrl =
+            "http://" + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME) + ":"
+                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
+                + "/images/escidoc-logo.jpg";
+
         Node itemWithNewContentHref =
-            substitute(newItem, "/item/components/component/content[1]/@href",
-                "http://localhost:8080/images/escidoc-logo.jpg");
+            substitute(newItem, "/item/components/component[@href = '/ir/item/" + this.theItemId
+                + "/components/component/" + updatedComponentId + "']/content/@href", imageUrl);
         String xmlItemWithNewContentHref = toString(itemWithNewContentHref, true);
 
-        String xml = update(theItemId, xmlItemWithNewContentHref);
+        String xml = update(this.theItemId, xmlItemWithNewContentHref);
         assertXmlValidItem(xml);
 
-        // TODO check binary content
+        // retrieve content and compare it with original
+        Document document = getDocument(xml);
+        Vector<String> newComponentIds = obtainComponentIds(document);
+
+        assertTrue("Wrong number ", componentIds.size() == 2);
+        BinaryContent content = retrieveBinaryContent(this.theItemId, updatedComponentId);
+        
+        // TODO compare retrieved content with original
     }
 
     /**
@@ -2308,9 +2329,11 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Obatins Component Ids from Item.
      * 
+     * @param curItem
+     *            XML Document of Item
      * @return Vector with objids of Component.
      */
-    private Vector<String> obtainComponentIds(Document curItem) throws TransformerException {
+    private Vector<String> obtainComponentIds(final Document curItem) throws TransformerException {
         String xPathCompId = "/item/components/component/@href";
         NodeList componentIds = selectNodeList(curItem, xPathCompId);
 
