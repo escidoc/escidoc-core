@@ -74,7 +74,7 @@ public class Reindexer {
     // Indexer configuration
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
-    private boolean commitIndex = false;
+    private boolean commitIndex = true;
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
