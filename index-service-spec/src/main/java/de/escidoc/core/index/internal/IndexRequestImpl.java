@@ -30,6 +30,8 @@ public class IndexRequestImpl implements IndexRequest {
 
     private boolean isReindexerCaller;
 
+    private boolean commitIndex = true;
+
     @Override
     public String getRequestId() {
         return this.requestId;
@@ -122,6 +124,20 @@ public class IndexRequestImpl implements IndexRequest {
      */
     public void setIsReindexerCaller(final boolean isReindexerCaller) {
         this.isReindexerCaller = isReindexerCaller;
+    }
+
+    @Override
+    public boolean getCommitIndex() {
+        return this.commitIndex;
+    }
+
+    /**
+     * Sets the flag if commit on IndexWriter has to get executed.
+     *
+     * @param commitIndex boolean if commit has to get executed
+     */
+    public void setCommitIndex(final boolean commitIndex) {
+        this.commitIndex = commitIndex;
     }
 
     @Override

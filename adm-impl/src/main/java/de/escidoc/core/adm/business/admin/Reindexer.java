@@ -74,6 +74,8 @@ public class Reindexer {
     // Indexer configuration
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
+    private boolean commitIndex = false;
+
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
      */
@@ -219,6 +221,9 @@ public class Reindexer {
                 }
             }
             finally {
+                if (!commitIndex) {
+                    sendCommitIndexMessage();
+                }
                 if (idListEmpty) {
                     reindexStatus.finishMethod();
                 }
@@ -269,7 +274,8 @@ public class Reindexer {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
-                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE).withResource(resource).build();
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE).withResource(resource).withCommitIndex(
+                    commitIndex).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -290,7 +296,24 @@ public class Reindexer {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE).withIndexName(indexName).withResource(
-                    resource).withObjectType(objectType.getUri()).withIsReindexerCaller(true).build();
+                    resource).withObjectType(objectType.getUri()).withIsReindexerCaller(true).withCommitIndex(
+                    commitIndex).build();
+            this.indexService.index(indexRequest);
+        }
+        catch (final Exception e) {
+            throw new ApplicationServerSystemException(e);
+        }
+    }
+
+    /**
+     * @throws ApplicationServerSystemException
+     *          e
+     */
+    private void sendCommitIndexMessage() throws ApplicationServerSystemException {
+        try {
+            final IndexRequest indexRequest =
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_VALUE).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {

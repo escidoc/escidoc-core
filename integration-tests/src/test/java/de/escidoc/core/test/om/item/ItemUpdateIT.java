@@ -1031,7 +1031,7 @@ public class ItemUpdateIT extends ItemTestBase {
 
         assertTrue("Wrong number ", componentIds.size() == 2);
         BinaryContent content = retrieveBinaryContent(this.theItemId, updatedComponentId);
-        
+
         // TODO compare retrieved content with original
     }
 

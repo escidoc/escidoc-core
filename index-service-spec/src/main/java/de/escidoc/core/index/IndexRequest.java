@@ -63,4 +63,11 @@ public interface IndexRequest {
      */
     boolean getIsReindexerCaller();
 
+    /**
+     * Returns the commitIndex-Property.
+     *
+     * @return the commitIndex-Property.
+     */
+    boolean getCommitIndex();
+
 }

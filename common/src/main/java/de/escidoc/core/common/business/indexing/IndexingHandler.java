@@ -235,7 +235,7 @@ public class IndexingHandler implements ResourceListener {
      */
     private void deleteResource(final String resource) throws SystemException {
         doIndexing(resource, null,
-            de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null);
+            de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE, false, null, true);
     }
 
     /**
@@ -273,7 +273,7 @@ public class IndexingHandler implements ResourceListener {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("indexing synchronously");
                 }
-                doIndexing(resource, objectType, action, false, xml);
+                doIndexing(resource, objectType, action, false, xml, true);
             }
             if (indexAsynch) {
                 if (LOGGER.isDebugEnabled()) {
@@ -304,8 +304,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException e
      */
     public void doIndexing(
-        final String resource, final String objectType, final String action, final boolean isAsynch, final String xml)
-        throws SystemException {
+        final String resource, final String objectType, final String action, final boolean isAsynch, final String xml,
+        final boolean commitIndex) throws SystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
@@ -323,18 +323,22 @@ public class IndexingHandler implements ResourceListener {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("indexing for index " + indexName);
                 }
-                doIndexing(resource, objectType, indexName, action, isAsynch, xml);
+                doIndexing(resource, objectType, indexName, action, isAsynch, xml, commitIndex);
             }
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
-            gsearchHandler.requestDeletion(resource, null, null);
-            gsearchHandler.requestDeletion(resource, null, Constants.LATEST_VERSION_PID_SUFFIX);
-            gsearchHandler.requestDeletion(resource, null, Constants.LATEST_RELEASE_PID_SUFFIX);
+            gsearchHandler.requestDeletion(resource, null, null, commitIndex);
+            gsearchHandler.requestDeletion(resource, null, Constants.LATEST_VERSION_PID_SUFFIX, commitIndex);
+            gsearchHandler.requestDeletion(resource, null, Constants.LATEST_RELEASE_PID_SUFFIX, commitIndex);
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
             gsearchHandler.requestCreateEmpty(null);
+        }
+        else if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_VALUE)) {
+            gsearchHandler.requestCommitWrites(null);
         }
     }
 
@@ -351,7 +355,7 @@ public class IndexingHandler implements ResourceListener {
      */
     public void doIndexing(
         final String resource, final String objectType, final String indexName, final String action,
-        final boolean isAsynch, final String xml) throws SystemException {
+        final boolean isAsynch, final String xml, final boolean commitIndex) throws SystemException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("indexing " + resource + ", objectType: " + objectType + ", indexName: " + indexName
@@ -444,7 +448,7 @@ public class IndexingHandler implements ResourceListener {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("request deletion " + indexName + " with " + resource);
                     }
-                    gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
+                    gsearchHandler.requestDeletion(resource, indexName, pidSuffix, commitIndex);
                 }
                 else {
                     if (LOGGER.isDebugEnabled()) {
@@ -452,16 +456,17 @@ public class IndexingHandler implements ResourceListener {
                     }
                     if (pidSuffix != null && pidSuffix.equals(Constants.LATEST_RELEASE_PID_SUFFIX)) {
                         gsearchHandler.requestDeletion(versionedResource, indexName,
-                            Constants.LATEST_VERSION_PID_SUFFIX);
+                            Constants.LATEST_VERSION_PID_SUFFIX, commitIndex);
                     }
                     if (pidSuffix != null && pidSuffix.equals(Constants.LATEST_VERSION_PID_SUFFIX)
                         && latestReleasedVersion != null) {
                         // reindex latest released version
                         gsearchHandler.requestIndexing(versionedResource + ':' + latestReleasedVersion, indexName,
-                            Constants.LATEST_RELEASE_PID_SUFFIX, (String) parameters.get("indexFulltextVisibilities"));
+                            Constants.LATEST_RELEASE_PID_SUFFIX, (String) parameters.get("indexFulltextVisibilities"),
+                            commitIndex);
                     }
                     gsearchHandler.requestIndexing(versionedResource, indexName, pidSuffix, (String) parameters
-                        .get("indexFulltextVisibilities"));
+                        .get("indexFulltextVisibilities"), commitIndex);
                 }
             }
             catch (final Exception e) {
@@ -473,7 +478,7 @@ public class IndexingHandler implements ResourceListener {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("request deletion " + indexName + ", resource " + resource);
             }
-            gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
+            gsearchHandler.requestDeletion(resource, indexName, pidSuffix, commitIndex);
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {

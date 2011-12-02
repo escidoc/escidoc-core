@@ -44,21 +44,21 @@ public class IndexServiceImpl {
             }
             if (allIndexes) {
                 indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest
-                    .getAction(), true, null);
+                    .getAction(), true, null, indexRequest.getCommitIndex());
             }
             else {
                 indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName,
-                    indexRequest.getAction(), true, null);
+                    indexRequest.getAction(), true, null, indexRequest.getCommitIndex());
             }
             //If reindexer wrote in queue, also index synchronous indexes
             if (indexRequest.getIsReindexerCaller()) {
                 if (allIndexes) {
                     indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest
-                        .getAction(), false, null);
+                        .getAction(), false, null, indexRequest.getCommitIndex());
                 }
                 else {
                     indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexName,
-                        indexRequest.getAction(), false, null);
+                        indexRequest.getAction(), false, null, indexRequest.getCommitIndex());
                 }
             }
         }

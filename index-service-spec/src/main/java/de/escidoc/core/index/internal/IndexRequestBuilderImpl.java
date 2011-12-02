@@ -47,6 +47,12 @@ public class IndexRequestBuilderImpl extends IndexRequestBuilder {
     }
 
     @Override
+    public IndexRequestBuilder withCommitIndex(final boolean commitIndex) {
+        this.indexRequest.setCommitIndex(commitIndex);
+        return this;
+    }
+
+    @Override
     public IndexRequest build() {
         final IndexRequest returnValue = this.indexRequest;
         this.indexRequest = new IndexRequestImpl();

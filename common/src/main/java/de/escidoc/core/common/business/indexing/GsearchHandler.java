@@ -136,13 +136,14 @@ public class GsearchHandler {
      * @param pidSuffix
      *            PidSuffix for latestVersion, latestRelease if both is in index.
      * @param indexFulltextVisibilities
+     * @param commitWrite If changes should immediately get commited in the Index
      * @return String response
      * @throws ApplicationServerSystemException
      *             e
      */
     public String requestIndexing(
-        final String resource, final String index, final String pidSuffix, final String indexFulltextVisibilities)
-        throws ApplicationServerSystemException {
+        final String resource, final String index, final String pidSuffix, final String indexFulltextVisibilities,
+        final boolean commitWrite) throws ApplicationServerSystemException {
 
         if (gsearchUrl == null) {
             throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
@@ -161,6 +162,8 @@ public class GsearchHandler {
             String updateIndexParams =
                 Constants.INDEX_NAME_PATTERN.matcher(Constants.GSEARCH_UPDATE_INDEX_PARAMS).replaceFirst(indexName);
             updateIndexParams = Constants.VALUE_PATTERN.matcher(updateIndexParams).replaceFirst(resource);
+            updateIndexParams =
+                Constants.COMMIT_WRITE_PATTERN.matcher(updateIndexParams).replaceFirst(Boolean.toString(commitWrite));
             try {
                 String stylesheetParameters =
                     Constants.SUPPORTED_MIMETYPES_PATTERN
@@ -222,11 +225,12 @@ public class GsearchHandler {
      *            String name of the index.
      * @param pidSuffix
      *            PidSuffix for latestVersion, latestRelease if both is in index.
+     * @param commitWrite If changes should immediately get commited in the Index
      * @return String response
      * @throws ApplicationServerSystemException
      *             e
      */
-    public String requestDeletion(String resource, final String index, final String pidSuffix)
+    public String requestDeletion(String resource, final String index, final String pidSuffix, final boolean commitWrite)
         throws ApplicationServerSystemException {
 
         if (gsearchUrl == null) {
@@ -251,6 +255,8 @@ public class GsearchHandler {
             deleteIndexParams =
                 Constants.VALUE_PATTERN.matcher(deleteIndexParams).replaceFirst(
                     XmlUtility.getObjidWithoutVersion(XmlUtility.getIdFromURI(resource)));
+            deleteIndexParams =
+                Constants.COMMIT_WRITE_PATTERN.matcher(deleteIndexParams).replaceFirst(Boolean.toString(commitWrite));
 
             try {
                 if (LOGGER.isDebugEnabled()) {
@@ -394,6 +400,63 @@ public class GsearchHandler {
                 }
                 // Catch Exceptions
                 handleGsearchException(indexName, optimizeIndexParams, response, 0);
+
+                responses.append(response).append('\n');
+            }
+            catch (final Exception e) {
+                exceptions.append(e.getMessage()).append('\n');
+            }
+        }
+        if (exceptions.length() > 0) {
+            throw new ApplicationServerSystemException(exceptions.toString());
+        }
+        return responses.toString();
+    }
+
+    /**
+     * requests commit of IndexWriters.
+     * <p/>
+     * 
+     * <pre>
+     *        execute get-request to fedoragsearch.
+     * </pre>
+     * 
+     * @param index
+     *            String name of the index.
+     * @return String response
+     * @throws ApplicationServerSystemException
+     *             e
+     */
+    public String requestCommitWrites(final String index) throws ApplicationServerSystemException {
+
+        if (gsearchUrl == null) {
+            throw new ApplicationServerSystemException(INITIALIZATION_ERROR_MSG);
+        }
+
+        final Set<String> indexNames = new HashSet<String>();
+        final StringBuilder responses = new StringBuilder();
+        final StringBuilder exceptions = new StringBuilder();
+        if (index == null || index.isEmpty()) {
+            indexNames.addAll(getIndexConfigurations().keySet());
+        }
+        else {
+            indexNames.add(index);
+        }
+        for (final String indexName : indexNames) {
+            final String commitWritesParams =
+                Constants.INDEX_NAME_PATTERN.matcher(Constants.GSEARCH_COMMIT_WRITES_PARAMS).replaceFirst(indexName);
+            try {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("requesting " + commitWritesParams + " from " + gsearchUrl);
+                }
+                final String response =
+                    connectionUtility.getRequestURLAsString(connectionUtility.getHttpClient(gSearchDefaultParams),
+                        new URL(gsearchUrl + commitWritesParams));
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("response: " + response);
+                }
+                // Catch Exceptions
+                handleGsearchException(indexName, commitWritesParams, response, 0);
 
                 responses.append(response).append('\n');
             }

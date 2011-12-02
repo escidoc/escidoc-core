@@ -57,6 +57,14 @@ public abstract class IndexRequestBuilder {
     public abstract IndexRequestBuilder withData(String data);
 
     /**
+     * Create a new {@link IndexRequest} with the given commitIndex-property.
+     *
+     * @param commitIndex the commitIndex-property
+     * @return a the current IndexRequestBuilder instance.
+     */
+    public abstract IndexRequestBuilder withCommitIndex(boolean commitIndex);
+
+    /**
      * Create a new {@link IndexRequest} with the given isReindexerCaller-property.
      *
      * @param isReindexerCaller the isReindexerCaller-property

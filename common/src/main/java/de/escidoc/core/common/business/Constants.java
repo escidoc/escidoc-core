@@ -692,6 +692,8 @@ public final class Constants {
 
     public static final String INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE = "create-empty";
 
+    public static final String INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_VALUE = "commit-writes";
+
     public static final String INDEXER_QUEUE_PARAMETER_INDEX_NAME = "indexName";
 
     public static final String STATISTIC_QUEUE_DATA_PARAMETER = "data";

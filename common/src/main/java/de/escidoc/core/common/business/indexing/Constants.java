@@ -56,11 +56,11 @@ public final class Constants {
 
     public static final String GSEARCH_UPDATE_INDEX_PARAMS =
         "?operation=updateIndex&action=fromPid&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY
-            + "&indexName=${INDEX_NAME}&value=${VALUE}";
+            + "&indexName=${INDEX_NAME}&value=${VALUE}&commitWrite=${COMMIT_WRITE}";
 
     public static final String GSEARCH_DELETE_INDEX_PARAMS =
         "?operation=updateIndex&action=deletePid&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY
-            + "&indexName=${INDEX_NAME}&value=${VALUE}";
+            + "&indexName=${INDEX_NAME}&value=${VALUE}&commitWrite=${COMMIT_WRITE}";
 
     public static final String GSEARCH_STYLESHEET_PARAMS =
         "&indexDocXslt=(SUPPORTED_MIMETYPES=${SUPPORTED_MIMETYPES}"
@@ -75,6 +75,10 @@ public final class Constants {
         "?operation=updateIndex&action=optimize&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY
             + "&indexName=${INDEX_NAME}";
 
+    public static final String GSEARCH_COMMIT_WRITES_PARAMS =
+        "?operation=updateIndex&action=commitIndexWrites&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY
+            + "&indexName=${INDEX_NAME}";
+
     /**
      * common srw Constants.
      */
@@ -86,6 +90,8 @@ public final class Constants {
     public static final Pattern INDEX_NAME_PATTERN = Pattern.compile("\\$\\{INDEX_NAME\\}");
 
     public static final Pattern VALUE_PATTERN = Pattern.compile("\\$\\{VALUE\\}");
+
+    public static final Pattern COMMIT_WRITE_PATTERN = Pattern.compile("\\$\\{COMMIT_WRITE\\}");
 
     public static final Pattern SUPPORTED_MIMETYPES_PATTERN = Pattern.compile("\\$\\{SUPPORTED_MIMETYPES\\}");
 
