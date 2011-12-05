@@ -113,7 +113,8 @@ public class GsearchHandler {
                             URLEncoder.encode(indexFulltextVisibilities, XmlUtility.CHARACTER_ENCODING));
                 updateIndexParams += stylesheetParameters;
 
-                connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+                connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                    EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + updateIndexParams + " from " + gsearchUrl);
                 }
@@ -180,7 +181,8 @@ public class GsearchHandler {
 
             try {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-                connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+                connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                    EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + deleteIndexParams + " from " + gsearchUrl);
                 }
@@ -226,7 +228,8 @@ public class GsearchHandler {
             Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS).replaceFirst(index);
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-            connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+            connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
             String response = connectionUtility.getRequestURLAsString(new URL(gsearchUrl + createEmptyParams));
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
@@ -286,7 +289,8 @@ public class GsearchHandler {
                 Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_OPTIMIZE_INDEX_PARAMS).replaceFirst(indexName);
             try {
                 final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-                connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+                connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                    EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("requesting " + optimizeIndexParams + " from " + gsearchUrl);
                 }
@@ -324,7 +328,8 @@ public class GsearchHandler {
     private Map<String, Map<String, String>> requestIndexConfiguration() throws ApplicationServerSystemException {
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-            connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+            connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
             final String response =
                 connectionUtility.getRequestURLAsString(new URL(gsearchUrl
                     + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
@@ -358,7 +363,8 @@ public class GsearchHandler {
     private Map<String, String> requestRepositoryInfo() throws ApplicationServerSystemException {
         try {
             final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
-            connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
+            connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
             final String response =
                 connectionUtility.getRequestURLAsString(new URL(gsearchUrl
                     + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));

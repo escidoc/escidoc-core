@@ -31,6 +31,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -48,6 +49,8 @@ public final class EscidocConfiguration {
     public static final String GSEARCH_URL = "gsearch.url";
 
     public static final String GSEARCH_PASSWORD = "gsearch.fedoraPass";
+
+    public static final String INDEXER_REQUEST_TIMEOUT = "escidoc-core.om.indexer.request.timeout";
 
     public static final String FEDORA_URL = "fedora.url";
 
@@ -294,6 +297,33 @@ public final class EscidocConfiguration {
     }
 
     /**
+     * Returns the property with the given name as a boolean value. The result is set to true if the property value as
+     * String has the value "true" or "1".
+     * If property is not found, defaultValue is returned.
+     * 
+     * @param name
+     *            The name of the Property.
+     * @param defaultValue
+     *            The default value if property isn't given.
+     * @return Value of the given Property as boolean.
+     */
+    public boolean getAsBoolean(final String name, final boolean defaultValue) {
+        Boolean result = false;
+        String prop = (String) this.properties.get(name);
+
+        if (prop != null) {
+            prop = prop.toLowerCase(Locale.ENGLISH);
+            if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
+                result = true;
+            }
+        }
+        else {
+            result = defaultValue;
+        }
+        return result;
+    }
+
+    /**
      * Returns the property with the given name as a long value.
      *
      * @param name The name of the Property.
@@ -315,6 +345,35 @@ public final class EscidocConfiguration {
 
     /**
      * Returns the property with the given name as a long value.
+     * If property is not found or is no long, defaultValue is returned.
+     * 
+     * @param name
+     *            The name of the Property.
+     * @param defaultValue
+     *            The default value if property isn't given.
+     * @return Value of the given Property as long value.
+     */
+    public Long getAsLong(final String name, final long defaultValue) {
+        String prop = (String) this.properties.get(name);
+        if (prop == null) {
+            return defaultValue;
+        }
+        else {
+            try {
+                return Long.parseLong(getProperty(name));
+            }
+            catch (final NumberFormatException e) {
+                LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a long!.");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a long!", e);
+                }
+                return defaultValue;
+            }
+        }
+    }
+
+    /**
+     * Returns the property with the given name as a long value.
      *
      * @param name The name of the Property.
      * @return Value of the given Property as long value.
@@ -331,6 +390,35 @@ public final class EscidocConfiguration {
             }
         }
         return returnValue;
+    }
+
+    /**
+     * Returns the property with the given name as a int value.
+     * If property is not found or is no int, defaultValue is returned.
+     * 
+     * @param name
+     *            The name of the Property.
+     * @param defaultValue
+     *            The default value if property isn't given.
+     * @return Value of the given Property as int value.
+     */
+    public Integer getAsInt(final String name, final int defaultValue) {
+        String prop = (String) this.properties.get(name);
+        if (prop == null) {
+            return defaultValue;
+        }
+        else {
+            try {
+                return Integer.parseInt(getProperty(name));
+            }
+            catch (final NumberFormatException e) {
+                LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a int!.");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a int!", e);
+                }
+                return defaultValue;
+            }
+        }
     }
 
     private String getProperty(final String name) {
