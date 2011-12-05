@@ -92,7 +92,8 @@ public class GsearchHandler {
     @PostConstruct
     private void init() {
         // setup HttpClient configuration
-        HttpConnectionParams.setSoTimeout(gSearchDefaultParams, Constants.REQUEST_TIMEOUT);
+        HttpConnectionParams.setSoTimeout(gSearchDefaultParams, EscidocConfiguration.getInstance().getAsInt(
+            EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
         // load gSearch configuration
         final EscidocConfiguration config = EscidocConfiguration.getInstance();
         if (config != null) {
