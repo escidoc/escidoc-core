@@ -32,6 +32,9 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+    	    <handled>
+      			<constant>true</constant>
+    	    </handled>
             <process ref="statisticServiceExceptionLoggingProcessor"/>
         </onException>
 

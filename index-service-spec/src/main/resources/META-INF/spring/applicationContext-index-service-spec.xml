@@ -35,8 +35,11 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+    	    <handled>
+      			<constant>true</constant>
+    	    </handled>
             <process ref="indexServiceExceptionLoggingProcessor"/>
-            <to uri="direct:de.escidoc.core.index.IndexService.error"/>
+            <!-- to uri="direct:de.escidoc.core.index.IndexService.error"/ -->
         </onException>
 
         <route>
@@ -48,11 +51,11 @@
             <to uri="jms:queue:de.escidoc.core.index.IndexService.input?disableReplyTo=true"/>
         </route>
 
-        <route>
+        <!-- route>
             <from uri="direct:de.escidoc.core.index.IndexService.error"/>
             <to uri="log:de.escidoc.core.index.IndexService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.index.IndexService.error"/>
-        </route>
+        </route -->
 
     </camelContext>
 

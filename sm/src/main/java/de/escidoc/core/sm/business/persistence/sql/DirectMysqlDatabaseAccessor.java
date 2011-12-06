@@ -116,8 +116,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport implements Direc
         try {
             final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
-            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", 
-                new DateTime(cal.getTimeInMillis()).toString(dateFormatString));
+            return DATE_FUNCTION.replaceFirst("\\$\\{date_placeholder\\}", new DateTime(cal.getTimeInMillis())
+                .toString(dateFormatString));
         }
         catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);

@@ -139,8 +139,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * @throws SqlDatabaseSystemException
      *          e
      */
-    private String generateSql(
-        final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
+    private String generateSql(final ReportParametersVo reportParametersVo, final ReportDefinition reportDefinition)
         throws MissingMethodParameterException, SqlDatabaseSystemException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {

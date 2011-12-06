@@ -51,7 +51,7 @@ public interface DirectDatabaseAccessorInterface {
      */
     String convertDate(final String xmldate) throws SqlDatabaseSystemException;
 
-        /**
+    /**
      * Create a new Table according to the Informations in the databaseTableVo.
      *
      * @param databaseTableVo databaseTableVo with information about tablename, fieldnames and indexnames.
