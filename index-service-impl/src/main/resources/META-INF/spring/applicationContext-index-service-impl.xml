@@ -32,6 +32,9 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+    	    <handled>
+      			<constant>true</constant>
+    	    </handled>
             <process ref="indexServiceExceptionLoggingProcessor"/>
             <!-- to uri="direct:de.escidoc.core.index.IndexService.error"/ -->
         </onException>

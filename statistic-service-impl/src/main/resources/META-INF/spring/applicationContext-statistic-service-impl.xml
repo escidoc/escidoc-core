@@ -32,6 +32,9 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+    	    <handled>
+      			<constant>true</constant>
+    	    </handled>
             <process ref="statisticServiceExceptionLoggingProcessor"/>
             <!-- to uri="direct:de.escidoc.core.statistic.StatisticService.error"/ -->
         </onException>
