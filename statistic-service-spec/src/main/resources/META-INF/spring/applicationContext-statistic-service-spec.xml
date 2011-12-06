@@ -35,8 +35,11 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+    	    <handled>
+      			<constant>true</constant>
+    	    </handled>
             <process ref="statisticServiceExceptionLoggingProcessor"/>
-            <to uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
+            <!-- to uri="direct:de.escidoc.core.statistic.StatisticService.error"/ -->
         </onException>
 
         <route>
@@ -48,11 +51,11 @@
             <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true"/>
         </route>
 
-        <route>
+        <!-- route>
             <from uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
             <to uri="log:de.escidoc.core.statistic.StatisticService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.error"/>
-        </route>
+        </route -->
 
     </camelContext>
 
