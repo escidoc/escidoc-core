@@ -115,6 +115,28 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
     public String convertDate(final String xmldate) throws SqlDatabaseSystemException {
         try {
             String dateFormatString = "yyyy-MM-dd";
+            if (xmldate.contains(":")) {
+                dateFormatString = "yyyy-MM-dd HH:mm:ss";
+            }
+            final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(xmldate);
+            final Calendar cal = xmlCal.toGregorianCalendar();
+            return new DateTime(cal.getTimeInMillis()).toString(dateFormatString);
+        }
+        catch (final Exception e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+    }
+
+    /**
+     * Converts xmldate into database-specific format.
+     *
+     * @param xmldate date in xml-format
+     * @return String date in database-specific format
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
+     */
+    private String convertDateWithFunction(final String xmldate) throws SqlDatabaseSystemException {
+        try {
+            String dateFormatString = "yyyy-MM-dd";
             String dbDateFormatString = DATE_FORMAT;
             if (xmldate.contains(":")) {
                 dateFormatString = "yyyy-MM-dd HH:mm:ss";
@@ -204,7 +226,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
                 // Case type=date and value=sysdate => sysdate
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDateWithFunction(value);
                 }
                 else if (field.getFieldType().equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
