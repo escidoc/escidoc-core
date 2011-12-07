@@ -112,7 +112,8 @@ public class Reindexer {
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
      */
-    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexName) throws SystemException {
+    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexName)
+        throws SystemException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
@@ -270,12 +271,13 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public void sendDeleteObjectMessage(final String resource, final boolean commitWrite) throws ApplicationServerSystemException {
+    public void sendDeleteObjectMessage(final String resource, final boolean commitWrite)
+        throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE).withResource(resource).withCommitIndex(
-                        commitWrite).build();
+                    commitWrite).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -290,14 +292,15 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    private void sendUpdateIndexMessage(final String resource, final ResourceType objectType, final String indexName, final boolean commitWrite)
+    private void sendUpdateIndexMessage(
+        final String resource, final ResourceType objectType, final String indexName, final boolean commitWrite)
         throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE).withIndexName(indexName).withResource(
                     resource).withObjectType(objectType.getUri()).withIsReindexerCaller(true).withCommitIndex(
-                        commitWrite).build();
+                    commitWrite).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {

@@ -139,7 +139,7 @@ public class AdminHandler {
                     this.purgeService.purge(purgeRequest);
                     if (taskParameter.getKeepInSync()) {
                         // synchronize search index
-                        reindexer.sendDeleteObjectMessage(id);
+                        reindexer.sendDeleteObjectMessage(id, true);
                     }
                     purgeStatus.inc();
                 }
@@ -217,7 +217,8 @@ public class AdminHandler {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexNamePrefix) throws SystemException {
+    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexNamePrefix)
+        throws SystemException {
         return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, commitWrites, indexNamePrefix));
     }
 
