@@ -4,6 +4,14 @@ ChangeLog
 	changes which affects the API 
 ----------------------------------------------------
 
+changes since version 1.4
+--------------------------
+	December 2011:
+		- Change Interface AdminHandler.reindex from 
+		  (final String clearIndex, final String indexNamePrefix) 
+		  to
+		  (final String clearIndex, final String commitWrites, final String indexNamePrefix)
+			
 changes since version 1.3
 --------------------------
 	May 2011:
