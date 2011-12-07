@@ -209,17 +209,32 @@ public class AdminHandler {
      * 
      * @param clearIndex
      *            clear the index before adding objects to it
-     * @param commitWrites    Commit index-writes while reindexing. 
-     *                        Slows down indexing but allows searching while reindexing.
      * @param indexNamePrefix
      *            name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexNamePrefix)
-        throws SystemException {
-        return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, commitWrites, indexNamePrefix));
+    @Deprecated
+    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException {
+        return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, true, indexNamePrefix));
+    }
+
+    /**
+     * Reinitialize the search index. The initialization runs synchronously and returns some useful information for the
+     * user, e.g. the total number of objects found.
+     * 
+     * @param taskParam
+     *            containing following parameters: clearIndex (True/false), commmitWrites(true/false), indexName (all for all).
+     * @return total number of objects found, ...
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public String reindex(final String taskParam) throws SystemException, XmlCorruptedException {
+        final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam, false);
+
+        return this.utility.prepareReturnXml(reindexer.reindex(taskParameter.getClearIndex(), taskParameter
+            .getCommitWrites(), taskParameter.getIndexName()));
     }
 
     /**

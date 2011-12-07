@@ -36,8 +36,8 @@
 				<documentation />
 			</invoke>
 		</descriptor>
-		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}/${COMMIT_WRITES}">
-			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${COMMIT_WRITES}" param3="${INDEX-NAME}">
+		<descriptor uri="/adm/admin/reindex">
+			<invoke http="POST" method="reindex" param1="${BODY}">
 				<documentation />
 			</invoke>
 		</descriptor>

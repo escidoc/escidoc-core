@@ -124,26 +124,50 @@ public interface AdminHandlerInterface {
      *                                     handle.
      * @throws AuthorizationException      Thrown if the authorization failed.
      */
+    @Deprecated
     String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException;
 
     /**
      * Reinitialize the search index. The initialization runs asynchronously and returns some useful information to the
-     * user, e.g. the total number of objects found.
+     * user, e.g. the total number of objects found.<b>Example:</b><br/> <br/>
+     * <p/>
+     * <pre>
+     * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     * &lt;param&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;index-name&gt;all&lt;/index-name&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;clear-index&gt;true&lt;/clear-index&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     *   &lt;commit-writes&gt;false&lt;/commit-writes&gt;
+     * </pre>
+     * <p/>
+     * <pre>
+     * &lt;/param&gt;
+     * </pre>
      *
-     * @param clearIndex      Clear the index before adding objects to it.
-     * @param commitWrites    Commit index-writes while reindexing. 
-     *                        Slows down indexing but allows searching while reindexing.
-     * @param indexNamePrefix name of the index (may be null for "all indexes")
+     *
+     * @param taskParam The XML representation of task parameters conforming to reindex-task-param.xsd.
      * @return total number of objects found, ...
-     * @throws InvalidSearchQueryException Thrown if a given search query could not be translated into a SQL query.
+     * @throws InvalidXmlException Thrown if the given XML is invalid.
      * @throws SystemException             Thrown in case of an internal error.
      * @throws AuthenticationException     Thrown if the authentication failed due to an invalid provided eSciDoc user
      *                                     handle.
      * @throws AuthorizationException      Thrown if the authorization failed.
      */
-    String reindex(final String clearIndex, final String commitWrites, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException;
+    @Validate(param = 0, resolver = "getReindexTaskParamSchemaLocation")
+    String reindex(final String taskParam) throws SystemException,
+        InvalidXmlException, AuthenticationException, AuthorizationException;
 
     /**
      * Provides a xml structure containing the index-configuration.

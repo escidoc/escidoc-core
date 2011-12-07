@@ -46,6 +46,12 @@ public interface AdminHandlerService extends Remote {
         throws SystemException, InvalidSearchQueryException, AuthenticationException, AuthorizationException,
         RemoteException;
 
+    String reindex(String taskParam, SecurityContext securityContext) throws SystemException, InvalidXmlException,
+        AuthenticationException, AuthorizationException, RemoteException;
+
+    String reindex(String taskParam, String authHandle, Boolean restAccess) throws SystemException,
+        InvalidXmlException, AuthenticationException, AuthorizationException, RemoteException;
+
     String getIndexConfiguration(SecurityContext securityContext) throws SystemException, AuthenticationException,
         AuthorizationException, RemoteException;
 

@@ -139,31 +139,29 @@ public class AdminHandler implements AdminHandlerInterface {
      *                                     handle.
      * @throws AuthorizationException      Thrown if authorization fails.
      */
+    @Deprecated
     @Override
     public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException {
-        return reindex(clearIndex, "true", indexNamePrefix);
+        return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 
     /**
      * Reinitialize the search index. The initialization runs synchronously and returns some useful information for the
      * user, e.g. the total number of objects found.
      *
-     * @param clearIndex      clear the index before adding objects to it
-     * @param commitWrites    Commit index-writes while reindexing. 
-     *                        Slows down indexing but allows searching while reindexing.
-     * @param indexNamePrefix name of the index (may be null for "all indexes")
+     * @param taskParam containing following parameters: clearIndex (True/false), commmitWrites(true/false), indexName (all for all).
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException thrown if a given search query could not be translated into a SQL query
+     * @throws XmlCorruptedException thrown if the taskParam has an invalid structure
      * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc user
      *                                     handle.
      * @throws AuthorizationException      Thrown if authorization fails.
      */
     @Override
-    public String reindex(final String clearIndex, final String commitWrites, final String indexNamePrefix) throws SystemException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException {
-        return business.reindex(Boolean.valueOf(clearIndex), Boolean.valueOf(commitWrites), indexNamePrefix);
+    public String reindex(final String taskParam) throws SystemException, XmlCorruptedException,
+        AuthenticationException, AuthorizationException {
+        return business.reindex(taskParam);
     }
 
     /**

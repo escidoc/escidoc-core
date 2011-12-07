@@ -59,6 +59,12 @@ public class TaskParamHandler extends DefaultHandler {
 
     private boolean keepInSync = true;
 
+    private String indexName;
+
+    private boolean clearIndex;
+
+    private boolean commitWrites;
+
     private static final String PARAM_PATH = "/param";
 
     private static final String PARAM_ID_PATH = PARAM_PATH + "/id";
@@ -70,6 +76,12 @@ public class TaskParamHandler extends DefaultHandler {
     private static final String PARAM_PID_PATH = PARAM_PATH + "/pid";
 
     private static final String PARAM_SYNC_PATH = PARAM_PATH + "/sync";
+
+    private static final String PARAM_INDEX_NAME_PATH = PARAM_PATH + "/index-name";
+
+    private static final String PARAM_CLEAR_INDEX_PATH = PARAM_PATH + "/clear-index";
+
+    private static final String PARAM_COMMIT_WRITES_PATH = PARAM_PATH + "/commit-writes";
 
     private static final String LAST_MODIFICATION_DATE_ATT = "last-modification-date";
 
@@ -167,6 +179,15 @@ public class TaskParamHandler extends DefaultHandler {
         else if (curPath.equals(PARAM_SYNC_PATH)) {
             this.keepInSync = Boolean.valueOf(data);
         }
+        else if (curPath.equals(PARAM_INDEX_NAME_PATH)) {
+            this.indexName = data;
+        }
+        else if (curPath.equals(PARAM_CLEAR_INDEX_PATH)) {
+            this.clearIndex = Boolean.valueOf(data);
+        }
+        else if (curPath.equals(PARAM_COMMIT_WRITES_PATH)) {
+            this.commitWrites = Boolean.valueOf(data);
+        }
         return data;
     }
 
@@ -245,4 +266,26 @@ public class TaskParamHandler extends DefaultHandler {
     public String getRevokationRemark() {
         return this.revokationRemark;
     }
+
+    /**
+     * @return the indexName
+     */
+    public String getIndexName() {
+        return this.indexName;
+    }
+
+    /**
+     * @return clearIndex variable
+     */
+    public boolean getClearIndex() {
+        return this.clearIndex;
+    }
+
+    /**
+     * @return commitWrites variable
+     */
+    public boolean getCommitWrites() {
+        return this.commitWrites;
+    }
+
 }
