@@ -209,14 +209,16 @@ public class AdminHandler {
      * 
      * @param clearIndex
      *            clear the index before adding objects to it
+     * @param commitWrites    Commit index-writes while reindexing. 
+     *                        Slows down indexing but allows searching while reindexing.
      * @param indexNamePrefix
      *            name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    public String reindex(final boolean clearIndex, final String indexNamePrefix) throws SystemException {
-        return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
+    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexNamePrefix) throws SystemException {
+        return this.utility.prepareReturnXml(reindexer.reindex(clearIndex, commitWrites, indexNamePrefix));
     }
 
     /**

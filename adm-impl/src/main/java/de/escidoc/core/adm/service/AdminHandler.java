@@ -131,6 +131,8 @@ public class AdminHandler implements AdminHandlerInterface {
      * user, e.g. the total number of objects found.
      *
      * @param clearIndex      clear the index before adding objects to it
+     * @param commitWrites    Commit index-writes while reindexing. 
+     *                        Slows down indexing but allows searching while reindexing.
      * @param indexNamePrefix name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
@@ -140,9 +142,9 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException      Thrown if authorization fails.
      */
     @Override
-    public String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
+    public String reindex(final String clearIndex, final String commitWrites, final String indexNamePrefix) throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException {
-        return business.reindex(Boolean.valueOf(clearIndex), indexNamePrefix);
+        return business.reindex(Boolean.valueOf(clearIndex), Boolean.valueOf(clearIndex), indexNamePrefix);
     }
 
     /**

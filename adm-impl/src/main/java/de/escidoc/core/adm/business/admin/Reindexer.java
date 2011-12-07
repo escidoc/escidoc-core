@@ -74,8 +74,6 @@ public class Reindexer {
     // Indexer configuration
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
-    private boolean commitIndex = true;
-
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
      */
@@ -108,11 +106,13 @@ public class Reindexer {
 
     /**
      * @param clearIndex clear the index before adding objects to it
+     * @param commitWrites    Commit index-writes while reindexing. 
+     *                        Slows down indexing but allows searching while reindexing.
      * @param indexName  name of the index (may be null for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
      */
-    public String reindex(final boolean clearIndex, final String indexName) throws SystemException {
+    public String reindex(final boolean clearIndex, final boolean commitWrites, final String indexName) throws SystemException {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
@@ -192,36 +192,36 @@ public class Reindexer {
 
                 // re-index Containers
                 for (final String containerHref : containerHrefs) {
-                    sendUpdateIndexMessage(containerHref, ResourceType.CONTAINER, indexName);
+                    sendUpdateIndexMessage(containerHref, ResourceType.CONTAINER, indexName, commitWrites);
                 }
 
                 // re-index Content Models
                 for (final String contentModelHref : contentModelHrefs) {
-                    sendUpdateIndexMessage(contentModelHref, ResourceType.CONTENT_MODEL, indexName);
+                    sendUpdateIndexMessage(contentModelHref, ResourceType.CONTENT_MODEL, indexName, commitWrites);
                 }
 
                 // re-index Content Relations
                 for (final String contentRelationHref : contentRelationHrefs) {
-                    sendUpdateIndexMessage(contentRelationHref, ResourceType.CONTENT_RELATION, indexName);
+                    sendUpdateIndexMessage(contentRelationHref, ResourceType.CONTENT_RELATION, indexName, commitWrites);
                 }
 
                 // re-index Contexts
                 for (final String contextHref : contextHrefs) {
-                    sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT, indexName);
+                    sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT, indexName, commitWrites);
                 }
 
                 // re-index Items
                 for (final String itemHref : itemHrefs) {
-                    sendUpdateIndexMessage(itemHref, ResourceType.ITEM, indexName);
+                    sendUpdateIndexMessage(itemHref, ResourceType.ITEM, indexName, commitWrites);
                 }
 
                 // re-index Organizational Units
                 for (final String orgUnitHref : orgUnitHrefs) {
-                    sendUpdateIndexMessage(orgUnitHref, ResourceType.OU, indexName);
+                    sendUpdateIndexMessage(orgUnitHref, ResourceType.OU, indexName, commitWrites);
                 }
             }
             finally {
-                if (!commitIndex) {
+                if (!commitWrites) {
                     sendCommitIndexMessage();
                 }
                 if (idListEmpty) {
@@ -241,7 +241,7 @@ public class Reindexer {
      * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     public String testReindexError() throws ApplicationServerSystemException {
-        sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
+        sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null, true);
         return "OK";
     }
 
@@ -270,12 +270,12 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    public void sendDeleteObjectMessage(final String resource) throws ApplicationServerSystemException {
+    public void sendDeleteObjectMessage(final String resource, final boolean commitWrite) throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE).withResource(resource).withCommitIndex(
-                    commitIndex).build();
+                        commitWrite).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -290,14 +290,14 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    private void sendUpdateIndexMessage(final String resource, final ResourceType objectType, final String indexName)
+    private void sendUpdateIndexMessage(final String resource, final ResourceType objectType, final String indexName, final boolean commitWrite)
         throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE).withIndexName(indexName).withResource(
                     resource).withObjectType(objectType.getUri()).withIsReindexerCaller(true).withCommitIndex(
-                    commitIndex).build();
+                        commitWrite).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
