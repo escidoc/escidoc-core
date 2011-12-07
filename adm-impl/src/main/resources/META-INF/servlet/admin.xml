@@ -3,7 +3,7 @@
 	<define>
 		<var name="CLEAR-CACHE" regexp="/([^/?]*)" />
 		<var name="CLEAR-INDEX" regexp="/([^/?]*)" />
-                <var name="INDEX-NAME" regexp="/([^/?]*)" />
+        <var name="INDEX-NAME" regexp="/([^/?]*)" />
 		<var name="TYPE" regexp="/([^/?]*)" />
 	</define>
 
@@ -33,6 +33,11 @@
 		</descriptor>
 		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}">
 			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${INDEX-NAME}">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}/${COMMIT_WRITES}">
+			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${COMMIT_WRITES}" param3="${INDEX-NAME}">
 				<documentation />
 			</invoke>
 		</descriptor>

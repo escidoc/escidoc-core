@@ -116,6 +116,22 @@ public interface AdminHandlerInterface {
      * user, e.g. the total number of objects found.
      *
      * @param clearIndex      Clear the index before adding objects to it.
+     * @param indexNamePrefix name of the index (may be null for "all indexes")
+     * @return total number of objects found, ...
+     * @throws InvalidSearchQueryException Thrown if a given search query could not be translated into a SQL query.
+     * @throws SystemException             Thrown in case of an internal error.
+     * @throws AuthenticationException     Thrown if the authentication failed due to an invalid provided eSciDoc user
+     *                                     handle.
+     * @throws AuthorizationException      Thrown if the authorization failed.
+     */
+    String reindex(final String clearIndex, final String indexNamePrefix) throws SystemException,
+        InvalidSearchQueryException, AuthenticationException, AuthorizationException;
+
+    /**
+     * Reinitialize the search index. The initialization runs asynchronously and returns some useful information to the
+     * user, e.g. the total number of objects found.
+     *
+     * @param clearIndex      Clear the index before adding objects to it.
      * @param commitWrites    Commit index-writes while reindexing. 
      *                        Slows down indexing but allows searching while reindexing.
      * @param indexNamePrefix name of the index (may be null for "all indexes")
