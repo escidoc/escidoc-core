@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRec
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
@@ -132,42 +133,39 @@ public class CreateTest extends OrganizationalUnitTestBase {
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
-    // /**
-    // * Test successfully creating an organizational unit including pid.
-    // *
-    // * @test.name Create Organizational Unit - Including Pid
-    // * @test.id OUM_COU-1-c
-    // * @test.input Organizational Unit XML representation.
-    // * @test.expected: The expected result is the XML representation of the
-    // * created OrganizationalUnit, corresponding to XML-schema
-    // * "organizational-unit.xsd" including generated id, creator
-    // * and creation date and pid.
-    // * @test.status Revoked - no more requirements for external id handling at
-    // * the moment
-    // *
-    // * @throws Exception
-    // * Thrown if anything fails.
-    // */
-    // public void testOumCou1c() throws Exception {
-    //
-    // Document toBeCreatedDocument =
-    // getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-    // "escidoc_ou_create_with_external_id.xml");
-    // setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-    // String toBeCreatedXml = toString(toBeCreatedDocument, false);
-    // String createdXml = null;
-    // try {
-    // createdXml = create(toBeCreatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException("Creating OU with PID failed", e);
-    // }
-    // assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-    // startTimestamp);
-    //
-    // assertXmlEquals("External id mismatch.", toBeCreatedDocument,
-    // getDocument(createdXml), XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER);
-    // }
+    /**
+     * Test successfully creating an organizational unit including pid.
+     * 
+     * @test.name Create Organizational Unit - Including Pid
+     * @test.id OUM_COU-1-c
+     * @test.input Organizational Unit XML representation.
+     * @test.expected: The expected result is the XML representation of the created OrganizationalUnit, corresponding to
+     *                 XML-schema "organizational-unit.xsd" including generated id, creator and creation date and pid.
+     * @test.status Revoked - no more requirements for external id handling at the moment
+     * 
+     * @throws Exception
+     *             Thrown if anything fails.
+     */
+    @Test
+    @Ignore
+    public void testOumCou1c() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create_with_external_id.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            failException("Creating OU with PID failed", e);
+        }
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
+
+        assertXmlEquals("External id mismatch.", toBeCreatedDocument, getDocument(createdXml),
+            XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER);
+    }
 
     /**
      * Test successfully creating an organizational unit using lax mode.
@@ -580,13 +578,35 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception If anything fails.
      */
     @Test(expected = MissingMdRecordException.class)
-    public void testOuCreateWithoutMdRecord() throws Exception {
+    public void testOuCreateWithoutEscidocMdRecord() throws Exception {
 
         Document toBeCreatedDocument =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record/@name", "non_default_name");
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+
+        create(toBeCreatedXml);
+    }
+
+    /**
+     * Test creating an Organizational Unit with no md-record given. It's checked if the expected
+     * Exception is thrown.
+     * <p/>
+     * See issue INFR-1016
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test(expected = MissingMdRecordException.class)
+    public void testOuCreateWithoutMdRecord() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record");
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
