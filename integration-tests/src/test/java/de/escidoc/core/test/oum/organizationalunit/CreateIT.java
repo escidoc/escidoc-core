@@ -555,13 +555,35 @@ public class CreateIT extends OrganizationalUnitTestBase {
      * @throws Exception If anything fails.
      */
     @Test(expected = MissingMdRecordException.class)
-    public void testOuCreateWithoutMdRecord() throws Exception {
+    public void testOuCreateWithoutEscidocMdRecord() throws Exception {
 
         Document toBeCreatedDocument =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record/@name", "non_default_name");
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+
+        create(toBeCreatedXml);
+    }
+
+    /**
+     * Test creating an Organizational Unit with no md-record given. It's checked if the expected
+     * Exception is thrown.
+     * <p/>
+     * See issue INFR-1016
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test(expected = MissingMdRecordException.class)
+    public void testOuCreateWithoutMdRecord() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record");
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
