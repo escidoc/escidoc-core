@@ -212,8 +212,9 @@ public class MultipleExtractor extends WriteHandler {
                 // of elementToDelete is null it is not compared with
                 // the current element and handled as match. (FRS)
                 if ((elementToDelete.getPrefix() == null || elementToDelete.getPrefix().equals(element.getPrefix()))
-                    && (elementToDelete.getNamespace() == null || elementToDelete.getNamespace().equals(
-                        element.getNamespace()))) {
+                    && (elementToDelete.getNamespace() == null
+                        || elementToDelete.getNamespace().equals(element.getNamespace()) || elementToDelete
+                        .getNamespace().concat("/").equals(element.getNamespace()))) {
 
                     final int attCount2 = elementToDelete.getAttributeCount();
                     if (attCount2 == 0) {
