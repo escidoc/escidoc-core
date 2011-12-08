@@ -22,6 +22,7 @@ package de.escidoc.core.common.util.aop;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -85,7 +86,8 @@ public class XmlValidationInterceptor implements Ordered {
             final Method[] methods = interfaze.getMethods();
             for (final Method method : methods) {
                 if (method.getName().equals(calledMethod.getName())
-                    && method.getReturnType().equals(calledMethod.getReturnType())) {
+                    && method.getReturnType().equals(calledMethod.getReturnType())
+                    && Arrays.equals(method.getParameterTypes(), calledMethod.getParameterTypes())) {
                     targetMethod = method;
                 }
             }
