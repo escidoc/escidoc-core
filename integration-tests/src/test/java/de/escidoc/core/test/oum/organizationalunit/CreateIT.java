@@ -36,21 +36,23 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingEleme
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Test the create method of the organizational unit handler.
- *
+ * 
  * @author Michael Schneider
  */
 public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit where the root element of metadata has no XML prefix.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1aMDPrefix() throws Exception {
@@ -73,8 +75,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1a() throws Exception {
@@ -96,8 +99,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit with parents in state created.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1b() throws Exception {
@@ -121,47 +125,45 @@ public class CreateIT extends OrganizationalUnitTestBase {
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
     }
 
-    // /**
-    // * Test successfully creating an organizational unit including pid.
-    // *
-    // * @test.name Create Organizational Unit - Including Pid
-    // * @test.id OUM_COU-1-c
-    // * @test.input Organizational Unit XML representation.
-    // * @test.expected: The expected result is the XML representation of the
-    // * created OrganizationalUnit, corresponding to XML-schema
-    // * "organizational-unit.xsd" including generated id, creator
-    // * and creation date and pid.
-    // * @test.status Revoked - no more requirements for external id handling at
-    // * the moment
-    // *
-    // * @throws Exception
-    // * Thrown if anything fails.
-    // */
-    // public void testOumCou1c() throws Exception {
-    //
-    // Document toBeCreatedDocument =
-    // getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-    // "escidoc_ou_create_with_external_id.xml");
-    // setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-    // String toBeCreatedXml = toString(toBeCreatedDocument, false);
-    // String createdXml = null;
-    // try {
-    // createdXml = create(toBeCreatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException("Creating OU with PID failed", e);
-    // }
-    // assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
-    // startTimestamp);
-    //
-    // assertXmlEquals("External id mismatch.", toBeCreatedDocument,
-    // getDocument(createdXml), XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER);
-    // }
+    /**
+     * Test successfully creating an organizational unit including pid.
+     * 
+     * @test.name Create Organizational Unit - Including Pid
+     * @test.id OUM_COU-1-c
+     * @test.input Organizational Unit XML representation.
+     * @test.expected: The expected result is the XML representation of the created OrganizationalUnit, corresponding to
+     *                 XML-schema "organizational-unit.xsd" including generated id, creator and creation date and pid.
+     * @test.status Revoked - no more requirements for external id handling at the moment
+     * 
+     * @throws Exception
+     *             Thrown if anything fails.
+     */
+    @Test
+    @Ignore
+    public void testOumCou1c() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create_with_external_id.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            failException("Creating OU with PID failed", e);
+        }
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
+
+        assertXmlEquals("External id mismatch.", toBeCreatedDocument, getDocument(createdXml),
+            XPATH_ORGANIZATIONAL_UNIT_IDENTIFIER);
+    }
 
     /**
      * Test successfully creating an organizational unit using lax mode.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1d() throws Exception {
@@ -208,8 +210,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit using lax mode.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1e() throws Exception {
@@ -251,8 +254,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit with 2 md-record elements.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1f() throws Exception {
@@ -282,8 +286,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit with parents in state opened.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1g() throws Exception {
@@ -313,8 +318,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test successfully creating an organizational unit with parents - one in state opened and one in state created.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou1h() throws Exception {
@@ -342,8 +348,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining creating an organizational unit without providing a title/name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou2a() throws Exception {
@@ -365,8 +372,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining creating an organizational unit with an invalid xml representation (xml is an item xml).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou2b() throws Exception {
@@ -386,8 +394,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining creating an organizational unit with providing an empty name.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou2c() throws Exception {
@@ -407,8 +416,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining creating an organizational unit with providing a parent is state closed.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou2d() throws Exception {
@@ -439,8 +449,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining creating an organizational unit without an xml representation.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou4() throws Exception {
@@ -458,8 +469,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
     /**
      * Test successfully creating an organizational unit with a name of an existing organizational unit in another scope
      * of the parents.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumCou5c() throws Exception {
@@ -513,8 +525,9 @@ public class CreateIT extends OrganizationalUnitTestBase {
     /**
      * Test if the last modification date of an fresh created OU equals the last-modification-date of the afterwards
      * retrieved OU.
-     *
-     * @throws Exception Thrown if last-modification-date between create and retrieve differs.
+     * 
+     * @throws Exception
+     *             Thrown if last-modification-date between create and retrieve differs.
      */
     @Test
     public void testOumLastModificationDate() throws Exception {
@@ -533,21 +546,45 @@ public class CreateIT extends OrganizationalUnitTestBase {
 
     /**
      * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
-     *
-     * @throws Exception Thrown if behavior is not as expected.
+     * 
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
      */
     @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
-         * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
+         * The infrastructure has thrown an unexpected parser exception during creation if a non XML datastructur is
+         * send (e.g. String).
          */
         create("laber-rababer");
     }
 
     /**
      * Test creating an Organizational Unit with missing required default md-record. It's checked if the expected
+     * Exception is thrown.
+     * <p/>
+     * See issue INFR-1016
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(expected = MissingMdRecordException.class)
+    public void testOuCreateWithoutEscidocMdRecord() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+
+        substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record/@name", "non_default_name");
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+
+        create(toBeCreatedXml);
+    }
+
+    /**
+     * Test creating an Organizational Unit with no md-record given. It's checked if the expected
      * Exception is thrown.
      * <p/>
      * See issue INFR-1016
@@ -561,7 +598,7 @@ public class CreateIT extends OrganizationalUnitTestBase {
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
-        substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record/@name", "non_default_name");
+        deleteNodes(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS + "/md-record");
 
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
