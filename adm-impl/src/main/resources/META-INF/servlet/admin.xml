@@ -30,14 +30,12 @@
 			<invoke http="GET" method="getReindexStatus">
 				<documentation />
 			</invoke>
-		</descriptor>
-		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}">
-			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${INDEX-NAME}">
+			<invoke http="POST" method="reindex" param1="${BODY}">
 				<documentation />
 			</invoke>
 		</descriptor>
-		<descriptor uri="/adm/admin/reindex">
-			<invoke http="POST" method="reindex" param1="${BODY}">
+		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}">
+			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${INDEX-NAME}">
 				<documentation />
 			</invoke>
 		</descriptor>
