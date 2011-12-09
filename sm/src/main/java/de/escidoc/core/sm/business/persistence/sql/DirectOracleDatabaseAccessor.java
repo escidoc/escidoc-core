@@ -604,7 +604,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport implements Dire
 
                 whereClause.append(dateToCharFunction).append(operator).append(' ');
             }
-            final String value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : "'" + convertDateWithoutFunction(fieldValue) + "'";
+            final String value =
+                "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : "'" + convertDateWithoutFunction(fieldValue) + "'";
             whereClause.append(value).append(' ');
         }
         else if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {

@@ -353,6 +353,15 @@ public class IndexingHandler implements ResourceListener {
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
 
+        if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("request createEmpty " + indexName);
+            }
+            gsearchHandler.requestCreateEmpty(indexName);
+            return;
+        }
+
         // get Index-Parameters for resourceName
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
         if (resourceParameters == null) {
@@ -362,6 +371,25 @@ public class IndexingHandler implements ResourceListener {
 
         if (parameters == null) {
             return;
+        }
+
+        if (action == null
+            || action
+                .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
+            try {
+                // check the asynch-mode
+                if (parameters.get("indexAsynchronous") == null
+                    || !Boolean.valueOf((String) parameters.get("indexAsynchronous")).equals(isAsynch)) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("is Asynch: " + isAsynch + " and indexAsynchronous-param is "
+                            + parameters.get("indexAsynchronous") + ", so returning");
+                    }
+                    return;
+                }
+            }
+            catch (final Exception e) {
+                throw new SystemException(e.getMessage(), e);
+            }
         }
 
         String versionedResource = resource;
@@ -408,16 +436,6 @@ public class IndexingHandler implements ResourceListener {
             || action
                 .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
             try {
-                // check the asynch-mode
-                if (parameters.get("indexAsynchronous") == null
-                    || !Boolean.valueOf((String) parameters.get("indexAsynchronous")).equals(isAsynch)) {
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("is Asynch: " + isAsynch + " and indexAsynchronous-param is "
-                            + parameters.get("indexAsynchronous") + ", so returning");
-                    }
-                    return;
-                }
-
                 // check if only objects with certain prerequisite
                 // shall be in the index
                 // (prerequisite is an xpath-Expression)
@@ -469,13 +487,6 @@ public class IndexingHandler implements ResourceListener {
                 LOGGER.debug("request deletion " + indexName + ", resource " + resource);
             }
             gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
-        }
-        else if (action
-            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("request createEmpty " + indexName);
-            }
-            gsearchHandler.requestCreateEmpty(indexName);
         }
     }
 
