@@ -72,7 +72,7 @@ public class Reindexer {
     private ReindexStatus reindexStatus;
 
     // Indexer configuration
-    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
+    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters = null;
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -87,13 +87,16 @@ public class Reindexer {
      * @param type      resource type
      * @return true if the index contains objects of the given type
      */
-    private boolean contains(final String indexName, final ResourceType type) {
+    private boolean contains(final String indexName, final ResourceType type) throws WebserverSystemException {
         final boolean result;
 
         if (indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName)) {
             result = true;
         }
         else {
+            if (this.objectTypeParameters == null) {
+                this.objectTypeParameters = indexingHandler.getObjectTypeParameters();
+            }
             final Map<String, Map<String, Object>> resourceParameters = objectTypeParameters.get(type.getUri());
             if (resourceParameters == null) {
                 return false;
@@ -156,12 +159,7 @@ public class Reindexer {
 
                 if (clearIndex) {
                     // Delete indexes
-                    sendDeleteIndexMessage(ResourceType.CONTAINER, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_MODEL, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_RELATION, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTEXT, indexName);
-                    sendDeleteIndexMessage(ResourceType.ITEM, indexName);
-                    sendDeleteIndexMessage(ResourceType.OU, indexName);
+                    sendDeleteIndexMessage(indexName);
                 }
 
                 result.append("<message>\n");
@@ -223,7 +221,7 @@ public class Reindexer {
             }
             finally {
                 if (!commitWrites) {
-                    sendCommitIndexMessage();
+                    sendCommitIndexMessage(indexName);
                 }
                 if (idListEmpty) {
                     reindexStatus.finishMethod();
@@ -252,13 +250,11 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    private void sendDeleteIndexMessage(final ResourceType objectType, final String indexName)
-        throws ApplicationServerSystemException {
+    private void sendDeleteIndexMessage(final String indexName) throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
-                IndexRequestBuilder
-                    .createIndexRequest().withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                    .withIndexName(indexName).withObjectType(objectType.getUri()).build();
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE).withIndexName(indexName).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -312,11 +308,11 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    private void sendCommitIndexMessage() throws ApplicationServerSystemException {
+    private void sendCommitIndexMessage(final String indexName) throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
                 IndexRequestBuilder.createIndexRequest().withAction(
-                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_VALUE).build();
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_VALUE).withIndexName(indexName).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
@@ -360,22 +356,6 @@ public class Reindexer {
      */
     public String getStatus() {
         return reindexStatus.toString();
-    }
-
-    /**
-     * @param indexingHandler indexing handler
-     * @throws WebserverSystemException thrown if the index configuration could not be read
-     */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) throws WebserverSystemException {
-        this.indexingHandler = indexingHandler;
-        this.objectTypeParameters = indexingHandler.getObjectTypeParameters();
-    }
-
-    /**
-     * @param indexService index service
-     */
-    public void setIndexService(final IndexService indexService) {
-        this.indexService = indexService;
     }
 
 }
