@@ -191,12 +191,7 @@ public class Reindexer {
 
                 if (clearIndex) {
                     // Delete indexes
-                    sendDeleteIndexMessage(ResourceType.CONTAINER, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_MODEL, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTENT_RELATION, indexName);
-                    sendDeleteIndexMessage(ResourceType.CONTEXT, indexName);
-                    sendDeleteIndexMessage(ResourceType.ITEM, indexName);
-                    sendDeleteIndexMessage(ResourceType.OU, indexName);
+                    sendDeleteIndexMessage(indexName);
                 }
 
                 result.append("<message>\n");
@@ -304,13 +299,11 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *          e
      */
-    private void sendDeleteIndexMessage(final ResourceType objectType, final String indexName)
-        throws ApplicationServerSystemException {
+    private void sendDeleteIndexMessage(final String indexName) throws ApplicationServerSystemException {
         try {
             final IndexRequest indexRequest =
-                IndexRequestBuilder
-                    .createIndexRequest().withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                    .withIndexName(indexName).withObjectType(objectType.getUri()).build();
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE).withIndexName(indexName).build();
             this.indexService.index(indexRequest);
         }
         catch (final Exception e) {
