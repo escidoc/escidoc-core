@@ -26,6 +26,8 @@
 
     <camelContext id="statisticServiceSpecCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
+		<template id="statisticCamelTemplate"/>
+
         <proxy id="de.escidoc.core.statistic.StatisticService" serviceInterface="de.escidoc.core.statistic.StatisticService"
                serviceUrl="direct:de.escidoc.core.statistic.StatisticService"/>
 

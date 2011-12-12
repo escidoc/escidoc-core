@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,8 +64,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private XmlUtility xmlUtility;
 
     @Autowired
-    @Qualifier("statisticServiceSpecCamelContext")
-    private CamelContext camelContext;
+    @Qualifier("statisticCamelTemplate")
+    private ProducerTemplate producerTemplate;
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -88,7 +87,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-        final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
         producerTemplate.asyncSendBody(
             "jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
     }
