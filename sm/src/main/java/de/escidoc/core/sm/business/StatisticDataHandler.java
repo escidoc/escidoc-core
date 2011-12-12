@@ -39,7 +39,6 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
-import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 
 /**
@@ -53,7 +52,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
     private SmXmlUtility xmlUtility;
 
-    private CamelContext camelContext;
+    private ProducerTemplate producerTemplate;
 
     /**
      * See Interface for functional description.
@@ -69,7 +68,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-        final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
         producerTemplate.asyncSendBody(
             "jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
     }
@@ -132,7 +130,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         this.xmlUtility = xmlUtility;
     }
 
-    public void setCamelContext(final CamelContext camelContext) {
-        this.camelContext = camelContext;
+    public void setProducerTemplate(final ProducerTemplate producerTemplate) {
+        this.producerTemplate = producerTemplate;
     }
 }

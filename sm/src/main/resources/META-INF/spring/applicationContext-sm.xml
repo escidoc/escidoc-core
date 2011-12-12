@@ -25,7 +25,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="business.StatisticDataHandler" class="de.escidoc.core.sm.business.StatisticDataHandler">
         <property name="dao" ref="persistence.SmStatisticDataDao"/>
         <property name="xmlUtility" ref="business.sm.XmlUtility"/>
-        <property name="camelContext" ref="statisticServiceSpecCamelContext"/>
+        <property name="producerTemplate" ref="statisticCamelTemplate"/>
     </bean>
     <bean id="persistence.SmStatisticDataDao"
           class="de.escidoc.core.sm.business.persistence.hibernate.SmStatisticDataHibernateDao">
