@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
+import java.io.File;
 import java.net.URL;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
@@ -221,36 +222,6 @@ public class ItemCreateIT extends ItemTestBase {
         // TODO intensivate checks
         assertXmlValidComponent(xml2);
         assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
-    }
-
-    /**
-     * Test creation of an Item with a Component with binary content. The content is referenced by HTTP from the index
-     * page.
-     * 
-     * @throws Exception
-     *             Thrown if creation of component fail.
-     */
-    @Test
-    public void createWithContent01() throws Exception {
-
-        // create an item an replace the value of the public-status element
-        String itemXml = getExampleTemplate("item-minimal-for-create-03.xml");
-
-        Document item = EscidocAbstractTest.getDocument(itemXml);
-        Node itemChanged =
-            substitute(item, "/item/components/component/content/@href", PropertiesProvider.getInstance().getProperty(
-                PropertiesProvider.TESTDATA_URL)
-                + "/testDocuments/images/head-v0.1.png");
-        String xmlTmp = toString(itemChanged, false);
-
-        String xml = create(xmlTmp);
-        assertXmlValidItem(xml);
-
-        Document itemDoc = EscidocAbstractTest.getDocument(xml);
-        String itemId = getObjidValue(itemDoc);
-        String lmd = getLastModificationDateValue(itemDoc);
-
-        //        assertXmlExists("Missing created Component", itemDoc, "/item/components/component/content/@href[text() = 'valid']");
     }
 
 }
