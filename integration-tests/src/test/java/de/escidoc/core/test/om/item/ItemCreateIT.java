@@ -28,10 +28,15 @@
  */
 package de.escidoc.core.test.om.item;
 
+import java.net.URL;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+
 import org.junit.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -217,4 +222,35 @@ public class ItemCreateIT extends ItemTestBase {
         assertXmlValidComponent(xml2);
         assertXmlExists("Missing created Component", xml2, "/component/properties/valid-status[text() = 'valid']");
     }
+
+    /**
+     * Test creation of an Item with a Component with binary content. The content is referenced by HTTP from the index
+     * page.
+     * 
+     * @throws Exception
+     *             Thrown if creation of component fail.
+     */
+    @Test
+    public void createWithContent01() throws Exception {
+
+        // create an item an replace the value of the public-status element
+        String itemXml = getExampleTemplate("item-minimal-for-create-03.xml");
+
+        Document item = EscidocAbstractTest.getDocument(itemXml);
+        Node itemChanged =
+            substitute(item, "/item/components/component/content/@href", PropertiesProvider.getInstance().getProperty(
+                PropertiesProvider.TESTDATA_URL)
+                + "/testDocuments/images/head-v0.1.png");
+        String xmlTmp = toString(itemChanged, false);
+
+        String xml = create(xmlTmp);
+        assertXmlValidItem(xml);
+
+        Document itemDoc = EscidocAbstractTest.getDocument(xml);
+        String itemId = getObjidValue(itemDoc);
+        String lmd = getLastModificationDateValue(itemDoc);
+
+        //        assertXmlExists("Missing created Component", itemDoc, "/item/components/component/content/@href[text() = 'valid']");
+    }
+
 }
