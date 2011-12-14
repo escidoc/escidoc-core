@@ -576,7 +576,7 @@ public class CreateIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test(expected = MissingMdRecordException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOuCreateWithoutMdRecord() throws Exception {
 
         Document toBeCreatedDocument =
