@@ -48,15 +48,18 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -83,26 +86,30 @@ public class ItemRetrieveContentIT extends ContentTestBase {
      */
     @Test
     public void testOmRtrEscidocCnt1() throws Exception {
-        String itemId = "escidoc:ex5";
-        String componentId = "escidoc:ex6";
-        String contentType = "image/jpeg";
+
+        // pre computed
+        final String contentSha1Checksum = "77b7a26c5446a46d8152eaa9c5ef5825e70a876b";
+
+        // create Item with test image as content
+        String xml = createItemWithImage();
+        Document itemDoc = getDocument(xml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+
+        String contentType = "image/png";
 
         File temp = retrieveContentFromFramework(itemId, componentId, contentType);
+        String sha1 = computeHashSum(temp);
+        // check file with checksum -----------------------------------------------------
+        assertEquals("File checksum failed", contentSha1Checksum, sha1);
+        removeSilent(temp);
 
-        // check file size -----------------------------------------------------
-        ImageProperties imProp = new ImageProperties(temp);
-        assertEquals("Image width ", 982, imProp.getImageWidth());
-        assertEquals("Image heigth ", 95, imProp.getImageHeight());
+        temp = retrieveContentFromRepository(componentId, contentType);
+        sha1 = computeHashSum(temp);
 
-        File tempRef = retrieveContentFromRepository(componentId, contentType);
-
-        // Asserts -------------------------------------------------------------
-        ImageProperties imPropRef = new ImageProperties(tempRef);
-        assertEquals("Width of images not differ ", imProp.getImageWidth(), imPropRef.getImageWidth());
-        assertEquals("Height of images not differ ", imProp.getImageHeight(), imPropRef.getImageHeight());
+        assertEquals("File checksum failed", contentSha1Checksum, sha1);
 
         removeSilent(temp);
-        removeSilent(tempRef);
     }
 
     /**
@@ -478,8 +485,12 @@ public class ItemRetrieveContentIT extends ContentTestBase {
     @Test
     public void testFedoraRtrCnt1() throws Exception {
 
-        String componentId = "escidoc:ex6";
-        String tempFileName = "testBinaryData.img";
+        final String contentSha1Checksum = "77b7a26c5446a46d8152eaa9c5ef5825e70a876b";
+
+        String xml = createItemWithImage();
+        Document itemDoc = getDocument(xml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
 
         // ---------------------------------------------------------------------
         URL fedoraUrl = new URL(getFedoraUrl(componentId, null));
@@ -500,11 +511,11 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         }
 
         String mimeType = conn.getContentType();
-        assertEquals("image/jpeg", mimeType);
+        assertEquals("image/png", mimeType);
         InputStream ins = conn.getInputStream();
 
         // write out file
-        File temp = File.createTempFile(tempFileName, "tmp");
+        File temp = File.createTempFile("testBinaryData.img", "tmp");
         ByteArrayOutputStream barray = readBinaryContent(ins);
         FileOutputStream fos = new FileOutputStream(temp);
         fos.write(barray.toByteArray());
@@ -513,16 +524,10 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         ins.close();
         conn.disconnect();
 
-        // check file size -----------------------------------------------------
-        ImageProperties imProp = new ImageProperties(temp);
-        assertEquals("Image width ", 982, imProp.getImageWidth());
-        assertEquals("Image heigth ", 95, imProp.getImageHeight());
-
-        // cleanup -------------------------------------------------------------
-        if (temp.exists() && !temp.delete()) {
-            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
-        }
-
+        String sha1 = computeHashSum(temp);
+        // check file with checksum -----------------------------------------------------
+        assertEquals("File checksum failed", contentSha1Checksum, sha1);
+        removeSilent(temp);
     }
 
     /**
@@ -595,4 +600,52 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         assertEquals("inline;filename=\"" + filename + "\"", headerDisp[0].getValue());
     }
 
+    /**
+     * Create an Item with an image as content.
+     * 
+     * @return objid of Item
+     */
+    private String createItemWithImage() throws Exception {
+
+        // create an item an replace the value of the public-status element
+        String itemXml = getExampleTemplate("item-minimal-for-create-03.xml");
+
+        Document item = EscidocAbstractTest.getDocument(itemXml);
+        substitute(item, "/item/components/component/content/@href", PropertiesProvider.getInstance().getProperty(
+            PropertiesProvider.TESTDATA_URL)
+            + "/testDocuments/images/head-v0.1.png");
+        substitute(item, "/item/components/component/properties/mime-type", "image/png");
+        String xmlTmp = toString(item, false);
+
+        return create(xmlTmp);
+    }
+
+    /**
+     * Compute SHA1 Hash.
+     * 
+     * @return SHA1
+     */
+    private String computeHashSum(final File datafile) throws Exception {
+
+        MessageDigest md = MessageDigest.getInstance("SHA1");
+        FileInputStream fis = new FileInputStream(datafile);
+        byte[] dataBytes = new byte[1024];
+
+        int nread = 0;
+
+        while ((nread = fis.read(dataBytes)) != -1) {
+            md.update(dataBytes, 0, nread);
+        }
+        ;
+
+        byte[] mdbytes = md.digest();
+
+        //convert the byte to hex format
+        StringBuffer sb = new StringBuffer("");
+        for (int i = 0; i < mdbytes.length; i++) {
+            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
+    }
 }
