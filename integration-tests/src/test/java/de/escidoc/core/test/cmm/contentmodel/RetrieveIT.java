@@ -169,4 +169,16 @@ public class RetrieveIT extends ContentModelTestBase {
         assertXmlValidContentModel(subResource);
     }
 
+    /**
+     * Test retrieve of Content Model properties.
+     * see issue INFR-1369.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void retrieveProperties() throws Exception {
+
+        String propertiesXml = retrieveProperties(this.contentModelId);
+        assertXmlValidContentModel(propertiesXml);
+    }
 }
