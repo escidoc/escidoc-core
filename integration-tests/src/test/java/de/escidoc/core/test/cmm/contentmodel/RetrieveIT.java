@@ -104,17 +104,10 @@ public class RetrieveIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmRCt2() throws Exception {
 
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            retrieve(UNKNOWN_ID);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(UNKNOWN_ID);
     }
 
     /**
@@ -122,17 +115,10 @@ public class RetrieveIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmRCt2_2() throws Exception {
 
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            retrieve(CONTEXT_ID);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(CONTEXT_ID);
     }
 
     /**
@@ -140,17 +126,10 @@ public class RetrieveIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testCtmRCt3() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            retrieve(null);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(null);
     }
 
     /**
@@ -158,6 +137,7 @@ public class RetrieveIT extends ContentModelTestBase {
      */
     @Test
     public void testRetrieveContentModelResources() throws Exception {
+
         String subResource = null;
         try {
             subResource = retrieveResources(this.contentModelId);
@@ -169,4 +149,16 @@ public class RetrieveIT extends ContentModelTestBase {
         assertXmlValidContentModel(subResource);
     }
 
+    /**
+     * Test retrieve of Content Model properties.
+     * see issue INFR-1369.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void retrieveProperties() throws Exception {
+
+        String propertiesXml = retrieveProperties(this.contentModelId);
+        assertXmlValidContentModel(propertiesXml);
+    }
 }
