@@ -17,6 +17,12 @@
 
   <properties>
     <escidoc.home>${project.build.directory}/escidoc/core</escidoc.home>
+    
+    <coverage.reports.dir>${basedir}/target/coverage-reports</coverage.reports.dir>
+    <sonar.jacoco.reportPath>${coverage.reports.dir}/jacoco-unit.exec</sonar.jacoco.reportPath>
+    <sonar.jacoco.itReportPath>${coverage.reports.dir}/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
   </properties>
 
   <build>
@@ -104,7 +110,33 @@
           </execution>
         </executions>
       </plugin>
+      
       <!-- [01] -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jacoco</groupId>
+                  <artifactId>org.jacoco.agent.rt</artifactId>
+                  <version>0.5.4.201111111111</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <destFileName>jacocoagent.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <!-- Copy SQL files to local project and filter them. This could be done with sql-maven-plugin version 1.4 but this
         version has issues. For some reason, the resources plugin does not follow the defined plugin-order sometimes and
         to ensure
@@ -560,6 +592,7 @@
         <version>2.10</version>
         <configuration>
           <skipTests>true</skipTests>
+          <argLine>-javaagent:${project.build.directory}/jacocoagent.jar=destfile=${sonar.jacoco.reportPath}</argLine>
         </configuration>
         <dependencies>
           <dependency>
@@ -600,33 +633,10 @@
           </systemproperties>
           <redirectTestOutputToFile>${project.build.directory}/test-output.log</redirectTestOutputToFile>
           <forkMode>always</forkMode>
-          <argLine>-Xmx1024m -XX:MaxPermSize=320m</argLine>
+          <argLine>-Xmx1024m -XX:MaxPermSize=320m -javaagent:${project.build.directory}/jacocoagent.jar=destfile=${sonar.jacoco.itReportPath}</argLine>
           <failIfNoTests>true</failIfNoTests>
         </configuration>
       </plugin>
-
-      <!-- [08] -->
-      <!-- <plugin> -->
-      <!-- <groupId>org.apache.jmeter</groupId> -->
-      <!-- <artifactId>maven-jmeter-plugin</artifactId> -->
-      <!-- <version>1.0-GA</version> -->
-      <!-- <executions> -->
-      <!-- <execution> -->
-      <!-- <id>jmeter-tests</id> -->
-      <!-- <phase>integration-test</phase> -->
-      <!-- <goals> -->
-      <!-- <goal>jmeter</goal> -->
-      <!-- </goals> -->
-      <!-- <configuration> -->
-      <!-- <reportDir>${project.build.directory}/jmeter-reports</reportDir> -->
-      <!-- <jmeterUserProperties> -->
-      <!-- <hostname>localhost</hostname> -->
-      <!-- <port>${escidoc.server.port}</port> -->
-      <!-- </jmeterUserProperties> -->
-      <!-- </configuration> -->
-      <!-- </execution> -->
-      <!-- </executions> -->
-      <!-- </plugin> -->
 
     </plugins>
   </build>
@@ -643,7 +653,7 @@
     <dependency>
       <groupId>org.escidoc</groupId>
       <artifactId>testdata</artifactId>
-      <version>0.0.2-alpha4</version>
+      <version>0.0.3-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -865,6 +875,7 @@
       <artifactId>escidoc-core-war</artifactId>
       <type>war</type>
     </dependency>
+    
   </dependencies>
 
   <!-- <profiles> -->
@@ -970,4 +981,5 @@
   <!-- </build> -->
   <!-- </profile> -->
   <!-- </profiles> -->
+  
 </project>
