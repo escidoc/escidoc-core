@@ -75,6 +75,8 @@ public class ItemRetrievePropertiesIT extends ItemTestBase {
     public void testOMRIP1() throws Exception {
 
         String properties = retrieveProperties(ITEM_ID);
+        assertXmlValidItem(properties);
+
         assertItemProperties(properties, toString(selectSingleNode(EscidocAbstractTest.getDocument(ITEM_XML),
             "/item/properties"), true), "/ir/item/" + ITEM_ID + "/properties",
             getLastModificationDateValue(CREATED_ITEM), startTimestamp);

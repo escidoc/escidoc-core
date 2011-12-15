@@ -457,6 +457,18 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         doTestFilterContainersStatus("submitted", true);
     }
 
+    /**
+     * Test retrieve of Container properties.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void retrieveProperties() throws Exception {
+
+        String propertiesXml = retrieveProperties(this.theContainerId);
+        assertXmlValidContainer(propertiesXml);
+    }
+
     @Test
     public void testRetrieveMembers() throws Exception {
         // make list from containers struct map
