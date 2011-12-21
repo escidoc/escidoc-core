@@ -30,6 +30,7 @@ package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -725,12 +726,22 @@ public class SearchTest extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
-        String[] valuesToCheck =
+        String[] valuesToCheck;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            valuesToCheck = new String[]
             { "", "1980-01-28|Antriebsvorrichtung aus einem", "1980-01-27|Verfahren und Vorrichtung",
                 "1980-01-27|Verfahren zum Vermessen", "1980-01-27|Verfahren zur Steuerung",
                 "1980-01-26|Methode zum Auffinden", "1980-01-26|Methode zur Herstellung",
                 "1980-01-26|Verfahren zur direkten", "1980-01-25|Berührungs- bzw. Einklemmschutz",
                 "1980-01-25|Elektrochemischer Gassensor", "1980-01-25|Verfahren zur thermischen" };
+        } else {
+            valuesToCheck = new String[]
+            { "", "1980-01-28|Antriebsvorrichtung aus einem", "1980-01-27|Verfahren und Vorrichtung",
+                "1980-01-27|Verfahren zum Vermessen", "1980-01-27|Verfahren zur Steuerung",
+                "1980-01-26|Methode zum Auffinden", "1980-01-26|Methode zur Herstellung",
+                "1980-01-26|Verfahren zur direkten", "1980-01-25|Ber&#xFC;hrungs- bzw. Einklemmschutz",
+                "1980-01-25|Elektrochemischer Gassensor", "1980-01-25|Verfahren zur thermischen" };
+        }
         assertEquals(records.length, valuesToCheck.length);
         for (int i = 1; i < records.length; i++) {
             String[] parts = valuesToCheck[i].split("\\|");
@@ -758,14 +769,26 @@ public class SearchTest extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
-        String[] valuesToCheck =
+        String[] valuesToCheck;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            valuesToCheck = new String[]
             { "", "ÄDriving device consisting of a motor and a gear",
                 "äProcess for controlling a long-stroke positioning", "aMethod of retreiving documents",
                 "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
                 "ÖMethod and device for calibrating the penetration", "öMETHOD FOR PRODUCING A BIOACTIVE",
                 "Process of thermal oxidation of an implanted semiconductor",
                 "üMETHOD FOR DIRECT METHANE PYROLYSIS", "ÜMethod of measuring a borehole" };
+        } else {
+            valuesToCheck = new String[]
+            { "", "&#xC4;Driving device consisting of a motor and a gear",
+                "&#xE4;Process for controlling a long-stroke positioning", "aMethod of retreiving documents",
+                "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
+                "&#xD6;Method and device for calibrating the penetration", "&#xF6;METHOD FOR PRODUCING A BIOACTIVE",
+                "Process of thermal oxidation of an implanted semiconductor",
+                "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS", "&#xDC;Method of measuring a borehole" };
+        }
         assertEquals(records.length, valuesToCheck.length);
+        
         for (int i = 1; i < records.length; i++) {
             if (!records[i].toLowerCase().matches(
                 "(?s).*<dcterms:alternative.*?>" + valuesToCheck[i].toLowerCase() + ".*")) {
