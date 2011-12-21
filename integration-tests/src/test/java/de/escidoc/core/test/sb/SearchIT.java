@@ -753,8 +753,8 @@ public class SearchIT extends SearchTestBase {
                 "äProcess for controlling a long-stroke positioning", "aMethod of retreiving documents",
                 "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
                 "ÖMethod and device for calibrating the penetration", "öMETHOD FOR PRODUCING A BIOACTIVE",
-                "Process of thermal oxidation of an implanted semiconductor",
-                "üMETHOD FOR DIRECT METHANE PYROLYSIS", "ÜMethod of measuring a borehole" };
+                "Process of thermal oxidation of an implanted semiconductor", "üMETHOD FOR DIRECT METHANE PYROLYSIS",
+                "ÜMethod of measuring a borehole" };
         assertEquals(records.length, valuesToCheck.length);
         for (int i = 1; i < records.length; i++) {
             if (!records[i].toLowerCase(Locale.ENGLISH).matches(

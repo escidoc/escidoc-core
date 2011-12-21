@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -103,6 +104,19 @@ public interface ContentModelHandlerInterface extends IngestableResource {
 
     EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
         throws ContentModelNotFoundException, SystemException, ContentStreamNotFoundException, InvalidStatusException;
+
+    /**
+     * Retrieves the subresource properties.
+     *
+     * @param id The id of the resource.
+     * @return Returns the value of the subresource.
+     * @throws ContentModelNotFoundException Thrown if a Content Model with the specified id could not be found.
+     * @throws MissingMethodParameterException
+     *                               If a mandatory parameter value is missing.
+     * @throws SystemException       If an unexpected error occurs.
+     */
+    String retrieveProperties(final String id) throws ContentModelNotFoundException, MissingMethodParameterException,
+        SystemException;
 
     /**
      * Retrieves the resources of the specified content model.

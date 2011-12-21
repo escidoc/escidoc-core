@@ -243,6 +243,18 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface#retrieveProperties(java.lang.String)
+     */
+    @Override
+    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException {
+
+        setContentModel(id);
+        return renderProperties();
+    }
+
     @Override
     public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException {
         setContentModel(id);

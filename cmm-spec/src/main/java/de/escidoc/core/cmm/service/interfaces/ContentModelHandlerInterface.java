@@ -132,6 +132,34 @@ public interface ContentModelHandlerInterface extends IngestableResource {
         MissingMethodParameterException, SystemException;
 
     /**
+     * Retrieve the Properties of an Content Model.<br/>
+     * <b>Prerequisites:</b><br/>
+     * The Content Model must exist<br/>
+     * <b>Tasks:</b><br/>
+     * <ul>
+     * <li>The Content Model is accessed using the provided reference.</li>
+     * <li>Retrieve the properties of the Content Model.</li>
+     * <li>The XML representation of the Content Model properties corresponding to XML schema is returned as output.</li>
+     * </ul>
+     * 
+     * @param id
+     *            The id of the resource.
+     * @return Returns the XML representation of the Content Model properties corresponding to XML schema.
+     * @throws ContentModelNotFoundException
+     *             Thrown if a Content Model with the specified id cannot be found.
+     * @throws AuthenticationException
+     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws AuthorizationException
+     *             Thrown if the authorization fails.
+     * @throws MissingMethodParameterException
+     *             If no data is provided.
+     * @throws SystemException
+     *             If an error occurs.
+     */
+    String retrieveProperties(final String id) throws ContentModelNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException;
+
+    /**
      * Retrieve the resources of the specified Content Model.<br/>
      * <p/>
      * <b>Prerequisites:</b><br/>

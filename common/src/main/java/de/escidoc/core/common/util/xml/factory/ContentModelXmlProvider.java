@@ -115,6 +115,20 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
+     * Get the eSciDoc XML properties document to deliver.
+     * 
+     * @param properties
+     *            Map of values.
+     * @return The eSciDoc Content Model properties document.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     */
+    public String getContentModelPropertiesXml(final Map<String, String> properties) throws WebserverSystemException {
+
+        return getXml(PROPERTIES_RESOURCE_NAME, PATH, properties);
+    }
+
+    /**
      * Get the eSciDoc XML document to deliver.
      *
      * @param properties Map of values.

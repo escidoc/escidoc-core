@@ -65,6 +65,14 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         return ContentModelXmlProvider.getInstance().getContentModelXml(values);
     }
 
+    protected String renderProperties() throws WebserverSystemException {
+
+        final Map<String, String> values = getCommonValues(getContentModel());
+        values.putAll(getResourcesValues(getContentModel()));
+        values.put(XmlTemplateProviderConstants.IS_ROOT_RESOURCES, XmlTemplateProviderConstants.TRUE);
+        return ContentModelXmlProvider.getInstance().getContentModelPropertiesXml(values);
+    }
+
     // TODO ContentHandlerRetrieve ?
     protected String renderResources() throws WebserverSystemException {
 
