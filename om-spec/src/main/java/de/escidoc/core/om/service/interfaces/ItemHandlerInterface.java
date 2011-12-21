@@ -1296,8 +1296,8 @@ public interface ItemHandlerInterface {
      * <b>Tasks:</b><br/>
      * <ul>
      * <li>The Item is accessed using the provided reference.</li>
-     * <li>Retrieve the properties of the Item. This includes the Content Type specific properties, too.</li>
-     * <li>The XML representation of the Item properties corresponding to XML-schema is returned as output.</li>
+     * <li>Retrieve the properties of the Item.</li>
+     * <li>The XML representation of the Item properties corresponding to XML schema is returned as output.</li>
      * </ul>
      * 
      * @param id

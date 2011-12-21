@@ -25,9 +25,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Content Model specific implementation of XmlTemplateProviderConstants using the velocity template engine.<br> This
- * implementation uses the velocity singleton pattern.
- *
+ * Content Model specific implementation of XmlTemplateProviderConstants using the velocity template engine.<br>
+ * This implementation uses the velocity singleton pattern.
+ * 
  * @author Frank Schwichtenberg
  * @see InfrastructureXmlProvider
  */
@@ -104,10 +104,12 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the eSciDoc XML document to deliver.
-     *
-     * @param values Map of values.
+     * 
+     * @param values
+     *            Map of values.
      * @return The eSciDoc Content Model document.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public String getContentModelXml(final Map<String, Object> values) throws WebserverSystemException {
 
@@ -115,11 +117,27 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
+     * Get the eSciDoc XML properties document to deliver.
+     * 
+     * @param properties
+     *            Map of values.
+     * @return The eSciDoc Content Model properties document.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     */
+    public String getContentModelPropertiesXml(final Map<String, String> properties) throws WebserverSystemException {
+
+        return getXml(PROPERTIES_RESOURCE_NAME, PATH, properties);
+    }
+
+    /**
      * Get the eSciDoc XML document to deliver.
-     *
-     * @param properties Map of values.
+     * 
+     * @param properties
+     *            Map of values.
      * @return The eSciDoc Content Model Resources document.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     public String getContentModelResourcesXml(final Map<String, String> properties) throws WebserverSystemException {
 
@@ -128,10 +146,12 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the eSciDoc XML document to deliver.
-     *
-     * @param values Map of values.
+     * 
+     * @param values
+     *            Map of values.
      * @return The eSciDoc Content Model Content Streams document.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     @Deprecated
     public String getContentStreamsXml(final Map<String, Object> values) throws WebserverSystemException {
@@ -141,10 +161,12 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Get the eSciDoc XML document to deliver.
-     *
-     * @param values Map of values.
+     * 
+     * @param values
+     *            Map of values.
      * @return The eSciDoc Content Model Content Stream document.
-     * @throws WebserverSystemException If an error occurs.
+     * @throws WebserverSystemException
+     *             If an error occurs.
      */
     @Deprecated
     public String getContentStreamXml(final Map<String, Object> values) throws WebserverSystemException {
@@ -154,7 +176,7 @@ public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     /**
      * Returns an instance of this.
-     *
+     * 
      * @return The singleton.
      */
     public static ContentModelXmlProvider getInstance() {

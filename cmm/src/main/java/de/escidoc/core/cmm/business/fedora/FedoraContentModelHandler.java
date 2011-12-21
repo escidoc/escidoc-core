@@ -44,6 +44,7 @@ import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
+import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitionCreate;
@@ -58,6 +59,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -243,6 +245,18 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface#retrieveProperties(java.lang.String)
+     */
+    @Override
+    public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException {
+
+        setContentModel(id);
+        return renderProperties();
+    }
+
     @Override
     public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException {
         setContentModel(id);
@@ -320,8 +334,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Retrieves a filtered list of Content Models.
-     *
-     * @param parameters parameters from the SRU request
+     * 
+     * @param parameters
+     *            parameters from the SRU request
      * @return Returns XML representation of the list of Content Model objects.
      */
     @Override
@@ -637,8 +652,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Render service definition FoXML.
-     *
-     * @param resourceDefinition The resource definition create object.
+     * 
+     * @param resourceDefinition
+     *            The resource definition create object.
      * @return FoXML representation of service definition.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -650,8 +666,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Render service deployment FoXML.
-     *
-     * @param resourceDefinition The resource definition create object.
+     * 
+     * @param resourceDefinition
+     *            The resource definition create object.
      * @return FoXML representation of service deployment.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -676,6 +693,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     /**
      * Creates Stream objects from the values in {@code contentStreamMap} and calls Item.setContentStreams with a
      * HashMap which contains the metadata datastreams as Stream objects.
+     * 
      * @param contentStreams
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
@@ -720,9 +738,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Check if the requested item version is the latest version.
-     *
-     * @throws ReadonlyVersionException If the requested item version is not the latest one.
-     * @throws IntegritySystemException 
+     * 
+     * @throws ReadonlyVersionException
+     *             If the requested item version is not the latest one.
+     * @throws IntegritySystemException
      */
     protected void checkLatestVersion() throws ReadonlyVersionException, IntegritySystemException {
         final String thisVersion = getContentModel().getVersionNumber();
@@ -735,8 +754,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
      * Validate the Content Model structure in general (independent if create or ingest was selected).
      * <p/>
      * Checks if all required values are set and consistent.
-     *
-     * @param item The item which is to validate.
+     * 
+     * @param item
+     *            The item which is to validate.
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private static void validate(final ContentModelCreate item) throws InvalidContentException {
@@ -758,9 +778,11 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     /**
      * Check if the name attribute of Metadata Records is unique and at least one Metadata Record has the name
      * "escidoc".
-     *
-     * @param item Item which is to validate.
-     * @throws InvalidContentException Thrown if content is invalid.
+     * 
+     * @param item
+     *            Item which is to validate.
+     * @throws InvalidContentException
+     *             Thrown if content is invalid.
      */
     private static void checkMetadataRecords(final ContentModelCreate item) throws InvalidContentException {
 
@@ -785,11 +807,16 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * @param xml
-     * @throws WebserverSystemException       If an error occurs.
-     * @throws InvalidContentException        If invalid content is found.
-     * @throws MissingAttributeValueException If a required attribute can not be found.
-     * @throws XmlParserSystemException       If an unexpected error occurs while parsing.
-     * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
+     * @throws WebserverSystemException
+     *             If an error occurs.
+     * @throws InvalidContentException
+     *             If invalid content is found.
+     * @throws MissingAttributeValueException
+     *             If a required attribute can not be found.
+     * @throws XmlParserSystemException
+     *             If an unexpected error occurs while parsing.
+     * @throws XmlCorruptedException
+     *             Thrown if the schema validation of the provided data failed.
      * @return
      */
     private static ContentModelCreate parseContentModel(final String xml) throws WebserverSystemException,
@@ -824,9 +851,11 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Check if the content model is locked.
-     *
-     * @throws WebserverSystemException Thrown in case of an internal error.
-     * @throws LockingException         If the item is locked and the current user is not the one who locked it.
+     * 
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @throws LockingException
+     *             If the item is locked and the current user is not the one who locked it.
      */
     protected void checkLocked() throws LockingException, WebserverSystemException {
         if (getContentModel().isLocked() && !getContentModel().getLockOwner().equals(Utility.getCurrentUser()[0])) {
@@ -837,8 +866,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Set the SRURequest object.
-     *
-     * @param sruRequest SRURequest
+     * 
+     * @param sruRequest
+     *            SRURequest
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -868,10 +898,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Notify the listeners that a Content Model was modified.
-     *
-     * @param id      Content Model id
-     * @param xmlData complete Content Model XML
-     * @throws SystemException One of the listeners threw an exception.
+     * 
+     * @param id
+     *            Content Model id
+     * @param xmlData
+     *            complete Content Model XML
+     * @throws SystemException
+     *             One of the listeners threw an exception.
      */
     private void fireContentModelModified(final String id, final String xmlData) throws SystemException {
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
@@ -881,10 +914,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Notify the listeners that an Content Model was created.
-     *
-     * @param id      Content Model id
-     * @param xmlData complete Content Model XML
-     * @throws SystemException One of the listeners threw an exception.
+     * 
+     * @param id
+     *            Content Model id
+     * @param xmlData
+     *            complete Content Model XML
+     * @throws SystemException
+     *             One of the listeners threw an exception.
      */
     private void fireContentModelCreated(final String id, final String xmlData) throws SystemException {
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
@@ -894,9 +930,11 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
 
     /**
      * Notify the listeners that an Content Model was deleted.
-     *
-     * @param id Content Model id
-     * @throws SystemException One of the listeners threw an exception.
+     * 
+     * @param id
+     *            Content Model id
+     * @throws SystemException
+     *             One of the listeners threw an exception.
      */
     private void fireContentModelDeleted(final String id) throws SystemException {
         for (final ResourceListener contentModelListener : this.contentModelListeners) {
