@@ -30,7 +30,6 @@ package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -727,7 +726,7 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
         String[] valuesToCheck;
-        if (getTransport() == Constants.TRANSPORT_REST) {
+        if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
             valuesToCheck = new String[]
             { "", "1980-01-28|Antriebsvorrichtung aus einem", "1980-01-27|Verfahren und Vorrichtung",
                 "1980-01-27|Verfahren zum Vermessen", "1980-01-27|Verfahren zur Steuerung",
@@ -770,7 +769,7 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         String[] records = response.split("<record>");
         String[] valuesToCheck;
-        if (getTransport() == Constants.TRANSPORT_REST) {
+        if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
             valuesToCheck = new String[]
             { "", "ÄDriving device consisting of a motor and a gear",
                 "äProcess for controlling a long-stroke positioning", "aMethod of retreiving documents",
