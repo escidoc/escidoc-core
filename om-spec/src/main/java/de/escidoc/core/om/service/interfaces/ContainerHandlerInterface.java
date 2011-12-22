@@ -763,7 +763,7 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam contains invalid data.
      */
-    @Validate(param = 2, resolver = "getContainerSchemaLocation")
+    @Validate(param = 1, resolver = "getContainerSchemaLocation")
     String createMdRecord(final String id, final String xmlData) throws ContainerNotFoundException,
         InvalidXmlException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException;
