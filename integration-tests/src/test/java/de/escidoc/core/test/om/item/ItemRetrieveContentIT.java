@@ -80,7 +80,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
 
     /**
-     * Test retrieving the binary content of an Item.
+     * Test retrieving the binary content of an Item, see issue INFR-1355.
      *
      * @throws Exception If anything fails.
      */
@@ -601,7 +601,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
     }
 
     /**
-     * Create an Item with an image as content.
+     * Create an Item with an image as content (and two dots in file name, see issue INFR-1355).
      * 
      * @return objid of Item
      */
