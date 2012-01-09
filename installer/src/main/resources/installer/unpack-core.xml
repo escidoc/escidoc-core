@@ -337,7 +337,7 @@
 
   <target name="fedoragsearch" depends="init" description="Installs Fedora gsearch">
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/services/fedoragsearch_full-${FedoraGsearchVersion}.war" />
+      <param name="source" value="${install.dir}/services/fedoragsearch-${FedoraGsearchVersion}.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/fedoragsearch.war" />
     </antcall>
   </target>
@@ -345,9 +345,9 @@
   <target name="srw" depends="init" description="Installs Search and Retrieval Webservice">
   	<!-- add isolation -->
   	<jar basedir="${install.dir}/install.tmp/srw" update="yes" 
-  	     destfile="${install.dir}/services/srw_full-${SrwVersion}.war" includes="WEB-INF/jboss-web.xml" />
+  	     destfile="${install.dir}/services/srw-${SrwVersion}.war" includes="WEB-INF/jboss-web.xml" />
     <antcall target="move-file-with-save">
-      <param name="source" value="${install.dir}/services/srw_full-${SrwVersion}.war" />
+      <param name="source" value="${install.dir}/services/srw-${SrwVersion}.war" />
       <param name="target" value="${install.dir}/jboss/server/default/deploy/srw.war" />
     </antcall>
   	

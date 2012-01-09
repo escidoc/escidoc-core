@@ -500,13 +500,13 @@
 
         <pack name="Fedora GSearch" id="fedoragsearch.package" parent="tools.package" required="yes">
             <description/>
-            <file src="packages/fedoragsearch/fedoragsearch_full-${FedoraGsearchVersion}.war" targetdir="$INSTALL_PATH/services" />
+            <file src="packages/fedoragsearch/fedoragsearch-${FedoraGsearchVersion}.war" targetdir="$INSTALL_PATH/services" />
         </pack>
 
         <pack name="SRW" id="srw.package" parent="tools.package" required="yes">
             <description/>
             <file src="../staging/srw/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/srw/WEB-INF" />
-            <file src="packages/srw/srw_full-${SrwVersion}.war" targetdir="$INSTALL_PATH/services" />
+            <file src="packages/srw/srw-${SrwVersion}.war" targetdir="$INSTALL_PATH/services" />
         </pack>
         
         <pack name="Saxon" id="saxon.package" parent="tools.package" required="yes">

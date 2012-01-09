@@ -28,9 +28,9 @@
   <dependencySets>
     <dependencySet>
       <includes>
-        <include>org.escidoc:fedoragsearch_src:zip:${escidoc.fedoragsearch.version}</include>
-        <include>org.escidoc:srw_src:zip:${escidoc.srw.version}</include>
-        <include>org.escidoc:SRW_src:zip:${srw.version}</include>
+        <include>org.escidoc:fedoragsearch:zip:sources</include>
+        <include>org.escidoc:srw:zip:sources</include>
+        <include>org.escidoc:SRW:zip:sources</include>
       </includes>
     </dependencySet>
   </dependencySets>
