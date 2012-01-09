@@ -14,7 +14,7 @@
 
   <properties>
     <staging.dir>${project.build.directory}/staging</staging.dir>
-    <izpack.standalone.compiler.version>4.3.3</izpack.standalone.compiler.version>
+    <izpack.standalone.compiler.version>4.3.5</izpack.standalone.compiler.version>
     <ant.version>1.8.2</ant.version>
     <ant-nodeps.version>1.8.1</ant-nodeps.version>
     <ant-launcher.version>1.8.2</ant-launcher.version>
