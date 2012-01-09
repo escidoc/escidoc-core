@@ -85,13 +85,13 @@
     </dependency>
     <dependency>
       <groupId>org.escidoc</groupId>
-      <artifactId>fedoragsearch_full</artifactId>
+      <artifactId>fedoragsearch</artifactId>
       <version>${escidoc.fedoragsearch.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.escidoc</groupId>
-      <artifactId>srw_full</artifactId>
+      <artifactId>srw</artifactId>
       <version>${escidoc.srw.version}</version>
       <type>war</type>
     </dependency>
@@ -361,7 +361,7 @@
 
                 <artifactItem>
                   <groupId>org.escidoc</groupId>
-                  <artifactId>fedoragsearch_full</artifactId>
+                  <artifactId>fedoragsearch</artifactId>
                   <version>${escidoc.fedoragsearch.version}</version>
                   <type>war</type>
                   <overWrite>false</overWrite>
@@ -370,7 +370,7 @@
 
                 <artifactItem>
                   <groupId>org.escidoc</groupId>
-                  <artifactId>srw_full</artifactId>
+                  <artifactId>srw</artifactId>
                   <version>${escidoc.srw.version}</version>
                   <type>war</type>
                   <overWrite>false</overWrite>

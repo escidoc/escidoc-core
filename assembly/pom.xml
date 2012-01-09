@@ -16,19 +16,22 @@
 	<dependencies>
       <dependency>
         <groupId>org.escidoc</groupId>
-        <artifactId>srw_src</artifactId>
+        <artifactId>srw</artifactId>
+        <classifier>sources</classifier>
         <type>zip</type>
         <version>${escidoc.srw.version}</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
-        <artifactId>fedoragsearch_src</artifactId>
+        <artifactId>fedoragsearch</artifactId>
         <type>zip</type>
+        <classifier>sources</classifier>
         <version>${escidoc.fedoragsearch.version}</version>
       </dependency>
       <dependency>
         <groupId>org.escidoc</groupId>
-        <artifactId>SRW_src</artifactId>
+        <artifactId>SRW</artifactId>
+        <classifier>sources</classifier>
         <type>zip</type>
         <version>${srw.version}</version>
       </dependency>
