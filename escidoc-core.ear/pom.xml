@@ -123,11 +123,13 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
+        	<classifier>nolibs</classifier>
 			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>srw</artifactId>
+        	<classifier>nolibs</classifier>
 			<type>war</type>
 		</dependency>
 		<dependency>
