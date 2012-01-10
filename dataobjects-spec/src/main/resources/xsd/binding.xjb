@@ -36,7 +36,7 @@
   </bindings>
   <bindings schemaLocation="components.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.componets" />
+      <package name="org.escidoc.core.domain.components" />
     </schemaBindings>
     <bindings node="//xs:element[@name='component']">
       <class name="ComponentTO" />
@@ -651,4 +651,97 @@
       <package name="org.escidoc.core.domain.sru.diagnostics"/>
     </schemaBindings>
   </bindings>
+  
+  <!-- task param -->
+  <bindings schemaLocation="assign-pid-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="AssignPidTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="id-set-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="IdSetTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="members-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="MembersTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="optimistic-locking-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="OptimisticLockingTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="reindex-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="ReindexTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="relation-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="RelationTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="revoke-grant-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="RevokeGrantTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="revoke-grants-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="RevokeGrantsTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="status-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="StatusTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="update-password-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="UpdatePasswordTaskParamTO" />
+    </bindings>
+  </bindings>
+
+  <!-- result -->
+  <bindings schemaLocation="result.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='result']">
+      <class name="ResultTO" />
+    </bindings>
+  </bindings>
+  
 </bindings>
