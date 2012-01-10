@@ -17,20 +17,17 @@
   ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
   ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
   ~ terms.
-  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	targetNamespace="http://www.escidoc.org/schemas/deletion-task-param/0.1" 
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="param">
-		<xs:annotation>
-			<xs:documentation>
-				Task parameter for delete method on Admin Service.
-			</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="id" type="xs:token" minOccurs="0" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.escidoc.org/schemas/id-set-task-param/0.1"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="param">
+    <xs:annotation>
+      <xs:documentation>Task parameter for id set oriented tasks.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:ID" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -235,7 +235,7 @@ public final class XmlUtility {
 
     private static String assignPidTaskParamSchemaLocation;
 
-    private static String deletionTaskParamSchemaLocation;
+    private static String idSetTaskParamSchemaLocation;
 
     private static String relationTaskParamSchemaLocation;
 
@@ -1982,11 +1982,11 @@ public final class XmlUtility {
      * @return Returns the DeletionTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
-    public static String getDeletionTaskParamSchemaLocation() {
-        if (deletionTaskParamSchemaLocation == null) {
-            deletionTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/deletion-task-param.xsd";
+    public static String getIdSetTaskParamSchemaLocation() {
+        if (idSetTaskParamSchemaLocation == null) {
+            idSetTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/id-set-task-param.xsd";
         }
-        return deletionTaskParamSchemaLocation;
+        return idSetTaskParamSchemaLocation;
     }
 
     /**

@@ -2689,6 +2689,29 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task param XML for add/remove members methods (see members-task-param.xsd)
+     * 
+     * @param timestamp
+     *            Last modification date
+     * @param ids
+     *            member id parameter
+     * @return task param XML (assign-pid-task-param.xsd)
+     */
+    public static String getIdSetTaskParam(final Set<String> ids) {
+
+        StringBuilder xml = new StringBuilder(de.escidoc.core.test.Constants.XML_HEADER);
+        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/id-set-task-param/0.1\">\n");
+
+        for (String id : ids) {
+            xml.append("<id>" + id + "</id>\n");
+        }
+
+        xml.append("</param>\n");
+
+        return xml.toString();
+    }
+
+    /**
      * Get task param XML for assing PID methods (see assing-pid-task-param.xsd)
      * 
      * @param timestamp
