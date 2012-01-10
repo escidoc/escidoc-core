@@ -317,7 +317,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getActivationTaskParam(lastModificationDate);
+        String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
         try {
             deactivate(id, taskParamXML);
@@ -337,7 +337,7 @@ public class UserGroupIT extends UserGroupTestBase {
             assertDeactiveUserGroup(retrievedUserGroupXML, createdXml, startTimestamp, beforeDeactivationTimestamp,
                 true);
         lastModificationDate = getLastModificationDateValue2(retrievedDeactivatedDocument);
-        taskParamXML = getActivationTaskParam(lastModificationDate);
+        taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         final String beforeActivationTimestamp = getNowAsTimestamp();
 
@@ -370,7 +370,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -388,7 +388,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug2_2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -406,7 +406,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug3() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -427,7 +427,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             activate(id, taskParamXML);
@@ -470,7 +470,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
 
@@ -504,7 +504,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -522,7 +522,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug2_2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -540,7 +540,7 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug3() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -561,7 +561,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        String taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         String xmlData = null;
         try {
@@ -581,7 +581,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document document = EscidocAbstractTest.getDocument(xmlData);
         assertXmlExists("Last modification date does not exist. ", createdDocument, XPATH_USER_GROUP_LAST_MOD_DATE);
         lastModificationDate = selectSingleNode(document, XPATH_USER_GROUP_LAST_MOD_DATE).getTextContent();
-        taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         try {
             deactivate(id, taskParamXML);
@@ -997,7 +997,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             deactivate(id, taskParamXML);

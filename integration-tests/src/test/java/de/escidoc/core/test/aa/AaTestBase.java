@@ -2308,10 +2308,11 @@ public class AaTestBase extends EscidocAbstractTest {
             PWCallback.setHandle(userHandle);
             if (status != null) {
                 contentRelationClient.lock(getObjidValue(document),
-                    getLockTaskParam(getLastModificationDateValue2(document)));
+                    getOptimisticLockingTaskParam(getLastModificationDateValue2(document)));
             }
             else {
-                contentRelationClient.lock(UNKNOWN_ID, getLockTaskParam(getLastModificationDateValue2(document)));
+                contentRelationClient.lock(UNKNOWN_ID,
+                    getOptimisticLockingTaskParam(getLastModificationDateValue2(document)));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -2366,16 +2367,19 @@ public class AaTestBase extends EscidocAbstractTest {
         Document document = EscidocAbstractTest.getDocument(createdXml);
         final String objId = getObjidValue(document);
         createdXml =
-            handleResult(contentRelationClient.lock(objId, getLockTaskParam(getLastModificationDateValue2(document))));
+            handleResult(contentRelationClient.lock(objId,
+                getOptimisticLockingTaskParam(getLastModificationDateValue2(document))));
         document = EscidocAbstractTest.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             if (status != null) {
-                contentRelationClient.unlock(objId, getLockTaskParam(getLastModificationDateValue2(document)));
+                contentRelationClient.unlock(objId,
+                    getOptimisticLockingTaskParam(getLastModificationDateValue2(document)));
             }
             else {
-                contentRelationClient.unlock(UNKNOWN_ID, getLockTaskParam(getLastModificationDateValue2(document)));
+                contentRelationClient.unlock(UNKNOWN_ID,
+                    getOptimisticLockingTaskParam(getLastModificationDateValue2(document)));
             }
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);

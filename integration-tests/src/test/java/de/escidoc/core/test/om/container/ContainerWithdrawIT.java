@@ -342,7 +342,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            lock(theContainerId, getLockTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
+            lock(theContainerId,
+                getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
             fail("Lock after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {

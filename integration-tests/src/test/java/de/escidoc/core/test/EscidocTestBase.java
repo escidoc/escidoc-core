@@ -2605,17 +2605,17 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Get task parameter for lock method.
+     * Get task parameter for optimistic-locking method.
      * 
      * @param timestamp
      *            last-modification-date of the resource
      * @return task param XML (lock-task-param.xsd)
      */
-    public String getLockTaskParam(final DateTime timestamp) {
+    public String getOptimisticLockingTaskParam(final DateTime timestamp) {
 
         return de.escidoc.core.test.Constants.XML_HEADER
-            + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" last-modification-date=\""
-            + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
+            + "<param xmlns=\"http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1\" "
+            + "last-modification-date=\"" + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
     }
 
     /**
@@ -2637,20 +2637,6 @@ public abstract class EscidocTestBase {
         taskParamXml += "</param>\n";
 
         return taskParamXml;
-    }
-
-    /**
-     * Get task parameter for activation (activate/deactivate) method.
-     * 
-     * @param timestamp
-     *            last-modification-date of the resource
-     * @return task param XML (activation-task-param.xsd)
-     */
-    public String getActivationTaskParam(final DateTime timestamp) {
-
-        return de.escidoc.core.test.Constants.XML_HEADER
-            + "<param xmlns=\"http://www.escidoc.org/schemas/activation-task-param/0.1\" last-modification-date=\""
-            + DateTimeJaxbConverter.printDate(timestamp) + "\" />";
     }
 
     /**
@@ -2682,7 +2668,7 @@ public abstract class EscidocTestBase {
      * 
      * @param timestamp
      *            Last modification date
-     * @param ids 
+     * @param ids
      *            member id parameter
      * @return task param XML (assign-pid-task-param.xsd)
      */

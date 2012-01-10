@@ -241,7 +241,7 @@ public final class XmlUtility {
 
     private static String statusTaskParamSchemaLocation;
 
-    private static String lockTaskParamSchemaLocation;
+    private static String optimiticLockingTaskParamSchemaLocation;
 
     private static String reindexTaskParamSchemaLocation;
 
@@ -1923,17 +1923,6 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the ActivationTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getActivationTaskParamSchemaLocation() {
-        if (activationTaskParamSchemaLocation == null) {
-            activationTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/activation-task-param.xsd";
-        }
-        return activationTaskParamSchemaLocation;
-    }
-
-    /**
      * @return Returns the UpdatePasswordTaskParamSchemaLocation.
      * @throws WebserverSystemException In case of an error.
      */
@@ -2023,14 +2012,16 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the schema location of lock-task-param schema.
-     * @throws WebserverSystemException In case of an error.
+     * @return Returns the schema location of optimitic-locking-task-param schema.
+     * @throws WebserverSystemException
+     *             In case of an error.
      */
-    public static String getLockTaskParamSchemaLocation() {
-        if (lockTaskParamSchemaLocation == null) {
-            lockTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/lock-task-param.xsd";
+    public static String getOptimisticLockingTaskParamSchemaLocation() {
+        if (optimiticLockingTaskParamSchemaLocation == null) {
+            optimiticLockingTaskParamSchemaLocation =
+                getSchemaBaseUrl() + "rest/common/0.1/optimistic-locking-task-param.xsd";
         }
-        return lockTaskParamSchemaLocation;
+        return optimiticLockingTaskParamSchemaLocation;
     }
 
     /**

@@ -1710,7 +1710,7 @@ public class ItemVersioningIT extends ItemTestBase {
         }
 
         try {
-            lock(theItemId, getLockTaskParam(lmd));
+            lock(theItemId, getOptimisticLockingTaskParam(lmd));
             fail("Lock after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {

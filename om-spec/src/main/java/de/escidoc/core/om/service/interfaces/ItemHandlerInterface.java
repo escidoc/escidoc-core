@@ -2084,7 +2084,7 @@ public interface ItemHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown if Item is in status withdrawn.
      */
-    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidContentException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
@@ -2142,7 +2142,7 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getLockTaskParamSchemaLocation")
+    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException;

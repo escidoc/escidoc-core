@@ -738,7 +738,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
         String result = retrieve(handlerCodeInt, idToLockUnlock);
         Document document = EscidocAbstractTest.getDocument(result);
-        String taskParam = getLockTaskParam(getLastModificationDateValue2(document));
+        String taskParam = getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
 
         //test locking the object
         try {
@@ -769,7 +769,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
         result = retrieve(handlerCodeInt, idToLockUnlock);
         document = EscidocAbstractTest.getDocument(result);
-        taskParam = getLockTaskParam(getLastModificationDateValue2(document));
+        taskParam = getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
         //unlock
         try {
             PWCallback.setHandle(handle);

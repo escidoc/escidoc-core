@@ -459,7 +459,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        String taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
         try {
             deactivate(id, taskParamXML);
@@ -479,7 +479,7 @@ public class UserAccountIT extends UserAccountTestBase {
             assertDeactiveUserAccount(retrievedUserAccountXML, createdXml, startTimestamp, beforeDeactivationTimestamp,
                 true);
         lastModificationDate = getLastModificationDateValue(retrievedDeactivatedDocument);
-        taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         final String beforeActivationTimestamp = getNowAsTimestamp();
 
@@ -513,7 +513,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAAAua2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
@@ -532,7 +532,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAAAua2_2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
@@ -551,7 +551,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAAAua3() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -573,7 +573,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             activate(id, taskParamXML);
@@ -620,7 +620,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
 
@@ -660,7 +660,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAADua2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
@@ -679,7 +679,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAADua2_2() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserAccountNotFoundException.class);
@@ -698,7 +698,7 @@ public class UserAccountIT extends UserAccountTestBase {
     @Test
     public void testAADua3() throws Exception {
 
-        final String taskParamXML = getActivationTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -720,7 +720,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        String taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         String xmlData = null;
         try {
@@ -740,7 +740,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document document = EscidocAbstractTest.getDocument(xmlData);
         assertXmlExists("Last modification date does not exist. ", createdDocument, XPATH_USER_ACCOUNT_LAST_MOD_DATE);
         lastModificationDate = selectSingleNode(document, XPATH_USER_ACCOUNT_LAST_MOD_DATE).getTextContent();
-        taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         try {
             deactivate(id, taskParamXML);
@@ -1193,7 +1193,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getActivationTaskParam(new DateTime(lastModificationDate));
+        String taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
         deactivate(id, taskParamXML);
 
         DateTime lastModificationDate2 = new DateTime(getLastModificationDateValue(getDocument(retrieve(id))));
@@ -1489,7 +1489,7 @@ public class UserAccountIT extends UserAccountTestBase {
         final String loginName =
             selectSingleNodeAsserted(createdDocument, XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getActivationTaskParam(lastModificationDate);
+        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             deactivate(id, taskParamXML);
