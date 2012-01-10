@@ -293,21 +293,13 @@ public class ContentModelTestBase extends CmmTestBase {
                 }
 
                 // check behavior
-
-                System.out.println(getFrameworkUrl() + "/ir/item/" + getObjidValue(getDocument(itemXml))
-                    + "/resources/trans");
-
                 HttpResponse httpRes =
                     HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/item/"
                         + getObjidValue(getDocument(itemXml)) + "/resources/trans", null, MimeTypes.TEXT_XML, null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
 
-                System.out.println(httpRes);
-                System.out.println(resultCheckString);
-
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
-
             }
             // else if(contentModel.isContainerContentModel)
             {
