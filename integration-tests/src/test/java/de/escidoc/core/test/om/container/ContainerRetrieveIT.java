@@ -656,7 +656,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         assertXmlExists("struct-map", containerXml, "/container/struct-map");
 
         String structMap = retrieveStructMap(theContainerId);
-        // assertXmlStructMap(structMap);
+        assertXmlValidStructMap(structMap);
     }
 
     /***************************************************************************
