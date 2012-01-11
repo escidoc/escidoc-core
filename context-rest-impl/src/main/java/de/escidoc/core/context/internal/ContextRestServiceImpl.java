@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
@@ -22,6 +23,7 @@ import org.escidoc.core.domain.sru.ScanRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
@@ -255,17 +257,14 @@ public class ContextRestServiceImpl implements ContextRestService {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveMembers(java.lang.String, java.util.Map)
-     */
-    @Override
-    public String retrieveMembers(final String id, final Map<String, String[]> filter) throws ContextNotFoundException,
-        MissingMethodParameterException, SystemException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // FIXME
+    // @Override
+    // public String retrieveMembers(final String id, final Map<String, String[]> filter) throws
+    // ContextNotFoundException,
+    // MissingMethodParameterException, SystemException {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 
     /*
      * (non-Javadoc)
@@ -308,30 +307,22 @@ public class ContextRestServiceImpl implements ContextRestService {
             this.contextHandler.updateAdminDescriptor(id, ServiceUtility.toXML(adminDescriptorTO)));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#open(java.lang.String, java.lang.String)
-     */
     @Override
-    public String open(final String id, final String taskParam) throws ContextNotFoundException,
+    public ResultTO open(final String id, StatusTaskParamTO statusTaskParamTO) throws ContextNotFoundException,
         MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, InvalidXmlException, SystemException, LockingException, StreamNotFoundException {
-        // TODO Auto-generated method stub
-        return null;
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contextHandler.open(id, ServiceUtility.toXML(statusTaskParamTO)));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#close(java.lang.String, java.lang.String)
-     */
     @Override
-    public String close(final String id, final String taskParam) throws ContextNotFoundException,
+    public ResultTO close(final String id, StatusTaskParamTO statusTaskParamTO) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException, LockingException,
         StreamNotFoundException {
-        // TODO Auto-generated method stub
-        return null;
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contextHandler.close(id, ServiceUtility.toXML(statusTaskParamTO)));
     }
 }

@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
@@ -23,6 +24,7 @@ import org.escidoc.core.domain.sru.ExplainRequestTO;
 import org.escidoc.core.domain.sru.ScanRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
@@ -121,13 +123,11 @@ public interface ContextRestService {
     /* ExplainResponseTO */Stream retrieveContexts(final ExplainRequestTO searchRetrieveRequestTO)
         throws MissingMethodParameterException, SystemException;
 
-    /**
-     * FIXME Map
-     */
-    @GET
-    @Path("/{id}/resources/members")
-    String retrieveMembers(@PathParam("id") String id, final Map<String, String[]> filter)
-        throws ContextNotFoundException, MissingMethodParameterException, SystemException;
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/members")
+    // String retrieveMembers(@PathParam("id") String id, final Map<String, String[]> filter)
+    // throws ContextNotFoundException, MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/admin-descriptor/{name}")
@@ -147,21 +147,15 @@ public interface ContextRestService {
         AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
         InvalidXmlException;
 
-    /**
-     * FIXME taskParam
-     */
     @POST
     @Path("/{id}/open")
-    String open(@PathParam("id") String id, final String taskParam) throws ContextNotFoundException,
+    ResultTO open(@PathParam("id") String id, StatusTaskParamTO statusTaskParam) throws ContextNotFoundException,
         MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, InvalidXmlException, SystemException, LockingException, StreamNotFoundException;
 
-    /**
-     * FIXME taskParam
-     */
     @POST
     @Path("/{id}/close")
-    String close(@PathParam("id") String id, final String taskParam) throws ContextNotFoundException,
+    ResultTO close(@PathParam("id") String id, StatusTaskParamTO statusTaskParam) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException, LockingException,
         StreamNotFoundException;
