@@ -225,7 +225,7 @@ public class RetrieveTest extends ContentModelTestBase {
         selectSingleNodeAsserted(getDocument(subResource), "/content-stream");
         assertXmlValidContentModel(subResource);
     }
-    
+
     /**
      * Test retrieve of Content Model properties.
      * see issue INFR-1369.

@@ -33,6 +33,9 @@
     <!-- Initializing the database is an optional task, therefore it should not be part  -->
     <!-- of the default build target. See EscidocAntAction.xml for further details       -->
     <!--antcall target="db-create-scripts" /-->
+  	<antcall target="fedoragsearch"/>
+  	<antcall target="srw"/>
+  	<antcall target="saxon"/>
   </target>
 
   <target name="init" description="Intialize runtime environment">
@@ -304,6 +307,35 @@
       <param name="target" value="${install.dir}/jboss/server/default/deploy/AdminTool.war" />
     </antcall>
   </target>
+	
+  <target name="fedoragsearch" depends="init" description="Installs Fedora GSearch">
+  	<antcall target="move-file-with-save">
+  	  <param name="source" value="${install.dir}/services/fedoragsearch-${escidoc.fedoragsearch.version}.war"/>
+  	  <param name="target" value="${install.dir}/jboss/server/default/deploy/fedoragsearch.war"/>
+  	</antcall>
+  </target>
+	
+  <target name="srw" depends="init" description="Installs Search and Retrieval Webservice">
+  	<!-- add isolation -->
+  	<jar basedir="${install.dir}/install.tmp/srw" update="yes"
+  		 destfile="${install.dir}/services/srw-${escidoc.srw.version}.war"
+  		 includes="WEB-INF/jboss-web.xml"/>
+  	<antcall target="move-file-with-save">
+  	  <param name="source" value="${install.dir}/services/srw-${escidoc.srw.version}.war"/>
+  	  <param name="target" value="${install.dir}/jboss/server/default/deploy/srw.war"/>
+  	</antcall>
+  </target>
+	
+  <target name="saxon" depends="init" description="Installs Saxon Webservice">
+    <!-- add isolation -->
+    <jar basedir="${install.dir}/install.tmp/saxon" update="yes"
+		 destfile="${install.dir}/services/saxon-${escidoc.saxon.version}.war"
+    	 includes="WEB-INF/jboss-web.xml"/>
+    <antcall target="move-file-with-save">
+	  <param name="source" value="${install.dir}/services/saxon-${escidoc.saxon.version}.war"/>
+	  <param name="target" value="${install.dir}/jboss/server/default/deploy/saxon.war"/>
+    </antcall>
+  </target>	
 
   <target name="escidoc-core" depends="init" description="Installs eSciDoc Core Services">
     <!-- unpack escidoc-core ZIP file -->

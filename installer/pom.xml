@@ -83,6 +83,22 @@
       <version>${migration-tool.version}</version>
       <type>zip</type>
     </dependency>
+    <!-- install fedoragsearch, srw & saxon WARs separately -->
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>fedoragsearch</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>srw</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>fedora.localservice</groupId>
+      <artifactId>saxon</artifactId>
+      <type>war</type>
+    </dependency>
   </dependencies>
 
   <build>
@@ -224,6 +240,33 @@
                   <version>${migration-tool.version}</version>
                   <overWrite>false</overWrite>
                   <outputDirectory>${staging.dir}/packages/migration-tool</outputDirectory>
+                </artifactItem>
+                
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>fedoragsearch</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.fedoragsearch.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${staging.dir}/packages/fedoragsearch</outputDirectory>
+                </artifactItem>
+                
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>srw</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.srw.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${staging.dir}/packages/srw</outputDirectory>
+                </artifactItem>
+                
+                <artifactItem>
+                  <groupId>fedora.localservice</groupId>
+                  <artifactId>saxon</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.saxon.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${staging.dir}/packages/saxon</outputDirectory>
                 </artifactItem>
               </artifactItems>
               <!-- other configurations here -->

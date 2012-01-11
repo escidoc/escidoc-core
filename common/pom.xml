@@ -295,7 +295,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.axis</groupId>
-      <artifactId>axis-jaxrpc</artifactId>
+      <artifactId>axis-jaxrpc-noqname</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.ws.security</groupId>
