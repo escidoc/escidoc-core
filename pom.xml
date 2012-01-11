@@ -1111,8 +1111,8 @@
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.8</saxon.version>
     <escidoc.fedoragsearch.version>1.5.20</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.5.9</escidoc.srw.version>
-    <srw.version>1.5.5</srw.version>
+    <escidoc.srw.version>1.5.10</escidoc.srw.version>
+    <srw.version>1.5.6</srw.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <java.source.version>1.6</java.source.version>
