@@ -26,7 +26,7 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="id" type="xs:ID" maxOccurs="unbounded" />
+        <xs:element name="id" type="xs:token" maxOccurs="unbounded" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
