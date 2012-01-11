@@ -3202,6 +3202,21 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Asserts that the provided XML data is a valid struct-map.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertXmlValidStructMap(final String xmlData) throws Exception {
+        Schema structMapSchema = getSchema(getFrameworkUrl() + "/xsd/rest/container/0.4/struct-map.xsd");
+
+        assertXmlValid(xmlData, structMapSchema);
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
      * Asserts that the provided xml data is a valid aggregation-definition.
      * 
      * @param xmlData
