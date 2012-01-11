@@ -48,6 +48,8 @@
       <class name="ComponentPropertiesTO" />
     </bindings>
   </bindings>
+  
+  <!-- Container -->
   <bindings schemaLocation="container-list.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.container" />
@@ -67,6 +69,8 @@
       <class name="ContainerPropertiesTO" />
     </bindings>
   </bindings>
+  
+  <!-- Content Model -->
   <bindings schemaLocation="content-model.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.model" />
@@ -78,6 +82,8 @@
       <class name="ContentModelPropertiesTO" />
     </bindings>
   </bindings>
+  
+  <!-- Content Relation -->
   <bindings schemaLocation="content-relation.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.relation" />
@@ -113,6 +119,8 @@
       <class name="ContentStreamsTO" />
     </bindings>
   </bindings>
+  
+  <!-- Context -->
   <bindings schemaLocation="context-list.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.context" />
@@ -141,6 +149,8 @@
       <class name="ContextTO" />
     </bindings>
   </bindings>
+  
+  <!-- Item -->
   <bindings schemaLocation="item-list.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.item" />
@@ -171,6 +181,8 @@
       <class name="MdRecordsTO" />
     </bindings>
   </bindings>
+  
+  <!-- Organizational Unit -->
   <bindings schemaLocation="organizational-unit.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.ou" />
@@ -184,9 +196,6 @@
     <bindings node="//xs:element[@name='parents']">
       <class name="ParentsTO" />
     </bindings>
-    <bindings node="//xs:element[@name='predecessors']">
-      <class name="PredecessorsTO" />
-    </bindings>
   </bindings>
   <bindings schemaLocation="organizational-unit-list.xsd">
     <schemaBindings>
@@ -196,6 +205,19 @@
       <class name="OrganizationalUnitListTO" />
     </bindings>
   </bindings>
+  
+  <!-- parents is strange and seems to be a duplication of parents defined in ou schema --> 
+  <bindings schemaLocation="parents.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='parents']">
+      <class name="ParentsListTO" />
+    </bindings>
+  </bindings>
+  
+  
+	<!-- User Account -->  
   <bindings schemaLocation="user-account.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa" />

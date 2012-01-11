@@ -20,6 +20,7 @@
 package de.escidoc.core.oum.internal;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -29,6 +30,8 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
@@ -43,6 +46,7 @@ import de.escidoc.core.oum.OrganizationalUnitRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +54,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.ou.ParentsListTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 /**
  * REST Service Implementation for Organizational Unit.
@@ -108,7 +121,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
         InvalidStatusException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.update(id, ServiceUtility.toXML(organizationalUnitTO)));
+        return ServiceUtility.fromXML(OrganizationalUnitTO.class,
+            this.organizationalUnitHandler.update(id, ServiceUtility.toXML(organizationalUnitTO)));
     }
 
     @Override
@@ -117,6 +131,132 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OrganizationalUnitHasChildrenException, SystemException {
 
         this.organizationalUnitHandler.delete(id);
+    }
+
+    @Override
+    public MdRecordsTO updateMdRecords(final String id, final MdRecordsTO mdRecordsTO) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException {
+
+        return ServiceUtility.fromXML(MdRecordsTO.class,
+            this.organizationalUnitHandler.updateMdRecords(id, ServiceUtility.toXML(mdRecordsTO)));
+    }
+
+    @Override
+    public ParentsTO updateParents(final String id, final ParentsTO parentsTO) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException {
+
+        return ServiceUtility.fromXML(ParentsTO.class,
+            this.organizationalUnitHandler.updateParents(id, ServiceUtility.toXML(parentsTO)));
+    }
+
+    @Override
+    public OrganizationalUnitPropertiesTO retrieveProperties(final String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(OrganizationalUnitPropertiesTO.class,
+            this.organizationalUnitHandler.retrieveProperties(id));
+    }
+
+    // FIXME
+    // @Override
+    // public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
+    // throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OperationNotFoundException, SystemException {
+    //
+    // return ServiceUtility.fromXML(MdRecordsTO.class,
+    // this.organizationalUnitHandler.retrieveResource(id)));
+    // }
+
+    // FIXME
+    // @Override
+    // public ResourcesTO retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    //
+    // return ServiceUtility.fromXML(ResourcesTO.class, this.organizationalUnitHandler.updateMdRecords(id));
+    // }
+
+    @Override
+    public MdRecordsTO retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(MdRecordsTO.class, this.organizationalUnitHandler.retrieveMdRecords(id));
+    }
+
+    @Override
+    public MdRecordTO retrieveMdRecord(final String id, final String name) throws AuthenticationException, AuthorizationException,
+        MdRecordNotFoundException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        SystemException {
+
+        return ServiceUtility.fromXML(MdRecordTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name));
+    }
+
+    @Override
+    public ParentsListTO retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
+    }
+
+    // FIXME
+    // @Override
+    // public ParentObjectsTO retrieveParentObjects(final String id) throws AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    //
+    // return ServiceUtility.fromXML(ParentObjectsTO.class, this.organizationalUnitHandler.retrieveParentObjects(id));
+    // }
+
+    // FIXME
+    // @Override
+    // public SuccessorsTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    //
+    // return ServiceUtility.fromXML(SuccessorsTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+    // }
+
+    // FIXME
+    // @Override
+    // public ChildObjectsTO retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    //
+    // return ServiceUtility.fromXML(ChildObjectsTO.class, this.organizationalUnitHandler.retrieveChildObjects(id));
+    // }
+
+    // FIXME
+    // @Override
+    // public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
+    // OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
+    //
+    // return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+    // }
+
+    // FIXME
+    // @Override
+    // public OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter)
+    // throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
+    //
+    // return ServiceUtility.fromXML(MdRecordsTO.class,
+    // this.organizationalUnitHandler.updateMdRecords(id, ServiceUtility.toXML(MdRecordsTO)));
+    // }
+
+    @Override
+    public ResultTO close(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.organizationalUnitHandler.close(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO open(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.organizationalUnitHandler.open(id, ServiceUtility.toXML(statusTaskParamTO)));
     }
 
 }

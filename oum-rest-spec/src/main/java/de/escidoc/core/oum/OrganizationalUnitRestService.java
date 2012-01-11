@@ -50,6 +50,14 @@ import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.ou.ParentsListTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -89,85 +97,93 @@ public interface OrganizationalUnitRestService {
         MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
         OrganizationalUnitHasChildrenException, SystemException;
 
-//    @POST
-//    @Path("/{id}/md-records")
-//    MdRecordTO updateMdRecords(@PathParam("id") String id, MdRecordsTO mdRecordTO) throws AuthenticationException,
-//        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
-//        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
-//
-//    @POST
-//    @Path("/{id}/parents")
-//    ParentsTO updateParents(@PathParam("id") String id, ParentsTO parentsTO) throws AuthenticationException,
-//        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-//        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
-//        MissingElementValueException, SystemException, InvalidStatusException;
-//
-//    @GET
-//    @Path("/{id}/properties")
-//    OrganizationalUnitPropertiesTO retrieveProperties(@PathParam("id") String id) throws AuthenticationException,
-//        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources/{name}")
-//    EscidocBinaryContent retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
-//        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OperationNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources")
-//    ResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/md-records")
-//    MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/md-records/md-record/{name}")
-//    MdRecordsTO retrieveMdRecord(@PathParam("id") String id, @PathParam("name") String name)
-//        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/parents")
-//    ParentsTO retrieveParents(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources/parent-objects")
-//    ParentObjectsTO retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources/successors")
-//    SuccessorsTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources/child-objects")
-//    ChildObjectsTO retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
-//
-//    @GET
-//    @Path("/{id}/resources/path-list")
-//    PathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-//        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
-//
-//    @GET
-//    @Path("/{id}/organizational-units")
-//    OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter) throws MissingMethodParameterException,
-//        SystemException, InvalidSearchQueryException, InvalidXmlException;
-//
-//    @POST
-//    @Path("/{id}/close")
-//    ResultTO close(@PathParam("id") String id, CloseTaskParamTO closeParam) throws AuthenticationException,
-//        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-//        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
-//
-//    @POST
-//    @Path("/{id}/open")
-//    ResultTO open(@PathParam("id") String id, OpenTaskParamTO openParams) throws AuthenticationException,
-//        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-//        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
+    @POST
+    @Path("/{id}/md-records")
+    MdRecordsTO updateMdRecords(@PathParam("id") String id, MdRecordsTO mdRecordTO) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
+
+    @POST
+    @Path("/{id}/parents")
+    ParentsTO updateParents(@PathParam("id") String id, ParentsTO parentsTO) throws AuthenticationException,
+        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
+        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException, InvalidStatusException;
+
+    @GET
+    @Path("/{id}/properties")
+    OrganizationalUnitPropertiesTO retrieveProperties(@PathParam("id") String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/{name}")
+    // EscidocBinaryContent retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
+    // throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OperationNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources")
+    // ResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    @GET
+    @Path("/{id}/md-records")
+    MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    @GET
+    @Path("/{id}/md-records/md-record/{name}")
+    MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("name") String name)
+        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    @GET
+    @Path("/{id}/parents")
+    ParentsListTO retrieveParents(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/parent-objects")
+    // ParentObjectsTO retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException,
+    // AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/successors")
+    // SuccessorsTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException,
+    // AuthorizationException,
+    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/child-objects")
+    // ChildObjectsTO retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException,
+    // AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources/path-list")
+    // PathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+    // OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/organizational-units")
+    // OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter)
+    // throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException;
+
+    @POST
+    @Path("/{id}/close")
+    ResultTO close(@PathParam("id") String id, StatusTaskParamTO closeParam) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
+
+    @POST
+    @Path("/{id}/open")
+    ResultTO open(@PathParam("id") String id, StatusTaskParamTO openParams) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 }

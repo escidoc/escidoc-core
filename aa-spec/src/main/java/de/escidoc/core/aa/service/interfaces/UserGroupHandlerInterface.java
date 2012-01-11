@@ -189,7 +189,7 @@ public interface UserGroupHandlerInterface {
      * </pre>
      *
      * @param groupId   The User Group ID to be activated.
-     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd. 
      * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
      * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Group is active.
@@ -228,7 +228,7 @@ public interface UserGroupHandlerInterface {
      * </pre>
      *
      * @param groupId   The User Group ID to be deacivated.
-     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd. 
      * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
      * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Group is deactive.

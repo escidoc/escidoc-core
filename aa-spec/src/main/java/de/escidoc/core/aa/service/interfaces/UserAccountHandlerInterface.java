@@ -299,9 +299,9 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID to be acivated.
-     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd. 
      * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
-     * The last-modification-date is necessary for optimistical locking purpose. (example above)
+     * The last-modification-date is necessary for optimistic locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Account is active.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException          Thrown if the provided XML representation of task parameters are invalid.
@@ -338,7 +338,7 @@ public interface UserAccountHandlerInterface {
      * </pre>
      *
      * @param userId    The User Account ID to be deacivated.
-     * @param taskParam The XML representation of task parameters conforming to activation-task-param.xsd. 
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd. 
      * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
      * The last-modification-date is necessary for optimistical locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Account is deactive.
