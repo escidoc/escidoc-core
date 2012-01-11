@@ -21,10 +21,11 @@
 package org.escidoc.core.cmm.internal;
 
 import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
+import org.escidoc.core.domain.content.model.ContentModelTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,10 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
@@ -46,6 +49,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.cmm.ContentModelRestService;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
@@ -67,5 +72,85 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     protected ContentModelRestServiceImpl() {
 
     }
+
+    public ContentModelTO create(ContentModelTO contentModelTO) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
+        XmlCorruptedException, XmlSchemaValidationException {
+
+        return ServiceUtility.fromXML(ContentModelTO.class,
+            this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+
+    }
+
+    public void delete(String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException, LockingException,
+        InvalidStatusException, ResourceInUseException {
+
+        this.contentModelHandler.delete(id);
+    }
+
+    public ContentModelTO retrieve(String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+
+        return ServiceUtility.fromXML(ContentModelTO.class, this.contentModelHandler.retrieve(id));
+
+    }
+
+    public ContentModelPropertiesTO retrieveProperties(String id) throws ContentModelNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+
+        return ServiceUtility.fromXML(ContentModelPropertiesTO.class,
+            this.contentModelHandler.retrieveProperties(id));
+
+    }
+
+    // FIXME
+    // public String retrieveResources(String id) throws AuthenticationException, AuthorizationException,
+    // ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+    //
+    // return ServiceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+    //
+    // }
+
+    public VersionHistoryTO retrieveVersionHistory(String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+
+        return ServiceUtility.fromXML(VersionHistoryTO.class, this.contentModelHandler.retrieveVersionHistory(id));
+
+    }
+
+    // FIXME
+    // String retrieveContentModels(Map<String, String[]> parameterMap) throws InvalidSearchQueryException,
+    // SystemException {
+    // return ServiceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(ServiceUtility.toXML(ContentModelTO)));
+    // }
+
+    public ContentModelTO update(String id, ContentModelTO contentModelTO) throws AuthenticationException,
+        AuthorizationException, ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,
+        OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
+        InvalidContentException {
+
+        return ServiceUtility.fromXML(ContentModelTO.class,
+            this.contentModelHandler.update(id, ServiceUtility.toXML(contentModelTO)));
+
+    }
+
+    // FIXME
+    // public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name)
+    // throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+    // ContentModelNotFoundException, SystemException {
+    // return ServiceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+    // }
+
+    // FIXME
+    // public EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name) throws
+    // AuthenticationException,
+    // AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException {
+    // return ServiceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+    // }
 
 }

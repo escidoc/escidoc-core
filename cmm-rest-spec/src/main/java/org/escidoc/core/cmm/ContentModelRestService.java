@@ -27,25 +27,31 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
+import org.escidoc.core.domain.content.model.ContentModelTO;
+import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 
@@ -62,5 +68,64 @@ import javax.ws.rs.Produces;
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContentModelRestService {
+
+    @PUT
+    ContentModelTO create(ContentModelTO contentModelTO) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
+        XmlCorruptedException, XmlSchemaValidationException;
+
+    @DELETE
+    @Path("/{id}")
+    void delete(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException, LockingException,
+        InvalidStatusException, ResourceInUseException;
+
+    @GET
+    @Path("/{id}")
+    ContentModelTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+
+    @GET
+    @Path("/{id}/properties")
+    ContentModelPropertiesTO retrieveProperties(@PathParam("id") String id) throws ContentModelNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/resources")
+    // String retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+    // ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+
+    @GET
+    @Path("/{id}/resources/version-history")
+    VersionHistoryTO retrieveVersionHistory(@PathParam("id") String id) throws AuthenticationException,
+        AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}/content-models")
+    // String retrieveContentModels(Map<String, String[]> parameterMap) throws InvalidSearchQueryException,
+    // SystemException;
+
+    @PUT
+    @Path("/{id}")
+    ContentModelTO update(@PathParam("id") String id, ContentModelTO contentModelTO) throws AuthenticationException,
+        AuthorizationException, ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,
+        OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
+        InvalidContentException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}")
+    // EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(@PathParam("id") String id, String name)
+    // throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+    // ContentModelNotFoundException, SystemException;
+
+    // FIXME
+    // @GET
+    // @Path("/{id}")
+    // EscidocBinaryContent retrieveResourceDefinitionXsltContent(@PathParam("id") String id, String name) throws
+    // AuthenticationException,
+    // AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException;
 
 }
