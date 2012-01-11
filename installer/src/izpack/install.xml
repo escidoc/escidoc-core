@@ -478,6 +478,23 @@
             <description>Migration Tool for the eSciDoc Infrastructure</description>
             <file src="packages/migration-tool/migration-tool-${migration-tool.version}.zip" targetdir="$INSTALL_PATH/tools" />
         </pack>
+        
+        <pack name="Fedora GSearch" parent="Additional Services and Tools" required="yes">
+            <description/>
+            <file src="packages/fedoragsearch/fedoragsearch-${escidoc.fedoragsearch.version}.war" targetdir="$INSTALL_PATH/services" />
+        </pack>
+        
+        <pack name="SRW" parent="Additional Services and Tools" required="yes">
+            <description/>
+            <file src="../staging/srw/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/srw/WEB-INF" />
+            <file src="packages/srw/srw-${escidoc.srw.version}.war" targetdir="$INSTALL_PATH/services" />
+        </pack>
+        
+        <pack name="Saxon" parent="Additional Services and Tools" required="yes">
+            <description/>
+            <file src="../staging/saxon/jboss-web.xml" targetdir="$INSTALL_PATH/install.tmp/saxon/WEB-INF" />
+            <file src="packages/saxon/saxon-${escidoc.saxon.version}.war" targetdir="$INSTALL_PATH/services" />
+        </pack>
 
         <!--pack name="Documentation" required="no">
           <description>eSciDoc Infrastructure Docomentation</description>
