@@ -41,15 +41,16 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test content relation retrieve implementation.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationRetrieveIT extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation with non-existing objid.
-     *
-     * @throws Exception Thrown if deleting failed.
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
      */
     @Test(expected = ContentRelationNotFoundException.class)
     public void testWrongObjid() throws Exception {
@@ -59,8 +60,9 @@ public class ContentRelationRetrieveIT extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation properties.
-     *
-     * @throws Exception Thrown if deleting failed.
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
      */
     @Test
     public void testRetrieveProperties01() throws Exception {
@@ -76,8 +78,9 @@ public class ContentRelationRetrieveIT extends ContentRelationTestBase {
 
     /**
      * Test retrieving content relation (virtual-)resources.
-     *
-     * @throws Exception Thrown if deleting failed.
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
      */
     @Test
     public void retrieveResources() throws Exception {
@@ -90,11 +93,26 @@ public class ContentRelationRetrieveIT extends ContentRelationTestBase {
     }
 
     /**
+     * Test retrieving list of registered predicates.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testRetrieveRegisteredPredicates() throws Exception {
+
+        String xml = retrieveRegisteredPredicates();
+        assertXMLValidRegisteredPredicates(xml);
+    }
+
+    /**
      * Assert the xmlItemProperties match the expected xmlTemplateItemProperties.
-     *
-     * @param propertiesXml           The retrieved properties.
-     * @param timestampBeforeCreation A timestamp before the creation of the item.
-     * @throws Exception If anything fails.
+     * 
+     * @param propertiesXml
+     *            The retrieved properties.
+     * @param timestampBeforeCreation
+     *            A timestamp before the creation of the item.
+     * @throws Exception
+     *             If anything fails.
      */
     private void assertContentRelationProperties(final String propertiesXml, final String timestampBeforeCreation)
         throws Exception {

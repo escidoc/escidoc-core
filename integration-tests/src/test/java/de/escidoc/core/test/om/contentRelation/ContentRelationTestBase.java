@@ -47,7 +47,7 @@ import de.escidoc.core.test.om.OmTestBase;
 
 /**
  * Test the handler of the content relation resource.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationTestBase extends OmTestBase {
@@ -67,10 +67,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the properties of an Content Relation.
-     *
-     * @param id The id of the Content Relation.
+     * 
+     * @param id
+     *            The id of the Content Relation.
      * @return The retrieved properties.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveProperties(final String id) throws Exception {
 
@@ -79,10 +81,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the md-records of an Content Relation.
-     *
-     * @param id The id of the Content Relation.
+     * 
+     * @param id
+     *            The id of the Content Relation.
      * @return The retrieved md-records.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveMdRecords(final String id) throws Exception {
 
@@ -91,11 +95,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Assign a objectPID to the Content Relation.
-     *
-     * @param id    The id of the Content Relation.
-     * @param param The PID parameter.
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @param param
+     *            The PID parameter.
      * @return The assignment method response.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String assignObjectPid(final String id, final String param) throws Exception {
 
@@ -104,11 +111,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test locking a content relation.
-     *
-     * @param id    The id of the content relation.
-     * @param param The param indicating the last-modifiaction-date of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
+     * @param param
+     *            The param indicating the last-modifiaction-date of the content relation.
      * @return result XML with (at least) last modification date of the resource.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String lock(final String id, final String param) throws Exception {
 
@@ -122,11 +132,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test unlocking a content relation in the mock framework.
-     *
-     * @param id    The id of the content relation.
-     * @param param The param indicating the last-modifiaction-date of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
+     * @param param
+     *            The param indicating the last-modifiaction-date of the content relation.
      * @return result XML with (at least) last modification date of the resource.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String unlock(final String id, final String param) throws Exception {
 
@@ -140,11 +153,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving a md-record of an Content Relation with a provided name.
-     *
-     * @param id   The id of the Content Relation.
-     * @param name The name of the md-record.
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @param name
+     *            The name of the md-record.
      * @return The retrieved md-record.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveMdRecord(final String id, final String name) throws Exception {
 
@@ -153,11 +169,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test submitting of a Content Relation.
-     *
-     * @param id    The id of the Content Relation.
-     * @param param param containing last mod date
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @param param
+     *            param containing last mod date
      * @return modified last mod date after summit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String submit(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().submit(id, param));
@@ -165,11 +184,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test revising of a Content Relation.
-     *
-     * @param id    The id of the Content Relation.
-     * @param param param containing last mod date
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @param param
+     *            param containing last mod date
      * @return modified last mod date after revise.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String revise(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().revise(id, param));
@@ -177,11 +199,14 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test releasing of a Content Relation.
-     *
-     * @param id    The id of the Content Relation.
-     * @param param param containing last mod date
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @param param
+     *            param containing last mod date
      * @return modified last mod date after release.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String release(final String id, final String param) throws Exception {
         return handleXmlResult(getContentRelationClient().release(id, param));
@@ -244,10 +269,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the list of content relations.
-     *
-     * @param filter CQL filter
+     * 
+     * @param filter
+     *            CQL filter
      * @return The retrieved content relations.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
 
@@ -256,10 +283,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Test retrieving the resources of an Item.
-     *
-     * @param id The id of the container.
+     * 
+     * @param id
+     *            The id of the container.
      * @return The retrieved resources.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String retrieveResources(final String id) throws Exception {
@@ -268,11 +297,23 @@ public class ContentRelationTestBase extends OmTestBase {
     }
 
     /**
+     * 
+     * @return
+     * @throws Exception
+     */
+    public String retrieveRegisteredPredicates() throws Exception {
+
+        return handleXmlResult(getContentRelationClient().retrieveRegisteredPredicates());
+    }
+
+    /**
      * Create an Content Relation from template.
-     *
-     * @param templateName The name of the Content Relation template (file).
+     * 
+     * @param templateName
+     *            The name of the Content Relation template (file).
      * @return objid of the Item.
-     * @throws Exception Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception
+     *             Thrown if creation of Item or extraction of objid fails.
      */
     public String createContainerFromTemplate(final String templateName) throws Exception {
 
@@ -285,10 +326,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Create an Item from template.
-     *
-     * @param templateName The name of the Item template (file).
+     * 
+     * @param templateName
+     *            The name of the Item template (file).
      * @return objid of the Item.
-     * @throws Exception Thrown if creation of Item or extraction of objid fails.
+     * @throws Exception
+     *             Thrown if creation of Item or extraction of objid fails.
      */
     public String createItemFromTemplate(final String templateName) throws Exception {
 
@@ -302,10 +345,12 @@ public class ContentRelationTestBase extends OmTestBase {
     /**
      * Get a Content Relation template. The template is pulled automatically from the rest/soap directory of the
      * container template basedir.
-     *
-     * @param templateName The name of the Content Relation template (file).
+     * 
+     * @param templateName
+     *            The name of the Content Relation template (file).
      * @return The String representation of the template.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String getContainerTemplate(final String templateName) throws Exception {
 
@@ -316,10 +361,12 @@ public class ContentRelationTestBase extends OmTestBase {
     /**
      * Get a Item template. The template is pulled automatically from the rest/soap directory of the Item template
      * basedir.
-     *
-     * @param templateName The name of the Item template (file).
+     * 
+     * @param templateName
+     *            The name of the Item template (file).
      * @return The String representation of the template.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
@@ -329,8 +376,9 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Convert a NodeList to a List.
-     *
-     * @param nl The NodeList.
+     * 
+     * @param nl
+     *            The NodeList.
      * @return List
      */
     public List<String> nodeList2List(final NodeList nl) {
@@ -346,10 +394,13 @@ public class ContentRelationTestBase extends OmTestBase {
      * Compares if the content of two lists equals.
      * <p/>
      * WARNING: side effect, elements are removed from the second list
-     *
-     * @param msg  Message for the exception.
-     * @param arg0 List one.
-     * @param arg1 List two.
+     * 
+     * @param msg
+     *            Message for the exception.
+     * @param arg0
+     *            List one.
+     * @param arg1
+     *            List two.
      */
     public void assertListContentEqual(final String msg, final List<String> arg0, final List<String> arg1) {
 
@@ -370,8 +421,9 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Add certain grants to userid.
-     *
-     * @param userId Userid
+     * 
+     * @param userId
+     *            Userid
      */
     public void addContentRelationManagerGrant(final String userId) throws Exception {
 
@@ -397,8 +449,9 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Add certain grants to userid.
-     *
-     * @param userId Userid
+     * 
+     * @param userId
+     *            Userid
      */
     public void addContentRelationModifierGrant(final String userId) throws Exception {
 
@@ -426,10 +479,12 @@ public class ContentRelationTestBase extends OmTestBase {
 
     /**
      * Successfully creates an UserAccount.
-     *
-     * @param templateName The name of the template.
+     * 
+     * @param templateName
+     *            The name of the template.
      * @return Returns the UserAccount document.
-     * @throws Exception If anything fails
+     * @throws Exception
+     *             If anything fails
      */
     public String[] createUserWithContentRelationRole(final String templateName) throws Exception {
 
@@ -454,12 +509,13 @@ public class ContentRelationTestBase extends OmTestBase {
     }
 
     /**
-     * Inserts a unique loginname into the provided document by adding the current timestamp to the contained
-     * loginname.
-     *
-     * @param document The document.
+     * Inserts a unique loginname into the provided document by adding the current timestamp to the contained loginname.
+     * 
+     * @param document
+     *            The document.
      * @return The inserted login name.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String insertUniqueLoginName(final Document document) throws Exception {
 

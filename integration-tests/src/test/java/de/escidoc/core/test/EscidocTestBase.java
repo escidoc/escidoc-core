@@ -252,14 +252,14 @@ public abstract class EscidocTestBase {
     /**
      * Pattern used in modfyNamespacePrefixes to find and replace prefixes.
      */
-    private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_REPLACE_PREFIXES =
-        Pattern.compile("(</{0,1}|[\\s])([a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
+    private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_REPLACE_PREFIXES = Pattern.compile(
+        "(</{0,1}|[\\s])([a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
 
     /**
      * Pattern used in modfyNamespacePrefixes to fix namespace declarations after changing prefixes.
      */
-    private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_FIX_NAMESPACE_DECLARATIONS =
-        Pattern.compile("prefix-xmlns:([a-zA-Z-].+?)", Pattern.DOTALL | Pattern.MULTILINE);
+    private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_FIX_NAMESPACE_DECLARATIONS = Pattern.compile(
+        "prefix-xmlns:([a-zA-Z-].+?)", Pattern.DOTALL | Pattern.MULTILINE);
 
     /**
      * Pattern used in modfyNamespacePrefixes to fix xml namespace declaration.
@@ -657,8 +657,8 @@ public abstract class EscidocTestBase {
     /**
      * Xlink namespace declaration in templates.
      */
-    public static final String XLINK_NS_DECL_TEPLATES =
-        "xmlns:" + XLINK_PREFIX_TEMPLATES + "=\"" + XLINK_NS_URI + "\" ";
+    public static final String XLINK_NS_DECL_TEPLATES = "xmlns:" + XLINK_PREFIX_TEMPLATES + "=\"" + XLINK_NS_URI
+        + "\" ";
 
     /**
      * Xlink namespace declaration in documents retrieved from the eSciDoc.
@@ -714,14 +714,14 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_RESOURCES_CURRENT_GRANTS = XPATH_RESOURCES + "/" + NAME_CURRENT_GRANTS;
 
-    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_HREF =
-        XPATH_RESOURCES_CURRENT_GRANTS + "/@" + NAME_HREF;
+    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_HREF = XPATH_RESOURCES_CURRENT_GRANTS + "/@"
+        + NAME_HREF;
 
-    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_TYPE =
-        XPATH_RESOURCES_CURRENT_GRANTS + "/@" + NAME_TYPE;
+    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_TYPE = XPATH_RESOURCES_CURRENT_GRANTS + "/@"
+        + NAME_TYPE;
 
-    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_TITLE =
-        XPATH_RESOURCES_CURRENT_GRANTS + "/@" + NAME_TITLE;
+    public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_TITLE = XPATH_RESOURCES_CURRENT_GRANTS + "/@"
+        + NAME_TITLE;
 
     public static final String XPATH_USER_ACCOUNT = "/" + NAME_USER_ACCOUNT;
 
@@ -745,28 +745,28 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_USER_ACCOUNT_MODIFIED_BY = XPATH_USER_ACCOUNT_PROPERTIES + "/" + NAME_MODIFIED_BY;
 
-    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_OBJID =
-        XPATH_USER_ACCOUNT_MODIFIED_BY + "/@" + NAME_OBJID;
+    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_OBJID = XPATH_USER_ACCOUNT_MODIFIED_BY + "/@"
+        + NAME_OBJID;
 
-    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_HREF =
-        XPATH_USER_ACCOUNT_MODIFIED_BY + "/@" + NAME_HREF;
+    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_HREF = XPATH_USER_ACCOUNT_MODIFIED_BY + "/@"
+        + NAME_HREF;
 
-    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_TITLE =
-        XPATH_USER_ACCOUNT_MODIFIED_BY + "/@" + NAME_TITLE;
+    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_TITLE = XPATH_USER_ACCOUNT_MODIFIED_BY + "/@"
+        + NAME_TITLE;
 
-    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_TYPE =
-        XPATH_USER_ACCOUNT_MODIFIED_BY + "/@" + NAME_TYPE;
+    public static final String XPATH_USER_ACCOUNT_MODIFIED_BY_XLINK_TYPE = XPATH_USER_ACCOUNT_MODIFIED_BY + "/@"
+        + NAME_TYPE;
 
     public static final String XPATH_USER_ACCOUNT_CREATED_BY_OBJID = XPATH_USER_ACCOUNT_CREATED_BY + "/@" + NAME_OBJID;
 
-    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_HREF =
-        XPATH_USER_ACCOUNT_CREATED_BY + "/@" + NAME_HREF;
+    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_HREF = XPATH_USER_ACCOUNT_CREATED_BY + "/@"
+        + NAME_HREF;
 
-    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_TITLE =
-        XPATH_USER_ACCOUNT_CREATED_BY + "/@" + NAME_TITLE;
+    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_TITLE = XPATH_USER_ACCOUNT_CREATED_BY + "/@"
+        + NAME_TITLE;
 
-    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_TYPE =
-        XPATH_USER_ACCOUNT_CREATED_BY + "/@" + NAME_TYPE;
+    public static final String XPATH_USER_ACCOUNT_CREATED_BY_XLINK_TYPE = XPATH_USER_ACCOUNT_CREATED_BY + "/@"
+        + NAME_TYPE;
 
     public static final String XPATH_USER_ACCOUNT_CREATION_DATE = XPATH_USER_ACCOUNT_PROPERTIES + "/creation-date";
 
@@ -774,16 +774,16 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_USER_ACCOUNT_RESOURCES_XLINK_HREF = XPATH_USER_ACCOUNT_RESOURCES + PART_XLINK_HREF;
 
-    public static final String XPATH_USER_ACCOUNT_RESOURCES_XLINK_TITLE =
-        XPATH_USER_ACCOUNT_RESOURCES + PART_XLINK_TITLE;
+    public static final String XPATH_USER_ACCOUNT_RESOURCES_XLINK_TITLE = XPATH_USER_ACCOUNT_RESOURCES
+        + PART_XLINK_TITLE;
 
     public static final String XPATH_USER_ACCOUNT_RESOURCES_XLINK_TYPE = XPATH_USER_ACCOUNT_RESOURCES + PART_XLINK_TYPE;
 
-    public static final String XPATH_USER_ACCOUNT_CURRENT_GRANTS =
-        XPATH_USER_ACCOUNT_RESOURCES + "/" + NAME_CURRENT_GRANTS;
+    public static final String XPATH_USER_ACCOUNT_CURRENT_GRANTS = XPATH_USER_ACCOUNT_RESOURCES + "/"
+        + NAME_CURRENT_GRANTS;
 
-    public static final String XPATH_USER_ACCOUNT_CURRENT_GRANTS_XLINK_TYPE =
-        XPATH_USER_ACCOUNT_CURRENT_GRANTS + PART_XLINK_TYPE;
+    public static final String XPATH_USER_ACCOUNT_CURRENT_GRANTS_XLINK_TYPE = XPATH_USER_ACCOUNT_CURRENT_GRANTS
+        + PART_XLINK_TYPE;
 
     public static final String XPATH_USER_ACCOUNT_ACTIVE = XPATH_USER_ACCOUNT_PROPERTIES + "/active";
 
@@ -801,8 +801,8 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_SRW_RESPONSE_OBJECT_SUBPATH = "/recordData/search-result-record/";
 
-    public static final String XPATH_SRW_RESPONSE_OBJECT =
-        XPATH_SRW_RESPONSE_RECORD + XPATH_SRW_RESPONSE_OBJECT_SUBPATH;
+    public static final String XPATH_SRW_RESPONSE_OBJECT = XPATH_SRW_RESPONSE_RECORD
+        + XPATH_SRW_RESPONSE_OBJECT_SUBPATH;
 
     public static final String XPATH_USER_GROUP_LIST = "/" + NAME_USER_GROUP_LIST;
 
@@ -812,21 +812,21 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_SRW_USER_GROUP_LIST_USER_GROUP = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_GROUP;
 
-    public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION =
-        XPATH_SET_DEFINITION_LIST + "/" + NAME_SET_DEFINITION;
+    public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION = XPATH_SET_DEFINITION_LIST + "/"
+        + NAME_SET_DEFINITION;
 
     public static final String XPATH_SRW_CONTAINER_LIST_CONTAINER = XPATH_SRW_RESPONSE_OBJECT + NAME_CONTAINER;
 
     public static final String XPATH_SRW_ITEM_LIST_ITEM = XPATH_SRW_RESPONSE_OBJECT + NAME_ITEM;
 
-    public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_SET_DEFINITION;
+    public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION = XPATH_SRW_RESPONSE_OBJECT
+        + NAME_SET_DEFINITION;
 
-    public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_ORGANIZATIONAL_UNIT;
+    public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT = XPATH_SRW_RESPONSE_OBJECT
+        + NAME_ORGANIZATIONAL_UNIT;
 
-    public static final String XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL =
-        XPATH_SRW_RESPONSE_OBJECT + NAME_CONTENT_MODEL;
+    public static final String XPATH_SRW_CONTENT_MODEL_LIST_CONTENT_MODEL = XPATH_SRW_RESPONSE_OBJECT
+        + NAME_CONTENT_MODEL;
 
     public static final String XPATH_USER_GROUP_OBJID = XPATH_USER_GROUP + "/@objid";
 
@@ -850,21 +850,21 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_USER_GROUP_MODIFIED_BY_OBJID = XPATH_USER_GROUP_MODIFIED_BY + "/@" + NAME_OBJID;
 
-    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_HREF =
-        XPATH_USER_GROUP_MODIFIED_BY + "/@" + NAME_HREF;
+    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_HREF = XPATH_USER_GROUP_MODIFIED_BY + "/@"
+        + NAME_HREF;
 
-    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_TITLE =
-        XPATH_USER_GROUP_MODIFIED_BY + "/@" + NAME_TITLE;
+    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_TITLE = XPATH_USER_GROUP_MODIFIED_BY + "/@"
+        + NAME_TITLE;
 
-    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_TYPE =
-        XPATH_USER_GROUP_MODIFIED_BY + "/@" + NAME_TYPE;
+    public static final String XPATH_USER_GROUP_MODIFIED_BY_XLINK_TYPE = XPATH_USER_GROUP_MODIFIED_BY + "/@"
+        + NAME_TYPE;
 
     public static final String XPATH_USER_GROUP_CREATED_BY_OBJID = XPATH_USER_GROUP_CREATED_BY + "/@" + NAME_OBJID;
 
     public static final String XPATH_USER_GROUP_CREATED_BY_XLINK_HREF = XPATH_USER_GROUP_CREATED_BY + "/@" + NAME_HREF;
 
-    public static final String XPATH_USER_GROUP_CREATED_BY_XLINK_TITLE =
-        XPATH_USER_GROUP_CREATED_BY + "/@" + NAME_TITLE;
+    public static final String XPATH_USER_GROUP_CREATED_BY_XLINK_TITLE = XPATH_USER_GROUP_CREATED_BY + "/@"
+        + NAME_TITLE;
 
     public static final String XPATH_USER_GROUP_CREATED_BY_XLINK_TYPE = XPATH_USER_GROUP_CREATED_BY + "/@" + NAME_TYPE;
 
@@ -880,8 +880,8 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_USER_GROUP_CURRENT_GRANTS = XPATH_USER_GROUP_RESOURCES + "/" + NAME_CURRENT_GRANTS;
 
-    public static final String XPATH_USER_GROUP_CURRENT_GRANTS_XLINK_TYPE =
-        XPATH_USER_GROUP_CURRENT_GRANTS + PART_XLINK_TYPE;
+    public static final String XPATH_USER_GROUP_CURRENT_GRANTS_XLINK_TYPE = XPATH_USER_GROUP_CURRENT_GRANTS
+        + PART_XLINK_TYPE;
 
     public static final String XPATH_USER_GROUP_ACTIVE = XPATH_USER_GROUP_PROPERTIES + "/active";
 
@@ -1365,8 +1365,9 @@ public abstract class EscidocTestBase {
                     }
                 }
                 if (!expectedElementAsserted) {
-                    fail(new StringBuffer(message).append(" Did not found expected corresponding element [").append(
-                        nodeName).append(", ").append(expectedChildName).append(", ").append(i).append("]").toString());
+                    fail(new StringBuffer(message)
+                        .append(" Did not found expected corresponding element [").append(nodeName).append(", ")
+                        .append(expectedChildName).append(", ").append(i).append("]").toString());
                 }
             }
         }
@@ -1382,8 +1383,8 @@ public abstract class EscidocTestBase {
             }
             if (toBeAssertedChild.getNodeType() == Node.ELEMENT_NODE) {
                 fail(new StringBuffer(message)
-                    .append("Found unexpected element node [").append(nodeName).append(", ").append(
-                        getLocalName(toBeAssertedChild)).append(", ").append(i).append("]").toString());
+                    .append("Found unexpected element node [").append(nodeName).append(", ")
+                    .append(getLocalName(toBeAssertedChild)).append(", ").append(i).append("]").toString());
             }
         }
         // if no children have been found, text content must be compared
@@ -1650,8 +1651,8 @@ public abstract class EscidocTestBase {
         }
         final NodeList expectedNodes = selectNodeList(expected, expectedXpath);
         final NodeList toBeAssertedNodes = selectNodeList(toBeAsserted, toBeAssertedXpath);
-        assertEquals(msg + "Number of selected nodes differ. ", expectedNodes.getLength(), toBeAssertedNodes
-            .getLength());
+        assertEquals(msg + "Number of selected nodes differ. ", expectedNodes.getLength(),
+            toBeAssertedNodes.getLength());
         final int length = toBeAssertedNodes.getLength();
         for (int i = 0; i < length; i++) {
             assertXmlEquals(msg + "Asserting " + (i + 1) + ". node. ", expectedNodes.item(i), toBeAssertedNodes.item(i));
@@ -2443,8 +2444,8 @@ public abstract class EscidocTestBase {
                 }
                 catch (final RuntimeException e) {
                     filter =
-                        (Document) replaceInFilter(filter, null, "/param/filter[@name=\"members\"]/id["
-                            + (members.size() + 1) + "]");
+                        (Document) replaceInFilter(filter, null,
+                            "/param/filter[@name=\"members\"]/id[" + (members.size() + 1) + "]");
                 }
             }
         }
@@ -3002,6 +3003,23 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Validates ContentRelations reistered predicates list XML against the XML Schema, checks if the xml:base exists
+     * and if all placeholders are replaced.
+     * 
+     * @param xmlData
+     *            The xml document as string.
+     * @throws Exception
+     *             If an error occures.
+     */
+    public void assertXMLValidRegisteredPredicates(final String xmlData) throws Exception {
+
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/content-relation/0.1/registered-predicates.xsd");
+        assertXmlValid(xmlData, url);
+        assertXlinkXmlBaseExists(xmlData);
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
      * Validates Content Model XML against the XML Schema, if the xml:base exists and if all placeholders are resolved.
      * 
      * @param xmlData
@@ -3059,10 +3077,10 @@ public abstract class EscidocTestBase {
      */
     protected void assertAllPlaceholderResolved(final String xmlData) {
 
-        assertTrue("Placeholder not resolved during rendering\n." + xmlData, !PATTERN_VELOCITY_PLACEHOLDER.matcher(
-            xmlData).find());
-        assertTrue("Placeholder not resolved during rendering\n." + xmlData, !PATTERN_VELOCITY_PLACEHOLDER2.matcher(
-            xmlData).find());
+        assertTrue("Placeholder not resolved during rendering\n." + xmlData,
+            !PATTERN_VELOCITY_PLACEHOLDER.matcher(xmlData).find());
+        assertTrue("Placeholder not resolved during rendering\n." + xmlData,
+            !PATTERN_VELOCITY_PLACEHOLDER2.matcher(xmlData).find());
     }
 
     /**
@@ -4618,8 +4636,8 @@ public abstract class EscidocTestBase {
         // relations
         Node relations = XPathAPI.selectSingleNode(document, "/item/relations/@title", document);
         if (relations != null) {
-            assertEquals("Xlink:title of relations differs from convention", "Relations of Item", relations
-                .getTextContent());
+            assertEquals("Xlink:title of relations differs from convention", "Relations of Item",
+                relations.getTextContent());
         }
     }
 
@@ -4636,8 +4654,8 @@ public abstract class EscidocTestBase {
         // relations
         Node relations = XPathAPI.selectSingleNode(document, "/container/relations/@title", document);
         if (relations != null) {
-            assertEquals("Xlink:title of relations differs from convention", "Relations of Container", relations
-                .getTextContent());
+            assertEquals("Xlink:title of relations differs from convention", "Relations of Container",
+                relations.getTextContent());
         }
     }
 

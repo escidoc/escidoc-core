@@ -36,17 +36,19 @@ import java.util.Map;
 
 /**
  * Offers access methods to the escidoc interfaces of the content relation resource.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ContentRelationClient extends ClientBase implements ContentRelationHandlerClientInterface {
 
     /**
      * Retrieve the xml representation of all virtual resources of the content relation.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object retrieveResources(final String id) throws Exception {
 
@@ -56,10 +58,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Retrieve the xml representation of a content relation.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     @Override
     public Object retrieve(final String id) throws Exception {
@@ -70,10 +74,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Retrieve content relations.
-     *
-     * @param filter The filter param.
+     * 
+     * @param filter
+     *            The filter param.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
 
@@ -83,10 +89,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Retrieve the xml representation of the properties of a resource.
-     *
-     * @param id The resource id.
+     * 
+     * @param id
+     *            The resource id.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object retrieveProperties(final String id) throws Exception {
 
@@ -96,10 +104,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Create a content relation in the escidoc framework.
-     *
-     * @param contentRelationXml The xml representation of the content relation.
+     * 
+     * @param contentRelationXml
+     *            The xml representation of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     @Override
     public Object create(final Object contentRelationXml) throws Exception {
@@ -110,11 +120,14 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Update a content relation in the escidoc framework.
-     *
-     * @param id                 The id of the content relation.
-     * @param contentRelationXml The xml representation of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
+     * @param contentRelationXml
+     *            The xml representation of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     @Override
     public Object update(final String id, final Object contentRelationXml) throws Exception {
@@ -125,10 +138,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Delete a content relation from the escidoc framework.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     @Override
     public Object delete(final String id) throws Exception {
@@ -139,10 +154,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Submit a content relation.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object submit(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST,
@@ -152,10 +169,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Release a content relation.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object release(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST,
@@ -165,10 +184,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Revise a content relation.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object revise(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST,
@@ -178,10 +199,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Lock a Content Relation for other user access.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object lock(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST,
@@ -190,10 +213,12 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Unlock a Content Relation for other user access.
-     *
-     * @param id The id of the content relation.
+     * 
+     * @param id
+     *            The id of the content relation.
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object unlock(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST,
@@ -202,9 +227,10 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Assign persistent identifier to a Content-relation object.
-     *
+     * 
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
 
     public Object assignObjectPid(final String id, final String param) throws Exception {
@@ -214,9 +240,10 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Get escidoc XML representation of ContentRelations md-records.
-     *
+     * 
      * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
+     * @throws Exception
+     *             If the service call fails.
      */
     public Object retrieveMdRecords(final String id) throws Exception {
         return callEsciDoc("ContentRelation.retrieveMdRecords", METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
@@ -225,11 +252,14 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     /**
      * Get escidoc XML representation of ContentRelations md-record with a provided id.
-     *
-     * @param id   objid of ContentRelation resource
-     * @param name name of a md-record * @return The HttpMethod after the service call (REST) or the result object
-     *             (SOAP).
-     * @throws Exception If the service call fails.
+     * 
+     * @param id
+     *            objid of ContentRelation resource
+     * @param name
+     *            name of a md-record * @return The HttpMethod after the service call (REST) or the result object
+     *            (SOAP).
+     * @throws Exception
+     *             If the service call fails.
      */
 
     public Object retrieveMdRecord(final String id, final String name) throws Exception {
@@ -237,4 +267,15 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
             Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_MD_RECORD, name });
     }
 
+    /**
+     * Get eSciDoc XML representation of Content Relations registered predicates.
+     * 
+     * @return
+     * @throws Exception
+     */
+    public Object retrieveRegisteredPredicates() throws Exception {
+        return callEsciDoc("ContentRelation.retrieveRegisteredPredicates", METHOD_RETRIEVE_REGISTERED_PREDICATES,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_RELATION_BASE_URI, new String[] {});
+
+    }
 }

@@ -178,6 +178,8 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_MD_RECORD = "retrieveMdRecord";
 
+    public static final String METHOD_RETRIEVE_REGISTERED_PREDICATES = "retrieveRegisteredPredicates";
+    
     public static final String METHOD_UPDATE_MD_RECORD = "updateMdRecord";
 
     public static final String METHOD_RETRIEVE_SET_DEFINITIONS = "retrieveSetDefinitions";
