@@ -18,4 +18,14 @@
         </jaxrs:features>
     </jaxrs:server>
 
+    <jaxrs:server id="containerRestService" address="/container">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.om.internal.ContainerRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
 </beans>
