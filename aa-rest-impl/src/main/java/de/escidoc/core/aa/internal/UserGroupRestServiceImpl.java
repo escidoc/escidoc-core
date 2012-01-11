@@ -28,12 +28,17 @@
  */
 package de.escidoc.core.aa.internal;
 
+import org.escidoc.core.domain.aa.AddSelectorsTO;
 import org.escidoc.core.domain.aa.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.GrantTO;
+import org.escidoc.core.domain.aa.RemoveSelectorsTO;
 import org.escidoc.core.domain.aa.UserGroupResourcesTO;
 import org.escidoc.core.domain.aa.UserGroupSelectorsTO;
 import org.escidoc.core.domain.aa.UserGroupTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.RevokeGrantTaskParamTO;
+import org.escidoc.core.domain.taskparam.RevokeGrantsTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -120,20 +125,20 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String id, final String taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
+    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.activate(id, taskParam);
+        this.userGroupHandler.activate(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#deactivate(java.lang.String, java.lang.String)
      */
     @Override
-    public void deactivate(final String id, final String taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
+    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.deactivate(id, taskParam);
+        this.userGroupHandler.deactivate(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -168,20 +173,20 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(final String id, final String grantId, final String taskParam) throws UserGroupNotFoundException,
+    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam) throws UserGroupNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.revokeGrant(id, grantId, taskParam);
+        this.userGroupHandler.revokeGrant(id, grantId, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrants(final String id, final String taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
+    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.revokeGrants(id, taskParam);
+        this.userGroupHandler.revokeGrants(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -196,23 +201,23 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#addSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupSelectorsTO addSelectors(final String id, final String taskParam) throws OrganizationalUnitNotFoundException,
+    public UserGroupSelectorsTO addSelectors(final String id, final AddSelectorsTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException {
-        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.addSelectors(id, taskParam));
+        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.addSelectors(id, ServiceUtility.toXML(taskParam)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#removeSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupSelectorsTO removeSelectors(final String id, final String taskParam) throws XmlCorruptedException,
+    public UserGroupSelectorsTO removeSelectors(final String id, final RemoveSelectorsTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException {
-        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.removeSelectors(id, taskParam));
+        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.removeSelectors(id, ServiceUtility.toXML(taskParam)));
     }
 
 }

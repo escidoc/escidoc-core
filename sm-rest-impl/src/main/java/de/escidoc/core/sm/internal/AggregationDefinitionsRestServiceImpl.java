@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.sm.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.AggregationDefinitionListTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,13 +59,13 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(java.util.Map)
+     * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public AggregationDefinitionListTO retrieveAggregationDefinitions(final Map<String, String[]> parameters)
+    public AggregationDefinitionListTO retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(parameters));
+        return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(filter.toParameterMap()));
     }
 
 }

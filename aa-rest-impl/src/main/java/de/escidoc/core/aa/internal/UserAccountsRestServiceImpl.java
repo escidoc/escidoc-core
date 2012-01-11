@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.aa.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.aa.UserAccountListTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -61,12 +60,12 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
 
     /* (non-Javadoc)
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(java.util.Map)
+     * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(SruSearchRequestParametersBean)
      */
     @Override
-    public UserAccountListTO retrieveUserAccounts(final Map<String, String[]> filter) throws MissingMethodParameterException,
+    public UserAccountListTO retrieveUserAccounts(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(filter));
+        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(filter.toParameterMap()));
     }
 
 }

@@ -575,13 +575,27 @@ public final class Constants {
 
     public static final String SRU_PARAMETER_RECORD_SCHEMA = "recordSchema";
 
+    public static final String SRU_PARAMETER_VERSION = "version";
+
+    public static final String SRU_PARAMETER_RECORD_XPATH = "recordXPath";
+
+    public static final String SRU_PARAMETER_RESULT_SET_TTL = "resultSetTTL";
+
+    public static final String SRU_PARAMETER_SORT_KEYS = "sortKeys";
+
+    public static final String SRU_PARAMETER_STYLESHEET = "stylesheet";
+
+    public static final String SRU_PARAMETER_SCAN_CLAUSE = "scanClause";
+
+    public static final String SRU_PARAMETER_RESPONSE_POSITION = "responsePosition";
+
+    public static final String SRU_PARAMETER_MAXIMUM_TERMS = "maximumTerms";
+
     public static final String SRU_PARAMETER_ROLE = "x-info5-roleId";
 
     public static final String SRU_PARAMETER_USER = "x-info5-userId";
 
     public static final String SRU_PARAMETER_OMIT_HIGHLIGHTING = "x-info5-omitHighlighting";
-
-    public static final String SRU_PARAMETER_VERSION = "version";
 
     /**
      * Filter (URI).

@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.aa.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.aa.UserGroupListTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,12 +59,12 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(java.util.Map)
+     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(SruSearchRequestParametersBean)
      */
     @Override
-    public UserGroupListTO retrieveUserGroups(final Map<String, String[]> filter) throws MissingMethodParameterException,
+    public UserGroupListTO retrieveUserGroups(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserGroupListTO.class, this.userGroupHandler.retrieveUserGroups(filter));
+        return ServiceUtility.fromXML(UserGroupListTO.class, this.userGroupHandler.retrieveUserGroups(filter.toParameterMap()));
     }
 
 }

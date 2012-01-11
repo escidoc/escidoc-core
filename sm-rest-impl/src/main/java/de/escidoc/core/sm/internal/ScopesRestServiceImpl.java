@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.sm.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.ScopeListTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,12 +59,12 @@ public class ScopesRestServiceImpl implements ScopesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(java.util.Map)
+     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(SruSearchRequestParametersBean)
      */
     @Override
-    public ScopeListTO retrieveScopes(final Map<String, String[]> parameters) throws InvalidSearchQueryException,
+    public ScopeListTO retrieveScopes(final SruSearchRequestParametersBean filter) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ScopeListTO.class, this.scopeHandler.retrieveScopes(parameters));
+        return ServiceUtility.fromXML(ScopeListTO.class, this.scopeHandler.retrieveScopes(filter.toParameterMap()));
     }
 
 }

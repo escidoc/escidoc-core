@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.sm.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.ReportDefinitionListTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,13 +59,13 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(java.util.Map)
+     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public ReportDefinitionListTO retrieveReportDefinitions(final Map<String, String[]> filter)
+    public ReportDefinitionListTO retrieveReportDefinitions(final SruSearchRequestParametersBean filter)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(filter));
+        return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(filter.toParameterMap()));
     }
 
 }

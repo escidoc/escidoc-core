@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.aa.internal;
 
-import java.util.Map;
-
 import org.escidoc.core.domain.aa.RoleListTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -60,12 +59,12 @@ public class RolesRestServiceImpl implements RolesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.RolesRestService#retrieveRoles(java.util.Map)
+     * @see de.escidoc.core.aa.RolesRestService#retrieveRoles(SruSearchRequestParametersBean)
      */
     @Override
-    public RoleListTO retrieveRoles(final Map<String, String[]> filter) throws MissingMethodParameterException,
+    public RoleListTO retrieveRoles(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(RoleListTO.class, this.roleHandler.retrieveRoles(filter));
+        return ServiceUtility.fromXML(RoleListTO.class, this.roleHandler.retrieveRoles(filter.toParameterMap()));
     }
 
 }

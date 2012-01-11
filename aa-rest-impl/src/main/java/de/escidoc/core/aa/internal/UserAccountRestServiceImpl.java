@@ -28,7 +28,9 @@
  */
 package de.escidoc.core.aa.internal;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.escidoc.core.domain.aa.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.GrantTO;
@@ -40,6 +42,10 @@ import org.escidoc.core.domain.aa.UserAccountPreferenceTO;
 import org.escidoc.core.domain.aa.UserAccountResourcesTO;
 import org.escidoc.core.domain.aa.UserAccountTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.RevokeGrantTaskParamTO;
+import org.escidoc.core.domain.taskparam.RevokeGrantsTaskParamTO;
+import org.escidoc.core.domain.taskparam.UpdatePasswordTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -139,10 +145,10 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#updatePassword(java.lang.String, java.lang.String)
      */
     @Override
-    public void updatePassword(final String id, final String taskParam) throws UserAccountNotFoundException,
+    public void updatePassword(final String id, final UpdatePasswordTaskParamTO taskParam) throws UserAccountNotFoundException,
         InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.updatePassword(id, taskParam);
+        this.userAccountHandler.updatePassword(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -160,20 +166,20 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String id, final String taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
+    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.activate(id, taskParam);
+        this.userAccountHandler.activate(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#deactivate(java.lang.String, java.lang.String)
      */
     @Override
-    public void deactivate(final String id, final String taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
+    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.deactivate(id, taskParam);
+        this.userAccountHandler.deactivate(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -218,20 +224,20 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#revokeGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(final String id, final String grantId, final String taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
+    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.revokeGrant(id, grantId, taskParam);
+        this.userAccountHandler.revokeGrant(id, grantId, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrants(final String id, final String taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
+    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.revokeGrants(id, taskParam);
+        this.userAccountHandler.revokeGrants(id, ServiceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -348,11 +354,21 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.Map)
+     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.Set, java.util.Set, java.util.Set)
      */
     @Override
-    public PermissionFilterTO retrievePermissionFilterQuery(final Map<String, String[]> parameters) throws SystemException,
+    public PermissionFilterTO retrievePermissionFilterQuery(final Set<String> index, final Set<String> user, final Set<String> role) throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException {
+        Map<String, String[]> parameters = new HashMap<String, String[]>();
+        if (index != null && index.size() > 0) {
+            parameters.put("index", (String[])index.toArray());
+        }
+        if (user != null && user.size() > 0) {
+            parameters.put("user", (String[])user.toArray());
+        }
+        if (role != null && role.size() > 0) {
+            parameters.put("role", (String[])role.toArray());
+        }
         return ServiceUtility.fromXML(PermissionFilterTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
     }
 
