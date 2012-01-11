@@ -20,8 +20,13 @@
 
 package de.escidoc.core.content.relation.internal;
 
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -29,20 +34,27 @@ import org.springframework.stereotype.Service;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.content.relation.ContentRelationRestService;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 
-@Service
+/**
+ * 
+ * @author ?, SWA
+ * 
+ */
 public class ContentRelationRestServiceImpl implements ContentRelationRestService {
 
     @Autowired
@@ -61,6 +73,7 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         InvalidContentException, MissingAttributeValueException, RelationPredicateNotFoundException,
         AuthorizationException, AuthenticationException, InvalidXmlException, ReferencedResourceNotFoundException,
         MissingMethodParameterException {
+
         return ServiceUtility.fromXML(ContentRelationTO.class,
             this.contentRelationHandler.create(ServiceUtility.toXML(contentRelationTO)));
 
@@ -69,6 +82,7 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     @Override
     public ContentRelationTO retrieve(final String id) throws SystemException, AuthorizationException,
         AuthenticationException, ContentRelationNotFoundException {
+
         return ServiceUtility.fromXML(ContentRelationTO.class, this.contentRelationHandler.retrieve(id));
     }
 
@@ -78,6 +92,7 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         RelationPredicateNotFoundException, AuthorizationException, InvalidStatusException, AuthenticationException,
         ContentRelationNotFoundException, InvalidXmlException, ReferencedResourceNotFoundException, LockingException,
         MissingMethodParameterException {
+
         return ServiceUtility.fromXML(ContentRelationTO.class,
             this.contentRelationHandler.update(id, ServiceUtility.toXML(contentRelationTO)));
     }
@@ -85,6 +100,111 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     @Override
     public void delete(final String id) throws SystemException, AuthorizationException, AuthenticationException,
         ContentRelationNotFoundException, LockingException {
-        contentRelationHandler.delete(id);
+
+        this.contentRelationHandler.delete(id);
     }
+
+    // FIXME
+    // public ContentRelationsTO retrieveContentRelations(final Map<String, String[]> parameterMap) throws
+    // InvalidSearchQueryException,
+    // SystemException;
+
+    @Override
+    public ContentRelationPropertiesTO retrieveProperties(String id) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(ContentRelationPropertiesTO.class,
+            this.contentRelationHandler.retrieveProperties(id));
+    }
+
+    @Override
+    public ResultTO lock(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidContentException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidStatusException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.lock(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO unlock(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
+        SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
+        InvalidStatusException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.unlock(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO submit(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidContentException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.submit(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO revise(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, XmlCorruptedException,
+        InvalidContentException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.revise(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO release(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidContentException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.release(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public ResultTO assignObjectPid(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
+        OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException {
+
+        return ServiceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.assignObjectPid(id, ServiceUtility.toXML(statusTaskParamTO)));
+    }
+
+    @Override
+    public MdRecordsTO retrieveMdRecords(String id) throws AuthenticationException, AuthorizationException,
+        ContentRelationNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(MdRecordsTO.class, this.contentRelationHandler.retrieveMdRecords(id));
+    }
+
+    @Override
+    public MdRecordTO retrieveMdRecord(String id, String name) throws AuthenticationException, AuthorizationException,
+        ContentRelationNotFoundException, MdRecordNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(MdRecordTO.class, this.contentRelationHandler.retrieveMdRecord(id, name));
+    }
+
+    // FIXME
+    // @Override
+    // public RegisteredPerdicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
+    // SystemException {
+    //
+    // return ServiceUtility.fromXML(RegisteredPerdicatesTO.class,
+    // this.contentRelationHandler.retrieveRegisteredPredicates());
+    // }
+
+    // FIXME
+    // @Override
+    // public String retrieveResources(String id) throws AuthenticationException, AuthorizationException,
+    // ContentRelationNotFoundException, MissingMethodParameterException, SystemException {
+    // return ServiceUtility.fromXML(ContentRelationTO.class,
+    // this.contentRelationHandler.retrieveResources(id));
+    // }
+
 }
