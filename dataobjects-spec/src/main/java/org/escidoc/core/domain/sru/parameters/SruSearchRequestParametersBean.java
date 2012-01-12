@@ -32,8 +32,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MIH
+ * Bean implementation for JAX-RS @QueryParam annotation usage on JAX-RS interfaces. <br/>
+ * <br/>
+ * Example:<br/>
+ * <br/>
+ * <code>public method interfaceMethod(@QueryParam("") SruSearchRequestParametersBean) {...}
+ * </code><br/>
+ * <br/>
+ * This will map all query parameters to this bean, if and only if the query parameter name fits to one of the setter
+ * method name.<br/>
+ * <br/>
+ * Example: The query parameter <i>operation</i> requires the existence of the setter method <i>setOperation</i>.
  * 
+ * @author MIH
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 public class SruSearchRequestParametersBean {
 
@@ -107,10 +119,11 @@ public class SruSearchRequestParametersBean {
 
     // @XmlSchemaType(name = "positiveInteger")
     private String maximumTerms;
-    
+
     private String user;
+
     private String role;
-    
+
     private String omitHighlighting;
 
     /**
@@ -343,76 +356,80 @@ public class SruSearchRequestParametersBean {
     public void setMaximumTerms(final String maximumTerms) {
         this.maximumTerms = maximumTerms;
     }
-    
+
     /**
-     * @param user the user to set
+     * @param user
+     *            the user to set
      */
-    public void setUser(String user) {
+    public void setUser(final String user) {
         this.user = user;
     }
 
     /**
-     * @param role the role to set
+     * @param role
+     *            the role to set
      */
-    public void setRole(String role) {
+    public void setRole(final String role) {
         this.role = role;
     }
 
     /**
-     * @param omitHighlighting the omitHighlighting to set
+     * @param omitHighlighting
+     *            the omitHighlighting to set
      */
-    public void setOmitHighlighting(String omitHighlighting) {
+    public void setOmitHighlighting(final String omitHighlighting) {
         this.omitHighlighting = omitHighlighting;
     }
 
     /**
      * return Object as Map
+     * 
      * @return Map parameterMap
      */
     public Map<String, String[]> toParameterMap() {
-        Map<String, String[]> parameterMap = new HashMap<String, String[]>();
-        parameterMap.put(SRU_PARAMETER_OPERATION, new String[]{getOperation()});
-        parameterMap.put(SRU_PARAMETER_START_RECORD, new String[]{getStartRecord()});
-        parameterMap.put(SRU_PARAMETER_RECORD_PACKING, new String[]{getRecordPacking()});
-        parameterMap.put(SRU_PARAMETER_RESPONSE_POSITION, new String[]{getResponsePosition()});
+        final Map<String, String[]> parameterMap = new HashMap<String, String[]>();
+        parameterMap.put(SRU_PARAMETER_OPERATION, new String[] { getOperation() });
+        parameterMap.put(SRU_PARAMETER_START_RECORD, new String[] { getStartRecord() });
+        parameterMap.put(SRU_PARAMETER_RECORD_PACKING, new String[] { getRecordPacking() });
+        parameterMap.put(SRU_PARAMETER_RESPONSE_POSITION, new String[] { getResponsePosition() });
         if (getVersion() != null) {
-            parameterMap.put(SRU_PARAMETER_VERSION, new String[]{getVersion()});
+            parameterMap.put(SRU_PARAMETER_VERSION, new String[] { getVersion() });
         }
         if (getQuery() != null) {
-            parameterMap.put(SRU_PARAMETER_QUERY, new String[]{getQuery()});
+            parameterMap.put(SRU_PARAMETER_QUERY, new String[] { getQuery() });
         }
         if (getMaximumRecords() != null) {
-            parameterMap.put(SRU_PARAMETER_MAXIMUM_RECORDS, new String[]{getMaximumRecords()});
+            parameterMap.put(SRU_PARAMETER_MAXIMUM_RECORDS, new String[] { getMaximumRecords() });
         }
         if (getRecordSchema() != null) {
-            parameterMap.put(SRU_PARAMETER_RECORD_SCHEMA, new String[]{getRecordSchema()});
+            parameterMap.put(SRU_PARAMETER_RECORD_SCHEMA, new String[] { getRecordSchema() });
         }
         if (getRecordXPath() != null) {
-            parameterMap.put(SRU_PARAMETER_RECORD_XPATH, new String[]{getRecordXPath()});
+            parameterMap.put(SRU_PARAMETER_RECORD_XPATH, new String[] { getRecordXPath() });
         }
         if (getResultSetTTL() != null) {
-            parameterMap.put(SRU_PARAMETER_RESULT_SET_TTL, new String[]{getResultSetTTL()});
+            parameterMap.put(SRU_PARAMETER_RESULT_SET_TTL, new String[] { getResultSetTTL() });
         }
         if (getSortKeys() != null) {
-            parameterMap.put(SRU_PARAMETER_SORT_KEYS, new String[]{getSortKeys()});
+            parameterMap.put(SRU_PARAMETER_SORT_KEYS, new String[] { getSortKeys() });
         }
         if (getStylesheet() != null) {
-            parameterMap.put(SRU_PARAMETER_STYLESHEET, new String[]{getStylesheet()});
+            parameterMap.put(SRU_PARAMETER_STYLESHEET, new String[] { getStylesheet() });
         }
         if (getScanClause() != null) {
-            parameterMap.put(SRU_PARAMETER_SCAN_CLAUSE, new String[]{getScanClause()});
+            parameterMap.put(SRU_PARAMETER_SCAN_CLAUSE, new String[] { getScanClause() });
         }
         if (getMaximumTerms() != null) {
-            parameterMap.put(SRU_PARAMETER_MAXIMUM_TERMS, new String[]{getMaximumTerms()});
+            parameterMap.put(SRU_PARAMETER_MAXIMUM_TERMS, new String[] { getMaximumTerms() });
         }
         if (getUser() != null) {
-            parameterMap.put(SRU_PARAMETER_USER, new String[]{getUser()});
+            parameterMap.put(SRU_PARAMETER_USER, new String[] { getUser() });
         }
         if (getRole() != null) {
-            parameterMap.put(SRU_PARAMETER_ROLE, new String[]{getRole()});
+            parameterMap.put(SRU_PARAMETER_ROLE, new String[] { getRole() });
         }
         if (getOmitHighlighting() != null) {
-            parameterMap.put(SRU_PARAMETER_OMIT_HIGHLIGHTING, new String[]{getOmitHighlighting()});
+            parameterMap.put(SRU_PARAMETER_OMIT_HIGHLIGHTING, new String[] { getOmitHighlighting() });
         }
         return parameterMap;
     }
