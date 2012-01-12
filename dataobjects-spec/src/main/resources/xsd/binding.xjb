@@ -766,4 +766,22 @@
     </bindings>
   </bindings>
   
+  <!-- OAI -->
+  <bindings schemaLocation="set-definition.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.oai" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='set-definition']">
+      <class name="SetDefinitionTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="set-definition-list.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.oai" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='set-definition-list']">
+      <class name="SetDefinitionListTO" />
+    </bindings>
+  </bindings>
+  
 </bindings>

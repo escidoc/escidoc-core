@@ -71,6 +71,8 @@
         <module>cmm-rest-impl</module>
         <module>cmm-spec</module>
         <module>cmm</module>
+        <module>oai-rest-spec</module>
+        <module>oai-rest-impl</module>
         <module>oai-spec</module>
         <module>oai</module>
         <module>om-rest-spec</module>
@@ -2063,7 +2065,17 @@
         <artifactId>adm-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>oai-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
         <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>oai-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>oai-spec</artifactId>
         <version>${project.version}</version>

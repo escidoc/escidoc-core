@@ -75,7 +75,7 @@ public interface ContentRelationRestService {
     ContentRelationTO retrieve(@PathParam("id") String id) throws SystemException, ContentRelationNotFoundException,
         AuthorizationException, AuthenticationException;
 
-    @POST
+    @PUT
     @Path("/{id}")
     ContentRelationTO update(@PathParam("id") String id, ContentRelationTO contentRelationTO) throws SystemException,
         InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
