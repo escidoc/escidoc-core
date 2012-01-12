@@ -25,7 +25,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>tme-rest-spec</artifactId>
-  <name>eSciDoc Core - Technical Metasdata Extractor REST Spec.</name>
+  <name>eSciDoc Core - Technical Metadata Extractor REST Spec.</name>
 
   <parent>
     <artifactId>eSciDocCore</artifactId>
