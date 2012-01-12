@@ -88,6 +88,8 @@
         <module>sm</module>
         <module>sm-rest-spec</module>
         <module>sm-rest-impl</module>
+        <module>st-rest-spec</module>
+        <module>st-rest-impl</module>
         <module>st-spec</module>
         <module>st</module>
         <module>tme-rest-spec</module>
@@ -2102,7 +2104,17 @@
         <artifactId>sm</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>st-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
         <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>st-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>st-spec</artifactId>
         <version>${project.version}</version>

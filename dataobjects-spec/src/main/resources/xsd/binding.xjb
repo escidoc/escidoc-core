@@ -784,6 +784,16 @@
     </bindings>
   </bindings>
   
+  <!-- Staging Service -->
+  <bindings schemaLocation="staging-file.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.st" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='staging-file']">
+      <class name="StagingFileTO" />
+    </bindings>
+  </bindings>
+  
   <!-- TME -->
   <bindings schemaLocation="tme-request.xsd">
     <schemaBindings>

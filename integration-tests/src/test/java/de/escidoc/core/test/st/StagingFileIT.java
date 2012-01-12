@@ -50,7 +50,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for the StagingFile.
- *
+ * 
  * @author Torsten Tetteroo
  */
 public class StagingFileIT extends StagingFileTestBase {
@@ -61,8 +61,9 @@ public class StagingFileIT extends StagingFileTestBase {
 
     /**
      * Test successfully creating a StagingFile.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSTCsf1() throws Exception {
@@ -89,25 +90,21 @@ public class StagingFileIT extends StagingFileTestBase {
 
     /**
      * Test declining the creation of a StagingFile without binary content.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testSTCsf2() throws Exception {
 
-        try {
-            create(null, testUploadFileMimeType, testUploadFile);
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("", MissingMethodParameterException.class, e);
-        }
+        create(null, testUploadFileMimeType, testUploadFile);
     }
 
     /**
      * Test successfully retrieving staging file.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSTRsf1() throws Exception {
@@ -148,59 +145,45 @@ public class StagingFileIT extends StagingFileTestBase {
 
     /**
      * Test declining the retrieval of a StagingFile with missing parameter token.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testSTRsf2() throws Exception {
 
-        try {
-            retrieveStagingFile(null);
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Unexpected exception, ", MissingMethodParameterException.class, e);
-        }
+        retrieveStagingFile(null);
     }
 
     /**
      * Test declining the retrieval of a StagingFile with unknown token.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = StagingFileNotFoundException.class)
     public void testSTRsf4() throws Exception {
 
-        try {
-            retrieveStagingFile(UNKNOWN_ID);
-            EscidocAbstractTest.failMissingException(StagingFileNotFoundException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
-        }
+        retrieveStagingFile(UNKNOWN_ID);
     }
 
     /**
      * Test declining the retrieval of a StagingFile with providing the id of an existing resource of another type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = StagingFileNotFoundException.class)
     public void testSTRsf4_2() throws Exception {
 
-        try {
-            retrieveStagingFile(CONTEXT_ID);
-            EscidocAbstractTest.failMissingException(StagingFileNotFoundException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType("Unexpected exception, ", StagingFileNotFoundException.class, e);
-        }
+        retrieveStagingFile(CONTEXT_ID);
     }
 
     /**
      * Test declining the retrieval of a staging file that has been previously retrieved.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testSTRsf8() throws Exception {
@@ -242,8 +225,9 @@ public class StagingFileIT extends StagingFileTestBase {
 
     /**
      * Test successfully creating a StagingFile.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCreateItemWithStagingFileLink() throws Exception {
