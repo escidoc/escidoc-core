@@ -3248,6 +3248,20 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Asserts that the provided xml data is a valid aggregation-definition.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertXmlValidTmeResult(final String xmlData) throws Exception {
+        URL url = new URL(getFrameworkUrl() + "/xsd/tme/0.1/jhove.xsd");
+        assertAllPlaceholderResolved(xmlData);
+        assertXmlValid(xmlData, url);
+    }
+
+    /**
      * Asserts that the provided xml data is a valid aggregation-definition-list.
      * 
      * @param xmlData

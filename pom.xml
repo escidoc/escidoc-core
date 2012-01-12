@@ -90,6 +90,8 @@
         <module>sm-rest-impl</module>
         <module>st-spec</module>
         <module>st</module>
+        <module>tme-rest-spec</module>
+        <module>tme-rest-impl</module>
         <module>tme-spec</module>
         <module>tme</module>
         <module>escidoc-core.war</module>
@@ -2110,7 +2112,17 @@
         <artifactId>st</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>tme-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
         <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>tme-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>tme-spec</artifactId>
         <version>${project.version}</version>

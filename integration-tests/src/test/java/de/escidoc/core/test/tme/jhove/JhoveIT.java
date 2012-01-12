@@ -22,8 +22,9 @@ public class JhoveIT extends JhoveTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public void tearDown() throws Exception {
@@ -34,8 +35,9 @@ public class JhoveIT extends JhoveTestBase {
 
     /**
      * Test successfully call jhove service to extract technical metadata for an image and a pdf file.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testJhoveEtm1() throws Exception {
@@ -51,6 +53,8 @@ public class JhoveIT extends JhoveTestBase {
 
         String request = toString(temp, false);
         String result = extract(request);
+        assertXmlValidTmeResult(result);
+
         Document resultDoc = getDocument(result);
         selectSingleNodeAsserted(resultDoc, "/jhove");
         assertJhoveRepInfo(resultDoc, getFrameworkUrl() + "/images/escidoc-logo.jpg", "JPEG-hul", "1.2", "5304",
@@ -61,107 +65,83 @@ public class JhoveIT extends JhoveTestBase {
             "/jhove/repInfo").getLength());
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = XmlSchemaValidationException.class)
     public void testJhoveEtm2a() throws Exception {
 
-        Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
-        try {
-            String request = "<request xmlns:xlink=\"http://www.w3.org/1999/xlink\"/>";
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        extract("<request xmlns:xlink=\"http://www.w3.org/1999/xlink\"/>");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = XmlCorruptedException.class)
     public void testJhoveEtm2b() throws Exception {
 
-        Class<XmlCorruptedException> ec = XmlCorruptedException.class;
-        try {
-            String request = "<request xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        extract("<request xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = XmlCorruptedException.class)
     public void testJhoveEtm2c() throws Exception {
 
-        Class<XmlCorruptedException> ec = XmlCorruptedException.class;
-        try {
-            String request = "<requests />";
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        extract("<requests />");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testJhoveEtm3a() throws Exception {
 
-        Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
-        try {
-            extract(null);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        extract(null);
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = MissingMethodParameterException.class)
     public void testJhoveEtm3b() throws Exception {
 
-        Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
-        try {
-            String request = "";
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        extract("");
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = TmeException.class)
     public void testJhoveEtm4a() throws Exception {
 
-        Class<TmeException> ec = TmeException.class;
-        try {
-            String request = getTemplateAsString(TEMPLATE_TME_PATH, "requestEmptyFileLink.xml");
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        String request = getTemplateAsString(TEMPLATE_TME_PATH, "requestEmptyFileLink.xml");
+        extract(request);
     }
 
-    @Test
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test(expected = TmeException.class)
     public void testJhoveEtm4b() throws Exception {
 
-        Class<TmeException> ec = TmeException.class;
-        try {
-            String request = getTemplateAsString(TEMPLATE_TME_PATH, "requestInvalidFileLink.xml");
-            extract(request);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        String request = getTemplateAsString(TEMPLATE_TME_PATH, "requestInvalidFileLink.xml");
+        extract(request);
     }
 
     /**
      * Assert JHove report info.
-     *
-     * @param size File size.
+     * 
+     * @param size
+     *            File size.
      */
     private void assertJhoveRepInfo(
         final Node node, final String uri, final String reportingModule, final String reportingModuleRelease,

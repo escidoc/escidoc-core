@@ -784,4 +784,27 @@
     </bindings>
   </bindings>
   
+  <!-- TME -->
+  <bindings schemaLocation="tme-request.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.tme" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='request']">
+      <class name="TmeRequestTO" />
+    </bindings>
+  </bindings>
+<!--  
+  <bindings schemaLocation="jhove.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.tme" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='jhove']">
+      <class name="JhoveTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='date']">
+      <property name="timestamp" />
+    </bindings>  
+  </bindings>
+-->
+
 </bindings>

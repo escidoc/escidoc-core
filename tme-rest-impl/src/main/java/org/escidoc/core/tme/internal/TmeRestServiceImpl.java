@@ -27,6 +27,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusEx
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -65,7 +66,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
+import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -74,9 +75,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import org.escidoc.core.oai.OAIRestService;
-import org.escidoc.core.domain.container.ContainerTO;
-import org.escidoc.core.domain.oai.SetDefinitionTO;
+import org.escidoc.core.tme.TmeRestService;
+import org.escidoc.core.domain.tme.TmeRequestTO;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -88,64 +88,37 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 /**
- * REST Service Implementation for OAI Set Definition Service.
+ * REST Service Implementation for Technical Metadata Extractor.
  * 
  * @author SWA
  * 
  */
 @Service
-public class OAIRestServiceImpl implements OAIRestService {
+public class TmeRestServiceImpl implements TmeRestService {
 
-    private final static Logger LOG = LoggerFactory.getLogger(OAIRestServiceImpl.class);
+    private final static Logger LOG = LoggerFactory.getLogger(TmeRestServiceImpl.class);
 
     @Autowired
-    @Qualifier("service.OAIHandler")
-    private SetDefinitionHandlerInterface oaiHandler;
+    @Qualifier("service.TmeHandler")
+    private JhoveHandlerInterface tmeHandler;
 
     private JAXBContext jaxbContext;
 
-    protected OAIRestServiceImpl() {
+    protected TmeRestServiceImpl() {
         try {
-            this.jaxbContext = JAXBContext.newInstance(SetDefinitionTO.class);
+            this.jaxbContext = JAXBContext.newInstance(TmeRequestTO.class);
         }
         catch (JAXBException e) {
             LOG.error("Error on initialising JAXB context.", e);
         }
     }
 
-    public SetDefinitionTO create(final SetDefinitionTO setDefinitionTO) throws UniqueConstraintViolationException,
-        InvalidXmlException, MissingMethodParameterException, SystemException, AuthenticationException,
-        AuthorizationException {
+    /* TmeResultTO */
+    public String extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
+    XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
+    TmeException {
 
-        return ServiceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.create(ServiceUtility.toXML(setDefinitionTO)));
+        return this.tmeHandler.extract(ServiceUtility.toXML(tmeRequestTO));
     }
 
-    public SetDefinitionTO retrieve(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException {
-
-        return ServiceUtility.fromXML(SetDefinitionTO.class, this.oaiHandler.retrieve(id));
-    }
-
-    public SetDefinitionTO update(final String id, final SetDefinitionTO setDefinitionTO)
-        throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
-        AuthenticationException, AuthorizationException {
-
-        return ServiceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.update(id, ServiceUtility.toXML(setDefinitionTO)));
-    }
-
-    public void delete(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException {
-
-        this.oaiHandler.delete(id);
-    }
-
-    // FIXME
-    // SetDefinitionListTO retrieveSetDefinitions(final Map<String, String[]> filter) throws AuthenticationException,
-    // AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
-    //
-    // return ServiceUtility.fromXML(SetDefinitionTO.class,
-    // this.oaiHandler.create(ServiceUtility.toXML(setDefinitionTO)));
-    // }
 }
