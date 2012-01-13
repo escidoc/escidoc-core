@@ -284,6 +284,8 @@ public class Constants {
 
     public static final String SUB_ASSIGN_CONTENT_PID = "assign-content-pid";
 
+    public static final String SUB_RETRIEVE_REGISTERED_PREDICATES = "retrieve-registered-predicates";
+
     // public static final String SUB_ASSIGN_CONTENT_PID_PATH =
     // SUB_COMPONENTS + "/" + "component";
 
