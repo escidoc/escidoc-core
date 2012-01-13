@@ -526,7 +526,7 @@ public abstract class EscidocTestBase {
 
     public static final String TEMPLATE_OM_COMMON_PATH = TEMPLATE_OM_PATH + "/common";
 
-    public static final String TEMPLATE_CONTAINER_PATH = TEMPLATE_OM_PATH + "/";
+    public static final String TEMPLATE_CONTAINER_PATH = TEMPLATE_OM_PATH + "/container";
 
     public static final String TEMPLATE_CONTAINER_SEARCH_PATH = TEMPLATE_CONTAINER_PATH + "/search";
 
