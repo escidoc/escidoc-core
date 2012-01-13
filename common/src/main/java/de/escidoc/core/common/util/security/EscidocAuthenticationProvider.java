@@ -55,7 +55,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(final Authentication authentication) {
         final String credentials = (String) authentication.getCredentials();
-        if (credentials == null || "".equals(credentials)) {
+        if (credentials == null || credentials.isEmpty()) {
             final GrantedAuthority grantedAuthority = new GrantedAuthorityImpl("");
             final GrantedAuthority[] grantedAuthorities = { grantedAuthority };
             return new AnonymousAuthenticationToken("key", "Anonymous", grantedAuthorities);

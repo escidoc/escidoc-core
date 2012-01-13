@@ -147,7 +147,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingElementValueException It the name is empty or null.
      */
     protected void checkName(final String name) throws MissingElementValueException {
-        if ("".equals(name) || name == null) {
+        if (name == null || name.isEmpty()) {
             throw new MissingElementValueException("Name of organizational unit must be set!");
         }
     }

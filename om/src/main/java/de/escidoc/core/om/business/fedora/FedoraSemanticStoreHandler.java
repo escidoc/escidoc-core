@@ -135,7 +135,7 @@ public class FedoraSemanticStoreHandler implements SemanticStoreHandlerInterface
         }
         final String format = qh.getFormat();
         String result = tripleStoreConnector.requestMPT(query, format);
-        if (!"".equals(result) && "*".equals(predicate)) {
+        if (!result.isEmpty() && "*".equals(predicate)) {
             // TODO check result for unallowed predicates
             if ("N-Triples".equals(format)) {
                 final String[] triples = result.split("\\s\\.");

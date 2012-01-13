@@ -118,7 +118,7 @@ public abstract class WriteHandler extends DefaultHandler {
         String uri, final String elementName, final String attributeName, final String attributeValue, String prefix,
         final NamespaceContext nscontext) throws XMLStreamException {
         if (uri != null) {
-            if ("".equals(uri)) {
+            if (uri.isEmpty()) {
                 uri = nscontext.getNamespaceURI(prefix);
             }
             if (nsuris.containsKey(uri)) {

@@ -446,7 +446,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam);
 
         final String password = handler.getPassword();
-        if (password == null || "".equals(password)) {
+        if (password == null || password.isEmpty()) {
             throw new MissingMethodParameterException("Password must not be null or empty!");
         }
         userAccount.setPassword(password);
