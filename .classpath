@@ -19,6 +19,8 @@
 	<classpathentry kind="src" output="tme-spec/target/test-classes" path="tme-spec/src/test/java"/>
 	<classpathentry kind="src" output="adm-spec/target/classes" path="adm-spec/src/main/java"/>
 	<classpathentry kind="src" output="adm-spec/target/test-classes" path="adm-spec/src/test/java"/>
+	<classpathentry kind="src" output="adm-rest-spec/target/classes" path="adm-rest-spec/src/main/java"/>
+	<classpathentry kind="src" output="adm-rest-spec/target/test-classes" path="adm-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="cmm-spec/target/classes" path="cmm-spec/src/main/java"/>
 	<classpathentry kind="src" output="cmm-spec/target/test-classes" path="cmm-spec/src/test/java"/>
 	<classpathentry kind="src" output="aa-spec/target/classes" path="aa-spec/src/main/java"/>
@@ -67,6 +69,8 @@
 	<classpathentry excluding="**" kind="src" output="fedoradeviation-rest-impl/target/classes" path="fedoradeviation-rest-impl/src/main/resources"/>
 	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
+	<classpathentry kind="src" output="adm-rest-impl/target/classes" path="adm-rest-impl/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="adm-rest-impl/target/classes" path="adm-rest-impl/src/main/resources"/>
 	<classpathentry kind="src" output="aspects/target/classes" path="aspects/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="aspects/target/classes" path="aspects/src/main/resources"/>
 	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
@@ -111,6 +115,6 @@
 	<classpathentry excluding="**" kind="src" output="purge-service-impl/target/classes" path="purge-service-impl/src/main/resources"/>
 	<classpathentry kind="src" output="purge-service-impl/target/test-classes" path="purge-service-impl/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

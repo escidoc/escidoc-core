@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema 
+    targetNamespace="http://java.sun.com/dtd/properties.dtd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:properties="http://java.sun.com/dtd/properties.dtd"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="comment">
+    <xs:complexType mixed="true" />
+  </xs:element>
+
+  <xs:element name="entry">
+    <xs:complexType mixed="true">
+      <xs:attribute name="key" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="properties:comment" minOccurs="0" />
+        <xs:element ref="properties:entry" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required" fixed="1.0" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

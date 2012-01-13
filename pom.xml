@@ -67,6 +67,8 @@
         <module>aa-rest-impl</module>
         <module>adm-spec</module>
         <module>adm-impl</module>
+        <module>adm-rest-spec</module>
+        <module>adm-rest-impl</module>
         <module>cmm-rest-spec</module>
         <module>cmm-rest-impl</module>
         <module>cmm-spec</module>
@@ -2233,6 +2235,16 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>aa-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>adm-rest-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>adm-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

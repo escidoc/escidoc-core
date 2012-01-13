@@ -783,6 +783,38 @@
       <class name="SetDefinitionListTO" />
     </bindings>
   </bindings>
+
+  <!-- java.util.Properties -->
+  <bindings schemaLocation="javautilproperties.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.properties" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='properties']">
+      <class name="JavaUtilPropertiesTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='comment']">
+      <class name="CommentTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='entry']">
+      <class name="EntryTO" />
+    </bindings>
+  </bindings>
+  
+  <!-- Index Configuration -->
+  <bindings schemaLocation="index-configuration.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sb" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='index-configuration']">
+      <class name="IndexConfigurationTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='index']">
+      <class name="IndexTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='resource']">
+      <class name="ResourceTO" />
+    </bindings>
+  </bindings>
   
   <!-- Staging Service -->
   <bindings schemaLocation="staging-file.xsd">

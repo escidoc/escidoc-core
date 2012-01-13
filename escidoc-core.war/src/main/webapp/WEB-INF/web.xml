@@ -40,6 +40,7 @@
             classpath:/META-INF/spring/applicationContext-context-rest-service.xml
             classpath:/META-INF/spring/applicationContext-aa-rest-service.xml
             classpath:/META-INF/spring/applicationContext-sm-rest-service.xml
+            classpath:/META-INF/spring/applicationContext-adm-rest-service.xml
 			classpath:/META-INF/spring/applicationContext-fedoradeviation-rest-service.xml
             classpath:applicationContext-persistence.xml
             classpath:applicationContext-webapp.xml
