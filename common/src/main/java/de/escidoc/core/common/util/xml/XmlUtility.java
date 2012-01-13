@@ -223,8 +223,6 @@ public final class XmlUtility {
 
     private static String xmlSchemaSchemaLocation;
 
-    private static String activationTaskParamSchemaLocation;
-
     private static String updatePasswordTaskParamSchemaLocation;
 
     private static String revokeGrantTaskParamSchemaLocation;
