@@ -317,22 +317,11 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/lock-task-param/0.1\" "
-                + "last-modification-date=\"1970-01-01T00:00:00.000Z\" />";
-
-        try {
-            lock(theContentRelationId, param);
-            fail("No exception after lock with wrong last-modification-date.");
-        }
-        catch (final Exception e) {
-            Class<?> ec = OptimisticLockingException.class;
-            EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
-        }
+        String param = getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
+        lock(theContentRelationId, param);
     }
 
     /**
