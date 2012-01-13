@@ -49,42 +49,6 @@ import java.util.Map;
  */
 public class SruSearchRequestParametersBean {
 
-    public static final String SRU_PARAMETER_OPERATION = "operation";
-
-    public static final String SRU_PARAMETER_QUERY = "query";
-
-    public static final String SRU_PARAMETER_START_RECORD = "startRecord";
-
-    public static final String SRU_PARAMETER_MAXIMUM_RECORDS = "maximumRecords";
-
-    public static final String SRU_PARAMETER_EXPLAIN = "explain";
-
-    public static final String SRU_PARAMETER_RECORD_PACKING = "recordPacking";
-
-    public static final String SRU_PARAMETER_RECORD_SCHEMA = "recordSchema";
-
-    public static final String SRU_PARAMETER_VERSION = "version";
-
-    public static final String SRU_PARAMETER_RECORD_XPATH = "recordXPath";
-
-    public static final String SRU_PARAMETER_RESULT_SET_TTL = "resultSetTTL";
-
-    public static final String SRU_PARAMETER_SORT_KEYS = "sortKeys";
-
-    public static final String SRU_PARAMETER_STYLESHEET = "stylesheet";
-
-    public static final String SRU_PARAMETER_SCAN_CLAUSE = "scanClause";
-
-    public static final String SRU_PARAMETER_RESPONSE_POSITION = "responsePosition";
-
-    public static final String SRU_PARAMETER_MAXIMUM_TERMS = "maximumTerms";
-
-    public static final String SRU_PARAMETER_ROLE = "x-info5-roleId";
-
-    public static final String SRU_PARAMETER_USER = "x-info5-userId";
-
-    public static final String SRU_PARAMETER_OMIT_HIGHLIGHTING = "x-info5-omitHighlighting";
-
     private String operation = "searchRetrieve"; // default behavior
 
     private String version;
@@ -119,12 +83,6 @@ public class SruSearchRequestParametersBean {
 
     // @XmlSchemaType(name = "positiveInteger")
     private String maximumTerms;
-
-    private String user;
-
-    private String role;
-
-    private String omitHighlighting;
 
     /**
      * @return the operation
@@ -222,27 +180,6 @@ public class SruSearchRequestParametersBean {
      */
     public String getMaximumTerms() {
         return maximumTerms;
-    }
-
-    /**
-     * @return the user
-     */
-    public String getUser() {
-        return user;
-    }
-
-    /**
-     * @return the role
-     */
-    public String getRole() {
-        return role;
-    }
-
-    /**
-     * @return the omitHighlighting
-     */
-    public String getOmitHighlighting() {
-        return omitHighlighting;
     }
 
     /**
@@ -357,80 +294,4 @@ public class SruSearchRequestParametersBean {
         this.maximumTerms = maximumTerms;
     }
 
-    /**
-     * @param user
-     *            the user to set
-     */
-    public void setUser(final String user) {
-        this.user = user;
-    }
-
-    /**
-     * @param role
-     *            the role to set
-     */
-    public void setRole(final String role) {
-        this.role = role;
-    }
-
-    /**
-     * @param omitHighlighting
-     *            the omitHighlighting to set
-     */
-    public void setOmitHighlighting(final String omitHighlighting) {
-        this.omitHighlighting = omitHighlighting;
-    }
-
-    /**
-     * return Object as Map
-     * 
-     * @return Map parameterMap
-     */
-    public Map<String, String[]> toParameterMap() {
-        final Map<String, String[]> parameterMap = new HashMap<String, String[]>();
-        parameterMap.put(SRU_PARAMETER_OPERATION, new String[] { getOperation() });
-        parameterMap.put(SRU_PARAMETER_START_RECORD, new String[] { getStartRecord() });
-        parameterMap.put(SRU_PARAMETER_RECORD_PACKING, new String[] { getRecordPacking() });
-        parameterMap.put(SRU_PARAMETER_RESPONSE_POSITION, new String[] { getResponsePosition() });
-        if (getVersion() != null) {
-            parameterMap.put(SRU_PARAMETER_VERSION, new String[] { getVersion() });
-        }
-        if (getQuery() != null) {
-            parameterMap.put(SRU_PARAMETER_QUERY, new String[] { getQuery() });
-        }
-        if (getMaximumRecords() != null) {
-            parameterMap.put(SRU_PARAMETER_MAXIMUM_RECORDS, new String[] { getMaximumRecords() });
-        }
-        if (getRecordSchema() != null) {
-            parameterMap.put(SRU_PARAMETER_RECORD_SCHEMA, new String[] { getRecordSchema() });
-        }
-        if (getRecordXPath() != null) {
-            parameterMap.put(SRU_PARAMETER_RECORD_XPATH, new String[] { getRecordXPath() });
-        }
-        if (getResultSetTTL() != null) {
-            parameterMap.put(SRU_PARAMETER_RESULT_SET_TTL, new String[] { getResultSetTTL() });
-        }
-        if (getSortKeys() != null) {
-            parameterMap.put(SRU_PARAMETER_SORT_KEYS, new String[] { getSortKeys() });
-        }
-        if (getStylesheet() != null) {
-            parameterMap.put(SRU_PARAMETER_STYLESHEET, new String[] { getStylesheet() });
-        }
-        if (getScanClause() != null) {
-            parameterMap.put(SRU_PARAMETER_SCAN_CLAUSE, new String[] { getScanClause() });
-        }
-        if (getMaximumTerms() != null) {
-            parameterMap.put(SRU_PARAMETER_MAXIMUM_TERMS, new String[] { getMaximumTerms() });
-        }
-        if (getUser() != null) {
-            parameterMap.put(SRU_PARAMETER_USER, new String[] { getUser() });
-        }
-        if (getRole() != null) {
-            parameterMap.put(SRU_PARAMETER_ROLE, new String[] { getRole() });
-        }
-        if (getOmitHighlighting() != null) {
-            parameterMap.put(SRU_PARAMETER_OMIT_HIGHLIGHTING, new String[] { getOmitHighlighting() });
-        }
-        return parameterMap;
-    }
 }
