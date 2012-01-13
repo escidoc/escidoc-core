@@ -2023,7 +2023,7 @@ public final class XmlUtility {
     }
 
     /**
-     * @return Returns the schema location of lock-task-param schema.
+     * @return Returns the schema location of reindex-task-param schema.
      * @throws WebserverSystemException In case of an error.
      */
     public static String getReindexTaskParamSchemaLocation() {
