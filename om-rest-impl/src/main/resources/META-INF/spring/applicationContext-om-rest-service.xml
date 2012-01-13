@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="itemRestService" address="/item">
+    <jaxrs:server id="itemRestService" address="/ir/item">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.om.internal.ItemRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -18,7 +18,7 @@
         </jaxrs:features>
     </jaxrs:server>
 
-    <jaxrs:server id="containerRestService" address="/container">
+    <jaxrs:server id="containerRestService" address="/ir/container">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.om.internal.ContainerRestServiceImpl"/>
         </jaxrs:serviceBeans>

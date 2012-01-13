@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="organizationalUnitRestService" address="/organizational-unit">
+    <jaxrs:server id="organizationalUnitRestService" address="/oum/organizational-unit">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
         </jaxrs:serviceBeans>

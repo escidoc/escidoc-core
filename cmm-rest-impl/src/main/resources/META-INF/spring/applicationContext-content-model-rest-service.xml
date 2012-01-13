@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="contentModelRestService" address="/cmm">
+    <jaxrs:server id="contentModelRestService" address="/cmm/content-model">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.content.relation.internal.ContentModelRestServiceImpl"/>
         </jaxrs:serviceBeans>
