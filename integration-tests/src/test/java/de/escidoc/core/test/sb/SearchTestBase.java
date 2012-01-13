@@ -59,8 +59,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class SearchTestBase extends SbTestBase {
 
-    private static final int TIME_TO_WAIT_FOR_INDEXER = 180000;
-
     private static final int MAX_TIME_TO_WAIT_FOR_INDEXER = 1200000;
 
     protected ItemHelper item = null;
@@ -74,17 +72,6 @@ public class SearchTestBase extends SbTestBase {
     protected ContentRelationHelper contentRelation = null;
 
     protected GrantHelper grant = null;
-
-    /**
-     * Wait until the indexer has (hopefully :) run the next time.
-     * 
-     * @throws InterruptedException
-     *             If sleep fails.
-     */
-    protected void waitForIndexer() throws InterruptedException {
-
-        Thread.sleep(TIME_TO_WAIT_FOR_INDEXER);
-    }
 
     /**
      * Wait until the given id exists in the given index.
