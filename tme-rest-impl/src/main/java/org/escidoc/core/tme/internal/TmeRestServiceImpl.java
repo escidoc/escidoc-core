@@ -17,7 +17,7 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-package org.escidoc.core.oai.internal;
+package org.escidoc.core.tme.internal;
 
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -66,7 +66,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
+import de.escidoc.core.tme.service.JhoveHandler;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -99,8 +99,8 @@ public class TmeRestServiceImpl implements TmeRestService {
     private final static Logger LOG = LoggerFactory.getLogger(TmeRestServiceImpl.class);
 
     @Autowired
-    @Qualifier("service.TmeHandler")
-    private JhoveHandlerInterface tmeHandler;
+    @Qualifier("service.JhoveHandler")
+    private JhoveHandler tmeHandler;
 
     private JAXBContext jaxbContext;
 

@@ -109,6 +109,14 @@
     </dependency>
     <dependency>
       <groupId>org.escidoc.core</groupId>
+      <artifactId>oai-rest-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>om-rest-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
       <artifactId>oum-rest-impl</artifactId>
     </dependency>
     <dependency>
@@ -122,6 +130,14 @@
     <dependency>
       <groupId>org.escidoc.core</groupId>
       <artifactId>sm-rest-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>st-rest-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>tme-rest-impl</artifactId>
     </dependency>
     <dependency>
       <groupId>org.escidoc.core</groupId>

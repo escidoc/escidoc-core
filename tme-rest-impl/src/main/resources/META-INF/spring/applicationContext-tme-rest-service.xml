@@ -10,7 +10,7 @@
 
     <jaxrs:server id="tmeRestService" address="/tme">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.om.internal.TmeRestServiceImpl"/>
+            <bean class="org.escidoc.core.tme.internal.TmeRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

@@ -27,15 +27,19 @@
             classpath:/META-INF/spring/applicationContext-purge-service-impl.xml
             classpath:/META-INF/spring/applicationContext-sm.xml
             classpath:/META-INF/spring/applicationContext-om.xml
+            classpath:/META-INF/spring/applicationContext-om-rest-service.xml
             classpath:/META-INF/spring/applicationContext-aa.xml
             classpath:/META-INF/spring/applicationContext-adm.xml
             classpath:/META-INF/spring/applicationContext-cmm.xml
             classpath:/META-INF/spring/applicationContext-oai.xml
+            classpath:/META-INF/spring/applicationContext-oai-rest-service.xml
             classpath:/META-INF/spring/applicationContext-oum.xml
             classpath:/META-INF/spring/applicationContext-oum-rest-service.xml
             classpath:/META-INF/spring/applicationContext-sb.xml
             classpath:/META-INF/spring/applicationContext-st.xml
+            classpath:/META-INF/spring/applicationContext-st-rest-service.xml
             classpath:/META-INF/spring/applicationContext-tme.xml
+            classpath:/META-INF/spring/applicationContext-tme-rest-service.xml
             classpath:/META-INF/spring/applicationContext-content-relation-rest-service.xml
             classpath:/META-INF/spring/applicationContext-context-rest-service.xml
             classpath:/META-INF/spring/applicationContext-aa-rest-service.xml
@@ -579,11 +583,6 @@
 	<servlet-mapping>
 		<servlet-name>AdminServlet</servlet-name>
 		<url-pattern>/adm/admin/*</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>OrganizationalUnitServlet</servlet-name>
-		<url-pattern>/ir/organizational-unit/*</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

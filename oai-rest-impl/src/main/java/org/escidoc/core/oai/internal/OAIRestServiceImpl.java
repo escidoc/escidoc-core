@@ -99,7 +99,7 @@ public class OAIRestServiceImpl implements OAIRestService {
     private final static Logger LOG = LoggerFactory.getLogger(OAIRestServiceImpl.class);
 
     @Autowired
-    @Qualifier("service.OAIHandler")
+    @Qualifier("service.SetDefinitionHandler")
     private SetDefinitionHandlerInterface oaiHandler;
 
     private JAXBContext jaxbContext;

@@ -10,7 +10,7 @@
 
     <jaxrs:server id="oaiRestService" address="/oai/set-definition">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.om.internal.OAIRestServiceImpl"/>
+            <bean class="org.escidoc.core.oai.internal.OAIRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

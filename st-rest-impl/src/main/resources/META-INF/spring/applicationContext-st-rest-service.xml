@@ -10,7 +10,7 @@
 
     <jaxrs:server id="StagingRestService" address="/tme">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.om.internal.StagingRestServiceImpl"/>
+            <bean class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

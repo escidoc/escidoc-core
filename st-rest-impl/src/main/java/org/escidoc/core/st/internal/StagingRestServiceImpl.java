@@ -67,7 +67,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
+import de.escidoc.core.st.service.StagingFileHandler;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
@@ -101,8 +101,8 @@ public class StagingRestServiceImpl implements StagingRestService {
     private final static Logger LOG = LoggerFactory.getLogger(StagingRestServiceImpl.class);
 
     @Autowired
-    @Qualifier("service.StagingHandler")
-    private StagingFileHandlerInterface stagingHandler;
+    @Qualifier("service.StagingFileHandler")
+    private StagingFileHandler stagingHandler;
 
     private JAXBContext jaxbContext;
 
