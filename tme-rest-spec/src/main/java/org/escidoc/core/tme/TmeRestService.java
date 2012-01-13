@@ -68,6 +68,7 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import org.escidoc.core.domain.tme.TmeRequestTO;
+import org.escidoc.core.domain.tme.JhoveTO;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -93,7 +94,7 @@ public interface TmeRestService {
 
     @POST
     @Path("/jhove")
-    /* TmeResultTO */String extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
+    JhoveTO extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException;
 

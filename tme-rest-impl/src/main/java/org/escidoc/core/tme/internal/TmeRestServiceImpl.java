@@ -77,6 +77,7 @@ import org.springframework.stereotype.Service;
 
 import org.escidoc.core.tme.TmeRestService;
 import org.escidoc.core.domain.tme.TmeRequestTO;
+import org.escidoc.core.domain.tme.JhoveTO;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -113,12 +114,11 @@ public class TmeRestServiceImpl implements TmeRestService {
         }
     }
 
-    /* TmeResultTO */
-    public String extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
-    XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
-    TmeException {
+    public JhoveTO extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
+        TmeException {
 
-        return this.tmeHandler.extract(ServiceUtility.toXML(tmeRequestTO));
+        return ServiceUtility.fromXML(JhoveTO.class, this.tmeHandler.extract(ServiceUtility.toXML(tmeRequestTO)));
     }
 
 }

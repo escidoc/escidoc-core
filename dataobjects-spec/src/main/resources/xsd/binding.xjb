@@ -835,7 +835,6 @@
       <class name="TmeRequestTO" />
     </bindings>
   </bindings>
-<!--  
   <bindings schemaLocation="jhove.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.tme" />
@@ -843,10 +842,12 @@
     <bindings node="//xs:element[@name='jhove']">
       <class name="JhoveTO" />
     </bindings>
-    <bindings node="//xs:element[@name='date']">
+    <bindings node="//xs:element[@name='jhove']//xs:element[@name='date']">
       <property name="timestamp" />
     </bindings>  
+    <bindings node="//xs:complexType[@name='agentType']//xs:attribute[@name='type']">
+      <property name="agentRole" />
+    </bindings>
   </bindings>
--->
 
 </bindings>
