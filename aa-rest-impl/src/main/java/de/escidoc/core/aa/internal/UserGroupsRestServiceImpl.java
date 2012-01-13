@@ -59,12 +59,12 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.aa.UserGroupRestService#retrieveUserGroups(SruSearchRequestParametersBean)
      */
     @Override
-    public UserGroupListTO retrieveUserGroups(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
+    public UserGroupListTO retrieveUserGroups(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserGroupListTO.class, this.userGroupHandler.retrieveUserGroups(filter.toParameterMap()));
+        return ServiceUtility.fromXML(UserGroupListTO.class, this.userGroupHandler.retrieveUserGroups(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

@@ -22,6 +22,7 @@ import org.escidoc.core.domain.sru.ScanRequestType;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -82,6 +83,12 @@ public class ServiceUtility {
         return result;
     }
 
+    public static final Map<String, String[]> toMap(final SruSearchRequestParametersBean request, final String roleId, final String userId, final String omitHighlighting) {
+        final Map<String, String[]> result = new HashMap<String, String[]>();
+        insertIntoMap(request, roleId, userId, omitHighlighting, result);
+        return result;
+    }
+
     private static final void insertIntoMap(final SearchRetrieveRequestType request, final Map<String, String[]> result) {
         result.put("operation", new String[] { SruRequestTypeFactory.SRW_REQUEST_SEARCH_OP });
 
@@ -114,6 +121,50 @@ public class ServiceUtility {
         }
         if (request.getVersion() != null) {
             result.put("version", new String[] { request.getVersion() });
+        }
+    }
+
+    private static final void insertIntoMap(final SruSearchRequestParametersBean request, final String roleId, final String userId, final String omitHighlighting, final Map<String, String[]> result) {
+        result.put("operation", new String[] { SruRequestTypeFactory.SRW_REQUEST_SEARCH_OP });
+
+        if (request.getMaximumRecords() != null) {
+            result.put("maximumRecords", new String[] { request.getMaximumRecords() });
+        }
+        if (request.getQuery() != null) {
+            result.put("query", new String[] { request.getQuery() });
+        }
+        if (request.getRecordPacking() != null) {
+            result.put("recordPacking", new String[] { request.getRecordPacking() });
+        }
+        if (request.getRecordSchema() != null) {
+            result.put("recordSchema", new String[] { request.getRecordSchema() });
+        }
+        if (request.getRecordXPath() != null) {
+            result.put("recordXPath", new String[] { request.getRecordXPath() });
+        }
+        if (request.getResultSetTTL() != null) {
+            result.put("resultSetTTL", new String[] { request.getResultSetTTL() });
+        }
+        if (request.getSortKeys() != null) {
+            result.put("sortKeys", new String[] { request.getSortKeys() });
+        }
+        if (request.getStartRecord() != null) {
+            result.put("startRecord", new String[] { request.getStartRecord() });
+        }
+        if (request.getStylesheet() != null) {
+            result.put("stylesheet", new String[] { request.getStylesheet() });
+        }
+        if (request.getVersion() != null) {
+            result.put("version", new String[] { request.getVersion() });
+        }
+        if (roleId != null) {
+            result.put("x-info5-roleId", new String[] { roleId });
+        }
+        if (userId != null) {
+            result.put("x-info5-userId", new String[] { userId });
+        }
+        if (omitHighlighting != null) {
+            result.put("x-info5-omitHighlighting", new String[] { omitHighlighting });
         }
     }
 

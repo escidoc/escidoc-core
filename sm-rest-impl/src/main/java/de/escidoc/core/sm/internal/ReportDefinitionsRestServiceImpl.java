@@ -62,10 +62,10 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
      * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public ReportDefinitionListTO retrieveReportDefinitions(final SruSearchRequestParametersBean filter)
+    public ReportDefinitionListTO retrieveReportDefinitions(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(filter.toParameterMap()));
+        return ServiceUtility.fromXML(ReportDefinitionListTO.class, this.reportDefinitionHandler.retrieveReportDefinitions(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

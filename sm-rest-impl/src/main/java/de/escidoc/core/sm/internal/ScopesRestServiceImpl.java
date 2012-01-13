@@ -62,9 +62,9 @@ public class ScopesRestServiceImpl implements ScopesRestService {
      * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(SruSearchRequestParametersBean)
      */
     @Override
-    public ScopeListTO retrieveScopes(final SruSearchRequestParametersBean filter) throws InvalidSearchQueryException,
+    public ScopeListTO retrieveScopes(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ScopeListTO.class, this.scopeHandler.retrieveScopes(filter.toParameterMap()));
+        return ServiceUtility.fromXML(ScopeListTO.class, this.scopeHandler.retrieveScopes(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

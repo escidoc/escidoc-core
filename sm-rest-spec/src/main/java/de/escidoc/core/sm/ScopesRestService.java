@@ -30,7 +30,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ScopesRestService {
 
     @GET
-    ScopeListTO retrieveScopes(@QueryParam("") SruSearchRequestParametersBean filter) throws InvalidSearchQueryException,
+    ScopeListTO retrieveScopes(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
 }

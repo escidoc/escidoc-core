@@ -59,13 +59,12 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
     }
 
     /* (non-Javadoc)
-    /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(SruSearchRequestParametersBean)
      */
     @Override
-    public UserAccountListTO retrieveUserAccounts(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
+    public UserAccountListTO retrieveUserAccounts(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(filter.toParameterMap()));
+        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

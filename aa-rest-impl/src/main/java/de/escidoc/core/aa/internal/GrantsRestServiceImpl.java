@@ -63,9 +63,9 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
      */
     @Override
-    public GrantListTO retrieveGrants(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
+    public GrantListTO retrieveGrants(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(filter.toParameterMap()));
+        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

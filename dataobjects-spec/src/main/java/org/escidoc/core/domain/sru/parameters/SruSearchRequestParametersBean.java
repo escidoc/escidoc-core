@@ -28,8 +28,6 @@
  */
 package org.escidoc.core.domain.sru.parameters;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Bean implementation for JAX-RS @QueryParam annotation usage on JAX-RS interfaces. <br/>

@@ -62,10 +62,10 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
      * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public AggregationDefinitionListTO retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter)
+    public AggregationDefinitionListTO retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(filter.toParameterMap()));
+        return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
     }
 
 }

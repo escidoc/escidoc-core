@@ -39,14 +39,17 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import org.escidoc.core.domain.aa.AddSelectorsTO;
 import org.escidoc.core.domain.aa.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.GrantTO;
 import org.escidoc.core.domain.aa.RemoveSelectorsTO;
+import org.escidoc.core.domain.aa.UserGroupListTO;
 import org.escidoc.core.domain.aa.UserGroupResourcesTO;
 import org.escidoc.core.domain.aa.UserGroupSelectorsTO;
 import org.escidoc.core.domain.aa.UserGroupTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.RevokeGrantsTaskParamTO;
@@ -54,6 +57,7 @@ import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;

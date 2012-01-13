@@ -29,10 +29,13 @@
 package de.escidoc.core.sm.internal;
 
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sm.ScopeListTO;
 import org.escidoc.core.domain.sm.ScopeTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
