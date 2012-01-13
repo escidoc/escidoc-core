@@ -2609,7 +2609,7 @@ public abstract class EscidocTestBase {
      * 
      * @param timestamp
      *            last-modification-date of the resource
-     * @return task param XML (lock-task-param.xsd)
+     * @return task param XML (optimistic-locking-task-param.xsd)
      */
     public String getOptimisticLockingTaskParam(final DateTime timestamp) {
 
