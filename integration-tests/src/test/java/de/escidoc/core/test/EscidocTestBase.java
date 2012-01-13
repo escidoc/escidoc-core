@@ -3256,7 +3256,7 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidTmeResult(final String xmlData) throws Exception {
-        URL url = new URL(getFrameworkUrl() + "/xsd/tme/0.1/jhove.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/tme/jhove.xsd");
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, url);
     }
