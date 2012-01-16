@@ -23,6 +23,9 @@
 	-refered new elements:
 	 {http://escidoc.de/core/01/structural-relations/}item
 	 {http://escidoc.de/core/01/structural-relations/}container
+
+  - January 2012
+    import namespace="http://www.w3.org/XML/1998/namespace"
 -->
 <xs:schema attributeFormDefault="unqualified"
 	elementFormDefault="qualified"
@@ -35,9 +38,12 @@
 	<xs:import
 		namespace="http://escidoc.de/core/01/structural-relations/"
 		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/structural-relations.xsd" />
-		<xs:import
+  <xs:import
 		namespace="http://www.escidoc.de/schemas/commontypes/0.4" 
 		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/common-types.xsd" />
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+    schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xml.xsd" />
+    
 	<xs:element name="struct-map">
 		<xs:annotation>
 			<xs:documentation>
