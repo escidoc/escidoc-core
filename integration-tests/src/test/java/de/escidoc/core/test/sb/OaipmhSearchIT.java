@@ -141,7 +141,6 @@ public class OaipmhSearchIT extends SearchTestBase {
                 container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
             }
-            Thread.sleep(30000);
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -184,8 +183,6 @@ public class OaipmhSearchIT extends SearchTestBase {
                 lastModDate = getLastModificationDate(xml);
                 item.release(itemIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
 
-                Thread.sleep(10000);
-
                 if (i % 2 == 0) {
                     xml = item.retrieve(itemIds[i]);
                     lastModDate = getLastModificationDate(xml);
@@ -218,8 +215,6 @@ public class OaipmhSearchIT extends SearchTestBase {
             lastModDate = getLastModificationDate(xml);
             container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
 
-            Thread.sleep(10000);
-
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
@@ -229,7 +224,6 @@ public class OaipmhSearchIT extends SearchTestBase {
             LOGGER.error("", e);
         }
         waitForIndexerToAppear(itemIds[Constants.NUM_OAIPMH_ITEMS - 1], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**
@@ -937,7 +931,6 @@ public class OaipmhSearchIT extends SearchTestBase {
 
                 }
             }
-            waitForIndexer();
             for (int i = 0; i < itemIds.length; i++) {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     // Do search. Must be 1
@@ -965,7 +958,6 @@ public class OaipmhSearchIT extends SearchTestBase {
 
                 }
             }
-            waitForIndexer();
             for (int i = 0; i < containerIds.length; i++) {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     // Do search. Must be 1

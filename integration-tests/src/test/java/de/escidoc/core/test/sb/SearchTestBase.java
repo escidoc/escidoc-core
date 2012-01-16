@@ -70,17 +70,6 @@ public class SearchTestBase extends SbTestBase {
     protected GrantHelper grant = null;
 
     /**
-     * Wait until the indexer has (hopefully :) run the next time.
-     * 
-     * @throws InterruptedException
-     *             If sleep fails.
-     */
-    protected void waitForIndexer() throws InterruptedException {
-
-        Thread.sleep(TIME_TO_WAIT_FOR_INDEXER);
-    }
-
-    /**
      * Wait until the given id exists in the given index.
      * 
      * @param id

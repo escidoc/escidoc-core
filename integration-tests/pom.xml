@@ -248,6 +248,21 @@
               <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/ou_admin/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/ou_admin.xml</config>
             </transformation>
+            <transformation>
+              <type>properties</type>
+              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/escidoc_all/index.object-types.properties</input>
+              <config>src/test/resources/config-plugin/escidoc_all.xml</config>
+            </transformation>
+            <transformation>
+              <type>properties</type>
+              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/escidocou_all/index.object-types.properties</input>
+              <config>src/test/resources/config-plugin/escidocou_all.xml</config>
+            </transformation>
+            <transformation>
+              <type>properties</type>
+              <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</input>
+              <config>src/test/resources/config-plugin/escidocoaipmh_all.xml</config>
+            </transformation>
           </transformations>
         </configuration>
         <executions>

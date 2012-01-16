@@ -146,7 +146,6 @@ public class ContextAdminSearchIT extends SearchTestBase {
         // /////////////////////////////////////////////////////////////////////
 
         waitForIndexerToAppear(contextIds[3], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**
@@ -443,7 +442,6 @@ public class ContextAdminSearchIT extends SearchTestBase {
                 }
             }
             else if (status.equals(CONTEXT_STATUS_DELETED)) {
-                Thread.sleep(3000);
                 context.delete(objectId);
             }
             return objectId;

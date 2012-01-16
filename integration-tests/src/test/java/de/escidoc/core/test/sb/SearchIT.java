@@ -271,7 +271,6 @@ public class SearchIT extends SearchTestBase {
             LOGGER.error("", e);
         }
         waitForIndexerToAppear(itemIds[Constants.NUM_ITEMS - 1], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**

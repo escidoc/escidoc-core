@@ -846,11 +846,6 @@ public class AaTestBase extends EscidocAbstractTest {
                     createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
                     if (!STATUS_RELEASED.equals(status)) {
 
-                        // we need to give the indexer some time, otherwise
-                        // the indexer will fail to index the data of the released
-                        // item.
-                        // Thread.sleep(240000);
-
                         if (createVersionsBefore) {
                             createdXml = createdXml.replaceAll("the title", "the title - updated");
                             createdXml = update(CONTAINER_HANDLER_CODE, objidValue, createdXml);

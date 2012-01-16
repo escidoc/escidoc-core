@@ -127,9 +127,7 @@ public class OuSearchIT extends SearchTestBase {
                 prepareOrgUnit(PWCallback.DEFAULT_HANDLE, document, ORGANIZATIONAL_UNIT_STATUS_OPENED, parentIds.get(i));
 
             writeVariables(i, xml);
-            Thread.sleep(SLEEP_TIME);
         }
-        Thread.sleep(60000);
         // /////////////////////////////////////////////////////////////////////
     }
 
@@ -143,19 +141,16 @@ public class OuSearchIT extends SearchTestBase {
         try {
             // close org-unit 6
             closeOrgUnit(orgUnitIds[6]);
-            Thread.sleep(SLEEP_TIME);
 
             // update org-unit 0
             String xml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, orgUnitIds[0]);
             xml = xml.replaceAll("Hierarchy Top Level", "Hierarchy Top Level updated ");
             update(ORGANIZATIONAL_UNIT_HANDLER_CODE, orgUnitIds[0], xml);
-            Thread.sleep(SLEEP_TIME);
 
             // update metadata of org-unit 1
             xml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, orgUnitIds[1]);
             xml = xml.replaceAll("Munich", "London");
             update(ORGANIZATIONAL_UNIT_HANDLER_CODE, orgUnitIds[1], xml);
-            Thread.sleep(SLEEP_TIME);
 
         }
         catch (final Exception e) {
