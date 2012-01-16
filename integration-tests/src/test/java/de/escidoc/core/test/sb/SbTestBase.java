@@ -132,7 +132,6 @@ public class SbTestBase extends EscidocAbstractTest {
         final String objidValue = getObjidValue(document);
 
         if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status) && !ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {
-            Thread.sleep(5000);
             LOGGER.info("opening ou with id " + objidValue);
             createdXml = openOrgUnit(objidValue);
             if (!ORGANIZATIONAL_UNIT_STATUS_OPENED.equals(status)) {
@@ -140,7 +139,6 @@ public class SbTestBase extends EscidocAbstractTest {
             }
         }
         else if (ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {
-            Thread.sleep(3000);
             deleteOrgUnit(objidValue);
         }
 

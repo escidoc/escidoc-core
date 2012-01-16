@@ -141,7 +141,6 @@ public class SearchTestBase extends SbTestBase {
                     }
                 }
             }
-            Thread.sleep(5000);
             if ((System.currentTimeMillis() - time) > maxTimeToWait) {
                 break;
             }

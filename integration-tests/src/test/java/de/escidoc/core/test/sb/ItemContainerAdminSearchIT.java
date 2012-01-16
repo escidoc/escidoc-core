@@ -302,7 +302,6 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
         }
         // /////////////////////////////////////////////////////////////////////
         waitForIndexerToAppear(itemIds[83], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     private void prepare(int c) {

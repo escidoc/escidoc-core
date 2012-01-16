@@ -178,7 +178,6 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
         // /////////////////////////////////////////////////////////////////////
 
         waitForIndexerToAppear(ouIds[13], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**

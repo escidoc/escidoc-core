@@ -145,7 +145,6 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
         // /////////////////////////////////////////////////////////////////////
 
         waitForIndexerToAppear(contentModelIds[1], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**
@@ -351,7 +350,6 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
 
             }
             else if (status.equals(CONTENT_MODEL_STATUS_DELETED)) {
-                Thread.sleep(3000);
                 contentModel.delete(objectId);
             }
             return objectId;

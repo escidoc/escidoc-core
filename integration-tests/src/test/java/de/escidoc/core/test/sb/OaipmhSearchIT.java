@@ -145,7 +145,6 @@ public class OaipmhSearchIT extends SearchTestBase {
                     getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
 
             }
-            Thread.sleep(30000);
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -187,8 +186,6 @@ public class OaipmhSearchIT extends SearchTestBase {
                 // release item
                 item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
-                Thread.sleep(10000);
-
                 if (i % 2 == 0) {
                     xml = item.retrieve(itemIds[i]);
                     xml = xml.replaceAll("Gollmer", "Gollmer1");
@@ -221,8 +218,6 @@ public class OaipmhSearchIT extends SearchTestBase {
             container.release(containerIds[0],
                 getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
-            Thread.sleep(10000);
-
             xml = container.retrieve(containerIds[0]);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[0], xml);
@@ -231,7 +226,6 @@ public class OaipmhSearchIT extends SearchTestBase {
             LOGGER.error("", e);
         }
         waitForIndexerToAppear(itemIds[Constants.NUM_OAIPMH_ITEMS - 1], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**
@@ -941,7 +935,6 @@ public class OaipmhSearchIT extends SearchTestBase {
 
                 }
             }
-            waitForIndexer();
             for (int i = 0; i < itemIds.length; i++) {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     // Do search. Must be 1
@@ -971,7 +964,6 @@ public class OaipmhSearchIT extends SearchTestBase {
 
                 }
             }
-            waitForIndexer();
             for (int i = 0; i < containerIds.length; i++) {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     // Do search. Must be 1

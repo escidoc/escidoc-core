@@ -179,7 +179,6 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
         // /////////////////////////////////////////////////////////////////////
 
         waitForIndexerToAppear(contentRelationIds[4], INDEX_NAME);
-        Thread.sleep(60000);
     }
 
     /**

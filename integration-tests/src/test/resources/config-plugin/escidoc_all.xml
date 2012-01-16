@@ -1,0 +1,10 @@
+<processor>
+    <modify>
+        <name>Resource.Item.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+    <modify>
+        <name>Resource.Container.indexAsynchronous</name>
+        <value>false</value>
+    </modify>
+</processor>
