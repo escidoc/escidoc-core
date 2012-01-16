@@ -498,7 +498,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             final UpdateObjectPathParam path = new UpdateObjectPathParam(this.parent);
             final UpdateObjectQueryParam query = new UpdateObjectQueryParam();
             query.setLogMessage("touched");
-            this.getFedoraServiceClient().updateObject(path, query);
+            try {
+                this.getFedoraServiceClient().updateObject(path, query);
+            }
+            catch (org.apache.cxf.jaxrs.client.ServerWebApplicationException e) {
+                LOGGER.warn(e.toString());
+                throw new WebserverSystemException("Error on reinitializing triple store.", e);
+            }
             this.getFedoraServiceClient().sync();
             try {
                 this.tripleStoreUtility.reinitialize();
