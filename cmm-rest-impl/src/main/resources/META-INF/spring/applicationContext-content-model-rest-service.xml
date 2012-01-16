@@ -10,7 +10,7 @@
 
     <jaxrs:server id="contentModelRestService" address="/cmm/content-model">
         <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.content.relation.internal.ContentModelRestServiceImpl"/>
+            <bean class="org.escidoc.core.cmm.internal.ContentModelRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

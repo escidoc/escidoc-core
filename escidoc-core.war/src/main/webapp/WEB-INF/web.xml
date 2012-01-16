@@ -31,6 +31,7 @@
             classpath:/META-INF/spring/applicationContext-aa.xml
             classpath:/META-INF/spring/applicationContext-adm.xml
             classpath:/META-INF/spring/applicationContext-cmm.xml
+            classpath:/META-INF/spring/applicationContext-content-model-rest-service.xml
             classpath:/META-INF/spring/applicationContext-oai.xml
             classpath:/META-INF/spring/applicationContext-oai-rest-service.xml
             classpath:/META-INF/spring/applicationContext-oum.xml
