@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="StagingRestService" address="/tme">
+    <jaxrs:server id="StagingRestService" address="/st/staging-file">
         <jaxrs:serviceBeans>
             <bean class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
         </jaxrs:serviceBeans>

@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="tmeRestService" address="/tme">
+    <jaxrs:server id="tmeRestService" address="/tme/jhove">
         <jaxrs:serviceBeans>
             <bean class="org.escidoc.core.tme.internal.TmeRestServiceImpl"/>
         </jaxrs:serviceBeans>
