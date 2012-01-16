@@ -416,7 +416,7 @@
     <pack name="Tomcat Server" id="tomcat.package" parent="escidoc.package" required="yes">
       <description />
       <file src="packages/tomcat/apache-tomcat-${TomcatVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
-      <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" />
+<!--       <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" /> -->
       <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="installEscidoc+databaseIsPostgres" />
       <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" / -->
       <!-- <file src="config/jboss/run.conf" targetdir="$INSTALL_PATH/install.tmp" /> -->

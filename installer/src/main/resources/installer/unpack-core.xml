@@ -35,8 +35,10 @@
 
 	<target name="init" description="Intialize runtime environment">
 		<property name="install.dir" location="${INSTALL_PATH}" />
+<!--
 		<property name="jboss" value="jboss-4.2.3.GA" />
 		<property name="jboss.patch.zip" value="escidoc-core-${EscidocVersion}-jboss-patch.zip" />
+-->		
 		<property name="tomcat" value="apache-tomcat-${TomcatVersion}" />
 		<property name="escidoc.home" location="${EscidocHome}" />
 		<property name="escidoc.core.zip" value="escidoc-core-${EscidocVersion}-bin.zip" />
@@ -79,11 +81,13 @@
 		<antcall target="install-tomcat-conditional" />
 	</target>
 
+<!--	
 	<target name="install-jboss-conditional" if="installJBoss">
 		<antcall target="install-jboss" />
 		<antcall target="install-jboss-patch" />
 	</target>
-
+-->
+	
 	<target name="install-tomcat-conditional" unless="installJBoss">
 		<antcall target="install-tomcat" />
 	</target>
@@ -125,21 +129,25 @@
 		<copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/${server.instance.dir}/lib/" />
 	</target>
 
+	<!-- unpack jboss-patch ZIP file -->
+<!--
 	<target name="install-jboss-patch" depends="init" description="Installs JBoss Patches">
-		<!-- unpack jboss-patch ZIP file -->
 		<echo level="info">Unpack JBoss Patches</echo>
 		<antcall target="unpack">
 			<param name="zipfile" value="${install.dir}/install.tmp/${jboss.patch.zip}" />
 			<param name="target.dir" value="${install.dir}/install.tmp" />
 		</antcall>
-
+-->
+	
 		<!-- move eSciDoc configuration into JBoss -->
+<!--	
 		<antcall target="move-with-save">
 			<param name="sourceDir" value="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server" />
 			<param name="targetDir" value="${install.dir}/jboss/server" />
 		</antcall>
-
+-->
 		<!-- copy empty Lucene segment files if they not yet exist -->
+<!--	
 		<move file="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}/server/default/data" tofile="${escidoc.home}/data" />
 		<for param="indexDir">
 			<path>
@@ -163,14 +171,16 @@
 				</if>
 			</sequential>
 		</for>
-
+-->
 		<!-- change server port numbers -->
-		<replace file="${install.dir}/${server.web.conf.dir}/server.xml" token="8080" value="${EscidocPort}" />
+<!--
+	<replace file="${install.dir}/${server.web.conf.dir}/server.xml" token="8080" value="${EscidocPort}" />
+-->	
 		<!--    
   	<math result="connectorPort" operand1="${EscidocPort}" operation="add" operand2="9" datatype="int"/>
     <replace file="${install.dir}/${server.web.conf.dir}/server.xml" token="8009" value="${connectorPort}"/>
 -->
-
+<!--
 		<antcall target="move-file-with-save">
 			<param name="source" value="${install.dir}/install.tmp/escidoc-core.custom.properties" />
 			<param name="target" value="${escidoc.home}/conf/escidoc-core.custom.properties" />
@@ -196,7 +206,8 @@
 		<delete dir="${install.dir}/install.tmp/jboss-patch-${EscidocVersion}" />
 		<chmod dir="${install.dir}/jboss/bin" perm="ugo+rx" includes="*.sh" />
 	</target>
-
+-->
+	
 	<!-- FEDORA -->
 
 	<target name="fedora" depends="init, copy-oracle-jdbc-jar" description="Installs Fedora Commons Repository">
