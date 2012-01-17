@@ -71,15 +71,10 @@ public class RolesRestServiceImpl implements RolesRestService {
      * @see de.escidoc.core.aa.RoleRestService#retrieveRoles(SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveRoles(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
+    public JAXBElement<? extends ResponseType> retrieveRoles(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-		final List<String> additionalParams = new LinkedList<String>();
-		additionalParams.add(roleId);
-		additionalParams.add(userId);
-		additionalParams.add(omitHighlighting);
-
 		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(filter, additionalParams);
+				.createRequestTO(filter, null);
 
 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
 				Constants.SRU_CONTEXT_PATH , this.roleHandler

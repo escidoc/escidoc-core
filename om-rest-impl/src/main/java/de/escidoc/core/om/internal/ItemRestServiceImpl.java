@@ -373,13 +373,6 @@ public class ItemRestServiceImpl implements ItemRestService {
         this.itemHandler.deleteComponent(id, componentId);
     }
 
-    // FIXME ???
-    // @Override
-    // public String retrieveItems(Map filter) throws SystemException, RemoteException {
-    //
-    // return ServiceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
-    // }
-
     @Override
     public ResultTO assignVersionPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,

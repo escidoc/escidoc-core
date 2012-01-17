@@ -59,8 +59,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface UserAccountsRestService {
 
     @GET
-    JAXBElement<? extends ResponseType> retrieveUserAccounts(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,
+    JAXBElement<? extends ResponseType> retrieveUserAccounts(@QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
     AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
 
 }

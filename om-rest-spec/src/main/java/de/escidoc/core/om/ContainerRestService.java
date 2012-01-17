@@ -20,11 +20,34 @@
 
 package de.escidoc.core.om;
 
-import java.rmi.RemoteException;
-import java.util.Map;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.xml.bind.JAXBElement;
 
-import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.exceptions.EscidocException;
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.container.ContainerPropertiesTO;
+import org.escidoc.core.domain.container.ContainerTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.relations.RelationsTO;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
+import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.MembersTaskParamTO;
+import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.utils.io.MimeTypes;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
@@ -35,71 +58,26 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingLicenceException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyDeletedException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
-import de.escidoc.core.common.exceptions.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.container.ContainerTO;
-import org.escidoc.core.domain.container.ContainerPropertiesTO;
-import org.escidoc.core.domain.item.ItemTO;
-import org.escidoc.core.domain.item.ItemPropertiesTO;
-import org.escidoc.core.domain.content.stream.ContentStreamTO;
-import org.escidoc.core.domain.content.stream.ContentStreamsTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
-import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
-import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
-import org.escidoc.core.domain.taskparam.MembersTaskParamTO;
-
-import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
 /**
  * 
@@ -138,24 +116,19 @@ public interface ContainerRestService {
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthenticationException,
         AuthorizationException, MissingAttributeValueException, MissingMdRecordException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // String retrieveContainers(final Map<String, String[]> filter) throws InvalidXmlException,
-    // InvalidSearchQueryException, MissingMethodParameterException, SystemException;
+	@GET
+	@Path("/{id}/resources/members")
+	JAXBElement<? extends ResponseType> retrieveMembers(@PathParam("id") String id,
+			@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+            @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
+            MissingMethodParameterException, ContainerNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/members")
-    // MembersTO retrieveMembers(@PathParam("id") String id, Map<String, String[]> filter)
-    // throws InvalidSearchQueryException, MissingMethodParameterException, ContainerNotFoundException,
-    // SystemException;
-
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // TocsTO retrieveTocs(@PathParam("id") String id, Map<String, String[]> filter) throws InvalidSearchQueryException,
-    // MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException;
+     @GET
+     @Path("/{id}/tocs")
+     JAXBElement<? extends ResponseType> retrieveTocs(@PathParam("id") String id,
+			@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+            @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
+            MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException;
 
     @POST
     @Path("/{id}/members/add")

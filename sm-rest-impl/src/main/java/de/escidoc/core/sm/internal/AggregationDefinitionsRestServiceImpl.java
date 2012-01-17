@@ -71,16 +71,11 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
      * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting)
+    public JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-		final List<String> additionalParams = new LinkedList<String>();
-		additionalParams.add(roleId);
-		additionalParams.add(userId);
-		additionalParams.add(omitHighlighting);
-
 		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(filter, additionalParams);
+				.createRequestTO(filter, null);
 
 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
 				Constants.SRU_CONTEXT_PATH , this.aggregationDefinitionHandler

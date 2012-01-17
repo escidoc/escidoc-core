@@ -58,10 +58,59 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface GrantsRestService {
 
+    /**
+     * Retrieve Grants by providing filter-criteria.<br/>
+     * <p/>
+     * Retrieve the information about the Roles that currently have been granted to a User Account or User Group
+     * including the information for which objects the limited roles are granted. Grants are selected depending on the
+     * provided filter-criteria. Group Grants are selected hierarchically, that means if only a userId is provided as
+     * filter-criterion, not only the Grants that are directly assigned to the User Account are returned but also the
+     * Grants that are attached to the User Groups the User Account belongs to. Same with User Groups. Not only the
+     * Grants that are directly assigned to the User Group are returned, but also the Grants that are attached to the
+     * User Groups the User Group belongs to. If more than one userId is provided, the User Group Grants of all User
+     * Accounts are returned. These User Group Grants do not have any information about the User Account they are
+     * attached to! <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the
+     * core-framework. Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/> <b>Additional filters valid for
+     * this method:</b><br/>
+     * <p/>
+     * <b>Prerequisites:</b><br/> At least one filter containing a value should be specified.<br/> If no filter is
+     * specified, all grants are returned.<br/> <b>Tasks:</b><br/> <ul> <li>Check weather all filter names are
+     * valid.</li> <li>The grants are accessed using the provided filters.</li> <li>The XML representation of the list
+     * of all grants corresponding to XML-schema grants.xsd, element grant-list is returned as output.</li> </ul> <br/>
+     * Valid filter-names for filtering grants are:<br/> <ul> <li>http://escidoc.de/core/01/properties/user and
+     * /properties/user/id: filter for grants of specific users</li> <li>http://escidoc.de/core/01/properties/group and
+     * /properties/group/id: filter for grants of specific groups</li> <li>http://escidoc.de/core/01/properties/role and
+     * /properties/role/id: filter for grants of specific roles</li> <li>http://escidoc.de/core/01/properties/assigned-on
+     * and /properties/assigned-on: filter for grants on specific objects (scopes)</li>
+     * <li>http://escidoc.de/core/01/properties/created-by and /properties/created-by/id: filter for grants created by
+     * specific users</li> <li>http://escidoc.de/core/01/properties/revoked-by and /properties/revoked-by/id: filter for
+     * grants revoked by specific users</li> <li>http://escidoc.de/core/01/properties/revocation-date and
+     * /properties/revocation-date: filter for grants revoked before/after a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/creation-date and /properties/creation-date: filter for grants created
+     * before/after a specific date</li> </ul>
+     * <p/>
+     * It is not allowed to provide group-filter and user-filter at the same time. All filters except user and group may
+     * have empty-value, this delivers all grants that have the field specified by the filter null<br/> eg providing a
+     * filter with revoked-by=empty only returns grants that are not revoked<br/>
+     * <p/>
+     * See chapter "Filters" for detailed information about filter definitions.
+     *
+     * @param parameters SRU GET-Parameters
+     * .
+     * @return The XML representation of the grants matching the provided filter-criteria corresponding to XML-schema
+     *         "grants.xsd", element grant-list.
+     * @throws MissingMethodParameterException
+     *                                     Thrown if no user id is provided.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided
+     *                                     eSciDocUserHandle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
+     * @throws SystemException             Thrown in case of an internal system error.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveGrants(
-        @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        @QueryParam("") SruSearchRequestParametersBean parameters)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException;
 

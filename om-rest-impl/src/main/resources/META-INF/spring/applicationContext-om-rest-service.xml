@@ -18,9 +18,29 @@
         </jaxrs:features>
     </jaxrs:server>
 
+    <jaxrs:server id="itemsRestService" address="/ir/items">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.om.internal.ItemsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
     <jaxrs:server id="containerRestService" address="/ir/container">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.om.internal.ContainerRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
+    <jaxrs:server id="containersRestService" address="/ir/containers">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.om.internal.ContainersRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
             <!--ref bean="compressGZIPFeature"/-->

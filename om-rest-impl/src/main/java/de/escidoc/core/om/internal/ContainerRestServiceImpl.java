@@ -19,10 +19,12 @@
  */
 package de.escidoc.core.om.internal;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -61,9 +63,14 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,12 +98,16 @@ import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.MembersTaskParamTO;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * REST Service Implementation for Container.
@@ -161,14 +172,54 @@ public class ContainerRestServiceImpl implements ContainerRestService {
             this.containerHandler.update(id, ServiceUtility.toXML(containerTO)));
     }
 
-    // FIXME
-    // public String retrieveContainers(final Map<String, String[]> filter) throws InvalidXmlException,
-    // InvalidSearchQueryException, MissingMethodParameterException, SystemException;
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     */
+    @Override
+    public JAXBElement<? extends ResponseType> retrieveMembers(final String containerId,
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting) throws InvalidSearchQueryException,
+        MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-    // FIXME
-    // public MembersTO retrieveMembers( String id, Map<String, String[]> filter)
-    // throws InvalidSearchQueryException, MissingMethodParameterException, ContainerNotFoundException,
-    // SystemException;
+        final List<String> additionalParams = new LinkedList<String>();
+        additionalParams.add(roleId);
+        additionalParams.add(userId);
+        additionalParams.add(omitHighlighting);
+
+        final JAXBElement<? extends RequestType> requestTO =
+            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.containerHandler
+						.retrieveMembers(containerId, ServiceUtility.toMap(requestTO))));
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     */
+    @Override
+    public JAXBElement<? extends ResponseType> retrieveTocs(final String containerId,
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting) throws InvalidSearchQueryException,
+        MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException {
+
+        final List<String> additionalParams = new LinkedList<String>();
+        additionalParams.add(roleId);
+        additionalParams.add(userId);
+        additionalParams.add(omitHighlighting);
+
+        final JAXBElement<? extends RequestType> requestTO =
+            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.containerHandler
+						.retrieveTocs(containerId, ServiceUtility.toMap(requestTO))));
+    }
+
 
     // FIXME
     // public TocsTO retrieveTocs( String id, Map<String, String[]> filter) throws InvalidSearchQueryException,

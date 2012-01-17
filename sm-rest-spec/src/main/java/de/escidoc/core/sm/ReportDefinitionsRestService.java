@@ -32,8 +32,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ReportDefinitionsRestService {
 
     @GET
-    JAXBElement<? extends ResponseType> retrieveReportDefinitions(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
+    JAXBElement<? extends ResponseType> retrieveReportDefinitions(@QueryParam("") SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
 }
