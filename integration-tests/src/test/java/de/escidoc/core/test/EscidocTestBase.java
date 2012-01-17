@@ -3012,7 +3012,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXMLValidRegisteredPredicates(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/content-relation/0.1/registered-predicates.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/content-relation/0.1/predicate-list.xsd");
         assertXmlValid(xmlData, url);
         assertXlinkXmlBaseExists(xmlData);
         assertAllPlaceholderResolved(xmlData);
