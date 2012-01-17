@@ -161,7 +161,7 @@ public class RoleFilter extends CqlFilter {
                     subQuery.setProjection(Projections.rowCount());
                     subQuery.add(Restrictions.eqProperty("escidocRole.id", "r.id"));
 
-                    result = Boolean.parseBoolean(value) ? Subqueries.lt(0, subQuery) : Subqueries.eq(0, subQuery);
+                    result = Boolean.parseBoolean(value) ? Subqueries.lt(0L, subQuery) : Subqueries.eq(0L, subQuery);
                 }
                 else if (columnName.equals(Constants.FILTER_CREATION_DATE)
                     || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
