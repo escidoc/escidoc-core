@@ -3095,6 +3095,22 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Asserts that the provided XML data is valid agains successors XSD.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertXmlValidSuccessors(final String xmlData) throws Exception {
+        Schema structMapSchema =
+            getSchema(getFrameworkUrl() + "/xsd/rest/organizational-unit/0.7/organizational-unit-successors.xsd");
+
+        assertXmlValid(xmlData, structMapSchema);
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
      * Asserts that the provided xml data is valid for a explain plan.
      * 
      * @param xmlData

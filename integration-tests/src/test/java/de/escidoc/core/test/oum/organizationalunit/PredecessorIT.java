@@ -96,6 +96,7 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         final String ou2Id = getObjidValue(getDocument(ou2Xml));
 
         ou1Xml = retrieveSuccessors(ou1Id);
+        assertXmlValidSuccessors(ou1Xml);
         // check if successor is set
 
         ou2Xml = retrieve(ou2Id);
@@ -172,10 +173,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // check if successors are set
         ou1Xml = retrieveSuccessors(ou1Id);
+        assertXmlValidSuccessors(ou1Xml);
         // check if successor is set
         assertXmlExists("Predecessor missing", ou1Xml, "/successors/successor" + "[@href='/oum/organizational-unit/"
             + ou3Id + "']");
         ou2Xml = retrieveSuccessors(ou2Id);
+        assertXmlValidSuccessors(ou2Xml);
         assertXmlExists("Predecessor missing", ou1Xml, "/successors/successor" + "[@href='/oum/organizational-unit/"
             + ou3Id + "']");
     }
