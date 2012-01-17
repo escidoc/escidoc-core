@@ -1715,7 +1715,7 @@ public abstract class EscidocTestBase {
     public static void assertNotEquals(final String message, final Object unexpected, final Object toBeAsserted) {
 
         if (unexpected == null && toBeAsserted == null || unexpected.equals(toBeAsserted)) {
-            if (message == null || "".equals(message)) {
+            if (message == null || message.isEmpty()) {
                 fail("Values are equal. Expected unequal");
             }
             else {
@@ -3228,6 +3228,22 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidStructMap(final String xmlData) throws Exception {
         Schema structMapSchema = getSchema(getFrameworkUrl() + "/xsd/rest/container/0.4/struct-map.xsd");
+
+        assertXmlValid(xmlData, structMapSchema);
+        assertAllPlaceholderResolved(xmlData);
+    }
+
+    /**
+     * Asserts that the provided XML data is valid agains successors XSD.
+     * 
+     * @param xmlData
+     *            The xml data to be asserted.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertXmlValidSuccessors(final String xmlData) throws Exception {
+        Schema structMapSchema =
+            getSchema(getFrameworkUrl() + "/xsd/rest/organizational-unit/0.7/organizational-unit-successors.xsd");
 
         assertXmlValid(xmlData, structMapSchema);
         assertAllPlaceholderResolved(xmlData);
