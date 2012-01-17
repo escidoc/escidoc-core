@@ -25,7 +25,7 @@
 	 {http://escidoc.de/core/01/structural-relations/}container
 
   - January 2012
-    import namespace="http://www.w3.org/XML/1998/namespace"
+    add attribute group to fix root element attributes 
 -->
 <xs:schema attributeFormDefault="unqualified"
 	elementFormDefault="qualified"
@@ -41,8 +41,6 @@
   <xs:import
 		namespace="http://www.escidoc.de/schemas/commontypes/0.4" 
 		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/common-types.xsd" />
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
-    schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xml.xsd" />
     
 	<xs:element name="struct-map">
 		<xs:annotation>
@@ -99,6 +97,8 @@
 					</xs:sequence>
 					<xs:attributeGroup
             ref="common:readOnlyESciDocResourceLinkAttributes" />
+          <xs:attributeGroup
+            ref="common:eSciDocRootElementAttributes" />
 				</xs:complexType>	
 			</xs:element>
 </xs:schema>
