@@ -420,7 +420,7 @@ public class MigrationTestBase extends EscidocAbstractTest {
             String next = resultTokenizer.nextToken().trim();
             while (resultTokenizer.hasMoreTokens()) {
                 next = resultTokenizer.nextToken().trim();
-                if (!"".equals(ids)) {
+                if (!ids.isEmpty()) {
                     ids += ",";
                 }
                 ids += next;

@@ -1819,7 +1819,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     public String getObjidValue(final Node node, final String xpath) throws Exception {
         final String attributeXpathPrefix;
-        if (xpath == null || "".equals(xpath)) {
+        if (xpath == null || xpath.isEmpty()) {
             attributeXpathPrefix = "@";
         }
         else {
@@ -1848,7 +1848,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         String[] objids = null;
 
         final String attributeXpathPrefix;
-        if (xpath == null || "".equals(xpath)) {
+        if (xpath == null || xpath.isEmpty()) {
             attributeXpathPrefix = "@";
         }
         else {

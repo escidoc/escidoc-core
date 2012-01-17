@@ -658,11 +658,10 @@ public class ContainerRetrieveIT extends ContainerTestBase {
     @Test
     public void testRetrievingStructMap() throws Exception {
 
-        String containerXml = retrieve(theContainerId);
-
-        assertXmlExists("struct-map", containerXml, "/container/struct-map");
+        assertXmlExists("struct-map", this.theContainerXml, "/container/struct-map");
 
         String structMap = retrieveStructMap(theContainerId);
+        System.out.println(structMap);
         assertXmlValidStructMap(structMap);
     }
 

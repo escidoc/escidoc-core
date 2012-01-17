@@ -154,7 +154,7 @@ public class PWCallback implements CallbackHandler {
      */
     public static void addEscidocUserHandleCokie(final HttpMessage method) {
 
-        if (handle == null || "".equals(handle)) {
+        if (handle == null || handle.isEmpty()) {
             return;
         }
         //Cookies werden im httpclient deaktiviert
