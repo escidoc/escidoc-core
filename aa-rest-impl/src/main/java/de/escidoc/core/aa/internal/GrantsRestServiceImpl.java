@@ -28,14 +28,23 @@
  */
 package de.escidoc.core.aa.internal;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.bind.JAXBElement;
+
 import org.escidoc.core.domain.aa.GrantListTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.aa.GrantsRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -63,9 +72,19 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
      */
     @Override
-    public GrantListTO retrieveGrants(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
+    public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantListTO.class, this.userAccountHandler.retrieveGrants(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
+		final List<String> additionalParams = new LinkedList<String>();
+		additionalParams.add(roleId);
+		additionalParams.add(userId);
+		additionalParams.add(omitHighlighting);
+
+		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
+				.createRequestTO(filter, additionalParams);
+
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.userAccountHandler
+						.retrieveGrants(ServiceUtility.toMap(requestTO))));
     }
 
 }

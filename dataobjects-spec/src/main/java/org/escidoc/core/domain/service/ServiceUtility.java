@@ -3,6 +3,7 @@
  */
 package org.escidoc.core.domain.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +71,22 @@ public class ServiceUtility {
         }
     }
 
+    // Note: This code is slow and only for migration!
+    // TODO: Replace this code and use domain objects!
+    public static final Object fromXML(final String contextPath, final String xmlString) throws SystemException {
+        try {
+            final JAXBContext jaxbContext = JAXBContext.newInstance(contextPath);
+            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            final Source src = new StreamSource(new StringReader(xmlString));
+            Object bindingObject =
+                unmarshaller.unmarshal(src);
+            return bindingObject;
+        }
+        catch (Exception e) {
+            throw new SystemException("Error on unmarshalling XML.", e);
+        }
+    }
+
     public static final Map<String, String[]> toMap(final JAXBElement<? extends RequestType> request) {
         final Map<String, String[]> result = new HashMap<String, String[]>();
 
@@ -80,12 +97,6 @@ public class ServiceUtility {
         else if (request instanceof ScanRequestTO)
             insertIntoMap((ScanRequestType) request.getValue(), result);
 
-        return result;
-    }
-
-    public static final Map<String, String[]> toMap(final SruSearchRequestParametersBean request, final String roleId, final String userId, final String omitHighlighting) {
-        final Map<String, String[]> result = new HashMap<String, String[]>();
-        insertIntoMap(request, roleId, userId, omitHighlighting, result);
         return result;
     }
 

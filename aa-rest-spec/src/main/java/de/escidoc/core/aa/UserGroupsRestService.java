@@ -36,8 +36,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.aa.UserGroupListTO;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -58,7 +59,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface UserGroupsRestService {
 
     @GET
-    UserGroupListTO retrieveUserGroups(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+    JAXBElement<? extends ResponseType> retrieveUserGroups(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
 

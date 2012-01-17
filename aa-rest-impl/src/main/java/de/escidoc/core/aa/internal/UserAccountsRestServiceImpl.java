@@ -28,14 +28,26 @@
  */
 package de.escidoc.core.aa.internal;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.bind.JAXBElement;
+
 import org.escidoc.core.domain.aa.UserAccountListTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.ExplainResponseTO;
+import org.escidoc.core.domain.sru.ExplainResponseType;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.SearchRetrieveResponseTO;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.aa.UserAccountsRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -44,27 +56,45 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- *
+ * 
  */
 public class UserAccountsRestServiceImpl implements UserAccountsRestService {
 
-    @Autowired
-    @Qualifier("service.UserAccountHandler")
-    private UserAccountHandlerInterface userAccountHandler;
+	@Autowired
+	@Qualifier("service.UserAccountHandler")
+	private UserAccountHandlerInterface userAccountHandler;
 
-    /**
+	/**
      * 
      */
-    public UserAccountsRestServiceImpl() {
-    }
+	public UserAccountsRestServiceImpl() {
+	}
 
-    /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(SruSearchRequestParametersBean)
-     */
-    @Override
-    public UserAccountListTO retrieveUserAccounts(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(UserAccountListTO.class, this.userAccountHandler.retrieveUserAccounts(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(
+	 * SruSearchRequestParametersBean)
+	 */
+	@Override
+	public JAXBElement<? extends ResponseType> retrieveUserAccounts(
+			final SruSearchRequestParametersBean filter, final String roleId,
+			final String userId, final String omitHighlighting)
+			throws MissingMethodParameterException, AuthenticationException,
+			AuthorizationException, InvalidSearchQueryException,
+			SystemException {
+
+		final List<String> additionalParams = new LinkedList<String>();
+		additionalParams.add(roleId);
+		additionalParams.add(userId);
+		additionalParams.add(omitHighlighting);
+
+		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
+				.createRequestTO(filter, additionalParams);
+
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.userAccountHandler
+						.retrieveUserAccounts(ServiceUtility.toMap(requestTO))));
+	}
 
 }

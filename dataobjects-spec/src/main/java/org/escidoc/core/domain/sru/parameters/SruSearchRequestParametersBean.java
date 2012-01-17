@@ -58,7 +58,7 @@ public class SruSearchRequestParametersBean {
     // @XmlSchemaType(name = "nonNegativeInteger")
     private String maximumRecords;
 
-    private String recordPacking = "string"; // default behavior
+    private String recordPacking = "xml"; // default behavior
 
     private String recordSchema;
 

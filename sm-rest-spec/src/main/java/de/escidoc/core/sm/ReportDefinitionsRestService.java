@@ -8,8 +8,10 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sm.ReportDefinitionListTO;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -30,7 +32,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ReportDefinitionsRestService {
 
     @GET
-    ReportDefinitionListTO retrieveReportDefinitions(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+    JAXBElement<? extends ResponseType> retrieveReportDefinitions(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 

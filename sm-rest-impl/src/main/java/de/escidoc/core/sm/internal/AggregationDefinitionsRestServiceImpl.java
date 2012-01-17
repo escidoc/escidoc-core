@@ -28,12 +28,21 @@
  */
 package de.escidoc.core.sm.internal;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.bind.JAXBElement;
+
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.AggregationDefinitionListTO;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -62,10 +71,20 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
      * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(SruSearchRequestParametersBean)
      */
     @Override
-    public AggregationDefinitionListTO retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting)
+    public JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter, final String roleId, final String userId, final String omitHighlighting)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(AggregationDefinitionListTO.class, this.aggregationDefinitionHandler.retrieveAggregationDefinitions(ServiceUtility.toMap(filter, roleId, userId, omitHighlighting)));
+		final List<String> additionalParams = new LinkedList<String>();
+		additionalParams.add(roleId);
+		additionalParams.add(userId);
+		additionalParams.add(omitHighlighting);
+
+		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
+				.createRequestTO(filter, additionalParams);
+
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.aggregationDefinitionHandler
+						.retrieveAggregationDefinitions(ServiceUtility.toMap(requestTO))));
     }
 
 }
