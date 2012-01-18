@@ -108,6 +108,15 @@
       <class name="SubjectTO" />
     </bindings>
   </bindings>
+  <bindings schemaLocation="predicate-list.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.content.relation" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='predicates']">
+      <class name="PredicateListTO" />
+    </bindings>
+	</bindings>
+  
   <bindings schemaLocation="content-streams.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.stream" />

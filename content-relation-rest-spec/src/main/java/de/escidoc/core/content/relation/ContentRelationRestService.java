@@ -32,6 +32,7 @@ import javax.ws.rs.Produces;
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.domain.content.relation.PredicateListTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
@@ -141,11 +142,10 @@ public interface ContentRelationRestService {
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
         MdRecordNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // Path("/content-relations/retrieve-registered-predicates")
-    // RegisteredPerdicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
-    // SystemException;
+     @GET
+     @Path("/content-relations/retrieve-registered-predicates")
+     PredicateListTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
+     SystemException;
 
     // FIXME
     // @GET

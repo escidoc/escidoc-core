@@ -21,6 +21,7 @@
 package de.escidoc.core.content.relation.internal;
 
 import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.content.relation.PredicateListTO;
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
@@ -185,14 +186,13 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         return ServiceUtility.fromXML(MdRecordTO.class, this.contentRelationHandler.retrieveMdRecord(id, name));
     }
 
-    // FIXME
-    // @Override
-    // public RegisteredPerdicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
-    // SystemException {
-    //
-    // return ServiceUtility.fromXML(RegisteredPerdicatesTO.class,
-    // this.contentRelationHandler.retrieveRegisteredPredicates());
-    // }
+    @Override
+    public PredicateListTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
+        SystemException {
+
+        return ServiceUtility.fromXML(PredicateListTO.class,
+            this.contentRelationHandler.retrieveRegisteredPredicates());
+    }
 
     // FIXME
     // @Override
