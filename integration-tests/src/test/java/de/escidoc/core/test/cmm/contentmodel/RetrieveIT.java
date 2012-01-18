@@ -54,30 +54,11 @@ public class RetrieveIT extends ContentModelTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        Document contentModel =
-            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
-                "content-model-all-for-create.xml");
-        contentModelXml = toString(contentModel, false);
+        
+        contentModelXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/rest",
+            "content-model-all-for-create.xml");
         contentModelXml = create(contentModelXml);
         contentModelId = getObjidValue(contentModelXml);
-    }
-
-    /**
-     * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Override
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-
-        try {
-            delete(this.contentModelId);
-        }
-        catch (final Exception e) {
-            // do nothing
-        }
     }
 
     /**
@@ -161,4 +142,30 @@ public class RetrieveIT extends ContentModelTestBase {
         String propertiesXml = retrieveProperties(this.contentModelId);
         assertXmlValidContentModel(propertiesXml);
     }
+
+    /**
+     * Test retrieve ContentModel content stream.
+     */
+    @Test
+    public void testRetrieveContentModelContentStreams() throws Exception {
+        String subResource = retrieveContentStreams(this.contentModelId);
+        selectSingleNodeAsserted(getDocument(subResource), "/content-streams");
+        assertXmlValidContentModel(subResource);
+    }
+
+    /**
+     * Test retrieve ContentModel content stream.
+     */
+    @Test
+    public void testRetrieveContentModelContentStream() throws Exception {
+        Document contentModel = getDocument(this.contentModelXml);
+        String name =
+            selectSingleNodeAsserted(contentModel, "/content-model/content-streams/content-stream[1]/@name")
+                .getNodeValue();
+
+        String subResource = retrieveContentStream(this.contentModelId, name);
+        selectSingleNodeAsserted(getDocument(subResource), "/content-stream");
+        assertXmlValidContentModel(subResource);
+    }
+
 }
