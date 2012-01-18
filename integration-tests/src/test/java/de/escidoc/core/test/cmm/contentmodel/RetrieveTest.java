@@ -202,7 +202,7 @@ public class RetrieveTest extends ContentModelTestBase {
     }
 
     /**
-     * Test retrieve ContentModel Properties.
+     * Test retrieve ContentModel content streams.
      */
     @Test
     public void testRetrieveContentModelContentStreams() throws Exception {
@@ -212,7 +212,7 @@ public class RetrieveTest extends ContentModelTestBase {
     }
 
     /**
-     * Test retrieve ContentModel Properties.
+     * Test retrieve ContentModel content stream.
      */
     @Test
     public void testRetrieveContentModelContentStream() throws Exception {
