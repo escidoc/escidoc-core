@@ -408,7 +408,7 @@
         <plugin>
           <groupId>org.zeroturnaround</groupId>
           <artifactId>jrebel-maven-plugin</artifactId>
-          <version>1.0.7</version>
+          <version>1.1.3</version>
         </plugin>
 
 		<!-- Maven Eclipse plugin is updating itself everytime you use it. Why stopping this behavior? -->
@@ -1105,8 +1105,8 @@
     <jaxb2-basics.version>0.6.2</jaxb2-basics.version>
     <!-- do not update jaxb.version to 2.2.4 because this will not work on JBoss 6(+) -->
     <jaxb.version>2.2.3</jaxb.version>
-    <aspectj.version>1.6.11</aspectj.version>
-    <spring.version>3.0.6.RELEASE</spring.version>
+    <aspectj.version>1.6.12</aspectj.version>
+    <spring.version>3.0.7.RELEASE</spring.version>
     <cxf.version>2.5.1</cxf.version>
     <camel.version>2.9.0</camel.version>
     <activemq.version>5.5.0</activemq.version>
