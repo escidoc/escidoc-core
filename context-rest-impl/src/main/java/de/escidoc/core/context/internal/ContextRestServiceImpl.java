@@ -15,6 +15,7 @@ import org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
+import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ExplainRequestTO;
@@ -194,11 +195,10 @@ public class ContextRestServiceImpl implements ContextRestService {
      * @see de.escidoc.core.context.ContextRestService#retrieveResources(java.lang.String)
      */
     @Override
-    public String retrieveResources(final String id) throws ContextNotFoundException, MissingMethodParameterException,
+    public ContextResourcesTO retrieveResources(final String id) throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+        
+        return ServiceUtility.fromXML(ContextResourcesTO.class, this.contextHandler.retrieveResources(id));    }
 
     /*
      * (non-Javadoc)

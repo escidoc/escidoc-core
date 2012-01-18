@@ -20,6 +20,7 @@ import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
+import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
@@ -105,7 +106,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/resources")
-    String retrieveResources(@PathParam("id") String id) throws ContextNotFoundException,
+    ContextResourcesTO retrieveResources(@PathParam("id") String id) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
 	@GET
