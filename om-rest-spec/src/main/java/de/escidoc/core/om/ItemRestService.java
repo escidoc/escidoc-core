@@ -38,6 +38,7 @@ import org.escidoc.core.domain.components.ComponentsTO;
 import org.escidoc.core.domain.content.stream.ContentStreamTO;
 import org.escidoc.core.domain.content.stream.ContentStreamsTO;
 import org.escidoc.core.domain.item.ItemPropertiesTO;
+import org.escidoc.core.domain.item.ItemResourcesTO;
 import org.escidoc.core.domain.item.ItemTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
@@ -63,6 +64,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -225,6 +227,11 @@ public interface ItemRestService {
     ItemPropertiesTO retrieveProperties(@PathParam("id") String id) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
+
+    @GET
+    @Path("/{id}/resources")
+    ItemResourcesTO retrieveResources(@PathParam("id") String id) throws ItemNotFoundException,
+    MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     @GET
     @Path("{id}/resources/version-history")

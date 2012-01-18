@@ -184,6 +184,9 @@
     <bindings node="//xs:element[@name='properties']">
       <class name="ItemPropertiesTO" />
     </bindings>
+    <bindings node="//xs:element[@name='resources']">
+      <class name="ItemResourcesTO" />
+    </bindings>
   </bindings>
   <bindings schemaLocation="md-records.xsd">
     <schemaBindings>

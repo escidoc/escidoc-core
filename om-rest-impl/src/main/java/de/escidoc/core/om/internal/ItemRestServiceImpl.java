@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -72,6 +73,7 @@ import org.springframework.stereotype.Service;
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.item.ItemTO;
 import org.escidoc.core.domain.item.ItemPropertiesTO;
+import org.escidoc.core.domain.item.ItemResourcesTO;
 import org.escidoc.core.domain.components.ComponentTO;
 import org.escidoc.core.domain.components.ComponentsTO;
 import org.escidoc.core.domain.components.ComponentPropertiesTO;
@@ -301,6 +303,13 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
 
         return ServiceUtility.fromXML(RelationsTO.class, this.itemHandler.retrieveRelations(id));
+    }
+
+    @Override
+    public ItemResourcesTO retrieveResources(String id) throws ItemNotFoundException,
+    MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        
+        return ServiceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
     }
 
     @Override
