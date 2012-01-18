@@ -23,6 +23,9 @@
 	-refered new elements:
 	 {http://escidoc.de/core/01/structural-relations/}item
 	 {http://escidoc.de/core/01/structural-relations/}container
+
+  - January 2012
+    add attribute group to fix root element attributes 
 -->
 <xs:schema attributeFormDefault="unqualified"
 	elementFormDefault="qualified"
@@ -93,6 +96,8 @@
 					</xs:sequence>
 					<xs:attributeGroup
             ref="common:readOnlyESciDocResourceLinkAttributes" />
+          <xs:attributeGroup
+            ref="common:eSciDocRootElementAttributes" />
 				</xs:complexType>	
 			</xs:element>
 </xs:schema>
