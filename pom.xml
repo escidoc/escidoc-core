@@ -1172,7 +1172,7 @@
     <!-- DATABASE SWITCH SETTINGS -->
     <escidoc.postgres.jdbc.artifactId>postgresql</escidoc.postgres.jdbc.artifactId>
     <escidoc.postgres.jdbc.groupId>postgresql</escidoc.postgres.jdbc.groupId>
-    <escidoc.postgres.jdbc.version>9.0-801.jdbc4</escidoc.postgres.jdbc.version>
+    <escidoc.postgres.jdbc.version>9.1-901.jdbc4</escidoc.postgres.jdbc.version>
 
     <escidoc.oracle.jdbc.artifactId>ojdbc</escidoc.oracle.jdbc.artifactId>
     <escidoc.oracle.jdbc.groupId>restricted</escidoc.oracle.jdbc.groupId>
