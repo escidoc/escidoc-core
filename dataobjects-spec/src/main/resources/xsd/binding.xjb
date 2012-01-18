@@ -81,6 +81,9 @@
     <bindings node="//xs:element[@name='properties']">
       <class name="ContentModelPropertiesTO" />
     </bindings>
+    <bindings node="//xs:element[@name='resources']">
+      <class name="ContentModelResourcesTO" />
+    </bindings>
   </bindings>
   
   <!-- Content Relation -->

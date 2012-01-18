@@ -22,6 +22,7 @@ package org.escidoc.core.cmm.internal;
 
 import org.escidoc.core.cmm.ContentModelRestService;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
+import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
 import org.escidoc.core.domain.content.model.ContentModelTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.version.VersionHistoryTO;
@@ -94,14 +95,13 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
 
     }
 
-    // FIXME
-    // public String retrieveResources(String id) throws AuthenticationException, AuthorizationException,
-    // ContentModelNotFoundException, MissingMethodParameterException, SystemException {
-    //
-    // return ServiceUtility.fromXML(ContentModelTO.class,
-    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
-    //
-    // }
+    public ContentModelResourcesTO retrieveResources(String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+
+        return ServiceUtility.fromXML(ContentModelResourcesTO.class,
+            this.contentModelHandler.retrieveResources(id));
+
+    }
 
     public VersionHistoryTO retrieveVersionHistory(String id) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, MissingMethodParameterException, SystemException {

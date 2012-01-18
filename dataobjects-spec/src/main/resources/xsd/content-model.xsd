@@ -242,6 +242,7 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element ref="content-streams:content-streams" minOccurs="0"/>
+                <xs:element ref="content-model:resources" minOccurs="0" />
             </xs:sequence>
             <xs:attributeGroup
                     ref="common-types:eSciDocResourceIdentityAttributes"/>
@@ -369,4 +370,32 @@
                     ref="common-types:eSciDocRootElementAttributes"/>
         </xs:complexType>
     </xs:element>
+  <xs:element name="resources">
+    <xs:annotation>
+      <xs:documentation>
+        <create>discarded</create>
+        <update>discarded</update>
+      </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version-history" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+
+          <xs:complexType>
+            <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes"></xs:attributeGroup>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes"/>
+      <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

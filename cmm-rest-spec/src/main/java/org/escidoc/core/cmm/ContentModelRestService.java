@@ -27,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
 import org.escidoc.core.domain.content.model.ContentModelTO;
 import org.escidoc.core.domain.version.VersionHistoryTO;
@@ -74,11 +75,10 @@ public interface ContentModelRestService {
     ContentModelPropertiesTO retrieveProperties(@PathParam("id") String id) throws ContentModelNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources")
-    // String retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-    // ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+     @GET
+     @Path("/{id}/resources")
+     ContentModelResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+     ContentModelNotFoundException, MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/resources/version-history")
