@@ -47,6 +47,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class ContentModelUpdateIT extends ContentModelTestBase {
 
+    private final static String CONTENT_MODEL_XML_SCHEMA = "http://www.escidoc.de/schemas/contentmodel/0.2";
+
     /**
      * Test updating a ContentModel with unchanged representation.
      *
@@ -288,19 +290,16 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
 
         // create MdRecordDefinition
         Element mdRecord =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1",
-                "escidocContentModel:md-record-definition");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-definition");
         mdRecord.setAttribute("name", testDefinitionName);
-        Element mdRecordContent =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1", "escidocContentModel:schema");
+        Element mdRecordContent = cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:schema");
         mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", getFrameworkUrl()
             + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 
         // create MdRecordDefinitions
         Element mdRecords =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1",
-                "escidocContentModel:md-record-definitions");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-definitions");
         mdRecords.appendChild(mdRecord);
 
         Node resources = selectSingleNode(cmDocV1E1, "/content-model/resources");
@@ -363,18 +362,16 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
 
         // create additional resource definition
         Element newResourceDefinition =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1",
-                "escidocContentModel:resource-definition");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:resource-definition");
         newResourceDefinition.setAttribute("name", testDefinitionName);
         Element resourceDefinitionXslt =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1", "escidocContentModel:xslt");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:xslt");
         resourceDefinitionXslt.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", selectSingleNode(cmDocV1E1,
             "/content-model/resource-definitions/resource-definition[@name = 'trans']/xslt/@href").getNodeValue());
         newResourceDefinition.appendChild(resourceDefinitionXslt);
 
         Element resourceDefinitionMdRecordName =
-            cmDocV1E1.createElementNS("http://www.escidoc.de/schemas/contentmodel/0.1",
-                "escidocContentModel:md-record-name");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-name");
         resourceDefinitionMdRecordName.setTextContent("somemd");
         newResourceDefinition.appendChild(resourceDefinitionMdRecordName);
 

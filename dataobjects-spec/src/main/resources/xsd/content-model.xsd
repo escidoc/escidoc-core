@@ -8,8 +8,8 @@
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.de/schemas/contentmodel/0.1"
-           xmlns:content-model="http://www.escidoc.de/schemas/contentmodel/0.1"
+           targetNamespace="http://www.escidoc.de/schemas/contentmodel/0.2"
+           xmlns:content-model="http://www.escidoc.de/schemas/contentmodel/0.2"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7"
            xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
@@ -291,54 +291,6 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element minOccurs="0" ref="prop:public-status">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:public-status-comment">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:lock-status">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:lock-date">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:lock-owner">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:pid">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>optional</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
                 <xs:element minOccurs="0" ref="prop:version">
                     <xs:annotation>
                         <xs:documentation>
@@ -348,14 +300,6 @@
                     </xs:annotation>
                 </xs:element>
                 <xs:element minOccurs="0" ref="prop:latest-version">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:latest-release">
                     <xs:annotation>
                         <xs:documentation>
                             <create>discarded</create>

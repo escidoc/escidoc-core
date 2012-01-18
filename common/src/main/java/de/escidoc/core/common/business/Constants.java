@@ -152,6 +152,8 @@ public final class Constants {
 
     private static final String NS_URI_SCHEMA_VERSION_0_1 = "/0.1";
 
+    private static final String NS_URI_SCHEMA_VERSION_0_2 = "/0.2";
+
     private static final String NS_URI_SCHEMA_VERSION_0_3 = "/0.3";
 
     private static final String NS_URI_SCHEMA_VERSION_0_4 = "/0.4";
@@ -174,7 +176,7 @@ public final class Constants {
 
     public static final String ITEM_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_10;
 
-    public static final String CONTENT_MODEL_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_1;
+    public static final String CONTENT_MODEL_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_2;
 
     private static final String ITEM_LIST_NS_URI_SCHEMA_VERSION = ITEM_NS_URI_SCHEMA_VERSION;
 

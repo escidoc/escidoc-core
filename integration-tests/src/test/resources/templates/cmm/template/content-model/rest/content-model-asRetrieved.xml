@@ -4,7 +4,7 @@
 	xmlns:escidocContentStreams="http://www.escidoc.de/schemas/contentstreams/0.7"
 	xmlns:version="http://escidoc.de/core/01/properties/version/"
 	xmlns:release="http://escidoc.de/core/01/properties/release/"
-	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.1"
+	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.2"
 	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:xlink="http://www.w3.org/1999/xlink" xml:base="http://localhost:8080"
 	xlink:type="simple" xlink:title="Test all for create CM" xlink:href="/cmm/content-model/escidoc:64002"
@@ -38,7 +38,7 @@
 			name="escidoc">
 			<escidocContentModel:schema xlink:type="simple"
 				xlink:title="escidoc"
-				xlink:href="http://localhost:8080/xsd/rest/content-model/0.1/content-model.xsd" />
+				xlink:href="http://localhost:8080/xsd/rest/content-model/0.2/content-model.xsd" />
 		</escidocContentModel:md-record-definition>
 	</escidocContentModel:md-record-definitions>
 

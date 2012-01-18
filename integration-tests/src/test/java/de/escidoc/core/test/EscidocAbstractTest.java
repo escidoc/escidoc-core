@@ -752,7 +752,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     public void assertXmlValidContentModel(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContentModelSchemaBase("0.1") + CONTENT_MODEL_XSD));
+        assertXmlValid(xmlData, new URL(getContentModelSchemaBase("0.2") + CONTENT_MODEL_XSD));
     }
 
     /**

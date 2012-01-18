@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocContentModel:content-model
-	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.1"
+	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.2"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	>
@@ -12,7 +12,7 @@
 
 	<escidocContentModel:md-record-definitions>
 		<escidocContentModel:md-record-definition name="escidoc">
-			<escidocContentModel:schema xlink:href="http://localhost:8080/xsd/rest/content-model/0.1/content-model.xsd" />
+			<escidocContentModel:schema xlink:href="http://localhost:8080/xsd/rest/content-model/0.2/content-model.xsd" />
 		</escidocContentModel:md-record-definition>
 	</escidocContentModel:md-record-definitions>
 
