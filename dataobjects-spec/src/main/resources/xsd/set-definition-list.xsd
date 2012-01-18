@@ -2,13 +2,13 @@
 
 <xs:schema 
 		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-		xmlns:set-definition="http://www.escidoc.de/schemas/setdefinition/0.1" 
+		xmlns:set-definition="http://www.escidoc.de/schemas/setdefinition/0.2" 
 		xmlns:xlink="http://www.w3.org/1999/xlink" 
-		targetNamespace="http://www.escidoc.de/schemas/setdefinitionlist/0.1" 
+		targetNamespace="http://www.escidoc.de/schemas/setdefinitionlist/0.2" 
 		elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
-	<xs:import namespace="http://www.escidoc.de/schemas/setdefinition/0.1" schemaLocation="set-definition.xsd"/>
+	<xs:import namespace="http://www.escidoc.de/schemas/setdefinition/0.2" schemaLocation="set-definition.xsd"/>
 	<xs:element name="set-definition-list">
 		<xs:complexType>
 			<xs:sequence>

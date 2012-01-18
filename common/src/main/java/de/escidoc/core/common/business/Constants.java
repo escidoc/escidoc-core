@@ -282,10 +282,10 @@ public final class Constants {
     public static final String USER_GROUP_LIST_NS_URI =
         NS_URI_PREFIX + "usergrouplist" + USER_GROUP_LIST_NS_URI_SCHEMA_VERSION;
 
-    public static final String SET_DEFINITION_NS_URI = NS_URI_PREFIX + "setdefinition" + NS_URI_SCHEMA_VERSION_0_1;
+    public static final String SET_DEFINITION_NS_URI = NS_URI_PREFIX + "setdefinition" + NS_URI_SCHEMA_VERSION_0_2;
 
     public static final String SET_DEFINITION_LIST_NS_URI =
-        NS_URI_PREFIX + "setdefinitionlist" + NS_URI_SCHEMA_VERSION_0_1;
+        NS_URI_PREFIX + "setdefinitionlist" + NS_URI_SCHEMA_VERSION_0_2;
 
     public static final String XACML_CONTEXT_NS_URI = "urn:oasis:names:tc:xacml:1.0:context";
 

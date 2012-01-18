@@ -4,8 +4,8 @@
     xmlns:prop="http://escidoc.de/core/01/properties/"
     xmlns:srel="http://escidoc.de/core/01/structural-relations/"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:set-definition="http://www.escidoc.de/schemas/setdefinition/0.1"
-    targetNamespace="http://www.escidoc.de/schemas/setdefinition/0.1"
+    xmlns:set-definition="http://www.escidoc.de/schemas/setdefinition/0.2"
+    targetNamespace="http://www.escidoc.de/schemas/setdefinition/0.2"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xs:import namespace="http://www.w3.org/XML/1998/namespace"
         schemaLocation="xml.xsd" />

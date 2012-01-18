@@ -1605,7 +1605,7 @@ public final class XmlUtility {
      */
     public static String getSetDefinitionSchemaLocation() {
         if (setDefinitionRestSchemaLocation == null) {
-            final String setDefinitionXsd = "set-definition/0.1/set-definition.xsd";
+            final String setDefinitionXsd = "set-definition/0.2/set-definition.xsd";
             setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
         }
         return setDefinitionRestSchemaLocation;

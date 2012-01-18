@@ -3036,7 +3036,7 @@ public abstract class EscidocTestBase {
 
     public void assertXmlValidSetDefinition(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.1/set-definition.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.2/set-definition.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }
@@ -3049,7 +3049,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidSetDefinitions(final String xmlData) throws Exception {
 
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.1/set-definition-list.xsd");
+        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.2/set-definition-list.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }

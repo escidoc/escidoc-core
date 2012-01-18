@@ -92,10 +92,9 @@
 	<section>
 		<title>XML Schemas</title>
 		<para>
-			In all methods XML-data is used as input and output. The related XML-schemas are located in
+			In all methods XML-data is used as input and output. The related XML-schema is located in
 			<itemizedlist mark="opencircle" spacing="compact">
-				<listitem>http://www.escidoc.de/schemas/rest/set-definition/0.1</listitem>
-				<listitem>http://www.escidoc.de/schemas/soap/set-definition/0.1</listitem>
+				<listitem>http://www.escidoc.de/schemas/rest/set-definition/0.2</listitem>
 			</itemizedlist>
 		</para>
 		<para>
