@@ -58,6 +58,34 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface RolesRestService {
 
+    /**
+     * Retrieves a filtered list of roles. <br/>
+     * <p/>
+     * Default (and for now, the only) format is a list of full role representations. <br/>Access rights are not checked
+     * per role instance, but it is checked, whether the user is allowed to retrieve a list of roles.<br/> <br/> NOTE:
+     * URI-Like Filters are deprecated and will be removed in the next version of the core-framework. Please use the new
+     * PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier). For further information about
+     * the filter-names, please see the explain-plan.<br/> <b>Additional filters valid for this method:</b><br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>Check whether the user is allowed to perform the action "retrieve-roles" <li>Check
+     * whether all filter names are valid.</li> <li>The roles are accessed using the provided filters.</li> <li>The XML
+     * representation of the list of roles corresponding to XML-schema is returned as output.</li> </ul> <br/> See
+     * chapter "Filters" for detailed information about filter definitions.<br/> <b>Additional filters valid for this
+     * method:</b><br/> <ul> <li>limited<br/> retrieves all roles that are limited roles (value = true) or unlimited
+     * roles (value = false).</li> <li>granted<br/> retrieves all roles that have been granted to a user (value = true)
+     * or all roles that have never been granted to a user (value = false).</li> </ul>
+     *
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
+     * @return The XML representation of the the filtered list of roles corresponding to SRW schema as JAXBElement.
+     * @throws MissingMethodParameterException
+     *                                     Thrown if no task parameter has been provided.
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided
+     *                                     eSciDocUserHandle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             Thrown in case of an internal error.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveRoles(@QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException, AuthenticationException,
     AuthorizationException, InvalidSearchQueryException, SystemException;

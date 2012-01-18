@@ -31,6 +31,27 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface ScopesRestService {
 
+    /**
+     * Retrieve Scopes the user is allowed to see. For further information about the filter-names, please see the
+     * explain-plan.<br/>
+     * <p/>
+     * Returns list of Scopes the user may see.<br/>
+     * <p/>
+     * <b>Prerequisites:</b><br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>All Scopes are accessed.</li> <li>The XML data is returned as TO.</li> </ul>
+     *
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
+     * @return The XML representation of the Scopes corresponding to SRW schema. The list only contains these Scopes the
+     *         user is allowed to see as TO.
+     * @throws MissingMethodParameterException
+     *                                     If the parameter filter is not given.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws AuthenticationException     Thrown in case of failed authentication.
+     * @throws AuthorizationException      Thrown in case of failed authorization.
+     * @throws SystemException             e.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveScopes(@QueryParam("") SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;

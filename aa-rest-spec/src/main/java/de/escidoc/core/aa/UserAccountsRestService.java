@@ -58,6 +58,32 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface UserAccountsRestService {
 
+    /**
+     * Retrieves a filtered list of User Accounts applying filters. <br/>
+     * <p/>
+     * Default (and for now, the only) format is a list of full User Account xml representations.<br/> Access rights are
+     * checked.<br/> For further information about the filter-names, please see the explain-plan.<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>Check weather all filter names are valid.</li> <li>The User Accounts are accessed
+     * using the provided filters.</li> <li>The XML representation of the list of User Accounts corresponding to
+     * XML-schema is returned as output.</li> </ul> <br/> See chapter "Filters" for detailed information about filter
+     * definitions.<br/> <b>Additional filters valid for this method:</b><br/> <ul> <li>active<br/> retrieves all user
+     * accounts that are activated (value=true) or deactivated (value=false).</li> <li>http://escidoc.de/core/01/structural-relations/organizational-unit
+     * with value "id"<br/> retrieves all User Accounts that are related to the Organizational Unit.</li>
+     * <li>http://escidoc.de/core/01/properties/group with value "id"<br/> retrieves all User Accounts that belong to
+     * the given group (hierarchically).</li> </ul> <br/>
+     *
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
+     * @return The XML representation of the the filtered list of user-accounts corresponding to SRW schema as JAXBElement.
+     * @throws MissingMethodParameterException
+     *                                     Thrown if no XML representation of filter parameters is provided.
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided
+     *                                     eSciDocUserHandle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             Thrown in case of an internal system error.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveUserAccounts(@QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
     AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;

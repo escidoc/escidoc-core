@@ -292,8 +292,6 @@ public interface UserGroupHandlerInterface {
      * <p/>
      * <b>Prerequisites:</b><br/>
      * <p/>
-     * The provided XML data in the body is only accepted if the size is less than ESCIDOC_MAX_XML_SIZE.<br/>
-     * <p/>
      * The User Group must exist<br/>
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The User Group is accessed using the provided reference.</li> <li>The grants

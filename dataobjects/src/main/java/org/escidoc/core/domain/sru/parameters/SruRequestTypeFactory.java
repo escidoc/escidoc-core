@@ -15,6 +15,8 @@ import org.escidoc.core.domain.sru.ScanRequestType;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
 
+import de.escidoc.core.common.util.service.KeyValuePair;
+
 /**
  * 
  * @author Marko Voß
@@ -35,7 +37,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     public static final JAXBElement<? extends RequestType> createRequestTO(
-        final SruSearchRequestParametersBean sruParams, final List<String> additionalParams) {
+        final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
         if (isSearchRequest(sruParams)) {
             return createSearchRetrieveRequestTO(sruParams, additionalParams);
@@ -78,7 +80,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     public static final SearchRetrieveRequestTO createSearchRetrieveRequestTO(
-        final SruSearchRequestParametersBean sruParams, final List<String> additionalParams) {
+        final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
         if (!isSearchRequest(sruParams))
             return null;
@@ -104,7 +106,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     public static final ExplainRequestTO createExplainRequestTO(
-        final SruSearchRequestParametersBean sruParams, final List<String> additionalParams) {
+        final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
         if (!isExplainRequest(sruParams))
             return null;
@@ -123,7 +125,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     public static final ScanRequestTO createScanRequestTO(
-        final SruSearchRequestParametersBean sruParams, final List<String> additionalParams) {
+        final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
         if (!isScanRequest(sruParams))
             return null;
@@ -144,7 +146,7 @@ public class SruRequestTypeFactory {
      * @param additionalParams
      * @return
      */
-    private static ExtraDataType createExtraDataType(final List<String> additionalParams) {
+    private static ExtraDataType createExtraDataType(final List<KeyValuePair> additionalParams) {
         if (additionalParams == null)
             return null;
 

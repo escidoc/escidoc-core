@@ -20,11 +20,24 @@
 
 package de.escidoc.core.content.relation;
 
-import java.util.Map;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
-import de.escidoc.core.common.annotation.Validate;
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
+import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.utils.io.MimeTypes;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -40,24 +53,6 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.utils.io.MimeTypes;
-
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
 @Path("/")
 @Produces(MimeTypes.TEXT_XML)
@@ -87,11 +82,6 @@ public interface ContentRelationRestService {
     @Path("/{id}")
     void delete(@PathParam("id") String id) throws SystemException, ContentRelationNotFoundException, LockingException,
         AuthorizationException, AuthenticationException;
-
-    // FIXME
-    // ContentRelationsTO retrieveContentRelations(final Map<String, String[]> parameterMap) throws
-    // InvalidSearchQueryException,
-    // SystemException;
 
     @GET
     @Path("{id}/properties")

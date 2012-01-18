@@ -68,7 +68,7 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserGroupRestService#retrieveUserGroups(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveUserGroups(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,

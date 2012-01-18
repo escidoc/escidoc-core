@@ -69,7 +69,7 @@ public class GrantsRestServiceImpl implements GrantsRestService {
 
     /* (non-Javadoc)
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.Map)
+     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,

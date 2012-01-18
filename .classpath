@@ -73,6 +73,8 @@
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/filtered-resources"/>
 	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
+    <classpathentry kind="src" output="dataobjects/target/classes" path="dataobjects/src/main/java"/>
+    <classpathentry excluding="**" kind="src" output="dataobjects/target/classes" path="dataobjects/src/main/resources"/>
 	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
 	<classpathentry kind="src" output="aa-rest-impl/target/classes" path="aa-rest-impl/src/main/java"/>

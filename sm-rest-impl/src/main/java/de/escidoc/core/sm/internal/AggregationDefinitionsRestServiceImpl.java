@@ -68,7 +68,7 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.AggregationDefinitionsRestService#retrieveAggregationDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(final SruSearchRequestParametersBean filter)

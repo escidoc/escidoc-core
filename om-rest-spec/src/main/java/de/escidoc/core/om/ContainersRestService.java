@@ -34,8 +34,6 @@ import org.escidoc.core.utils.io.MimeTypes;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
@@ -48,6 +46,30 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContainersRestService {
 
+    /**
+     * The list of all containers matching the given filter criteria will be created.
+     * <p/>
+     * <br/>
+     * See chapter "Filters" for detailed information about filter definitions.
+     * 
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
+     * @param userId
+     *            The custom SRU Get Parameter x-info5-userId
+     * @param roleId
+     *            The custom SRU Get Parameter x-info5-roleId
+     * @param omitHighlighting
+     *            The custom SRU Get Parameter x-info5-omitHighlighting
+     * @return The XML representation of the the filtered list of containers corresponding to SRW schema as JAXBElement.
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into a CQL query
+     * @throws InvalidXmlException
+     *             If the given xml is not valid.
+     * @throws MissingMethodParameterException
+     *             If the parameter filter is not given.
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveContainers(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
             @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,

@@ -47,6 +47,7 @@
         <module>aspects</module>
         <module>utilities</module>
         <module>dataobjects-spec</module>
+        <module>dataobjects</module>
         <module>content-relation-rest-spec</module>
         <module>content-relation-rest-impl</module>
         <module>context-rest-spec</module>
@@ -2185,6 +2186,11 @@
         <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>dataobjects-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+        <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>dataobjects</artifactId>
         <version>${project.version}</version>
       </dependency>
         <dependency>

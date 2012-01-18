@@ -18,4 +18,14 @@
         </jaxrs:features>
     </jaxrs:server>
 
+    <jaxrs:server id="organizationalUnitsRestService" address="/oum/organizational-units">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
 </beans>

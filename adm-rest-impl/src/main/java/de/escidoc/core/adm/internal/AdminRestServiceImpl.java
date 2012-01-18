@@ -84,7 +84,7 @@ public class AdminRestServiceImpl implements AdminRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.adm.AdminRestService#deleteObjects(IdSetTaskParamTO)
+     * @see de.escidoc.core.adm.AdminRestService#deleteObjects(org.escidoc.core.domain.taskparam.IdSetTaskParamTO)
      */
     @Override
     public ResultTO deleteObjects(IdSetTaskParamTO ids) throws AuthenticationException, AuthorizationException,
@@ -101,7 +101,7 @@ public class AdminRestServiceImpl implements AdminRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.adm.AdminRestService#reindex()
+     * @see de.escidoc.core.adm.AdminRestService#reindex(org.escidoc.core.domain.taskparam.ReindexTaskParamTO)
      */
     @Override
     public ResultTO reindex(ReindexTaskParamTO taskParam) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {

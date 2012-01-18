@@ -19,6 +19,7 @@
  */
 package de.escidoc.core.oum.internal;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -46,6 +47,7 @@ import de.escidoc.core.oum.OrganizationalUnitRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -63,6 +65,7 @@ import org.escidoc.core.domain.ou.ParentsListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -200,13 +203,14 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         return ServiceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
     }
 
-    // FIXME
-    // @Override
-    // public ParentObjectsTO retrieveParentObjects(final String id) throws AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    //
-    // return ServiceUtility.fromXML(ParentObjectsTO.class, this.organizationalUnitHandler.retrieveParentObjects(id));
-    // }
+     @Override
+     public JAXBElement<? extends ResponseType> retrieveParentObjects(final String id) throws AuthenticationException, AuthorizationException,
+     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    
+ 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.organizationalUnitHandler
+						.retrieveParentObjects(id)));
+     }
 
     // FIXME
     // @Override
@@ -216,13 +220,14 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     // return ServiceUtility.fromXML(SuccessorsTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
     // }
 
-    // FIXME
-    // @Override
-    // public ChildObjectsTO retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    //
-    // return ServiceUtility.fromXML(ChildObjectsTO.class, this.organizationalUnitHandler.retrieveChildObjects(id));
-    // }
+     @Override
+     public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
+     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    
+  		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.organizationalUnitHandler
+						.retrieveChildObjects(id)));
+     }
 
     // FIXME
     // @Override

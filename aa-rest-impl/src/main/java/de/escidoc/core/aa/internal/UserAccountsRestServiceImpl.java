@@ -73,8 +73,8 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.escidoc.core.aa.UserAccountRestService#retrieveUerAccounts(
-	 * SruSearchRequestParametersBean)
+	 * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(
+	 * org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
 	 */
 	@Override
 	public JAXBElement<? extends ResponseType> retrieveUserAccounts(

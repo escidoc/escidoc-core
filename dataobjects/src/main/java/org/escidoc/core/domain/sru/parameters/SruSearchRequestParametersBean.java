@@ -28,7 +28,6 @@
  */
 package org.escidoc.core.domain.sru.parameters;
 
-
 /**
  * Bean implementation for JAX-RS @QueryParam annotation usage on JAX-RS interfaces. <br/>
  * <br/>

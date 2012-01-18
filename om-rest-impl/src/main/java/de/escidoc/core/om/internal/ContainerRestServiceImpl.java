@@ -64,6 +64,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import org.escidoc.core.domain.service.ServiceUtility;
@@ -183,10 +184,16 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-        final List<String> additionalParams = new LinkedList<String>();
-        additionalParams.add(roleId);
-        additionalParams.add(userId);
-        additionalParams.add(omitHighlighting);
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
 
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
@@ -207,10 +214,16 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException {
 
-        final List<String> additionalParams = new LinkedList<String>();
-        additionalParams.add(roleId);
-        additionalParams.add(userId);
-        additionalParams.add(omitHighlighting);
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
 
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);

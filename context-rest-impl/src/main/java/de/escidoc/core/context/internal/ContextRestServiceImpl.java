@@ -19,6 +19,7 @@ import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ExplainRequestTO;
 import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.ScanRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
@@ -36,6 +37,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -44,6 +46,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
@@ -58,6 +61,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.context.ContextRestService;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
@@ -199,72 +203,32 @@ public class ContextRestServiceImpl implements ContextRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveContexts(java.util.Map)
+     * @see de.escidoc.core.context.ContextRestService#retrieveMembers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public Stream retrieveContexts(
-        final SruSearchRequestParametersBean parameters, final String xInfoRoleId, final String xInfoUserId,
-        final String xInfoHighlighting) throws MissingMethodParameterException, SystemException {
+    public JAXBElement<? extends ResponseType> retrieveMembers(final String contextId,
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting) throws ContextNotFoundException,
+        MissingMethodParameterException, SystemException {
 
-        final List<String> additionalParams = new LinkedList<String>();
-        additionalParams.add(xInfoRoleId);
-        additionalParams.add(xInfoUserId);
-        additionalParams.add(xInfoHighlighting);
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
 
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        final String xml = contextHandler.retrieveContexts(ServiceUtility.toMap(requestTO));
-        final Stream stream = new Stream();
-        try {
-            stream.write(xml.getBytes("UTF-8"));
-            stream.lock();
-        }
-        catch (final IOException e) {
-            throw new WebserverSystemException(e);
-        }
-        return stream;
+		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+				Constants.SRU_CONTEXT_PATH , this.contextHandler
+						.retrieveMembers(contextId, ServiceUtility.toMap(requestTO))));
     }
-
-    @Override
-    public Stream retrieveContexts(final SearchRetrieveRequestTO searchRetrieveRequestTO)
-        throws MissingMethodParameterException, SystemException {
-
-        final String xml = contextHandler.retrieveContexts(ServiceUtility.toMap(searchRetrieveRequestTO));
-        // TODO remove this code as soon as the business level returns a Stream or the ResponseTO
-        final Stream stream = new Stream();
-        try {
-            stream.write(xml.getBytes("UTF-8"));
-            stream.lock();
-        }
-        catch (final IOException e) {
-            throw new WebserverSystemException(e);
-        }
-        return stream;
-    }
-
-    @Override
-    public Stream retrieveContexts(final ScanRequestTO searchRetrieveRequestTO) throws MissingMethodParameterException,
-        SystemException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Stream retrieveContexts(final ExplainRequestTO searchRetrieveRequestTO)
-        throws MissingMethodParameterException, SystemException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    // FIXME
-    // @Override
-    // public String retrieveMembers(final String id, final Map<String, String[]> filter) throws
-    // ContextNotFoundException,
-    // MissingMethodParameterException, SystemException {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
 
     /*
      * (non-Javadoc)

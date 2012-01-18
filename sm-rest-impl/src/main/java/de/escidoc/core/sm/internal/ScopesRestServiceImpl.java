@@ -68,7 +68,7 @@ public class ScopesRestServiceImpl implements ScopesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveScopes(final SruSearchRequestParametersBean filter) throws InvalidSearchQueryException,

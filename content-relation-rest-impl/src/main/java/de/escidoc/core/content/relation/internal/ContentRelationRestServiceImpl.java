@@ -104,11 +104,6 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         this.contentRelationHandler.delete(id);
     }
 
-    // FIXME
-    // public ContentRelationsTO retrieveContentRelations(final Map<String, String[]> parameterMap) throws
-    // InvalidSearchQueryException,
-    // SystemException;
-
     @Override
     public ContentRelationPropertiesTO retrieveProperties(String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, SystemException {

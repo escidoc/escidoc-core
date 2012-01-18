@@ -916,11 +916,11 @@ public interface UserAccountHandlerInterface {
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves user preference objects associated to the User Account identified by the provided User Account
+     * Retrieves user attribute objects associated to the User Account identified by the provided User Account
      * ID.
      *
      * @param userId The User Account ID.
-     * @return Returns user preference objects.
+     * @return Returns user attribute objects.
      * @throws MissingMethodParameterException
      *                                      Thrown if no User Account ID is provided.
      * @throws AuthenticationException      Thrown if the authentication fails due to an invalid provided
@@ -934,12 +934,12 @@ public interface UserAccountHandlerInterface {
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves user preference objects associated to the User Account identified by the provided User Account ID
+     * Retrieves user attribute objects associated to the User Account identified by the provided User Account ID
      * and the provided User Attribute Name.
      *
      * @param userId The User Account ID.
      * @param name   The User Attribute Name to be retrieved.
-     * @return Returns user preference objects.
+     * @return Returns user attribute objects.
      * @throws MissingMethodParameterException
      *                                        Thrown if no User Account ID or User Attribute Name is provided.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
@@ -955,12 +955,12 @@ public interface UserAccountHandlerInterface {
         AuthorizationException, SystemException;
 
     /**
-     * Retrieves the user preference object associated to the User Account identified by the provided User Account
+     * Retrieves the user attribute object associated to the User Account identified by the provided User Account
      * ID and the provided User Attribute ID.
      *
      * @param userId      The User Account ID.
      * @param attributeId The User Attribute ID to be retrieved.
-     * @return Returns the user preference object.
+     * @return Returns the user attribute object.
      * @throws MissingMethodParameterException
      *                                        Thrown if no User Account ID or User Attribute ID is provided.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided

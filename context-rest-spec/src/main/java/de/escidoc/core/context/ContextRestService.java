@@ -14,23 +14,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextTO;
-import org.escidoc.core.domain.sru.ExplainRequestTO;
-import org.escidoc.core.domain.sru.ScanRequestTO;
-import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
-import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -39,6 +38,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
@@ -108,26 +108,12 @@ public interface ContextRestService {
     String retrieveResources(@PathParam("id") String id) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    @GET
-    Stream retrieveContexts(
-        @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("xinfo-roleId") String xInfoRoleId,
-        @QueryParam("xinfo-userId") String xInfoUserId, @QueryParam("xinfo-hightlighting") String xInfoHighlighting)
-        throws MissingMethodParameterException, SystemException;
-
-    /* SearchRetrieveResponseTO */Stream retrieveContexts(SearchRetrieveRequestTO searchRetrieveRequestTO)
-        throws MissingMethodParameterException, SystemException;
-
-    /* ScanResponseTO */Stream retrieveContexts(ScanRequestTO searchRetrieveRequestTO)
-        throws MissingMethodParameterException, SystemException;
-
-    /* ExplainResponseTO */Stream retrieveContexts(final ExplainRequestTO searchRetrieveRequestTO)
-        throws MissingMethodParameterException, SystemException;
-
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/members")
-    // String retrieveMembers(@PathParam("id") String id, final Map<String, String[]> filter)
-    // throws ContextNotFoundException, MissingMethodParameterException, SystemException;
+	@GET
+	@Path("/{id}/resources/members")
+	JAXBElement<? extends ResponseType> retrieveMembers(@PathParam("id") String id,
+			@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+            @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws ContextNotFoundException,
+            MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/admin-descriptor/{name}")

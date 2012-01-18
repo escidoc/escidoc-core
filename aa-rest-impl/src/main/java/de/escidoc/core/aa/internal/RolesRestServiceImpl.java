@@ -68,7 +68,7 @@ public class RolesRestServiceImpl implements RolesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.RoleRestService#retrieveRoles(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.aa.RolesRestService#retrieveRoles(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveRoles(final SruSearchRequestParametersBean filter) throws MissingMethodParameterException,

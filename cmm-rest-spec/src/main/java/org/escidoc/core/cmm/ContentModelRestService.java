@@ -19,11 +19,20 @@
  */
 package org.escidoc.core.cmm;
 
-import java.util.Map;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 
-import de.escidoc.core.common.annotation.Validate;
+import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
+import org.escidoc.core.domain.content.model.ContentModelTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.utils.io.MimeTypes;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -31,38 +40,13 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
-
-import org.escidoc.core.domain.content.model.ContentModelTO;
-import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
 @Path("/")
 @Produces(MimeTypes.TEXT_XML)
@@ -100,12 +84,6 @@ public interface ContentModelRestService {
     @Path("/{id}/resources/version-history")
     VersionHistoryTO retrieveVersionHistory(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException;
-
-    // FIXME
-    // @GET
-    // @Path("/{id}/content-models")
-    // String retrieveContentModels(Map<String, String[]> parameterMap) throws InvalidSearchQueryException,
-    // SystemException;
 
     @PUT
     @Path("/{id}")

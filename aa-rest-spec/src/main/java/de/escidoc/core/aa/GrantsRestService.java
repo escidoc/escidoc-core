@@ -96,10 +96,10 @@ public interface GrantsRestService {
      * <p/>
      * See chapter "Filters" for detailed information about filter definitions.
      *
-     * @param parameters SRU GET-Parameters
-     * .
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
      * @return The XML representation of the grants matching the provided filter-criteria corresponding to XML-schema
-     *         "grants.xsd", element grant-list.
+     *         "grants.xsd", element grant-list as JAXBElement.
      * @throws MissingMethodParameterException
      *                                     Thrown if no user id is provided.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query

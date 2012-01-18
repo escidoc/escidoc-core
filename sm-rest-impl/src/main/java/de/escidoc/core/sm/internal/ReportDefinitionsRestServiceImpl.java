@@ -68,7 +68,7 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveReportDefinitions(final SruSearchRequestParametersBean filter)

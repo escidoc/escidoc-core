@@ -20,66 +20,25 @@
 
 package org.escidoc.core.oai;
 
-import java.rmi.RemoteException;
-import java.util.Map;
-
-import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
-import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingLicenceException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyDeletedException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyPublishedException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
-import de.escidoc.core.common.exceptions.application.violated.NotPublishedException;
-import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.oai.SetDefinitionTO;
-
-import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+
+import org.escidoc.core.domain.oai.SetDefinitionTO;
+import org.escidoc.core.utils.io.MimeTypes;
+
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * 
@@ -222,30 +181,4 @@ public interface OAIRestService {
     void delete(@PathParam("id") String id) throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException;
 
-    // FIXME
-    // /**
-    // * Retrieves a list of completes set-definitions applying filters.<br/> <br/> NOTE: URI-Like Filters are
-    // deprecated
-    // * and will be removed in the next version of the core-framework. Please use the new PATH-like filters (eg /id
-    // * instead of http://purl.org/dc/elements/1.1/identifier). For further information about the filter-names, please
-    // * see the explain-plan.<br/> <b>Tasks:</b><br/> <ul> <li>Check weather all filter names are valid.</li> <li>The
-    // * set-definitions are accessed using the provided filters.</li> <li>The XML representation of the list of all
-    // * set-definitions corresponding to SRW schema is returned as output.</li> </ul> <br/> See chapter "Filters" for
-    // * detailed information about filter definitions.
-    // *
-    // * @param filter Simple XML containing the filter definition. See functional specification.
-    // * @return Returns the XML representation of found set-definitions.
-    // * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided
-    // * eSciDocUserHandle.
-    // * @throws AuthorizationException Thrown if the authorization fails.
-    // * @throws MissingMethodParameterException
-    // * If the parameter filter is not given.
-    // * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
-    // * @throws SystemException If an error occurs.
-    // */
-    // @POST
-    // @Path("/set-definitions")
-    // String retrieveSetDefinitions(final Map<String, String[]> filter) throws AuthenticationException,
-    // AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException;
-    //
 }

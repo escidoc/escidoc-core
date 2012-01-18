@@ -28,6 +28,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
@@ -36,6 +37,7 @@ import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
 import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -133,11 +135,10 @@ public interface OrganizationalUnitRestService {
     ParentsListTO retrieveParents(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/parent-objects")
-    // ParentObjectsTO retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException,
-    // AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+     @GET
+     @Path("/{id}/resources/parent-objects")
+     JAXBElement<? extends ResponseType> retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     // FIXME
     // @GET
@@ -146,23 +147,16 @@ public interface OrganizationalUnitRestService {
     // AuthorizationException,
     // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/child-objects")
-    // ChildObjectsTO retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException,
-    // AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+     @GET
+     @Path("/{id}/resources/child-objects")
+     JAXBElement<? extends ResponseType> retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
+     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     // FIXME
     // @GET
     // @Path("/{id}/resources/path-list")
     // PathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
     // OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
-
-    // FIXME
-    // @GET
-    // @Path("/{id}/organizational-units")
-    // OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter)
-    // throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException;
 
     @POST
     @Path("/{id}/close")

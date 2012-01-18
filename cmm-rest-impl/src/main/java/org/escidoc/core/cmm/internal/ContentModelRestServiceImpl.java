@@ -20,18 +20,15 @@
 
 package org.escidoc.core.cmm.internal;
 
-import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.cmm.ContentModelRestService;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
 import org.escidoc.core.domain.content.model.ContentModelTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
+import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -40,20 +37,13 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.cmm.ContentModelRestService;
-import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 
 /**
  * 
@@ -119,13 +109,6 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
         return ServiceUtility.fromXML(VersionHistoryTO.class, this.contentModelHandler.retrieveVersionHistory(id));
 
     }
-
-    // FIXME
-    // String retrieveContentModels(Map<String, String[]> parameterMap) throws InvalidSearchQueryException,
-    // SystemException {
-    // return ServiceUtility.fromXML(ContentModelTO.class,
-    // this.contentModelHandler.create(ServiceUtility.toXML(ContentModelTO)));
-    // }
 
     public ContentModelTO update(String id, ContentModelTO contentModelTO) throws AuthenticationException,
         AuthorizationException, ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,

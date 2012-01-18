@@ -18,4 +18,14 @@
         </jaxrs:features>
     </jaxrs:server>
 
+    <jaxrs:server id="oaisRestService" address="/oai/set-definitions">
+        <jaxrs:serviceBeans>
+            <bean class="org.escidoc.core.oai.internal.OAIsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
 </beans>

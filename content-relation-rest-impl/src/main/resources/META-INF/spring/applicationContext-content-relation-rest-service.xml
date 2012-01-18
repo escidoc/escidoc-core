@@ -18,4 +18,14 @@
         </jaxrs:features>
     </jaxrs:server>
 
+    <jaxrs:server id="contentRelationsRestService" address="/ir/content-relations">
+        <jaxrs:serviceBeans>
+            <bean class="de.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:features>
+            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="loggingFeature"/>
+        </jaxrs:features>
+    </jaxrs:server>
+
 </beans>

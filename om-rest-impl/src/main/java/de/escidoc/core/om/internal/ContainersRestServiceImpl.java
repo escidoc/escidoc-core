@@ -40,6 +40,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.om.ContainersRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
@@ -64,7 +65,7 @@ public class ContainersRestServiceImpl implements ContainersRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainersRestService#retrieveContainers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.context.ContainersRestService#retrieveContainers(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveContainers(
@@ -72,10 +73,16 @@ public class ContainersRestServiceImpl implements ContainersRestService {
         final String omitHighlighting) throws MissingMethodParameterException,
         InvalidSearchQueryException, InvalidXmlException, SystemException {
 
-        final List<String> additionalParams = new LinkedList<String>();
-        additionalParams.add(roleId);
-        additionalParams.add(userId);
-        additionalParams.add(omitHighlighting);
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
 
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);

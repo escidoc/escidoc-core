@@ -78,7 +78,7 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getFedoraDescription(boolean)
+     * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getFedoraDescription(java.lang.String)
      */
     @Override
     public String getFedoraDescription(final String xml) throws Exception {

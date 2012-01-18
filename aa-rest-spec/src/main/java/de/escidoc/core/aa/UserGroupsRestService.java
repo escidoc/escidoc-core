@@ -58,6 +58,32 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 @Consumes(MimeTypes.TEXT_XML)
 public interface UserGroupsRestService {
 
+    /**
+     * Retrieve a filtered list of User Groups applying filters.<br/>
+     * <p/>
+     * Default (and for now, the only) format is a list of full User Group XML representations.<br/> Access rights are
+     * checked.<br/> <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the
+     * core-framework. Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/>
+     * <p/>
+     * <ul> <li>Check weather all filter names are valid.</li> <li>The User Groups are accessed using the provided
+     * filters.</li> <li>The XML representation of the list of User Groups corresponding to XML schema is returned as
+     * output.</li> </ul> <br/> See chapter "Filters" for detailed information about filter definitions.<br/>
+     * <b>Additional filters valid for this method:</b><br/> <ul> <li>active<br/> retrieves all User Groups that are
+     * activated (value=true) or deactivated (value=false).</li> <li>http://escidoc.de/core/01/properties/user with
+     * value "id"<br/> retrieves all User Groups the User belongs to (hierarchically).</li> </ul> <br/>
+     *
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
+     * @return The XML representation of the the filtered list of user-groups corresponding to SRW schema as JAXBElement.
+     * @throws MissingMethodParameterException
+     *                                     Thrown if no XML representation of filter parameters is provided.
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided eSciDoc User
+     *                                     Handle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
+     * @throws SystemException             Thrown in case of an internal system error.
+     */
     @GET
     JAXBElement<? extends ResponseType> retrieveUserGroups(@QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
