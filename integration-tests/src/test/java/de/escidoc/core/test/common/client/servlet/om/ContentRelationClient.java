@@ -275,7 +275,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object retrieveRegisteredPredicates() throws Exception {
         return callEsciDoc("ContentRelation.retrieveRegisteredPredicates", METHOD_RETRIEVE_REGISTERED_PREDICATES,
-            Constants.HTTP_METHOD_GET, Constants.CONTENT_RELATION_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.CONTENT_RELATIONS_BASE_URI,
             new String[] { Constants.SUB_RETRIEVE_REGISTERED_PREDICATES });
 
     }

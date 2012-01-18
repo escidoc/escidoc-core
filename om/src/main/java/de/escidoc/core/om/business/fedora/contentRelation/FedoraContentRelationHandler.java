@@ -743,16 +743,20 @@ public class FedoraContentRelationHandler extends HandlerBase implements Content
      */
     @Override
     public String retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException {
+
         final List<String> predicates = ContentRelationsUtility.getPredicates();
         final Iterator<String> it = predicates.iterator();
-        final StringBuilder sb = new StringBuilder();
-        sb.append("<predicates>");
-        while (it.hasNext()) {
-            sb.append(it.next());
-            sb.append('\n');
 
+        final StringBuilder sb = new StringBuilder();
+        sb.append(Constants.XML_HEADER);
+        sb.append("<registeredPredicates:predicates");
+        sb.append(" xmlns:registeredPredicates=\"http://www.escidoc.org/schemas/predicate-list/0.1\" >\n");
+        while (it.hasNext()) {
+            sb.append("<registeredPredicates:predicate>");
+            sb.append(it.next());
+            sb.append("</registeredPredicates:predicate>\n");
         }
-        sb.append("</predicates>");
+        sb.append("</registeredPredicates:predicates>\n");
         return sb.toString();
     }
 
