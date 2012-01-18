@@ -661,7 +661,6 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         assertXmlExists("struct-map", this.theContainerXml, "/container/struct-map");
 
         String structMap = retrieveStructMap(theContainerId);
-        System.out.println(structMap);
         assertXmlValidStructMap(structMap);
     }
 

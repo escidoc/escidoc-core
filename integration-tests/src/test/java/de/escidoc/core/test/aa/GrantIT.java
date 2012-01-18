@@ -1255,10 +1255,6 @@ public class GrantIT extends GrantTestBase {
         }
         String taskParam = getRevokeGrantsTaskParam(grantsToRemove, "Some revocation\n remark");
 
-        System.out.println("========================================");
-        System.out.println(taskParam);
-        System.out.println("========================================");
-
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
         }
