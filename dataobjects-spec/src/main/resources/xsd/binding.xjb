@@ -211,6 +211,9 @@
     <bindings node="//xs:element[@name='organizational-unit']">
       <class name="OrganizationalUnitTO" />
     </bindings>
+    <bindings node="//xs:element[@name='resources']">
+      <class name="OrganizationalUnitResourcesTO" />
+    </bindings>
     <bindings node="//xs:element[@name='parents']">
       <class name="ParentsTO" />
     </bindings>

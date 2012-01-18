@@ -100,6 +100,15 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
+        <xs:element ref="organizational-unit:resources"
+          minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
                 <xs:element ref="md-records:md-records" minOccurs="1">
                     <xs:annotation>
                         <xs:documentation>
@@ -229,6 +238,60 @@
                     ref="common-types:eSciDocRootElementAttributes"/>
         </xs:complexType>
     </xs:element>
+  <xs:element name="resources">
+    <xs:annotation>
+      <xs:documentation>
+        <create>discarded</create>
+        <update>discarded</update>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="parent-objects" type="common-types:readOnlyLink" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="child-objects" type="common-types:readOnlyLink" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="path-list" type="common-types:readOnlyLink" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="successor-objects" type="common-types:readOnlyLink" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="relations" type="common-types:readOnlyLink" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes" />
+      <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes" />
+    </xs:complexType>
+  </xs:element>
     <xs:element name="parents">
         <xs:annotation>
             <xs:documentation>

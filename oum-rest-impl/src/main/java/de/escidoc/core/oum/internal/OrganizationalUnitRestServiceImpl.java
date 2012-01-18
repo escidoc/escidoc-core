@@ -63,6 +63,7 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -173,13 +174,13 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     // this.organizationalUnitHandler.retrieveResource(id)));
     // }
 
-    // FIXME
-    // @Override
-    // public ResourcesTO retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    //
-    // return ServiceUtility.fromXML(ResourcesTO.class, this.organizationalUnitHandler.updateMdRecords(id));
-    // }
+    @Override
+    public OrganizationalUnitResourcesTO retrieveResources(final String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+
+        return ServiceUtility.fromXML(OrganizationalUnitResourcesTO.class,
+            this.organizationalUnitHandler.retrieveResources(id));
+    }
 
     @Override
     public MdRecordsTO retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,

@@ -34,6 +34,7 @@ import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
 import org.escidoc.core.domain.ou.ParentsTO;
@@ -113,11 +114,10 @@ public interface OrganizationalUnitRestService {
     // throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
     // MissingMethodParameterException, OperationNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources")
-    // ResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    @GET
+    @Path("/{id}/resources")
+    OrganizationalUnitResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/md-records")
