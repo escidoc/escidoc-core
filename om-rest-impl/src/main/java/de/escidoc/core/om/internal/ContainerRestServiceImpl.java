@@ -82,6 +82,7 @@ import org.springframework.stereotype.Service;
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.container.ContainerTO;
 import org.escidoc.core.domain.container.ContainerPropertiesTO;
+import org.escidoc.core.domain.container.ContainerResourcesTO;
 import org.escidoc.core.domain.item.ItemTO;
 import org.escidoc.core.domain.item.ItemPropertiesTO;
 import org.escidoc.core.domain.components.ComponentTO;
@@ -310,9 +311,12 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         return ServiceUtility.fromXML(ContainerPropertiesTO.class, this.containerHandler.retrieveProperties(id));
     }
 
-    // FIXME
-    // public String retrieveResources( String id) throws ContainerNotFoundException,
-    // MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @Override
+     public ContainerResourcesTO retrieveResources(String id) throws ContainerNotFoundException,
+     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+         
+         return ServiceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
+     }
 
     // FIXME
     // public EscidocBinaryContent retrieveResource(final String id, String resourceName, Map<String, String[]>

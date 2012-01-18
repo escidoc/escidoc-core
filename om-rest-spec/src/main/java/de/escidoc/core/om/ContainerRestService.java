@@ -33,6 +33,7 @@ import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.container.ContainerPropertiesTO;
+import org.escidoc.core.domain.container.ContainerResourcesTO;
 import org.escidoc.core.domain.container.ContainerTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
@@ -196,11 +197,10 @@ public interface ContainerRestService {
     ContainerPropertiesTO retrieveProperties(@PathParam("id") String id) throws ContainerNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // String retrieveResources(@PathParam("id") String id) throws ContainerNotFoundException,
-    // MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+     @GET
+     @Path("/{id}/resources")
+     ContainerResourcesTO retrieveResources(@PathParam("id") String id) throws ContainerNotFoundException,
+     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     // FIXME
     // @GET
