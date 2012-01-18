@@ -66,8 +66,7 @@ public class ContentModelExamplesIT extends ContentModelTestBase {
         NodeList mdRecordDefinitionNames =
             selectNodeList(contentModel, "/content-model/md-record-definitions/md-record-definition/@name");
         Map<String, String> mdRecordDefinitions = new HashMap<String, String>();
-        int c = mdRecordDefinitionNames.getLength();
-        for (int i = 0; i < c; i++) {
+        for (int i = 0; i < mdRecordDefinitionNames.getLength(); i++) {
             String name = mdRecordDefinitionNames.item(i).getNodeValue();
             String xsd =
                 selectSingleNode(contentModel,
@@ -79,16 +78,14 @@ public class ContentModelExamplesIT extends ContentModelTestBase {
         NodeList resourceDefinitionNames =
             selectNodeList(contentModel, "/content-model/resource-definitions/resource-definition/@name");
         List<String> resourceDefinitions = new Vector<String>();
-        c = resourceDefinitionNames.getLength();
-        for (int i = 0; i < c; i++) {
+        for (int i = 0; i < resourceDefinitionNames.getLength(); i++) {
             resourceDefinitions.add(resourceDefinitionNames.item(i).getNodeValue());
         }
 
         NodeList contentStreamNames =
             selectNodeList(contentModel, "/content-model/content-streams/content-stream/@name");
         List<List<String>> contentStreamDefinitions = new Vector<List<String>>();
-        c = contentStreamNames.getLength();
-        for (int i = 0; i < c; i++) {
+        for (int i = 0; i < contentStreamNames.getLength(); i++) {
             String name = contentStreamNames.item(i).getNodeValue();
             List<String> contentStreamDefinition = new Vector<String>();
             contentStreamDefinition.add(0, name);

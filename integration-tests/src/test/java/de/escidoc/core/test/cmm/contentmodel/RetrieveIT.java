@@ -38,7 +38,7 @@ import org.w3c.dom.Document;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class RetrieveIT extends ContentModelTestBase {
@@ -49,8 +49,9 @@ public class RetrieveIT extends ContentModelTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -64,8 +65,9 @@ public class RetrieveIT extends ContentModelTestBase {
 
     /**
      * Clean up after servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     @After
@@ -83,8 +85,9 @@ public class RetrieveIT extends ContentModelTestBase {
     /**
      * Test retrieving an existing ContentModel. The excepted result is a XML representation of the created
      * ContentModel, corresponding to XML-schema "ContentModel.xsd"
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testCtmRCt1() throws Exception {
@@ -101,56 +104,38 @@ public class RetrieveIT extends ContentModelTestBase {
 
     /**
      * Test retrieving a not existing ContentModel.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmRCt2() throws Exception {
 
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            retrieve(UNKNOWN_ID);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(UNKNOWN_ID);
     }
 
     /**
      * Test retrieving a ContentModel with providing an id of an existing resource of another type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmRCt2_2() throws Exception {
 
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            retrieve(CONTEXT_ID);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(CONTEXT_ID);
     }
 
     /**
      * Test retrieving an ContentModel without id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testCtmRCt3() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            retrieve(null);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        retrieve(null);
     }
 
     /**
@@ -158,20 +143,14 @@ public class RetrieveIT extends ContentModelTestBase {
      */
     @Test
     public void testRetrieveContentModelResources() throws Exception {
-        String subResource = null;
-        try {
-            subResource = retrieveResources(this.contentModelId);
-        }
-        catch (final NoSuchMethodException e) {
-            return;
-        }
+
+        String subResource = retrieveResources(this.contentModelId);
         selectSingleNodeAsserted(getDocument(subResource), "/resources/version-history");
         assertXmlValidContentModel(subResource);
     }
 
     /**
-     * Test retrieve of Content Model properties.
-     * see issue INFR-1369.
+     * Test retrieve of Content Model properties. see issue INFR-1369.
      * 
      * @throws Exception
      */
@@ -181,4 +160,30 @@ public class RetrieveIT extends ContentModelTestBase {
         String propertiesXml = retrieveProperties(this.contentModelId);
         assertXmlValidContentModel(propertiesXml);
     }
+
+    /**
+     * Test retrieve ContentModel content stream.
+     */
+    @Test
+    public void testRetrieveContentModelContentStreams() throws Exception {
+        String subResource = retrieveContentStreams(this.contentModelId);
+        selectSingleNodeAsserted(getDocument(subResource), "/content-streams");
+        assertXmlValidContentModel(subResource);
+    }
+
+    /**
+     * Test retrieve ContentModel content stream.
+     */
+    @Test
+    public void testRetrieveContentModelContentStream() throws Exception {
+        Document contentModel = getDocument(this.contentModelXml);
+        String name =
+            selectSingleNodeAsserted(contentModel, "/content-model/content-streams/content-stream[1]/@name")
+                .getNodeValue();
+
+        String subResource = retrieveContentStream(this.contentModelId, name);
+        selectSingleNodeAsserted(getDocument(subResource), "/content-stream");
+        assertXmlValidContentModel(subResource);
+    }
+
 }

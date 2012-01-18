@@ -172,10 +172,23 @@ public class ContentModelTestBase extends CmmTestBase {
         return handleXmlResult(getContentModelClient().retrieveContentModels(filter));
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     * @throws Exception
+     */
     public String retrieveContentStreams(final String id) throws Exception {
         return handleXmlResult(getContentModelClient().retrieveContentStreams(id));
     }
 
+    /**
+     * 
+     * @param id
+     * @param name
+     * @return
+     * @throws Exception
+     */
     public String retrieveContentStream(final String id, final String name) throws Exception {
         return handleXmlResult(getContentModelClient().retrieveContentStream(id, name));
     }

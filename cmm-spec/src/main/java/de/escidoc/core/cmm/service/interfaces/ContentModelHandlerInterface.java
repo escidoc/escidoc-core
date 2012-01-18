@@ -31,6 +31,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -281,4 +282,71 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      */
     EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException;
+    
+    /**
+     * Retrieve the content-streams of the specified Content Model.<br/>
+     * <p/>
+     * <b>Prerequisites:</b><br/>
+     * <p/>
+     * The Content Model must exist<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>The Content Model is accessed using the provided reference.</li> <li>The XML data is
+     * returned.</li> </ul>
+     *
+     * @param id The id of the Content Model.
+     * @return The XML representation of the content-streams of the content model.
+     * @throws AuthenticationException       If authentication fails.
+     * @throws AuthorizationException        If authorization fails.
+     * @throws ContentModelNotFoundException If the specified Content Model was not found.
+     * @throws MissingMethodParameterException
+     *                                       If the id is not provided.
+     * @throws SystemException               If an internal error occurred.
+     */
+    String retrieveContentStreams(String id) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+
+    /**
+     * Retrieve the content-stream with the specified name of the specified Content Model.<br/>
+     * <p/>
+     * <b>Prerequisites:</b><br/>
+     * <p/>
+     * The Content Model must exist<br/>
+     * <p/>
+     * <b>Tasks:</b><br/> <ul> <li>The Content Model is accessed using the provided reference.</li> <li>The XML data is
+     * returned.</li> </ul>
+     *
+     * @param id   The id of the Content Model.
+     * @param name The name of the content stream.
+     * @return The XML representation of the content-stream with the specified name of the Content Model.
+     * @throws AuthenticationException       If authentication fails.
+     * @throws AuthorizationException        If authorization fails.
+     * @throws ContentModelNotFoundException If the specified Content Model was not found.
+     * @throws MissingMethodParameterException
+     *                                       If the id is not provided.
+     * @throws SystemException               If an internal error occurred.
+     */
+    @Deprecated
+    String retrieveContentStream(String id, String name) throws AuthenticationException, AuthorizationException,
+        ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+
+    /**
+     * Returns the content of the content stream with specified name.
+     *
+     * @param id   The id of the Content Model.
+     * @param name The name of the content stream.
+     * @return The content of the content stream.
+     * @throws AuthenticationException        If authentication fails.
+     * @throws AuthorizationException         If authorization fails.
+     * @throws ContentModelNotFoundException  If the specified Content Model was not found.
+     * @throws MissingMethodParameterException
+     *                                        If the id is not provided.
+     * @throws SystemException                If an internal error occurred.
+     * @throws ContentStreamNotFoundException If no content stream with specified name exists.
+     * @throws InvalidStatusException         If the Content Model is withdrawn.
+     */
+    @Deprecated
+    EscidocBinaryContent retrieveContentStreamContent(String id, String name) throws AuthenticationException,
+        AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException,
+        ContentStreamNotFoundException, InvalidStatusException;
+
 }

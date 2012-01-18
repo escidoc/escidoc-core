@@ -168,6 +168,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
     }
 
     @Override
+    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
+        EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
+        WebserverSystemException {
+        setContentModel(id);
+        return renderContentStreams(true);
+    }
+
+    @Override
     public EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
         throws ContentModelNotFoundException, ContentStreamNotFoundException, InvalidStatusException,
         FedoraSystemException, TripleStoreSystemException, WebserverSystemException, IntegritySystemException {

@@ -91,6 +91,16 @@ public interface ContentModelHandlerInterface extends IngestableResource {
     String retrieve(String id) throws ContentModelNotFoundException, SystemException;
 
     /**
+     * Retrieves the content-streams of the specified content model.
+     *
+     * @param id The id of the content model.
+     * @return Returns the XML representation of the content-streams of the content model.
+     * @throws ContentModelNotFoundException If the specified content model was not found.
+     * @throws SystemException               If an internal error occured.
+     */
+    String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException;
+
+    /**
      * Retrieves the specified content-stream of the specified content model.
      *
      * @param id   The id of the content model.

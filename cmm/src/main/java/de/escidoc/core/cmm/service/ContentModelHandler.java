@@ -40,6 +40,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -184,6 +185,37 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         ResourceNotFoundException, SystemException {
         return business.retrieveResourceDefinitionXsltContent(id, name);
+    }
+
+    /**
+     * See Interface for functional description.
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
+     *      #retrieveContentStreams(java.lang.String)
+     */
+    @Override
+    public String retrieveContentStreams(final String id) throws ContentModelNotFoundException, SystemException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException {
+        return business.retrieveContentStreams(id);
+    }
+
+    /**
+     * See Interface for functional description.
+     *
+     * @see package de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
+     *      #retrieveContentStream(java.lang.String)
+     */
+    @Override
+    public String retrieveContentStream(final String id, final String name) throws ContentModelNotFoundException,
+        SystemException, AuthenticationException, AuthorizationException, MissingMethodParameterException {
+        return business.retrieveContentStream(id, name);
+    }
+
+    @Override
+    public EscidocBinaryContent retrieveContentStreamContent(final String id, final String name)
+        throws ContentModelNotFoundException, SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, ContentStreamNotFoundException, InvalidStatusException {
+        return business.retrieveContentStreamContent(id, name);
     }
 
 }
