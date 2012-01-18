@@ -24,6 +24,7 @@ import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.content.relation.PredicateListTO;
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
+import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.service.ServiceUtility;
@@ -194,12 +195,10 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
             this.contentRelationHandler.retrieveRegisteredPredicates());
     }
 
-    // FIXME
-    // @Override
-    // public String retrieveResources(String id) throws AuthenticationException, AuthorizationException,
-    // ContentRelationNotFoundException, MissingMethodParameterException, SystemException {
-    // return ServiceUtility.fromXML(ContentRelationTO.class,
-    // this.contentRelationHandler.retrieveResources(id));
-    // }
+    @Override
+    public ContentRelationResourcesTO retrieveResources(String id) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException, MissingMethodParameterException, SystemException {
+        return ServiceUtility.fromXML(ContentRelationResourcesTO.class, this.contentRelationHandler.retrieveResources(id));
+    }
 
 }
