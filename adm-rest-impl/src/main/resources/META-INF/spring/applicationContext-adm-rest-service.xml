@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="adminRestService" address="/admin">
+    <jaxrs:server id="adminRestService" address="/adm/admin">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.adm.internal.AdminRestServiceImpl"/>
         </jaxrs:serviceBeans>

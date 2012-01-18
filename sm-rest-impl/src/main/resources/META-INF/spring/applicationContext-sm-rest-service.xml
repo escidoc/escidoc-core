@@ -8,7 +8,7 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="aggregationDefinitionRestService" address="/aggregation-definition">
+    <jaxrs:server id="aggregationDefinitionRestService" address="/statistic/aggregation-definition">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -17,7 +17,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="aggregationDefinitionsRestService" address="/aggregation-definitions">
+    <jaxrs:server id="aggregationDefinitionsRestService" address="/statistic/aggregation-definitions">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -26,7 +26,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="reportDefinitionRestService" address="/report-definition">
+    <jaxrs:server id="reportDefinitionRestService" address="/statistic/report-definition">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -35,7 +35,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="reportDefinitionsRestService" address="/report-definitions">
+    <jaxrs:server id="reportDefinitionsRestService" address="/statistic/report-definitions">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -44,7 +44,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="preprocessingRestService" address="/preprocessing">
+    <jaxrs:server id="preprocessingRestService" address="/statistic/preprocessing">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -53,7 +53,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="reportRestService" address="/report">
+    <jaxrs:server id="reportRestService" address="/statistic/report">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -62,7 +62,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="scopeRestService" address="/scope">
+    <jaxrs:server id="scopeRestService" address="/statistic/scope">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -71,7 +71,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="scopesRestService" address="/scopes">
+    <jaxrs:server id="scopesRestService" address="/statistic/scopes">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -80,7 +80,7 @@
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
-    <jaxrs:server id="statisticDataRestService" address="/statistic-data">
+    <jaxrs:server id="statisticDataRestService" address="/statistic/statistic-data">
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
         </jaxrs:serviceBeans>
