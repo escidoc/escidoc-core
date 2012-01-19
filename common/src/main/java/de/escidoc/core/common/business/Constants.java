@@ -81,8 +81,6 @@ public final class Constants {
 
     public static final String USER_GROUP_LIST_NS_PREFIX = "user-group-list";
 
-    public static final String SET_DEFINITION_LIST_NS_PREFIX = "set-definition-list";
-
     public static final String USER_GROUP_NS_PREFIX = "user-group";
 
     public static final String SET_DEFINITION_NS_PREFIX = "set-definition";

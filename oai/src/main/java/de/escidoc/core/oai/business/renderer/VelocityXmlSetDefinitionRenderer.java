@@ -172,20 +172,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer imp
      */
     private static void addSetDefinitionListValues(final Map<String, Object> values) {
 
-        addSetDefinitionsNamespaceValues(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("setDefinitionListTitle", "Set Definition List");
-    }
-
-    /**
-     * Adds the values related to the set definitions name space to the provided {@link Map}.
-     *
-     * @param values The MAP to add the values to.
-     */
-    private static void addSetDefinitionsNamespaceValues(final Map<String, Object> values) {
-
-        values.put("setDefinitionListNamespacePrefix", Constants.SET_DEFINITION_LIST_NS_PREFIX);
-        values.put("setDefinitionListNamespace", Constants.SET_DEFINITION_LIST_NS_URI);
     }
 
     /**

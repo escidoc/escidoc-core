@@ -101,7 +101,6 @@
 			These XSDs are used:
 			<itemizedlist mark="opencircle" spacing="compact">			
 				<listitem>set-definition.xsd</listitem>
-				<listitem>set-definition-list.xsd</listitem>
 			</itemizedlist>
 		</para> 
 	</section>

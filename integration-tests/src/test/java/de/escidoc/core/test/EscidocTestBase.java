@@ -132,8 +132,6 @@ public abstract class EscidocTestBase {
 
     private static final String NAME_USER_GROUP_LIST = "user-group-list";
 
-    private static final String NAME_SET_DEFINITION_LIST = "set-definition-list";
-
     public static final String NAME_USER_GROUP = "user-group";
 
     private static final String NAME_SET_DEFINITION = "set-definition";
@@ -806,14 +804,9 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_USER_GROUP_LIST = "/" + NAME_USER_GROUP_LIST;
 
-    public static final String XPATH_SET_DEFINITION_LIST = "/" + NAME_SET_DEFINITION_LIST;
-
     public static final String XPATH_USER_GROUP_LIST_USER_GROUP = XPATH_USER_GROUP_LIST + "/" + NAME_USER_GROUP;
 
     public static final String XPATH_SRW_USER_GROUP_LIST_USER_GROUP = XPATH_SRW_RESPONSE_OBJECT + NAME_USER_GROUP;
-
-    public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION =
-        XPATH_SET_DEFINITION_LIST + "/" + NAME_SET_DEFINITION;
 
     public static final String XPATH_SRW_CONTAINER_LIST_CONTAINER = XPATH_SRW_RESPONSE_OBJECT + NAME_CONTAINER;
 
@@ -3037,19 +3030,6 @@ public abstract class EscidocTestBase {
     public void assertXmlValidSetDefinition(final String xmlData) throws Exception {
 
         URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.2/set-definition.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXmlValidSetDefinitions(final String xmlData) throws Exception {
-
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/set-definition/0.2/set-definition-list.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }

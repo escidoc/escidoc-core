@@ -34,8 +34,6 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String SET_DEFINITION_RESOURCE_NAME = "set-definition";
 
-    private static final String SET_DEFINITIONS_RESOURCE_NAME = "set-definition-list";
-
     private static final String SET_DEFINITIONS_SRW_RESOURCE_NAME = "set-definition-srw-list";
 
     private static final String SET_DEFINITION_PATH = "/set-definition";
@@ -69,18 +67,6 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
     public String getSetDefinitionXml(final Map<String, Object> values) throws WebserverSystemException {
 
         return getXml(SET_DEFINITION_RESOURCE_NAME, SET_DEFINITION_PATH, values);
-    }
-
-    /**
-     * Get the XML representation for a list of set definition.
-     *
-     * @param values variables to be put into the Velocity template
-     * @return XML representation for the list of set definition
-     * @throws WebserverSystemException Thrown if the instance cannot be created due to an internal error.
-     */
-    public String getSetDefinitionsXml(final Map<String, Object> values) throws WebserverSystemException {
-
-        return getXml(SET_DEFINITIONS_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
     /**
