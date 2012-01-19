@@ -441,7 +441,7 @@ public final class Constants {
         NS_URI_PREFIX + "organizationalunitpathlist" + NS_URI_SCHEMA_VERSION_0_4;
 
     public static final String ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI =
-        NS_URI_PREFIX + "organizationalunitsuccessors" + NS_URI_SCHEMA_VERSION_0_7;
+        NS_URI_PREFIX + "organizationalunitsuccessors" + NS_URI_SCHEMA_VERSION_0_8;
 
     public static final String ORGANIZATIONAL_UNIT_REFS_NAMESPACE_URI =
         NS_URI_PREFIX + "organizationalunitrefslist" + NS_URI_SCHEMA_VERSION_0_4;

@@ -6,18 +6,17 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
-	targetNamespace="http://www.escidoc.de/schemas/organizationalunitsuccessors/0.7"
+	targetNamespace="http://www.escidoc.de/schemas/organizationalunitsuccessors/0.8"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
-		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xml.xsd" />
+		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/xml.xsd" />
 	<xs:import namespace="http://www.w3.org/1999/xlink"
-		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xlink.xsd" />
-
+		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/xlink.xsd" />
 	<xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
 		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/common-types.xsd" />
 
-	<xs:element name="organizational-unit-successors">
+	<xs:element name="successors">
 		<xs:complexType>
 			<xs:sequence minOccurs="0" maxOccurs="unbounded">
 				<xs:element name="successor">
@@ -52,6 +51,8 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
+        <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes" />
+        <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes" />
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

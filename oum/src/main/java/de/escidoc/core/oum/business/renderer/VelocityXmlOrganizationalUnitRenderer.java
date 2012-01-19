@@ -395,11 +395,9 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     private static void addSuccessorsNamespaceValues(final Map<String, Object> values) {
 
-        values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
-        values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);
-
-        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
-        values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS, Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("organizationalUnitSuccessorsNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_PREFIX);
+        values
+            .put("organizationalUnitSuccessorsNamespace", Constants.ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI);
     }
 
     /**

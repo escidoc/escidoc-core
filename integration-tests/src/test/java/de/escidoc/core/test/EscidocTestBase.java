@@ -3223,7 +3223,7 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidSuccessors(final String xmlData) throws Exception {
         Schema structMapSchema =
-            getSchema(getFrameworkUrl() + "/xsd/rest/organizational-unit/0.7/organizational-unit-successors.xsd");
+            getSchema(getFrameworkUrl() + "/xsd/rest/organizational-unit/0.8/organizational-unit-successors.xsd");
 
         assertXmlValid(xmlData, structMapSchema);
         assertAllPlaceholderResolved(xmlData);
