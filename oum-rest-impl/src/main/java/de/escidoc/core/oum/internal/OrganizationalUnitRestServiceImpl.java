@@ -62,6 +62,7 @@ import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
+import org.escidoc.core.domain.ou.PathListTO;
 import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
@@ -230,13 +231,12 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
 						.retrieveChildObjects(id)));
      }
 
-    // FIXME
-    // @Override
-    // public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
-    // OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
-    //
-    // return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
-    // }
+     @Override
+     public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
+     OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
+    
+     return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+     }
 
     // FIXME
     // @Override
