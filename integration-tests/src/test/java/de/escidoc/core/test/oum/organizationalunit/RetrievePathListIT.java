@@ -45,8 +45,9 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving a pathlist of an existing organizational unit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumRpl1() throws Exception {
@@ -93,7 +94,7 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
         path4.add(parentOuId3);
         path4.add(parentOuId2);
 
-        Vector<Vector> expectedPathes = new Vector<Vector>(4);
+        Vector<Vector<String>> expectedPathes = new Vector<Vector<String>>(4);
         expectedPathes.add(path1);
         expectedPathes.add(path2);
         expectedPathes.add(path3);
@@ -127,7 +128,7 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
 
             boolean foundMatch = true;
             for (int j = 0; j < expectedPathes.size(); j++) {
-                final Vector expectedPath = expectedPathes.get(j);
+                final Vector<String> expectedPath = expectedPathes.get(j);
                 foundMatch = true;
                 for (int l = 0; l < expectedPath.size(); l++) {
                     final String toBeAssertedId = getObjidValue(pathNode, xpathOuRef + "[" + (l + 1) + "]");
@@ -149,8 +150,9 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving a pathlist of an existing top-level organizational unit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumRpl1_2() throws Exception {
@@ -190,69 +192,38 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining retrieving a pathlist with providing an unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRpl2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-
-        try {
-            retrievePathList(UNKNOWN_ID);
-
-            failMissingException("Retrieving path list of an OU" + " with unknown id has not been declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU" + " with unknown id has not been declined, correctly.",
-                ec, e);
-        }
-
+        retrievePathList(UNKNOWN_ID);
     }
 
     /**
      * Tests declining retrieving a pathlist with providing the id of a resource of another type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRpl2_2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-
-        try {
-            retrievePathList(CONTEXT_ID);
-
-            failMissingException("Retrieving path list of an OU" + " with id of resource of another resource type"
-                + " has not been declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU" + " with id of resource of another resource type"
-                + " has not been declined, correctly.", ec, e);
-        }
-
+        retrievePathList(CONTEXT_ID);
     }
 
     /**
      * Tests declining retrieving a pathlist without providing an id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOumRpl3() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-
-        try {
-            retrievePathList(null);
-
-            failMissingException("Retrieving path list of an OU" + " without id" + " has not been declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType("Retrieving path list of an OU" + " without id" + " has not been declined, correctly.",
-                ec, e);
-        }
-
+        retrievePathList(null);
     }
 
 }

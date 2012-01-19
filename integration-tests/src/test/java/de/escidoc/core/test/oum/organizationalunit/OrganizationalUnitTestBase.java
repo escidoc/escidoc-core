@@ -872,41 +872,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     }
 
     /**
-     * Tries to retrieve path-list of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
-     * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
-     */
-    public String doTestRetrievePathList(final String handle, final String ouId, final Class expectedExceptionClass)
-        throws Exception {
-
-        String ouXml = null;
-        PWCallback.setHandle(handle);
-        try {
-            ouXml = retrievePathList(ouId);
-            if (expectedExceptionClass != null) {
-                EscidocAbstractTest.failMissingException(expectedExceptionClass);
-            }
-        }
-        catch (final Exception e) {
-            if (expectedExceptionClass == null) {
-                EscidocAbstractTest.failException(e);
-            }
-            else {
-                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
-            }
-        }
-        finally {
-            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-        }
-        return ouXml;
-    }
-
-    /**
      * Test retrieving list of successors of organizational unit.
      *
      * @param objid The organizational unit id.
