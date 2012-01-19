@@ -100,13 +100,7 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
         expectedPathes.add(path3);
         expectedPathes.add(path4);
 
-        String pathListXml = null;
-        try {
-            pathListXml = retrievePathList(childOuId1);
-        }
-        catch (final Exception e) {
-            failException("Retrieving path list of a child OU failed.", e);
-        }
+        String pathListXml = retrievePathList(childOuId1);
         assertXmlValidOrganizationalUnitPathList(pathListXml);
         Document pathListDocument = getDocument(pathListXml);
 
@@ -162,13 +156,7 @@ public class RetrievePathListIT extends OrganizationalUnitTestBase {
         final Document createdDocument = getDocument(createdXml);
         final String objid = getObjidValue(createdDocument);
 
-        String pathList = null;
-        try {
-            pathList = retrievePathList(objid);
-        }
-        catch (final Exception e) {
-            failException("Retrieving path list of existing to level OU failed.", e);
-        }
+        String pathList = retrievePathList(objid);
         assertXmlValidOrganizationalUnitPathList(pathList);
         Document pathListDocument = getDocument(pathList);
 
