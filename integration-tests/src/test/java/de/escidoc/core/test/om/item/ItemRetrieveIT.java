@@ -289,16 +289,10 @@ public class ItemRetrieveIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testRetrieveMdRecordWithoutItemID() throws Exception {
-        Class ec = MissingMethodParameterException.class;
-        String msg = "Expected " + ec.getName();
-        try {
-            retrieveMdRecord(false, "escidoc");
-        }
-        catch (final Exception e) {
-            assertExceptionType(msg, ec, e);
-        }
+
+        retrieveMdRecord(false, "escidoc");
     }
 
     /**
@@ -306,16 +300,10 @@ public class ItemRetrieveIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testRetrieveMdRecordWithoutName() throws Exception {
-        Class ec = MissingMethodParameterException.class;
-        String msg = "Expected " + ec.getName();
-        try {
-            retrieveMdRecord(true, null);
-        }
-        catch (final Exception e) {
-            assertExceptionType(msg, ec, e);
-        }
+
+        retrieveMdRecord(true, null);
     }
 
     /**
@@ -323,16 +311,10 @@ public class ItemRetrieveIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testRetrieveMdRecordWithEmptyName() throws Exception {
-        Class ec = MissingMethodParameterException.class;
-        String msg = "Expected " + ec.getName();
-        try {
-            retrieveMdRecord(true, "");
-        }
-        catch (final Exception e) {
-            assertExceptionType(msg, ec, e);
-        }
+
+        retrieveMdRecord(true, "");
     }
 
     /**
@@ -340,16 +322,10 @@ public class ItemRetrieveIT extends ItemTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MdRecordNotFoundException.class)
     public void testRetrieveMdRecordNonExistingName() throws Exception {
-        Class ec = MdRecordNotFoundException.class;
-        String msg = "Expected " + ec.getName();
-        try {
-            retrieveMdRecord(true, "blablub");
-        }
-        catch (final Exception e) {
-            assertExceptionType(msg, ec, e);
-        }
+
+        retrieveMdRecord(true, "blablub");
     }
 
     /**
