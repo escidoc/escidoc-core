@@ -931,8 +931,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(String)
      */
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName) throws SystemException,
         ItemNotFoundException, OperationNotFoundException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();

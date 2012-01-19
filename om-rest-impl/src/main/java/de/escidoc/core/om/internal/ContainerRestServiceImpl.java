@@ -43,6 +43,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundExc
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
@@ -107,6 +108,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
@@ -177,12 +179,13 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean,
+     * java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveMembers(final String containerId,
-        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
-        final String omitHighlighting) throws InvalidSearchQueryException,
+    public JAXBElement<? extends ResponseType> retrieveMembers(
+        final String containerId, final SruSearchRequestParametersBean parameters, final String roleId,
+        final String userId, final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
@@ -199,20 +202,20 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.containerHandler
-						.retrieveMembers(containerId, ServiceUtility.toMap(requestTO))));
+        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
+            this.containerHandler.retrieveMembers(containerId, ServiceUtility.toMap(requestTO))));
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean,
+     * java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveTocs(final String containerId,
-        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
-        final String omitHighlighting) throws InvalidSearchQueryException,
+    public JAXBElement<? extends ResponseType> retrieveTocs(
+        final String containerId, final SruSearchRequestParametersBean parameters, final String roleId,
+        final String userId, final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException {
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
@@ -229,11 +232,9 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.containerHandler
-						.retrieveTocs(containerId, ServiceUtility.toMap(requestTO))));
+        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
+            this.containerHandler.retrieveTocs(containerId, ServiceUtility.toMap(requestTO))));
     }
-
 
     // FIXME
     // public TocsTO retrieveTocs( String id, Map<String, String[]> filter) throws InvalidSearchQueryException,
@@ -312,17 +313,52 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     }
 
     @Override
-     public ContainerResourcesTO retrieveResources(String id) throws ContainerNotFoundException,
-     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-         
-         return ServiceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
-     }
+    public ContainerResourcesTO retrieveResources(String id) throws ContainerNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-    // FIXME
-    // public EscidocBinaryContent retrieveResource(final String id, String resourceName, Map<String, String[]>
-    // parameters)
-    // throws SystemException, ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
-    // AuthorizationException, OperationNotFoundException;
+        return ServiceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
+    }
+
+    @Override
+    public Stream retrieveResource(
+        final String id, final String resourceName, final SruSearchRequestParametersBean parameters,
+        final String roleId, final String userId, final String omitHighlighting) throws SystemException,
+        ContainerNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        OperationNotFoundException {
+
+        // prepare parameter list
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
+
+        final JAXBElement<? extends RequestType> requestTO =
+            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+
+        // call business method and write out
+        Stream stream = new Stream();
+        byte[] buffer = new byte[1024];
+        try {
+            InputStream ins =
+                this.containerHandler.retrieveResource(id, resourceName, ServiceUtility.toMap(requestTO)).getContent();
+            int len;
+            while ((len = ins.read(buffer)) > 0) {
+                stream.write(buffer, 0, len);
+            }
+        }
+        catch (IOException e) {
+            LOG.error("Stream copy error", e);
+            throw new SystemException(e);
+        }
+
+        return stream;
+    }
 
     @Override
     public RelationsTO retrieveRelations(String id) throws ContainerNotFoundException, MissingMethodParameterException,

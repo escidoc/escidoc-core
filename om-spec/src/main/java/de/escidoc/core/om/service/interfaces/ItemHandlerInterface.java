@@ -1369,7 +1369,6 @@ public interface ItemHandlerInterface {
      *            The id of the Item.
      * @param resourceName
      *            The name of the resource.
-     * @param parameters
      * @return The content of the resource.
      * @throws ItemNotFoundException
      *             Thrown if an Item with the specified id cannot be found.
@@ -1385,7 +1384,7 @@ public interface ItemHandlerInterface {
      *             If there is no operation for the given name.
      */
     EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters)
+        final String id, final String resourceName)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OperationNotFoundException;
 

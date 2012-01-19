@@ -71,8 +71,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import java.util.Map;
-
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 
 /**
@@ -1014,13 +1012,11 @@ public interface ItemHandlerInterface extends IngestableResource {
      * 
      * @param id
      * @param resourceName
-     * @param parameters
      * @return
      * @throws SystemException
      * @throws ItemNotFoundException
      * @throws OperationNotFoundException
      */
-    EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters) throws SystemException,
+    EscidocBinaryContent retrieveResource(final String id, final String resourceName) throws SystemException,
         ItemNotFoundException, OperationNotFoundException;
 }

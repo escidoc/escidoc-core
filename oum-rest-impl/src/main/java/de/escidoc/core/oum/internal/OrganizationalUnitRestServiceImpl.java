@@ -74,6 +74,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -166,15 +168,26 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
             this.organizationalUnitHandler.retrieveProperties(id));
     }
 
-    // FIXME
-    // @Override
-    // public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
-    // throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OperationNotFoundException, SystemException {
-    //
-    // return ServiceUtility.fromXML(MdRecordsTO.class,
-    // this.organizationalUnitHandler.retrieveResource(id)));
-    // }
+    @Override
+    public Stream retrieveResource(final String id, final String resourceName)
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException {
+
+        Stream stream = new Stream();
+        byte[] buffer = new byte[1024];
+        try {
+            InputStream ins = this.organizationalUnitHandler.retrieveResource(id, resourceName).getContent();
+        int len;
+        while ((len = ins.read(buffer)) > 0) {
+            stream.write(buffer, 0, len);
+        }
+        } catch (IOException e) {
+            LOG.error("Stream copy error", e);
+            throw new SystemException(e);
+        }
+
+        return stream;
+    }
 
     @Override
     public OrganizationalUnitResourcesTO retrieveResources(final String id) throws AuthenticationException,
@@ -192,9 +205,9 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     }
 
     @Override
-    public MdRecordTO retrieveMdRecord(final String id, final String name) throws AuthenticationException, AuthorizationException,
-        MdRecordNotFoundException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-        SystemException {
+    public MdRecordTO retrieveMdRecord(final String id, final String name) throws AuthenticationException,
+        AuthorizationException, MdRecordNotFoundException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
 
         return ServiceUtility.fromXML(MdRecordTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name));
     }
@@ -206,46 +219,35 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         return ServiceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
     }
 
-     @Override
-     public JAXBElement<? extends ResponseType> retrieveParentObjects(final String id) throws AuthenticationException, AuthorizationException,
-     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    
- 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.organizationalUnitHandler
-						.retrieveParentObjects(id)));
-     }
+    @Override
+    public JAXBElement<? extends ResponseType> retrieveParentObjects(final String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-     @Override
-     public SuccessorListTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
-     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    
-     return ServiceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
-     }
+        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
+            this.organizationalUnitHandler.retrieveParentObjects(id)));
+    }
 
-     @Override
-     public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
-     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    
-  		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.organizationalUnitHandler
-						.retrieveChildObjects(id)));
-     }
+    @Override
+    public SuccessorListTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-     @Override
-     public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
-     OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
-    
-     return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
-     }
+        return ServiceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+    }
 
-    // FIXME
-    // @Override
-    // public OrganizationalUnitRefsTO retrieveOrganizationalUnits(final Map<String, String[]> filter)
-    // throws MissingMethodParameterException, SystemException, InvalidSearchQueryException, InvalidXmlException {
-    //
-    // return ServiceUtility.fromXML(MdRecordsTO.class,
-    // this.organizationalUnitHandler.updateMdRecords(id, ServiceUtility.toXML(MdRecordsTO)));
-    // }
+    @Override
+    public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+
+        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
+            this.organizationalUnitHandler.retrieveChildObjects(id)));
+    }
+
+    @Override
+    public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
+        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
+
+        return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+    }
 
     @Override
     public ResultTO close(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,

@@ -43,6 +43,7 @@ import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -53,6 +54,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -109,12 +111,11 @@ public interface OrganizationalUnitRestService {
     OrganizationalUnitPropertiesTO retrieveProperties(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/{name}")
-    // EscidocBinaryContent retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
-    // throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OperationNotFoundException, SystemException;
+    @GET
+    @Path("/{id}/resources/{name}")
+    Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
+        throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, OperationNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources")

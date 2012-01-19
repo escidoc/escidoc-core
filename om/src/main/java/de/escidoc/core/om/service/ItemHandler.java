@@ -413,11 +413,10 @@ public class ItemHandler implements ItemHandlerInterface {
     }
 
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters)
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OperationNotFoundException {
-        return handler.retrieveResource(id, resourceName, parameters);
+        return handler.retrieveResource(id, resourceName);
     }
 
     @Override

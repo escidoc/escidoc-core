@@ -40,6 +40,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundExc
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
@@ -95,6 +96,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.RemoteException;
 
 /**
@@ -306,10 +309,31 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public ItemResourcesTO retrieveResources(String id) throws ItemNotFoundException,
+    public ItemResourcesTO retrieveResources(final String id) throws ItemNotFoundException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         
         return ServiceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
+    }
+
+    @Override
+    public Stream retrieveResource(final String id, final String resourceName) throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+    SystemException, OperationNotFoundException {
+
+        Stream stream = new Stream();
+        byte[] buffer = new byte[1024];
+        try {
+            InputStream ins = this.itemHandler.retrieveResource(id, resourceName).getContent();
+            int len;
+            while ((len = ins.read(buffer)) > 0) {
+                stream.write(buffer, 0, len);
+            }
+        }
+        catch (IOException e) {
+            LOG.error("Stream copy error", e);
+            throw new SystemException(e);
+        }
+
+        return stream;
     }
 
     @Override

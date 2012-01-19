@@ -48,6 +48,7 @@ import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.domain.version.VersionHistoryTO;
 import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -68,6 +69,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNot
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
@@ -202,12 +204,12 @@ public interface ContainerRestService {
      ContainerResourcesTO retrieveResources(@PathParam("id") String id) throws ContainerNotFoundException,
      MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // EscidocBinaryContent retrieveResource(final String id, String resourceName, Map<String, String[]> parameters)
-    // throws SystemException, ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
-    // AuthorizationException, OperationNotFoundException;
+    @GET
+    @Path("/{id}/resources/{name}")
+    Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName, @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws SystemException, ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, OperationNotFoundException;
 
     @GET
     @Path("/{id}/relations")

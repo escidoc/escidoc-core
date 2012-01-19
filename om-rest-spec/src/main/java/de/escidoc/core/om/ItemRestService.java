@@ -21,6 +21,7 @@
 package de.escidoc.core.om;
 
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -49,7 +50,9 @@ import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -72,6 +75,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundExc
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
@@ -232,6 +236,12 @@ public interface ItemRestService {
     @Path("/{id}/resources")
     ItemResourcesTO retrieveResources(@PathParam("id") String id) throws ItemNotFoundException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+
+    @GET
+    @Path("/{id}/resources/{name}")
+    Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, OperationNotFoundException;
 
     @GET
     @Path("{id}/resources/version-history")
