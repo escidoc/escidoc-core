@@ -38,6 +38,7 @@ import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
 import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -140,12 +141,10 @@ public interface OrganizationalUnitRestService {
      JAXBElement<? extends ResponseType> retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
      MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}/resources/successors")
-    // SuccessorsTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException,
-    // AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+    @GET
+    @Path("/{id}/resources/successors")
+    SuccessorListTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
      @GET
      @Path("/{id}/resources/child-objects")

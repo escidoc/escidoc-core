@@ -226,6 +226,14 @@
       <class name="OrganizationalUnitListTO" />
     </bindings>
   </bindings>
+  <bindings schemaLocation="organizational-unit-successors.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='successors']">
+      <class name="SuccessorListTO" />
+    </bindings>
+  </bindings>
   
   <!-- parents is strange and seems to be a duplication of parents defined in ou schema --> 
   <bindings schemaLocation="parents.xsd">

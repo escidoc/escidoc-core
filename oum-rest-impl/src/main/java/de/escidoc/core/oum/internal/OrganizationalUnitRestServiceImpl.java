@@ -62,6 +62,7 @@ import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.ou.ParentsListTO;
+import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 
@@ -213,13 +214,12 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
 						.retrieveParentObjects(id)));
      }
 
-    // FIXME
-    // @Override
-    // public SuccessorsTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
-    // MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-    //
-    // return ServiceUtility.fromXML(SuccessorsTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
-    // }
+     @Override
+     public SuccessorListTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
+     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    
+     return ServiceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+     }
 
      @Override
      public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException, AuthorizationException,
