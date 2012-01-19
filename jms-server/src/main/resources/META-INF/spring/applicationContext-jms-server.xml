@@ -19,7 +19,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.3.0.xsd"
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd"
        default-lazy-init="false">
 
     <broker xmlns="http://activemq.apache.org/schema/core"
