@@ -912,8 +912,8 @@
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.4.0</lucene.version>
-    <escidoc.fedoragsearch.version>1.3.31</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.3.38</escidoc.srw.version>
+    <escidoc.fedoragsearch.version>1.3.32</escidoc.fedoragsearch.version>
+    <escidoc.srw.version>1.3.39</escidoc.srw.version>
     <srw.version>1.3.19</srw.version>
     <escidoc.saxon.version>1.0.1</escidoc.saxon.version>
     <java.source.version>1.6</java.source.version>
