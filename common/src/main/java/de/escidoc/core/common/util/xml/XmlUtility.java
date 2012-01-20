@@ -1480,10 +1480,33 @@ public final class XmlUtility {
      */
     public static String getStylesheetDefinition() {
         if (stylesheetDefinition == null) {
-            final String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
-            stylesheetDefinition =
-                xslt != null && xslt.length() > 0 ? "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
-                    + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
+            String xslt = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
+
+            if (xslt == null || xslt.isEmpty()) {
+                // FIXME a non-existing values should be null and not an empty string
+                stylesheetDefinition = "";
+            }
+            else {
+                // add baseurl, if xslt is not http or https protocol
+                /*
+                 * taking base url from configuration is actually an hacking, because the servlet context is missing in the
+                 * deep of these methods.
+                 */
+                if (!(xslt.startsWith("http://") || xslt.startsWith("https://"))) {
+                    String baseurl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
+                    if (!baseurl.endsWith("/")) {
+                        baseurl += "/";
+                    }
+
+                    if (xslt.startsWith("./")) {
+                        xslt = baseurl + xslt.substring(2, xslt.length());
+                    }
+                    else if (xslt.startsWith("/")) {
+                        xslt = baseurl + xslt.substring(1, xslt.length());
+                    }
+                }
+                stylesheetDefinition = "<?xml-stylesheet type=\"text/xsl\" href=\"" + xslt + "\"?>\n";
+            }
         }
         return stylesheetDefinition;
     }
