@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="userAccountRestService" address="/aa/user-account">
+        <jaxrs:providers>
+          <bean id="escidocException" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
         </jaxrs:serviceBeans>
