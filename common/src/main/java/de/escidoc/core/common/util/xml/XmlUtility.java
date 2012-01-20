@@ -1523,6 +1523,8 @@ public final class XmlUtility {
                     }
 
                     stylesheetDefinition = "<?xml-stylesheet type=\"text/xsl\" href=\"" + xslt + "\"?>\n";
+                } else {
+                    stylesheetDefinition = xslt;
                 }
             }
         }
