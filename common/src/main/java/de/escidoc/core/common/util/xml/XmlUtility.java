@@ -1522,10 +1522,9 @@ public final class XmlUtility {
                         xslt = baseurl + xslt.substring(1, xslt.length());
                     }
 
-                    stylesheetDefinition = "<?xml-stylesheet type=\"text/xsl\" href=\"" + xslt + "\"?>\n";
-                } else {
-                    stylesheetDefinition = xslt;
-                }
+                    
+                } 
+                stylesheetDefinition = "<?xml-stylesheet type=\"text/xsl\" href=\"" + xslt + "\"?>\n";
             }
         }
         return stylesheetDefinition;
