@@ -19,6 +19,41 @@
  */
 package de.escidoc.core.om.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+
+import org.escidoc.core.domain.ResultTO;
+import org.escidoc.core.domain.container.ContainerPropertiesTO;
+import org.escidoc.core.domain.container.ContainerResourcesTO;
+import org.escidoc.core.domain.container.ContainerTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.relations.RelationsTO;
+import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.RequestType;
+import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
+import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.MembersTaskParamTO;
+import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
+import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.utils.io.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -30,88 +65,30 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingLicenceException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyDeletedException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
-import de.escidoc.core.common.exceptions.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
-import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
-import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
-import org.escidoc.core.utils.io.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.container.ContainerTO;
-import org.escidoc.core.domain.container.ContainerPropertiesTO;
-import org.escidoc.core.domain.container.ContainerResourcesTO;
-import org.escidoc.core.domain.item.ItemTO;
-import org.escidoc.core.domain.item.ItemPropertiesTO;
-import org.escidoc.core.domain.components.ComponentTO;
-import org.escidoc.core.domain.components.ComponentsTO;
-import org.escidoc.core.domain.components.ComponentPropertiesTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
-import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
-import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
-import org.escidoc.core.domain.taskparam.MembersTaskParamTO;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.rmi.RemoteException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * REST Service Implementation for Container.
@@ -179,14 +156,37 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean,
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
      * java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveMembers(
-        final String containerId, final SruSearchRequestParametersBean parameters, final String roleId,
-        final String userId, final String omitHighlighting) throws InvalidSearchQueryException,
+        final String containerId, 
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms, 
+        final String roleId,
+        final String userId, 
+        final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
+
+        SruSearchRequestParametersBean parameters =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
         if (roleId != null) {
@@ -209,14 +209,37 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(SruSearchRequestParametersBean,
+     * @see de.escidoc.core.context.ContainerRestService#retrieveTocs(java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
      * java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveTocs(
-        final String containerId, final SruSearchRequestParametersBean parameters, final String roleId,
-        final String userId, final String omitHighlighting) throws InvalidSearchQueryException,
+        final String containerId, 
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms, 
+        final String roleId,
+        final String userId, 
+        final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException {
+
+        SruSearchRequestParametersBean parameters =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
         if (roleId != null) {
@@ -321,10 +344,32 @@ public class ContainerRestServiceImpl implements ContainerRestService {
 
     @Override
     public Stream retrieveResource(
-        final String id, final String resourceName, final SruSearchRequestParametersBean parameters,
-        final String roleId, final String userId, final String omitHighlighting) throws SystemException,
+        final String id, 
+        final String resourceName, 
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms,
+        final String roleId, 
+        final String userId, 
+        final String omitHighlighting) throws SystemException,
         ContainerNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         OperationNotFoundException {
+
+        SruSearchRequestParametersBean parameters =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
 
         // prepare parameter list
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();

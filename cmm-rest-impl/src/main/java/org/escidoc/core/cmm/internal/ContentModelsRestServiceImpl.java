@@ -60,13 +60,35 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.cmm.ContentModelsRestService#retrieveContentModels(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.cmm.ContentModelsRestService#retrieveContentModels(java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveContentModels(
-        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms, 
+        final String roleId, 
+        final String userId,
         final String omitHighlighting) throws InvalidSearchQueryException,
         SystemException {
+
+        SruSearchRequestParametersBean parameters =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
         if (roleId != null) {

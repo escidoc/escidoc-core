@@ -3,11 +3,9 @@
  */
 package org.escidoc.core.domain.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
@@ -25,7 +23,6 @@ import org.escidoc.core.domain.sru.ScanRequestType;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
-import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.business.Constants;

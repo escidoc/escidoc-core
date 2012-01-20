@@ -28,13 +28,9 @@
  */
 package de.escidoc.core.sm.internal;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.ReportDefinitionListTO;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
@@ -68,13 +64,35 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.ReportDefinitionsRestService#retrieveReportDefinitions(java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveReportDefinitions(final SruSearchRequestParametersBean filter)
+    public JAXBElement<? extends ResponseType> retrieveReportDefinitions(
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms)
         throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
+
+        SruSearchRequestParametersBean filter =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
+
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
 				.createRequestTO(filter, null);
 
 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(

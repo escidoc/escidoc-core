@@ -28,7 +28,6 @@ import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sru.ResponseType;
-import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -52,8 +51,34 @@ public interface ContainersRestService {
      * <br/>
      * See chapter "Filters" for detailed information about filter definitions.
      * 
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
+     * @param operation
+     *            The Standard SRU Get-Parameter operation
+     * @param version
+     *            The Standard SRU Get-Parameter version
+     * @param query
+     *            The Standard SRU Get-Parameter query
+     * @param startRecord
+     *            The Standard SRU Get-Parameter startRecord
+     * @param maximumRecords
+     *            The Standard SRU Get-Parameter maximumRecords
+     * @param recordPacking
+     *            The Standard SRU Get-Parameter recordPacking
+     * @param recordSchema
+     *            The Standard SRU Get-Parameter recordSchema
+     * @param recordXPath
+     *            The Standard SRU Get-Parameter recordXPath
+     * @param resultSetTTL
+     *            The Standard SRU Get-Parameter resultSetTTL
+     * @param sortKeys
+     *            The Standard SRU Get-Parameter sortKeys
+     * @param stylesheet
+     *            The Standard SRU Get-Parameter stylesheet
+     * @param scanClause
+     *            The Standard SRU Get-Parameter scanClause
+     * @param responsePosition
+     *            The Standard SRU Get-Parameter responsePosition
+     * @param maximumTerms
+     *            The Standard SRU Get-Parameter maximumTerms
      * @param userId
      *            The custom SRU Get Parameter x-info5-userId
      * @param roleId
@@ -71,8 +96,24 @@ public interface ContainersRestService {
      *             Thrown if a framework internal error occurs.
      */
     @GET
-    JAXBElement<? extends ResponseType> retrieveContainers(@QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
-            @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,
+    JAXBElement<? extends ResponseType> retrieveContainers(
+        @QueryParam("operation") String operation,
+        @QueryParam("version") String version,
+        @QueryParam("query") String query,
+        @QueryParam("startRecord") String startRecord,
+        @QueryParam("maximumRecords") String maximumRecords,
+        @QueryParam("recordPacking") String recordPacking,
+        @QueryParam("recordSchema") String recordSchema,
+        @QueryParam("recordXPath") String recordXPath,
+        @QueryParam("resultSetTTL") String resultSetTTL,
+        @QueryParam("sortKeys") String sortKeys,
+        @QueryParam("stylesheet") String stylesheet,
+        @QueryParam("scanClause") String scanClause,
+        @QueryParam("responsePosition") String responsePosition,
+        @QueryParam("maximumTerms") String maximumTerms, 
+        @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, 
+        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,
             InvalidSearchQueryException, InvalidXmlException, SystemException;
 
 }

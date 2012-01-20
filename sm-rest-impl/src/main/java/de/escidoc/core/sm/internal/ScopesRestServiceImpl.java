@@ -28,13 +28,9 @@
  */
 package de.escidoc.core.sm.internal;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.ScopeListTO;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
@@ -68,11 +64,33 @@ public class ScopesRestServiceImpl implements ScopesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveScopes(final SruSearchRequestParametersBean filter) throws InvalidSearchQueryException,
+    public JAXBElement<? extends ResponseType> retrieveScopes(
+        final String operation,
+        final String version,
+        final String query,
+        final String startRecord,
+        final String maximumRecords,
+        final String recordPacking,
+        final String recordSchema,
+        final String recordXPath,
+        final String resultSetTTL,
+        final String sortKeys,
+        final String stylesheet,
+        final String scanClause,
+        final String responsePosition,
+        final String maximumTerms) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+
+        SruSearchRequestParametersBean filter =
+            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
+                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
+                maximumTerms);
+
 		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
 				.createRequestTO(filter, null);
 

@@ -81,6 +81,54 @@ public class SruSearchRequestParametersBean {
     // @XmlSchemaType(name = "positiveInteger")
     private String maximumTerms;
 
+    public SruSearchRequestParametersBean(final String operation, final String version, final String query,
+        final String startRecord, final String maximumRecords, final String recordPacking, final String recordSchema,
+        final String recordXPath, final String resultSetTTL, final String sortKeys, final String stylesheet,
+        final String scanClause, final String responsePosition, final String maximumTerms) {
+        if (operation != null) {
+            this.operation = operation;
+        }
+        if (version != null) {
+            this.version = version;
+        }
+        if (query != null) {
+            this.query = query;
+        }
+        if (startRecord != null) {
+            this.startRecord = startRecord;
+        }
+        if (maximumRecords != null) {
+            this.maximumRecords = maximumRecords;
+        }
+        if (recordPacking != null) {
+            this.recordPacking = recordPacking;
+        }
+        if (recordSchema != null) {
+            this.recordSchema = recordSchema;
+        }
+        if (recordXPath != null) {
+            this.recordXPath = recordXPath;
+        }
+        if (resultSetTTL != null) {
+            this.resultSetTTL = resultSetTTL;
+        }
+        if (sortKeys != null) {
+            this.sortKeys = sortKeys;
+        }
+        if (stylesheet != null) {
+            this.stylesheet = stylesheet;
+        }
+        if (scanClause != null) {
+            this.scanClause = scanClause;
+        }
+        if (responsePosition != null) {
+            this.responsePosition = responsePosition;
+        }
+        if (maximumTerms != null) {
+            this.maximumTerms = maximumTerms;
+        }
+    }
+
     /**
      * @return the operation
      */
