@@ -310,7 +310,7 @@
         <plugin>
           <groupId>org.jvnet.jaxb2.maven2</groupId>
           <artifactId>maven-jaxb2-plugin</artifactId>
-          <version>0.7.5</version>
+          <version>0.8.0</version>
           <configuration>
             <schemaDirectory>${project.build.sourceDirectory}/../resources/xsd</schemaDirectory>
             <generateDirectory>${project.build.directory}/generated-sources/java</generateDirectory>
