@@ -177,7 +177,8 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     In bean=userSearch, {0} is a placeholder for the login name of the
     user. 
     In DefaultLdapAuthoritiesPopulator, adapt constructor-arg 2 and properties:
-    in property groupSearchFilter {0} is a placeholder for dn and {1} is a placeholder for uid
+    - If you have no groups where users are organized in, comment constructor-arg 2 out!
+    - in property groupSearchFilter {0} is a placeholder for dn and {1} is a placeholder for uid.
 	 -->
     <bean id="springSecurityLdapFilterChain"
         class="org.springframework.security.web.FilterChainProxy">
