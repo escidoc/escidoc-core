@@ -624,7 +624,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         substitute(item, "/item/components/component/content/@href", PropertiesProvider.getInstance().getProperty(
             PropertiesProvider.TESTDATA_URL)
             + "/testDocuments/images/head-v0.1.png");
-        substitute(item, "/item/components/component/properties/mime-type", "image/png");
+        //substitute(item, "/item/components/component/properties/mime-type", "image/png");
         String xmlTmp = toString(item, false);
 
         return create(xmlTmp);
