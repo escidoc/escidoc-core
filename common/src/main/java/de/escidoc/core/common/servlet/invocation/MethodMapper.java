@@ -227,8 +227,11 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     public BeanMethod getMethod(final HttpServletRequest request) throws MethodNotFoundException,
         EncodingSystemException {
 
-        return getMethod(request.getRequestURI(), request.getQueryString(), "GET".equals(request.getMethod()) ? request
-            .getParameterMap() : null, request.getMethod(), Resource.getRequestBody(request));
+        final String path = request.getRequestURI().replaceFirst(request.getContextPath(), "");
+
+        return getMethod(path, request.getQueryString(),
+            "GET".equals(request.getMethod()) ? request.getParameterMap() : null, request.getMethod(), Resource
+                .getRequestBody(request));
     }
 
     /**
@@ -247,6 +250,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     public BeanMethod getMethod(
         final String uri, final String query, final Map<String, String[]> parameters, final String httpMethod,
         final Object body) throws MethodNotFoundException, EncodingSystemException {
+
         final String decodedUri;
         try {
             decodedUri = URLDecoder.decode(uri, XmlUtility.CHARACTER_ENCODING);
@@ -254,6 +258,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
+
         final Resource resource = getResource(decodedUri);
         if (resource != null) {
             return resource.getMethod(decodedUri, query, parameters, httpMethod, body);
