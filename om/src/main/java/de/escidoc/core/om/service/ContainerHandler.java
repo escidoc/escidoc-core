@@ -408,14 +408,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
     }
 
     @Override
-    public String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-
-        return handler.moveToContext(containerId, taskParam);
-    }
-
-    @Override
     public String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
         MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,

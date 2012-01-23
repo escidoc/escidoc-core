@@ -1669,20 +1669,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
     }
 
     /**
-     * @param id        The id of the item.
-     * @param taskParam Taskparam XML including the latest-modification-date.
-     * @return TODO
-     * @throws ItemNotFoundException TODO
-     */
-    @Override
-    public String moveToContext(final String id, final String taskParam) throws ItemNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException {
-        // FIXME
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * @param comment Optional comment to associate with the created version or event.
      * @throws SystemException If an error occures.
      */

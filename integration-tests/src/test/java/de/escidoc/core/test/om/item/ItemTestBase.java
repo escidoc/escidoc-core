@@ -688,19 +688,6 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
-     * Test moving an item to another context in the mock framework.
-     *
-     * @param id    The id of the item.
-     * @param param The param indicating the last-modifiaction-date of the Item.
-     * @return The retrieved item.
-     * @throws Exception If anything fails.
-     */
-    public String moveToContext(final String id, final String param) throws Exception {
-
-        return handleXmlResult(getItemClient().moveToContext(id, param));
-    }
-
-    /**
      * Add Element to content-model-specific.
      *
      * @param xml The xml to add the element to.

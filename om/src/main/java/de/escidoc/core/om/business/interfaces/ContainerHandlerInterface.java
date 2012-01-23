@@ -686,20 +686,6 @@ public interface ContainerHandlerInterface extends IngestableResource {
 
     /**
      * @param containerId
-     * @param taskParam
-     * @return The XML representation of the Container.
-     * @throws MissingMethodParameterException
-     *          Thrown if a method parameter is missing
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     */
-    String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException;
-
-    /**
-     * @param containerId
      * @param xmlData
      * @throws MissingMethodParameterException
      *                         Thrown if a method parameter is missing

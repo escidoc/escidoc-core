@@ -297,8 +297,6 @@ public abstract class ClientBase {
 
     public static final String METHOD_UNLOCK = "unlock";
 
-    public static final String METHOD_MOVE_TO_CONTEXT = "moveToContext";
-
     public static final String METHOD_SEARCH = "search";
 
     public static final String METHOD_EXPLAIN = "explain";

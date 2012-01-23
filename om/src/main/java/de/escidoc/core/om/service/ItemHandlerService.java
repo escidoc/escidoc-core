@@ -334,16 +334,6 @@ public interface ItemHandlerService extends Remote {
         AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
         RemoteException;
 
-    String moveToContext(String id, String taskParam, SecurityContext securityContext) throws ContextNotFoundException,
-        InvalidContentException, ItemNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        RemoteException;
-
-    String moveToContext(String id, String taskParam, String authHandle, Boolean restAccess)
-        throws ContextNotFoundException, InvalidContentException, ItemNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException, RemoteException;
-
     String retrieveItems(Map filter, SecurityContext securityContext) throws SystemException, RemoteException;
 
     String retrieveItems(Map filter, String authHandle, Boolean restAccess) throws SystemException, RemoteException;

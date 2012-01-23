@@ -519,17 +519,6 @@ public class ItemHandler implements ItemHandlerInterface {
 
     /**
      * See Interface for functional description.
-     */
-    @Override
-    public String moveToContext(final String id, final String taskParam) throws ContextNotFoundException,
-        InvalidContentException, ItemNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-
-        return handler.moveToContext(id, taskParam);
-    }
-
-    /**
-     * See Interface for functional description.
      *
      * @see ItemHandlerInterface #retrieveItems(java.util.Map)
      */

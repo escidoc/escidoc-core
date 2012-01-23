@@ -2147,69 +2147,6 @@ public interface ItemHandlerInterface {
         SystemException, OptimisticLockingException, InvalidXmlException;
 
     /**
-     * Move an Item to an other Context<br/>
-     * <p/>
-     * <b>Prerequisites:</b><br/>
-     * <p/>
-     * The Item must exist<br/>
-     * <p/>
-     * The Item is not locked.<br/>
-     * <p/>
-     * The public-status is not "withdrawn".<br/>
-     * <p/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The Item is accessed using the provided Id.</li>
-     * <li>Optimistic Locking criteria is checked.</li>
-     * <li>Context-ID is validated.</li>
-     * <li>It is checked whether the Item fits to the prerequisites in the Admin Descriptor of the new Context.</li>
-     * <li>Item is added to the provided Context.</li>
-     * <li>An XML representation of the Item is created.</li>
-     * <li>This XML data is returned.</li>
-     * </ul>
-     * <p/>
-     * <p/>
-     * <b>Parameter for request:</b> (example)<br/>
-     * <p/>
-     * 
-     * <pre>
-     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
-     * </pre>
-     * <p/>
-     * 
-     * <pre>
-     * &lt;/param&gt;
-     * </pre>
-     * 
-     * @param id
-     *            The Item ID.
-     * @param taskParam
-     *            The timestamp of the last modification of the Item. Necessary for optimistic locking purpose.
-     * @return The XML representation of the Item corresponding to XML-schema "Item.xsd". (see example above)
-     * @throws ItemNotFoundException
-     *             Thrown if an Item with the specified id cannot be found.
-     * @throws ContextNotFoundException
-     *             Thrown if an context with the specified id cannot be found.
-     * @throws InvalidContentException
-     *             Thrown if the content is invalid.
-     * @throws LockingException
-     *             Thrown if the Item is locked and the current user is not the one who locked it.
-     * @throws InvalidStatusException
-     *             Thrown in case of an invalid status.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingMethodParameterException
-     *             If no data is provided.
-     * @throws SystemException
-     *             If an error occurs.
-     */
-    String moveToContext(final String id, final String taskParam) throws ItemNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
-
-    /**
      * Assign a Persistent Identifier (PID) to a version of an Item.
      * <p/>
      * This PID represents the reference to a specific version of the Item. <br/>

@@ -241,16 +241,6 @@ public interface ContainerHandlerService extends Remote {
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException, RemoteException;
 
-    String moveToContext(String containerId, String taskParam, SecurityContext securityContext)
-        throws ContainerNotFoundException, ContextNotFoundException, InvalidContentException, LockingException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        RemoteException;
-
-    String moveToContext(String containerId, String taskParam, String authHandle, Boolean restAccess)
-        throws ContainerNotFoundException, ContextNotFoundException, InvalidContentException, LockingException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        RemoteException;
-
     String createItem(String containerId, String xmlData, SecurityContext securityContext)
         throws ContainerNotFoundException, MissingContentException, ContextNotFoundException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,

@@ -956,32 +956,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     /**
      * See Interface for functional description.
      * 
-     * @param containerId
-     *            containerId
-     * @param taskParam
-     *            taskParam
-     * @throws ContainerNotFoundException
-     *             e
-     * @throws ContextNotFoundException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws MissingMethodParameterException
-     *             cf. Interface
-     */
-    @Override
-    public String moveToContext(final String containerId, final String taskParam) throws ContainerNotFoundException,
-        ContextNotFoundException, InvalidContentException, LockingException, MissingMethodParameterException {
-
-        // TODO: implement
-        throw new UnsupportedOperationException("FedoraContainerHandler.moveToContext not yet implemented");
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
      * @param parameters
      *            parameters from the SRU request
      * @return The list of Containers matching filter parameter.

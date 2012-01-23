@@ -648,19 +648,4 @@ public class ItemClient extends ClientBase
         return callEsciDoc("Item.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST, Constants.ITEM_BASE_URI,
             new String[] { itemId, Constants.SUB_UNLOCK }, param);
     }
-
-    /**
-     * Move an Item to a new Context.
-     *
-     * @param itemId The id of the item.
-     * @param param  The timestamp of the last modification of the Item and the new Context.
-     * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
-     */
-    public Object moveToContext(final String itemId, final String param) throws Exception {
-
-        return callEsciDoc("Item.moveToContext", METHOD_MOVE_TO_CONTEXT, Constants.HTTP_METHOD_POST,
-            Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MOVE_TO_CONTEXT }, param);
-    }
-
 }

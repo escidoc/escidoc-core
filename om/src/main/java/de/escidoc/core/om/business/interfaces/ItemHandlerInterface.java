@@ -866,23 +866,6 @@ public interface ItemHandlerInterface extends IngestableResource {
         InvalidXmlException;
 
     /**
-     * @param id
-     * @param taskParam
-     * @throws ItemNotFoundException  Thrown if an item with the specified id could not be found.
-     * @throws InvalidStatusException Thrown in case of an invalid status.
-     * @throws MissingMethodParameterException
-     *                                If a mandatory element value is missing.
-     * @throws SystemException        If an unexpected error occurs.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     * @return
-     */
-    String moveToContext(final String id, String taskParam) throws ItemNotFoundException, ContextNotFoundException,
-        InvalidContentException, LockingException, InvalidStatusException, MissingMethodParameterException,
-        SystemException;
-
-    /**
      * Assign a Persistent Identifier to a definied object version.
      *
      * @param id        The id of the item.
