@@ -2850,7 +2850,8 @@ public abstract class EscidocTestBase {
      *             If anything fails.
      */
     public void assertXmlValidStructMap(final String xmlData) throws Exception {
-        Schema structMapSchema = getSchema(getFrameworkUrl() + "/xsd/rest/container/0.4/struct-map.xsd");
+        Schema structMapSchema =
+            getSchema(getFrameworkUrl() + "/xsd/" + getTransport(false) + "/container/0.4/struct-map.xsd");
 
         assertXmlValid(xmlData, structMapSchema);
         assertAllPlaceholderResolved(xmlData);
