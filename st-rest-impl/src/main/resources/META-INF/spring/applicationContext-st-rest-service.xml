@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="StagingRestService" address="/st/staging-file">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
         </jaxrs:serviceBeans>

@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="organizationalUnitRestService" address="/oum/organizational-unit">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -19,6 +22,9 @@
     </jaxrs:server>
 
     <jaxrs:server id="organizationalUnitsRestService" address="/oum/organizational-units">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
         </jaxrs:serviceBeans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:exception="http://www.escidoc.de/schemas/exception/0.1"
+	targetNamespace="http://www.escidoc.de/schemas/exception/0.1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:element name="exception">
+		<xs:complexType>
+			<xs:sequence>
+              <xs:element ref="exception:title"/>
+              <xs:element ref="exception:message"/>
+              <xs:element ref="exception:class"/>
+              <xs:element ref="exception:stack-trace"/>
+              <xs:element ref="exception:cause"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+    <xs:element name="title">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="exception:h1"/>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="message">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="exception:p"/>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="class">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="exception:p"/>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="stack-trace">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="exception:p"/>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="cause">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="exception:p" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="p" type="xs:string"/>
+    <xs:element name="h1" type="xs:string"/>
+</xs:schema>

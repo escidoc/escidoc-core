@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="tmeRestService" address="/tme/jhove">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="org.escidoc.core.tme.internal.TmeRestServiceImpl"/>
         </jaxrs:serviceBeans>

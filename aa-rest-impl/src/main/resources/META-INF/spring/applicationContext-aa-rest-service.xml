@@ -10,7 +10,7 @@
 
     <jaxrs:server id="userAccountRestService" address="/aa/user-account">
         <jaxrs:providers>
-          <bean id="escidocException" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>
+          <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
@@ -21,6 +21,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="userAccountsRestService" address="/aa/user-accounts">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -30,6 +33,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="userGroupRestService" address="/aa/user-group">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -39,6 +45,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="userGroupsRestService" address="/aa/user-groups">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -48,6 +57,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="grantsRestService" address="/aa/grants">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -57,6 +69,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="roleRestService" address="/aa/role">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -66,6 +81,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="rolesRestService" address="/aa/roles">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -75,6 +93,9 @@
         </jaxrs:features>
     </jaxrs:server>
     <jaxrs:server id="pdpRestService" address="/aa/pdp">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
         </jaxrs:serviceBeans>

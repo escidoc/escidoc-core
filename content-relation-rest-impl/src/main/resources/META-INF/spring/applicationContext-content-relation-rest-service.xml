@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="contentRelationRestService" address="/ir/content-relation">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.content.relation.internal.ContentRelationRestServiceImpl"/>
         </jaxrs:serviceBeans>
@@ -19,6 +22,9 @@
     </jaxrs:server>
 
     <jaxrs:server id="contentRelationsRestService" address="/ir/content-relations">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
         </jaxrs:serviceBeans>

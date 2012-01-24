@@ -9,6 +9,9 @@
        default-lazy-init="false">
 
     <jaxrs:server id="adminRestService" address="/adm/admin">
+        <jaxrs:providers>
+          <ref bean="escidocExceptionMapper"/>
+        </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="de.escidoc.core.adm.internal.AdminRestServiceImpl"/>
         </jaxrs:serviceBeans>
