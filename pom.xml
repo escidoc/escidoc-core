@@ -1512,25 +1512,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>jaxen</groupId>
-        <artifactId>jaxen</artifactId>
-        <version>1.1.1</version>
-        <exclusions>
-          <exclusion>
-            <groupId>xerces</groupId>
-            <artifactId>xmlParserAPIs</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
         <groupId>sun-xacml</groupId>
         <artifactId>sun-xacml</artifactId>
         <version>1.0</version>
@@ -1656,6 +1637,14 @@
           <exclusion>
             <groupId>javax.xml.soap</groupId>
             <artifactId>saaj-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.fcrepo</groupId>
+            <artifactId>saxon</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.fcrepo</groupId>
+            <artifactId>saxon-dom</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
