@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.message.MessageContentsList;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
@@ -64,7 +65,7 @@ public class StylesheetOutInterceptor extends AbstractPhaseInterceptor<Message> 
     private static String stylesheetDefinition;
 
     public StylesheetOutInterceptor() {
-        super(Phase.MARSHAL);
+        super(Phase.SEND);
     }
 
     public void handleMessage(Message message) {
@@ -77,7 +78,7 @@ public class StylesheetOutInterceptor extends AbstractPhaseInterceptor<Message> 
                     response = (Response)objs.remove(0);
                 }
                 catch (ClassCastException e) {
-                    return;
+                    throw new Fault(e);
                 }
                 String xml = (String) response.getEntity();
                 if (!XML_DOCUMENT_START_PATTERN.matcher(xml).find()) {
