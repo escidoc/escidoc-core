@@ -91,6 +91,7 @@
 						<xs:element minOccurs="0" maxOccurs="unbounded" ref="srel:container" />
 					</xs:sequence>
 					<xs:attributeGroup ref="common:eSciDocResourceIdentityAttributes" />
+          <xs:attributeGroup ref="common:eSciDocRootElementAttributes" />
 				</xs:complexType>
 			</xs:element>
 </xs:schema>
