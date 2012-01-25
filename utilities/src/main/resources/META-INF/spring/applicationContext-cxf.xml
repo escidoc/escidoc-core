@@ -11,7 +11,7 @@
 
     <cxf:bus>
         <cxf:features>
-            <ref bean="compressGZIPFeature"/>
+            <!-- ref bean="compressGZIPFeature"/ -->
             <ref bean="loggingFeature"/>
         </cxf:features>
     </cxf:bus>
@@ -20,7 +20,7 @@
         <http-conf:client AutoRedirect="true"/>
     </http-conf:conduit>
 
-    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
+    <!-- bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/ -->
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
@@ -29,10 +29,6 @@
     </bean>
 
     <bean id="escidocExceptionMapper" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>
-
-    <bean id="stylesheetInterceptor" class="org.escidoc.core.service.interceptors.StylesheetOutInterceptor"/>
-
-    <bean id="stylesheetResponseHandler" class="de.escidoc.core.common.util.jaxrs.EscidocStylesheetResponseHandler"/>
 
     <bean id="cachedOutputStreamMessageBodyReader"
           class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>
