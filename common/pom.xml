@@ -38,27 +38,6 @@
 
   <build>
     <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.2</version>
-        <executions>
-          <execution>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <excludes>
-                <exclude>**/docbook/**/*</exclude>
-                <exclude>**/sql/**/*</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <!-- execute maven with hibernate3:hbm2java to generate Hibernate classes -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
