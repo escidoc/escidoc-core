@@ -654,6 +654,34 @@
 					<groupId>gnu.getopt</groupId>
 					<artifactId>java-getopt</artifactId>
 				</exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>openrdf-sesame-onejar</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-model</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-rio-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-rio-n3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-rio-ntriples</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-rio-ntriples</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.openrdf.sesame</groupId>
+          <artifactId>sesame-rio-turtle</artifactId>
+        </exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>

@@ -444,7 +444,27 @@
         </exclusion>
         <exclusion>
           <groupId>org.apache.ws.commons.axiom</groupId>
-          <artifactId>axiom</artifactId>
+          <artifactId>axiom-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.ws.commons.axiom</groupId>
+          <artifactId>axiom-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jdom</groupId>
+          <artifactId>jdom</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derby</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>rome</groupId>
+          <artifactId>rome</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.fcrepo</groupId>
+          <artifactId>openrdf-sesame-onejar</artifactId>
         </exclusion>
 
       </exclusions>

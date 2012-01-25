@@ -116,10 +116,6 @@
 			<artifactId>aa</artifactId>
             <type>ejb</type>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math</artifactId>
-		</dependency>
 	</dependencies>
     
 </project>
