@@ -247,7 +247,7 @@
 			# 	-->
 		<descriptor uri="/ir/item/${ITEM-ID}/resources/${RESOURCE_NAME}">
 			<invoke http="GET" method="retrieveResource" param1="${ITEM-ID}"
-				param2="${RESOURCE_NAME}" param3="${PARAMETERS}"/>
+				param2="${RESOURCE_NAME}"/>
 		</descriptor>
 		<!--#
 			# Resources
