@@ -17,12 +17,12 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  *
  * @author <a href="mailto:michael.hoppe@fiz-karlsruhe.de">Michael Hoppe</a>
  */
-public final class ExceptionToFactory {
+public final class ExceptionTOFactory {
 
     /**
      * private default Constructor to prevent initialization.
      */
-    private ExceptionToFactory() {
+    private ExceptionTOFactory() {
     }
 
     /**

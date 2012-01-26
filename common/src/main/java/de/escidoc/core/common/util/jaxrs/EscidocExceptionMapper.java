@@ -52,7 +52,7 @@ import de.escidoc.core.common.exceptions.application.security.SecurityException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
-import de.escidoc.core.common.util.jaxb.ExceptionToFactory;
+import de.escidoc.core.common.util.jaxb.ExceptionTOFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
@@ -204,7 +204,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
         if (exception.getClass().getName() != null) {
             responseBuilder.header(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         }
-        responseBuilder.entity(ExceptionToFactory.generateExceptionTO(exception));
+        responseBuilder.entity(ExceptionTOFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
@@ -226,7 +226,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
                 responseBuilder.header(HTTP_HEADER_LOCATION, ((SecurityException) exception).getRedirectLocation());
             }
         }
-        responseBuilder.entity(ExceptionToFactory.generateExceptionTO(exception));
+        responseBuilder.entity(ExceptionTOFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
