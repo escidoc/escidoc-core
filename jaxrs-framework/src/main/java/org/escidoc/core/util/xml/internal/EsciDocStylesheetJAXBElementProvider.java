@@ -41,7 +41,7 @@ public class EsciDocStylesheetJAXBElementProvider extends JAXBElementProvider {
      */
     private void overrideXmlHeadersProperty(Map<String, Object> marshallProperties) {
         String xmlHeaders = (String)marshallProperties.get(XML_HEADERS_PATH);
-        if (xmlHeaders != null && !"".equals(xmlHeaders)) {
+        if (xmlHeaders != null && !xmlHeaders.isEmpty()) {
             if (!(xmlHeaders.startsWith("http://") || xmlHeaders.startsWith("https://"))) {
                 String baseurl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
                 if (!baseurl.endsWith("/")) {
