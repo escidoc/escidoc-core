@@ -64,10 +64,10 @@
 			</li>
 		</xsl:for-each>
 	</xsl:template>
-	<xsl:template match="exception">
-		<h1><xsl:value-of select="title"/></h1>
+	<xsl:template match="*[local-name() = 'exception']">
+		<h1><xsl:value-of select="*[local-name() = 'title']"/></h1>
 		<blockquote>
-		<P><xsl:value-of select="class"/></P>
+		<P><xsl:value-of select="*[local-name() = 'class']"/></P>
 		<xsl:variable name="UID">message<xsl:value-of select="count(ancestor::*)"/></xsl:variable>
 		<P>
 			<xsl:attribute name="onClick">toggleVisibility('<xsl:value-of select="$UID"/>');</xsl:attribute>
@@ -79,7 +79,7 @@
 		</P>
 		<pre style="display: none; visibility: hidden;">
 			<xsl:attribute name="id"><xsl:value-of select="$UID"/>-body</xsl:attribute>
-			<xsl:value-of select="message"/>
+			<xsl:value-of select="*[local-name() = 'message']"/>
 		</pre>
 		
 		<xsl:variable name="UID2">stacktrace<xsl:value-of select="count(ancestor::*)"/></xsl:variable>
@@ -93,11 +93,11 @@
 		</P>
 		<pre style="display: none; visibility: hidden;">
 			<xsl:attribute name="id"><xsl:value-of select="$UID2"/>-body</xsl:attribute>
-			<xsl:value-of select="stack-trace"/>
+			<xsl:value-of select="*[local-name() = 'stack-trace']"/>
 		</pre>
 		
 		<xsl:variable name="UID3">more<xsl:value-of select="count(ancestor::*)"/></xsl:variable>
-		<xsl:if test="cause/exception">
+		<xsl:if test="*[local-name() = 'cause']/*[local-name() = 'exception']">
 			<P>
 				<xsl:attribute name="onClick">toggleVisibility('<xsl:value-of select="$UID3"/>');</xsl:attribute>
 				<xsl:attribute name="id">
@@ -108,7 +108,7 @@
 			</P>
 			<pre style="display: none; visibility: hidden;">
 				<xsl:attribute name="id"><xsl:value-of select="$UID3"/>-body</xsl:attribute>
-				<xsl:apply-templates select="cause/exception"/>
+				<xsl:apply-templates select="*[local-name() = 'cause']/*[local-name() = 'exception']"/>
 			</pre>
 		</xsl:if>
 		</blockquote>

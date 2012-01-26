@@ -14,7 +14,7 @@
                   username="${fedora.user}"
                   password="${fedora.password}">
         <jaxrs:providers>
-            <ref bean="jaxbProvider"/>
+            <ref bean="fedoraJaxbProvider"/>
             <ref bean="cachedOutputStreamMessageBodyReader"/>
             <ref bean="cachedOutputStreamMessageBodyWriter"/>
         </jaxrs:providers>

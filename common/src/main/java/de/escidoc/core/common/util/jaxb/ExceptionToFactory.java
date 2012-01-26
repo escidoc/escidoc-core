@@ -1,14 +1,6 @@
 package de.escidoc.core.common.util.jaxb;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 import org.escidoc.core.domain.exception.CauseTO;
 import org.escidoc.core.domain.exception.ClassTO;
@@ -34,48 +26,6 @@ public final class ExceptionToFactory {
     }
 
     /**
-     * Make ExceptionTO out of Exception xml.
-     *
-     * @param exceptionXml exception-xml according to exception.xsd.
-     * @return ExceptionTO JAX-B Exception Object
-     * @throws SystemException e
-     */
-    public static ExceptionTO parseException(final String exceptionXml) throws SystemException {
-        if (exceptionXml == null) {
-            return null;
-        }
-        try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(ExceptionTO.class);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            final Source src = new StreamSource(new StringReader(exceptionXml));
-            return unmarshaller.unmarshal(src, ExceptionTO.class).getValue();
-        }
-        catch (final Exception e) {
-            throw new SystemException("Error on unmarshalling XML.", e);
-        }
-    }
-
-    /**
-     * Make Exception xml out of ExceptionTO.
-     *
-     * @param exceptionTo JAX-B Exception Object 
-     * @return exceptionXml exception-xml according to exception.xsd.
-     * @throws SystemException e
-     */
-    public static String printException(final ExceptionTO exceptionTo) throws SystemException {
-        final StringWriter stringWriter = new StringWriter();
-        try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(exceptionTo.getClass());
-            final Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.marshal(exceptionTo, stringWriter);
-        }
-        catch (final Exception e) {
-            throw new SystemException("Error on marshalling object: " + exceptionTo.getClass().getName(), e);
-        }
-        return stringWriter.toString();
-    }
-
-    /**
      * Make Exception xml out of ExceptionTO.
      *
      * @param exceptionTo JAX-B Exception Object 
@@ -87,7 +37,7 @@ public final class ExceptionToFactory {
 
         if (e.getCause() != null) {
             CauseTO causeTo = new CauseTO();
-            causeTo.setP(printException(generateExceptionTO(e.getCause())));
+            causeTo.setException(generateExceptionTO(e.getCause()));
             exceptionTo.setCause(causeTo);
         }
 

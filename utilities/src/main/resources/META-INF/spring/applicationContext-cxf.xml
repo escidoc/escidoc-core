@@ -20,12 +20,30 @@
         <http-conf:client AutoRedirect="true"/>
     </http-conf:conduit>
 
-    <!-- bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/ -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.properties</value>
+                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.custom.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
-    <bean name="jaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
+    <bean name="fedoraJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
         <property name="enableBuffering" value="true"/>
+    </bean>
+
+    <util:map id="marshallerProperties">
+      <entry key="com.sun.xml.bind.xmlHeaders" value="${escidoc-core.xslt.std}"/>
+    </util:map>
+
+    <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocStylesheetJAXBElementProvider">
+        <property name="marshallerProperties" ref="marshallerProperties"/>
     </bean>
 
     <bean id="escidocExceptionMapper" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>

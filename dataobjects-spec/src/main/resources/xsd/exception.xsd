@@ -47,7 +47,7 @@
     <xs:element name="cause">
         <xs:complexType>
           <xs:sequence>
-            <xs:element ref="exception:p" minOccurs="0"/>
+            <xs:element ref="exception:exception" minOccurs="0"/>
           </xs:sequence>
         </xs:complexType>
     </xs:element>

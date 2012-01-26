@@ -10,6 +10,7 @@
 
     <jaxrs:server id="aggregationDefinitionRestService" address="/statistic/aggregation-definition">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -22,6 +23,7 @@
     </jaxrs:server>
     <jaxrs:server id="aggregationDefinitionsRestService" address="/statistic/aggregation-definitions">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -34,6 +36,7 @@
     </jaxrs:server>
     <jaxrs:server id="reportDefinitionRestService" address="/statistic/report-definition">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -46,6 +49,7 @@
     </jaxrs:server>
     <jaxrs:server id="reportDefinitionsRestService" address="/statistic/report-definitions">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -58,6 +62,7 @@
     </jaxrs:server>
     <jaxrs:server id="preprocessingRestService" address="/statistic/preprocessing">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -70,6 +75,7 @@
     </jaxrs:server>
     <jaxrs:server id="reportRestService" address="/statistic/report">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -82,6 +88,7 @@
     </jaxrs:server>
     <jaxrs:server id="scopeRestService" address="/statistic/scope">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -94,6 +101,7 @@
     </jaxrs:server>
     <jaxrs:server id="scopesRestService" address="/statistic/scopes">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -106,6 +114,7 @@
     </jaxrs:server>
     <jaxrs:server id="statisticDataRestService" address="/statistic/statistic-data">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>

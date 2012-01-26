@@ -10,6 +10,7 @@
 
     <jaxrs:server id="oaiRestService" address="/oai/set-definition">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -23,6 +24,7 @@
 
     <jaxrs:server id="oaisRestService" address="/oai/set-definitions">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>

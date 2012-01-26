@@ -10,6 +10,7 @@
 
     <jaxrs:server id="itemRestService" address="/ir/item">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -23,6 +24,7 @@
 
     <jaxrs:server id="itemsRestService" address="/ir/items">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -36,6 +38,7 @@
 
     <jaxrs:server id="containerRestService" address="/ir/container">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
@@ -49,6 +52,7 @@
 
     <jaxrs:server id="containersRestService" address="/ir/containers">
         <jaxrs:providers>
+          <ref bean="escidocJaxbProvider"/>
           <ref bean="escidocExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>

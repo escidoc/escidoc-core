@@ -204,7 +204,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
         if (exception.getClass().getName() != null) {
             responseBuilder.header(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         }
-        responseBuilder.entity(ExceptionToFactory.printException(ExceptionToFactory.generateExceptionTO(exception)));
+        responseBuilder.entity(ExceptionToFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
@@ -226,7 +226,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
                 responseBuilder.header(HTTP_HEADER_LOCATION, ((SecurityException) exception).getRedirectLocation());
             }
         }
-        responseBuilder.entity(ExceptionToFactory.printException(ExceptionToFactory.generateExceptionTO(exception)));
+        responseBuilder.entity(ExceptionToFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
