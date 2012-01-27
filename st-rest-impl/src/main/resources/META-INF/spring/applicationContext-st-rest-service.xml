@@ -17,7 +17,7 @@
             <bean class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>

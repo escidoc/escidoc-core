@@ -30,7 +30,7 @@
             <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -43,7 +43,7 @@
             <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -56,7 +56,7 @@
             <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -69,7 +69,7 @@
             <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -82,7 +82,7 @@
             <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -95,7 +95,7 @@
             <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -108,7 +108,7 @@
             <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>

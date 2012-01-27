@@ -17,7 +17,7 @@
             <bean class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -30,7 +30,7 @@
             <bean class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -43,7 +43,7 @@
             <bean class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -56,7 +56,7 @@
             <bean class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -69,7 +69,7 @@
             <bean class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -82,7 +82,7 @@
             <bean class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -95,7 +95,7 @@
             <bean class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -108,7 +108,7 @@
             <bean class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -121,7 +121,7 @@
             <bean class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>

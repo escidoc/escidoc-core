@@ -11,7 +11,6 @@
 
     <cxf:bus>
         <cxf:features>
-            <!-- ref bean="compressGZIPFeature"/ -->
             <ref bean="loggingFeature"/>
         </cxf:features>
     </cxf:bus>
@@ -30,7 +29,11 @@
         <property name="ignoreResourceNotFound" value="true"/>
     </bean>
 
-    <bean id="compressGZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature"/>
+    <bean id="compressGZIPFeature" class="org.escidoc.core.util.html.internal.EscidocGzipFeature">
+	 <property name="threshold">
+	   <value>0</value>
+	 </property>
+    </bean>
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 

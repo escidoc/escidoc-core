@@ -17,7 +17,7 @@
             <bean class="de.escidoc.core.content.relation.internal.ContentRelationRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
@@ -31,7 +31,7 @@
             <bean class="de.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:features>
-            <!--ref bean="compressGZIPFeature"/-->
+            <ref bean="compressGZIPFeature"/>
             <ref bean="loggingFeature"/>
         </jaxrs:features>
     </jaxrs:server>
