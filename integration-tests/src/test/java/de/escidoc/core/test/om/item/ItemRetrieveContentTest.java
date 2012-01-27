@@ -103,7 +103,8 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
 
-        String contentType = "image/png";
+        // FIXME actually the test should set mime-type to image
+        String contentType = "application/octet-stream"; //"image/png";
 
         File temp = retrieveContentFromFramework(itemId, componentId, contentType);
         String sha1 = computeHashSum(temp);
