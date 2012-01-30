@@ -37,8 +37,9 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving the properties of an organizational unit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumRP1() throws Exception {
@@ -53,75 +54,51 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
 
     /**
      * Test declining retrieving properties of organizational unit with providing unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRP2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(UNKNOWN_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(UNKNOWN_ID);
     }
 
     /**
      * Test declining retrieving properties of organizational unit with providing id of existing resource of another
      * resource type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRP2_2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(CONTEXT_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(CONTEXT_ID);
     }
 
     /**
      * Test declining retrieving properties of organizational unit without providing id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOumRP3_1() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties(null);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(null);
     }
 
     /**
      * Test declining retrieving properties of organizational unit without providing id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOumRP3_2() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties("");
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties("");
     }
 
 }

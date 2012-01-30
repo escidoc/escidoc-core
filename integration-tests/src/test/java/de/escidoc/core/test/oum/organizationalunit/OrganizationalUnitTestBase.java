@@ -373,6 +373,22 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     }
 
     /**
+     * Retrieving an md-record of the organization unit by name.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param name
+     *            The name of the md-record
+     * @return The retrieved properties.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public String retrieveMdRecord(final String id, final String name) throws Exception {
+
+        return handleXmlResult(getOrganizationalUnitClient().retrieveMdRecord(id, name));
+    }
+
+    /**
      * Test retrieving the organization-details from the framework.
      *
      * @param id The id of the organizational unit.
