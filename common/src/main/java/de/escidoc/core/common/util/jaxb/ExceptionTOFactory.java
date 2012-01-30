@@ -3,11 +3,7 @@ package de.escidoc.core.common.util.jaxb;
 import java.io.IOException;
 
 import org.escidoc.core.domain.exception.CauseTO;
-import org.escidoc.core.domain.exception.ClassTO;
 import org.escidoc.core.domain.exception.ExceptionTO;
-import org.escidoc.core.domain.exception.MessageTO;
-import org.escidoc.core.domain.exception.StackTraceTO;
-import org.escidoc.core.domain.exception.TitleTO;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -26,10 +22,11 @@ public final class ExceptionTOFactory {
     }
 
     /**
-     * Make Exception xml out of ExceptionTO.
+     * Make ExceptionTO JAXB-Object out of Exception-Object.
      *
-     * @param exceptionTo JAX-B Exception Object 
-     * @return exceptionXml exception-xml according to exception.xsd.
+     * @param e Throwable
+     * @return ExceptionTO JAX-B Exception Object according to exception.xsd.
+     * @throws IOException e
      * @throws SystemException e
      */
     public static ExceptionTO generateExceptionTO(final Throwable e) throws IOException, SystemException {
@@ -41,27 +38,17 @@ public final class ExceptionTOFactory {
             exceptionTo.setCause(causeTo);
         }
 
-        ClassTO classTo = new ClassTO();
-        classTo.setP(e.getClass().getName());
-        exceptionTo.setClazz(classTo);
+        exceptionTo.setClazz(e.getClass().getName());
+        exceptionTo.setMessage(e.getMessage());
+        exceptionTo.setStackTrace(getStackTraceString(e));
 
-        MessageTO messageTo = new MessageTO();
-        messageTo.setP(e.getMessage());
-        exceptionTo.setMessage(messageTo);
-
-        StackTraceTO stackTraceTo = new StackTraceTO();
-        stackTraceTo.setP(getStackTraceString(e));
-        exceptionTo.setStackTrace(stackTraceTo);
-
-        TitleTO titleTo = new TitleTO();
         if (e instanceof EscidocException) {
-            titleTo.setH1(String.valueOf(((EscidocException) e).getHttpStatusCode()) + " "
+            exceptionTo.setTitle(String.valueOf(((EscidocException) e).getHttpStatusCode()) + " "
                 + ((EscidocException) e).getHttpStatusMsg());
         }
         else {
-            titleTo.setH1(e.getClass().getName());
+            exceptionTo.setTitle(e.getClass().getName());
         }
-        exceptionTo.setTitle(titleTo);
 
         return exceptionTo;
     }

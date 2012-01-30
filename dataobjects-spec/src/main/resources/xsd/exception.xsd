@@ -7,43 +7,15 @@
   <xs:element name="exception">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="exception:title" />
-        <xs:element ref="exception:message" />
-        <xs:element ref="exception:class" />
-        <xs:element ref="exception:stack-trace" />
+        <xs:element name="title" type="xs:string" />
+        <xs:element name="message" type="xs:string" />
+        <xs:element name="class" type="xs:string" />
+        <xs:element name="stack-trace" type="xs:string" />
         <xs:element ref="exception:cause" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="title">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="exception:h1" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="message">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="exception:p" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="class">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="exception:p" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="stack-trace">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="exception:p" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="cause">
     <xs:complexType>
       <xs:sequence>
@@ -52,6 +24,4 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="p" type="xs:string" />
-  <xs:element name="h1" type="xs:string" />
 </xs:schema>

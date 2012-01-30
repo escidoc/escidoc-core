@@ -887,18 +887,6 @@
     <bindings node="//xs:element[@name='exception']">
       <class name="ExceptionTO" />
     </bindings>
-    <bindings node="//xs:element[@name='title']">
-      <class name="TitleTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='message']">
-      <class name="MessageTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='class']">
-      <class name="ClassTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='stack-trace']">
-      <class name="StackTraceTO" />
-    </bindings>
     <bindings node="//xs:element[@name='cause']">
       <class name="CauseTO" />
     </bindings>
