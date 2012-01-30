@@ -30,9 +30,9 @@
     </bean>
 
     <bean id="compressGZIPFeature" class="org.escidoc.core.util.html.internal.EscidocGzipFeature">
-	 <property name="threshold">
-	   <value>0</value>
-	 </property>
+	  <property name="threshold">
+	    <value>0</value>
+	  </property>
     </bean>
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
@@ -46,7 +46,8 @@
     </util:map>
 
     <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocStylesheetJAXBElementProvider">
-        <property name="marshallerProperties" ref="marshallerProperties"/>
+      <property name="marshallerProperties" ref="marshallerProperties"/>
+      <property name="enableBuffering" value="true"/>
     </bean>
 
     <bean id="escidocExceptionMapper" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>
