@@ -29,6 +29,7 @@
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -70,7 +71,7 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of an organizational unit.
      * @throws SystemException If anything fails while rendering the xml representation.
      */
-    protected String getOrganizationalUnitXml() throws SystemException {
+    protected String getOrganizationalUnitXml() throws SystemException, MdRecordNotFoundException {
 
         return getRenderer().render(getOrganizationalUnit());
     }
@@ -103,21 +104,9 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
      * @return The xml representation of the md-records of an organizational unit.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
-    protected String getMdRecordsXml() throws WebserverSystemException {
+    protected String getMdRecordsXml() throws WebserverSystemException, MdRecordNotFoundException {
 
         return getRenderer().renderMdRecords(getOrganizationalUnit());
-    }
-
-    /**
-     * Get the xml representation of a single md-record.
-     *
-     * @param name The name of teh md-record.
-     * @return The xml representation of the md-record of an organizational unit.
-     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
-     */
-    protected String getMdRecordXml(final String name) throws WebserverSystemException {
-
-        return getRenderer().renderMdRecord(getOrganizationalUnit(), name);
     }
 
     /**
@@ -152,6 +141,9 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
                 throw new IntegritySystemException("Referenced child organizational unit '" + childId
                     + "' could not be retrieved! ", e);
             }
+            catch (final MdRecordNotFoundException e2) {
+                throw new IntegritySystemException("Referenced md-record not found.", e2);
+            }
         }
         try {
             setOrganizationalUnit(parentId);
@@ -183,6 +175,9 @@ public class OrganizationalUnitHandlerRetrieve extends OrganizationalUnitHandler
             catch (final OrganizationalUnitNotFoundException e) {
                 throw new IntegritySystemException("Referenced parent organizational unit '" + parentId
                     + "' could not be retrieved! ", e);
+            }
+            catch (final MdRecordNotFoundException e2) {
+                throw new IntegritySystemException("Referenced md-record not found.", e2);
             }
         }
         try {

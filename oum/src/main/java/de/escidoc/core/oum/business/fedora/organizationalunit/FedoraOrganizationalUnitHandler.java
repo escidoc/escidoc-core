@@ -385,7 +385,14 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     public String retrieve(final String id) throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
-        return getRenderer().render(getOrganizationalUnit());
+        String ouXml;
+        try {
+            ouXml = getRenderer().render(getOrganizationalUnit());
+        }
+        catch (MdRecordNotFoundException e) {
+            throw new SystemException(e);
+        }
+        return ouXml;
     }
 
     /**
@@ -752,7 +759,15 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         WebserverSystemException, TripleStoreSystemException, IntegritySystemException {
 
         setOrganizationalUnit(id);
-        return getMdRecordsXml();
+        String mdRecordsXml;
+        try {
+            mdRecordsXml = getMdRecordsXml();
+        }
+        catch (MdRecordNotFoundException e) {
+            throw new IntegritySystemException(e);
+        }
+        return mdRecordsXml;
+
     }
 
     /**
@@ -766,13 +781,9 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     public String retrieveMdRecord(final String id, final String name) throws MdRecordNotFoundException,
         OrganizationalUnitNotFoundException, WebserverSystemException, TripleStoreSystemException,
         IntegritySystemException {
+
         setOrganizationalUnit(id);
-        final String mdRecord = getMdRecordXml(name);
-        if (mdRecord.length() == 0) {
-            throw new MdRecordNotFoundException("Md-record with a name " + name + " does not "
-                + " exist in the organization unit with id " + id);
-        }
-        return getMdRecordXml(name);
+        return getRenderer().renderMdRecord(getOrganizationalUnit(), name);
     }
 
     /**

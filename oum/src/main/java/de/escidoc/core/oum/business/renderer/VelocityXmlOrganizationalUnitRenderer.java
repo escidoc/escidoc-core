@@ -33,7 +33,10 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -96,7 +99,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     @Override
     public String render(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
-        TripleStoreSystemException {
+        TripleStoreSystemException, MdRecordNotFoundException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
@@ -146,7 +149,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * See Interface for functional description.
      */
     @Override
-    public String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException {
+    public String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
+        MdRecordNotFoundException {
         final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put(XmlTemplateProviderConstants.IS_ROOT_SUB_RESOURCE, XmlTemplateProviderConstants.TRUE);
@@ -165,7 +169,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     @Override
     public String renderMdRecord(final OrganizationalUnit organizationalUnit, final String name)
-        throws WebserverSystemException {
+        throws WebserverSystemException, MdRecordNotFoundException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addMdRecordValues(organizationalUnit, name, values);
@@ -459,7 +463,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      * @throws WebserverSystemException Thrown if mapping of MdRecord failed.
      */
     private void addMdRecordsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
-        throws WebserverSystemException {
+        throws WebserverSystemException, MdRecordNotFoundException {
 
         values.put(XmlTemplateProviderConstants.MD_RECRORDS_NAMESPACE_PREFIX,
             Constants.METADATARECORDS_NAMESPACE_PREFIX);
@@ -508,14 +512,17 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
      */
     private void addMdRecordValues(
         final OrganizationalUnit organizationalUnit, final String name, final Map<String, Object> values)
-        throws WebserverSystemException {
+        throws WebserverSystemException, MdRecordNotFoundException {
 
         final Datastream mdRecord;
         try {
             mdRecord = organizationalUnit.getMdRecord(name);
         }
-        catch (final Exception e) {
-            throw new WebserverSystemException("Rendering of md-record failed. ", e);
+        catch (StreamNotFoundException e1) {
+            throw new MdRecordNotFoundException("Md-record with name \"" + name + "\" not found.", e1);
+        }
+        catch (FedoraSystemException e2) {
+            throw new WebserverSystemException("Rendering of md-record failed. ", e2);
         }
         addCommonValues(organizationalUnit, values);
         values.put(XmlTemplateProviderConstants.VAR_MD_RECORD_HREF, XmlUtility.getOrganizationalUnitMdRecordHref(
