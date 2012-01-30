@@ -200,6 +200,18 @@ public interface ItemRestService {
         throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException;
 
+    @GET
+    @Path("/{id}/md-records/md-record/{mdRecordId}/content")
+    Stream retrieveMdRecordContent(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException;
+    
+    @GET
+    @Path("/{id}/resources/dc/content")
+    Stream retrieveDcRecordContent(@PathParam("id") String id) throws ItemNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        SystemException;
+
     @PUT
     @Path("{id}/md-records/md-record/{mdRecordId}")
     MdRecordTO updateMdRecord(

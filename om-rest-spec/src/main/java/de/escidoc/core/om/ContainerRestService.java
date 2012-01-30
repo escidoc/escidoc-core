@@ -35,6 +35,7 @@ import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.container.ContainerPropertiesTO;
 import org.escidoc.core.domain.container.ContainerResourcesTO;
 import org.escidoc.core.domain.container.ContainerTO;
+import org.escidoc.core.domain.container.StructMapTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
@@ -140,42 +141,12 @@ public interface ContainerRestService {
         @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
             MissingMethodParameterException, ContainerNotFoundException, SystemException;
 
-     @GET
-     @Path("/{id}/tocs")
-     JAXBElement<? extends ResponseType> retrieveTocs(@PathParam("id") String id,
-         @QueryParam("operation") String operation,
-         @QueryParam("version") String version,
-         @QueryParam("query") String query,
-         @QueryParam("startRecord") String startRecord,
-         @QueryParam("maximumRecords") String maximumRecords,
-         @QueryParam("recordPacking") String recordPacking,
-         @QueryParam("recordSchema") String recordSchema,
-         @QueryParam("recordXPath") String recordXPath,
-         @QueryParam("resultSetTTL") String resultSetTTL,
-         @QueryParam("sortKeys") String sortKeys,
-         @QueryParam("stylesheet") String stylesheet,
-         @QueryParam("scanClause") String scanClause,
-         @QueryParam("responsePosition") String responsePosition,
-         @QueryParam("maximumTerms") String maximumTerms, 
-         @QueryParam("x-info5-roleId") String roleId,
-         @QueryParam("x-info5-userId") String userId, 
-         @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
-            MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException;
-
     @POST
     @Path("/{id}/members/add")
     ResultTO addMembers(@PathParam("id") String id, MembersTaskParamTO membersTaskParamTO)
         throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
         SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, MissingAttributeValueException;
-
-    // FIXME
-    // @POST
-    // @Path("/{id}/tocs/add")
-    // ResultTO addTocs(@PathParam("id") String id, TaskParamTO taskParamTO)
-    // throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
-    // SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
-    // OptimisticLockingException, MissingAttributeValueException;
 
     @POST
     @Path("/{id}/members/remove")
@@ -197,18 +168,16 @@ public interface ContainerRestService {
         throws ContainerNotFoundException, MissingMethodParameterException, MdRecordNotFoundException,
         AuthenticationException, AuthorizationException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // String retrieveMdRecordContent(@PathParam("id") String id, String mdRecordId) throws ContainerNotFoundException,
-    // MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-    // SystemException;
+     @GET
+     @Path("/{id}/md-records/md-record/{mdRecordId}/content")
+     Stream retrieveMdRecordContent(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId) throws ContainerNotFoundException,
+     MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+     SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // String retrieveDcRecordContent(@PathParam("id") String id) throws ContainerNotFoundException,
-    // AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+     @GET
+     @Path("/{id}/resources/dc/content")
+     Stream retrieveDcRecordContent(@PathParam("id") String id) throws ContainerNotFoundException,
+     AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
 
     @POST
     @Path("/{id}/md-records/md-record/{mdRecordId}")
@@ -261,11 +230,10 @@ public interface ContainerRestService {
     RelationsTO retrieveRelations(@PathParam("id") String id) throws ContainerNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // String retrieveStructMap(@PathParam("id") String id) throws ContainerNotFoundException,
-    // MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @GET
+    @Path("/{id}/struct-map")
+    StructMapTO retrieveStructMap(@PathParam("id") String id) throws ContainerNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/version-history")

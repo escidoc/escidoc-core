@@ -19,6 +19,7 @@
  */
 package de.escidoc.core.om.internal;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
@@ -32,6 +33,7 @@ import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.container.ContainerPropertiesTO;
 import org.escidoc.core.domain.container.ContainerResourcesTO;
 import org.escidoc.core.domain.container.ContainerTO;
+import org.escidoc.core.domain.container.StructMapTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
@@ -47,6 +49,7 @@ import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,6 +90,7 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
@@ -206,65 +210,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
             this.containerHandler.retrieveMembers(containerId, ServiceUtility.toMap(requestTO))));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveTocs(java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String)
-     */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveTocs(
-        final String containerId, 
-        final String operation,
-        final String version,
-        final String query,
-        final String startRecord,
-        final String maximumRecords,
-        final String recordPacking,
-        final String recordSchema,
-        final String recordXPath,
-        final String resultSetTTL,
-        final String sortKeys,
-        final String stylesheet,
-        final String scanClause,
-        final String responsePosition,
-        final String maximumTerms, 
-        final String roleId,
-        final String userId, 
-        final String omitHighlighting) throws InvalidSearchQueryException,
-        MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException {
-
-        SruSearchRequestParametersBean parameters =
-            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
-                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
-                maximumTerms);
-
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
-        final JAXBElement<? extends RequestType> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
-
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
-            this.containerHandler.retrieveTocs(containerId, ServiceUtility.toMap(requestTO))));
-    }
-
-    // FIXME
-    // public TocsTO retrieveTocs( String id, Map<String, String[]> filter) throws InvalidSearchQueryException,
-    // MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException;
-
-    @Override
-    public ResultTO addMembers(String id, MembersTaskParamTO membersTaskParamTO) throws ContainerNotFoundException,
+    public ResultTO addMembers(final String id, final MembersTaskParamTO membersTaskParamTO) throws ContainerNotFoundException,
         LockingException, InvalidContentException, MissingMethodParameterException, SystemException,
         InvalidContextException, AuthenticationException, AuthorizationException, OptimisticLockingException,
         MissingAttributeValueException {
@@ -272,12 +219,6 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         return ServiceUtility.fromXML(ResultTO.class,
             this.containerHandler.addMembers(id, ServiceUtility.toXML(membersTaskParamTO)));
     }
-
-    // FIXME
-    // public ResultTO addTocs( String id, TaskParamTO taskParamTO)
-    // throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
-    // SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
-    // OptimisticLockingException, MissingAttributeValueException;
 
     @Override
     public ResultTO removeMembers(String id, MembersTaskParamTO membersTaskParamTO) throws ContextNotFoundException,
@@ -302,14 +243,42 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         return ServiceUtility.fromXML(MdRecordTO.class, this.containerHandler.retrieveMdRecord(id, mdRecordId));
     }
 
-    // FIXME
-    // public String retrieveMdRecordContent( String id, String mdRecordId) throws ContainerNotFoundException,
-    // MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-    // SystemException;
+    @Override
+    public Stream retrieveMdRecordContent(String id, String mdRecordId) throws ContainerNotFoundException,
+        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException {
 
-    // FIXME
-    // public String retrieveDcRecordContent( String id) throws ContainerNotFoundException,
-    // AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+        Stream stream = new Stream();
+        try {
+            InputStream inputStream =
+                new ByteArrayInputStream(this.containerHandler.retrieveMdRecordContent(id, mdRecordId).getBytes(
+                    XmlUtility.CHARACTER_ENCODING));
+            IOUtils.copy(inputStream, stream);
+        }
+        catch (IOException e) {
+            LOG.error("Failed to copy stream", e);
+            throw new SystemException(e);
+        }
+        return stream;
+    }
+
+    @Override
+    public Stream retrieveDcRecordContent(String id) throws ContainerNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException {
+
+        Stream stream = new Stream();
+        try {
+            InputStream inputStream =
+                new ByteArrayInputStream(this.containerHandler.retrieveDcRecordContent(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING));
+            IOUtils.copy(inputStream, stream);
+        }
+        catch (IOException e) {
+            LOG.error("Failed to copy stream", e);
+            throw new SystemException(e);
+        }
+        return stream;
+    }
 
     @Override
     public MdRecordTO updateMetadataRecord(String id, String mdRecordId, MdRecordTO mdRecordTO)
@@ -412,9 +381,12 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         return ServiceUtility.fromXML(RelationsTO.class, this.containerHandler.retrieveRelations(id));
     }
 
-    // FIXME
-    // public String retrieveStructMap( String id) throws ContainerNotFoundException,
-    // MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @Override
+     public StructMapTO retrieveStructMap( String id) throws ContainerNotFoundException,
+     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        
+        return ServiceUtility.fromXML(StructMapTO.class, this.containerHandler.retrieveStructMap(id));
+    }
 
     @Override
     public VersionHistoryTO retrieveVersionHistory(String id) throws ContainerNotFoundException,

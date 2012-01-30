@@ -61,9 +61,11 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.ItemRestService;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,6 +248,44 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
+    public Stream retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
+        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException {
+
+        Stream stream = new Stream();
+        try {
+            InputStream inputStream =
+                new ByteArrayInputStream(this.itemHandler.retrieveMdRecordContent(id, mdRecordId).getBytes(
+                    XmlUtility.CHARACTER_ENCODING));
+            IOUtils.copy(inputStream, stream);
+        }
+        catch (IOException e) {
+            LOG.error("Failed to copy stream", e);
+            throw new SystemException(e);
+        }
+        return stream;
+    }
+
+    @Override
+    public Stream retrieveDcRecordContent(final String id) throws ItemNotFoundException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, MdRecordNotFoundException,
+        SystemException {
+
+        Stream stream = new Stream();
+        try {
+            InputStream inputStream =
+                new ByteArrayInputStream(this.itemHandler.retrieveDcRecordContent(id).getBytes(
+                    XmlUtility.CHARACTER_ENCODING));
+            IOUtils.copy(inputStream, stream);
+        }
+        catch (IOException e) {
+            LOG.error("Failed to copy stream", e);
+            throw new SystemException(e);
+        }
+        return stream;
+    }
+
+    @Override
     public MdRecordTO updateMdRecord(final String id, final String mdRecordId, MdRecordTO mdRecordTO)
         throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
         MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
@@ -310,29 +350,25 @@ public class ItemRestServiceImpl implements ItemRestService {
 
     @Override
     public ItemResourcesTO retrieveResources(final String id) throws ItemNotFoundException,
-    MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+
         return ServiceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
     }
 
     @Override
-    public Stream retrieveResource(final String id, final String resourceName) throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-    SystemException, OperationNotFoundException {
+    public Stream retrieveResource(final String id, final String resourceName) throws ItemNotFoundException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        OperationNotFoundException {
 
         Stream stream = new Stream();
-        byte[] buffer = new byte[1024];
         try {
-            InputStream ins = this.itemHandler.retrieveResource(id, resourceName).getContent();
-            int len;
-            while ((len = ins.read(buffer)) > 0) {
-                stream.write(buffer, 0, len);
-            }
+            InputStream inputStream = this.itemHandler.retrieveResource(id, resourceName).getContent();
+            IOUtils.copy(inputStream, stream);
         }
         catch (IOException e) {
-            LOG.error("Stream copy error", e);
+            LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
-
         return stream;
     }
 

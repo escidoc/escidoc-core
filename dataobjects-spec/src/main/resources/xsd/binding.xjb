@@ -601,7 +601,7 @@
   </bindings>
   <bindings schemaLocation="struct-map.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.relations" />
+      <package name="org.escidoc.core.domain.container" />
     </schemaBindings>
     <bindings node="//xs:element[@name='struct-map']">
       <class name="StructMapTO" />
