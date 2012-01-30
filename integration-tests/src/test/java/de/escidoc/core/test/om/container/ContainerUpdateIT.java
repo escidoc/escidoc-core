@@ -938,17 +938,6 @@ public class ContainerUpdateIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Ignore("Update with incorrect xml-representation of the container")
-    @Test
-    public void testOM_UCO_3_3() throws Exception {
-        //testUpdateTocNonExistingObjectRef();
-    }
-
-    /**
-     * Update with incorrect xml-representation of the container.
-     *
-     * @throws Exception If anything fails.
-     */
     // Commented out, because business logic does not check read-only properties
     @Ignore("Commented out because business logic does not check read-only properties")
     @Test

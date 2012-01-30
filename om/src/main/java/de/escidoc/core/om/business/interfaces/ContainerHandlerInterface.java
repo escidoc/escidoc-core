@@ -179,36 +179,6 @@ public interface ContainerHandlerInterface extends IngestableResource {
         SystemException;
 
     /**
-     * Retrieves the subresource tocs.<br> This subresource provides access to a list of the items of the specified
-     * container which are of content model Toc. The toc content model ID is configurable in escidoc-core.properties.
-     * This list contains the object's data instead of references to them.
-     *
-     * @param id         The id of the resource.
-     * @param parameters parameters from the SRU request
-     * @return Returns xml representation of a list of toc items.
-     * @throws ContainerNotFoundException Thrown if a container with the provided id cannot be found.
-     * @throws SystemException            Thrown if a framework internal error occurs.
-     */
-    String retrieveTocs(final String id, final SRURequestParameters parameters) throws ContainerNotFoundException,
-        SystemException;
-
-    /**
-     * @param id
-     * @param taskParam
-     * @return last-modification-date within XML (result.xsd)
-     * @throws SystemException Thrown if a framework internal error occurs.
-     * @throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException
-     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContextException
-     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
-     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
-     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
-     */
-    String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
-        MissingAttributeValueException;
-
-    /**
      * @param id
      * @param taskParam
      * @return last-modification-date within XML (result.xsd)

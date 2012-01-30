@@ -59,7 +59,7 @@ import java.util.Collection;
 
 /**
  * Persistent Identifier relevant methods for Item.
- *
+ * 
  * @author Steffen Wagner
  */
 public class ItemHandlerPid extends ItemHandlerContent {
@@ -70,21 +70,32 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Assign persistent identifier to Content of Item.
-     *
-     * @param id          The object Id of item.
-     * @param componentId The objectId of the Component.
-     * @param taskParam   The parameter for the Persistent Identifier Service as XML snippet.
+     * 
+     * @param id
+     *            The object Id of item.
+     * @param componentId
+     *            The objectId of the Component.
+     * @param taskParam
+     *            The parameter for the Persistent Identifier Service as XML snippet.
      * @return The assigned PID as XML snippet.
-     * @throws ItemNotFoundException      Thrown if the object with id is does not exist or is no Item.
-     * @throws LockingException           Thrown if the Resource is locked.
+     * @throws ItemNotFoundException
+     *             Thrown if the object with id is does not exist or is no Item.
+     * @throws LockingException
+     *             Thrown if the Resource is locked.
      * @throws MissingMethodParameterException
-     *                                    Thrown if a parameter is missing within {@code taskParam}.
-     * @throws OptimisticLockingException Thrown if Item was altered in the mean time.
-     * @throws InvalidStatusException     Thrown if Item has the wrong status.
-     * @throws XmlCorruptedException      Thrown if taskParam is invalid XML.
-     * @throws ComponentNotFoundException Thrown if the object with componentId does not exist or is no Component.
-     * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
-     * @throws SystemException            Thrown in case of internal error.
+     *             Thrown if a parameter is missing within {@code taskParam}.
+     * @throws OptimisticLockingException
+     *             Thrown if Item was altered in the mean time.
+     * @throws InvalidStatusException
+     *             Thrown if Item has the wrong status.
+     * @throws XmlCorruptedException
+     *             Thrown if taskParam is invalid XML.
+     * @throws ComponentNotFoundException
+     *             Thrown if the object with componentId does not exist or is no Component.
+     * @throws ReadonlyVersionException
+     *             Thrown if a provided item version id is not a latest version.
+     * @throws SystemException
+     *             Thrown in case of internal error.
      */
     public String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
@@ -126,19 +137,28 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Assign persistent identifier to Item object.
-     *
-     * @param id        The Id of the Item witch is to assign with an ObjectPid.
-     * @param taskParam XML snippet with parameter for the persistent identifier system.
+     * 
+     * @param id
+     *            The Id of the Item witch is to assign with an ObjectPid.
+     * @param taskParam
+     *            XML snippet with parameter for the persistent identifier system.
      * @return The assigned persistent identifier for the Item.
-     * @throws ComponentNotFoundException Thrown if the Component was not found.
-     * @throws ItemNotFoundException      Thrown if the object with id is does not exist or is no Item.
-     * @throws LockingException           Thrown if the Item is locked
+     * @throws ComponentNotFoundException
+     *             Thrown if the Component was not found.
+     * @throws ItemNotFoundException
+     *             Thrown if the object with id is does not exist or is no Item.
+     * @throws LockingException
+     *             Thrown if the Item is locked
      * @throws MissingMethodParameterException
-     *                                    Thrown if a parameter is missing within {@code taskParam}.
-     * @throws OptimisticLockingException Thrown if Item was altered in the mean time.
-     * @throws InvalidStatusException     Thrown if Item has the wrong status.
-     * @throws XmlCorruptedException      Thrown if taskParam has invalid XML.
-     * @throws SystemException            Thrown in case of internal error.
+     *             Thrown if a parameter is missing within {@code taskParam}.
+     * @throws OptimisticLockingException
+     *             Thrown if Item was altered in the mean time.
+     * @throws InvalidStatusException
+     *             Thrown if Item has the wrong status.
+     * @throws XmlCorruptedException
+     *             Thrown if taskParam has invalid XML.
+     * @throws SystemException
+     *             Thrown in case of internal error.
      */
     public String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingMethodParameterException,
@@ -185,21 +205,30 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Assign persistent identifier to a defined version of Item.
-     *
-     * @param id        The Id of the Item witch is to assign with a VersionPid. This id must contain the version
-     *                  number.
-     * @param taskParam XML snippet with parameter for the persistent identifier system.
+     * 
+     * @param id
+     *            The Id of the Item witch is to assign with a VersionPid. This id must contain the version number.
+     * @param taskParam
+     *            XML snippet with parameter for the persistent identifier system.
      * @return The assigned persistent identifier for the version of the Item.
-     * @throws ComponentNotFoundException Thrown if the Component was not found.
-     * @throws ItemNotFoundException      Thrown if the Item was not found.
-     * @throws LockingException           Thrown if the Item is locked.
+     * @throws ComponentNotFoundException
+     *             Thrown if the Component was not found.
+     * @throws ItemNotFoundException
+     *             Thrown if the Item was not found.
+     * @throws LockingException
+     *             Thrown if the Item is locked.
      * @throws MissingMethodParameterException
-     *                                    Thrown if method parameter are missing.
-     * @throws OptimisticLockingException Thrown in case of optimistic locking failure.
-     * @throws InvalidStatusException     Thrown if Item has the wrong status.
-     * @throws XmlCorruptedException      Thrown in case of invalid XML
-     * @throws SystemException            Thrown in case of internal error.
-     * @throws ReadonlyVersionException   Thrown if a provided item version id is not a latest version.
+     *             Thrown if method parameter are missing.
+     * @throws OptimisticLockingException
+     *             Thrown in case of optimistic locking failure.
+     * @throws InvalidStatusException
+     *             Thrown if Item has the wrong status.
+     * @throws XmlCorruptedException
+     *             Thrown in case of invalid XML
+     * @throws SystemException
+     *             Thrown in case of internal error.
+     * @throws ReadonlyVersionException
+     *             Thrown if a provided item version id is not a latest version.
      */
     public String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         LockingException, MissingMethodParameterException, OptimisticLockingException, InvalidStatusException,
@@ -253,14 +282,18 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Get Persistent Identifier from configured PID (Manager) service.
-     *
-     * @param id    Item ID
-     * @param param XML snippet with PID Manager parameter.
+     * 
+     * @param id
+     *            Item ID
+     * @param param
+     *            XML snippet with PID Manager parameter.
      * @return Persistent Identifier
-     * @throws PidSystemException       Thrown if the communication with PID (Management) System fails.
+     * @throws PidSystemException
+     *             Thrown if the communication with PID (Management) System fails.
      * @throws MissingMethodParameterException
-     *                                  Thrown if necessary parameters are not part of the param XML structure.
-     * @throws WebserverSystemException Thrown by assignPid().
+     *             Thrown if necessary parameters are not part of the param XML structure.
+     * @throws WebserverSystemException
+     *             Thrown by assignPid().
      */
     public String getPid(final String id, final String param) throws PidSystemException,
         MissingMethodParameterException, WebserverSystemException {
@@ -278,10 +311,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
     /**
      * Check the status of persistent identifier in relation to the configured behavior. This behavior is to configure
      * by the escidoc-core.properties until an existing implementation of the content model.
-     *
-     * @throws InvalidStatusException     Thrown if the Item has invalid status to release a Item.
-     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
-     * @throws WebserverSystemException   Thrown in case of internal failure.
+     * 
+     * @throws InvalidStatusException
+     *             Thrown if the Item has invalid status to release a Item.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request fails.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
      */
     protected void checkPid() throws InvalidStatusException, TripleStoreSystemException, WebserverSystemException {
         // this is part of a content model (which is currently missing)
@@ -302,7 +338,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
-     *
+     * 
      * @return true if all pre-conditions are fulfilled otherwise false.
      * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
@@ -313,26 +349,17 @@ public class ItemHandlerPid extends ItemHandlerContent {
             result = true;
         }
         else {
-            // FIXME an exception is content model TOC, since we have a real
-            // content model object here is a workaround
             try {
                 final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-                final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
+                result = true;
 
-                if (curCm.endsWith(tocCm)) {
-                    result = true;
-                }
-                else {
-                    result = true;
+                final Collection<String> componentIds = getItem().getComponentIds();
 
-                    final Collection<String> componentIds = getItem().getComponentIds();
-
-                    if (componentIds != null) {
-                        for (final String componentId : componentIds) {
-                            if (!getItem().getComponent(componentId).hasObjectPid()) {
-                                result = false;
-                                break;
-                            }
+                if (componentIds != null) {
+                    for (final String componentId : componentIds) {
+                        if (!getItem().getComponent(componentId).hasObjectPid()) {
+                            result = false;
+                            break;
                         }
                     }
                 }
@@ -349,20 +376,15 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
-     *
+     * 
      * @return true if all pre-conditions are fulfilled otherwise false.
-     * @throws TripleStoreSystemException Thrown if TripleStore request fails.
-     * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request fails.
+     * @throws WebserverSystemException
+     *             Thrown if check of existing versionPID throws Exception.
      */
     protected boolean releasableObjectPid() throws TripleStoreSystemException, WebserverSystemException {
         if (Boolean.valueOf(System.getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
-            return true;
-        } // objectPid is needed
-        // FIXME an exception is content model TOC, since we have a real
-        // content model object here is a workaround
-        final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        if (curCm.endsWith(tocCm)) {
             return true;
         }
         return getItem().hasObjectPid();
@@ -370,34 +392,32 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if the Item has fulfilled all pre-conditions in relation to PID for the release process.
-     *
+     * 
      * @return true if all pre-conditions are fulfilled otherwise false.
-     * @throws WebserverSystemException   Thrown if check of existing versionPID throws Exception.
-     * @throws TripleStoreSystemException Thrown if TripleStore request failed.
+     * @throws WebserverSystemException
+     *             Thrown if check of existing versionPID throws Exception.
+     * @throws TripleStoreSystemException
+     *             Thrown if TripleStore request failed.
      */
     protected boolean releasableVersionPid() throws WebserverSystemException, TripleStoreSystemException {
         if (Boolean.valueOf(System.getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
             return true;
         }
-        // FIXME an exception is content model TOC, since we have a real
-        // content model object here is a workaround
-        final String curCm = getItem().getProperty(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        final String tocCm = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        if (curCm.endsWith(tocCm)) {
-            return true;
-        }
-
         // versionPid is needed
         return getItem().hasVersionPid();
     }
 
     /**
      * Check if item fulfills all requirements for PID assignment. - status released - not already assigned pid
-     *
-     * @param componentId The objectId of the Component.
-     * @throws InvalidStatusException     If item status is not released
-     * @throws SystemException            Thrown if instance of configuration throws exception.
-     * @throws ComponentNotFoundException Thrown if the component with the given componentId could not be found
+     * 
+     * @param componentId
+     *            The objectId of the Component.
+     * @throws InvalidStatusException
+     *             If item status is not released
+     * @throws SystemException
+     *             Thrown if instance of configuration throws exception.
+     * @throws ComponentNotFoundException
+     *             Thrown if the component with the given componentId could not be found
      */
     private void checkContentPidAssignable(final String componentId) throws InvalidStatusException, SystemException,
         ComponentNotFoundException {
@@ -433,9 +453,11 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if item fulfills all requirements for PID assignment. - status released - not already assigned pid
-     *
-     * @throws InvalidStatusException If item status is not released
-     * @throws SystemException        Thrown if instance of configuration throws exception.
+     * 
+     * @throws InvalidStatusException
+     *             If item status is not released
+     * @throws SystemException
+     *             Thrown if instance of configuration throws exception.
      */
     private void checkItemVersionPidAssignable() throws InvalidStatusException, SystemException {
 
@@ -470,9 +492,11 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if item fulfills all requirements for PID assignment. - status released - not already assigned pid
-     *
-     * @throws InvalidStatusException If item status is not released
-     * @throws SystemException        Thrown if instance of configuration throws exception.
+     * 
+     * @throws InvalidStatusException
+     *             If item status is not released
+     * @throws SystemException
+     *             Thrown if instance of configuration throws exception.
      */
     protected void checkObjectPidAssignable() throws InvalidStatusException, SystemException {
 
@@ -506,10 +530,13 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
     /**
      * Check if no object PID is assigned to item. (called floating PID before)
-     *
-     * @throws InvalidStatusException     If PID is assigned and part of the item.
-     * @throws TripleStoreSystemException If the triple store reports an error.
-     * @throws WebserverSystemException   Thrown in case of an internal error.
+     * 
+     * @throws InvalidStatusException
+     *             If PID is assigned and part of the item.
+     * @throws TripleStoreSystemException
+     *             If the triple store reports an error.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
      */
     protected void checkNoObjectPidAssigned() throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
@@ -523,11 +550,14 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * Prepare the assignment response message.
      * <p/>
      * Preconditions: The TripleStore must be in sync with the repository.
-     *
-     * @param pid The new assigned PID.
+     * 
+     * @param pid
+     *            The new assigned PID.
      * @return response message
-     * @throws WebserverSystemException   Thrown in case of internal error.
-     * @throws TripleStoreSystemException Thrown in case of TripleStore error.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal error.
+     * @throws TripleStoreSystemException
+     *             Thrown in case of TripleStore error.
      */
     private String prepareResponse(final String pid) throws WebserverSystemException {
         final DateTime lmd;

@@ -138,8 +138,6 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_SCHEMA = "retrieveSchema";
 
-    public static final String METHOD_ADD_TOCS = "addTocs";
-
     public static final String METHOD_ADD_MEMBERS = "addMembers";
 
     public static final String METHOD_REMOVE_MEMBERS = "removeMembers";
@@ -243,16 +241,6 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_STRUCT_MAP = "retrieveStructMap";
 
-    public static final String METHOD_CREATE_TOC = "createToc";
-
-    public static final String METHOD_DELETE_TOC = "deleteToc";
-
-    public static final String METHOD_RETRIEVE_TOC = "retrieveToc";
-
-    public static final String METHOD_RETRIEVE_TOC_VIEW = "retrieveTocView";
-
-    public static final String METHOD_RETRIEVE_TOCS = "retrieveTocs";
-
     public static final String METHOD_RETRIEVE_USER_ACCOUNTS = "retrieveUserAccounts";
 
     public static final String METHOD_RETRIEVE_USER_GROUPS = "retrieveUserGroups";
@@ -272,10 +260,6 @@ public abstract class ClientBase {
     public static final String METHOD_DELETE_UNSECURED_ACTIONS = "deleteUnsecuredActions";
 
     public static final String METHOD_RETRIEVE_UNSECURED_ACTIONS = "retrieveUnsecuredActions";
-
-    public static final String METHOD_UPDATE_TOC = "updateToc";
-
-    public static final String METHOD_UPDATE_TOCS = "updateTocs";
 
     public static final String METHOD_VALIDATE = "validate";
 

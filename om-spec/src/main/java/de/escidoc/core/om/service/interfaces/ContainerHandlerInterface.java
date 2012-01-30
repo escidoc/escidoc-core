@@ -375,46 +375,6 @@ public interface ContainerHandlerInterface {
         MissingMethodParameterException, ContainerNotFoundException, SystemException;
 
     /**
-     * Retrieve a list of tocs of a container applying filters.<br/>
-     * <p/>
-     * <b>Prerequisites:</b><br/>
-     * <p/>
-     * The container must exist<br/>
-     * <p/>
-     * The container is not locked.<br/>
-     * <p/>
-     * The public-status is not "withdrawn".<br/>
-     * <p/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The container is accessed using the provided reference.</li>
-     * <li>Check whether all filter criteria names are valid.</li>
-     * <li>The members are accessed using the provided filters.</li>
-     * <li>The XML representations of the list of all members corresponding to the SRW schema is returned as output</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param filter
-     *            The filter criteria to select the containers given as a map of key - value pairs.
-     * @return The XML representation of the list of member corresponding to the SRW schema.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id does not exist in the framework.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into a CQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    String retrieveTocs(final String id, final Map<String, String[]> filter) throws InvalidSearchQueryException,
-        MissingMethodParameterException, ContainerNotFoundException, InvalidXmlException, SystemException;
-
-    /**
      * Add one or more members to a container.<br/>
      * <p/>
      * This members will be added to the member list of that container.<br/>
@@ -493,88 +453,6 @@ public interface ContainerHandlerInterface {
      */
     @Validate(param = 1, resolver = "getMembersTaskParamSchemaLocation")
     String addMembers(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException, SystemException, InvalidContextException,
-        AuthenticationException, AuthorizationException, OptimisticLockingException, MissingAttributeValueException;
-
-    /**
-     * Add one or more tocs to a container.<br/>
-     * <p/>
-     * The tocs will be added to the member list of that container.<br/>
-     * <p/>
-     * <b>Prerequisites:</b><br/>
-     * <p/>
-     * The container must exist<br/>
-     * <p/>
-     * All referenced objects must exist<br/>
-     * <p/>
-     * All referenced objects must have Toc content model<br/>
-     * <p/>
-     * The container is not locked.<br/>
-     * <p/>
-     * The public-status is not "withdrawn".<br/>
-     * <p/>
-     * Only the latest version can be used here.<br/>
-     * <p/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The container is accessed using the provided reference.</li>
-     * <li>Optimistic Locking criteria is checked.</li>
-     * <li>Add the tocs to the member list.</li>
-     * <li>A new version is created.</li>
-     * <li>A XML containing the new latest version timestamp is returned.</li>
-     * </ul>
-     * The tocs to be added to the container are listed in the "param" section of the input data using their IDs.
-     * <p/>
-     * <b>Parameter for request:</b> (example)<br/>
-     * <p/>
-     * 
-     * <pre>
-     * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
-     * </pre>
-     * <p/>
-     * 
-     * <pre>
-     *  &lt;id&gt;escidoc:23232&lt;/id&gt;
-     * </pre>
-     * <p/>
-     * 
-     * <pre>
-     *  &lt;id&gt;escidoc:12121&lt;/id&gt;
-     * </pre>
-     * <p/>
-     * 
-     * <pre>
-     * &lt;/param&gt;
-     * </pre>
-     * 
-     * @param id
-     *            The id of the container.
-     * @param taskParam
-     *            The list of tocs to add to the container. (See example above.)
-     * @return last-modification-date within XML (result.xsd)
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id does not exist in the framework.
-     * @throws LockingException
-     *             Thrown if the container is locked and the current user is not the one who locked it.
-     * @throws InvalidContentException
-     *             Thrown if for any ids there is no a resource in the framework.
-     * @throws MissingMethodParameterException
-     *             Thrown if one of expected input parameter is missing.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidContextException
-     *             Thrown if a context of any member differs from a context of the container with the provided id.
-     * @throws AuthenticationException
-     *             Thrown if authorization fails.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     * @throws MissingAttributeValueException
-     *             It a mandatory attribute value is missing.
-     * @throws OptimisticLockingException
-     *             If the provided latest-modification-date does not match.
-     */
-    @Validate(param = 1, resolver = "getAssignTaskParamSchemaLocation")
-    String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, InvalidContextException,
         AuthenticationException, AuthorizationException, OptimisticLockingException, MissingAttributeValueException;
 

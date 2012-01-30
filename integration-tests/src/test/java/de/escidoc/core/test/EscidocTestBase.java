@@ -324,8 +324,6 @@ public abstract class EscidocTestBase {
 
     public static final String NAME_ITEM = "item";
 
-    public static final String NAME_TOC = "toc";
-
     public static final String XPATH_ITEM = "/" + NAME_ITEM;
 
     public static final String NAME_CONTAINER = "container";
@@ -482,8 +480,6 @@ public abstract class EscidocTestBase {
 
     public static final String STAGING_FILE_NS_URI = "http://www.escidoc.de/schemas/stagingfile/0.2";
 
-    public static final String TOC_NS_URI = "http://www.escidoc.de/schemas/toc/0.2";
-
     public static final String SCHEMA_NS_URI = "http://www.escidoc.de/schemas/xml-schema/0.2";
 
     public static final String STRUCT_MAP_NS_URI = "http://www.escidoc.de/schemas/structmap/0.4";
@@ -551,8 +547,6 @@ public abstract class EscidocTestBase {
     public static final String TEMPLATE_ITEM_SEARCH_ADMIN_PATH = TEMPLATE_ITEM_SEARCH_PATH + "/admin";
 
     public static final String TEMPLATE_INGEST_PATH = TEMPLATE_OM_PATH + "/ingest";
-
-    public static final String TEMPLATE_TOC_PATH = TEMPLATE_OM_PATH + "/toc";
 
     public static final String TEMPLATE_LANGUAGE_ITEMS_PATH = TEMPLATE_ITEM_PATH + "/language";
 
@@ -3090,13 +3084,6 @@ public abstract class EscidocTestBase {
     public void assertXmlValidResult(final String xmlData) throws Exception {
 
         URL url = new URL(getFrameworkUrl() + "/xsd/rest/common/0.1/result.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidToc(final String xmlData) throws Exception {
-
-        URL url = new URL(getFrameworkUrl() + "/xsd/rest/toc/0.7/toc.xsd");
         assertXmlValid(xmlData, url);
         assertAllPlaceholderResolved(xmlData);
     }

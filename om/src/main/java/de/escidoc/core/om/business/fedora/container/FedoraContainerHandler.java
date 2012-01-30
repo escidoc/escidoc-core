@@ -919,43 +919,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     /**
      * See Interface for functional description.
      * 
-     * @param id
-     *            The id of the resource.
-     * @param parameters
-     *            parameters from the SRU request
-     * @return Returns xml representation of a list of tocs.
-     * @throws ContainerNotFoundException
-     *             Thrown if the given container was not found.
-     * @throws SystemException
-     *             cf. Interface
-     */
-    @Override
-    public String retrieveTocs(final String id, final SRURequestParameters parameters)
-        throws ContainerNotFoundException, SystemException {
-        final StringWriter result = new StringWriter();
-
-        this.utility.checkIsContainer(id);
-        if (parameters.isExplain()) {
-            sruRequest.explain(result, ResourceType.ITEM);
-        }
-        else {
-            String query =
-                "\"/resources/parent\"=" + id + " AND \"/properties/content-model/id\"="
-                    + EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-
-            if (parameters.getQuery() != null) {
-                query += " AND " + parameters.getQuery();
-            }
-            sruRequest.searchRetrieve(result, new ResourceType[] { ResourceType.ITEM }, query, parameters
-                .getMaximumRecords(), parameters.getStartRecord(), parameters.getExtraData(), parameters
-                .getRecordPacking());
-        }
-        return result.toString();
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
      * @param parameters
      *            parameters from the SRU request
      * @return The list of Containers matching filter parameter.
@@ -2286,82 +2249,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             throw new SystemException("Should not occur in FedoraContainerHandler.addMember.", e);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(getContainer().getLastModificationDate());
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            id
-     * @param taskParam
-     *            taskParam
-     * @throws ContainerNotFoundException
-     *             e
-     * @throws LockingException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws OptimisticLockingException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidContextException
-     *             e
-     * @throws MissingAttributeValueException
-     *             cf. Interface
-     * @see ContainerHandlerInterface#addMembers(String, String)
-     */
-    @Override
-    public String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, OptimisticLockingException, SystemException, InvalidContextException,
-        MissingAttributeValueException {
-
-        final StaxParser sp = new StaxParser();
-
-        sp.addHandler(new OptimisticLockingHandler(getContainer().getId(), Constants.CONTAINER_OBJECT_TYPE,
-            getContainer().getLastModificationDate()));
-
-        // add a member retrieving handler
-        final BuildRelsExtMemberEntriesFromTaskParamHandlerNew bremeftph =
-            new BuildRelsExtMemberEntriesFromTaskParamHandlerNew(getContainer().getId());
-        sp.addHandler(bremeftph);
-
-        try {
-            sp.parse(taskParam);
-        }
-        catch (final InvalidContentException e) {
-            throw e;
-        }
-        catch (final MissingAttributeValueException e) {
-            throw e;
-        }
-        catch (final OptimisticLockingException e) {
-            throw e;
-        }
-        catch (final TripleStoreSystemException e) {
-            throw e;
-        }
-        catch (final XMLStreamException e) {
-            throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
-            throw new SystemException("Should not occure in FedoraContainerHandler.addTocs.", e);
-        }
-
-        final List<String> memberIds = bremeftph.getMemberIds();
-        final Iterator<String> it = memberIds.iterator();
-        final String tocContentModel = EscidocConfiguration.getInstance().get("escidoc-core.toc.content-model");
-        while (it.hasNext()) {
-            final String memberId = it.next();
-            final String memberContentModel =
-                this.tripleStoreUtility.getProperty(memberId, TripleStoreUtility.PROP_CONTENT_MODEL_ID);
-            if (!tocContentModel.equals(memberContentModel)) {
-                throw new InvalidContentException("Object with id " + memberId + " must have content model "
-                    + tocContentModel + '.');
-            }
-        }
-
-        return addMembers(id, taskParam);
     }
 
     /**

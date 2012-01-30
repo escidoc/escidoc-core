@@ -133,8 +133,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     private static final String VERSION_HISTORY_XSD = "version-history.xsd";
 
-    private static final String TOC_VIEW_XSD = "toc-view.xsd";
-
     private static final String RELATIONS_XSD = "relations.xsd";
 
     private static final String MEMBER_LIST_XSD = "member-list.xsd";
@@ -937,12 +935,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     public void assertXmlValidVersionHistory(final String xmlData) throws Exception {
 
         assertXmlValid(xmlData, new URL(getCommonSchemaBase_03() + VERSION_HISTORY_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidTocView(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + TOC_VIEW_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 

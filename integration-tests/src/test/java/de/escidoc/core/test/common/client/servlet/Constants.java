@@ -102,8 +102,6 @@ public class Constants {
 
     public static final String INGEST_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/ingest";
 
-    public static final String TOC_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/toc";
-
     public static final String CONTENT_RELATION_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
 
@@ -244,15 +242,7 @@ public class Constants {
 
     public static final String SUB_CONTAINER_MEMBERS = "members";
 
-    public static final String SUB_CONTAINER_TOCS = "tocs";
-
     public static final String SUB_METS = SUB_RESOURCES + "/" + "mets";
-
-    public static final String SUB_TOCS = "tocs";
-
-    public static final String SUB_TOC = "toc";
-
-    public static final String SUB_TOC_VIEW = SUB_RESOURCES + "/" + "toc-view";
 
     public static final String SUB_CHILD_OBJECTS = SUB_RESOURCES + "/" + "child-objects";
 
@@ -294,8 +284,6 @@ public class Constants {
     public static final String SUB_LOCK = "lock";
 
     public static final String SUB_UNLOCK = "unlock";
-
-    public static final String SUB_ADD_TOCS = "tocs/add";
 
     public static final String SUB_ADD_MEMBERS = "members/add";
 

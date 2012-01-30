@@ -170,18 +170,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
 
-    /**
-     * See Interface for functional description.
-     *
-     * @return List of Tocs
-     */
-    @Override
-    public String retrieveTocs(final String id, final Map<String, String[]> filter) throws ContainerNotFoundException,
-        InvalidXmlException, InvalidSearchQueryException, MissingMethodParameterException, SystemException {
-
-        return handler.retrieveTocs(id, new LuceneRequestParameters(filter));
-    }
-
     @Override
     public String addMembers(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, InvalidContentException, OptimisticLockingException, MissingMethodParameterException,
@@ -189,19 +177,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         MissingAttributeValueException {
 
         return handler.addMembers(id, taskParam);
-    }
-
-    /**
-     * See Interface for functional description.
-     *
-     * @return last-modification-date within XML (result.xsd)
-     */
-    @Override
-    public String addTocs(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, OptimisticLockingException, MissingMethodParameterException, SystemException,
-        InvalidContextException, AuthenticationException, AuthorizationException, MissingAttributeValueException {
-
-        return handler.addTocs(id, taskParam);
     }
 
     @Override

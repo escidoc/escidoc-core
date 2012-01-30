@@ -56,8 +56,6 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_ITEM = "/" + NAME_ITEM;
 
-    public static final String XPATH_TOC = "/" + NAME_TOC;
-
     public static final String XPATH_ITEM_COMPONENTS = XPATH_ITEM + "/" + NAME_COMPONENTS;
 
     public static final String XPATH_ITEM_COMPONENT =
@@ -72,8 +70,6 @@ public class OmTestBase extends EscidocAbstractTest {
     public static final String XPATH_ITEM_CONTEXT = XPATH_ITEM_PROPERTIES + "/" + NAME_CONTEXT;
 
     public static final String XPATH_ITEM_CONTENT_MODEL = XPATH_ITEM_PROPERTIES + "/" + NAME_CONTENT_MODEL;
-
-    public static final String XPATH_TOC_PROPERTIES = XPATH_TOC + "/" + NAME_PROPERTIES;
 
     public static final String XPATH_CONTAINER_PROPERTIES = "/container/properties";
 

@@ -91,30 +91,12 @@ public interface ContainerHandlerService extends Remote {
         throws ContainerNotFoundException, InvalidSearchQueryException, MissingMethodParameterException,
         SystemException, RemoteException;
 
-    String retrieveTocs(String id, Map filter, SecurityContext securityContext) throws ContainerNotFoundException,
-        InvalidXmlException, InvalidSearchQueryException, MissingMethodParameterException, SystemException,
-        RemoteException;
-
-    String retrieveTocs(String id, Map filter, String authHandle, Boolean restAccess)
-        throws ContainerNotFoundException, InvalidXmlException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException, RemoteException;
-
     String addMembers(String id, String taskParam, SecurityContext securityContext) throws ContainerNotFoundException,
         LockingException, InvalidContentException, OptimisticLockingException, MissingMethodParameterException,
         SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
         MissingAttributeValueException, RemoteException;
 
     String addMembers(String id, String taskParam, String authHandle, Boolean restAccess)
-        throws ContainerNotFoundException, LockingException, InvalidContentException, OptimisticLockingException,
-        MissingMethodParameterException, SystemException, InvalidContextException, AuthenticationException,
-        AuthorizationException, MissingAttributeValueException, RemoteException;
-
-    String addTocs(String id, String taskParam, SecurityContext securityContext) throws ContainerNotFoundException,
-        LockingException, InvalidContentException, OptimisticLockingException, MissingMethodParameterException,
-        SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
-        MissingAttributeValueException, RemoteException;
-
-    String addTocs(String id, String taskParam, String authHandle, Boolean restAccess)
         throws ContainerNotFoundException, LockingException, InvalidContentException, OptimisticLockingException,
         MissingMethodParameterException, SystemException, InvalidContextException, AuthenticationException,
         AuthorizationException, MissingAttributeValueException, RemoteException;

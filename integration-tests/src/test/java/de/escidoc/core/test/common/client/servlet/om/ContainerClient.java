@@ -161,36 +161,10 @@ public class ContainerClient extends ClientBase
             Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_RESOURCES + "/" + Constants.SUB_PARENTS });
     }
 
-    /**
-     * Retrieve the list of Items of content model toc related to a Container.
-     *
-     * @param id     The id of the container.
-     * @param filter filter as CQL query
-     * @return The HttpMethod after the service call .
-     * @throws Exception If the service call fails.
-     */
-    public Object retrieveTocs(final String id, final Map<String, String[]> filter) throws Exception {
-
-        return callEsciDoc("Container.retrieveTocs", METHOD_RETRIEVE_TOCS, Constants.HTTP_METHOD_GET,
-            Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_CONTAINER_TOCS }, filter);
-    }
-
     public Object retrieveStructMap(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveStructMap", METHOD_RETRIEVE_STRUCT_MAP, Constants.HTTP_METHOD_GET,
             Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_STRUCT_MAP });
-    }
-
-    public Object retrieveToc(final String id) throws Exception {
-
-        return callEsciDoc("Container.retrieveToc", METHOD_RETRIEVE_TOC, Constants.HTTP_METHOD_GET,
-            Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_TOC });
-    }
-
-    public Object retrieveTocView(final String id) throws Exception {
-
-        return callEsciDoc("Container.retrieveTocView", METHOD_RETRIEVE_TOC_VIEW, Constants.HTTP_METHOD_GET,
-            Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_TOC_VIEW });
     }
 
     /**
@@ -330,12 +304,6 @@ public class ContainerClient extends ClientBase
 
         return callEsciDoc("Container.retrieveMets", METHOD_RETRIEVE_METS, Constants.HTTP_METHOD_GET,
             Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_METS });
-    }
-
-    public Object addTocs(final String containerId, final String taskParam) throws Exception {
-
-        return callEsciDoc("Container.addTocs", METHOD_ADD_TOCS, Constants.HTTP_METHOD_POST,
-            Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_ADD_TOCS }, taskParam);
     }
 
     public Object addMembers(final String containerId, final String taskParam) throws Exception {
