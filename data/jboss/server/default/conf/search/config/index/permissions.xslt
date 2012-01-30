@@ -210,9 +210,9 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
+                <xsl:variable name="parentsHref" select="/*/*[local-name()='resources']/*[local-name()='parents']/@*[local-name()='href']"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/ir/item/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                    $parentsHref,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="content-model-id">
@@ -236,9 +236,9 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="contextId" select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
+                <xsl:variable name="contextHref" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href']"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
+                    $contextHref,'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="created-by">
@@ -385,9 +385,9 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
+                <xsl:variable name="parentsHref" select="/*/*[local-name()='resources']/*[local-name()='parents']/@*[local-name()='href']"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/ir/container/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                    $parentsHref,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="content-model-id">
@@ -411,9 +411,9 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="contextId" select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
+                <xsl:variable name="contextHref" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href']"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
+                    $contextHref,'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="created-by">

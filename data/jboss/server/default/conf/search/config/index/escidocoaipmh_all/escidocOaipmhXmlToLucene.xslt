@@ -60,6 +60,11 @@ Notes:
     <!-- Include stylesheet that writes important fields for gsearch -->
     <xsl:include href="index/gsearchAttributes.xslt"/>
     
+    <!-- The name of the servlet-context of escidoc
+         Used to prefix uris as it is possible to configure the 
+         servlet context name of escidoc -->
+    <xsl:param name="ESCIDOC_SERVLET_CONTEXT_NAME"/>
+
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">NO</xsl:variable>
 
@@ -118,13 +123,26 @@ Notes:
             <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                    <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
-                    <xsl:for-each select="xalan:tokenize($parentous, ' ')">
-                        <oai-object:organizational-unit-id>
-                            <xsl:value-of select="."/>
-                        </oai-object:organizational-unit-id>
-                    </xsl:for-each>
+                  <xsl:choose>
+                    <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:if>
             </xsl:for-each>
             <oai-object:deleted>
@@ -155,13 +173,26 @@ Notes:
             <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                    <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
-                    <xsl:for-each select="xalan:tokenize($parentous, ' ')">
-                        <oai-object:organizational-unit-id>
-                            <xsl:value-of select="."/>
-                        </oai-object:organizational-unit-id>
-                    </xsl:for-each>
+                  <xsl:choose>
+                    <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:if>
             </xsl:for-each>
             <oai-object:deleted>

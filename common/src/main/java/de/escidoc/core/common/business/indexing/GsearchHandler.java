@@ -166,6 +166,7 @@ public class GsearchHandler {
             updateIndexParams =
                 Constants.COMMIT_WRITE_PATTERN.matcher(updateIndexParams).replaceFirst(Boolean.toString(commitWrite));
             try {
+                String escidocServletContext = EscidocConfiguration.getInstance().get("TODO");
                 String stylesheetParameters =
                     Constants.SUPPORTED_MIMETYPES_PATTERN
                         .matcher(Constants.GSEARCH_STYLESHEET_PARAMS).replaceFirst(
@@ -180,6 +181,10 @@ public class GsearchHandler {
                         .matcher(stylesheetParameters).replaceFirst("") : Constants.INDEX_FULLTEXT_VISIBILITIES_PATTERN
                         .matcher(stylesheetParameters).replaceFirst(
                             URLEncoder.encode(indexFulltextVisibilities, XmlUtility.CHARACTER_ENCODING));
+                stylesheetParameters =
+                    escidocServletContext == null || escidocServletContext.length() == 0 ? Constants.ESCIDOC_SERVLET_CONTEXT_NAME_TOTAL_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst("") : Constants.ESCIDOC_SERVLET_CONTEXT_NAME_PATTERN
+                        .matcher(stylesheetParameters).replaceFirst(escidocServletContext);
                 updateIndexParams += stylesheetParameters;
 
                 if (LOGGER.isDebugEnabled()) {

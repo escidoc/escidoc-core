@@ -65,7 +65,8 @@ public final class Constants {
     public static final String GSEARCH_STYLESHEET_PARAMS =
         "&indexDocXslt=(SUPPORTED_MIMETYPES=${SUPPORTED_MIMETYPES}"
             + ",PID_VERSION_IDENTIFIER=${PID_VERSION_IDENTIFIER}"
-            + ",INDEX_FULLTEXT_VISIBILITIES=${INDEX_FULLTEXT_VISIBILITIES})";
+            + ",INDEX_FULLTEXT_VISIBILITIES=${INDEX_FULLTEXT_VISIBILITIES}"
+            + ",ESCIDOC_SERVLET_CONTEXT_NAME=${ESCIDOC_SERVLET_CONTEXT_NAME})";
 
     public static final String GSEARCH_GET_INDEX_CONFIGURATION_PARAMS = "?operation=getIndexConfigInfo";
 
@@ -105,6 +106,12 @@ public final class Constants {
 
     public static final Pattern INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN =
         Pattern.compile(",INDEX_FULLTEXT_VISIBILITIES=\\$\\{INDEX_FULLTEXT_VISIBILITIES\\}");
+
+    public static final Pattern ESCIDOC_SERVLET_CONTEXT_NAME_PATTERN =
+        Pattern.compile("\\$\\{ESCIDOC_SERVLET_CONTEXT_NAME\\}");
+
+    public static final Pattern ESCIDOC_SERVLET_CONTEXT_NAME_TOTAL_PATTERN =
+        Pattern.compile(",ESCIDOC_SERVLET_CONTEXT_NAME=\\$\\{ESCIDOC_SERVLET_CONTEXT_NAME\\}");
 
     public static final Pattern DOC_COUNT_PATTERN =
         Pattern.compile(".*?docCount=\"(.*?)\".*", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
