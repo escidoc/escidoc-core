@@ -205,35 +205,6 @@ public class ContainerTestBase extends OmTestBase {
         return handleXmlResult(getContainerClient().retrieveMembers(id, filter));
     }
 
-    public String retrieveTocs(final String id, final Map<String, String[]> filter) throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveTocs(id, filter));
-    }
-
-    protected String retrieveToc(final String id) throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveToc(id));
-    }
-
-    protected void deleteToc(final String id) throws Exception {
-
-        Object result = getContainerClient().deleteToc(id);
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            assertHttpStatusOfMethod("", httpRes);
-        }
-    }
-
-    protected String updateToc(final String id, final String xml) throws Exception {
-
-        return handleXmlResult(getContainerClient().updateToc(id, xml));
-    }
-
-    protected String retrieveTocView(final String id) throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveTocView(id));
-    }
-
     /**
      * Test retrieving the metadata records of an Container.
      *
@@ -350,10 +321,6 @@ public class ContainerTestBase extends OmTestBase {
 
     public String addMembers(final String id, final String taskParam) throws Exception {
         return handleXmlResult(getContainerClient().addMembers(id, taskParam));
-    }
-
-    public String addTocs(final String id, final String taskParam) throws Exception {
-        return handleXmlResult(getContainerClient().addTocs(id, taskParam));
     }
 
     protected String removeMembers(final String id, final String taskParam) throws Exception {

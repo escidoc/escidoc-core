@@ -48,12 +48,6 @@
 	<srel:container prefix-xlink:type="simple"
 					prefix-xlink:href="/ir/container/##CONTAINERID2##"/>
 	</struct-map:struct-map>
-	<!--  tocs:tocs  -->
-	<!--prefix-toc:toc pid="hdl:10231/1:1232" prefix-xlink:type="simple" prefix-xlink:title="tocs" prefix-xlink:href="/ir/container/escidoc:23233/toc">
-		<prefix-struct-map:member prefix-xlink:title="Interviewer Introduction" prefix-xlink:type="simple" prefix-xlink:href="/ir/container/escidoc:23232"/>
-		<prefix-struct-map:member prefix-xlink:title="Family History" prefix-xlink:href="/ir/item/escidoc:12121"/>
-		<prefix-struct-map:member prefix-xlink:title="General History" prefix-xlink:href="/ir/item/escidoc:12122"/>
-		</prefix-toc:toc-->
 	
 	<!-- relations:relations -->
 	<!-- will be defined later -->

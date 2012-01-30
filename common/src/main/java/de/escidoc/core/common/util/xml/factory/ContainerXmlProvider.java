@@ -38,8 +38,6 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String MEMBER_REF_LIST_PATH = CONTAINER_PATH;
 
-    private static final String TOC_VIEW_PATH = CONTAINER_PATH;
-
     private static final String CONTAINER_REF_LIST_PATH = CONTAINER_PATH;
 
     private static final String MEMBER_LIST_PATH = CONTAINER_PATH;
@@ -55,8 +53,6 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
     private static final String STRUCTMAP_RESOURCE_NAME = "struct-map";
 
     private static final String MEMBER_REF_LIST_RESOURCE_NAME = "member-ref-list";
-
-    private static final String TOC_VIEW_RESOURCE_NAME = "toc-view";
 
     private static final String CONTAINER_REF_LIST_RESOURCE_NAME = "container-ref-list";
 
@@ -101,11 +97,6 @@ public final class ContainerXmlProvider extends InfrastructureXmlProvider {
     public String getMemberRefsXml(final Map values) throws WebserverSystemException {
 
         return getXml(MEMBER_REF_LIST_RESOURCE_NAME, MEMBER_REF_LIST_PATH, values);
-    }
-
-    public String getTocViewXml(final Map values) throws WebserverSystemException {
-
-        return getXml(TOC_VIEW_RESOURCE_NAME, TOC_VIEW_PATH, values);
     }
 
     public String getContainerRefsXml(final Map values) throws WebserverSystemException {

@@ -229,19 +229,6 @@ public final class ExplainXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
-     * Render an SRU explain response to describe the toc database.
-     *
-     * @param values map containing variable names and values to fill out the Velocity macro.
-     * @return explain response XML
-     * @throws WebserverSystemException Thrown if Velocity could not be initialized
-     */
-    public String getExplainTocXml(final Map<String, Object> values) throws WebserverSystemException {
-        values.put("DATABASE", "ir/container/&lt;container id&gt;/tocs");
-        values.put("RESOURCE_NAME", "toc");
-        return getExplainXml(values);
-    }
-
-    /**
      * Render an SRU explain response to describe the user account database.
      *
      * @param values map containing variable names and values to fill out the Velocity macro.

@@ -972,28 +972,6 @@ public class ContainerRetrieveIT extends ContainerTestBase {
     }
 
     /**
-     * Test successfully retrieving an explain response.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testExplainRetrieveTocs() throws Exception {
-        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
-
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
-
-        String result = null;
-
-        try {
-            result = retrieveTocs(theContainerId, filterParams);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.failException(e);
-        }
-        assertXmlValidSrwResponse(result);
-    }
-
-    /**
      * Test if the objid is handles right.
      * <p/>
      * see issue INFR-773

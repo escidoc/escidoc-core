@@ -93,7 +93,6 @@ retrieveContentRelations()</literallayout>
                 <code>
                   <literallayout>retrieveContainers()
 retrieveMembers()
-retrieveTocs()
 retrieveContentRelations()</literallayout>
                 </code>
               </entry>
