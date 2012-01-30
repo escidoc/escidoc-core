@@ -103,18 +103,11 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmUCt2() throws Exception {
 
         String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            update(UNKNOWN_ID, cmXml);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        update(UNKNOWN_ID, cmXml);
     }
 
     /**
@@ -122,18 +115,11 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = ContentModelNotFoundException.class)
     public void testCtmUCt2_2() throws Exception {
 
         String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
-        Class<?> ec = ContentModelNotFoundException.class;
-        try {
-            update(CONTEXT_ID, cmXml);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        update(CONTEXT_ID, cmXml);
     }
 
     /**
@@ -141,18 +127,11 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testCtmUCt3() throws Exception {
 
         String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            update(null, cmXml);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        update(null, cmXml);
     }
 
     /**
@@ -160,20 +139,13 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testCtmUCt3a() throws Exception {
         String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
         String contentModelId = getObjidValue(createdXML);
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            update(contentModelId, null);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        update(contentModelId, null);
     }
 
     /**
@@ -181,20 +153,13 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testCtmUCt4() throws Exception {
         String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
         String contentModelId = getObjidValue(createdXML);
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            update(contentModelId, "<content-model/>");
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        update(contentModelId, "<content-model/>");
     }
 
     /**

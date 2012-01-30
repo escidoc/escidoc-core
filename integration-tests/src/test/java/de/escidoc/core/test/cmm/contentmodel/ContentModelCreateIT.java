@@ -154,17 +154,10 @@ public class ContentModelCreateIT extends ContentModelTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testCmmCCm3() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            create(null);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
+        create(null);
     }
 
     /**
