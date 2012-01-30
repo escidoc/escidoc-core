@@ -170,6 +170,23 @@ public class OrganizationalUnitClient extends ClientBase {
     }
 
     /**
+     * Retrieve the XML representation of a md-record of a organizational unit.
+     * 
+     * @param id
+     *            The id.
+     * @param name
+     *            The name of the md-record
+     * @return The HttpMethod after the service call .
+     * @throws Exception
+     *             If the service call fails.
+     */
+    public Object retrieveMdRecord(final String id, final String name) throws Exception {
+
+        return callEsciDoc("OrganizationalUnit.retrieveMdRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id, "/" + Constants.SUB_MD_RECORD, name });
+    }
+
+    /**
      * Retrieve the xml representation of the parent-ous.
      *
      * @param id The id.

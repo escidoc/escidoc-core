@@ -56,17 +56,10 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRP2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(UNKNOWN_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(UNKNOWN_ID);
     }
 
     /**
@@ -75,17 +68,10 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = OrganizationalUnitNotFoundException.class)
     public void testOumRP2_2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(CONTEXT_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(CONTEXT_ID);
     }
 
     /**
@@ -93,17 +79,10 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOumRP3_1() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties(null);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties(null);
     }
 
     /**
@@ -111,17 +90,10 @@ public class RetrievePropertiesIT extends OrganizationalUnitTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOumRP3_2() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties("");
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        retrieveProperties("");
     }
 
 }

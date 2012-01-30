@@ -28,17 +28,20 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
+
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
 
 public class RetrieveMdRecordsIT extends OrganizationalUnitTestBase {
 
     /**
      * Test retrieving the properties of an organizational unit. The organizational unit has no external-id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumROd1_1() throws Exception {
@@ -52,108 +55,57 @@ public class RetrieveMdRecordsIT extends OrganizationalUnitTestBase {
 
     }
 
-    //    /**
-    //     * Test retrieving the properties of an organizational unit. The
-    //     * organizational unit contains an external-id.
-    //     *
-    //     * @test.name Retrieve Organization Details of Organizational Unit - Success
-    //     * @test.id OUM_RP-1-2
-    //     * @test.input
-    //     *          <ul>
-    //     *          <li>Id of existing organizational unit.</li>
-    //     *          </ul>
-    //     * @test.expected: XML representation of the list of properties of the
-    //     *                 organizational unit.
-    //     * @test.status Revoked - no more requirements for external id handling at
-    //     *              the moment
-    //     *
-    //     * @throws Exception
-    //     *             If anything fails.
-    //     */
-    // public void testOumROd1_2() throws Exception {
-    //
-    // Document xml =
-    // getDocument(createSuccessfully("escidoc_ou_create_with_external_id.xml"));
-    // String id = getObjidValue(xml);
-    // String organizationDetails = retrieveOrganizationDetails(id);
-    // assertXmlValidOrganizationalUnit(organizationDetails);
-    // assertEscidocMdRecord(id, getDocument(organizationDetails),
-    // selectSingleNode(xml,
-    // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS), startTimestamp);
-    //
-    // }
-
     /**
-     * Test declining retrieving organization-details of organizational unit with providing unknown id.
-     *
-     * @throws Exception If anything fails.
+     * Test retrieving the properties of an organizational unit. The organizational unit contains an external-id.
+     * 
+     * @test.name Retrieve Organization Details of Organizational Unit - Success
+     * @test.id OUM_RP-1-2
+     * @test.input <ul>
+     *             <li>Id of existing organizational unit.</li>
+     *             </ul>
+     * @test.expected: XML representation of the list of properties of the organizational unit.
+     * @test.status Revoked - no more requirements for external id handling at the moment
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
-    public void testOumROd2() throws Exception {
+    @Ignore("unknown method")
+    public void testOumROd1_2() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(UNKNOWN_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        Document xml = getDocument(createSuccessfully("escidoc_ou_create_with_external_id.xml"));
+        String id = getObjidValue(xml);
+        String organizationDetails = ""; //retrieveOrganizationDetails(id);
+        assertXmlValidOrganizationalUnit(organizationDetails);
+        assertEscidocMdRecord(id, getDocument(organizationDetails), selectSingleNode(xml,
+            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS), startTimestamp);
+
     }
 
     /**
-     * Test declining retrieving organization-details of organizational unit with providing id of existing resource of
-     * another resource type.
-     *
-     * @throws Exception If anything fails.
+     * Test retrieving a non-existing md-record of an organizational unit.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
-    public void testOumROd2_2() throws Exception {
+    @Test(expected = MdRecordNotFoundException.class)
+    public void retrieveNonExistingMdRecordByName() throws Exception {
 
-        Class ec = OrganizationalUnitNotFoundException.class;
-        try {
-            retrieveProperties(CONTEXT_ID);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        String id = getObjidValue(getDocument(createSuccessfully("escidoc_ou_create.xml")));
+        retrieveMdRecord(id, "non-existing-name");
     }
 
     /**
-     * Test declining retrieving organization-details of organizational unit without providing id.
-     *
-     * @throws Exception If anything fails.
+     * Test retrieving a non-existing md-record of an organizational unit.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    @Test
-    public void testOumROd3_1() throws Exception {
+    @Test(expected = MissingMethodParameterException.class)
+    public void retrieveMdRecordByNameWithoutParameter() throws Exception {
 
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties(null);
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
-    }
-
-    /**
-     * Test declining retrieving of organization-details of organizational unit without providing id.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testOumROd3_2() throws Exception {
-
-        Class ec = MissingMethodParameterException.class;
-        try {
-            retrieveProperties("");
-            failMissingException(ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
+        String id = getObjidValue(getDocument(createSuccessfully("escidoc_ou_create.xml")));
+        retrieveMdRecord(id, null);
     }
 
 }

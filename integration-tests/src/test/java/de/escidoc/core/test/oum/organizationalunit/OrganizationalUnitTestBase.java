@@ -45,7 +45,7 @@ import static org.junit.Assert.assertNull;
 
 /**
  * Test the implementation of the organizational unit resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class OrganizationalUnitTestBase extends OumTestBase {
@@ -72,10 +72,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Successfully creates an organizational unit.
-     *
-     * @param templateName The name of the template to use.
+     * 
+     * @param templateName
+     *            The name of the template to use.
      * @return Returns the XML representation of the created organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String createSuccessfully(final String templateName) throws Exception {
 
@@ -95,12 +97,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Successfully creates a specified number of organizational units.
-     *
-     * @param templateName The name of the template to use.
-     * @param number       The number of organizational units that shall be created.
+     * 
+     * @param templateName
+     *            The name of the template to use.
+     * @param number
+     *            The number of organizational units that shall be created.
      * @return Returns a string array containing the object ids of the created organizational units and the titles, e.g.
      *         [id1, id2, title1, title2].
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected String[] createSuccessfully(final String templateName, final int number) throws Exception {
 
@@ -116,11 +121,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Successfully creates a child organizational unit with the specified parent organizational units.
-     *
-     * @param templateName The name of the template to use.
-     * @param parentIds    The ids of the parent organizational units.
+     * 
+     * @param templateName
+     *            The name of the template to use.
+     * @param parentIds
+     *            The ids of the parent organizational units.
      * @return Returns the Xml representation of the created child organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected String createSuccessfullyChild(final String templateName, final String[] parentIds) throws Exception {
 
@@ -139,13 +147,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to create a child organizational unit with the specified parent organizational units.
-     *
-     * @param handle                 The user-handle.
-     * @param parentIds              The ids of the parent organizational units.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param parentIds
+     *            The ids of the parent organizational units.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the created child organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestCreate(final String handle, final String[] parentIds, final Class expectedExceptionClass)
         throws Exception {
@@ -175,14 +186,18 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     /**
      * Creates and insert the parent ous element at the specified position in the provided document. This element
      * contains references to the specified organizational units.
-     *
-     * @param document         The document for that the element shall be created.
-     * @param xpathBefore      The xpath after that the parent-ous element shall be inserted in the document.
-     * @param parentValues     The ids and titles of the parent organizational units, e.g. [id1, id2, title1, title2]
-     * @param withRestReadOnly Flag indicating if the parent-ous element shall contain the REST specific read only
-     *                         attributes.
+     * 
+     * @param document
+     *            The document for that the element shall be created.
+     * @param xpathBefore
+     *            The xpath after that the parent-ous element shall be inserted in the document.
+     * @param parentValues
+     *            The ids and titles of the parent organizational units, e.g. [id1, id2, title1, title2]
+     * @param withRestReadOnly
+     *            Flag indicating if the parent-ous element shall contain the REST specific read only attributes.
      * @return Returns the created <code>Element</code> object.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Node insertParentsElement(
         final Document document, final String xpathBefore, final String[] parentValues, final boolean withRestReadOnly)
@@ -215,11 +230,15 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     }
 
     /**
-     * Creates an organizational unit hierarchy. Four organizational units are created:<br> <ul> <li>Two top level Ous
-     * ouTop1 and ouTop2</li> <li>One mid level Ou ouChild1Parent as child of ouTop1</li> <li>One low level Ou
-     * ouChild2Parents as child of ouTop2 and ouChild1Parent</li> </ul>
-     *
-     * @throws Exception Thrown if anything fails.
+     * Creates an organizational unit hierarchy. Four organizational units are created:<br>
+     * <ul>
+     * <li>Two top level Ous ouTop1 and ouTop2</li>
+     * <li>One mid level Ou ouChild1Parent as child of ouTop1</li>
+     * <li>One low level Ou ouChild2Parents as child of ouTop2 and ouChild1Parent</li>
+     * </ul>
+     * 
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     protected void createOuHierarchie() throws Exception {
 
@@ -248,10 +267,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Determines the namespace prefix of the organizational unit used in the document.
-     *
-     * @param document The document to look up the namespace in. This must contain an organizational unit.
+     * 
+     * @param document
+     *            The document to look up the namespace in. This must contain an organizational unit.
      * @return Returns the namespace prefix of the root element of the document
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String determineOrganizationalUnitNamespacePrefix(final Document document) throws Exception {
 
@@ -267,12 +288,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Determines the namespace prefix of the xlink attributes used in the document.
-     *
-     * @param document The document to look up the namespace prefix in.
+     * 
+     * @param document
+     *            The document to look up the namespace prefix in.
      * @return Returns the namespace prefix of the xlink href attribute in the root element of the document. If there is
      *         no xlink href attribute in the document, the value of the constant <code>XLINK_PREFIX_TEMPLATES</code> is
      *         returned.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     private String determineXlinkNamespacePrefix(final Document document) throws Exception {
 
@@ -287,8 +310,9 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Determines the namespace prefix of the provided node.
-     *
-     * @param node The <code>Node</code> to get the namespace prefix from.
+     * 
+     * @param node
+     *            The <code>Node</code> to get the namespace prefix from.
      * @return Returns the namespace prefix of the provided <code>Node</code>.
      */
     private String determinePrefix(final Node node) {
@@ -301,10 +325,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving an organizational unit from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String retrieve(final String id) throws Exception {
@@ -314,13 +340,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to retrieve a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrieve(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -349,10 +378,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving the properties from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved properties.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveProperties(final String id) throws Exception {
 
@@ -361,10 +392,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving resources from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved list of resources.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String retrieveResources(final String id) throws Exception {
@@ -374,10 +407,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving the organization-details from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved properties.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveMdRecords(final String id) throws Exception {
 
@@ -385,14 +420,33 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     }
 
     /**
+     * Retrieving an md-record of the organization unit by name.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param name
+     *            The name of the md-record
+     * @return The retrieved properties.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public String retrieveMdRecord(final String id, final String name) throws Exception {
+
+        return handleXmlResult(getOrganizationalUnitClient().retrieveMdRecord(id, name));
+    }
+
+    /**
      * Tries to retrieve md-records of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrieveMdRecords(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -421,10 +475,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving the parent-ous from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved parent-ous.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String retrieveParents(final String id) throws Exception {
 
@@ -433,13 +489,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to retrieve parents of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrieveParents(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -468,10 +527,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving the children of an organizational unit from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveChildObjects(final String id) throws Exception {
 
@@ -480,13 +541,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to retrieve children of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrieveChildObjects(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -515,10 +579,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving the parents of an organizational unit from the framework.
-     *
-     * @param id The id of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
      * @return The retrieved organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveParentObjects(final String id) throws Exception {
 
@@ -527,13 +593,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to retrieve parents of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrieveParentObjects(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -562,10 +631,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test creating an organizational unit in the framework.
-     *
-     * @param xml The xml representation of the organizational unit.
+     * 
+     * @param xml
+     *            The xml representation of the organizational unit.
      * @return The created organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String create(final String xml) throws Exception {
@@ -575,9 +646,11 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test creating an organizational unit in the framework.
-     *
-     * @param id The id of the organizational unit.
-     * @throws Exception If anything fails.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public void delete(final String id) throws Exception {
@@ -587,13 +660,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to delete a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public void doTestDelete(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -620,11 +696,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test closing an organizational unit in the framework.
-     *
-     * @param id        The id of the organizational unit.
-     * @param taskParam TODO
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param taskParam
+     *            TODO
      * @return The result XML (result.xsd)
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String close(final String id, final String taskParam) throws Exception {
 
@@ -633,13 +712,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to close a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestClose(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -669,11 +751,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test opening an organizational unit in the framework.
-     *
-     * @param id        The id of the organizational unit.
-     * @param taskParam TODO
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param taskParam
+     *            TODO
      * @return The result XML (result.xsd)
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String open(final String id, final String taskParam) throws Exception {
 
@@ -682,13 +767,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to open a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestOpen(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -718,11 +806,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test updating an organizational unit of the framework.
-     *
-     * @param id  The id of the organizational unit.
-     * @param xml The xml representation of the organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param xml
+     *            The xml representation of the organizational unit.
      * @return The updated organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     @Override
     public String update(final String id, final String xml) throws Exception {
@@ -732,13 +823,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to update a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestUpdate(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -770,14 +864,18 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to update a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param parentIds              The ids of the parents.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param parentIds
+     *            The ids of the parents.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestUpdateWithChangedParents(
         final String handle, final String ouId, final String[] parentIds, final Class expectedExceptionClass)
@@ -823,11 +921,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test updating the md records sub resource of an organizational unit of the framework.
-     *
-     * @param id  The id of the organizational unit.
-     * @param xml The xml representation of the the organization-details sub resource organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param xml
+     *            The xml representation of the the organization-details sub resource organizational unit.
      * @return The updated organization-details sub resource of the organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String updateMdRecords(final String id, final String xml) throws Exception {
 
@@ -836,11 +937,14 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test updating the parent-ous sub resource of an organizational unit of the framework.
-     *
-     * @param id  The id of the organizational unit.
-     * @param xml The xml representation of the the organization-details sub resource organizational unit.
+     * 
+     * @param id
+     *            The id of the organizational unit.
+     * @param xml
+     *            The xml representation of the the organization-details sub resource organizational unit.
      * @return The updated parent-ous sub resource of the organizational unit.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public String updateParentOus(final String id, final String xml) throws Exception {
 
@@ -849,10 +953,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving a filtered list of organizational units from the framework.
-     *
-     * @param filter The filter criteria.
+     * 
+     * @param filter
+     *            The filter criteria.
      * @return The retrieved list of organizational units.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveOrganizationalUnits(final Map<String, String[]> filter) throws Exception {
 
@@ -861,10 +967,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving a organizationalunitpathlist of organizational.
-     *
-     * @param id The organizational unit id.
+     * 
+     * @param id
+     *            The organizational unit id.
      * @return The retrieved list of references to organizational units.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrievePathList(final String id) throws Exception {
 
@@ -873,13 +981,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Tries to retrieve path-list of a organizational unit.
-     *
-     * @param handle                 The user-handle.
-     * @param ouId                   The id of the ou to update.
-     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
-     *                               success.
+     * 
+     * @param handle
+     *            The user-handle.
+     * @param ouId
+     *            The id of the ou to update.
+     * @param expectedExceptionClass
+     *            The class of the expected exception or <code>null</code> in case of expected success.
      * @return Returns the Xml representation of the updated organizational unit.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public String doTestRetrievePathList(final String handle, final String ouId, final Class expectedExceptionClass)
         throws Exception {
@@ -908,10 +1019,12 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Test retrieving list of successors of organizational unit.
-     *
-     * @param objid The organizational unit id.
+     * 
+     * @param objid
+     *            The organizational unit id.
      * @return The retrieved list of references to organizational units.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveSuccessors(final String objid) throws Exception {
 
@@ -920,14 +1033,18 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Assert the retrieved organization-details has all expected elements.
-     *
-     * @param organizationalUnitId The organizational unit id.
-     * @param mdRecords            The retrieved md records sub resource.
-     * @param originalDocument     The document used to create the organizational-unit
+     * 
+     * @param organizationalUnitId
+     *            The organizational unit id.
+     * @param mdRecords
+     *            The retrieved md records sub resource.
+     * @param originalDocument
+     *            The document used to create the organizational-unit
      * @param timestampBeforeLastModification
-     *                             A timestamp before the last modification has been started. This is used to check the
-     *                             last modification date.
-     * @throws Exception If anything fails.
+     *            A timestamp before the last modification has been started. This is used to check the last modification
+     *            date.
+     * @throws Exception
+     *             If anything fails.
      */
     public void assertEscidocMdRecord(
         final String organizationalUnitId, final Node mdRecords, final Node originalDocument,
@@ -971,7 +1088,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
             assertXmlEquals("OU error: dc:identifier mismatch", mdRecords, XPATH_MD_RECORDS_ESCIDOC_MD_RECORD + "/"
                 + NAME_IDENTIFIER, identifierNode.getTextContent().trim());
         }
-        //        
+        //
         // // abbreviation
         // assertXmlEquals(messagePrefix + "abbrevation mismatch, ", mdRecords,
         // XPATH_ORGANIZATION_MD_RECORDS + "/" + NAME_ALTERNATIVE,
@@ -1081,18 +1198,20 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Assert that the organizational unit has all required elements.
-     *
-     * @param toBeAssertedXml         The created/updated organizational unit.
-     * @param originalXml             The template organizational unit used to create/update the organizational unit. If
-     *                                this parameter is <code>null</code>, no check with the original data is
-     *                                performed.
-     * @param timestampBeforeCreation A timestamp before the creation has been started. This is used to check the
-     *                                creation date.
+     * 
+     * @param toBeAssertedXml
+     *            The created/updated organizational unit.
+     * @param originalXml
+     *            The template organizational unit used to create/update the organizational unit. If this parameter is
+     *            <code>null</code>, no check with the original data is performed.
+     * @param timestampBeforeCreation
+     *            A timestamp before the creation has been started. This is used to check the creation date.
      * @param timestampBeforeLastModification
-     *                                A timestamp before the last modification has been started. This is used to check
-     *                                the last modification date.
+     *            A timestamp before the last modification has been started. This is used to check the last modification
+     *            date.
      * @return Returns the document representing the provided xml data.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public Document assertOrganizationalUnit(
         final String toBeAssertedXml, final String originalXml, final String timestampBeforeCreation,
@@ -1104,24 +1223,27 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
     /**
      * Assert that the organizational unit has all required elements.
-     *
-     * @param toBeAssertedXml         The created/updated organizational unit.
-     * @param originalXml             The template organizational unit used to create/update the organizational unit. If
-     *                                this parameter is <code>null</code>, no check with the original data is
-     *                                performed.
-     * @param timestampBeforeCreation A timestamp before the creation has been started. This is used to check the
-     *                                creation date.
+     * 
+     * @param toBeAssertedXml
+     *            The created/updated organizational unit.
+     * @param originalXml
+     *            The template organizational unit used to create/update the organizational unit. If this parameter is
+     *            <code>null</code>, no check with the original data is performed.
+     * @param timestampBeforeCreation
+     *            A timestamp before the creation has been started. This is used to check the creation date.
      * @param timestampBeforeLastModification
-     *                                A timestamp before the last modification has been started. This is used to check
-     *                                the last modification date.
-     * @param assertCreationDate      Flag to indicate if the creation-date and created-by values shall be asserted
-     *                                (<code>true</code>) or not ( <code>false</code>).
-     * @param comparePublicStatus     Flag to indicate if the public-status in <code>toBeAssertedXml</code> and
-     *                                <code>originalXml</code> should be compared (<code>true</code>) or not (
-     *                                <code>false</code>). If not, the public-status in <code>toBeAssertedXml</code> is
-     *                                assumed to be created.
+     *            A timestamp before the last modification has been started. This is used to check the last modification
+     *            date.
+     * @param assertCreationDate
+     *            Flag to indicate if the creation-date and created-by values shall be asserted (<code>true</code>) or
+     *            not ( <code>false</code>).
+     * @param comparePublicStatus
+     *            Flag to indicate if the public-status in <code>toBeAssertedXml</code> and <code>originalXml</code>
+     *            should be compared (<code>true</code>) or not ( <code>false</code>). If not, the public-status in
+     *            <code>toBeAssertedXml</code> is assumed to be created.
      * @return Returns the document representing the provided xml data.
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     public Document assertOrganizationalUnit(
         final String toBeAssertedXml, final String originalXml, final String timestampBeforeCreation,
@@ -1201,16 +1323,24 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     /**
      * Compare md-record elements of organizational units.
      * <p/>
-     * <p> There is one issue with eSciDoc XML documents and md-records. The order of md-record elements is out of
-     * focus. This means that for comparing of md-records the position within the XML document doesn't count (as far it
-     * is within md-records elements of course). One has to distinguish md-records by attribute name. </p>
-     *
-     * @param message           Assert message (lead text).
-     * @param original          Original document
-     * @param originalBaseXpath base path of original document
-     * @param document          document to compare
-     * @param documentBaseXpath base path of to compare document
-     * @throws Exception If documents differ or document structure is not as expected.
+     * <p>
+     * There is one issue with eSciDoc XML documents and md-records. The order of md-record elements is out of focus.
+     * This means that for comparing of md-records the position within the XML document doesn't count (as far it is
+     * within md-records elements of course). One has to distinguish md-records by attribute name.
+     * </p>
+     * 
+     * @param message
+     *            Assert message (lead text).
+     * @param original
+     *            Original document
+     * @param originalBaseXpath
+     *            base path of original document
+     * @param document
+     *            document to compare
+     * @param documentBaseXpath
+     *            base path of to compare document
+     * @throws Exception
+     *             If documents differ or document structure is not as expected.
      */
     public void assertOrganizationalUnitMdRecordsElement(
         final String message, final Document original, final String originalBaseXpath, final Document document,
@@ -1270,12 +1400,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     /**
      * Asserts that the provided document contains a valid Xml representation of an organizational unit list (like
      * retrieved from retrieveParents, retrieveChildren), and contains the expected organizational units.
-     *
-     * @param message         The assertion failed message.
-     * @param expectedOus     The map from id to xml representation of the expected organizational units.
-     * @param toBeAssertedXml The xml data to be asserted.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedOus
+     *            The map from id to xml representation of the expected organizational units.
+     * @param toBeAssertedXml
+     *            The xml data to be asserted.
      * @return Returns the <code>Document</code> for the provided xml data.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Document assertOrganizationalUnitList(
         final String message, final Map<String, String> expectedOus, final String toBeAssertedXml) throws Exception {
@@ -1304,14 +1438,20 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     /**
      * Asserts that the provided document contains a valid Xml representation of an organizational unit list (like
      * retrieved from retrieveParents, retrieveChildren), and contains the expected organizational units.
-     *
-     * @param message         The assertion failed message.
-     * @param expectedBaseUri The expected base uri in the root element.<br/> If this parameter is <code>null</code>,
-     *                        the root element will not be checked for containing xlink attributes.
-     * @param expectedOus     The map from id to xml representation of the expected organizational units.
-     * @param toBeAssertedXml The xml data to be asserted.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedBaseUri
+     *            The expected base uri in the root element.<br/>
+     *            If this parameter is <code>null</code>, the root element will not be checked for containing xlink
+     *            attributes.
+     * @param expectedOus
+     *            The map from id to xml representation of the expected organizational units.
+     * @param toBeAssertedXml
+     *            The xml data to be asserted.
      * @return Returns the <code>Document</code> for the provided xml data.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Document assertOrganizationalUnitSrwList(
         final String message, final String expectedBaseUri, final Map<String, String> expectedOus,
@@ -1348,13 +1488,18 @@ public class OrganizationalUnitTestBase extends OumTestBase {
     /**
      * Asserts that the provided document contains a valid Xml representation of an organizational unit ref list, and
      * contains refernces to the expected organizational units.
-     *
-     * @param message         The assertion failed message.
-     * @param expectedBaseUri The expected base uri in the root element.
-     * @param expectedOus     The map from id to xml representation of the expected organizational units.
-     * @param toBeAssertedXml The xml data to be asserted.
+     * 
+     * @param message
+     *            The assertion failed message.
+     * @param expectedBaseUri
+     *            The expected base uri in the root element.
+     * @param expectedOus
+     *            The map from id to xml representation of the expected organizational units.
+     * @param toBeAssertedXml
+     *            The xml data to be asserted.
      * @return Returns the <code>Document</code> for the provided xml data.
-     * @throws Exception Thrown if anything fails.
+     * @throws Exception
+     *             Thrown if anything fails.
      */
     public Document assertOrganizationalUnitRefList(
         final String message, final String expectedBaseUri, final Map<String, String> expectedOus,
