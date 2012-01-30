@@ -245,28 +245,28 @@ public class EscidocException extends Exception {
         EscidocException escidocException = null;
         if (throwable instanceof EscidocException) {
             escidocException = (EscidocException) throwable;
-            result.append("  <title><h1>");
+            result.append("  <title>");
             result.append(escapeTextContent(String.valueOf(escidocException.getHttpStatusCode())));
             result.append(' ');
             result.append(escapeTextContent(escidocException.getHttpStatusMsg()));
-            result.append("</h1></title>\n");
+            result.append("</title>\n");
         }
 
         // message
         final String throwableMessage = throwable.getMessage();
         if (throwableMessage != null) {
-            result.append("  <message><p>");
+            result.append("  <message>");
             result.append(escapeTextContent(throwableMessage));
-            result.append("</p></message>\n");
+            result.append("</message>\n");
         }
         else {
             result.append("  <message/>");
         }
 
         // class name
-        result.append("  <class><p>");
+        result.append("  <class>");
         result.append(throwable.getClass().getName());
-        result.append("</p></class>\n");
+        result.append("</class>\n");
 
         // stacktrace
         if (escidocException == null || hasHttpErrorCode(escidocException)) {
