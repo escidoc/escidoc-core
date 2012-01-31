@@ -623,9 +623,16 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
             final byte[] txt = (text.getBytes());
             final ServletOutputStream servletOut = httpResponse.getOutputStream();
-            final OutputStream out = new GZIPOutputStream(servletOut);
-            out.write(txt);
-            out.close();
+            OutputStream out = null;
+            try {
+                out = new GZIPOutputStream(servletOut);
+            }
+            finally {
+                if (out != null) {
+                    out.write(txt);
+                    out.close();
+                }
+            }
             servletOut.close();
         }
         httpResponse.setStatus(status);
@@ -659,11 +666,18 @@ public class EscidocServlet extends HttpServlet {
         if (compressionIsAccepted) {
             httpResponse.setHeader(HTTP_HEADER_CONTENT_ENCODING, HTTP_HEADER_VALUE_CONTENT_ENCODING_GZIP);
             final ServletOutputStream servletOut = httpResponse.getOutputStream();
-            final OutputStream out = new GZIPOutputStream(servletOut);
-            out.write(XmlUtility.DOCUMENT_START.getBytes());
-            out.write(XmlUtility.getStylesheetDefinition().getBytes());
-            out.write(exception.toXmlString().getBytes());
-            out.close();
+            OutputStream out = null;
+            try {
+                out = new GZIPOutputStream(servletOut);
+                out.write(XmlUtility.DOCUMENT_START.getBytes());
+                out.write(XmlUtility.getStylesheetDefinition().getBytes());
+                out.write(exception.toXmlString().getBytes());
+            }
+            finally {
+                if (out != null) {
+                    out.close();
+                }
+            }
             servletOut.close();
         }
         else {
