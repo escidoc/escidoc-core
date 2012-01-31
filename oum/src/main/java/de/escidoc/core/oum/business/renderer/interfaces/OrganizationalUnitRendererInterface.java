@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.oum.business.renderer.interfaces;
 
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
@@ -47,8 +48,9 @@ public interface OrganizationalUnitRendererInterface {
      * @param organizationalUnit The organizational unit to render.
      * @return Returns the XML representation of the organizational unit.
      * @throws SystemException Thrown in case of an internal error.
+     * @throws MdRecordNotFoundException Thrown in case a md-record was not found
      */
-    String render(final OrganizationalUnit organizationalUnit) throws SystemException;
+    String render(final OrganizationalUnit organizationalUnit) throws SystemException, MdRecordNotFoundException;
 
     /**
      * Gets the representation of the sub resource {@code properties} of an organizational unit.
@@ -74,8 +76,10 @@ public interface OrganizationalUnitRendererInterface {
      * @param organizationalUnit The organizational unit to render.
      * @return Returns the XML representation of the sub resource {@code md-records} of an organizational unit.
      * @throws WebserverSystemException Thrown in case of an internal error.
+     * @throws MdRecordNotFoundException thrown if a md-recrod cannot be not found 
      */
-    String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException;
+    String renderMdRecords(final OrganizationalUnit organizationalUnit) throws WebserverSystemException,
+        MdRecordNotFoundException;
 
     /**
      * Gets the representation of a single sub resource {@code md-record} of an organizational unit.
@@ -86,7 +90,7 @@ public interface OrganizationalUnitRendererInterface {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     String renderMdRecord(final OrganizationalUnit organizationalUnit, final String name)
-        throws WebserverSystemException;
+        throws WebserverSystemException, MdRecordNotFoundException;
 
     /**
      * Gets the representation of the sub resource {@code parents} of an organizational unit.
