@@ -91,19 +91,25 @@ public class ContainerReleaseIT extends ContainerTestBase {
         submit(subContainerId, param);
 
         // prepare the Container it self to release
-        param = getTheLastModificationParam(false, theContainerId, "");
+        final String submitComment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(false, theContainerId, submitComment);
         resultXml = submit(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", submitComment);
 
         // release the Container
         String containerLmd = getTheLastModificationDate(this.theContainerId);
         containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
-        param = getTheLastModificationParam(false, this.theContainerId, "", containerLmd);
+        final String releaseComment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(false, this.theContainerId, releaseComment, containerLmd);
         resultXml = release(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
         assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", releaseComment);
 
         // check the Container and children
         String containerXml = retrieve(theContainerId);
