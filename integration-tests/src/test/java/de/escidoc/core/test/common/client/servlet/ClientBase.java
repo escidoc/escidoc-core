@@ -731,7 +731,7 @@ public abstract class ClientBase {
                     + exceptionXML);
         }
 
-        Node exceptionNameNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/class/p");
+        Node exceptionNameNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/class");
         if (exceptionNameNode == null) {
             throw new Exception("Missing exception name node in response body:\n" + exceptionXML);
         }
@@ -774,7 +774,7 @@ public abstract class ClientBase {
             ((EscidocException) exceptionObject).setHttpStatusCode(result.getStatusLine().getStatusCode());
             ((EscidocException) exceptionObject).setHttpStatusLine(result.getStatusLine().getReasonPhrase());
 
-            Node exceptionMessageNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/message/p");
+            Node exceptionMessageNode = EscidocTestBase.selectSingleNode(exceptionDocument, "/exception/message");
             if (exceptionMessageNode != null) {
                 String exceptionMessage = exceptionMessageNode.getTextContent();
 

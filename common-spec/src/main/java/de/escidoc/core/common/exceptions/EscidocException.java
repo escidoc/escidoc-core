@@ -306,14 +306,14 @@ public class EscidocException extends Exception {
      */
     public static String getStackTraceXml(final Throwable e) {
 
-        final StringBuilder result = new StringBuilder("  <stack-trace><p><![CDATA[\n");
+        final StringBuilder result = new StringBuilder("  <stack-trace><![CDATA[\n");
         final StackTraceElement[] elements = e.getStackTrace();
         for (final StackTraceElement element : elements) {
             result.append("    ");
             result.append(element);
             result.append('\n');
         }
-        result.append("]]></p></stack-trace>\n");
+        result.append("]]></stack-trace>\n");
         return result.toString();
     }
 
