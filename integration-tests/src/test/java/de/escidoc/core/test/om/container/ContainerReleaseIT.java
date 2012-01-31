@@ -94,22 +94,28 @@ public class ContainerReleaseIT extends ContainerTestBase {
             null));
 
         // prepare the Container it self to release
-        param = getTheLastModificationParam(false, theContainerId, "");
+        final String submitComment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(false, theContainerId, submitComment);
         resultXml =
             submit(theContainerId, getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", submitComment);
 
         // release the Container
         String containerLmd = getTheLastModificationDate(this.theContainerId);
         containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
+        final String releaseComment = String.valueOf(System.nanoTime());
         resultXml =
             release(theContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ""));
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), releaseComment));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
         assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", submitComment);
 
         // check the Container and children
         String containerXml = retrieve(theContainerId);
