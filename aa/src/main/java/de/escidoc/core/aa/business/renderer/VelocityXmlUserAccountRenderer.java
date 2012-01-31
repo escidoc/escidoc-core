@@ -205,7 +205,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer imple
             values.put("grantUserHref", grant.getUserAccountByUserId().getHref());
             values.put("grantUserId", grant.getUserAccountByUserId().getId());
         }
-        if (grant.getUserGroupByGroupId() != null) {
+        else if (grant.getUserGroupByGroupId() != null) {
             values.put("grantGroupTitle", grant.getUserGroupByGroupId().getName());
             values.put("grantGroupHref", grant.getUserGroupByGroupId().getHref());
             values.put("grantGroupId", grant.getUserGroupByGroupId().getId());
