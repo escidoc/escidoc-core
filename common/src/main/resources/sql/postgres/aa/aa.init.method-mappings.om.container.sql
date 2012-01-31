@@ -245,18 +245,6 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
 
 
         /**
-         * Container mm - add tocs
-         */
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-container-add-tocs', 'de.escidoc.core.om.service.interfaces.ContainerHandlerInterface', 'addTocs', 
-  'info:escidoc/names:aa:1.0:action:add-members-to-container', 
-  true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException');
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-im-container-add-tocs', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-container-add-tocs');
-
-        /**
          * Container mm - add members
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
@@ -452,18 +440,6 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-container-unlock-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-container-unlock');
-
-
-        /**
-         * Container mm - retrieve tocs
-         */
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-container-retrieve-tocs', 'de.escidoc.core.om.service.interfaces.ContainerHandlerInterface', 'retrieveTocs', 
-  'info:escidoc/names:aa:1.0:action:retrieve-container', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException');
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-im-container-retrieve-tocs-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-container-retrieve-tocs');
 
 
         /**

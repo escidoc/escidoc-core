@@ -94,14 +94,6 @@ BEGIN
               info:escidoc/names:aa:1.0:action:item-move-to-context 
               info:escidoc/names:aa:1.0:action:lock-item 
               info:escidoc/names:aa:1.0:action:unlock-item 
-              info:escidoc/names:aa:1.0:action:create-toc 
-              info:escidoc/names:aa:1.0:action:delete-toc 
-              info:escidoc/names:aa:1.0:action:retrieve-toc 
-              info:escidoc/names:aa:1.0:action:update-toc 
-              info:escidoc/names:aa:1.0:action:submit-toc 
-              info:escidoc/names:aa:1.0:action:release-toc 
-              info:escidoc/names:aa:1.0:action:revise-toc 
-              info:escidoc/names:aa:1.0:action:withdraw-toc 
               info:escidoc/names:aa:1.0:action:create-content-relation 
               info:escidoc/names:aa:1.0:action:delete-content-relation 
               info:escidoc/names:aa:1.0:action:retrieve-content-relation 

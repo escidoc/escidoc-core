@@ -45,7 +45,6 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:retrieve-context 
             info:escidoc/names:aa:1.0:action:retrieve-item 
             info:escidoc/names:aa:1.0:action:retrieve-content 
-            info:escidoc/names:aa:1.0:action:retrieve-toc 
             info:escidoc/names:aa:1.0:action:retrieve-content-relation 
             info:escidoc/names:aa:1.0:action:query-semantic-store 
             info:escidoc/names:aa:1.0:action:retrieve-xml-schema 
