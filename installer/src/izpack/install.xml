@@ -359,7 +359,7 @@
         <panel classname="UserInputPanel" id="UserInputPanel.0" condition="askForUpgrade" />
         <panel classname="UserInputPanel" id="UserInputPanel.1" />
         <panel classname="UserInputPanel" id="UserInputPanel.2" />
-        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="installEscidoc+databaseIsOracle" />
+        <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
         <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
         <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
