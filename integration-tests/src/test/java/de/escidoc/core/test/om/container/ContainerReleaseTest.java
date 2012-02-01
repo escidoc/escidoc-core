@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
