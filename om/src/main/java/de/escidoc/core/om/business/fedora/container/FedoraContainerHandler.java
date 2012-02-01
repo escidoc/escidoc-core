@@ -1471,7 +1471,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             // set status "submited"
             // only renew the timestamp and set status with version entry
             // getFedoraUtility().touchObject(getContainer().getId(), true);
-            makeVersion("ContainerHandler.release()", Constants.STATUS_RELEASED);
+            makeVersion(taskParameter.getComment(), Constants.STATUS_RELEASED);
             getContainer().setLatestReleasePid();
             getContainer().persist();
         }

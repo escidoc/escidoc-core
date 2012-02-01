@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
@@ -101,19 +102,25 @@ public class ContainerReleaseTest extends ContainerTestBase {
         submit(subContainerId, param);
 
         // prepare the Container it self to release
-        param = getTheLastModificationParam(false, theContainerId, "");
+        final String submitComment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(false, theContainerId, submitComment);
         resultXml = submit(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
+        assertXmlEquals("Comment string not as expected", getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", submitComment);
 
         // release the Container
         String containerLmd = getTheLastModificationDate(this.theContainerId);
         containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
-        param = getTheLastModificationParam(false, this.theContainerId, "", containerLmd);
+        final String releaseComment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(false, this.theContainerId, releaseComment, containerLmd);
         resultXml = release(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
         assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
+        assertXmlEquals("Comment string not as expected", getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", releaseComment);
 
         // check the Container and children
         String containerXml = retrieve(theContainerId);
