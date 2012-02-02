@@ -22,12 +22,6 @@
       <version>${escidoc.srw.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.escidoc.core</groupId>
-      <artifactId>migration-tool</artifactId>
-      <type>zip</type>
-      <version>${migration-tool.version}</version>
-    </dependency>
-    <dependency>
       <groupId>fedora.localservice</groupId>
       <artifactId>saxon</artifactId>
       <type>war</type>
@@ -64,15 +58,6 @@
             </goals>
             <configuration>
               <artifactItems>
-                <artifactItem>
-                  <groupId>org.escidoc.core</groupId>
-                  <artifactId>migration-tool</artifactId>
-                  <type>zip</type>
-                  <version>${migration-tool.version}</version>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
-                </artifactItem>
-
                 <artifactItem>
                   <groupId>org.escidoc</groupId>
                   <artifactId>fedoragsearch</artifactId>
