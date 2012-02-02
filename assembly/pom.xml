@@ -25,7 +25,26 @@
         <type>zip</type>
         <version>${escidoc.srw.version}</version>
       </dependency>
-      <dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>migration-tool</artifactId>
+      <type>zip</type>
+      <version>${migration-tool.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>fedora.localservice</groupId>
+      <artifactId>saxon</artifactId>
+      <type>war</type>
+      <version>${escidoc.saxon.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>fedoragsearch</artifactId>
+      <type>zip</type>
+      <classifier>sources</classifier>
+      <version>${escidoc.fedoragsearch.version}</version>
+     </dependency>
+     <dependency>
         <groupId>org.escidoc</groupId>
         <artifactId>fedoragsearch</artifactId>
         <type>zip</type>
@@ -43,6 +62,61 @@
 
 	<build>
 		<plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.escidoc.core</groupId>
+                  <artifactId>migration-tool</artifactId>
+                  <type>zip</type>
+                  <version>${migration-tool.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>fedoragsearch</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.fedoragsearch.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>srw</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.srw.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>fedora.localservice</groupId>
+                  <artifactId>saxon</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.saxon.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+              </artifactItems>
+              <!-- other configurations here -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2</version>
