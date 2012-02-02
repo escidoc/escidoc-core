@@ -92,7 +92,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
         // prepare the Container it self to release
         final String submitComment = String.valueOf(System.nanoTime());
-        param = getTheLastModificationParam(false, theContainerId, submitComment);
+        param = getTheLastModificationParam(true, theContainerId, submitComment);
         resultXml = submit(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
@@ -103,7 +103,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String containerLmd = getTheLastModificationDate(this.theContainerId);
         containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
         final String releaseComment = String.valueOf(System.nanoTime());
-        param = getTheLastModificationParam(false, this.theContainerId, releaseComment, containerLmd);
+        param = getTheLastModificationParam(true, this.theContainerId, releaseComment, containerLmd);
         resultXml = release(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
