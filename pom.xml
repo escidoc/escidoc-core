@@ -1059,6 +1059,7 @@
     <escidoc.srw.version>1.4.16</escidoc.srw.version>
     <srw.version>1.4.7</srw.version>
     <escidoc.saxon.version>1.0.7</escidoc.saxon.version>
+    <migration-tool.version>1.4.2</migration-tool.version>
     <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <xalan.version>2.7.1</xalan.version>

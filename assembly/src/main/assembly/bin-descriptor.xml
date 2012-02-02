@@ -41,6 +41,15 @@
         <include>*.ear</include>
       </includes>
     </fileSet>
+    <!--  war -->
+    <fileSet>
+      <directory>${project.build.directory}/packages</directory>
+      <outputDirectory>/war</outputDirectory>
+      <includes>
+        <include>*.war</include>
+      </includes>
+    </fileSet>
+
 
     <!-- sql scripte -->
     <fileSet>

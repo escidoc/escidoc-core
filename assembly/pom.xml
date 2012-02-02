@@ -1,67 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<artifactId>eSciDocCore</artifactId>
-		<groupId>org.escidoc.core</groupId>
-		<version>1.4.1-SNAPSHOT</version>
-	</parent>
+  <parent>
+    <artifactId>eSciDocCore</artifactId>
+    <groupId>org.escidoc.core</groupId>
+    <version>1.4.1-SNAPSHOT</version>
+  </parent>
 
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>assembly</artifactId>
-	<packaging>pom</packaging>
-	<name>ZIP, etc. Assembly</name>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>assembly</artifactId>
+  <packaging>pom</packaging>
+  <name>ZIP, etc. Assembly</name>
 
-	<dependencies>
-      <dependency>
-        <groupId>org.escidoc</groupId>
-        <artifactId>srw</artifactId>
-        <classifier>sources</classifier>
-        <type>zip</type>
-        <version>${escidoc.srw.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc</groupId>
-        <artifactId>fedoragsearch</artifactId>
-        <type>zip</type>
-        <classifier>sources</classifier>
-        <version>${escidoc.fedoragsearch.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.escidoc</groupId>
-        <artifactId>SRW</artifactId>
-        <classifier>sources</classifier>
-        <type>zip</type>
-        <version>${srw.version}</version>
-      </dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>srw</artifactId>
+      <classifier>sources</classifier>
+      <type>zip</type>
+      <version>${escidoc.srw.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>migration-tool</artifactId>
+      <type>zip</type>
+      <version>${migration-tool.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>fedora.localservice</groupId>
+      <artifactId>saxon</artifactId>
+      <type>war</type>
+      <version>${escidoc.saxon.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>fedoragsearch</artifactId>
+      <type>zip</type>
+      <classifier>sources</classifier>
+      <version>${escidoc.fedoragsearch.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>SRW</artifactId>
+      <classifier>sources</classifier>
+      <type>zip</type>
+      <version>${srw.version}</version>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
+  <build>
+    <plugins>
 
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
-						<descriptor>src/main/assembly/src-descriptor.xml</descriptor>
-						<descriptor>src/main/assembly/search-indexing-descriptor.xml</descriptor>
-						<!-- <descriptor>src/main/assembly/doc-descriptor.xml</descriptor> -->
-						<descriptor>src/main/assembly/examples-descriptor.xml</descriptor>
-						<descriptor>src/main/assembly/jboss-patch-descriptor.xml</descriptor>
-					</descriptors>
-					<finalName>escidoc-core-${project.version}</finalName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.escidoc.core</groupId>
+                  <artifactId>migration-tool</artifactId>
+                  <type>zip</type>
+                  <version>${migration-tool.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>fedoragsearch</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.fedoragsearch.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>org.escidoc</groupId>
+                  <artifactId>srw</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.srw.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+                <artifactItem>
+                  <groupId>fedora.localservice</groupId>
+                  <artifactId>saxon</artifactId>
+                  <type>war</type>
+                  <version>${escidoc.saxon.version}</version>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}/packages</outputDirectory>
+                </artifactItem>
+
+              </artifactItems>
+              <!-- other configurations here -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+
+        <configuration>
+          <descriptors>
+            <descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
+            <descriptor>src/main/assembly/src-descriptor.xml</descriptor>
+            <descriptor>src/main/assembly/search-indexing-descriptor.xml</descriptor>
+            <!-- <descriptor>src/main/assembly/doc-descriptor.xml</descriptor> -->
+            <descriptor>src/main/assembly/examples-descriptor.xml</descriptor>
+            <descriptor>src/main/assembly/jboss-patch-descriptor.xml</descriptor>
+          </descriptors>
+          <finalName>escidoc-core-${project.version}</finalName>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
