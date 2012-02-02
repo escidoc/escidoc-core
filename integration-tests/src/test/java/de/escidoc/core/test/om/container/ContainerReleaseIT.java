@@ -113,7 +113,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         lmd = getLastModificationDateValue(getDocument(resultXml));
         assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
         assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
-            "/container/properties/public-status-comment", submitComment);
+            "/container/properties/public-status-comment", releaseComment);
 
         // check the Container and children
         String containerXml = retrieve(theContainerId);
