@@ -89,16 +89,14 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String lmdSubCont = getLastModificationDateValue(getDocument(xmlData));
 
         lmdSubCont = prepareContainerPid(subContainerId, lmdSubCont);
-        String param = getTheLastModificationParam(false, this.theContainerId, "", lmdSubCont);
         submit(subContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(subContainerId))),
             null));
 
         // prepare the Container it self to release
         final String submitComment = String.valueOf(System.nanoTime());
-        param = getTheLastModificationParam(false, theContainerId, submitComment);
         resultXml =
             submit(theContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), submitComment));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
         assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
