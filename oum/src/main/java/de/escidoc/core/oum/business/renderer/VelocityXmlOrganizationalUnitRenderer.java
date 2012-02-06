@@ -419,6 +419,7 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
             values.put(XmlTemplateProviderConstants.VAR_PROPERTIES_HREF, XmlUtility
                 .getOrganizationalUnitPropertiesHref(organizationalUnit.getId()));
             values.put("organizationalUnitStatus", organizationalUnit.getPublicStatus());
+            values.put("organizationalUnitStatusComment", organizationalUnit.getPublicStatusComment());
             values.put("organizationalUnitCreationDate", organizationalUnit.getCreationDate());
             values.put("organizationalUnitCreatedByTitle", organizationalUnit.getCreatedByTitle());
             values.put("organizationalUnitCreatedByHref", XmlUtility.getUserAccountHref(organizationalUnit

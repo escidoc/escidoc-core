@@ -128,14 +128,16 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
      * Set a new state.
      *
      * @param state The new state.
+     * @param comment TODO
      * @throws SystemException Thrown in case of an internal error.
      */
-    protected void updateState(final String state) throws SystemException {
+    protected void updateState(final String state, final String comment) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getBuildNumber();
         values.put(XmlTemplateProviderConstants.FRAMEWORK_BUILD_NUMBER, buildNumber);
         values.put(XmlTemplateProviderConstants.PUBLIC_STATUS, state);
+        values.put(XmlTemplateProviderConstants.PUBLIC_STATUS_COMMENT, comment);
         values.put(XmlTemplateProviderConstants.CREATED_BY_ID, getOrganizationalUnit().getCreatedBy());
         values.put(XmlTemplateProviderConstants.CREATED_BY_TITLE, getOrganizationalUnit().getCreatedByTitle());
         values.put(XmlTemplateProviderConstants.MODIFIED_BY_ID, getOrganizationalUnit().getModifiedBy());

@@ -5,6 +5,9 @@
     #set($unescapedModifier="#unesc(${organizationalUnitModifiedByTitle})")    
     #restModifiedBy("#escA($unescapedModifier)" ${organizationalUnitModifiedByHref})
 	<${escidocPropertiesNamespacePrefix}:public-status>${organizationalUnitStatus}</${escidocPropertiesNamespacePrefix}:public-status>
+#if( ${organizationalUnitStatusComment} )
+	<${escidocPropertiesNamespacePrefix}:public-status-comment>${organizationalUnitStatusComment}</${escidocPropertiesNamespacePrefix}:public-status-comment>
+#end
 	<${escidocPropertiesNamespacePrefix}:name>${NAME}</${escidocPropertiesNamespacePrefix}:name>
 	#if(${DESCRIPTION})<${escidocPropertiesNamespacePrefix}:description>${DESCRIPTION}</${escidocPropertiesNamespacePrefix}:description>#end
     <${escidocPropertiesNamespacePrefix}:external-ids></${escidocPropertiesNamespacePrefix}:external-ids>

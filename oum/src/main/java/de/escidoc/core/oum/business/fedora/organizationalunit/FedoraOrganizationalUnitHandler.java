@@ -899,7 +899,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         checkUpToDate(taskParamHandler.getLastModificationDate());
         checkInState(Constants.STATUS_OU_CLOSED, Constants.STATUS_OU_OPENED);
         checkWithoutChildrenOrChildrenClosed(Constants.STATUS_OU_CLOSED);
-        updateState(Constants.STATUS_OU_CLOSED);
+        updateState(Constants.STATUS_OU_CLOSED, taskParamHandler.getComment());
         getOrganizationalUnit().persist();
 
         fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));
@@ -924,7 +924,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         checkUpToDate(taskParamHandler.getLastModificationDate());
         checkInState(Constants.STATUS_OU_OPENED, Constants.STATUS_OU_CREATED);
         checkParentsInState(Constants.STATUS_OU_OPENED, Constants.STATUS_OU_OPENED);
-        updateState(Constants.STATUS_OU_OPENED);
+        updateState(Constants.STATUS_OU_OPENED, taskParamHandler.getComment());
         getOrganizationalUnit().persist();
 
         fireOuModified(getOrganizationalUnit().getId(), retrieve(getOrganizationalUnit().getId()));

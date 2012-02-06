@@ -86,6 +86,8 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
 
     private String publicStatus;
 
+    private String publicStatusComment;
+
     private String createdByTitle;
 
     private String modifiedBy;
@@ -168,6 +170,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
         this.modifiedBy = getPropertyFromTriplestore(TripleStoreUtility.PROP_MODIFIED_BY_ID);
         this.modifiedByTitle = getPropertyFromTriplestore(TripleStoreUtility.PROP_MODIFIED_BY_TITLE);
         this.publicStatus = getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS);
+        this.publicStatusComment = getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT);
 
         this.hasChildren = !this.tripleStoreUtility.getChildren(getId()).isEmpty();
         this.name = this.tripleStoreUtility.getTitle(getId());
@@ -590,6 +593,21 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      */
     public void setPublicStatus(final String publicStatus) {
         this.publicStatus = publicStatus;
+    }
+
+    /**
+     * @return the publicStatusComment
+     */
+    public String getPublicStatusComment() {
+        return this.publicStatus;
+    }
+
+    /**
+     * @param publicStatus
+     *            the publicStatus to set
+     */
+    public void setPublicStatusComment(final String publicStatusComment) {
+        this.publicStatusComment = publicStatusComment;
     }
 
     /**
