@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.test.EscidocAbstractTest;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -414,6 +415,40 @@ public class OpenIT extends OrganizationalUnitTestBase {
         String lmdClose = getLastModificationDateValue(getDocument(resultXml));
 
         assertTimestampIsEqualOrAfter("Wrong timestamp", lmdClose, lmdOpen);
+    }
+
+    /**
+     * Test if comment is processed (issue INFR-1403)
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
+     */
+    @Test
+    public void comment() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+
+        String createdXml = create(toString(toBeCreatedDocument, false));
+
+        final Document toBeOpenedDocument = getDocument(createdXml);
+        final String objid = getObjidValue(toBeOpenedDocument);
+
+        final String openComment = String.valueOf(System.nanoTime());
+        String taskParam = getStatusTaskParam(getLastModificationDateValue2(toBeOpenedDocument), openComment);
+        String resultXml = open(objid, taskParam);
+        assertXmlValidResult(resultXml);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(objid)),
+            "/organizational-unit/properties/public-status-comment", openComment);
+
+        final String closeComment = String.valueOf(System.nanoTime());
+        taskParam = getStatusTaskParam(getLastModificationDateValue2(getDocument(resultXml)), closeComment);
+
+        resultXml = close(objid, taskParam);
+        assertXmlValidResult(resultXml);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(objid)),
+            "/organizational-unit/properties/public-status-comment", closeComment);
     }
 
     /**
