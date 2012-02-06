@@ -32,6 +32,9 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.test.EscidocAbstractTest;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -39,15 +42,16 @@ import static org.junit.Assert.fail;
 
 /**
  * Test open method of OrganizationalUnitHandler.
- *
+ * 
  * @author Michael Schneider
  */
 public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests successfully open an organizational unit without children.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou1a() throws Exception {
@@ -71,8 +75,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests successfully open an organizational unit with children.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou1b() throws Exception {
@@ -101,8 +106,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests successfully open an organizational unit with parents in status opened.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou1c() throws Exception {
@@ -147,8 +153,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining remove a parent from an open organizational unit.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testRemoveParentFromOpen() throws Exception {
@@ -185,8 +192,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit with providing an unknown id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou2a() throws Exception {
@@ -203,8 +211,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit with providing an id of an existing resource of another type.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou2b() throws Exception {
@@ -224,8 +233,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit without providing an id.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou3a() throws Exception {
@@ -242,8 +252,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit without providing a task param.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou3b() throws Exception {
@@ -260,8 +271,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit with an invalid task param (missing timestamp).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou3c() throws Exception {
@@ -278,8 +290,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit with an invalid task param (wrong root).
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou3d() throws Exception {
@@ -296,8 +309,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit which is already opened.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou4a() throws Exception {
@@ -323,8 +337,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit which is in state closed.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou4b() throws Exception {
@@ -352,8 +367,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Tests declining opening an organizational unit with parents in status created.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOumOou4c() throws Exception {
@@ -390,8 +406,9 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
     /**
      * Test the last modification date timestamp of the open/close method.
-     *
-     * @throws Exception Thrown if anything failed.
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
      */
     @Test
     public void testReturnValue01() throws Exception {
@@ -424,68 +441,94 @@ public class OpenIT extends OrganizationalUnitTestBase {
         assertTimestampIsEqualOrAfter("Wrong timestamp", lmdClose, lmdOpen);
     }
 
-    //    /**
-    //     * Tests declining opening an organizational unit with parents in status
-    //     * closed.
-    //     *
-    //     * @test.name Open Organizational Unit - Success
-    //     * @test.id OUM_OOU-4-d
-    //     * @test.input <ul>
-    //     *             <li>Id of existing organizational unit with parents in status
-    //     *             closed.</li>
-    //     *             </ul>
-    //     * @test.expected: InvalidStatusException
-    //     * @test.status Revoked - because it is impossible to create an ou with
-    //     *              parents in status closed.
-    //     *
-    //     * @throws Exception
-    //     *             If anything fails.
-    //     */
-    // public void testOumOou4d() throws Exception {
-    //
-    // final String[] parentValues =
-    // createSuccessfully("escidoc_ou_create.xml", 2);
-    //
-    // open(parentValues[0], getTheLastModificationParam(true,
-    // parentValues[0], "Opened organizational unit '" + parentValues[0]
-    // + "'."));
-    // open(parentValues[1], getTheLastModificationParam(true,
-    // parentValues[1], "Opened organizational unit '" + parentValues[1]
-    // + "'."));
-    // Document toBeCreatedDocument =
-    // getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-    // "escidoc_ou_create.xml");
-    // setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-    // insertParentsElement(toBeCreatedDocument,
-    // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
-    //
-    // String toBeCreatedXml = toString(toBeCreatedDocument, false);
-    //
-    // String createdXml = null;
-    // try {
-    // createdXml = create(toBeCreatedXml);
-    // }
-    // catch (final Exception e) {
-    // failException("Creating OU with parents failed with exception. ", e);
-    // }
-    //
-    // close(parentValues[0], getTheLastModificationParam(true,
-    // parentValues[0], "Closed organizational unit '" + parentValues[0]
-    // + "'."));
-    // close(parentValues[1], getTheLastModificationParam(true,
-    // parentValues[1], "Closed organizational unit '" + parentValues[1]
-    // + "'."));
-    // final Document toBeOpenedDocument = getDocument(createdXml);
-    // final String objid = getObjidValue(toBeOpenedDocument);
-    // final Class<InvalidStatusException> ec = InvalidStatusException.class;
-    // try {
-    // open(objid, getTheLastModificationParam(true, objid,
-    // "Opened organizational unit '" + objid + "'."));
-    // failMissingException("Opening OU has not been declined", ec);
-    // }
-    // catch (final Exception e) {
-    // assertExceptionType(ec, e);
-    //
-    // }
-    // }
+    /**
+     * Test if comment is processed (issue INFR-1403)
+     * 
+     * @throws Exception
+     *             Thrown if anything failed.
+     */
+    @Test
+    @Ignore("additional values required in persistence data - fix with 1.5")
+    public void comment() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+
+        String createdXml = create(toString(toBeCreatedDocument, false));
+
+        final Document toBeOpenedDocument = getDocument(createdXml);
+        final String objid = getObjidValue(toBeOpenedDocument);
+
+        final String openComment = String.valueOf(System.nanoTime());
+        String taskParam = getStatusTaskParam(getLastModificationDateValue(toBeOpenedDocument), openComment);
+        String resultXml = open(objid, taskParam);
+        assertXmlValidResult(resultXml);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(objid)),
+            "/organizational-unit/properties/public-status-comment", openComment);
+
+        final String closeComment = String.valueOf(System.nanoTime());
+        taskParam = getStatusTaskParam(getLastModificationDateValue(getDocument(resultXml)), closeComment);
+
+        resultXml = close(objid, taskParam);
+        assertXmlValidResult(resultXml);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(objid)),
+            "/organizational-unit/properties/public-status-comment", closeComment);
+    }
+
+    /**
+     * Tests declining opening an organizational unit with parents in status closed.
+     * 
+     * @test.name Open Organizational Unit - Success
+     * @test.id OUM_OOU-4-d
+     * @test.input <ul>
+     *             <li>Id of existing organizational unit with parents in status closed.</li>
+     *             </ul>
+     * @test.expected: InvalidStatusException
+     * @test.status Revoked - because it is impossible to create an ou with parents in status closed.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    @Ignore("unkown")
+    public void testOumOou4d() throws Exception {
+
+        final String[] parentValues = createSuccessfully("escidoc_ou_create.xml", 2);
+
+        open(parentValues[0], getTheLastModificationParam(true, parentValues[0], "Opened organizational unit '"
+            + parentValues[0] + "'."));
+        open(parentValues[1], getTheLastModificationParam(true, parentValues[1], "Opened organizational unit '"
+            + parentValues[1] + "'."));
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
+        insertParentsElement(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentValues, false);
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            failException("Creating OU with parents failed with exception. ", e);
+        }
+
+        close(parentValues[0], getTheLastModificationParam(true, parentValues[0], "Closed organizational unit '"
+            + parentValues[0] + "'."));
+        close(parentValues[1], getTheLastModificationParam(true, parentValues[1], "Closed organizational unit '"
+            + parentValues[1] + "'."));
+        final Document toBeOpenedDocument = getDocument(createdXml);
+        final String objid = getObjidValue(toBeOpenedDocument);
+        final Class<InvalidStatusException> ec = InvalidStatusException.class;
+        try {
+            open(objid, getTheLastModificationParam(true, objid, "Opened organizational unit '" + objid + "'."));
+            failMissingException("Opening OU has not been declined", ec);
+        }
+        catch (final Exception e) {
+            assertExceptionType(ec, e);
+
+        }
+    }
 }

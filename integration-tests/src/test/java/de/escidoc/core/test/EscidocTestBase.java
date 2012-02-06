@@ -3512,6 +3512,24 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task param to open 
+     * @param lmd
+     * @param comment
+     * @return
+     */
+    public static String getStatusTaskParam(final String lmd, final String comment) {
+
+        String taskParam =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\"" + lmd + "\">\n";
+        if (comment != null) {
+            taskParam += "<comment>" + comment + "</url>";
+        }
+        taskParam += "</param>\n";
+
+        return taskParam;
+    }
+
+    /**
      * Gets the creation-date element of the first element named "properties" from the document.
      * 
      * @param document
