@@ -530,9 +530,9 @@ public final class Constants {
 
     public static final String STATUS_OU_CREATED = "created";
 
-    public static final String STATUS_OU_OPENED = "opened";
+    public static final String STATUS_OU_OPENED = STATUS_CONTEXT_OPENED;
 
-    public static final String STATUS_OU_CLOSED = "closed";
+    public static final String STATUS_OU_CLOSED = STATUS_CONTEXT_CLOSED;
 
     public static final String STATUS_RELATION_ACTIVE = "active";
 
