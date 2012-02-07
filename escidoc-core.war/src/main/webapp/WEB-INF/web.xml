@@ -547,7 +547,7 @@
          <!-- Redirect all JSP requests to the default jsp servlet -->
          <init-param>
            <param-name>redirects-list</param-name>
-           <param-value>/index.jsp</param-value>
+           <param-value>/index.jsp /aa/login/.*\.jsp /aa/logout/.*\.jsp</param-value>
          </init-param>
          <init-param>
            <param-name>redirect-servlet-name</param-name>
