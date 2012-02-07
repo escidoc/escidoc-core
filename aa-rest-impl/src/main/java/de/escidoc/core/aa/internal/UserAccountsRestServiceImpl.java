@@ -73,38 +73,17 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(
-	 * java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String)
+	 * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
 	 */
 	@Override
 	public JAXBElement<? extends ResponseType> retrieveUserAccounts(
-	    final String operation,
-        final String version,
-        final String query,
-        final String startRecord,
-        final String maximumRecords,
-        final String recordPacking,
-        final String recordSchema,
-        final String recordXPath,
-        final String resultSetTTL,
-        final String sortKeys,
-        final String stylesheet,
-        final String scanClause,
-        final String responsePosition,
-        final String maximumTerms)
+	    final SruSearchRequestParametersBean parameters)
 			throws MissingMethodParameterException, AuthenticationException,
 			AuthorizationException, InvalidSearchQueryException,
 			SystemException {
 
-	    SruSearchRequestParametersBean filter =
-            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
-                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
-                maximumTerms);
-
 		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(filter, null);
+				.createRequestTO(parameters, null);
 
 		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
 				Constants.SRU_CONTEXT_PATH , this.userAccountHandler

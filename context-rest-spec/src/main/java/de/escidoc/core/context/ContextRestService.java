@@ -23,6 +23,7 @@ import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -109,20 +110,7 @@ public interface ContextRestService {
 	@GET
 	@Path("/{id}/resources/members")
 	JAXBElement<? extends ResponseType> retrieveMembers(@PathParam("id") String id,
-	    @QueryParam("operation") String operation,
-        @QueryParam("version") String version,
-        @QueryParam("query") String query,
-        @QueryParam("startRecord") String startRecord,
-        @QueryParam("maximumRecords") String maximumRecords,
-        @QueryParam("recordPacking") String recordPacking,
-        @QueryParam("recordSchema") String recordSchema,
-        @QueryParam("recordXPath") String recordXPath,
-        @QueryParam("resultSetTTL") String resultSetTTL,
-        @QueryParam("sortKeys") String sortKeys,
-        @QueryParam("stylesheet") String stylesheet,
-        @QueryParam("scanClause") String scanClause,
-        @QueryParam("responsePosition") String responsePosition,
-        @QueryParam("maximumTerms") String maximumTerms, 
+        @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, 
         @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws ContextNotFoundException,

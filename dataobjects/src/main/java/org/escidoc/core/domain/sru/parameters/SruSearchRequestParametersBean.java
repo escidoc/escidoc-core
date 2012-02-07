@@ -29,7 +29,15 @@
 package org.escidoc.core.domain.sru.parameters;
 
 /**
- * Bean holding all parameters required for a SRU-Request.<br/>
+ * Bean implementation for JAX-RS @QueryParam annotation usage on JAX-RS interfaces. <br/>
+ * <br/>
+ * Example:<br/>
+ * <br/>
+ * <code>public method interfaceMethod(@QueryParam("") SruSearchRequestParametersBean) {...}
+ * </code><br/>
+ * <br/>
+ * This will map all query parameters to this bean, if and only if the query parameter name fits to one of the setter
+ * method name.<br/>
  * <br/>
  * Example: The query parameter <i>operation</i> requires the existence of the setter method <i>setOperation</i>.
  * 
@@ -72,6 +80,9 @@ public class SruSearchRequestParametersBean {
 
     // @XmlSchemaType(name = "positiveInteger")
     private String maximumTerms;
+
+    public SruSearchRequestParametersBean() {
+    }
 
     public SruSearchRequestParametersBean(final String operation, final String version, final String query,
         final String startRecord, final String maximumRecords, final String recordPacking, final String recordSchema,

@@ -66,24 +66,13 @@ public class GrantsRestServiceImpl implements GrantsRestService {
     /*
      * (non-Javadoc) /* (non-Javadoc)
      * 
-     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveGrants(
-        final String operation, final String version, final String query, final String startRecord,
-        final String maximumRecords, final String recordPacking, final String recordSchema, final String recordXPath,
-        final String resultSetTTL, final String sortKeys, final String stylesheet, final String scanClause,
-        final String responsePosition, final String maximumTerms) throws MissingMethodParameterException,
+    public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
 
-        SruSearchRequestParametersBean filter =
-            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
-                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
-                maximumTerms);
-
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(filter, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters, null);
 
         return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
             this.userAccountHandler.retrieveGrants(ServiceUtility.toMap(requestTO))));

@@ -25,9 +25,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
 
 import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.container.ContainerPropertiesTO;
@@ -109,15 +107,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     @Qualifier("service.ContainerHandler")
     private ContainerHandlerInterface containerHandler;
 
-    private JAXBContext jaxbContext;
-
     protected ContainerRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(ContainerTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
     }
 
     @Override
@@ -160,37 +150,17 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
-     * java.util.String, java.util.String, java.util.String, java.util.String, java.util.String,
+     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean,
      * java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveMembers(
         final String containerId, 
-        final String operation,
-        final String version,
-        final String query,
-        final String startRecord,
-        final String maximumRecords,
-        final String recordPacking,
-        final String recordSchema,
-        final String recordXPath,
-        final String resultSetTTL,
-        final String sortKeys,
-        final String stylesheet,
-        final String scanClause,
-        final String responsePosition,
-        final String maximumTerms, 
+        final SruSearchRequestParametersBean parameters, 
         final String roleId,
         final String userId, 
         final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
-
-        SruSearchRequestParametersBean parameters =
-            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
-                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
-                maximumTerms);
 
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
         if (roleId != null) {
@@ -315,30 +285,12 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     public Stream retrieveResource(
         final String id, 
         final String resourceName, 
-        final String operation,
-        final String version,
-        final String query,
-        final String startRecord,
-        final String maximumRecords,
-        final String recordPacking,
-        final String recordSchema,
-        final String recordXPath,
-        final String resultSetTTL,
-        final String sortKeys,
-        final String stylesheet,
-        final String scanClause,
-        final String responsePosition,
-        final String maximumTerms,
+        final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId, 
         final String omitHighlighting) throws SystemException,
         ContainerNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         OperationNotFoundException {
-
-        SruSearchRequestParametersBean parameters =
-            new SruSearchRequestParametersBean(operation, version, query, startRecord, maximumRecords, recordPacking,
-                recordSchema, recordXPath, resultSetTTL, sortKeys, stylesheet, scanClause, responsePosition,
-                maximumTerms);
 
         // prepare parameter list
         final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();

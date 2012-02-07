@@ -315,7 +315,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      */
     public Object deletePreference(final String id, final String name) throws Exception {
 
-        return callEsciDoc("UserAccount.createPreference", METHOD_DELETE_PREFERENCE, Constants.HTTP_METHOD_DELETE,
+        return callEsciDoc("UserAccount.deletePreference", METHOD_DELETE_PREFERENCE, Constants.HTTP_METHOD_DELETE,
             Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences/preference", name });
     }
 

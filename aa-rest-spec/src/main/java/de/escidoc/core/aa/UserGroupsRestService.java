@@ -39,6 +39,7 @@ import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -72,34 +73,8 @@ public interface UserGroupsRestService {
      * activated (value=true) or deactivated (value=false).</li> <li>http://escidoc.de/core/01/properties/user with
      * value "id"<br/> retrieves all User Groups the User belongs to (hierarchically).</li> </ul> <br/>
      *
-     * @param operation
-     *            The Standard SRU Get-Parameter operation
-     * @param version
-     *            The Standard SRU Get-Parameter version
-     * @param query
-     *            The Standard SRU Get-Parameter query
-     * @param startRecord
-     *            The Standard SRU Get-Parameter startRecord
-     * @param maximumRecords
-     *            The Standard SRU Get-Parameter maximumRecords
-     * @param recordPacking
-     *            The Standard SRU Get-Parameter recordPacking
-     * @param recordSchema
-     *            The Standard SRU Get-Parameter recordSchema
-     * @param recordXPath
-     *            The Standard SRU Get-Parameter recordXPath
-     * @param resultSetTTL
-     *            The Standard SRU Get-Parameter resultSetTTL
-     * @param sortKeys
-     *            The Standard SRU Get-Parameter sortKeys
-     * @param stylesheet
-     *            The Standard SRU Get-Parameter stylesheet
-     * @param scanClause
-     *            The Standard SRU Get-Parameter scanClause
-     * @param responsePosition
-     *            The Standard SRU Get-Parameter responsePosition
-     * @param maximumTerms
-     *            The Standard SRU Get-Parameter maximumTerms
+     * @param parameters
+     *            The Standard SRU Get-Parameters as Object
      * @return The XML representation of the the filtered list of user-groups corresponding to SRW schema as JAXBElement.
      * @throws MissingMethodParameterException
      *                                     Thrown if no XML representation of filter parameters is provided.
@@ -111,20 +86,7 @@ public interface UserGroupsRestService {
      */
     @GET
     JAXBElement<? extends ResponseType> retrieveUserGroups(
-        @QueryParam("operation") String operation,
-        @QueryParam("version") String version,
-        @QueryParam("query") String query,
-        @QueryParam("startRecord") String startRecord,
-        @QueryParam("maximumRecords") String maximumRecords,
-        @QueryParam("recordPacking") String recordPacking,
-        @QueryParam("recordSchema") String recordSchema,
-        @QueryParam("recordXPath") String recordXPath,
-        @QueryParam("resultSetTTL") String resultSetTTL,
-        @QueryParam("sortKeys") String sortKeys,
-        @QueryParam("stylesheet") String stylesheet,
-        @QueryParam("scanClause") String scanClause,
-        @QueryParam("responsePosition") String responsePosition,
-        @QueryParam("maximumTerms") String maximumTerms) throws MissingMethodParameterException,
+        @QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
 
 }
