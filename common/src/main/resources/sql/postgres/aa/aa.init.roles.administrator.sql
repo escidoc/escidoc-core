@@ -44,6 +44,12 @@
               <para>retrieve user-accounts,</para>
             </listitem>
             <listitem>
+              <para>retrieve user-account-preferences,</para>
+            </listitem>
+            <listitem>
+              <para>retrieve user-account-attributes,</para>
+            </listitem>
+            <listitem>
               <para>retrieve user-groups.</para>
             </listitem>
           </itemizedlist></para>
@@ -136,6 +142,8 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:retrieve-container 
             info:escidoc/names:aa:1.0:action:retrieve-item 
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
             info:escidoc/names:aa:1.0:action:retrieve-user-group 
           </AttributeValue>
 

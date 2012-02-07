@@ -57,6 +57,10 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
     private static UserGroupTestBase userGroupTestBase = null;
 
+    private static UserAttributeTestBase userAttributeTestBase = null;
+
+    private static UserPreferenceTestBase userPreferenceTestBase = null;
+
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
     private static int methodCounter = 0;
@@ -100,6 +104,10 @@ public class DefaultPoliciesIT extends GrantTestBase {
         super(USER_ACCOUNT_HANDLER_CODE);
         userGroupTestBase = new UserGroupTestBase() {
         };
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
+        userPreferenceTestBase = new UserPreferenceTestBase() {
+        };
     }
 
     /**
@@ -112,7 +120,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
         if (methodCounter == 0) {
             prepare();
         }
-        PWCallback.setHandle(HANDLE);
+        //PWCallback.setHandle(HANDLE);
     }
 
     /**
@@ -123,7 +131,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
     @After
     public void deinitialize() throws Exception {
         methodCounter++;
-        PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        //PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
     }
 
     /**
@@ -425,32 +433,30 @@ public class DefaultPoliciesIT extends GrantTestBase {
     }
 
     /**
-     * Test declining retrieving an user account by an anonymous user.<br> The retrieval uses the user account id.
+     * Test retrieving an user account by an anonymous user.<br> The retrieval uses the user account id.
      *
      * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrieveUserAccountDecline() throws Exception {
+    public void testRetrieveUserAccount() throws Exception {
 
-        doTestRetrieveUserAccount(HANDLE, null, "byId", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE,
-            AuthorizationException.class);
+        doTestRetrieveUserAccount(HANDLE, null, "byId", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
     }
 
     /**
-     * Test declining retrieving an user account by an anonymous user.<br> The retrieval uses the user account login
+     * Test retrieving an user account by an anonymous user.<br> The retrieval uses the user account login
      * name.
      *
      * @throws Exception If anything fails.
      */
     @Test
-    public void testRetrieveUserAccountByLoginNameDecline() throws Exception {
+    public void testRetrieveUserAccountByLoginName() throws Exception {
 
-        doTestRetrieveUserAccount(HANDLE, null, "byLoginName", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE,
-            AuthorizationException.class);
+        doTestRetrieveUserAccount(HANDLE, null, "byLoginName", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
     }
 
     /**
-     * Test declining retrieving an user account by an anonymous user.<br> The retrieval uses an handle
+     * Test retrieving an user account by an anonymous user.<br> The retrieval uses an handle
      * (PWCallback.DEPOSITOR_HANDLE).
      *
      * @throws Exception If anything fails.
@@ -458,7 +464,290 @@ public class DefaultPoliciesIT extends GrantTestBase {
     @Test
     public void testRetrieveUserAccountByHandle() throws Exception {
 
-        doTestRetrieveUserAccount(HANDLE, PWCallback.DEPOSITOR_HANDLE, null, null, null, AuthorizationException.class);
+        doTestRetrieveUserAccount(HANDLE, PWCallback.DEPOSITOR_HANDLE, null, null, null, null);
+    }
+
+    /**
+     * Test creating a user-acccount preference for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testCreateUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestCreatePreference(TEST_USER_ACCOUNT_ID, HANDLE, null);
+    }
+
+    /**
+     * Test creating a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineCreateUserAccountPreference1() throws Exception {
+        userPreferenceTestBase.doTestCreatePreference(null, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test deleting a user-acccount preference for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeleteUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestDeletePreference(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test deleting a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineDeleteUserAccountPreference1() throws Exception {
+        userPreferenceTestBase.doTestDeletePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating a user-acccount preference for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testUpdateUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreference(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test updating a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPreference1() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating user-acccount preferences for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testUpdateUserAccountPreferences() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreferences(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test updating user-acccount preferences.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPreferences1() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreferences(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount preference for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreference(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountPreference1() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount preferences for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountPreferences() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreferences(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount preferences.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountPreferences1() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreferences(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test creating a user-acccount attribute for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineCreateUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestCreateAttribute(TEST_USER_ACCOUNT_ID, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test creating a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineCreateUserAccountAttribute1() throws Exception {
+        userAttributeTestBase.doTestCreateAttribute(null, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test deleting a user-acccount attribute for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineDeleteUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestDeleteAttribute(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test deleting a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineDeleteUserAccountAttribute1() throws Exception {
+        userAttributeTestBase.doTestDeleteAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating a user-acccount attribute for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestUpdateAttribute(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountAttribute1() throws Exception {
+        userAttributeTestBase.doTestUpdateAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount attribute for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttribute(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountAttribute1() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount attributes for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttributes(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountAttributes1() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving named user-acccount attributes for own account.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveNamedUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveNamedAttributes(TEST_USER_ACCOUNT_ID, PWCallback.DEFAULT_HANDLE, HANDLE,
+            null);
+    }
+
+    /**
+     * Test retrieving named user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveNamedUserAccountAttributes1() throws Exception {
+        userAttributeTestBase.doTestRetrieveNamedAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating user-acccount password.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testUpdateUserAccountPassword() throws Exception {
+        doTestUpdateUserAccountPassword(TEST_USER_ACCOUNT_ID, HANDLE, null);
+    }
+
+    /**
+     * Test updating user-acccount password.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPassword1() throws Exception {
+        doTestUpdateUserAccountPassword(null, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving other user-acccount.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveOtherUserAccount() throws Exception {
+        doTestRetrieveUserAccount(HANDLE, null, null);
     }
 
     /**
@@ -491,11 +780,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1a() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(CONTAINER_HANDLER_CODE, CONTEXT_ID);
             EscidocAbstractTest.failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(ContainerNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -508,11 +801,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1b() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(CONTENT_MODEL_HANDLER_CODE, CONTEXT_ID);
             EscidocAbstractTest.failMissingException(ContentModelNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(ContentModelNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -525,11 +822,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1c() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(CONTEXT_HANDLER_CODE, CONTENT_TYPE_ID);
             EscidocAbstractTest.failMissingException(ContextNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(ContextNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -542,11 +843,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1d() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(ITEM_HANDLER_CODE, CONTEXT_ID);
             EscidocAbstractTest.failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(ItemNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -560,11 +865,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1e() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, CONTEXT_ID);
             EscidocAbstractTest.failMissingException(OrganizationalUnitNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(OrganizationalUnitNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -602,11 +911,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef1g() throws Exception {
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(STAGING_FILE_HANDLER_CODE, CONTEXT_ID);
             EscidocAbstractTest.failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(StagingFileNotFoundException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -636,13 +949,16 @@ public class DefaultPoliciesIT extends GrantTestBase {
     public void testAaDef2() throws Exception {
 
         final String param = getSemanticStoreQuery("&lt;info:fedora/escidov:user1" + "&gt;  * * ooo", "N-Triples");
-        PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
         try {
+            PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
             spo(param);
             EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -676,15 +992,17 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
         Class<AuthorizationException> ec = AuthorizationException.class;
 
-        PWCallback.setHandle(HANDLE);
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(CONTEXT_HANDLER_CODE, id);
             EscidocAbstractTest.failMissingException("Retrieving created context not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Retrieving created context not declined, properly.", ec, e);
         }
-
+        finally {
+            PWCallback.resetHandle();
+        }
     }
 
     /**
@@ -697,11 +1015,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(AGGREGATION_DEFINITION_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Retrieving aggregation definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Retrieving aggregation definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -715,11 +1037,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(REPORT_DEFINITION_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Retrieving report definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Retrieving report definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -737,10 +1063,14 @@ public class DefaultPoliciesIT extends GrantTestBase {
         parameterXml = parameterXml.replaceAll("repdef3", "repdef1");
 
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(REPORT_HANDLER_CODE, parameterXml);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -754,11 +1084,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
+            PWCallback.setHandle(HANDLE);
             retrieve(SCOPE_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Retrieving scope not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Retrieving scope not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -773,11 +1107,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
         try {
+            PWCallback.setHandle(HANDLE);
             delete(AGGREGATION_DEFINITION_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Deleting aggregation definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Deleting aggregation definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -792,11 +1130,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
         try {
+            PWCallback.setHandle(HANDLE);
             delete(REPORT_DEFINITION_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Deleting report definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Deleting report definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -810,11 +1152,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
+            PWCallback.setHandle(HANDLE);
             delete(SCOPE_HANDLER_CODE, "1");
             EscidocAbstractTest.failMissingException("Deleting scope not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Deleting scope not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -833,11 +1179,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
         String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {
+            PWCallback.setHandle(HANDLE);
             create(AGGREGATION_DEFINITION_HANDLER_CODE, toBeCreatedXml);
             EscidocAbstractTest.failMissingException("Creating aggregation definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Creating aggregation definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -856,11 +1206,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
         String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {
+            PWCallback.setHandle(HANDLE);
             create(REPORT_DEFINITION_HANDLER_CODE, toBeCreatedXml);
             EscidocAbstractTest.failMissingException("Creating report definition not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Creating report definition not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 
@@ -878,11 +1232,15 @@ public class DefaultPoliciesIT extends GrantTestBase {
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
 
         try {
+            PWCallback.setHandle(HANDLE);
             create(SCOPE_HANDLER_CODE, toBeCreatedXml);
             EscidocAbstractTest.failMissingException("Creating scope not declined.", ec);
         }
         catch (final Exception e) {
             EscidocAbstractTest.assertExceptionType("Creating scope not declined, properly.", ec, e);
+        }
+        finally {
+            PWCallback.resetHandle();
         }
     }
 

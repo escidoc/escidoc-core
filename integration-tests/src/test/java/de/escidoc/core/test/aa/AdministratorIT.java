@@ -29,6 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -64,6 +65,10 @@ public class AdministratorIT extends GrantTestBase {
             { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
+    private static UserAttributeTestBase userAttributeTestBase = null;
+
+    private static UserPreferenceTestBase userPreferenceTestBase = null;
+
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
     private static final String LOGINNAME = HANDLE;
@@ -84,6 +89,10 @@ public class AdministratorIT extends GrantTestBase {
     public AdministratorIT(final int handlerCode, final String userOrGroupId) throws Exception {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
+        userPreferenceTestBase = new UserPreferenceTestBase() {
+        };
     }
 
     /**
@@ -159,6 +168,141 @@ public class AdministratorIT extends GrantTestBase {
     public void testRetrieveUserAccountByLoginName() throws Exception {
 
         doTestRetrieveUserAccount(HANDLE, null, "byLoginName", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
+    }
+
+    /**
+     * Test creating a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineCreateUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestCreatePreference(null, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test deleting a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineDeleteUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestDeletePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating a user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating user-acccount preferences.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPreferences() throws Exception {
+        userPreferenceTestBase.doTestUpdatePreferences(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount preferences.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountPreferences() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreferences(null, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test creating a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineCreateUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestCreateAttribute(null, HANDLE, AuthorizationException.class);
+    }
+
+    /**
+     * Test deleting a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineDeleteUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestDeleteAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test updating a user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestUpdateAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving named user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveNamedUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveNamedAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test updating user-acccount password.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineUpdateUserAccountPassword() throws Exception {
+        doTestUpdateUserAccountPassword(null, HANDLE, AuthorizationException.class);
     }
 
     /**

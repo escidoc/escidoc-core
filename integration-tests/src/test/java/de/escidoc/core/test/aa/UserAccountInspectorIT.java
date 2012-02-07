@@ -65,6 +65,10 @@ public class UserAccountInspectorIT extends GrantTestBase {
             { USER_GROUP_HANDLER_CODE, USER_GROUP_WITH_EXTERNAL_SELECTOR } });
     }
 
+    private static UserAttributeTestBase userAttributeTestBase = null;
+
+    private static UserPreferenceTestBase userPreferenceTestBase = null;
+
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
     protected static final String LOGINNAME = HANDLE;
@@ -92,6 +96,10 @@ public class UserAccountInspectorIT extends GrantTestBase {
         super(handlerCode);
         grantCreationUserOrGroupId = userOrGroupId;
         userAccountTestBase = new UserAccountTestBase() {
+        };
+        userAttributeTestBase = new UserAttributeTestBase() {
+        };
+        userPreferenceTestBase = new UserPreferenceTestBase() {
         };
     }
 
@@ -155,13 +163,108 @@ public class UserAccountInspectorIT extends GrantTestBase {
     }
 
     /**
-     * Tests declining retrieving a user-account.
+     * Test retrieving user-acccount preference for user created by user-account-admin.
      *
      * @throws Exception If anything fails.
      */
     @Test
-    public void testDeclineRetrieveUserAccount() throws Exception {
-        userAccountTestBase.doTestRetrieveUserAccount(HANDLE, userId1, AuthorizationException.class);
+    public void testRetrieveUserAccountPreference() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreference(userId, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount preference.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountPreference1() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreference(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount preferences for user created by user-account-admin.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountPreferences() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreferences(userId, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount preferences.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountPreferences1() throws Exception {
+        userPreferenceTestBase.doTestRetrievePreferences(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount attribute for user created by user-account-admin.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttribute() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttribute(userId, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount attribute.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountAttribute1() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttribute(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving user-acccount attributes for user created by user-account-admin.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttributes(userId, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveUserAccountAttributes1() throws Exception {
+        userAttributeTestBase.doTestRetrieveAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
+    }
+
+    /**
+     * Test retrieving named user-acccount attributes for user created by user-account-admin.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetrieveNamedUserAccountAttributes() throws Exception {
+        userAttributeTestBase.doTestRetrieveNamedAttributes(userId, PWCallback.DEFAULT_HANDLE, HANDLE, null);
+    }
+
+    /**
+     * Test retrieving named user-acccount attributes.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testDeclineRetrieveNamedUserAccountAttributes1() throws Exception {
+        userAttributeTestBase.doTestRetrieveNamedAttributes(null, PWCallback.DEFAULT_HANDLE, HANDLE,
+            AuthorizationException.class);
     }
 
 }

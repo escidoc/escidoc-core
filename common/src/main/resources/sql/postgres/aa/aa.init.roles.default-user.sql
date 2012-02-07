@@ -45,8 +45,25 @@
         </listitem>
 
         <listitem>
-          <para>retrieve his/her own user-account (if the user has been
-          authenticated) and grants of their user-accounts.</para>
+          <para>retrieve all user-accounts (if the user has been
+          authenticated).</para>
+        </listitem>
+
+        <listitem>
+          <para>create, retrieve, update, delete own user-preferences</para>
+        </listitem>
+
+        <listitem>
+          <para>retrieve own user-attributes</para>
+        </listitem>
+
+        <listitem>
+          <para>update own password</para>
+        </listitem>
+
+        <listitem>
+          <para> retrieve grants of own user-account (if the user has been
+          authenticated).</para>
         </listitem>
 
         <listitem>
@@ -150,6 +167,12 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:retrieve-user-account 
                     info:escidoc/names:aa:1.0:action:retrieve-current-user-account 
                     info:escidoc/names:aa:1.0:action:update-user-account 
+                    info:escidoc/names:aa:1.0:action:create-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:update-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:update-password 
                     info:escidoc/names:aa:1.0:action:retrieve-objects-filtered 
                     info:escidoc/names:aa:1.0:action:retrieve-staging-file 
                     info:escidoc/names:aa:1.0:action:query-semantic-store 
@@ -442,9 +465,14 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                 <Action>
                     <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
                         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string"> 
-                        info:escidoc/names:aa:1.0:action:retrieve-user-account 
                         info:escidoc/names:aa:1.0:action:retrieve-grant 
                         info:escidoc/names:aa:1.0:action:update-user-account
+                        info:escidoc/names:aa:1.0:action:create-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:update-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+                        info:escidoc/names:aa:1.0:action:update-password 
                         </AttributeValue>
                         <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </ActionMatch>
@@ -475,6 +503,26 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                 </Apply>
             </Apply>
         </Condition>
+    </Rule>
+    <Rule RuleId="Default-User-policy-rule-8-0" Effect="Permit">
+        <Target>
+        <Subjects>
+                <AnySubject/>
+            </Subjects>
+            <Resources>
+                <AnyResource/>
+            </Resources>
+            <Actions>
+                <Action>
+                    <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string"> 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account 
+                        </AttributeValue>
+                        <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </ActionMatch>
+                </Action>
+            </Actions>
+        </Target>
     </Rule>
     <Rule RuleId="Default-User-policy-rule-8-1" Effect="Permit">
         <Target>

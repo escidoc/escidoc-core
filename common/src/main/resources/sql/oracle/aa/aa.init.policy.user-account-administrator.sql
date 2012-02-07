@@ -22,6 +22,15 @@ BEGIN
             info:escidoc/names:aa:1.0:action:update-user-account 
             info:escidoc/names:aa:1.0:action:activate-user-account 
             info:escidoc/names:aa:1.0:action:deactivate-user-account 
+            info:escidoc/names:aa:1.0:action:create-user-account-preference 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+            info:escidoc/names:aa:1.0:action:update-user-account-preference 
+            info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+            info:escidoc/names:aa:1.0:action:create-user-account-attribute 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+            info:escidoc/names:aa:1.0:action:update-user-account-attribute 
+            info:escidoc/names:aa:1.0:action:delete-user-account-attribute 
+            info:escidoc/names:aa:1.0:action:update-password 
             info:escidoc/names:aa:1.0:action:create-user-group-grant 
             info:escidoc/names:aa:1.0:action:retrieve-user-group-grant 
             info:escidoc/names:aa:1.0:action:revoke-user-group-grant 
@@ -70,6 +79,15 @@ BEGIN
                     info:escidoc/names:aa:1.0:action:update-user-account 
                     info:escidoc/names:aa:1.0:action:activate-user-account 
                     info:escidoc/names:aa:1.0:action:deactivate-user-account 
+                    info:escidoc/names:aa:1.0:action:create-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:update-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:create-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:update-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:delete-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:update-password 
                   </AttributeValue>
                   <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
               </ActionMatch>

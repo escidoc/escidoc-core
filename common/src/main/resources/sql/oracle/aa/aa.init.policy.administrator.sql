@@ -37,6 +37,8 @@ BEGIN
             info:escidoc/names:aa:1.0:action:retrieve-container 
             info:escidoc/names:aa:1.0:action:retrieve-item 
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
             info:escidoc/names:aa:1.0:action:retrieve-user-group 
           </AttributeValue>
 

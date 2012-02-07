@@ -34,6 +34,8 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:retrieve-roles 
             info:escidoc/names:aa:1.0:action:evaluate 
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
             info:escidoc/names:aa:1.0:action:retrieve-grant 
             info:escidoc/names:aa:1.0:action:retrieve-user-group 
             info:escidoc/names:aa:1.0:action:retrieve-user-group-grant 

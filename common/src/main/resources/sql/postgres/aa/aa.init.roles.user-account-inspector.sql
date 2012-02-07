@@ -5,7 +5,7 @@
         <para>A User-Account-Inspector is allowed to: <itemizedlist mark="opencircle"
             spacing="compact">
             <listitem>
-              <para>retrieve user-accounts.</para>
+              <para>retrieve user-accounts, user-account-preferences and -attributes.</para>
             </listitem>
           </itemizedlist></para>
         <para>This role is a limited role. It is restricted to a user-account.</para>
@@ -41,6 +41,8 @@ INSERT INTO aa.escidoc_policies
         <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
           <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+            info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
           </AttributeValue>
           <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
         </ActionMatch>

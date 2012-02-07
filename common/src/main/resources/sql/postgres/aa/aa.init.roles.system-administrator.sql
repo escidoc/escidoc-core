@@ -45,6 +45,15 @@ INSERT INTO aa.escidoc_policies
               info:escidoc/names:aa:1.0:action:update-user-account 
               info:escidoc/names:aa:1.0:action:activate-user-account 
               info:escidoc/names:aa:1.0:action:deactivate-user-account 
+              info:escidoc/names:aa:1.0:action:create-user-account-preference 
+              info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+              info:escidoc/names:aa:1.0:action:update-user-account-preference 
+              info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+              info:escidoc/names:aa:1.0:action:create-user-account-attribute 
+              info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+              info:escidoc/names:aa:1.0:action:update-user-account-attribute 
+              info:escidoc/names:aa:1.0:action:delete-user-account-attribute 
+              info:escidoc/names:aa:1.0:action:update-password 
               info:escidoc/names:aa:1.0:action:create-grant 
               info:escidoc/names:aa:1.0:action:retrieve-grant 
               info:escidoc/names:aa:1.0:action:retrieve-current-grants 

@@ -68,6 +68,33 @@ INSERT INTO aa.actions (id, name) VALUES
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-deactivate-user-account', 'info:escidoc/names:aa:1.0:action:deactivate-user-account');
 
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-update-password', 'info:escidoc/names:aa:1.0:action:update-password');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-create-user-account-attribute', 'info:escidoc/names:aa:1.0:action:create-user-account-attribute');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-update-user-account-attribute', 'info:escidoc/names:aa:1.0:action:update-user-account-attribute');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-delete-user-account-attribute', 'info:escidoc/names:aa:1.0:action:delete-user-account-attribute');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-retrieve-user-account-attribute', 'info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-create-user-account-preference', 'info:escidoc/names:aa:1.0:action:create-user-account-preference');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-update-user-account-preference', 'info:escidoc/names:aa:1.0:action:update-user-account-preference');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-delete-user-account-preference', 'info:escidoc/names:aa:1.0:action:delete-user-account-preference');
+
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-retrieve-user-account-preference', 'info:escidoc/names:aa:1.0:action:retrieve-user-account-preference');
+
     -- AA grant
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-create-grant', 'info:escidoc/names:aa:1.0:action:create-grant');

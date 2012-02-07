@@ -31,9 +31,8 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
+import de.escidoc.core.test.security.client.PWCallback;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -64,18 +63,40 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     protected String createAttribute(final String userId, final String xml) throws Exception {
-        Object result = client.createAttribute(userId, xml);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", httpRes);
+        return handleXmlResult(client.createAttribute(userId, xml));
+    }
 
+    /**
+     * Test creating a user attribute.
+     *
+     * @param id       The id of the UserAccount.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestCreateAttribute(final String id, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.createAttribute(userId, getCreateAttributeTaskParam(Long.toString(System.currentTimeMillis()),
+                "test"));
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
         }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
         }
-        return xmlResult;
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -86,19 +107,50 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     protected String retrieveAttributes(final String userId) throws Exception {
+        return handleXmlResult(client.retrieveAttributes(userId));
+    }
 
-        Object result = client.retrieveAttributes(userId);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);
+    /**
+     * Test retrieving user attributes.
+     *
+     * @param id   The id of the UserAccount.
+     * @param creatorHandle       The creatorhandle.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestRetrieveAttributes(
+        final String id, final String creatorHandle, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        String attName = Long.toString(System.currentTimeMillis());
+        try {
+            PWCallback.setHandle(creatorHandle);
+            client.createAttribute(userId, getCreateAttributeTaskParam(attName, "test"));
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
 
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.retrieveAttributes(userId);
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
         }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
         }
-        return xmlResult;
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -110,19 +162,50 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     protected String retrieveNamedAttributes(final String userId, final String name) throws Exception {
+        return handleXmlResult(client.retrieveNamedAttributes(userId, name));
+    }
 
-        Object result = client.retrieveNamedAttributes(userId, name);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);
+    /**
+     * Test retrieving named user attributes.
+     *
+     * @param id   The id of the UserAccount.
+     * @param creatorHandle       The creatorhandle.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestRetrieveNamedAttributes(
+        final String id, final String creatorHandle, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        String attName = Long.toString(System.currentTimeMillis());
+        try {
+            PWCallback.setHandle(creatorHandle);
+            client.createAttribute(userId, getCreateAttributeTaskParam(attName, "test"));
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
 
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.retrieveNamedAttributes(userId, attName);
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
         }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
         }
-        return xmlResult;
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -134,19 +217,53 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     protected String retrieveAttribute(final String userId, final String attributeId) throws Exception {
+        return handleXmlResult(client.retrieveAttribute(userId, attributeId));
+    }
 
-        Object result = client.retrieveAttribute(userId, attributeId);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);
+    /**
+     * Test retrieving named user attributes.
+     *
+     * @param id   The id of the UserAccount.
+     * @param creatorHandle       The creatorhandle.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestRetrieveAttribute(
+        final String id, final String creatorHandle, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        String attName = Long.toString(System.currentTimeMillis());
+        String attId = null;
+        try {
+            PWCallback.setHandle(creatorHandle);
+            String xmlResult =
+                handleXmlResult(client.createAttribute(userId, getCreateAttributeTaskParam(attName, "test")));
+            attId = getObjidValue(xmlResult);
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
 
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.retrieveAttribute(userId, attId);
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
         }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
         }
-        return xmlResult;
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -159,18 +276,55 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     protected String updateAttribute(final String userId, final String attributeId, final String xml) throws Exception {
-        Object result = client.updateAttribute(userId, attributeId, xml);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);
+        return handleXmlResult(client.updateAttribute(userId, attributeId, xml));
+    }
 
+    /**
+     * Test updating user attribute.
+     *
+     * @param id   The id of the UserAccount.
+     * @param creatorHandle       The creatorhandle.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestUpdateAttribute(
+        final String id, final String creatorHandle, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        String lmd = null;
+        String attName = Long.toString(System.currentTimeMillis());
+        String attId = null;
+        try {
+            PWCallback.setHandle(creatorHandle);
+            String xmlResult =
+                handleXmlResult(client.createAttribute(userId, getCreateAttributeTaskParam(attName, "test")));
+            attId = getObjidValue(xmlResult);
+            lmd = getLastModificationDateValue(getDocument(retrieve(userId)));
         }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
-        return xmlResult;
+
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.updateAttribute(userId, attId, getUpdateAttributeTaskParam(attName, "test1", lmd));
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
+        }
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -182,6 +336,52 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      */
     protected void deleteAttribute(final String userId, final String attributeId) throws Exception {
         client.deleteAttribute(userId, attributeId);
+    }
+
+    /**
+     * Test deleting a user attribute.
+     *
+     * @param id   The id of the UserAccount.
+     * @param creatorHandle       The creatorhandle.
+     * @param userHandle       The userhandle.
+     * @param expectedExceptionClass       expectedExceptionClass.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestDeleteAttribute(
+        final String id, final String creatorHandle, final String userHandle, final Class<?> expectedExceptionClass)
+        throws Exception {
+        String userId = getUserId(id);
+        String attId = null;
+        try {
+            PWCallback.setHandle(creatorHandle);
+            String attName = Long.toString(System.currentTimeMillis());
+            String xmlResult =
+                handleXmlResult(client.createAttribute(userId, getCreateAttributeTaskParam(attName, "test")));
+            attId = getObjidValue(xmlResult);
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+
+        try {
+            PWCallback.setHandle(userHandle);
+
+            client.deleteAttribute(userId, attId);
+            if (expectedExceptionClass != null) {
+                EscidocAbstractTest.failMissingException(expectedExceptionClass);
+            }
+        }
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocAbstractTest.failException(e);
+            }
+            else {
+                EscidocAbstractTest.assertExceptionType(expectedExceptionClass, e);
+            }
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
     }
 
     /**
@@ -306,6 +506,33 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
         }
 
         return col;
+    }
+
+    /**
+     * create attribute task-param xml.
+     *
+     * @param attName The name of the Attribute.
+     * @param attValue The value of the Attribute.
+     * @return The xml representation of the attribute task param.
+     * @throws Exception If anything fails.
+     */
+    public String getCreateAttributeTaskParam(final String attName, final String attValue) throws Exception {
+        return "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\" name=\"" + attName + "\">" + attValue
+            + "</attribute>";
+    }
+
+    /**
+     * update attribute task-param xml.
+     *
+     * @param attName The name of the Attribute.
+     * @param attValue The value of the Attribute.
+     * @return The xml representation of the attribute task param.
+     * @throws Exception If anything fails.
+     */
+    public String getUpdateAttributeTaskParam(final String attName, final String attValue, final String lmd)
+        throws Exception {
+        return "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\" last-modification-date=\"" + lmd
+            + "\" name=\"" + attName + "\">" + attValue + "</attribute>";
     }
 
 }

@@ -88,9 +88,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
             Collection<String> expectedAttributes = getCollectionFromAttributes(USER_TEST);
             expectedAttributes.add(key + value + "true");
 
-            String createdXml =
-                createAttribute(USER_TEST, "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                    + " name=\"" + key + "\">" + value + "</attribute>");
+            String createdXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
             assertValidUserAttributes(retrieveAttributes(USER_TEST), USER_TEST, expectedAttributes);
         }
     }
@@ -106,16 +104,16 @@ public class UserAttributeIT extends UserAttributeTestBase {
         String value = "ValueForTestCreate";
 
         try {
-            createAttribute(USER_TEST, "<attribut xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">" + value + "</attribute>");
+            createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
+                + "\">" + value + "</attribute>");
             EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
             assertExceptionType(XmlCorruptedException.class, e);
         }
         try {
-            createAttribute(USER_TEST, "<attribut xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">");
+            createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
+                + "\">");
             EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
         }
         catch (final Exception e) {
@@ -123,8 +121,8 @@ public class UserAttributeIT extends UserAttributeTestBase {
         }
 
         try {
-            createAttribute(USER_TEST, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " >"
-                + value + "</attribute>");
+            createAttribute(USER_TEST, "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " >" + value
+                + "</attribute>");
             EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
@@ -216,9 +214,8 @@ public class UserAttributeIT extends UserAttributeTestBase {
         }
         Collection<String> expectedAttributes = new ArrayList<String>();
         for (int i = 0; i < 2; i++) {
-            long value = System.currentTimeMillis();
-            createAttribute(USER_TEST, "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                + " name=\"" + key + "\">" + value + "</attribute>");
+            String value = Long.toString(System.currentTimeMillis());
+            createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
             expectedAttributes.add(key + value + "true");
         }
 
@@ -293,11 +290,9 @@ public class UserAttributeIT extends UserAttributeTestBase {
      */
     @Test
     public void retrieveUserAttribute() throws Exception {
-        String name = "retrieveTest";
-        long value = System.currentTimeMillis();
-        String attributeXml =
-            createAttribute(USER_TEST, "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                + " name=\"" + name + "\">" + value + "</attribute>");
+        String key = "retrieveTest";
+        String value = Long.toString(System.currentTimeMillis());
+        String attributeXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
         String attribute = retrieveAttribute(USER_TEST, id);
         assertUserAttribute(USER_TEST, attribute, attributeXml);
@@ -380,14 +375,11 @@ public class UserAttributeIT extends UserAttributeTestBase {
         String value = "ValueForTestCreate" + System.currentTimeMillis();
 
         Collection<String> expectedAttributes = getCollectionFromAttributes(USER_TEST);
-        String attributeXml =
-            createAttribute(USER_TEST, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">" + value + "</attribute>");
+        String attributeXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
         String timestamp = getLastModificationDateValue(getDocument(attributeXml));
 
-        updateAttribute(USER_TEST, id, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\""
-            + " last-modification-date=\"" + timestamp + "\"" + " name=\"" + key + "\">updated</attribute>");
+        updateAttribute(USER_TEST, id, getUpdateAttributeTaskParam(key, "updated", timestamp));
         expectedAttributes.add(key + "updatedtrue");
         assertValidUserAttributes(retrieveAttributes(USER_TEST), USER_TEST, expectedAttributes);
     }
@@ -401,9 +393,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
     public void updateUserAttributeWrongLastModificationDate() throws Exception {
         String key = "KeyForTestCreate";
         String value = "ValueForTestCreate" + System.currentTimeMillis();
-        String attributeXml =
-            createAttribute(USER_TEST, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">" + value + "</attribute>");
+        String attributeXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
 
         updateAttribute(USER_TEST, id, attributeXml);
@@ -425,9 +415,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
     public void deleteUserAttribute() throws Exception {
         String key = "KeyForTestCreate";
         String value = "ValueForTestCreate" + System.currentTimeMillis();
-        String attributeXml =
-            createAttribute(USER_TEST, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">" + value + "</attribute>");
+        String attributeXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
         retrieveAttribute(USER_TEST, id);
         deleteAttribute(USER_TEST, id);
@@ -465,9 +453,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
     public void deleteUserAttributeNonexistingUser() throws Exception {
         String key = "KeyForTestCreate";
         String value = "ValueForTestCreate" + System.currentTimeMillis();
-        String attributeXml =
-            createAttribute(USER_TEST, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\""
-                + key + "\">" + value + "</attribute>");
+        String attributeXml = createAttribute(USER_TEST, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
         try {
             deleteAttribute("nonexisting", id);
@@ -487,9 +473,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
     public void deleteUserAttributeWrongAttributeId() throws Exception {
         String key = "KeyForTestCreate";
         String value = "ValueForTestCreate" + System.currentTimeMillis();
-        String attributeXml =
-            createAttribute(USER_TEST1, "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\""
-                + " name=\"" + key + "\">" + value + "</attribute>");
+        String attributeXml = createAttribute(USER_TEST1, getCreateAttributeTaskParam(key, value));
         String id = getObjidValue(attributeXml);
         try {
             deleteAttribute(USER_TEST, id);

@@ -181,7 +181,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-update-password', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'updatePassword', 
-  'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:update-password', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -230,28 +230,36 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
          * AA mm - create preference
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-user-account-create-preference', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'createPreference', 'info:escidoc/names:aa:1.0:action:create-user-account', 1, 1);
+  VALUES ('escidoc:mm-user-account-create-preference', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'createPreference', 'info:escidoc/names:aa:1.0:action:create-user-account-preference', 1, 1);
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-user-account-create-preference-1', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, 0, 'user-account', 'escidoc:mm-user-account-create-preference');
 
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-user-account-create-preference-2', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 0, 0, '', 'escidoc:mm-user-account-create-preference');
+
         /**
          * AA mm - delete preference
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-user-account-delete-preference', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'deletePreference', 'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1);
+  VALUES ('escidoc:mm-user-account-delete-preference', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'deletePreference', 'info:escidoc/names:aa:1.0:action:delete-user-account-preference', 1, 1);
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-user-account-delete-preference-1', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, 0, 'user-account', 'escidoc:mm-user-account-delete-preference');
           
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-user-account-delete-preference-2', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 0, 0, '', 'escidoc:mm-user-account-delete-preference');
+
         /**
          * AA mm - retrieve preference
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-preferences-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrievePreferences', 
-  'info:escidoc/names:aa:1.0:action:retrieve-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:retrieve-user-account-preference', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -260,7 +268,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-preference-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrievePreference', 
-  'info:escidoc/names:aa:1.0:action:retrieve-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:retrieve-user-account-preference', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -272,7 +280,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-preference-update', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'updatePreference', 
-  'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:update-user-account-preference', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -281,7 +289,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-preferences-update', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'updatePreferences', 
-  'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:update-user-account-preference', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -293,18 +301,22 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
          * AA mm - create attribute
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-user-account-create-attribute', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'createAttribute', 'info:escidoc/names:aa:1.0:action:create-user-account', 1, 1);
+  VALUES ('escidoc:mm-user-account-create-attribute', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'createAttribute', 'info:escidoc/names:aa:1.0:action:create-user-account-attribute', 1, 1);
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-user-account-create-attribute-1', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, 0, 'user-account', 'escidoc:mm-user-account-create-attribute');
           
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-user-account-create-attribute-2', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 0, 0, '', 'escidoc:mm-user-account-create-attribute');
+
         /**
          * AA mm - retrieve attributes
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-attributes-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrieveAttributes', 
-  'info:escidoc/names:aa:1.0:action:retrieve-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -313,7 +325,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-named-attributes-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrieveNamedAttributes', 
-  'info:escidoc/names:aa:1.0:action:retrieve-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -322,7 +334,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-attribute-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrieveAttribute', 
-  'info:escidoc/names:aa:1.0:action:retrieve-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -334,7 +346,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-attribute-update', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'updateAttribute', 
-  'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:update-user-account-attribute', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
@@ -346,7 +358,7 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-user-account-attribute-delete', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'deleteAttribute', 
-  'info:escidoc/names:aa:1.0:action:update-user-account', 1, 1,
+  'info:escidoc/names:aa:1.0:action:delete-user-account-attribute', 1, 1,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)

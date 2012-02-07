@@ -32,6 +32,12 @@ BEGIN
                     info:escidoc/names:aa:1.0:action:retrieve-user-account 
                     info:escidoc/names:aa:1.0:action:retrieve-current-user-account 
                     info:escidoc/names:aa:1.0:action:update-user-account 
+                    info:escidoc/names:aa:1.0:action:create-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:update-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+                    info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+                    info:escidoc/names:aa:1.0:action:update-password 
                     info:escidoc/names:aa:1.0:action:retrieve-objects-filtered 
                     info:escidoc/names:aa:1.0:action:retrieve-staging-file 
                     info:escidoc/names:aa:1.0:action:query-semantic-store 
@@ -333,9 +339,14 @@ BEGIN
                 <Action>
                     <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
                         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string"> 
-                        info:escidoc/names:aa:1.0:action:retrieve-user-account 
                         info:escidoc/names:aa:1.0:action:retrieve-grant 
                         info:escidoc/names:aa:1.0:action:update-user-account
+                        info:escidoc/names:aa:1.0:action:create-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:update-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:delete-user-account-preference 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account-attribute 
+                        info:escidoc/names:aa:1.0:action:update-password 
                         </AttributeValue>
                         <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </ActionMatch>
@@ -366,6 +377,26 @@ BEGIN
                 </Apply>
             </Apply>
         </Condition>
+    </Rule>
+    <Rule RuleId="Default-User-policy-rule-8-0" Effect="Permit">
+        <Target>
+        <Subjects>
+                <AnySubject/>
+            </Subjects>
+            <Resources>
+                <AnyResource/>
+            </Resources>
+            <Actions>
+                <Action>
+                    <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string"> 
+                        info:escidoc/names:aa:1.0:action:retrieve-user-account 
+                        </AttributeValue>
+                        <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </ActionMatch>
+                </Action>
+            </Actions>
+        </Target>
     </Rule>
     <Rule RuleId="Default-User-policy-rule-8-1" Effect="Permit">
         <Target>

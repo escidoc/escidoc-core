@@ -486,6 +486,10 @@ public abstract class EscidocTestBase {
 
     public static final String USER_ACCOUNT_NS_URI = "http://www.escidoc.de/schemas/useraccount/0.7";
 
+    public static final String USER_ACCOUNT_PREFERENCE_NS_URI = "http://www.escidoc.de/schemas/preferences/0.1";
+
+    public static final String USER_ACCOUNT_ATTRIBUTE_NS_URI = "http://www.escidoc.de/schemas/attributes/0.1";
+
     public static final String USER_GROUP_NS_URI = "http://www.escidoc.de/schemas/usergroup/0.6";
 
     public static final String XACML_CONTEXT_NS_URI = "urn:oasis:names:tc:xacml:1.0:context";
