@@ -539,9 +539,19 @@
         <servlet-class>
             org.apache.cxf.transport.servlet.CXFServlet
         </servlet-class>
+        <!-- Handle static content -->
         <init-param>
           <param-name>static-resources-list</param-name>
-          <param-value>/xsd/.* /xsl/.* /images/.* /js/.* /css/.* /aa/login/.* /aa/logout/.* /ontologies/.*</param-value>
+          <param-value>/index.html /xsd/.* /xsl/.* /images/.* /js/.* /css/.* /aa/login/.* /aa/logout/.* /ontologies/.*</param-value>
+         </init-param>
+         <!-- Redirect all JSP requests to the default jsp servlet -->
+         <init-param>
+           <param-name>redirects-list</param-name>
+           <param-value>/index.jsp</param-value>
+         </init-param>
+         <init-param>
+           <param-name>redirect-servlet-name</param-name>
+           <param-value>jsp</param-value>
          </init-param>
     </servlet>
 
