@@ -599,7 +599,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
      * @return the publicStatusComment
      */
     public String getPublicStatusComment() {
-        return this.publicStatus;
+        return this.publicStatusComment;
     }
 
     /**
