@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -39,6 +42,8 @@ import de.escidoc.core.test.common.client.servlet.om.ContextClient;
 import de.escidoc.core.test.common.client.servlet.om.DeviationClient;
 import de.escidoc.core.test.common.client.servlet.om.IngestClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
+import de.escidoc.core.test.sb.SearchTestBase;
+
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -137,6 +142,8 @@ public class OmTestBase extends EscidocAbstractTest {
 
     private DeviationClient deviationClient = null;
 
+    private SearchTestBase searchTestBase = null;
+
     /**
      * @return Returns the itemClient.
      */
@@ -195,6 +202,16 @@ public class OmTestBase extends EscidocAbstractTest {
             this.deviationClient = new DeviationClient();
         }
         return this.deviationClient;
+    }
+
+    /**
+     * @return Returns the searchTestBase.
+     */
+    public SearchTestBase getSearchTestBase() {
+        if (this.searchTestBase == null) {
+            this.searchTestBase = new SearchTestBase();
+        }
+        return searchTestBase;
     }
 
     /**
@@ -322,6 +339,25 @@ public class OmTestBase extends EscidocAbstractTest {
             selectSingleNode(template, "/" + resourceType + "/md-records/md-record[@name = '" + name + "']/*[1]");
 
         assertXmlEquals(msg + "Content not equal.", toBeAssertedMdRecordContent, mdRecordContentTemplate);
+    }
+
+    /**
+     * Assert that the objectId is indexed in given index.
+     * 
+     * @param indexName
+     *            The name of the index.
+     * @param resourceId
+     *            The id of the resource.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void assertIndexed(final String indexName, final String resourceId) throws Exception {
+
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, "PID=" + resourceId + " or distinction.rootPid=" + resourceId);
+        String response = getSearchTestBase().search(parameters, indexName);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getSearchTestBase().getNumberOfHits(response));
     }
 
     /**

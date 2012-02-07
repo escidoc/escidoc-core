@@ -873,10 +873,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         cm.persist(true);
         final String objid = cm.getObjid();
         try {
-            if (EscidocConfiguration.getInstance().getAsBoolean(
-                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
-                fireContentModelCreated(objid, retrieve(objid));
-            }
+            fireContentModelCreated(objid, retrieve(objid));
         }
         catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Content Model with id '" + objid + "', which was just ingested, "

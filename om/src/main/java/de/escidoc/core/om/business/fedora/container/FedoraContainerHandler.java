@@ -266,7 +266,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ReferencedResourceNotFoundException, InvalidStatusException, RelationPredicateNotFoundException,
         MissingMdRecordException, MissingMethodParameterException, SystemException, XmlSchemaValidationException {
 
-        return doCreate(xmlData, false);
+        String containerId = doCreate(xmlData, false);
+        fireContainerCreated(containerId, null);
+        return containerId;
     }
 
     /**

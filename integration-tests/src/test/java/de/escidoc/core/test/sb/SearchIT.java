@@ -28,18 +28,8 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -49,9 +39,19 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
+import de.escidoc.core.common.exceptions.remote.EscidocException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
  * Test the implementation of the search resource.
@@ -152,7 +152,8 @@ public class SearchIT extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate
+                    + "\" ><comment>ContainerHandler.release()</comment></param>");
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");
@@ -265,7 +266,8 @@ public class SearchIT extends SearchTestBase {
             // release container
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate
+                + "\" ><comment>ContainerHandler.release()</comment></param>");
         }
         catch (final Exception e) {
             LOGGER.error("", e);
