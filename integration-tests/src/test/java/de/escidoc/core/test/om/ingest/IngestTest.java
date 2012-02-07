@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.sb.SearchTestBase;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -96,6 +97,9 @@ public class IngestTest extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested an item ?
             assert (resourceType.equals("ITEM"));
@@ -203,6 +207,9 @@ public class IngestTest extends IngestTestBase {
             String resourceType = matcher.group(1);
             objectId = matcher.group(2);
 
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
+
             // Have we just ingested an item ?
             assert (resourceType.equals("ITEM"));
 
@@ -307,6 +314,10 @@ public class IngestTest extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.CONTEXT_ADMIN_INDEX_NAME, objectId);
+
             // immediately delete to avoid naming conflicts in later tests...
             deleteContext(objectId);
 
@@ -343,6 +354,9 @@ public class IngestTest extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested an item ?
             assert (resourceType.equals("CONTAINER"));
@@ -456,6 +470,9 @@ public class IngestTest extends IngestTestBase {
             String resourceType = matcher.group(1);
             objectId = matcher.group(2);
 
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
+
             // Have we just ingested a container?
             assert resourceType.equals("CONTAINER") : "wrong resource type: " + resourceType;
 
@@ -502,6 +519,9 @@ public class IngestTest extends IngestTestBase {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
 
+            //check if object is indexed
+            assertIndexed(SearchTestBase.OU_ADMIN_INDEX_NAME, objectId);
+
             // Have we just ingested an item ?
             assert (resourceType.equals("OU"));
 
@@ -536,6 +556,9 @@ public class IngestTest extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.CONTENT_MODEL_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested a content model ?
             assert resourceType.equals("CONTENT_MODEL") : "expected resource type \"CONTENT_MODEL\" but got \""

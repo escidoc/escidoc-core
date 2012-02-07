@@ -264,7 +264,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        return doCreate(xmlData, false);
+        String containerId = doCreate(xmlData, false);
+        fireContainerCreated(containerId, null);
+        return containerId;
     }
 
     /**

@@ -457,13 +457,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         item.persist(true);
         final String objid = item.getObjid();
         try {
-            if (EscidocConfiguration.getInstance().getAsBoolean(
-                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
-                fireItemCreated(objid, retrieve(objid));
-            }
-        }
-        catch (final IOException e) {
-            throw new SystemException("The eSciDoc configuration could not be read", e);
+            fireItemCreated(objid, retrieve(objid));
         }
         catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Item with id '" + objid + "', which was just ingested, "

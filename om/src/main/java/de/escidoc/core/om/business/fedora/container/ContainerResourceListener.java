@@ -207,13 +207,15 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
         final boolean isRestAccess = UserContext.isRestAccess();
 
         try {
-            if (isRestAccess) {
-                UserContext.setRestAccess(false);
-                result = getContainerXml(getContainer());
-            }
-            else {
-                UserContext.setRestAccess(true);
-                result = getContainerXml(getContainer());
+            if (getContainer() != null) {
+                if (isRestAccess) {
+                    UserContext.setRestAccess(false);
+                    result = getContainerXml(getContainer());
+                }
+                else {
+                    UserContext.setRestAccess(true);
+                    result = getContainerXml(getContainer());
+                }
             }
         }
         catch (final WebserverSystemException e) {

@@ -81,6 +81,22 @@ public class SearchTestBase extends SbTestBase {
 
     protected GrantHelper grant = null;
 
+    public static final String ESCIDOC_ALL_INDEX_NAME = "escidoc_all";
+
+    public static final String ESCIDOCOU_ALL_INDEX_NAME = "escidocou_all";
+
+    public static final String ESCIDOCOAIPMH_ALL_INDEX_NAME = "escidocoaipmh_all";
+
+    public static final String ITEM_CONTAINER_ADMIN_INDEX_NAME = "item_container_admin";
+
+    public static final String OU_ADMIN_INDEX_NAME = "ou_admin";
+
+    public static final String CONTENT_MODEL_ADMIN_INDEX_NAME = "content_model_admin";
+
+    public static final String CONTEXT_ADMIN_INDEX_NAME = "context_admin";
+
+    public static final String CONTENT_RELATION_ADMIN_INDEX_NAME = "content_relation_admin";
+
     /**
      * @param transport The transport identifier.
      */
@@ -172,7 +188,7 @@ public class SearchTestBase extends SbTestBase {
      * @return The retrieved search-result.
      * @throws Exception If anything fails.
      */
-    protected String search(final HashMap<String, String> parameters, final String database) throws Exception {
+    public String search(final HashMap<String, String> parameters, final String database) throws Exception {
 
         Object result = getSearchClient().search(parameters, database);
         String xmlResult = null;
@@ -195,7 +211,7 @@ public class SearchTestBase extends SbTestBase {
      * @return The retrieved explain plan.
      * @throws Exception If anything fails.
      */
-    protected String explain(final HashMap<String, String> parameters, final String database) throws Exception {
+    public String explain(final HashMap<String, String> parameters, final String database) throws Exception {
 
         Object result = getSearchClient().explain(parameters, database);
         String xmlResult = null;
@@ -221,7 +237,7 @@ public class SearchTestBase extends SbTestBase {
      * @return The retrieved explain plan.
      * @throws Exception If anything fails.
      */
-    protected String scan(final HashMap parameters, final String database) throws Exception {
+    public String scan(final HashMap parameters, final String database) throws Exception {
 
         Object result = getSearchClient().scan(parameters, database);
         String xmlResult = null;
@@ -243,7 +259,7 @@ public class SearchTestBase extends SbTestBase {
      * @return The xml-representation of the soap object.
      * @throws Exception If anything fails.
      */
-    protected String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
+    public String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
         StringBuffer soapXmlResult = new StringBuffer("");
         soapXmlResult.append("<searchRetrieveResponse  ").append("xmlns=\"http://www.loc.gov/zing/srw/\">");
         soapXmlResult.append("<version>").append(result.getVersion()).append("</version>");
@@ -361,7 +377,7 @@ public class SearchTestBase extends SbTestBase {
      * @return The xml-representation of the soap object.
      * @throws Exception If anything fails.
      */
-    protected String makeScanResponseXml(final ScanResponseType result) throws Exception {
+    public String makeScanResponseXml(final ScanResponseType result) throws Exception {
         StringBuffer soapXmlResult =
             new StringBuffer("<scanResponse xmlns=\"http://www.loc.gov/zing/srw/\">").append("<version>1.1</version>");
 
@@ -439,7 +455,7 @@ public class SearchTestBase extends SbTestBase {
      * @param xml String xml
      * @return String id
      */
-    protected String getId(final String xml) {
+    public String getId(final String xml) {
         String id = null;
         Pattern objidAttributePattern = Pattern.compile("objid=\"([^\"]*)\"");
         Matcher m = objidAttributePattern.matcher(xml);
@@ -464,7 +480,7 @@ public class SearchTestBase extends SbTestBase {
      * @return String last-modification-date
      * @throws Exception If anything fails.
      */
-    protected String getLastModificationDate(final String xml) throws Exception {
+    public String getLastModificationDate(final String xml) throws Exception {
 
         return getLastModificationDateValue(EscidocRestSoapTestBase.getDocument(xml));
     }
@@ -476,7 +492,7 @@ public class SearchTestBase extends SbTestBase {
      * @return String creation-date
      * @throws Exception If anything fails.
      */
-    protected String getCreationDate(final String xml) throws Exception {
+    public String getCreationDate(final String xml) throws Exception {
 
         return getCreationDateValue(EscidocRestSoapTestBase.getDocument(xml));
     }
@@ -487,7 +503,7 @@ public class SearchTestBase extends SbTestBase {
      * @param searchResult String searchResult
      * @return String number of hits
      */
-    protected String getNumberOfHits(final String searchResult) {
+    public String getNumberOfHits(final String searchResult) {
         String numberOfHits = null;
         Pattern dateAttributePattern = Pattern.compile("numberOfRecords>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -503,7 +519,7 @@ public class SearchTestBase extends SbTestBase {
      * @param scanResult String scanResult
      * @return String number of hits
      */
-    protected String getNumberOfScanHits(final String scanResult) throws Exception {
+    public String getNumberOfScanHits(final String scanResult) throws Exception {
         Document scanResultDoc = getDocument(scanResult);
         NodeList nodes = selectNodeList(scanResultDoc, "/scanResponse/terms/term");
         return Integer.toString(nodes.getLength());
@@ -515,7 +531,7 @@ public class SearchTestBase extends SbTestBase {
      * @param searchResult String searchResult
      * @return String first record
      */
-    protected String getFirstRecord(final String searchResult) {
+    public String getFirstRecord(final String searchResult) {
         String firstRecord = null;
         Pattern dateAttributePattern = Pattern.compile("recordPosition>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -531,7 +547,7 @@ public class SearchTestBase extends SbTestBase {
      * @param searchResult String searchResult
      * @return String first record
      */
-    protected String getNextRecordPosition(final String searchResult) {
+    public String getNextRecordPosition(final String searchResult) {
         String nextRecordPosition = null;
         Pattern dateAttributePattern = Pattern.compile("nextRecordPosition>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -577,7 +593,7 @@ public class SearchTestBase extends SbTestBase {
      * @param explainPlan String explainPlan
      * @return String number of sort-fields
      */
-    protected int getSortFieldCount(final String explainPlan) {
+    public int getSortFieldCount(final String explainPlan) {
         if (explainPlan == null) {
             return 0;
         }
@@ -591,7 +607,7 @@ public class SearchTestBase extends SbTestBase {
      * @param searchResult String searchResult
      * @return String diagnostic details
      */
-    protected String getDiagnostics(final String searchResult) {
+    public String getDiagnostics(final String searchResult) {
         String details = null;
         Pattern dateAttributePattern = Pattern.compile("details>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -610,7 +626,7 @@ public class SearchTestBase extends SbTestBase {
      * @param searchResult String searchResult
      * @return boolean
      */
-    protected boolean checkHighlighting(final String searchResult) {
+    public boolean checkHighlighting(final String searchResult) {
         if (searchResult.matches("(?s).*highlight.*")) {
             return true;
         }

@@ -155,7 +155,8 @@ public class SearchTest extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate + "\" />");
+                container.release(containerIds[i], "<param last-modification-date=\"" + lastModDate
+                    + "\" ><comment>ContainerHandler.release()</comment></param>");
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");
