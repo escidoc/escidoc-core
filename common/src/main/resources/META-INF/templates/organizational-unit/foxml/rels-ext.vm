@@ -4,7 +4,7 @@
 <rdf:type rdf:resource="${resourcesOntologiesNamespace}OrganizationalUnit"/>
 <${escidocPropertiesNamespacePrefix}:public-status>${PUBLIC_STATUS}</${escidocPropertiesNamespacePrefix}:public-status>
 #if( ${PUBLIC_STATUS_COMMENT} )
-<${escidocPropertiesNamespacePrefix}:public-status-comment>${PUBLIC_STATUS_COMMENT}</${escidocPropertiesNamespacePrefix}:public-status-comment>
+<${escidocPropertiesNamespacePrefix}:public-status-comment>#escT(${PUBLIC_STATUS_COMMENT})</${escidocPropertiesNamespacePrefix}:public-status-comment>
 #end
 <${structuralRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}" />
 <${escidocPropertiesNamespacePrefix}:created-by-title>#escT(${CREATED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:created-by-title>
