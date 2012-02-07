@@ -28,20 +28,19 @@
  */
 package de.escidoc.core.test.om.ingest;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.test.EscidocAbstractTest;
+import static org.junit.Assert.fail;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.sb.SearchTestBase;
 
 /**
  * Test ingesting Item via ingest interface.<br>
@@ -81,6 +80,9 @@ public class IngestItemIT extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested an item ?
             assert (resourceType.equals("ITEM"));
@@ -180,6 +182,9 @@ public class IngestItemIT extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.ITEM_CONTAINER_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested an item ?
             assert (resourceType.equals("ITEM"));

@@ -59,7 +59,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationAdminSearchIT.class);
 
-    private static final String INDEX_NAME = "content_relation_admin";
+    private static final String INDEX_NAME = CONTENT_RELATION_ADMIN_INDEX_NAME;
 
     private static final ArrayList<String> RESULT_XPATHS = new ArrayList<String>() {
         private static final long serialVersionUID = 1L;

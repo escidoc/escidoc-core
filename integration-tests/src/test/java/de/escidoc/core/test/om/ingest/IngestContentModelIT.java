@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResou
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.sb.SearchTestBase;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -76,6 +77,9 @@ public class IngestContentModelIT extends IngestTestBase {
         if (matcher.find()) {
             String resourceType = matcher.group(1);
             String objectId = matcher.group(2);
+
+            //check if object is indexed
+            assertIndexed(SearchTestBase.CONTENT_MODEL_ADMIN_INDEX_NAME, objectId);
 
             // Have we just ingested a content model ?
             assert resourceType.equals("CONTENT_MODEL") : "expected resource type \"CONTENT_MODEL\" but got \""

@@ -62,7 +62,7 @@ public class SearchIT extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchIT.class);
 
-    private static final String INDEX_NAME = "escidoc_all";
+    private static final String INDEX_NAME = ESCIDOC_ALL_INDEX_NAME;
 
     private static String[] itemIds = null;
 
@@ -164,7 +164,7 @@ public class SearchIT extends SearchTestBase {
             // release container
             xml = container.retrieve(containerIds[i]);
             lastModDate = getLastModificationDateValue2(getDocument(xml));
-            container.release(containerIds[i], getStatusTaskParam(lastModDate, null));
+            container.release(containerIds[i], getStatusTaskParam(lastModDate, "ContainerHandler.release()"));
             xml = container.retrieve(containerIds[i]);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[i], xml);
@@ -278,7 +278,8 @@ public class SearchIT extends SearchTestBase {
         xml = container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
         // release container
-        container.release(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        container.release(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            "ContainerHandler.release()"));
     }
 
     /**

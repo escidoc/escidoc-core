@@ -45,8 +45,6 @@ import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
-
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
@@ -119,13 +117,13 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
@@ -446,9 +444,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         validateIngest(item);
         item.persist(true);
         final String objid = item.getObjid();
-        if (EscidocConfiguration.getInstance().getAsBoolean(EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
-            fireItemCreated(objid, null);
-        }
+        fireItemCreated(objid, null);
         return objid;
 
     }

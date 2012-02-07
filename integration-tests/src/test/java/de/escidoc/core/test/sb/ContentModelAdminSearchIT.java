@@ -58,7 +58,7 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelAdminSearchIT.class);
 
-    private static final String INDEX_NAME = "content_model_admin";
+    private static final String INDEX_NAME = CONTENT_MODEL_ADMIN_INDEX_NAME;
 
     private static final ArrayList<String> RESULT_XPATHS = new ArrayList<String>() {
         private static final long serialVersionUID = 1L;

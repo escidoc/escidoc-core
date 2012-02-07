@@ -61,7 +61,7 @@ public class OaipmhSearchIT extends SearchTestBase {
 
     private static int methodCounter = 0;
 
-    private static final String INDEX_NAME = "escidocoaipmh_all";
+    private static final String INDEX_NAME = ESCIDOCOAIPMH_ALL_INDEX_NAME;
 
     private static DateTime startTime;
 

@@ -28,16 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import static org.junit.Assert.assertEquals;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,10 +38,18 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.AssignParam;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
  * Base class for search tests.
@@ -72,6 +71,22 @@ public class SearchTestBase extends SbTestBase {
     protected ContentRelationHelper contentRelation = null;
 
     protected GrantHelper grant = null;
+
+    public static final String ESCIDOC_ALL_INDEX_NAME = "escidoc_all";
+
+    public static final String ESCIDOCOU_ALL_INDEX_NAME = "escidocou_all";
+
+    public static final String ESCIDOCOAIPMH_ALL_INDEX_NAME = "escidocoaipmh_all";
+
+    public static final String ITEM_CONTAINER_ADMIN_INDEX_NAME = "item_container_admin";
+
+    public static final String OU_ADMIN_INDEX_NAME = "ou_admin";
+
+    public static final String CONTENT_MODEL_ADMIN_INDEX_NAME = "content_model_admin";
+
+    public static final String CONTEXT_ADMIN_INDEX_NAME = "context_admin";
+
+    public static final String CONTENT_RELATION_ADMIN_INDEX_NAME = "content_relation_admin";
 
     /**
      * Wait until the given id exists in the given index.
@@ -158,7 +173,7 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String search(final HashMap<String, String> parameters, final String database) throws Exception {
+    public String search(final HashMap<String, String> parameters, final String database) throws Exception {
         Object result = getSearchClient().search(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
         assertHttpStatusOfMethod("", httpRes);
@@ -176,7 +191,7 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String explain(final HashMap<String, String[]> parameters, final String database) throws Exception {
+    public String explain(final HashMap<String, String[]> parameters, final String database) throws Exception {
         Object result = getSearchClient().explain(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
         assertHttpStatusOfMethod("", httpRes);
@@ -194,7 +209,7 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String scan(final HashMap parameters, final String database) throws Exception {
+    public String scan(final HashMap parameters, final String database) throws Exception {
 
         Object result = getSearchClient().scan(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
@@ -211,7 +226,7 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String getLastModificationDate(final String xml) throws Exception {
+    public String getLastModificationDate(final String xml) throws Exception {
 
         return getLastModificationDateValue(EscidocAbstractTest.getDocument(xml));
     }
@@ -225,7 +240,7 @@ public class SearchTestBase extends SbTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String getCreationDate(final String xml) throws Exception {
+    public String getCreationDate(final String xml) throws Exception {
 
         return getCreationDateValue(EscidocAbstractTest.getDocument(xml));
     }
@@ -237,7 +252,7 @@ public class SearchTestBase extends SbTestBase {
      *            String searchResult
      * @return String number of hits
      */
-    protected String getNumberOfHits(final String searchResult) {
+    public String getNumberOfHits(final String searchResult) {
         String numberOfHits = null;
         Pattern dateAttributePattern = Pattern.compile("numberOfRecords>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -254,7 +269,7 @@ public class SearchTestBase extends SbTestBase {
      *            String scanResult
      * @return String number of hits
      */
-    protected String getNumberOfScanHits(final String scanResult) throws Exception {
+    public String getNumberOfScanHits(final String scanResult) throws Exception {
         Document scanResultDoc = getDocument(scanResult);
         NodeList nodes = selectNodeList(scanResultDoc, "/scanResponse/terms/term");
         return Integer.toString(nodes.getLength());
@@ -267,7 +282,7 @@ public class SearchTestBase extends SbTestBase {
      *            String searchResult
      * @return String first record
      */
-    protected String getFirstRecord(final String searchResult) {
+    public String getFirstRecord(final String searchResult) {
         String firstRecord = null;
         Pattern dateAttributePattern = Pattern.compile("recordPosition>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -284,7 +299,7 @@ public class SearchTestBase extends SbTestBase {
      *            String searchResult
      * @return String first record
      */
-    protected String getNextRecordPosition(final String searchResult) {
+    public String getNextRecordPosition(final String searchResult) {
         String nextRecordPosition = null;
         Pattern dateAttributePattern = Pattern.compile("nextRecordPosition>(.*?)<");
         Matcher m = dateAttributePattern.matcher(searchResult);
@@ -301,7 +316,7 @@ public class SearchTestBase extends SbTestBase {
      *            String explainPlan
      * @return String number of hits
      */
-    protected String getDatabase(final String explainPlan) {
+    public String getDatabase(final String explainPlan) {
         String database = null;
         Pattern dateAttributePattern = Pattern.compile("database>(.*?)<");
         Matcher m = dateAttributePattern.matcher(explainPlan);
@@ -318,7 +333,7 @@ public class SearchTestBase extends SbTestBase {
      *            String explainPlan
      * @return String number of index-fields
      */
-    protected int getIndexFieldCount(final String explainPlan) {
+    public int getIndexFieldCount(final String explainPlan) {
         if (explainPlan == null) {
             return 0;
         }
@@ -333,7 +348,7 @@ public class SearchTestBase extends SbTestBase {
      *            String explainPlan
      * @return String number of sort-fields
      */
-    protected int getSortFieldCount(final String explainPlan) {
+    public int getSortFieldCount(final String explainPlan) {
         if (explainPlan == null) {
             return 0;
         }
@@ -368,7 +383,7 @@ public class SearchTestBase extends SbTestBase {
      *            String searchResult
      * @return boolean
      */
-    protected boolean checkHighlighting(final String searchResult) {
+    public boolean checkHighlighting(final String searchResult) {
         if (searchResult.matches("(?s).*highlight.*")) {
             return true;
         }

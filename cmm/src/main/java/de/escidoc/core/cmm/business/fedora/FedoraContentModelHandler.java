@@ -31,61 +31,19 @@
  */
 package de.escidoc.core.cmm.business.fedora;
 
-import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
-import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
-import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelCreateHandler;
-import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelPropertiesHandler;
-import de.escidoc.core.cmm.business.stax.handler.contentModel.MdRecordDefinitionHandler;
-import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinitionHandler;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.StatusType;
-import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
-import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
-import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
-import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
-import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitionCreate;
-import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.filter.SRURequest;
-import de.escidoc.core.common.business.filter.SRURequestParameters;
-import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
-import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
-import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
-import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
-import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
-import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
-import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.annotation.PostConstruct;
+
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
@@ -103,17 +61,58 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
+import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
+import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelCreateHandler;
+import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelPropertiesHandler;
+import de.escidoc.core.cmm.business.stax.handler.contentModel.MdRecordDefinitionHandler;
+import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinitionHandler;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.StatusType;
+import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
+import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
+import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
+import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitionCreate;
+import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
+import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
+import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
+import de.escidoc.core.common.util.xml.stax.events.Attribute;
+import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 
 /**
  * @author Frank Schwichtenberg
@@ -892,10 +891,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
         cm.persist(true);
         final String objid = cm.getObjid();
         try {
-            if (EscidocConfiguration.getInstance().getAsBoolean(
-                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
-                fireContentModelCreated(objid, retrieve(objid));
-            }
+            fireContentModelCreated(objid, retrieve(objid));
         }
         catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Content Model with id '" + objid + "', which was just ingested, "

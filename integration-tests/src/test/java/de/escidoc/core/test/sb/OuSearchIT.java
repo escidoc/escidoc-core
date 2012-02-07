@@ -65,7 +65,7 @@ public class OuSearchIT extends SearchTestBase {
 
     private static int methodCounter = 0;
 
-    private static final String INDEX_NAME = "escidocou_all";
+    private static final String INDEX_NAME = ESCIDOCOU_ALL_INDEX_NAME;
 
     private static String startTime = "";
 
