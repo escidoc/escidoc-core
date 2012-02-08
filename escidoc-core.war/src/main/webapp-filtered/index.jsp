@@ -58,7 +58,7 @@
    <%
     	String escidocBrowserUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_BROWSER_URL);
     	if(escidocBrowserUrl != null) {
-    		out.println("<li><a href=\"" + adminToolUrl + "\">eSciDoc Browser</a></li>");
+    		out.println("<li><a href=\"" + escidocBrowserUrl + "\">eSciDoc Browser</a></li>");
     	}
    %>
       </ul>
