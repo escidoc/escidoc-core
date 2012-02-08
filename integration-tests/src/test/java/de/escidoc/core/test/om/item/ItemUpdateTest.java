@@ -267,16 +267,10 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      *
      * @throws Exception If framework
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testUpdateWithNullId() throws Exception {
-        try {
 
-            update(null, this.theItemXml);
-            fail("Not expected exception");
-        }
-        catch (final MissingMethodParameterException e) {
-            // Well done
-        }
+        update(null, this.theItemXml);
     }
 
     /**
