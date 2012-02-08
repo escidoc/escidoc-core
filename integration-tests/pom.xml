@@ -510,6 +510,7 @@
               <cargo.servlet.port>${escidoc.server.port}</cargo.servlet.port>
               <cargo.rmi.port>1099</cargo.rmi.port>
               <cargo.logging>medium</cargo.logging>
+              <!-- cargo.runtime.args>-b 0.0.0.0</cargo.runtime.args -->
               <cargo.jvmargs>${cargo.jvmargs} ${cargo.jvmdebug} ${cargo.ucldebug}</cargo.jvmargs>
             </properties>
             <deployables>
