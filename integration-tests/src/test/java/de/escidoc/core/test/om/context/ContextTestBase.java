@@ -490,7 +490,7 @@ public class ContextTestBase extends OmTestBase {
     }
 
     /**
-     * Update the XML representation of all members of the context matching the filter criteria.
+     * Update the XML an admin descriptor.
      * 
      * @param id
      *            The id of the context.
