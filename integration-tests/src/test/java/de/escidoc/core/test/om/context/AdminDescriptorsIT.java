@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.AdminDescri
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -47,6 +48,8 @@ public class AdminDescriptorsIT extends ContextTestBase {
     private static String contextId = null;
 
     private static String contextXml = null;
+
+    private static final String DEFAULT_ADMIN_DESCRIPTOR_NAME = "admin-descriptor";
 
     public AdminDescriptorsIT() {
         this.path += "/rest";
@@ -140,6 +143,22 @@ public class AdminDescriptorsIT extends ContextTestBase {
     public void retrieveNonExisitingAdmDesc01() throws Exception {
 
         retrieveAdminDescriptor(contextId, "Test");
+    }
+
+    /**
+     * Test updating one admin descriptor.
+     * 
+     * @throws Exception If anything fails.
+     */
+    @Test
+    @Ignore("Method not implemented yet")
+    public void updateAdminDescriptor() throws Exception {
+
+        final String newContent = "<blafasel>&amp;'§$%/()</blafasel>";
+        String updatedAdm = updateAdminDescriptor(contextId, DEFAULT_ADMIN_DESCRIPTOR_NAME, newContent);
+        String adm = retrieveAdminDescriptor(contextId, DEFAULT_ADMIN_DESCRIPTOR_NAME);
+        assertXmlValidContext(adm);
+        assertXmlEquals("Admin Descriptor content differs", getDocument(adm), "/admin-descriptor/*[1]", newContent);
     }
 
 }

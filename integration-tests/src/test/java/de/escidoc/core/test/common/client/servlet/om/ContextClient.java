@@ -111,6 +111,22 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     }
 
     /**
+     * Update the XML representation of admin descriptor of a context.
+     *
+     * @param id              The id of the context.
+     * @param admDescriptorId The name of the admin-descriptor.
+     * @param content The XML content
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
+     */
+    public Object updateAdminDescriptor(final String id, final String admDescriptorId, final String content)
+        throws Exception {
+
+        return callEsciDoc("Context.updateAdminDescriptor", METHOD_UPDATE_ADMINDESCRIPTOR, Constants.HTTP_METHOD_PUT,
+            Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_ADMINDESCRIPTOR, admDescriptorId }, content);
+    }
+
+    /**
      * Open a Context.
      *
      * @param id        The id of the context.

@@ -355,6 +355,25 @@ public class ContextTestBase extends OmTestBase {
     }
 
     /**
+     * Update the XML an admin descriptor.
+     * 
+     * @param id
+     *            The id of the context.
+     * @param name
+     *            The name of the admin-descriptor.
+     * @param content
+     *            The content as XML (string)
+     * @return The XML representation of AdminDescriptor.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public String updateAdminDescriptor(final String id, final String name, final String content) throws Exception {
+
+        return handleXmlResult(getContextClient().updateAdminDescriptor((String) checkParameter(id),
+            (String) checkParameter(name), content));
+    }
+
+    /**
      * Retrieve the xml representation of the context properties.
      *
      * @param id The id of the context.
