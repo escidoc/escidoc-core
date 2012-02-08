@@ -48,7 +48,7 @@ import static org.junit.Assert.fail;
 public class DeleteObjectsIT extends AdminToolTestBase {
 
     /**
-     * Delete one objects.
+     * Delete one object.
      * 
      * @throws Exception
      *             If anything fails.
@@ -95,6 +95,86 @@ public class DeleteObjectsIT extends AdminToolTestBase {
 
         // delete Items
         deleteObjects(getIdSetTaskParam(l));
+
+        // wait until process has finished
+        final int waitTime = 5000;
+
+        while (true) {
+            String status = getPurgeStatus();
+            if (status.indexOf("finished") > 0) {
+                break;
+            }
+            Thread.sleep(waitTime);
+        }
+
+        // check if Items are deleted
+        Iterator<String> it = l.iterator();
+        while (it.hasNext()) {
+            String id = it.next();
+            try {
+                retrieveItem(id);
+                fail("eSciDoc Item with id " + id + " still exists although it should be deleted");
+            }
+            catch (final ItemNotFoundException e) {
+                // that's expected for every Item
+            }
+        }
+    }
+
+    /**
+     * Delete a list of objects with asynchon indexer.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout = 30000)
+    public void deleteObjectsWithAsyncOption() throws Exception {
+
+        // create Items
+        Set<String> l = createItems(4);
+
+        // delete Items
+        deleteObjects(getDeleteObjectsTaskParam(l, false));
+
+        // wait until process has finished
+        final int waitTime = 5000;
+
+        while (true) {
+            String status = getPurgeStatus();
+            if (status.indexOf("finished") > 0) {
+                break;
+            }
+            Thread.sleep(waitTime);
+        }
+
+        // check if Items are deleted
+        Iterator<String> it = l.iterator();
+        while (it.hasNext()) {
+            String id = it.next();
+            try {
+                retrieveItem(id);
+                fail("eSciDoc Item with id " + id + " still exists although it should be deleted");
+            }
+            catch (final ItemNotFoundException e) {
+                // that's expected for every Item
+            }
+        }
+    }
+
+    /**
+     * Delete a list of objects with synchon indexer.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout = 30000)
+    public void deleteObjectsWithSyncOption() throws Exception {
+
+        // create Items
+        Set<String> l = createItems(4);
+
+        // delete Items
+        deleteObjects(getDeleteObjectsTaskParam(l, true));
 
         // wait until process has finished
         final int waitTime = 5000;
