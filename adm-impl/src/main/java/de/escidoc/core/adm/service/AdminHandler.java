@@ -65,16 +65,20 @@ public class AdminHandler implements AdminHandlerInterface {
      * Delete a list of objects given by their object id's from Fedora. In case of items this method will also delete
      * all depending components of the given items. The deletion runs synchronously and returns some useful information
      * for the user, e.g. the total number of objects deleted.
-     *
-     * @param taskParam list of object id's to be deleted boolean value to signal if the search index and the resource
-     *                  cache have to be kept in sync. If this value is set to false then the re-indexing and re-caching
-     *                  should be run manually afterwards.
+     * 
+     * @param taskParam
+     *            list of object id's to be deleted. &lt;sync>true/false&lt;/sync> boolean value to signal if the search
+     *            index and the resource cache have to be kept in sync. If this value is set to false then the
+     *            re-indexing and re-caching should be run manually afterwards.
      * @return total number of objects deleted, ...
-     * @throws InvalidXmlException     thrown if the taskParam has an invalid structure
-     * @throws SystemException         thrown in case of an internal error
-     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
-     *                                 handle.
-     * @throws AuthorizationException  Thrown if authorization fails.
+     * @throws InvalidXmlException
+     *             thrown if the taskParam has an invalid structure
+     * @throws SystemException
+     *             thrown in case of an internal error
+     * @throws AuthenticationException
+     *             Thrown if the authentication fails due to an invalid provided eSciDoc user handle.
+     * @throws AuthorizationException
+     *             Thrown if authorization fails.
      */
     @Override
     public String deleteObjects(final String taskParam) throws SystemException, AuthenticationException,
