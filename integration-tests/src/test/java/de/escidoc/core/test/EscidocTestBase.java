@@ -2703,6 +2703,32 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Get task param XML for add/remove members methods (see members-task-param.xsd)
+     * 
+     * @param timestamp
+     *            Last modification date
+     * @param ids
+     *            member id parameter
+     * @return task param XML (assign-pid-task-param.xsd)
+     */
+    public static String getDeleteObjectsTaskParam(final Set<String> ids, final Boolean sync) {
+
+        // FIXME Namespace wrong but the real is'nt defined yet (INFR-1466)
+        StringBuilder xml = new StringBuilder(de.escidoc.core.test.Constants.XML_HEADER);
+        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/id-set-task-param/0.1\">\n");
+
+        for (String id : ids) {
+            xml.append("<id>").append(id).append("</id>\n");
+        }
+        if (sync != null) {
+            xml.append("<sync>").append(sync.toString()).append("</sync>\n");
+        }
+        xml.append("</param>\n");
+
+        return xml.toString();
+    }
+
+    /**
      * Get task param XML for assing PID methods (see assing-pid-task-param.xsd)
      * 
      * @param timestamp
