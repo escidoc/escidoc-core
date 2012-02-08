@@ -202,6 +202,8 @@ public abstract class ClientBase {
 
     public static final String METHOD_RETRIEVE_ADMINDESCRIPTOR = "retrieveAdminDescriptor";
 
+    public static final String METHOD_UPDATE_ADMINDESCRIPTOR = "updateAdminDescriptor";
+
     public static final String METHOD_RETRIEVE_AGGREGATION_DEFINITIONS = "retrieveAggregationDefinitions";
 
     public static final String METHOD_RETRIEVE_REPORT_DEFINITIONS = "retrieveReportDefinitions";

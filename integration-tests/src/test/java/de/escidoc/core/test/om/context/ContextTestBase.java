@@ -476,7 +476,7 @@ public class ContextTestBase extends OmTestBase {
     }
 
     /**
-     * Retrieve the xml representation of all members of the context matching the filter criteria.
+     * Retrieve the xml representation of an admin descriptor.
      *
      * @param id   The id of the context.
      * @param name The name of the admin-descriptor.
@@ -487,6 +487,25 @@ public class ContextTestBase extends OmTestBase {
 
         return handleXmlResult(getContextClient().retrieveAdminDescriptor((String) checkParameter(id),
             (String) checkParameter(name)));
+    }
+
+    /**
+     * Update the XML representation of all members of the context matching the filter criteria.
+     * 
+     * @param id
+     *            The id of the context.
+     * @param name
+     *            The name of the admin-descriptor.
+     * @param content
+     *            The content as XML (string)
+     * @return The XML representation of AdminDescriptor.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public String updateAdminDescriptor(final String id, final String name, final String content) throws Exception {
+
+        return handleXmlResult(getContextClient().updateAdminDescriptor((String) checkParameter(id),
+            (String) checkParameter(name), content));
     }
 
     /**
