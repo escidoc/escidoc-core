@@ -73,6 +73,8 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import de.escidoc.core.test.common.client.servlet.om.*;
+import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -943,6 +945,20 @@ public abstract class EscidocTestBase {
 
     private static String frameworkUrl = null;
 
+    private ItemClient itemClient = null;
+
+    private IngestClient ingestClient = null;
+
+    private ContainerClient containerClient = null;
+
+    private ContextClient contextClient = null;
+
+    private ContentRelationClient contentRelationClient = null;
+
+    private DeviationClient deviationClient = null;
+
+    private OrganizationalUnitClient ouClient = null;
+
     public EscidocTestBase() {
         this.stagingFileClient = new StagingFileClient();
     }
@@ -972,6 +988,77 @@ public abstract class EscidocTestBase {
         catch (final Exception e) {
             throw new UnsupportedOperationException("getClient() not implemented by this test class.", e);
         }
+    }
+
+    /**
+     * @return Returns the itemClient.
+     */
+    public ItemClient getItemClient() {
+        if (this.itemClient == null) {
+            this.itemClient = new ItemClient();
+        }
+        return itemClient;
+    }
+
+    /**
+     * @return Returns the IngestClient.
+     */
+    public IngestClient getIngestClient() {
+        if (this.ingestClient == null) {
+            this.ingestClient = new IngestClient();
+        }
+        return this.ingestClient;
+    }
+
+    /**
+     * @return Returns the containerClient.
+     */
+    public ContainerClient getContainerClient() {
+        if (this.containerClient == null) {
+            this.containerClient = new ContainerClient();
+        }
+        return containerClient;
+    }
+
+    /**
+     * @return Returns the contextClient.
+     */
+    public ContextClient getContextClient() {
+        if (this.contextClient == null) {
+            this.contextClient = new ContextClient();
+        }
+        return contextClient;
+    }
+
+    /**
+     * @return Returns the contentRelationClient.
+     */
+    public ContentRelationClient getContentRelationClient() {
+        if (this.contentRelationClient == null) {
+            this.contentRelationClient = new ContentRelationClient();
+        }
+        return contentRelationClient;
+    }
+
+    /**
+     * @return Returns the DeviationClient.
+     */
+    public DeviationClient getDeviationClient() {
+        if (this.deviationClient == null) {
+            this.deviationClient = new DeviationClient();
+        }
+        return this.deviationClient;
+    }
+
+    /**
+     *
+     * @return Returns the OrganizationalUnitClient.
+     */
+    public OrganizationalUnitClient getOrganizationalUnitClient() {
+        if (this.ouClient == null) {
+            this.ouClient = new OrganizationalUnitClient();
+        }
+        return this.ouClient;
     }
 
     /**
@@ -2682,8 +2769,6 @@ public abstract class EscidocTestBase {
     /**
      * Get task param XML for add/remove members methods (see members-task-param.xsd)
      * 
-     * @param timestamp
-     *            Last modification date
      * @param ids
      *            member id parameter
      * @return task param XML (assign-pid-task-param.xsd)
@@ -2705,10 +2790,9 @@ public abstract class EscidocTestBase {
     /**
      * Get task param XML for add/remove members methods (see members-task-param.xsd)
      * 
-     * @param timestamp
-     *            Last modification date
      * @param ids
      *            member id parameter
+     * @param sync
      * @return task param XML (assign-pid-task-param.xsd)
      */
     public static String getDeleteObjectsTaskParam(final Set<String> ids, final Boolean sync) {

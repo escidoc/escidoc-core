@@ -126,79 +126,7 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_RESULT_PID = XPATH_RESULT + "/" + NAME_PID;
 
-    private ItemClient itemClient = null;
-
-    private IngestClient ingestClient = null;
-
-    private ContainerClient containerClient = null;
-
-    private ContextClient contextClient = null;
-
-    private ContentRelationClient contentRelationClient = null;
-
-    private DeviationClient deviationClient = null;
-
     private SearchTestBase searchTestBase = null;
-
-    /**
-     * @return Returns the itemClient.
-     */
-    public ItemClient getItemClient() {
-        if (this.itemClient == null) {
-            this.itemClient = new ItemClient();
-        }
-        return itemClient;
-    }
-
-    /**
-     * @return Returns the IngestClient.
-     */
-    public IngestClient getIngestClient() {
-        if (this.ingestClient == null) {
-            this.ingestClient = new IngestClient();
-        }
-        return this.ingestClient;
-    }
-
-    /**
-     * @return Returns the containerClient.
-     */
-    public ContainerClient getContainerClient() {
-        if (this.containerClient == null) {
-            this.containerClient = new ContainerClient();
-        }
-        return containerClient;
-    }
-
-    /**
-     * @return Returns the contextClient.
-     */
-    public ContextClient getContextClient() {
-        if (this.contextClient == null) {
-            this.contextClient = new ContextClient();
-        }
-        return contextClient;
-    }
-
-    /**
-     * @return Returns the contentRelationClient.
-     */
-    public ContentRelationClient getContentRelationClient() {
-        if (this.contentRelationClient == null) {
-            this.contentRelationClient = new ContentRelationClient();
-        }
-        return contentRelationClient;
-    }
-
-    /**
-     * @return Returns the DeviationClient.
-     */
-    public DeviationClient getDeviationClient() {
-        if (this.deviationClient == null) {
-            this.deviationClient = new DeviationClient();
-        }
-        return this.deviationClient;
-    }
 
     /**
      * @return Returns the searchTestBase.
