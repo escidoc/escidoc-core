@@ -36,6 +36,7 @@ import java.util.Vector;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
 import de.escidoc.core.test.common.client.servlet.om.ContentRelationClient;
 import de.escidoc.core.test.common.client.servlet.om.ContextClient;
@@ -130,6 +131,8 @@ public class OmTestBase extends EscidocRestSoapTestBase {
 
     public static final String XPATH_RESULT_PID = XPATH_RESULT + "/" + NAME_PID;
 
+    private AdminClient adminClient = null;
+
     private ItemClient itemClient = null;
 
     private IngestClient ingestClient = null;
@@ -150,6 +153,16 @@ public class OmTestBase extends EscidocRestSoapTestBase {
     public OmTestBase(final int transport) {
         super(transport);
 
+    }
+
+    /**
+     * @return Returns the adminClient.
+     */
+    public AdminClient getAdminClient() {
+        if (this.adminClient == null) {
+            this.adminClient = new AdminClient(getTransport());
+        }
+        return adminClient;
     }
 
     /**
