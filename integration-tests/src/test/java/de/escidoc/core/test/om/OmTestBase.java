@@ -30,11 +30,13 @@ package de.escidoc.core.test.om;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
 import de.escidoc.core.test.common.client.servlet.om.ContentRelationClient;
@@ -43,6 +45,9 @@ import de.escidoc.core.test.common.client.servlet.om.DeviationClient;
 import de.escidoc.core.test.common.client.servlet.om.IngestClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.sb.SearchTestBase;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -337,4 +342,93 @@ public class OmTestBase extends EscidocAbstractTest {
         }
         return taskParam;
     }
+
+    /**
+     * Prepare the PIDs of Container. Depending on configuration must have a Container an object and a version Pid
+     * before you can release it.
+     *
+     * @param containerId The id of the Container.
+     * @param lmd         The last modification date of the Container.
+     * @return The new last modification date of the Container. The return last modification date equals the param last
+     *         modification date if the Container resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
+     */
+    public String prepareContainerPid(final String containerId, final String lmd) throws Exception {
+
+        String newLmd = lmd;
+        String objectPidXml = null;
+        String versionPidXml = null;
+
+        String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
+        // assign pid to member (Container)
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
+            objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
+            assertXmlValidResult(objectPidXml);
+            newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+        }
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
+            assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
+            versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
+            assertXmlValidResult(versionPidXml);
+            newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+        }
+
+        return newLmd;
+    }
+
+    /**
+     * Prepare the release of Item. Depending on configuration must have a Item an object and a version Pid before you
+     * can release it.
+     *
+     * @param itemId The id of the Item.
+     * @param lmd    The lastmodification date of the Item.
+     * @return The new last modification date of the Item. The return last modification date equals the param last
+     *         modification date if the Item resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
+     */
+    public String prepareItemPid(final String itemId, final String lmd) throws Exception {
+
+        String newLmd = lmd;
+        String objectPidXml = null;
+        String versionPidXml = null;
+
+        String pidParam;
+        AssignParam assignPidParam = new AssignParam();
+
+        // assign pid to member (item)
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
+            objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
+            assertXmlValidResult(objectPidXml);
+            newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+        }
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
+            assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
+            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+
+            versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
+            assertXmlValidResult(versionPidXml);
+            newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+        }
+
+        return newLmd;
+    }
+
 }

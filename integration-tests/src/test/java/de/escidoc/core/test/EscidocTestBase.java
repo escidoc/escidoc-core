@@ -945,6 +945,8 @@ public abstract class EscidocTestBase {
 
     private static String frameworkUrl = null;
 
+    private AdminClient adminClient = null;
+
     private ItemClient itemClient = null;
 
     private IngestClient ingestClient = null;
@@ -988,6 +990,16 @@ public abstract class EscidocTestBase {
         catch (final Exception e) {
             throw new UnsupportedOperationException("getClient() not implemented by this test class.", e);
         }
+    }
+
+    /**
+     * @return Returns the adminClient.
+     */
+    public AdminClient getAdminClient() {
+        if (this.adminClient == null) {
+            this.adminClient = new AdminClient();
+        }
+        return adminClient;
     }
 
     /**
