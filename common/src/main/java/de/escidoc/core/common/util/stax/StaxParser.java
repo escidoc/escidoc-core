@@ -641,7 +641,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         InvalidContentException, OptimisticLockingException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, OrganizationalUnitNotFoundException, TripleStoreSystemException,
         WebserverSystemException, EncodingSystemException, XmlParserSystemException, IntegritySystemException,
-        TmeException, XmlCorruptedException {
+        TmeException, XmlCorruptedException, InvalidStatusException {
 
         StartElement element = startElement;
         if (this.checkRootElementName && !this.rootChecked) {
@@ -718,6 +718,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     throw ex;
                 }
                 catch (final TmeException ex) {
+                    throw ex;
+                }
+                catch (final InvalidStatusException ex) {
                     throw ex;
                 }
                 catch (final Exception ex) {

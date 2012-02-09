@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import org.junit.Before;
@@ -164,6 +165,32 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         // assert data structure in FoXML (indirect via triple store)
         TripleStoreValue tsv = new TripleStoreValue();
         tsv.contextTripleStoreValues(newContextDoc);
+    }
+
+    @Test(expected = InvalidStatusException.class)
+    public void testOmContextAddInvalidOU() throws Exception {
+        // create a context
+        Document context =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
+        final String createdContext = create(toString(context, false));
+        final String contextObjid = getObjidValue(createdContext);
+        // create an OU
+        final Document ou =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        final String createdOU = handleXmlResult(getOrganizationalUnitClient().create(toString(ou, false)));
+        final String ouObjid = getObjidValue(createdOU);
+
+        context = getDocument(createdContext);
+        final Node ouRefNode =
+            selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
+        final Node ouRefNodeNew = ouRefNode.cloneNode(true);
+
+        substitute(ouRefNodeNew, "@href", ouObjid);
+        final Node ousRefNode = selectSingleNode(context, "/context/properties/organizational-units");
+        ousRefNode.appendChild(ouRefNodeNew);
+
+        update(contextObjid, toString(context, false));
     }
 
     /**
