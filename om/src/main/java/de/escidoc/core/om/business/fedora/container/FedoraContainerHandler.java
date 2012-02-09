@@ -2473,14 +2473,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException, SystemException,
         ContainerNotFoundException, InvalidContentException, TripleStoreSystemException, XmlParserSystemException,
         IntegritySystemException, WebserverSystemException {
-        // TODO: implement
+
         setContainer(id);
 
         try {
             checkLocked();
             try {
                 checkStatusNot(Constants.STATUS_WITHDRAWN);
-                checkStatusNot(Constants.STATUS_RELEASED);
             }
             catch (final InvalidStatusException e) {
                 throw new InvalidStatusException("Members can not be removed, because the "
@@ -2535,7 +2534,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                         Datastream.MIME_TYPE_TEXT_XML));
 
                 // updateTimeStamp
-                makeVersion("Container.removeMembers");
+                makeVersion("Container.removeMembers", null);
                 getContainer().persist();
                 fireContainerModified(getContainer().getId(), retrieve(getContainer().getId()));
 
@@ -2576,6 +2575,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
+    @Deprecated
     private void makeVersion(final String comment) throws SystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, WebserverSystemException,
         XmlParserSystemException {
