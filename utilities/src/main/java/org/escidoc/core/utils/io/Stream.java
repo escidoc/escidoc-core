@@ -136,6 +136,7 @@ public final class Stream extends OutputStream {
     /**
      * Locks the output stream to prevent additional writes, but maintains a pointer to it so an InputStream can be
      * obtained
+     * @throws java.io.IOException
      */
     public void lock() throws IOException {
         if (this.isOutputLocked()) {
@@ -167,6 +168,7 @@ public final class Stream extends OutputStream {
      *            the new output stream
      * @param copyOldContent
      *            flag indicating if the old content should be copied
+     * @throws java.io.IOException
      */
     public void resetOut(OutputStream out, final boolean copyOldContent) throws IOException {
         if (out == null) {
@@ -200,8 +202,8 @@ public final class Stream extends OutputStream {
                     final InputStream in = new BufferedInputStream(new FileInputStream(this.tempFile));
                     IOUtils.copyAndCloseInput(in, out);
                 }
-                final boolean sucessfull = this.tempFile.delete();
-                if (!sucessfull) {
+                final boolean successful = this.tempFile.delete();
+                if (!successful) {
                     if (LOG.isInfoEnabled()) {
                         LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
                     }
@@ -293,9 +295,7 @@ public final class Stream extends OutputStream {
                 }
             }
             finally {
-                if (in != null) {
-                    in.close();
-                }
+                in.close();
             }
         }
     }
@@ -465,8 +465,8 @@ public final class Stream extends OutputStream {
                     // ignore
                 }
             }
-            final boolean sucessfull = this.tempFile.delete();
-            if (!sucessfull) {
+            final boolean successful = this.tempFile.delete();
+            if (!successful) {
                 if (LOG.isInfoEnabled()) {
                     LOG.info("Error on deleting temp file '" + tempFile.getName() + "'.");
                 }
