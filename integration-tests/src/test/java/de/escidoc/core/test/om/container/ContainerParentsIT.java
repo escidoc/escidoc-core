@@ -128,7 +128,6 @@ public class ContainerParentsIT extends ContainerTestBase {
      *
      * @throws Exception If anything fails.
      */
-    // test is disabled because it runs endless on hudson.
     // the way to count number of tests let assume that the test design smells 
     @Test
     public void testRetrieveParents() throws Exception {
