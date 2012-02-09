@@ -73,9 +73,6 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be added to members of " + this.parentId + '.');
                 }
-                else {
-                    memberIds.add(objid);
-                }
             }
             if (TripleStoreUtility.getInstance().isMemberOf(this.parentId, objid)) {
                 memberIdsToRemove.add(objid);
