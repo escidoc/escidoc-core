@@ -28,21 +28,23 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.compare.TripleStoreValue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.compare.TripleStoreValue;
 
 /**
  * Test the mock implementation of the item resource.
- *
+ * 
  * @author Michael Schneider
  */
 public class UpdateOrganizationalUnitsIT extends ContextTestBase {
@@ -51,8 +53,9 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
 
     /**
      * Set up servlet test.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Before
     public void setUp() throws Exception {
@@ -61,21 +64,22 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
 
     /**
      * Successfully test. Removing an Organizational Units to a Context.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOmContextDelOU() throws Exception {
-        Document context =
+        final Document context =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
-        String template = toString(context, false);
+        final String template = toString(context, false);
 
         String created = create(template);
         assertXmlValidContext(created);
 
-        Document createdDoc = EscidocAbstractTest.getDocument(created);
-        String id = getObjidValue(createdDoc);
+        final Document createdDoc = EscidocAbstractTest.getDocument(created);
+        final String id = getObjidValue(createdDoc);
 
         // remove second OU from Context
         Node node = selectSingleNode(createdDoc, "/context/properties/organizational-units/organizational-unit");
@@ -84,14 +88,14 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         // get id from removed OU
         String attrId = null;
         // String debug = toString(node, false);
-        Node hrefNode = selectSingleNode(node, "@href");
+        final Node hrefNode = selectSingleNode(node, "@href");
         attrId = hrefNode.getNodeValue();
 
         created = toString(createdDoc, false);
-        String newContext = update(id, created);
+        final String newContext = update(id, created);
 
         // assert second OU does was removed from Context
-        Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
+        final Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
 
         String xpath = "/context/properties/organizational-units/organizational-unit";
         xpath += "[@href = '" + attrId + "']";
@@ -100,18 +104,19 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         assertNull("OU not removed from Context", node);
 
         // assert data structure in FoXML (indirect via triple store)
-        TripleStoreValue tsv = new TripleStoreValue();
+        final TripleStoreValue tsv = new TripleStoreValue();
         tsv.contextTripleStoreValues(newContextDoc);
     }
 
     /**
      * Successfully test. Adding an Organizational Units to a Context.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOmContextAddOU() throws Exception {
-        Document context =
+        final Document context =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
@@ -119,39 +124,39 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
-        Node hrefNode = selectSingleNode(node, "@href");
+        final Node hrefNode = selectSingleNode(node, "@href");
         attrId = hrefNode.getNodeValue();
 
         node.getParentNode().removeChild(node);
 
         String template = toString(context, false);
-        String created = create(template);
+        final String created = create(template);
         assertXmlValidContext(created);
 
-        Document createdDoc = EscidocAbstractTest.getDocument(created);
-        String id = getObjidValue(createdDoc);
+        final Document createdDoc = EscidocAbstractTest.getDocument(created);
+        final String id = getObjidValue(createdDoc);
 
         // add new OU to properties/org-units
-        Node ou = selectSingleNode(createdDoc, "/context/properties/organizational-units/organizational-unit");
-        Node newOu = ou.cloneNode(true);
+        final Node ou = selectSingleNode(createdDoc, "/context/properties/organizational-units/organizational-unit");
+        final Node newOu = ou.cloneNode(true);
 
         String xpath = "";
         xpath = "@href";
 
         substitute(newOu, xpath, attrId);
 
-        Node ous = selectSingleNode(createdDoc, "/context/properties/organizational-units");
+        final Node ous = selectSingleNode(createdDoc, "/context/properties/organizational-units");
 
         ous.appendChild(newOu);
 
         template = toString(createdDoc, false);
-        String newContext = update(id, template);
+        final String newContext = update(id, template);
 
         // assert second OU does was removed from Context
-        Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
+        final Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
 
         // assert number of OUs == 2
-        NodeList updatedOus =
+        final NodeList updatedOus =
             selectNodeList(newContextDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("Missing new OU after update", 2, updatedOus.getLength());
 
@@ -162,39 +167,66 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         assertNotNull("OU not added to Context", node);
 
         // assert data structure in FoXML (indirect via triple store)
-        TripleStoreValue tsv = new TripleStoreValue();
+        final TripleStoreValue tsv = new TripleStoreValue();
         tsv.contextTripleStoreValues(newContextDoc);
+    }
+
+    @Test(expected = InvalidStatusException.class)
+    public void testOmContextAddInvalidOU() throws Exception {
+        // create a context
+        Document context =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
+        final String createdContext = create(toString(context, false));
+        final String contextObjid = getObjidValue(createdContext);
+        // create an OU
+        final Document ou =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        final String createdOU = handleXmlResult(getOrganizationalUnitClient().create(toString(ou, false)));
+        final String ouObjid = getObjidValue(createdOU);
+
+        context = getDocument(createdContext);
+        final Node ouRefNode =
+            selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
+        final Node ouRefNodeNew = ouRefNode.cloneNode(true);
+
+        substitute(ouRefNodeNew, "@href", ouObjid);
+        final Node ousRefNode = selectSingleNode(context, "/context/properties/organizational-units");
+        ousRefNode.appendChild(ouRefNodeNew);
+
+        update(contextObjid, toString(context, false));
     }
 
     /**
      * Successfully test. Replacing an Organizational Units in a Context.
-     *
-     * @throws Exception If anything fails.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
     @Test
     public void testOmContextReplaceOU() throws Exception {
-        Document context =
+        final Document context =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
         substitute(context, "/context/properties/name", getUniqueName("PubMan Context "));
 
         // remove second OU from Context
-        Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
+        final Node node = selectSingleNode(context, "/context/properties/organizational-units/organizational-unit");
 
         String attrId = null;
         // String debug = toString(node, false);
-        Node hrefNode = selectSingleNode(node, "@href");
+        final Node hrefNode = selectSingleNode(node, "@href");
         attrId = hrefNode.getNodeValue();
 
         node.getParentNode().removeChild(node);
 
-        String template = toString(context, false);
+        final String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);
 
-        Document createdDoc = EscidocAbstractTest.getDocument(created);
-        String id = getObjidValue(createdDoc);
+        final Document createdDoc = EscidocAbstractTest.getDocument(created);
+        final String id = getObjidValue(createdDoc);
 
-        NodeList createdOus =
+        final NodeList createdOus =
             selectNodeList(createdDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("More than one OUs created", createdOus.getLength(), 1);
 
@@ -209,13 +241,13 @@ public class UpdateOrganizationalUnitsIT extends ContextTestBase {
         assertEquals("More than one OUs for update", 1, updateOu.getLength());
 
         created = toString(createdDoc, false);
-        String newContext = update(id, created);
+        final String newContext = update(id, created);
 
         // assert that the OU was replaced in Context
-        Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
+        final Document newContextDoc = EscidocAbstractTest.getDocument(newContext);
 
         // assert that only one OU is part of Context after OU
-        NodeList updatedOus =
+        final NodeList updatedOus =
             selectNodeList(newContextDoc, "/context/properties/organizational-units/organizational-unit");
         assertEquals("Only one OU after update", updatedOus.getLength(), 1);
 
