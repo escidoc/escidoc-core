@@ -643,6 +643,8 @@ public abstract class EscidocTestBase {
 
     protected static String startTimestamp = getNowAsTimestamp();
 
+    private AdminClient adminClient = null;
+
     private ItemClient itemClient = null;
 
     private IngestClient ingestClient = null;
@@ -656,6 +658,16 @@ public abstract class EscidocTestBase {
     private OrganizationalUnitClient organizationalUnitClient = null;
 
     private DeviationClient deviationClient = null;
+
+    /**
+     * @return Returns the adminClient.
+     */
+    public AdminClient getAdminClient() {
+        if (this.adminClient == null) {
+            this.adminClient = new AdminClient();
+        }
+        return adminClient;
+    }
 
     /**
      * @return Returns the itemClient.

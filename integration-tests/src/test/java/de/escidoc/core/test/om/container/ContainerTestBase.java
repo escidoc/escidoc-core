@@ -31,12 +31,15 @@ package de.escidoc.core.test.om.container;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.apache.http.HttpResponse;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -814,4 +817,81 @@ public class ContainerTestBase extends OmTestBase {
             fail(msg);
         }
     }
+
+    /**
+     * Prepare the PIDs of Container. Depending on configuration must have a Container an object and a version Pid
+     * before you can release it.
+     *
+     * @param containerId The id of the Container.
+     * @param lmd         The last modification date of the Container.
+     * @return The new last modification date of the Container. The return last modification date equals the param last
+     *         modification date if the Container resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
+     */
+    public String prepareContainerPid(final String containerId, final String lmd) throws Exception {
+
+        String newLmd = lmd;
+        String objectPidXml = null;
+        String versionPidXml = null;
+
+        String pidParam;
+        // assign pid to member (Container)
+        if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
+            assertXmlValidResult(objectPidXml);
+            newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+        }
+        if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
+            && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
+
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+            versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
+            assertXmlValidResult(versionPidXml);
+            newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+        }
+
+        return newLmd;
+    }
+
+    /**
+     * Prepare the release of Item. Depending on configuration must have a Item an object and a version Pid before you
+     * can release it.
+     *
+     * @param itemId The id of the Item.
+     * @param lmd    The lastmodification date of the Item.
+     * @return The new last modification date of the Item. The return last modification date equals the param last
+     *         modification date if the Item resource was not altered.
+     * @throws Exception Thrown if pid assignment failed.
+     */
+    public String prepareItemPid(final String itemId, final String lmd) throws Exception {
+
+        String newLmd = lmd;
+        String objectPidXml = null;
+        String versionPidXml = null;
+
+        String pidParam;
+        // assign pid to member (item)
+        if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+
+            objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
+            assertXmlValidResult(objectPidXml);
+            newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+        }
+        if (getItemClient().getPidConfig("cmm.Item.versionPid.setPidBeforeRelease", "true")
+            && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
+
+            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + itemId));
+
+            versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
+            assertXmlValidResult(versionPidXml);
+            newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+        }
+
+        return newLmd;
+    }
+
 }

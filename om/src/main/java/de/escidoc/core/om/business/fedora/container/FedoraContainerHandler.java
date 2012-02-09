@@ -2422,14 +2422,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
     public String removeMembers(final String id, final String taskParam) throws LockingException,
         ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException, SystemException,
         ContainerNotFoundException, InvalidContentException {
-        // TODO: implement
+
         setContainer(id);
 
         try {
             checkLocked();
             try {
                 checkStatusNot(Constants.STATUS_WITHDRAWN);
-                checkStatusNot(Constants.STATUS_RELEASED);
             }
             catch (final InvalidStatusException e) {
                 throw new InvalidStatusException("Members can not be removed, because the "

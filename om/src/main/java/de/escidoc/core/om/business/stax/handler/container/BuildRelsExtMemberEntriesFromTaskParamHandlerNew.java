@@ -75,14 +75,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         final String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
-            if (!this.tripleStoreUtility.exists(objid)) {
-                if ("add".equals(this.methodName)) {
+            if ("add".equals(this.methodName)) {
+                if (!this.tripleStoreUtility.exists(objid)) {
+
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be added to members of " + this.parentId + '.');
-                }
-                else if ("remove".equals(this.methodName)) {
-                    throw new InvalidContentException("Object with id " + objid
-                        + " does not exist and can not be removed from members of " + this.parentId + '.');
                 }
             }
             if (this.tripleStoreUtility.isMemberOf(this.parentId, objid)) {
