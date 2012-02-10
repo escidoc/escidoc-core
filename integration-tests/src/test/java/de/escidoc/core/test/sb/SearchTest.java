@@ -269,7 +269,8 @@ public class SearchTest extends SearchTestBase {
             // release container
             xml = container.retrieve(containerIds[0]);
             lastModDate = getLastModificationDate(xml);
-            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate + "\" />");
+            container.release(containerIds[0], "<param last-modification-date=\"" + lastModDate
+                + "\" ><comment>ContainerHandler.release()</comment></param>");
         }
         catch (final Exception e) {
             LOGGER.error("", e);
