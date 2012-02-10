@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    targetNamespace="http://oclc.org/srw/extraData/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns="http://oclc.org/srw/extraData/" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified">
+  <xsd:element name="extraData">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="databaseTitle" type="xsd:string"/>
+        <xsd:element name="targetURL" type="targetURLType" minOccurs="0"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="targetURLType">
+    <xsd:sequence>
+      <xsd:element name="host" type="xsd:string"/>
+      <xsd:element name="port" type="xsd:string"/>
+      <xsd:element name="path" type="xsd:string"/>
+      <xsd:element name="query" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

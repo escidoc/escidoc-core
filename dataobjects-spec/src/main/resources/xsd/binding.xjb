@@ -892,5 +892,18 @@
     </bindings>
   </bindings>
   
+  <!-- SRW EXTRA DATA -->
+  <bindings schemaLocation="srw-extra-data.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sru.extradata" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='extraData']">
+      <class name="ExtraDataTO" />
+    </bindings>
+    <bindings node="//xs:complexType[@name='targetURLType']">
+      <class name="TargetUrlTO" />
+    </bindings>
+  </bindings>
+  
 
 </bindings>
