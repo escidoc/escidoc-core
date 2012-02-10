@@ -833,23 +833,35 @@ public class ContainerTestBase extends OmTestBase {
         String newLmd = lmd;
         String objectPidXml = null;
         String versionPidXml = null;
+        String containerXml = retrieve(containerId);
 
         String pidParam;
         // assign pid to member (Container)
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
-            objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
-            assertXmlValidResult(objectPidXml);
-            newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+
+            // check if container has already object pid
+            if (selectSingleNode(getDocument(containerXml), "/container/properties/pid") == null) {
+
+                pidParam =
+                    getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+                objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
+                assertXmlValidResult(objectPidXml);
+                newLmd = getLastModificationDateValue(getDocument(objectPidXml));
+            }
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
-            pidParam = getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
-            versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
-            assertXmlValidResult(versionPidXml);
-            newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+            // check if this version of container has already version pid
+            if (selectSingleNode(getDocument(containerXml), "/container/properties/version/pid") == null) {
+
+                pidParam =
+                    getPidParam2(new DateTime(newLmd, DateTimeZone.UTC), new URL("http://somewhere" + containerId));
+                versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
+                assertXmlValidResult(versionPidXml);
+                newLmd = getLastModificationDateValue(getDocument(versionPidXml));
+            }
         }
 
         return newLmd;
