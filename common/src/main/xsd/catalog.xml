@@ -30,9 +30,5 @@
 	<system systemId="http://www.escidoc.org/schemas/statistic-data/0.3/statistic-data.xsd"
             uri="../xsd/statistic-data/0.3/statistic-data.xsd"/>
 
-<!-- 
-
-	<rewriteURI uriStartString="http://www.escidoc.de/schemas/"
-		rewritePrefix="./" />
- -->
+  <rewriteURI uriStartString="http://www.escidoc.de/schemas/" rewritePrefix="./" />
 </catalog>
