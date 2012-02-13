@@ -229,9 +229,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
         final String path = request.getRequestURI().replaceFirst(request.getContextPath(), "");
 
-        return getMethod(path, request.getQueryString(),
-            "GET".equals(request.getMethod()) ? request.getParameterMap() : null, request.getMethod(), Resource
-                .getRequestBody(request));
+        return getMethod(path, request.getQueryString(), "GET".equals(request.getMethod()) ? convertToUtf8(request
+            .getParameterMap()) : null, request.getMethod(), Resource.getRequestBody(request));
     }
 
     /**
@@ -289,6 +288,43 @@ public class MethodMapper extends XMLBase implements MapperInterface {
             }
         }
         return result;
+    }
+
+    /**
+     * Convert parameters to utf-8.
+     *
+     * @param parameters the parameters
+     * @return parameters converted to utf-8
+     */
+    private Map<String, String[]> convertToUtf8(final Map<String, String[]> parameters) {
+        Map<String, String[]> utf8Parameters = new HashMap<String, String[]>();
+        if (parameters != null) {
+            for (final Entry<String, String[]> entry : parameters.entrySet()) {
+                if (entry.getValue() != null) {
+                    utf8Parameters.put(entry.getKey(), new String[entry.getValue().length]);
+                    for (int i = 0; i < entry.getValue().length; i++) {
+                        String value = entry.getValue()[i];
+                        if (value != null) {
+                            value = value.replaceAll("\\s+", " ");
+                            byte[] qb = new byte[value.length()];
+                            for (int j = 0; j < value.length(); j++)
+                                qb[j] = (byte) value.charAt(j);
+                            try {
+                                value = new String(qb, "utf-8");
+                            }
+                            catch (UnsupportedEncodingException e) {
+                                value = entry.getValue()[i];
+                            }
+                        }
+                        utf8Parameters.get(entry.getKey())[i] = value;
+                    }
+                }
+            }
+        }
+        else {
+            return null;
+        }
+        return utf8Parameters;
     }
 
     /**
