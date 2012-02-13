@@ -20,19 +20,6 @@
 
 package de.escidoc.core.common.servlet.invocation;
 
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -44,6 +31,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * The method mapper.<br> This mapper provides the resource handler's method that has to be invoked for a specific
@@ -233,8 +235,9 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     public BeanMethod getMethod(final HttpServletRequest request) throws MethodNotFoundException,
         EncodingSystemException {
 
-        return getMethod(request.getRequestURI(), request.getQueryString(), "GET".equals(request.getMethod()) ? request
-            .getParameterMap() : null, request.getMethod(), Resource.getRequestBody(request));
+        return getMethod(request.getRequestURI(), request.getQueryString(),
+            "GET".equals(request.getMethod()) ? convertToUtf8(request.getParameterMap()) : null, request.getMethod(),
+            Resource.getRequestBody(request));
     }
 
     /**
@@ -290,6 +293,43 @@ public class MethodMapper extends XMLBase implements MapperInterface {
             }
         }
         return result;
+    }
+
+    /**
+     * Convert parameters to utf-8.
+     *
+     * @param parameters the parameters
+     * @return parameters converted to utf-8
+     */
+    private Map<String, String[]> convertToUtf8(final Map<String, String[]> parameters) {
+        Map<String, String[]> utf8Parameters = new HashMap<String, String[]>();
+        if (parameters != null) {
+            for (final Entry<String, String[]> entry : parameters.entrySet()) {
+                if (entry.getValue() != null) {
+                    utf8Parameters.put(entry.getKey(), new String[entry.getValue().length]);
+                    for (int i = 0; i < entry.getValue().length; i++) {
+                        String value = entry.getValue()[i];
+                        if (value != null) {
+                            value = value.replaceAll("\\s+", " ");
+                            byte[] qb = new byte[value.length()];
+                            for (int j = 0; j < value.length(); j++)
+                                qb[j] = (byte) value.charAt(j);
+                            try {
+                                value = new String(qb, "utf-8");
+                            }
+                            catch (UnsupportedEncodingException e) {
+                                value = entry.getValue()[i];
+                            }
+                        }
+                        utf8Parameters.get(entry.getKey())[i] = value;
+                    }
+                }
+            }
+        }
+        else {
+            return null;
+        }
+        return utf8Parameters;
     }
 
     /**
