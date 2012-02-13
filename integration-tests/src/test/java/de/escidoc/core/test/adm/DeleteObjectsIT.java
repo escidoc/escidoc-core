@@ -57,7 +57,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     public void testDeleteOneObject() throws Exception {
 
         Set<String> l = createItems(1);
-        deleteObjects(getIdSetTaskParam(l));
+        deleteObjects(getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -94,7 +94,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         Set<String> l = createItems(4);
 
         // delete Items
-        deleteObjects(getIdSetTaskParam(l));
+        deleteObjects(getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -167,7 +167,8 @@ public class DeleteObjectsIT extends AdminToolTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test//(timeout = 30000)
+    @Test
+    //(timeout = 30000)
     public void deleteObjectsWithSyncOption() throws Exception {
 
         // create Items
