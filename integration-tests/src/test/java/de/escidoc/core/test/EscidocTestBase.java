@@ -2811,7 +2811,7 @@ public abstract class EscidocTestBase {
 
         // FIXME Namespace wrong but the real is'nt defined yet (INFR-1466)
         StringBuilder xml = new StringBuilder(de.escidoc.core.test.Constants.XML_HEADER);
-        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/id-set-task-param/0.1\">\n");
+        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/delete-objects-task-param/0.1\">\n");
 
         for (String id : ids) {
             xml.append("<id>").append(id).append("</id>\n");

@@ -122,7 +122,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     }
 
     /**
-     * Delete a list of objects with asynchon indexer.
+     * Delete a list of objects with asynchronous indexer.
      * 
      * @throws Exception
      *             If anything fails.
@@ -167,7 +167,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(timeout = 30000)
+    @Test//(timeout = 30000)
     public void deleteObjectsWithSyncOption() throws Exception {
 
         // create Items

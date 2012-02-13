@@ -28,36 +28,24 @@
  */
 package de.escidoc.core.adm.internal;
 
-import javax.ws.rs.PathParam;
-
+import de.escidoc.core.adm.AdminRestService;
+import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.aa.UserAccountTO;
 import org.escidoc.core.domain.properties.JavaUtilPropertiesTO;
 import org.escidoc.core.domain.sb.IndexConfigurationTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.IdSetTaskParamTO;
 import org.escidoc.core.domain.taskparam.ReindexTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.adm.AdminRestService;
-import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException;
-import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import javax.ws.rs.PathParam;
 
 /**
  * @author Michael Hoppe
@@ -87,7 +75,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      * @see de.escidoc.core.adm.AdminRestService#deleteObjects(org.escidoc.core.domain.taskparam.IdSetTaskParamTO)
      */
     @Override
-    public ResultTO deleteObjects(IdSetTaskParamTO ids) throws AuthenticationException, AuthorizationException,
+    public ResultTO deleteObjects(DeleteObjectsTaskParamTO ids) throws AuthenticationException, AuthorizationException,
         InvalidXmlException, SystemException {
         return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.deleteObjects(ServiceUtility.toXML(ids)));
     }

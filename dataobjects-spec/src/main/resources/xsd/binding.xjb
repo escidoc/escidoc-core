@@ -242,6 +242,14 @@
       <class name="PathListTO" />
     </bindings>
   </bindings>
+  <bindings schemaLocation="organizational-unit-ref.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='organizational-unit-ref']">
+      <class name="OrganizationalUnitRefTO" />
+    </bindings>
+  </bindings>
   
   <!-- parents is strange and seems to be a duplication of parents defined in ou schema --> 
   <bindings schemaLocation="parents.xsd">
@@ -726,6 +734,14 @@
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="IdSetTaskParamTO" />
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="delete-objects-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam" />
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="DeleteObjectsTaskParamTO" />
     </bindings>
   </bindings>
   <bindings schemaLocation="members-task-param.xsd">
