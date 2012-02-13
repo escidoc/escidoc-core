@@ -59,8 +59,8 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_ITEM_COMPONENTS = XPATH_ITEM + "/" + NAME_COMPONENTS;
 
-    public static final String XPATH_ITEM_COMPONENT = XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT
-        + "[@objid=\"${COMPONENT_ID}\"]";
+    public static final String XPATH_ITEM_COMPONENT =
+        XPATH_ITEM_COMPONENTS + "/" + NAME_COMPONENT + "[@objid=\"${COMPONENT_ID}\"]";
 
     public static final String XPATH_ITEM_MD_RECORDS = XPATH_ITEM + "/" + "md-records";
 
@@ -78,11 +78,11 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_CONTENT_RELATION_PROPERTIES = "/content-relation/properties";
 
-    public static final String XPATH_CONTENT_RELATION_STATUS = XPATH_CONTENT_RELATION_PROPERTIES + "/"
-        + NAME_PUBLIC_STATUS;
+    public static final String XPATH_CONTENT_RELATION_STATUS =
+        XPATH_CONTENT_RELATION_PROPERTIES + "/" + NAME_PUBLIC_STATUS;
 
-    public static final String XPATH_CONTENT_RELATION_STATUS_COMMENT = XPATH_CONTENT_RELATION_PROPERTIES + "/"
-        + NAME_PUBLIC_STATUS_COMMENT;
+    public static final String XPATH_CONTENT_RELATION_STATUS_COMMENT =
+        XPATH_CONTENT_RELATION_PROPERTIES + "/" + NAME_PUBLIC_STATUS_COMMENT;
 
     public static final String XPATH_ITEM_RESOURCES = XPATH_ITEM + "/" + NAME_RESOURCES;
 
@@ -92,13 +92,13 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_ITEM_LATEST_RELEASE = XPATH_ITEM_PROPERTIES + "/" + NAME_LATEST_RELEASE;
 
-    public static final String XPATH_ITEM_LATEST_RELEASE_PID = XPATH_ITEM_PROPERTIES + "/" + NAME_LATEST_RELEASE
-        + "/pid";
+    public static final String XPATH_ITEM_LATEST_RELEASE_PID =
+        XPATH_ITEM_PROPERTIES + "/" + NAME_LATEST_RELEASE + "/pid";
 
     public static final String XPATH_ITEM_LATEST_VERSION = XPATH_ITEM_PROPERTIES + "/" + NAME_LATEST_VERSION;
 
-    public static final String XPATH_ITEM_CURRENT_VERSION_STATUS = XPATH_ITEM_CURRENT_VERSION + "/"
-        + NAME_VERSION_STATUS;
+    public static final String XPATH_ITEM_CURRENT_VERSION_STATUS =
+        XPATH_ITEM_CURRENT_VERSION + "/" + NAME_VERSION_STATUS;
 
     public static final String XPATH_CONTAINER_CONTENT_MODEL = XPATH_CONTAINER_PROPERTIES + "/" + NAME_CONTENT_MODEL;
 
