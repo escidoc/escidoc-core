@@ -31,8 +31,10 @@ import de.escidoc.core.common.util.service.KeyValuePair;
 
 /**
  * @author Marko Voß
+ * @deprecated Compatibility utility to map the new CXF services to the old services.
  * 
  */
+@Deprecated
 public class ServiceUtility {
 
     private ServiceUtility() {
@@ -129,7 +131,7 @@ public class ServiceUtility {
             result.put(Constants.SRU_PARAMETER_START_RECORD, new String[] { request.getStartRecord().toString() });
         }
         if (request.getStylesheet() != null) {
-            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet() });
+            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet().toASCIIString() });
         }
         if (request.getVersion() != null) {
             result.put(Constants.SRU_PARAMETER_VERSION, new String[] { request.getVersion() });
@@ -151,7 +153,7 @@ public class ServiceUtility {
             result.put(Constants.SRU_PARAMETER_RECORD_PACKING, new String[] { request.getRecordPacking() });
         }
         if (request.getStylesheet() != null) {
-            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet() });
+            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet().toASCIIString() });
         }
         if (request.getVersion() != null) {
             result.put(Constants.SRU_PARAMETER_VERSION, new String[] { request.getVersion() });
@@ -170,7 +172,7 @@ public class ServiceUtility {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_SCAN_OP });
 
         if (request.getStylesheet() != null) {
-            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet() });
+            result.put(Constants.SRU_PARAMETER_STYLESHEET, new String[] { request.getStylesheet().toASCIIString() });
         }
         if (request.getVersion() != null) {
             result.put(Constants.SRU_PARAMETER_VERSION, new String[] { request.getVersion() });
