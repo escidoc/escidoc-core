@@ -442,7 +442,7 @@ public class OuSearchIT extends SearchTestBase {
         assertXmlValidSearchResult(response);
         assertEquals(true, checkHighlighting(response));
         response = response.replaceAll("<search-result:highlight.*?</search-result:highlight>", "");
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck =
             { "", "workgroup|3-01-01", "workgroup|3-02-01", "workgroup|3-03-02", "workgroup|3-04-01",
                 "society|1-01-01", "institute|2-01-01", "institute|2-02-01" };
