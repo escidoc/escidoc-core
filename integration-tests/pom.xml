@@ -391,7 +391,7 @@
           </execution>
           <execution>
             <id>drop-escidoc-db [oracle]</id>
-            <phase>-pre-clean</phase>
+            <phase>pre-clean</phase>
             <goals>
               <goal>execute</goal>
             </goals>
@@ -638,13 +638,13 @@
           </execution>
         </executions>
         <configuration>
-          <systemproperties>
+          <systemProperties>
             <property>
               <!-- Specific log4j config for tests -->
               <name>log4j.configuration</name>
               <value>test-log4j.xml</value>
             </property>
-          </systemproperties>
+          </systemProperties>
           <redirectTestOutputToFile>${project.build.directory}/test-output.log</redirectTestOutputToFile>
           <forkMode>always</forkMode>
           <argLine>-Xmx1024m -XX:MaxPermSize=320m -javaagent:${project.build.directory}/jacocoagent.jar=destfile=${sonar.jacoco.itReportPath}</argLine>
