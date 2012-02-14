@@ -8,6 +8,7 @@
         parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate" printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate" />
       <javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
         parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate" printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate" />
+      <javaType name="java.net.URI" xmlType="xs:anyURI" parseMethod="create" printMethod="toASCIIString" />
       <serializable />
     </globalBindings>
   </bindings>
@@ -396,13 +397,160 @@
   </bindings>
   <bindings schemaLocation="cs-xacml-schema-context-01.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa.context" />
+      <package name="org.escidoc.core.domain.xacml.context" />
     </schemaBindings>
+    <bindings node="//xs:element[@name='Request']">
+      <class name="RequestTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Response']">
+      <class name="ResponseTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Subject']">
+      <class name="SubjectTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Resource']">
+      <class name="ResourceTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='ResourceContent']">
+      <class name="ResourceContentTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Action']">
+      <class name="ActionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Environment']">
+      <class name="EnvironmentTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Attribute']">
+      <class name="AttributeTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AttributeValue']">
+      <class name="AttributeValueTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Result']">
+      <class name="ResultTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Decision']">
+      <class name="DecisionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Status']">
+      <class name="StatusTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='StatusCode']">
+      <class name="StatusCodeTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='StatusMessage']">
+      <class name="StatusMessageTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='StatusDetail']">
+      <class name="StatusDetailTO" />
+    </bindings>
   </bindings>
   <bindings schemaLocation="cs-xacml-schema-policy-01.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa.policy" />
+      <package name="org.escidoc.core.domain.xacml.policy" />
     </schemaBindings>
+    <bindings node="//xs:element[@name='PolicySet']">
+      <class name="PolicySetTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='PolicySetIdReference']">
+      <class name="PolicySetIdReferenceTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='PolicyIdReference']">
+      <class name="PolicyIdReferenceTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='PolicySetDefaults']">
+      <class name="PolicySetDefaultsTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='PolicyDefaults']">
+      <class name="PolicyDefaultsTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='XPathVersion']">
+      <class name="XPathVersionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Policy']">
+      <class name="PolicyTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Description']">
+      <class name="DescriptionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Rule']">
+      <class name="RuleTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Target']">
+      <class name="TargetTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Subjects']">
+      <class name="SubjectsTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Subject']">
+      <class name="SubjectTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AnySubject']">
+      <class name="AnySubjectTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Resources']">
+      <class name="ResourcesTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AnyResource']">
+      <class name="AnyResourceTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Resource']">
+      <class name="ResourceTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Actions']">
+      <class name="ActionsTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AnyAction']">
+      <class name="AnyActionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Action']">
+      <class name="ActionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='SubjectMatch']">
+      <class name="SubjectMatchTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='ResourceMatch']">
+      <class name="ResourceMatchTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='ActionMatch']">
+      <class name="ActionMatchTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AttributeSelector']">
+      <class name="AttributeSelectorTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='ResourceAttributeDesignator']">
+      <class name="ResourceAttributeDesignatorTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='ActionAttributeDesignator']">
+      <class name="ActionAttributeDesignatorTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='EnvironmentAttributeDesignator']">
+      <class name="EnvironmentAttributeDesignatorTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='SubjectAttributeDesignator']">
+      <class name="SubjectAttributeDesignatorTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AttributeValue']">
+      <class name="AttributeValueTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Function']">
+      <class name="FunctionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Apply']">
+      <class name="ApplyTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Condition']">
+      <class name="ConditionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Obligations']">
+      <class name="ObligationsTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='Obligation']">
+      <class name="ObligationTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='AttributeAssignment']">
+      <class name="AttributeAssignmentTO" />
+    </bindings>
   </bindings>
   <bindings schemaLocation="role.xsd">
     <schemaBindings>
@@ -600,9 +748,72 @@
     <bindings node="//xs:element[@name='affiliation']">
       <class name="AffiliationTO" />
     </bindings>
+    <!-- references -->
+    <bindings node="//xs:element[@name='origin']">
+      <class name="OriginTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='created-by']">
+      <class name="CreatedByTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='modified-by']">
+      <class name="ModifiedByTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='revoked-by']">
+      <class name="RevokedByTO" />
+    </bindings>
     <bindings node="//xs:element[@name='granted-to']">
       <class name="GrantedToTO" />
     </bindings>
+    <bindings node="//xs:element[@name='context']">
+      <class name="ContextTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='content-model']">
+      <class name="ContentModelTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='lock-owner']">
+      <class name="LockOwnerTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='organizational-unit']">
+      <class name="OrganizationalUnitTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='scope']">
+      <class name="ScopeTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='report-definition']">
+      <class name="ReportDefinitionTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='person']">
+      <class name="PersonTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='role']">
+      <class name="RoleTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='assigned-on']">
+      <class name="AssignedOnTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='parent']">
+      <class name="ParentTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='member']">
+      <class name="MemberTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='item']">
+      <class name="ItemTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='container']">
+      <class name="ContainerTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='child']">
+      <class name="ChildTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='component']">
+      <class name="ComponentTO" />
+    </bindings>
+    <bindings node="//xs:element[@name='predecessor']">
+      <class name="PredecessorTO" />
+    </bindings>
+    <!-- /references -->
+    <!-- TODO: Delete mapping of PredecessorLinkRequiredTO (not marshalable) -->
     <bindings node="//xs:complexType[@name='predecessorLinkRequired']">
       <class name="PredecessorLinkRequiredTO" />
     </bindings>

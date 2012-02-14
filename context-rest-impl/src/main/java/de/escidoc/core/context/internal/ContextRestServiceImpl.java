@@ -3,6 +3,8 @@
  */
 package de.escidoc.core.context.internal;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +110,11 @@ public class ContextRestServiceImpl implements ContextRestService {
         // check resource with id is context
 
         ContextTO context = new ContextTO();
-        context.setHref(Constants.CONTEXT_URL_BASE + id);
+        try {
+            context.setHref(new URI(Constants.CONTEXT_URL_BASE + id));
+        } catch (URISyntaxException e) {
+            throw new SystemException(e.getMessage(), e);
+        }
         context.getProperties().setCreationDate(objectProfile.getObjCreateDate());
         context.getProperties().setLastModificationDate(objectProfile.getObjLastModDate());
 
@@ -123,8 +129,6 @@ public class ContextRestServiceImpl implements ContextRestService {
                 context.getAdminDescriptors().getAdminDescriptor().add(adminDescriptor);
             }
         }
-
-        // return ServiceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
         return context;
     }
 
@@ -220,9 +224,9 @@ public class ContextRestServiceImpl implements ContextRestService {
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.contextHandler
-						.retrieveMembers(contextId, ServiceUtility.toMap(requestTO))));
+        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
+                Constants.SRU_CONTEXT_PATH , this.contextHandler
+                .retrieveMembers(contextId, ServiceUtility.toMap(requestTO))));
     }
 
     /*
