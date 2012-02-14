@@ -1240,6 +1240,11 @@
       <groupId>net.sf.oval</groupId>
       <artifactId>oval</artifactId>
     </dependency>
+    <!-- Enable if you want to use groovy for OVal -->
+    <!--dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+    </dependency-->
     <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
