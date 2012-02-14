@@ -28,6 +28,9 @@
  */
 package org.escidoc.core.domain.sru.parameters;
 
+import net.sf.oval.constraint.NotNull;
+import net.sf.oval.guard.Guarded;
+
 /**
  * Bean implementation for JAX-RS @QueryParam annotation usage on JAX-RS interfaces. <br/>
  * <br/>
@@ -44,20 +47,32 @@ package org.escidoc.core.domain.sru.parameters;
  * @author MIH
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded
 public class SruSearchRequestParametersBean {
 
-    private String operation = "searchRetrieve"; // default behavior
+    public static final String DEFAULT_OPERATION = "searchRetrieve";
+
+    public static final String DEFAULT_START_RECORD = "1";
+
+    public static final String DEFAULT_RECORD_PACKING = "xml";
+
+    public static final String DEFAULT_RESPONSE_POSITION = "1";
+
+    @NotNull
+    private String operation = DEFAULT_OPERATION;
 
     private String version;
 
     private String query;
 
-    private String startRecord = "1"; // default behavior
+    @NotNull
+    private String startRecord = DEFAULT_START_RECORD;
 
     // @XmlSchemaType(name = "nonNegativeInteger")
     private String maximumRecords;
 
-    private String recordPacking = "xml"; // default behavior
+    @NotNull
+    private String recordPacking = DEFAULT_RECORD_PACKING;
 
     private String recordSchema;
 
@@ -76,65 +91,22 @@ public class SruSearchRequestParametersBean {
     private String scanClause;
 
     // @XmlSchemaType(name = "nonNegativeInteger")
-    private String responsePosition = "1"; // default behavior
+    private String responsePosition = DEFAULT_RESPONSE_POSITION;
 
     // @XmlSchemaType(name = "positiveInteger")
     private String maximumTerms;
 
+    /**
+     *
+     */
     public SruSearchRequestParametersBean() {
-    }
-
-    public SruSearchRequestParametersBean(final String operation, final String version, final String query,
-        final String startRecord, final String maximumRecords, final String recordPacking, final String recordSchema,
-        final String recordXPath, final String resultSetTTL, final String sortKeys, final String stylesheet,
-        final String scanClause, final String responsePosition, final String maximumTerms) {
-        if (operation != null) {
-            this.operation = operation;
-        }
-        if (version != null) {
-            this.version = version;
-        }
-        if (query != null) {
-            this.query = query;
-        }
-        if (startRecord != null) {
-            this.startRecord = startRecord;
-        }
-        if (maximumRecords != null) {
-            this.maximumRecords = maximumRecords;
-        }
-        if (recordPacking != null) {
-            this.recordPacking = recordPacking;
-        }
-        if (recordSchema != null) {
-            this.recordSchema = recordSchema;
-        }
-        if (recordXPath != null) {
-            this.recordXPath = recordXPath;
-        }
-        if (resultSetTTL != null) {
-            this.resultSetTTL = resultSetTTL;
-        }
-        if (sortKeys != null) {
-            this.sortKeys = sortKeys;
-        }
-        if (stylesheet != null) {
-            this.stylesheet = stylesheet;
-        }
-        if (scanClause != null) {
-            this.scanClause = scanClause;
-        }
-        if (responsePosition != null) {
-            this.responsePosition = responsePosition;
-        }
-        if (maximumTerms != null) {
-            this.maximumTerms = maximumTerms;
-        }
     }
 
     /**
      * @return the operation
+     * @see SruSearchRequestParametersBean#DEFAULT_OPERATION
      */
+    @NotNull
     public String getOperation() {
         return operation;
     }
@@ -155,7 +127,9 @@ public class SruSearchRequestParametersBean {
 
     /**
      * @return the startRecord
+     * @see SruSearchRequestParametersBean#DEFAULT_START_RECORD
      */
+    @NotNull
     public String getStartRecord() {
         return startRecord;
     }
@@ -169,7 +143,9 @@ public class SruSearchRequestParametersBean {
 
     /**
      * @return the recordPacking
+     * @see SruSearchRequestParametersBean#DEFAULT_RECORD_PACKING
      */
+    @NotNull
     public String getRecordPacking() {
         return recordPacking;
     }
@@ -218,7 +194,9 @@ public class SruSearchRequestParametersBean {
 
     /**
      * @return the responsePosition
+     * @see SruSearchRequestParametersBean#DEFAULT_RESPONSE_POSITION
      */
+    @NotNull
     public String getResponsePosition() {
         return responsePosition;
     }
@@ -235,7 +213,7 @@ public class SruSearchRequestParametersBean {
      *            the operation to set
      */
     public void setOperation(final String operation) {
-        this.operation = operation;
+        this.operation = (operation == null) ? DEFAULT_OPERATION : operation;
     }
 
     /**
@@ -259,7 +237,7 @@ public class SruSearchRequestParametersBean {
      *            the startRecord to set
      */
     public void setStartRecord(final String startRecord) {
-        this.startRecord = startRecord;
+        this.startRecord = (startRecord == null) ? DEFAULT_START_RECORD : startRecord;
     }
 
     /**
@@ -275,7 +253,7 @@ public class SruSearchRequestParametersBean {
      *            the recordPacking to set
      */
     public void setRecordPacking(final String recordPacking) {
-        this.recordPacking = recordPacking;
+        this.recordPacking = (recordPacking == null) ? DEFAULT_RECORD_PACKING : recordPacking;
     }
 
     /**
@@ -331,7 +309,7 @@ public class SruSearchRequestParametersBean {
      *            the responsePosition to set
      */
     public void setResponsePosition(final String responsePosition) {
-        this.responsePosition = responsePosition;
+        this.responsePosition = (responsePosition == null) ? DEFAULT_RESPONSE_POSITION : responsePosition;
     }
 
     /**
