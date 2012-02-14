@@ -33,14 +33,19 @@ import org.escidoc.core.services.fedora.ExportQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.FedoraServiceRESTEndpoint;
 import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
+import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
+import org.escidoc.core.services.fedora.GetDatastreamPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
+import org.escidoc.core.services.fedora.GetDatastreamQueryParam;
 import org.escidoc.core.services.fedora.GetDisseminationPathParam;
+import org.escidoc.core.services.fedora.GetDisseminationQueryParam;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
 import org.escidoc.core.services.fedora.GetObjectProfileQueryParam;
 import org.escidoc.core.services.fedora.GetObjectXMLPathParam;
+import org.escidoc.core.services.fedora.GetObjectXMLQueryParam;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ListDatastreamProfilesPathParam;
@@ -49,6 +54,7 @@ import org.escidoc.core.services.fedora.ListDatastreamsPathParam;
 import org.escidoc.core.services.fedora.ListDatastreamsQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
+import org.escidoc.core.services.fedora.NextPIDPathParam;
 import org.escidoc.core.services.fedora.NextPIDQueryParam;
 import org.escidoc.core.services.fedora.PidListTO;
 import org.escidoc.core.services.fedora.RisearchPathParam;
@@ -115,10 +121,11 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Override
     public PidListTO getNextPID(final String namespace, final int numPIDs) {
         checkState(numPIDs > 0, "Number of PIDs must be > 0.");
+        final NextPIDPathParam path = new NextPIDPathParam();
         final NextPIDQueryParam query = new NextPIDQueryParam();
         query.setNamespace(namespace);
         query.setNumPIDs(numPIDs);
-        return this.fedoraService.getNextPID(query.getNamespace(), query.getNumPIDs(), query.getFormat());
+        return this.fedoraService.getNextPID(path, query);
     }
 
     @Override
@@ -132,7 +139,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public ObjectProfileTO getObjectProfile(final String pid) {
         final GetObjectProfilePathParam path = new GetObjectProfilePathParam(pid);
         final GetObjectProfileQueryParam query = new GetObjectProfileQueryParam();
-        return this.fedoraService.getObjectProfile(path.getPid(), query.getFormat());
+        return this.fedoraService.getObjectProfile(path, query);
     }
 
     @Override
@@ -155,7 +162,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         if (encoding != null) {
             query.setEncoding(encoding);
         }
-        return this.fedoraService.export(path.getPid(), query.getFormat(), query.getContext(), query.getEncoding());
+
+        return this.fedoraService.export(path, query);
     }
 
     @Override
@@ -179,8 +187,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         if (encoding != null) {
             query.setEncoding(encoding);
         }
-        return this.fedoraService.exportAsStream(path.getPid(), query.getFormat(), query.getContext(),
-            query.getEncoding());
+        return this.fedoraService.exportAsStream(path, query);
     }
 
     @Override
@@ -194,7 +201,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Cacheable(cacheName = "Fedora.DigitalObjects", selfPopulating = true, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
     public DigitalObjectTO getObjectXML(final String pid) {
         final GetObjectXMLPathParam path = new GetObjectXMLPathParam(pid);
-        return this.fedoraService.getObjectXML(path.getPid());
+        final GetObjectXMLQueryParam query = new GetObjectXMLQueryParam();
+        return this.fedoraService.getObjectXML(path, query);
     }
 
     @Override
@@ -207,7 +215,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Cacheable(cacheName = "Fedora.DigitalObjectStreams", selfPopulating = true, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetObjectXMLKeyGenerator"))
     public Stream getObjectXMLAsStream(final String pid) {
         final GetObjectXMLPathParam path = new GetObjectXMLPathParam(pid);
-        return this.fedoraService.getObjectXMLAsStream(path.getPid());
+        final GetObjectXMLQueryParam query = new GetObjectXMLQueryParam();
+        return this.fedoraService.getObjectXMLAsStream(path, query);
     }
 
     @Override
@@ -224,7 +233,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         if (timestamp != null) {
             query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
         }
-        return this.fedoraService.listDatastreams(path.getPid(), query.getAsOfDateTime(), query.getFormat());
+        return this.fedoraService.listDatastreams(path, query);
     }
 
     @Override
@@ -241,21 +250,21 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         String path = "/objects/" + pid + "/datastreams/" + dsID + "/content";
         webClient.accept(MimeTypes.ALL).path(path);
         if (timestamp != null) {
-            webClient.query("asOfDateTime", timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
+        	webClient.query("asOfDateTime", timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
         }
         Response response = webClient.get();
-
+        
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-            throw new ServerWebApplicationException(response);
+        	throw new ServerWebApplicationException(response);
         }
         String contentType = null;
-        List<Object> contentTypeList = (List<Object>) response.getMetadata().get("Content-Type");
-        if (!contentTypeList.isEmpty()) {
-            contentType = contentTypeList.get(0).toString();
+        List<Object> contentTypeList = (List<Object>)response.getMetadata().get("Content-Type");
+        if (!contentTypeList.isEmpty()){
+            contentType =  contentTypeList.get(0).toString();
         }
         MimeStream result;
         try {
-            InputStream inputStream = (InputStream) response.getEntity();
+            InputStream inputStream = (InputStream)response.getEntity();
             Stream stream = new Stream();
             IOUtils.copy(inputStream, stream);
             result = new MimeStream(stream, contentType);
@@ -276,8 +285,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Cacheable(cacheName = "Fedora.DatastreamProfiles", selfPopulating = true, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamProfileKeyGenerator"))
     public DatastreamProfileTO getDatastreamProfile(
         final GetDatastreamProfilePathParam path, final GetDatastreamProfileQueryParam query) {
-        return this.fedoraService.getDatastreamProfile(path.getPid(), path.getDsID(), query.getAsOfDateTime(),
-            query.getFormat(), query.getValidateChecksum());
+        return this.fedoraService.getDatastreamProfile(path, query);
     }
 
     @Override
@@ -293,18 +301,10 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public DatastreamProfileTO addDatastream(
         final AddDatastreamPathParam path, final AddDatastreamQueryParam query, final Stream stream) {
         if (stream != null) {
-            return this.fedoraService
-                .addDatastream(path.getPid(), path.getDsID(), query.getControlGroup() != null ? query.getControlGroup().value() : null, query.getDsLocation(),
-                    query.getAltIDs(), query.getDsLabel(), query.getVersionable(), query.getDsState() != null ? query
-                        .getDsState().value() : null, query.getFormatURI(), query.getChecksumType() != null ? query.getChecksumType().value() : null, query
-                        .getChecksum(), query.getMimeType(), query.getLogMessage(), stream);
+            return this.fedoraService.addDatastream(path, query, stream);
         }
         else {
-            return this.fedoraService.addDatastream(path.getPid(), path.getDsID(), query.getControlGroup() != null ? query.getControlGroup().value() : null,
-                query.getDsLocation(), query.getAltIDs(), query.getDsLabel(), query.getVersionable(), query
-                .getDsState() != null ? query
-                    .getDsState().value() : null, query.getFormatURI(), query.getChecksumType() != null ? query.getChecksumType().value() : null, query.getChecksum(),
-                query.getMimeType(), query.getLogMessage(), new Stream());
+            return this.fedoraService.addDatastream(path, query, new Stream());
         }
     }
 
@@ -321,16 +321,10 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public DatastreamProfileTO modifyDatastream(
         final ModifiyDatastreamPathParam path, final ModifyDatastreamQueryParam query, final Stream stream) {
         if (stream != null) {
-            return this.fedoraService.modifyDatastream(path.getPid(), path.getDsID(), query.getDsLocation(),
-                query.getDsLabel(), query.getAltIDs(), query.getVersionable(), query.getDsState() != null ? query.getDsState().value() : null,
-                query.getFormatURI(), query.getChecksumType() != null ? query.getChecksumType().value() : null, query.getMimeType(), query.getLogMessage(),
-                query.getIgnoreContent(), query.getLastModifiedDate(), stream);
+            return this.fedoraService.modifyDatastream(path, query, stream);
         }
         else {
-            return this.fedoraService.modifyDatastream(path.getPid(), path.getDsID(), query.getDsLocation(),
-                query.getDsLabel(), query.getAltIDs(), query.getVersionable(), query.getDsState() != null ? query.getDsState().value() : null,
-                query.getFormatURI(), query.getChecksumType() != null ? query.getChecksumType().value() : null, query.getMimeType(), query.getLogMessage(),
-                query.getIgnoreContent(), query.getLastModifiedDate(), new Stream());
+            return this.fedoraService.modifyDatastream(path, query, new Stream());
         }
     }
 
@@ -367,10 +361,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(pid, dsID);
         final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
         query.setDsState(state);
-        return this.fedoraService.modifyDatastream(path.getPid(), path.getDsID(), query.getDsLocation(),
-            query.getDsLabel(), query.getAltIDs(), query.getVersionable(), query.getDsState() != null ? query.getDsState().value() : null,
-            query.getFormatURI(), query.getChecksumType() != null ? query.getChecksumType().value() : null, query.getMimeType(), query.getLogMessage(),
-            query.getIgnoreContent(), query.getLastModifiedDate(), new Stream());
+        return this.fedoraService.modifyDatastream(path, query, new Stream());
     }
 
     @Override
@@ -384,8 +375,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
         "Fedora.ExportObjects", "Fedora.ExportObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.UpdateObjectKeyGenerator"))
     public void updateObject(final UpdateObjectPathParam path, final UpdateObjectQueryParam query) {
-        this.fedoraService.updateObject(path.getPid(), query.getLabel(), query.getLogMessage(), query.getOwnerId(),
-            query.getState(), query.getLastModifiedDate());
+        this.fedoraService.updateObject(path, query);
     }
 
     @Override
@@ -401,7 +391,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public void deleteObject(final String pid) {
         final DeleteObjectPathParam path = new DeleteObjectPathParam(pid);
         final DeleteObjectQueryParam query = new DeleteObjectQueryParam();
-        this.fedoraService.deleteObject(path.getPid(), query.getLogMessage());
+        this.fedoraService.deleteObject(path, query);
     }
 
     @Override
@@ -415,8 +405,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @TriggersRemove(cacheName = { "Fedora.ObjectProfiles", "Fedora.DigitalObjects", "Fedora.DigitalObjectStreams",
         "Fedora.ExportObjects", "Fedora.ExportObjectStreams" }, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.IngestKeyGenerator"))
     public String ingest(final IngestPathParam path, final IngestQueryParam query, final DigitalObjectTO digitalObjectTO) {
-        return this.fedoraService.ingest(path.getPid(), query.getLabel(), query.getFormat(), query.getEncoding(),
-            query.getNamespace(), query.getOwnerId(), query.getLogMessage(), query.getIgnoreMime(), digitalObjectTO);
+        return this.fedoraService.ingest(path, query, digitalObjectTO);
     }
 
     @Override
@@ -437,9 +426,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         final Stream stream = new Stream();
         try {
             stream.write(foxml.getBytes("UTF-8"));
-            final Stream result =
-                this.fedoraService.ingest(path.getPid(), query.getLabel(), query.getFormat(), query.getEncoding(),
-                    query.getNamespace(), query.getOwnerId(), query.getLogMessage(), query.getIgnoreMime(), stream);
+            final Stream result = this.fedoraService.ingest(path, query, stream);
             return new String(result.getBytes(), "UTF-8");
         }
         catch (final IOException e) {
@@ -451,7 +438,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     @Cacheable(cacheName = "Fedora.DatastreamHistories", selfPopulating = true, keyGenerator = @KeyGenerator(name = "org.escidoc.core.services.fedora.internal.cache.GetDatastreamHistoryKeyGenerator"))
     public DatastreamHistoryTO getDatastreamHistory(
         final GetDatastreamHistoryPathParam path, final GetDatastreamHistoryQueryParam query) {
-        return this.fedoraService.getDatastreamHistory(path.getPid(), path.getDsID(), query.getFormat());
+        return this.fedoraService.getDatastreamHistory(path, query);
     }
 
     @Override
@@ -463,21 +450,21 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     public void sync() {
+        final RisearchPathParam path = new RisearchPathParam();
         final RisearchQueryParam query = new RisearchQueryParam();
         query.setFlush(Boolean.TRUE.toString());
-        this.fedoraService.risearch(query.getType(), query.getLang(), query.getFormat(), query.getQuery(),
-            query.getFlush());
+        this.fedoraService.risearch(path, query);
     }
 
     @Override
     public Collection<String> queryResourceIdsByType(final String resourceType) {
+        final RisearchPathParam path = new RisearchPathParam();
         final RisearchQueryParam query = new RisearchQueryParam();
         query.setType("triples");
         query.setLang("spo");
         query.setFormat("N-Triples");
         query.setQuery("* <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <" + resourceType + '>');
-        return parseIdsFromStream(this.fedoraService.risearch(query.getType(), query.getLang(), query.getFormat(),
-            query.getQuery(), query.getFlush()));
+        return parseIdsFromStream(this.fedoraService.risearch(path, query));
     }
 
     private Collection<String> parseIdsFromStream(final Stream stream) {
@@ -532,7 +519,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public Stream getBinaryContent(final String pid, final String dsId, final DateTime versionDate) {
         final GetBinaryContentPathParam path =
             new GetBinaryContentPathParam(pid, dsId, versionDate.withZone(DateTimeZone.UTC).toString());
-        return this.fedoraService.getBinaryContent(path.getPid(), path.getDsID(), path.getVersionDate());
+        final GetBinaryContentQueryParam query = new GetBinaryContentQueryParam();
+        return this.fedoraService.getBinaryContent(path, query);
     }
 
     @Override
@@ -588,7 +576,8 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
     public Stream getDissemination(final String pid, final String contentModelPid, final String methodName) {
         final String cmp = "sdef:" + contentModelPid.replace(':', '_') + '-' + methodName;
         final GetDisseminationPathParam path = new GetDisseminationPathParam(pid, cmp, methodName);
-        return this.fedoraService.getDissemination(path.getPid(), path.getSdefPid(), path.getMethod());
+        final GetDisseminationQueryParam query = new GetDisseminationQueryParam();
+        return this.fedoraService.getDissemination(path, query);
     }
 
     @Override
@@ -599,8 +588,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     public Stream risearch(final RisearchPathParam path, final RisearchQueryParam query) {
-        return this.fedoraService.risearch(query.getType(), query.getLang(), query.getFormat(), query.getQuery(),
-            query.getFlush());
+        return this.fedoraService.risearch(path, query);
     }
 
     @Override
@@ -627,8 +615,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
             query.setAsOfDateTime(timestamp.toString(TIMESTAMP_FORMAT));
         }
         final DatastreamProfilesTO result =
-            this.fedoraService.listProfiles(new ListDatastreamProfilesPathParam(pid).getPid(), query.getAsOfDateTime(),
-                query.getFormat());
+            this.fedoraService.listProfiles(new ListDatastreamProfilesPathParam(pid), query);
 
         // filter by altId
 

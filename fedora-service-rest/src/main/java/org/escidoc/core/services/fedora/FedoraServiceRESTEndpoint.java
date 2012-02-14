@@ -1,7 +1,5 @@
 package org.escidoc.core.services.fedora;
 
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -33,71 +31,60 @@ public interface FedoraServiceRESTEndpoint {
     @Path("/objects/nextPID")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    PidListTO getNextPID(@QueryParam("namespace") String namespace,
-                        @QueryParam("numPIDs") int numPIDs,
-                        @QueryParam("format") String format);
+    PidListTO getNextPID(@NotNull @PathParam("") NextPIDPathParam path, @NotNull @QueryParam("") NextPIDQueryParam query);
 
     @GET
     @Path("/objects/{pid}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     ObjectProfileTO getObjectProfile(
-        @NotNull @PathParam("pid") String pid,
-        @QueryParam("format") String format);
+        @NotNull @PathParam("") GetObjectProfilePathParam path,
+        @NotNull @QueryParam("") GetObjectProfileQueryParam query);
 
     @PUT
     @Path("/objects/{pid}")
     @Consumes(MimeTypes.TEXT_XML)
     void updateObject(
-        @NotNull @PathParam("pid") String pid, @QueryParam("label") String label,
-        @QueryParam("logMessage") String logMessage,
-        @QueryParam("ownerId") String ownerId,
-        @QueryParam("state") String state,
-        @QueryParam("lastModifiedDate") String lastModifiedDate);
+        @NotNull @PathParam("") UpdateObjectPathParam path, @NotNull @QueryParam("") UpdateObjectQueryParam query);
 
     @DELETE
     @Path("/objects/{pid}")
     @Consumes(MimeTypes.TEXT_XML)
     void deleteObject(
-        @NotNull @PathParam("pid") String pid, @QueryParam("logMessage") String logMessage);
+        @NotNull @PathParam("") DeleteObjectPathParam path, @NotNull @QueryParam("") DeleteObjectQueryParam query);
 
     @GET
     @Path("/objects/{pid}/export")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    DigitalObjectTO export(@NotNull @PathParam("pid") String pid, @QueryParam("format") String format,
-        @QueryParam("context") String context,@QueryParam("encoding") String encoding);
+    DigitalObjectTO export(@NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
 
     @GET
     @Path("/objects/{pid}/export")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    Stream exportAsStream(@NotNull @PathParam("pid") String pid, @QueryParam("format") String format,
-        @QueryParam("context") String context,@QueryParam("encoding") String encoding);
+    Stream exportAsStream(@NotNull @PathParam("") ExportPathParam path, @NotNull @QueryParam("") ExportQueryParam query);
 
     @GET
     @Path("/objects/{pid}/objectXML")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     DigitalObjectTO getObjectXML(
-        @NotNull @PathParam("pid") String pid);
+        @NotNull @PathParam("") GetObjectXMLPathParam path, @NotNull @QueryParam("") GetObjectXMLQueryParam query);
 
     @GET
     @Path("/objects/{pid}/objectXML")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     Stream getObjectXMLAsStream(
-        @NotNull @PathParam("pid") String pid);
+        @NotNull @PathParam("") GetObjectXMLPathParam path, @NotNull @QueryParam("") GetObjectXMLQueryParam query);
 
     @POST
     @Path("/objects/{pid}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     String ingest(
-        @NotNull @PathParam("pid") String pid, @QueryParam("label") String label,
-        @QueryParam("format") String format,@QueryParam("encoding") String encoding,
-        @QueryParam("namespace") String namespace,@QueryParam("ownerId") String ownerId,
-        @QueryParam("logMessage") String logMessage,@QueryParam("ignoreMime") Boolean ignoreMime,
+        @NotNull @PathParam("") IngestPathParam path, @NotNull @QueryParam("") IngestQueryParam query,
         @NotNull DigitalObjectTO digitalObjectTO);
 
     @POST
@@ -105,10 +92,7 @@ public interface FedoraServiceRESTEndpoint {
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     Stream ingest(
-        @NotNull @PathParam("pid") String pid, @QueryParam("label") String label,
-        @QueryParam("format") String format,@QueryParam("encoding") String encoding,
-        @QueryParam("namespace") String namespace,@QueryParam("ownerId") String ownerId,
-        @QueryParam("logMessage") String logMessage,@QueryParam("ignoreMime") Boolean ignoreMime,
+        @NotNull @PathParam("") IngestPathParam path, @NotNull @QueryParam("") IngestQueryParam query,
         @NotNull Stream foxml);
 
     @POST
@@ -116,12 +100,7 @@ public interface FedoraServiceRESTEndpoint {
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.TEXT_XML)
     DatastreamProfileTO addDatastream(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID, @QueryParam("controlGroup") String controlGroup,
-        @QueryParam("dsLocation") String dsLocation,@QueryParam("altIDs") List<String> altIDs,
-        @QueryParam("dsLabel") String dsLabel,@QueryParam("versionable") Boolean versionable,
-        @QueryParam("dsState") String dsState,@QueryParam("formatURI") String formatURI,
-        @QueryParam("checksumType") String checksumType,@QueryParam("checksum") String checksum,
-        @QueryParam("mimeType") String mimeType,@QueryParam("logMessage") String logMessage,
+        @NotNull @PathParam("") AddDatastreamPathParam path, @NotNull @QueryParam("") AddDatastreamQueryParam query,
         Stream inputStream);
 
     @GET
@@ -129,90 +108,75 @@ public interface FedoraServiceRESTEndpoint {
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.ALL)
     Stream getDatastream(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID, @QueryParam("asOfDateTime") String asOfDateTime,
-        @QueryParam("download") String download);
+        @NotNull @PathParam("") GetDatastreamPathParam path, @NotNull @QueryParam("") GetDatastreamQueryParam query);
 
     @GET
     @Path("/objects/{pid}/datastreams/{dsID}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     DatastreamProfileTO getDatastreamProfile(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID,
-        @QueryParam("asOfDateTime") String asOfDateTime,
-        @QueryParam("format") String format,
-        @QueryParam("validateChecksum") String validateChecksum);
+        @NotNull @PathParam("") GetDatastreamProfilePathParam path,
+        @NotNull @QueryParam("") GetDatastreamProfileQueryParam query);
 
     @PUT
     @Path("/objects/{pid}/datastreams/{dsID}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.ALL)
     DatastreamProfileTO modifyDatastream(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID,
-        @QueryParam("dsLocation") String dsLocation,
-        @QueryParam("dsLabel") String dsLabel,@QueryParam("altIDs") List<String> altIDs,
-        @QueryParam("versionable") Boolean versionable,
-        @QueryParam("dsState") String dsState,@QueryParam("formatURI") String formatURI,
-        @QueryParam("checksumType") String checksumType,
-        @QueryParam("mimeType") String mimeType,@QueryParam("logMessage") String logMessage,
-        @QueryParam("ignoreContent") Boolean ignoreContent,@QueryParam("lastModifiedDate") String lastModifiedDate,@NotNull Stream stream);
+        @NotNull @PathParam("") ModifiyDatastreamPathParam path,
+        @NotNull @QueryParam("") ModifyDatastreamQueryParam query, @NotNull Stream stream);
 
     @DELETE
     @Path("/objects/{pid}/datastreams/{dsID}")
     @Consumes(MimeTypes.APPLICATION_JSON)
     void deleteDatastream(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID,
-        @QueryParam("startDT") String startDT,
-        @QueryParam("endDT") String endDT, @QueryParam("logMessage") String logMessage);
+        @NotNull @PathParam("") DeleteDatastreamPathParam path,
+        @NotNull @QueryParam("") DeleteDatastreamQueryParam query);
 
     @GET
     @Path("/objects/{pid}/datastreams")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     ObjectDatastreamsTO listDatastreams(
-        @NotNull @PathParam("pid") String pid, @QueryParam("asOfDateTime") String asOfDateTime,
-        @QueryParam("format") String format);
+        @NotNull @PathParam("") ListDatastreamsPathParam path, @NotNull @QueryParam("") ListDatastreamsQueryParam query);
 
     @GET
     @Path("/objects/{pid}/datastreams/infolist")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     DatastreamProfilesTO listProfiles(
-        @NotNull @PathParam("pid") String pid,
-        @QueryParam("asOfDateTime") String asOfDateTime,
-        @QueryParam("format") String format);
+        @NotNull @PathParam("") ListDatastreamProfilesPathParam path,
+        @NotNull @QueryParam("") ListDatastreamProfilesQueryParam query);
 
     @GET
     @Path("/objects/{pid}/datastreams/{dsID}/history")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     DatastreamHistoryTO getDatastreamHistory(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID,
-        @QueryParam("format") String format);
+        @NotNull @PathParam("") GetDatastreamHistoryPathParam path,
+        @NotNull @QueryParam("") GetDatastreamHistoryQueryParam query);
 
     @GET
     @Encoded
     @Path("/risearch")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)
-    Stream risearch(@QueryParam("type") String type,
-        @QueryParam("lang") String lang,@QueryParam("format") String format,
-        @QueryParam("query") String query,
-        @QueryParam("flush") String flush);
+    Stream risearch(@NotNull @PathParam("") RisearchPathParam path, @NotNull @QueryParam("") RisearchQueryParam query);
 
     @GET
     @Path("/get/{pid}/{dsID}/{versionDate}")
     @Produces(MimeTypes.ALL)
     @Consumes(MimeTypes.ALL)
     Stream getBinaryContent(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("dsID") String dsID,
-        @NotNull @PathParam("versionDate") String versionDate);
+        @NotNull @PathParam("") GetBinaryContentPathParam path,
+        @NotNull @QueryParam("") GetBinaryContentQueryParam query);
 
     @GET
     @Path("/objects/{pid}/methods/{sdefPid}/{method}")
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     Stream getDissemination(
-        @NotNull @PathParam("pid") String pid, @NotNull @PathParam("sdefPid") String sdefPid,
-        @NotNull @PathParam("method") String method);
+        @NotNull @PathParam("") GetDisseminationPathParam path,
+        @NotNull @QueryParam("") GetDisseminationQueryParam query);
 
 }
