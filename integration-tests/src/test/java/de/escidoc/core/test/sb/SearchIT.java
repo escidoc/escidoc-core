@@ -717,7 +717,7 @@ public class SearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.created,,0 sort.escidoc.title");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck =
             { "", "1980-01-28|Antriebsvorrichtung aus einem", "1980-01-27|Verfahren und Vorrichtung",
                 "1980-01-27|Verfahren zum Vermessen", "1980-01-27|Verfahren zur Steuerung",
@@ -752,7 +752,7 @@ public class SearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.alternative");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck =
             { "", "ÄDriving device consisting of a motor and a gear",
                 "äProcess for controlling a long-stroke positioning", "aMethod of retreiving documents",
@@ -788,7 +788,7 @@ public class SearchIT extends SearchTestBase {
         assertXmlValidSearchResult(response);
         Pattern scorePattern = Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
         Matcher scoreMatcher = scorePattern.matcher("");
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         assertEquals(records.length, 11);
         String score = null;
         for (int i = 1; i < records.length; i++) {
@@ -828,7 +828,7 @@ public class SearchIT extends SearchTestBase {
             Pattern.compile("(?s).*?md-record[^>]*?name=\"escidoc\".*?" + "<[^>]*?title.*?>\\s*?(.*?)\\s*?<.*");
         Matcher titleMatcher = titlePattern.matcher("");
 
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String score = null;
         String savedTitle = "0";
         for (int i = 1; i < records.length; i++) {

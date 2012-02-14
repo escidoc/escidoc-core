@@ -1122,8 +1122,8 @@
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.8</saxon.version>
     <escidoc.fedoragsearch.version>1.5.21</escidoc.fedoragsearch.version>
-    <escidoc.srw.version>1.5.12</escidoc.srw.version>
-    <srw.version>1.5.7</srw.version>
+    <escidoc.srw.version>1.5.13</escidoc.srw.version>
+    <srw.version>1.5.8</srw.version>
     <migration-tool.version>trunk-SNAPSHOT</migration-tool.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
