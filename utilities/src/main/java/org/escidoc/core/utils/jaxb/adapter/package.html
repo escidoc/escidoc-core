@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+This package exists, to avoid JAXB to create a new adapter in a package named "org.w3._2001.xmlschema". The problem
+is, if you have multiple JAXB bindings, each binding will generate this package with adapter classes named "Adapter[n]"
+(where n is a number starting with 1), and these adapter classes will overwrite each other and this can cause conflicts
+on runtime, if for example Adapter1 of one JAXB binding overwrites Adapter1 of another JAXB binding.<br/>
+<br/>
+Current conflict: dataobjects-spec module and fedora-service-rest module.
+</body>
+</html>

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
-  version="2.1">
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1">
   <bindings>
     <globalBindings>
-      <javaType name="org.joda.time.DateTime" xmlType="xs:date"
-        parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate" printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate" />
-      <javaType name="org.joda.time.DateTime" xmlType="xs:dateTime"
-        parseMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.parseDate" printMethod="org.escidoc.core.utils.xml.DateTimeJaxbConverter.printDate" />
-      <javaType name="java.net.URI" xmlType="xs:anyURI" parseMethod="create" printMethod="toASCIIString" />
+      <xjc:javaType name="org.joda.time.DateTime" xmlType="xs:date" adapter="org.escidoc.core.utils.jaxb.adapter.DateTimeAdapter" />
+      <xjc:javaType name="org.joda.time.DateTime" xmlType="xs:dateTime" adapter="org.escidoc.core.utils.jaxb.adapter.DateTimeAdapter" />
+      <xjc:javaType name="java.net.URI" xmlType="xs:anyURI" adapter="org.escidoc.core.utils.jaxb.adapter.UriAdapter" />
       <serializable />
     </globalBindings>
   </bindings>
