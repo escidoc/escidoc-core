@@ -726,7 +726,7 @@ public class SearchTest extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.created,,0 sort.escidoc.title");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck;
         if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
             valuesToCheck =
@@ -770,7 +770,7 @@ public class SearchTest extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.alternative");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck;
         if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
             valuesToCheck =
@@ -819,7 +819,7 @@ public class SearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         Pattern scorePattern = Pattern.compile("(?s).*<search-result:score.*?>(.*?)<.*");
         Matcher scoreMatcher = scorePattern.matcher("");
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         assertEquals(records.length, 11);
         String score = null;
         for (int i = 1; i < records.length; i++) {
@@ -858,7 +858,7 @@ public class SearchTest extends SearchTestBase {
             Pattern.compile("(?s).*?md-record[^>]*?name=\"escidoc\".*?" + "<[^>]*?title.*?>\\s*?(.*?)\\s*?<.*");
         Matcher titleMatcher = titlePattern.matcher("");
 
-        String[] records = response.split("<record>");
+        String[] records = response.split("<[^\\/>]*?:record>");
         String score = null;
         String savedTitle = "0";
         for (int i = 1; i < records.length; i++) {

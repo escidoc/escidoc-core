@@ -261,12 +261,13 @@ public class SearchTestBase extends SbTestBase {
      */
     public String makeSearchResponseXml(final SearchRetrieveResponseType result) throws Exception {
         StringBuffer soapXmlResult = new StringBuffer("");
-        soapXmlResult.append("<searchRetrieveResponse  ").append("xmlns=\"http://www.loc.gov/zing/srw/\">");
-        soapXmlResult.append("<version>").append(result.getVersion()).append("</version>");
+        soapXmlResult.append("<sru-zr:searchRetrieveResponse  ").append(
+            "xmlns:sru-zr=\"http://www.loc.gov/zing/srw/\">");
+        soapXmlResult.append("<sru-zr:version>").append(result.getVersion()).append("</sru-zr:version>");
         // get number of records////////////////////////////////////////////
         if (result.getNumberOfRecords() != null) {
-            soapXmlResult.append("<numberOfRecords>").append((result).getNumberOfRecords().toString()).append(
-                "</numberOfRecords>");
+            soapXmlResult.append("<sru-zr:numberOfRecords>").append((result).getNumberOfRecords().toString()).append(
+                "</sru-zr:numberOfRecords>");
         }
         // /////////////////////////////////////////////////////////////////
 
@@ -277,36 +278,41 @@ public class SearchTestBase extends SbTestBase {
             records = recordsType.getRecord();
         }
         if (records != null) {
-            soapXmlResult.append("<records>");
+            soapXmlResult.append("<sru-zr:records>");
             for (int i = 0; i < records.length; i++) {
-                soapXmlResult.append("<record>");
+                soapXmlResult.append("<sru-zr:record>");
                 RecordType record = records[i];
-                soapXmlResult.append("<recordSchema>").append(record.getRecordSchema()).append("</recordSchema>");
-                soapXmlResult.append("<recordPacking>").append(record.getRecordPacking()).append("</recordPacking>");
+                soapXmlResult.append("<sru-zr:recordSchema>").append(record.getRecordSchema()).append(
+                    "</sru-zr:recordSchema>");
+                soapXmlResult.append("<sru-zr:recordPacking>").append(record.getRecordPacking()).append(
+                    "</sru-zr:recordPacking>");
                 String recordData = decodeCharacters(record.getRecordData().get_any()[0].getAsString());
-                soapXmlResult.append("<recordData>").append(recordData).append("</recordData>");
-                soapXmlResult.append("<recordPosition>").append(record.getRecordPosition()).append("</recordPosition>");
-                soapXmlResult.append("</record>");
+                soapXmlResult.append("<sru-zr:recordData>").append(recordData).append("</sru-zr:recordData>");
+                soapXmlResult.append("<sru-zr:recordPosition>").append(record.getRecordPosition()).append(
+                    "</sru-zr:recordPosition>");
+                soapXmlResult.append("</sru-zr:record>");
             }
-            soapXmlResult.append("</records>");
+            soapXmlResult.append("</sru-zr:records>");
         }
         // /////////////////////////////////////////////////////////////////
         // get nextRecordPosition////////////////////////////////////////////
         if (result.getNextRecordPosition() != null) {
-            soapXmlResult.append("<nextRecordPosition>").append(result.getNextRecordPosition().toString()).append(
-                "</nextRecordPosition>");
+            soapXmlResult
+                .append("<sru-zr:nextRecordPosition>").append(result.getNextRecordPosition().toString()).append(
+                    "</sru-zr:nextRecordPosition>");
         }
         // /////////////////////////////////////////////////////////////////
         // get echoed searchRetrieveRequest/////////////////////////////////
         if (result.getEchoedSearchRetrieveRequest() != null) {
             EchoedSearchRetrieveRequestType echoedSearchRequest = result.getEchoedSearchRetrieveRequest();
-            soapXmlResult.append("<echoedSearchRetrieveRequest>");
+            soapXmlResult.append("<sru-zr:echoedSearchRetrieveRequest>");
             if (echoedSearchRequest.getVersion() != null) {
-                soapXmlResult.append("<version>").append(echoedSearchRequest.getVersion()).append("</version>");
+                soapXmlResult.append("<sru-zr:version>").append(echoedSearchRequest.getVersion()).append(
+                    "</sru-zr:version>");
             }
             if (echoedSearchRequest.getQuery() != null) {
-                soapXmlResult.append("<query>").append(encodeCharacters(echoedSearchRequest.getQuery())).append(
-                    "</query>");
+                soapXmlResult.append("<sru-zr:query>").append(encodeCharacters(echoedSearchRequest.getQuery())).append(
+                    "</sru-zr:query>");
             }
             if (echoedSearchRequest.getXQuery() != null) {
                 SearchClauseType searchClause = echoedSearchRequest.getXQuery().getSearchClause();
@@ -318,7 +324,7 @@ public class SearchTestBase extends SbTestBase {
                         echoedSearchRequest
                             .getXQuery().getTriple().getLeftOperand().getTriple().getLeftOperand().getSearchClause();
                 }
-                soapXmlResult.append("<xQuery><ns3:searchClause  ").append(
+                soapXmlResult.append("<sru-zr:xQuery><ns3:searchClause  ").append(
                     "xmlns:ns3=\"http://www.loc.gov/zing/cql/xcql/\">");
                 if (searchClause.getIndex() != null) {
                     soapXmlResult.append("<ns3:index>").append(searchClause.getIndex()).append("</ns3:index>");
@@ -331,21 +337,21 @@ public class SearchTestBase extends SbTestBase {
                     soapXmlResult.append("<ns3:term>").append(encodeCharacters(searchClause.getTerm())).append(
                         "</ns3:term>");
                 }
-                soapXmlResult.append("</ns3:searchClause></xQuery>");
+                soapXmlResult.append("</ns3:searchClause></sru-zr:xQuery>");
             }
             if (echoedSearchRequest.getMaximumRecords() != null) {
-                soapXmlResult.append("<maximumRecords>").append(echoedSearchRequest.getMaximumRecords()).append(
-                    "</maximumRecords>");
+                soapXmlResult.append("<sru-zr:maximumRecords>").append(echoedSearchRequest.getMaximumRecords()).append(
+                    "</sru-zr:maximumRecords>");
             }
             if (echoedSearchRequest.getRecordPacking() != null) {
-                soapXmlResult.append("<recordPacking>").append(echoedSearchRequest.getRecordPacking()).append(
-                    "</recordPacking>");
+                soapXmlResult.append("<sru-zr:recordPacking>").append(echoedSearchRequest.getRecordPacking()).append(
+                    "</sru-zr:recordPacking>");
             }
             if (echoedSearchRequest.getRecordSchema() != null) {
-                soapXmlResult.append("<recordSchema>").append(echoedSearchRequest.getRecordSchema()).append(
-                    "</recordSchema>");
+                soapXmlResult.append("<sru-zr:recordSchema>").append(echoedSearchRequest.getRecordSchema()).append(
+                    "</sru-zr:recordSchema>");
             }
-            soapXmlResult.append("</echoedSearchRetrieveRequest>");
+            soapXmlResult.append("</sru-zr:echoedSearchRetrieveRequest>");
         }
         // /////////////////////////////////////////////////////////////////
         // get Diagnostics//////////////////////////////////////////////////
@@ -355,7 +361,7 @@ public class SearchTestBase extends SbTestBase {
             diagnostics = diagnosticsType.getDiagnostic();
         }
         if (diagnostics != null) {
-            soapXmlResult.append("<diagnostics>");
+            soapXmlResult.append("<sru-zr:diagnostics>");
             for (int i = 0; i < diagnostics.length; i++) {
                 soapXmlResult.append("<ns4:diagnostic xmlns:ns4=\"http://www.loc.gov/zing/srw/diagnostic/\">");
                 DiagnosticType diagnostic = diagnostics[i];
@@ -363,10 +369,10 @@ public class SearchTestBase extends SbTestBase {
                 soapXmlResult.append("<ns4:details>").append(diagnostic.getDetails()).append("</ns4:details>");
                 soapXmlResult.append("</ns4:diagnostic>");
             }
-            soapXmlResult.append("</diagnostics>");
+            soapXmlResult.append("</sru-zr:diagnostics>");
         }
         // /////////////////////////////////////////////////////////////////
-        soapXmlResult.append("</searchRetrieveResponse>");
+        soapXmlResult.append("</sru-zr:searchRetrieveResponse>");
         return soapXmlResult.toString();
     }
 
