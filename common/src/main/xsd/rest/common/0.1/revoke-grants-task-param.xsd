@@ -29,7 +29,7 @@
 						<xs:sequence>
 							<xs:element name="id" minOccurs="0" maxOccurs="unbounded" />
 						</xs:sequence>
-						<xs:attribute name="name" type="xs:anyURI" use="optional" />
+						<xs:attribute name="name" type="xs:anyURI" use="required" />
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="revocation-remark" type="xs:string" minOccurs="0"/>
