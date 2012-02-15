@@ -28,9 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -39,6 +37,8 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
+import de.escidoc.core.test.utils.DateTimeJaxbConverter;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -273,14 +273,13 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
     /**
      * Test delete of members which are in status released.
-     * 
+     * <p/>
      * Issue INFR-1199
-     * 
+     * <p/>
      * 10 containers in status released are set as members to a further container. Then are three of these containers to
-     * delete. 2 new Container are to add as member and the parent Container is to release at least.  
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     * delete. 2 new Container are to add as member and the parent Container is to release at least.
+     *
+     * @throws Exception If an error occurs.
      */
     @Test
     public void deleteReleasedContainerMember() throws Exception {
@@ -317,17 +316,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
         String lmdpContainer = getLastModificationDateValue(xP);
 
         // add all other as member to this Container
-        StringBuilder taskParam = new StringBuilder("<param last-modification-date=\"" + lmdpContainer + "\">");
-
-        Iterator<String> it = memberIDs.iterator();
-        while (it.hasNext()) {
-            taskParam.append("<id>");
-            taskParam.append(it.next());
-            taskParam.append("</id>");
-        }
-        taskParam.append("</param>");
-
-        String resultXml = addMembers(pContainerId, taskParam.toString());
+        String resultXml =
+            addMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer), memberIDs));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // assert that the container is in version-status pending (because of addMembers)
@@ -350,19 +340,12 @@ public class ContainerDeleteIT extends ContainerTestBase {
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // purge three members (with admin purge method)
-        List<String> deletedMemberIDs = new ArrayList<String>();
-        taskParam = new StringBuilder("<param last-modification-date=\"" + lmdpContainer + "\">");
-
-        taskParam.append("<id>").append(memberIDs.get(2)).append("</id>");
+        Set<String> deletedMemberIDs = new HashSet<String>();
         deletedMemberIDs.add(memberIDs.remove(2));
-        taskParam.append("<id>").append(memberIDs.get(3)).append("</id>");
         deletedMemberIDs.add(memberIDs.remove(3));
-        taskParam.append("<id>").append(memberIDs.get(5)).append("</id>");
         deletedMemberIDs.add(memberIDs.remove(5));
 
-        taskParam.append("</param>");
-
-        getAdminClient().deleteObjects(taskParam.toString());
+        getAdminClient().deleteObjects(getDeleteObjectsTaskParam(deletedMemberIDs, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -403,19 +386,9 @@ public class ContainerDeleteIT extends ContainerTestBase {
             // add to member list
             newMemberIDs.add(containerId);
         }
-        // add new Container to parent Container
-        taskParam = new StringBuilder("<param last-modification-date=\"" + lmdpContainer + "\">");
 
-        it = newMemberIDs.iterator();
-        while (it.hasNext()) {
-            taskParam.append("<id>");
-            taskParam.append(it.next());
-            taskParam.append("</id>");
-            it.remove();
-        }
-        taskParam.append("</param>");
-
-        resultXml = addMembers(pContainerId, taskParam.toString());
+        resultXml =
+            addMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer), newMemberIDs));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // check container version status
@@ -444,18 +417,9 @@ public class ContainerDeleteIT extends ContainerTestBase {
         }
 
         // now try to fix the container again by removing the purged members from container
-        taskParam = new StringBuilder("<param last-modification-date=\"" + lmdpContainer + "\">");
-
-        it = deletedMemberIDs.iterator();
-        while (it.hasNext()) {
-            taskParam.append("<id>");
-            taskParam.append(it.next());
-            taskParam.append("</id>");
-            it.remove();
-        }
-        taskParam.append("</param>");
-
-        resultXml = removeMembers(pContainerId, taskParam.toString());
+        resultXml =
+            removeMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer),
+                new ArrayList<String>(deletedMemberIDs)));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // check container version status
