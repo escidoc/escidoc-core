@@ -57,6 +57,15 @@ public final class IngestQueryParam {
         return ownerId;
     }
 
+    /**
+     * TODO: Remove deprecation when fedora version 1.5 is being used.
+     *
+     * @param ownerId
+     * @deprecated If you need to use this method, please communicate this with the team, because this requires us to
+     * update to fedora version 1.5.
+     * @see <a href="https://jira.duraspace.org/browse/FCREPO-963">FCREPO-963</a> for details.
+     */
+    @Deprecated
     public void setOwnerId(final String ownerId) {
         this.ownerId = ownerId;
     }
