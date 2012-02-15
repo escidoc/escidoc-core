@@ -121,234 +121,240 @@
            xmlns:prop="http://escidoc.de/core/01/properties/"
            xmlns:srel="http://escidoc.de/core/01/structural-relations/">
 
-    <xs:import namespace="http://escidoc.de/core/01/properties/"
-               schemaLocation="properties.xsd"/>
-    <xs:import
-            namespace="http://escidoc.de/core/01/structural-relations/"
-            schemaLocation="structural-relations.xsd"/>
-    <xs:import
-            namespace="http://www.escidoc.de/schemas/metadatarecords/0.5"
-            schemaLocation="md-records.xsd"/>
-    <xs:import
-            namespace="http://www.escidoc.de/schemas/contentstreams/0.7"
-            schemaLocation="content-streams.xsd"/>
-    <xs:import namespace="http://www.escidoc.de/schemas/relations/0.3"
-               schemaLocation="relations.xsd"/>
-    <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
-               schemaLocation="common-types.xsd"/>
-    <xs:import namespace="http://www.escidoc.de/schemas/components/0.9"
-               schemaLocation="components.xsd"/>
-    <xs:import namespace="http://www.w3.org/XML/1998/namespace"
-               schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/"
+             schemaLocation="properties.xsd"/>
+  <xs:import
+      namespace="http://escidoc.de/core/01/structural-relations/"
+      schemaLocation="structural-relations.xsd"/>
+  <xs:import
+      namespace="http://www.escidoc.de/schemas/metadatarecords/0.5"
+      schemaLocation="md-records.xsd"/>
+  <xs:import
+      namespace="http://www.escidoc.de/schemas/contentstreams/0.7"
+      schemaLocation="content-streams.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/relations/0.3"
+             schemaLocation="relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
+             schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/components/0.9"
+             schemaLocation="components.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+             schemaLocation="xml.xsd"/>
 
-    <xs:element name="item">
-        <xs:annotation>
+  <xs:element name="item">
+    <xs:annotation>
+      <xs:documentation>
+        <para>
+          Following you will find information which elements
+          and attributes are "required", "optional",
+          "not-allowed" or will be "discarded" in the input
+          XML-stream when creating or updating such an object.
+        </para>
+        <para>
+          In "create" the rule for creating a new object is
+          defined.
+        </para>
+        <para>
+          In "update" the rule for updating an object is
+          defined.
+        </para>
+        <para>
+          Possible values are: required | optional |
+          not-allowed | discarded
+        </para>
+        <para>
+          required: this element or attribute has to be
+          delivered
+        </para>
+        <para>
+          optional: this element or attribute can be delivered
+          and will be kept
+        </para>
+        <para>
+          not-allowed: this element or attribute is not
+          allowed in delivery and will cause an exception
+        </para>
+        <para>
+          discarded: this element or attribute can be
+          delivered but will not be used; the system will
+          generate a value which is delivered in this element
+          or attribute when retrieved
+        </para>
+      </xs:documentation>
+      <xs:documentation>
+        <create>required</create>
+        <update>required</update>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="item:properties"/>
+        <xs:element ref="md-records:md-records" minOccurs="0"/>
+        <xs:element ref="content-streams:content-streams" minOccurs="0"/>
+        <xs:element ref="components:components" minOccurs="0"/>
+        <xs:element ref="relations:relations" minOccurs="0"/>
+        <xs:element ref="item:resources" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attributeGroup
+          ref="common-types:eSciDocResourceIdentityAttributes"/>
+      <xs:attributeGroup
+          ref="common-types:eSciDocRootElementAttributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="properties">
+    <xs:annotation>
+      <xs:documentation>
+        <create>required</create>
+        <update>required</update>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="prop:creation-date">
+          <xs:annotation>
             <xs:documentation>
-                <para>
-                    Following you will find information which elements
-                    and attributes are "required", "optional",
-                    "not-allowed" or will be "discarded" in the input
-                    XML-stream when creating or updating such an object.
-                </para>
-                <para>
-                    In "create" the rule for creating a new object is
-                    defined.
-                </para>
-                <para>
-                    In "update" the rule for updating an object is
-                    defined.
-                </para>
-                <para>
-                    Possible values are: required | optional |
-                    not-allowed | discarded
-                </para>
-                <para>
-                    required: this element or attribute has to be
-                    delivered
-                </para>
-                <para>
-                    optional: this element or attribute can be delivered
-                    and will be kept
-                </para>
-                <para>
-                    not-allowed: this element or attribute is not
-                    allowed in delivery and will cause an exception
-                </para>
-                <para>
-                    discarded: this element or attribute can be
-                    delivered but will not be used; the system will
-                    generate a value which is delivered in this element
-                    or attribute when retrieved
-                </para>
+              <create>discarded</create>
+              <update>discarded</update>
             </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="srel:created-by">
+          <xs:annotation>
             <xs:documentation>
-                <create>required</create>
-                <update>required</update>
+              <create>discarded</create>
+              <update>discarded</update>
             </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="item:properties"/>
-                <xs:element ref="md-records:md-records" minOccurs="0"/>
-                <xs:element ref="content-streams:content-streams" minOccurs="0"/>
-                <xs:element ref="components:components" minOccurs="0"/>
-                <xs:element ref="relations:relations" minOccurs="0"/>
-                <xs:element ref="item:resources" minOccurs="0" />
-            </xs:sequence>
-            <xs:attributeGroup
-                    ref="common-types:eSciDocResourceIdentityAttributes"/>
-            <xs:attributeGroup
-                    ref="common-types:eSciDocRootElementAttributes"/>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="properties">
-        <xs:annotation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:public-status">
+          <xs:annotation>
             <xs:documentation>
-                <create>required</create>
-                <update>required</update>
+              <create>discarded</create>
+              <update>discarded</update>
             </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element minOccurs="0" ref="prop:creation-date">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:created-by">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:public-status">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:public-status-comment">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:context">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>required</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:content-model">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>required</create>
-                            <update>discarded</update>
-                            <comment>not finalized yet</comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:origin">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>required</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:lock-status">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:lock-date">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="srel:lock-owner">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:pid">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>optional</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:version">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:latest-version">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:latest-release">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>discarded</create>
-                            <update>discarded</update>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element minOccurs="0" ref="prop:content-model-specific">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <create>optional</create>
-                            <update>required</update>
-                            <comment>Does not appear until once set. Then required. Deprecated; use md-record instead.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-            </xs:sequence>
-            <xs:attributeGroup
-                    ref="common-types:eSciDocRootElementAttributes"/>
-        </xs:complexType>
-    </xs:element>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:public-status-comment">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="srel:context">
+          <xs:annotation>
+            <xs:documentation>
+              <create>required</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="srel:content-model">
+          <xs:annotation>
+            <xs:documentation>
+              <create>required</create>
+              <update>discarded</update>
+              <comment>not finalized yet</comment>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="srel:origin">
+          <xs:annotation>
+            <xs:documentation>
+              <create>required</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:lock-status">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:lock-date">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="srel:lock-owner">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:pid">
+          <xs:annotation>
+            <xs:documentation>
+              <create>optional</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:version">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:latest-version">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:latest-release">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element minOccurs="0" ref="prop:content-model-specific">
+          <xs:annotation>
+            <xs:documentation>
+              <create>optional</create>
+              <update>required</update>
+              <comment>Does not appear until once set. Then required. Deprecated; use md-record instead.
+              </comment>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+      <xs:attributeGroup
+          ref="common-types:eSciDocRootElementAttributes"/>
+    </xs:complexType>
+  </xs:element>
 
   <xs:element name="resources">
     <xs:annotation>
-      <xs:documentation><create>discarded</create><update>discarded</update></xs:documentation>
+      <xs:documentation>
+        <create>discarded</create>
+        <update>discarded</update>
+      </xs:documentation>
     </xs:annotation>
 
     <xs:complexType>
       <xs:sequence>
         <xs:element name="version-history" minOccurs="0">
           <xs:annotation>
-            <xs:documentation><create>discarded</create><update>discarded</update></xs:documentation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
           </xs:annotation>
 
           <xs:complexType>
@@ -356,23 +362,26 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="parents" minOccurs="0">
-            <xs:annotation>
-                <xs:documentation>
-                    <create>discarded</create>
-                    <update>discarded</update>
-                </xs:documentation>
-            </xs:annotation>
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
 
-            <xs:complexType>
-                <xs:attributeGroup
-                    ref="common-types:readOnlyESciDocResourceLinkAttributes">
-                </xs:attributeGroup>
-            </xs:complexType>
+          <xs:complexType>
+            <xs:attributeGroup
+                ref="common-types:readOnlyESciDocResourceLinkAttributes">
+            </xs:attributeGroup>
+          </xs:complexType>
         </xs:element>
 
         <xs:element name="relations" minOccurs="0">
           <xs:annotation>
-            <xs:documentation><create>discarded</create><update>discarded</update></xs:documentation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
           </xs:annotation>
 
           <xs:complexType>
