@@ -197,11 +197,13 @@ public class IndexingHandler implements ResourceListener {
             LOGGER.debug("gsearchindexing STARTING, xml is " + xml);
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
-        indexingCacheHandler.removeObjectFromCache(id);
-        if (xml != null && xml.length() > 0) {
-            indexingCacheHandler.writeObjectInCache(id, xml);
+        if (objectType != null) {
+            indexingCacheHandler.removeObjectFromCache(id);
+            if (xml != null && xml.length() > 0) {
+                indexingCacheHandler.writeObjectInCache(id, xml);
+            }
+            addResource(id, objectType, xml);
         }
-        addResource(id, objectType, xml);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }
