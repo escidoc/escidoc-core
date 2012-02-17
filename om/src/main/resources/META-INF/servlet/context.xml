@@ -69,7 +69,9 @@
 			<invoke http="GET" method="retrieveAdminDescriptor"
 				param1="${CONTEXT-ID}" param2="${ADMIN-DESCRIPTOR-ID}"/>
 			<invoke http="PUT" method="updateAdminDescriptor"
-				param1="${CONTEXT-ID}" param2="${BODY}"/>
+				param1="${CONTEXT-ID}" param2="${BODY}">
+              <documentation visible="false"/>
+            </invoke>
 		</descriptor>
 		
 <!--#
