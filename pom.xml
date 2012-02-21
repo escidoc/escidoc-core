@@ -19,7 +19,7 @@
   <artifactId>eSciDocCore</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core</name>
-  <version>1.4.1-SNAPSHOT</version>
+  <version>${escidoc.version}</version>
   <url>https://www.escidoc.org</url>
 
   <issueManagement>
@@ -337,7 +337,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>2.3</version>
+          <version>3.0</version>
           <inherited>false</inherited>
         </plugin>
 
@@ -1033,6 +1033,7 @@
   </distributionManagement>
 
   <properties>
+    <escidoc.version>1.4.1-SNAPSHOT</escidoc.version>
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <jaxb2-basics.version>0.6.2</jaxb2-basics.version>

@@ -10,7 +10,7 @@
     <parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>1.4.1-SNAPSHOT</version>
+		<version>${escidoc.version}</version>
 	</parent>
 
     <description>User Account, Policy and Rule package of eSciDoc Core</description>
