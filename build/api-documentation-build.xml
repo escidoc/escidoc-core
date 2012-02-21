@@ -658,8 +658,7 @@
 
 	<!-- Start: Generation of docbook documentation from javadoc -->
 	<target name="build-dbdoclet">
-		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="DocBook XML V4.5" value="DocBook V5.0" />
-		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="http://www.oasis-open.org/docbook/xml/5.0/docbook.dtd" value="../../../../build/docbook/docbook-5.0/dtd/docbook.dtd" />
+		<replaceregexp file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" match=".*!DOCTYPE.*" replace="" byline="true"/>
 		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;?xml version='1.0' encoding='UTF-8'?>" value=" " />
 			
 		<!-- Formatting db-doclet output -->
