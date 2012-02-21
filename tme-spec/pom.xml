@@ -31,7 +31,7 @@
     <parent>
         <artifactId>eSciDocCore</artifactId>
         <groupId>org.escidoc.core</groupId>
-        <version>trunk-SNAPSHOT</version>
+        <version>${escidoc.version}</version>
     </parent>
 
     <build>
