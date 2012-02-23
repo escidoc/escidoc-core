@@ -106,6 +106,8 @@ public interface UserAccountHandlerInterface {
      * SQLDatabaseSystemException is thrown and the user account is not deleted. References to other tables exist if: -
      * the user created roles, role-grants, user-account or user-groups. - the user modified roles, user-accounts or
      * user-groups. - the user revoked grants.
+     * NOTE: Dont use this method if the user has references to other objects like items, containers etc. as this can cause inconsistencies.
+     * Eg if the user to delete has created items or containers (s)he is named as creator of the item, container.
      *
      * @param userId The User Account ID.
      * @throws UserAccountNotFoundException Thrown if no user account with the provided id exists.
