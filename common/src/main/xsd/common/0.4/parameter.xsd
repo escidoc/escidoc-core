@@ -20,75 +20,71 @@
   -->
 
 <xs:schema attributeFormDefault="unqualified"
-	elementFormDefault="qualified"
-	targetNamespace="http://escidoc.de/core/01/parameter/"
-	xmlns:parameter="http://escidoc.de/core/01/parameter/"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	
-	<xs:annotation>
-		<xs:documentation>
-		  Defines a structure to specify a parameter with its type.
-		</xs:documentation>
-	</xs:annotation>
+           elementFormDefault="qualified"
+           targetNamespace="http://escidoc.de/core/01/parameter/"
+           xmlns:parameter="http://escidoc.de/core/01/parameter/"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="parameter">
-        <xs:annotation>
-            <xs:documentation>
-                <create>
-                    <input>required</input>
-                    <output>kept</output>
-                </create>
+  <xs:annotation>
+    <xs:documentation>
+      Defines a structure to specify a parameter with its type.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:element name="parameter">
+    <xs:annotation>
+      <xs:documentation>
+        <create>
+          <input>required</input>
+          <output>kept</output>
+        </create>
+        <comment>
+          represents one key-value-parameter.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="1">
+          <xs:element name="datevalue" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>
                 <comment>
-                    represents one key-value-parameter.
+                  value of the parameter in
+                  date-format.
                 </comment>
-            </xs:documentation>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="stringvalue" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+                <comment>
+                  value of the parameter in
+                  string-format.
+                </comment>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="decimalvalue" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>
+                <comment>
+                  value of the parameter in
+                  decimal-format.
+                </comment>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="name" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>name of the parameter.</comment>
+          </xs:documentation>
         </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:choice maxOccurs="1">
-                    <xs:element name="datevalue"
-                        type="xs:dateTime">
-                        <xs:annotation>
-                            <xs:documentation>
-                                <comment>
-                                    value of the parameter in
-                                    date-format.
-                                </comment>
-                            </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:element name="stringvalue"
-                        type="xs:string">
-                        <xs:annotation>
-                            <xs:documentation>
-                                <comment>
-                                    value of the parameter in
-                                    string-format.
-                                </comment>
-                            </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:element name="decimalvalue"
-                        type="xs:decimal">
-                        <xs:annotation>
-                            <xs:documentation>
-                                <comment>
-                                    value of the parameter in
-                                    decimal-format.
-                                </comment>
-                            </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                </xs:choice>
-            </xs:sequence>
-            <xs:attribute name="name" type="xs:string"
-                use="required">
-                <xs:annotation>
-                    <xs:documentation>
-                        <comment>name of the parameter.</comment>
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-        </xs:complexType>
-    </xs:element>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

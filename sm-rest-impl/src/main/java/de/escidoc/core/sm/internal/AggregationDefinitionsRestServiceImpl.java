@@ -53,7 +53,6 @@ import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterfa
 
 /**
  * @author Michael Hoppe
- *
  */
 public class AggregationDefinitionsRestServiceImpl implements AggregationDefinitionsRestService {
 
@@ -61,10 +60,13 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
     @Qualifier("service.AggregationDefinitionHandler")
     private AggregationDefinitionHandlerInterface aggregationDefinitionHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
-     * 
+     *
      */
-    public AggregationDefinitionsRestServiceImpl() {
+    protected AggregationDefinitionsRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -72,16 +74,14 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(
-        final SruSearchRequestParametersBean parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+            final SruSearchRequestParametersBean parameters)
+            throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
-		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.aggregationDefinitionHandler
-						.retrieveAggregationDefinitions(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.aggregationDefinitionHandler.retrieveAggregationDefinitions(serviceUtility.toMap(requestTO)));
     }
 
 }

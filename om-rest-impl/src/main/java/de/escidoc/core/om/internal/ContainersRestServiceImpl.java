@@ -59,6 +59,9 @@ public class ContainersRestServiceImpl implements ContainersRestService {
     @Qualifier("service.ContainerHandler")
     private ContainerHandlerInterface containerHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     protected ContainersRestServiceImpl() {
     }
 
@@ -75,23 +78,13 @@ public class ContainersRestServiceImpl implements ContainersRestService {
         final String omitHighlighting) throws MissingMethodParameterException,
         InvalidSearchQueryException, InvalidXmlException, SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.containerHandler
-						.retrieveContainers(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.containerHandler.retrieveContainers(serviceUtility.toMap(requestTO)));
     }
 
 }

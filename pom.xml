@@ -17,7 +17,7 @@
   <artifactId>eSciDocCore</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core</name>
-  <version>${escidoc.version}</version>
+  <version>trunk-SNAPSHOT</version>
   <url>https://www.escidoc.org</url>
 
   <issueManagement>
@@ -797,7 +797,7 @@
           <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
-            <version>1.70</version>
+            <version>1.80</version>
           </dependency>
           <dependency>
             <groupId>javax.validation</groupId>
@@ -1100,7 +1100,6 @@
   </distributionManagement>
 
   <properties>
-    <escidoc.version>trunk-SNAPSHOT</escidoc.version>
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
     <jaxb2-basics.version>0.6.2</jaxb2-basics.version>
@@ -2310,7 +2309,7 @@
         <groupId>javolution</groupId>
         <artifactId>javolution</artifactId>
         <version>5.5.1</version>
-      </dependency>    
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

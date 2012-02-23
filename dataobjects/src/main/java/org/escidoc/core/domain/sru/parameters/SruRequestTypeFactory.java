@@ -2,23 +2,18 @@ package org.escidoc.core.domain.sru.parameters;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
+import de.escidoc.core.common.business.Constants;
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
-import net.sf.oval.guard.Pre;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.axis.types.PositiveInteger;
-import org.escidoc.core.domain.sru.ExplainRequestTO;
-import org.escidoc.core.domain.sru.ExplainRequestType;
-import org.escidoc.core.domain.sru.ExtraDataType;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ScanRequestTO;
-import org.escidoc.core.domain.sru.ScanRequestType;
-import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
-import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
+import org.escidoc.core.domain.sru.*;
 
 import de.escidoc.core.common.util.service.KeyValuePair;
 import org.slf4j.Logger;
@@ -41,25 +36,91 @@ public class SruRequestTypeFactory {
 
     public static final String SRW_REQUEST_EXPLAIN_OP = "explain";
 
+    private static final ObjectFactory factory = new ObjectFactory();
+
     /**
      * 
      * @param sruParams
      * @param additionalParams
      * @return
      */
+    @NotNull
     public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        if (isSearchRequest(sruParams)) {
-            return createSearchRetrieveRequestTO(sruParams, additionalParams);
-        }
-        else if (isExplainRequest(sruParams)) {
+        if (isExplainRequest(sruParams)) {
             return createExplainRequestTO(sruParams, additionalParams);
         }
         else if (isScanRequest(sruParams)) {
             return createScanRequestTO(sruParams, additionalParams);
         }
-        return null;
+        else {
+            /* Current default behavior
+             * TODO:
+             * This decision should be decided in business layer but returning <tt>null</tt> here is no option as long
+             * as we support the old interfaces because we need to map the request to the Map. When we got rid of the
+             * old interfaces, we could pass <tt>null</tt> to the business layer to let the business layer decide, what
+             * should happen. However, in this case we will loose the other query parameters because of we are passing
+             * <tt>null</tt> to the business layer.
+             *
+             * I would suggest the following solution:
+             * - Generate the SRU objects on business layer to be reusable for all layers.
+             * - Implement another SRU object, which also extends the RequestType, which can be used, if the
+             *   operation-parameter is invalid. (e.g. UnknownRequestType extends RequestType)
+             * - Pass the UnknownRequestType to the business layer to let the business layer decide, what to do.
+             */
+            return createSearchRetrieveRequestTO(sruParams, additionalParams);
+        }
+    }
+
+    /**
+     * 
+     * @param sruParams
+     * @param keyValuePairs
+     * @return
+     */
+    @NotNull
+    public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
+    final SruSearchRequestParametersBean sruParams, final KeyValuePair... keyValuePairs) {
+        List<KeyValuePair> pairs = new ArrayList<KeyValuePair>(keyValuePairs.length);
+        for (KeyValuePair pair : keyValuePairs) {
+            pairs.add(pair);
+        }
+        return createRequestTO(sruParams, pairs);
+    }
+
+    /**
+     *
+     * @param sruParams
+     * @return
+     */
+    @NotNull
+    public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
+    final SruSearchRequestParametersBean sruParams) {
+        return createRequestTO(sruParams, new ArrayList<KeyValuePair>(0));
+    }
+
+    /**
+     * 
+     * @param roleId
+     * @param userId
+     * @param omitHighlighting
+     * @return
+     */
+    @NotNull
+    public static final List<KeyValuePair> getDefaultAdditionalParams(
+        String roleId, String userId, String omitHighlighting) {
+        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
+        if (roleId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
+        }
+        if (userId != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
+        }
+        if (omitHighlighting != null) {
+            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
+        }
+        return additionalParams;
     }
 
     /**
@@ -91,37 +152,38 @@ public class SruRequestTypeFactory {
 
     /**
      *
+     *
      * @param sruParams
      * @param additionalParams
      * @return
      */
-    public static final SearchRetrieveRequestTO createSearchRetrieveRequestTO(@NotNull
+    @NotNull
+    public static final JAXBElement<SearchRetrieveRequestType> createSearchRetrieveRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        if (!isSearchRequest(sruParams))
-            return null;
-
-        final SearchRetrieveRequestType search = new SearchRetrieveRequestType();
-        search.setMaximumRecords(createNonNegativeInteger(sruParams.getMaximumRecords()));
-        search.setQuery(sruParams.getQuery());
-        search.setRecordPacking(sruParams.getRecordPacking());
-        search.setRecordSchema(sruParams.getRecordSchema());
-        search.setRecordXPath(sruParams.getRecordXPath());
-        search.setResultSetTTL(createNonNegativeInteger(sruParams.getResultSetTTL()));
-        search.setSortKeys(sruParams.getSortKeys());
-        search.setStartRecord(createPositiveInteger(sruParams.getStartRecord()));
+        final SearchRetrieveRequestType searchType = factory.createSearchRetrieveRequestType();
+        searchType.setMaximumRecords(createNonNegativeInteger(sruParams.getMaximumRecords()));
+        searchType.setQuery(sruParams.getQuery());
+        searchType.setRecordPacking(sruParams.getRecordPacking());
+        searchType.setRecordSchema(sruParams.getRecordSchema());
+        searchType.setRecordXPath(sruParams.getRecordXPath());
+        searchType.setResultSetTTL(createNonNegativeInteger(sruParams.getResultSetTTL()));
+        searchType.setSortKeys(sruParams.getSortKeys());
+        searchType.setStartRecord(createPositiveInteger(sruParams.getStartRecord()));
         try {
-            search.setStylesheet(new URI(sruParams.getStylesheet()));
+            if (sruParams.getStylesheet() != null) {
+                searchType.setStylesheet(new URI(sruParams.getStylesheet()));
+            }
         }
         catch (URISyntaxException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Ignoring invalid stylesheet-URI: " + sruParams.getStylesheet());
             }
         }
-        search.setVersion(sruParams.getVersion());
-        search.setExtraRequestData(createExtraDataType(additionalParams));
+        searchType.setVersion(sruParams.getVersion());
+        searchType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return new SearchRetrieveRequestTO(search);
+        return factory.createSearchRetrieveRequest(searchType);
     }
 
     /**
@@ -130,54 +192,54 @@ public class SruRequestTypeFactory {
      * @param additionalParams
      * @return
      */
-    public static final ExplainRequestTO createExplainRequestTO(@NotNull
+    @NotNull
+    public static final JAXBElement<ExplainRequestType> createExplainRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        if (!isExplainRequest(sruParams))
-            return null;
-
-        final ExplainRequestType explain = new ExplainRequestType();
-        explain.setRecordPacking(sruParams.getRecordPacking());
+        final ExplainRequestType explainType = factory.createExplainRequestType();
+        explainType.setRecordPacking(sruParams.getRecordPacking());
         try {
-            explain.setStylesheet(new URI(sruParams.getStylesheet()));
+            if (sruParams.getStylesheet() != null) {
+                explainType.setStylesheet(new URI(sruParams.getStylesheet()));
+            }
         }
         catch (URISyntaxException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Ignoring invalid stylesheet-URI: " + sruParams.getStylesheet());
             }
         }
-        explain.setVersion(sruParams.getVersion());
-        explain.setExtraRequestData(createExtraDataType(additionalParams));
+        explainType.setVersion(sruParams.getVersion());
+        explainType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return new ExplainRequestTO(explain);
+        return factory.createExplainRequest(explainType);
     }
 
     /**
      * 
      * @return
      */
-    public static final ScanRequestTO createScanRequestTO(@NotNull
+    @NotNull
+    public static final JAXBElement<ScanRequestType> createScanRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        if (!isScanRequest(sruParams))
-            return null;
-
-        final ScanRequestType scan = new ScanRequestType();
-        scan.setMaximumTerms(createPositiveInteger(sruParams.getMaximumTerms()));
-        scan.setResponsePosition(createNonNegativeInteger(sruParams.getResponsePosition()));
-        scan.setScanClause(sruParams.getScanClause());
+        final ScanRequestType scanType = factory.createScanRequestType();
+        scanType.setMaximumTerms(createPositiveInteger(sruParams.getMaximumTerms()));
+        scanType.setResponsePosition(createNonNegativeInteger(sruParams.getResponsePosition()));
+        scanType.setScanClause(sruParams.getScanClause());
         try {
-            scan.setStylesheet(new URI(sruParams.getStylesheet()));
+            if (sruParams.getStylesheet() != null) {
+                scanType.setStylesheet(new URI(sruParams.getStylesheet()));
+            }
         }
         catch (URISyntaxException e) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Ignoring invalid stylesheet-URI: " + sruParams.getStylesheet());
             }
         }
-        scan.setVersion(sruParams.getVersion());
-        scan.setExtraRequestData(createExtraDataType(additionalParams));
+        scanType.setVersion(sruParams.getVersion());
+        scanType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return new ScanRequestTO(scan);
+        return factory.createScanRequest(scanType);
     }
 
     /**
@@ -186,7 +248,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     private static ExtraDataType createExtraDataType(final List<KeyValuePair> additionalParams) {
-        if (additionalParams == null)
+        if (additionalParams == null || additionalParams.size() == 0)
             return null;
 
         final ExtraDataType extra = new ExtraDataType();

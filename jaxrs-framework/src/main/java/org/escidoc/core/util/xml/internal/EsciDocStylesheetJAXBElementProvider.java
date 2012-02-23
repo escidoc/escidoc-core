@@ -1,14 +1,19 @@
 package org.escidoc.core.util.xml.internal;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ext.Provider;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * eSciDoc specific implementation of {@link JAXBElementProvider}.
@@ -23,10 +28,24 @@ public class EsciDocStylesheetJAXBElementProvider extends JAXBElementProvider {
     
     private final String XML_HEADERS_PATH = "com.sun.xml.bind.xmlHeaders";
 
+    private JAXBContextProvider jaxbContextProvider;
+
     @Override
     public void setMarshallerProperties(Map<String, Object> marshallProperties) {
         overrideXmlHeadersProperty(marshallProperties);
         super.setMarshallerProperties(marshallProperties);
+    }
+
+    public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {
+        this.jaxbContextProvider = jaxbContextProvider;
+    }
+
+    protected JAXBContext getJAXBContext(Class<?> type, Type genericType) throws JAXBException {
+        if (this.jaxbContextProvider != null) {
+            return this.jaxbContextProvider.getJAXBContext();
+        } else {
+            return super.getJAXBContext(type, genericType);
+        }
     }
     
     /**

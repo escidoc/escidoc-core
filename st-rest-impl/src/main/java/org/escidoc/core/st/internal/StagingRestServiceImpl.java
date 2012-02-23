@@ -104,22 +104,17 @@ public class StagingRestServiceImpl implements StagingRestService {
     @Qualifier("service.StagingFileHandler")
     private StagingFileHandler stagingHandler;
 
-    private JAXBContext jaxbContext;
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     protected StagingRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(StagingFileTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
     }
 
     @Override
     public StagingFileTO create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(StagingFileTO.class, this.stagingHandler.create(binaryContent));
+        return serviceUtility.fromXML(StagingFileTO.class, this.stagingHandler.create(binaryContent));
     }
 
     @Override

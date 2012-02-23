@@ -62,6 +62,9 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     @Autowired
     @Qualifier("service.ContentRelationHandler")
     private ContentRelationHandlerInterface contentRelationHandler;
+    
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     /**
      * 
@@ -76,8 +79,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         AuthorizationException, AuthenticationException, InvalidXmlException, ReferencedResourceNotFoundException,
         MissingMethodParameterException {
 
-        return ServiceUtility.fromXML(ContentRelationTO.class,
-            this.contentRelationHandler.create(ServiceUtility.toXML(contentRelationTO)));
+        return serviceUtility.fromXML(ContentRelationTO.class,
+            this.contentRelationHandler.create(serviceUtility.toXML(contentRelationTO)));
 
     }
 
@@ -85,7 +88,7 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     public ContentRelationTO retrieve(final String id) throws SystemException, AuthorizationException,
         AuthenticationException, ContentRelationNotFoundException {
 
-        return ServiceUtility.fromXML(ContentRelationTO.class, this.contentRelationHandler.retrieve(id));
+        return serviceUtility.fromXML(ContentRelationTO.class, this.contentRelationHandler.retrieve(id));
     }
 
     @Override
@@ -95,8 +98,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         ContentRelationNotFoundException, InvalidXmlException, ReferencedResourceNotFoundException, LockingException,
         MissingMethodParameterException {
 
-        return ServiceUtility.fromXML(ContentRelationTO.class,
-            this.contentRelationHandler.update(id, ServiceUtility.toXML(contentRelationTO)));
+        return serviceUtility.fromXML(ContentRelationTO.class,
+            this.contentRelationHandler.update(id, serviceUtility.toXML(contentRelationTO)));
     }
 
     @Override
@@ -110,7 +113,7 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     public ContentRelationPropertiesTO retrieveProperties(String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(ContentRelationPropertiesTO.class,
+        return serviceUtility.fromXML(ContentRelationPropertiesTO.class,
             this.contentRelationHandler.retrieveProperties(id));
     }
 
@@ -120,8 +123,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidStatusException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.lock(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.lock(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -130,8 +133,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
         InvalidStatusException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.unlock(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.unlock(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -140,8 +143,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidContentException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.submit(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -150,8 +153,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         MissingMethodParameterException, SystemException, OptimisticLockingException, XmlCorruptedException,
         InvalidContentException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.revise(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -160,8 +163,8 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidContentException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.release(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -169,36 +172,36 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.assignObjectPid(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.contentRelationHandler.assignObjectPid(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
     public MdRecordsTO retrieveMdRecords(String id) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class, this.contentRelationHandler.retrieveMdRecords(id));
+        return serviceUtility.fromXML(MdRecordsTO.class, this.contentRelationHandler.retrieveMdRecords(id));
     }
 
     @Override
     public MdRecordTO retrieveMdRecord(String id, String name) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, MdRecordNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class, this.contentRelationHandler.retrieveMdRecord(id, name));
+        return serviceUtility.fromXML(MdRecordTO.class, this.contentRelationHandler.retrieveMdRecord(id, name));
     }
 
     @Override
     public PredicateListTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
         SystemException {
 
-        return ServiceUtility.fromXML(PredicateListTO.class,
+        return serviceUtility.fromXML(PredicateListTO.class,
             this.contentRelationHandler.retrieveRegisteredPredicates());
     }
 
     @Override
     public ContentRelationResourcesTO retrieveResources(String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, MissingMethodParameterException, SystemException {
-        return ServiceUtility.fromXML(ContentRelationResourcesTO.class, this.contentRelationHandler.retrieveResources(id));
+        return serviceUtility.fromXML(ContentRelationResourcesTO.class, this.contentRelationHandler.retrieveResources(id));
     }
 
 }

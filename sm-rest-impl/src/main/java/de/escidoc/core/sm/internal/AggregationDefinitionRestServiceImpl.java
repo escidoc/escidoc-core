@@ -53,6 +53,9 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
     @Autowired
     @Qualifier("service.AggregationDefinitionHandler")
     private AggregationDefinitionHandlerInterface aggregationDefinitionHandler;
+    
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     /**
      * 
@@ -67,7 +70,8 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
     public AggregationDefinitionTO create(final AggregationDefinitionTO aggregationDefinitionTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, ScopeNotFoundException, SystemException {
-        return ServiceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.create(ServiceUtility.toXML(aggregationDefinitionTO)));
+        return serviceUtility.fromXML(AggregationDefinitionTO.class,
+                this.aggregationDefinitionHandler.create(serviceUtility.toXML(aggregationDefinitionTO)));
     }
 
     /* (non-Javadoc)
@@ -85,7 +89,7 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
     @Override
     public AggregationDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
-        return ServiceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.retrieve(id));
+        return serviceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.retrieve(id));
     }
 
 }

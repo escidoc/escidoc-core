@@ -19,7 +19,6 @@
  */
 package de.escidoc.core.om.internal;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -35,12 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.om.ItemsRestService;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
@@ -60,6 +54,9 @@ public class ItemsRestServiceImpl implements ItemsRestService {
     @Qualifier("service.ItemHandler")
     private ItemHandlerInterface itemHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     protected ItemsRestServiceImpl() {
     }
 
@@ -75,23 +72,13 @@ public class ItemsRestServiceImpl implements ItemsRestService {
         final String userId,
         final String omitHighlighting) throws SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.itemHandler
-						.retrieveItems(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.itemHandler.retrieveItems(serviceUtility.toMap(requestTO)));
     }
 
 }

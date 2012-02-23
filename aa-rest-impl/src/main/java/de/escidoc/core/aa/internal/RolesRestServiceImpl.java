@@ -40,7 +40,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.aa.RolesRestService;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -49,7 +48,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- *
  */
 public class RolesRestServiceImpl implements RolesRestService {
 
@@ -57,10 +55,13 @@ public class RolesRestServiceImpl implements RolesRestService {
     @Qualifier("service.RoleHandler")
     private RoleHandlerInterface roleHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
-     * 
+     *
      */
-    public RolesRestServiceImpl() {
+    protected RolesRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -68,15 +69,13 @@ public class RolesRestServiceImpl implements RolesRestService {
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveRoles(
-        final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
+            final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
 
-		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.roleHandler
-						.retrieveRoles(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.roleHandler.retrieveRoles(serviceUtility.toMap(requestTO)));
     }
 
 }

@@ -6,12 +6,12 @@
 	<groupId>org.escidoc.core</groupId>
 	<artifactId>dataobjects</artifactId>
 	<name>eSciDoc Core - Dataobjects Impl.</name>
-	<version>${escidoc.version}</version>
+	<version>trunk-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>${escidoc.version}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<description>Dataobjects package of eSciDoc Core</description>

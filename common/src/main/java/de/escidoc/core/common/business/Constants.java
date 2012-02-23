@@ -747,11 +747,6 @@ public final class Constants {
     public static final String PREDECESSOR_FUSION = STRUCTURAL_RELATIONS_NS_URI + "fusion";
 
     /**
-     * JAXB Context-Paths
-     */
-    public static final String SRU_CONTEXT_PATH = "org.escidoc.core.domain.sru";
-
-    /**
      * Do not instantiate this class.
      */
     private Constants() {

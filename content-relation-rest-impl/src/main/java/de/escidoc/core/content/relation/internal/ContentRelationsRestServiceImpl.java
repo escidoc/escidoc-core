@@ -26,6 +26,7 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.sru.ObjectFactory;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
@@ -51,6 +52,9 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
     @Qualifier("service.ContentRelationHandler")
     private ContentRelationHandlerInterface contentRelationHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -70,23 +74,13 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
         final String omitHighlighting) throws InvalidSearchQueryException,
         SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.contentRelationHandler
-						.retrieveContentRelations(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>)serviceUtility.fromXML(
+                this.contentRelationHandler.retrieveContentRelations(serviceUtility.toMap(requestTO)));
     }
 
 }

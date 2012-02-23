@@ -3,16 +3,20 @@
  */
 package de.escidoc.core.context.internal;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 
+import de.escidoc.core.context.param.*;
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
@@ -22,17 +26,16 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
-import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.escidoc.core.services.fedora.access.ObjectProfileTO;
-import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -64,7 +67,10 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
  * @author Marko Voß
  * 
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContextRestServiceImpl implements ContextRestService {
+
+    private final static Logger LOG = LoggerFactory.getLogger(ContextRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.ContextHandler")
@@ -73,6 +79,9 @@ public class ContextRestServiceImpl implements ContextRestService {
     @Autowired
     private FedoraServiceClient fedoraServiceClient;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -80,212 +89,181 @@ public class ContextRestServiceImpl implements ContextRestService {
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#create(org.escidoc.core.domain.context.ContextTO)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public ContextTO create(final ContextTO contextTO) throws MissingMethodParameterException,
-        ContextNameNotUniqueException, AuthenticationException, AuthorizationException, SystemException,
-        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
-        XmlSchemaValidationException {
+    public ContextTO create(final CreateQueryParam queryParam, final ContextTO contextTO)
+            throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
+            AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+            MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+            InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
+            XmlSchemaValidationException {
 
-        return ServiceUtility.fromXML(ContextTO.class, this.contextHandler.create(ServiceUtility.toXML(contextTO)));
+        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.create(serviceUtility.toXML(contextTO)));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieve(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public ContextTO retrieve(final String id) throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-
-        ObjectProfileTO objectProfile = this.fedoraServiceClient.getObjectProfile(id);
-
-        // check resource with id is context
-
-        ContextTO context = new ContextTO();
-        try {
-            context.setHref(new URI(Constants.CONTEXT_URL_BASE + id));
-        } catch (URISyntaxException e) {
-            throw new SystemException(e.getMessage(), e);
-        }
-        context.getProperties().setCreationDate(objectProfile.getObjCreateDate());
-        context.getProperties().setLastModificationDate(objectProfile.getObjLastModDate());
-
-        DatastreamProfilesTO dprofiles = this.fedoraServiceClient.getDatastreamProfiles(id, null);
-        for (DatastreamProfileTO dprofile : dprofiles.getDatastreamProfile()) {
-            if (dprofile
-                .getDsAltID().contains(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID)) {
-
-                AdminDescriptorDatastreamHolderTO adminDescriptor = new AdminDescriptorDatastreamHolderTO();
-                adminDescriptor.setContent(this.fedoraServiceClient
-                    .getDatastream(id, dprofile.getDsID(), null).getStream());
-                context.getAdminDescriptors().getAdminDescriptor().add(adminDescriptor);
-            }
-        }
-        return context;
+    public ContextTO retrieve(final String id, final RetrieveQueryParam queryParam)
+            throws ContextNotFoundException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException {
+        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#update(java.lang.String,
-     * org.escidoc.core.domain.context.ContextTO)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public ContextTO update(final String id, final ContextTO contextTO) throws ContextNotFoundException,
-        MissingMethodParameterException, InvalidContentException, InvalidStatusException, AuthenticationException,
-        AuthorizationException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        OptimisticLockingException, ContextNameNotUniqueException, InvalidXmlException, MissingElementValueException,
-        SystemException {
+    public ContextTO update(final String id, final UpdateQueryParam queryParam, final ContextTO contextTO)
+            throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
+            InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
+            ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
+            InvalidXmlException, MissingElementValueException, SystemException {
 
-        return ServiceUtility.fromXML(ContextTO.class, this.contextHandler.update(id, ServiceUtility.toXML(contextTO)));
+        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.update(id, serviceUtility.toXML(contextTO)));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#delete(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public void delete(final String id) throws ContextNotFoundException, ContextNotEmptyException,
-        MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
-        SystemException {
+    public void delete(final String id, final DeleteQueryParam queryParam)
+            throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
+            InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
         this.contextHandler.delete(id);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveProperties(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public ContextPropertiesTO retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
-        return ServiceUtility.fromXML(ContextPropertiesTO.class, this.contextHandler.retrieveProperties(id));
+    public ContextPropertiesTO retrieveProperties(final String id, final RetrievePropertiesQueryParam queryParam)
+            throws ContextNotFoundException, SystemException {
+        return serviceUtility.fromXML(ContextPropertiesTO.class, this.contextHandler.retrieveProperties(id));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveResource(java.lang.String, java.lang.String,
-     * java.util.Map)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<String, String[]> parameters)
+    public Stream retrieveResource(final String id, final String resourceName,
+                                   final RetrieveResourceQueryParam queryParam,
+                                   final String roleId, String userId, String omitHighlighting)
         throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        // TODO Auto-generated method stub
-        return null;
+
+        Map<String, String[]> map = serviceUtility.toMap(SruRequestTypeFactory.createRequestTO(
+                queryParam, SruRequestTypeFactory.getDefaultAdditionalParams(roleId, userId, omitHighlighting)));
+        EscidocBinaryContent content = this.contextHandler.retrieveResource(id, resourceName, map);
+        Stream stream = new Stream();
+        try {
+            IOUtils.copy(content.getContent(), stream);
+        }
+        catch (IOException e) {
+            String msg = "Failed to copy stream";
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
+        }
+        return stream;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveResources(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public ContextResourcesTO retrieveResources(final String id) throws ContextNotFoundException, MissingMethodParameterException,
+    public ContextResourcesTO retrieveResources(final String id, final RetrieveResourcesQueryParam queryParam)
+            throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         
-        return ServiceUtility.fromXML(ContextResourcesTO.class, this.contextHandler.retrieveResources(id));    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveMembers(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
-     */
-    @Override
-    public JAXBElement<? extends ResponseType> retrieveMembers(
-        final String contextId,
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId, 
-        final String userId,
-        final String omitHighlighting) throws ContextNotFoundException,
-        MissingMethodParameterException, SystemException {
-
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
-        final JAXBElement<? extends RequestType> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
-
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-                Constants.SRU_CONTEXT_PATH , this.contextHandler
-                .retrieveMembers(contextId, ServiceUtility.toMap(requestTO))));
+        return serviceUtility.fromXML(ContextResourcesTO.class, this.contextHandler.retrieveResources(id));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveAdminDescriptor(java.lang.String, java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorTO retrieveAdminDescriptor(final String id, final String name)
+    public JAXBElement<? extends ResponseType> retrieveMembers(final String id,
+                                                               final RetrieveMembersQueryParam queryParam,
+                                                               final String roleId, final String userId,
+                                                               final String omitHighlighting)
+            throws ContextNotFoundException, MissingMethodParameterException, SystemException {
+
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
+
+        final JAXBElement<? extends RequestType> requestTO =
+            SruRequestTypeFactory.createRequestTO(queryParam, additionalParams);
+
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.contextHandler.retrieveMembers(id, serviceUtility.toMap(requestTO)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AdminDescriptorTO retrieveAdminDescriptor(final String id, final String name,
+                                                     final RetrieveAdminDescriptorQueryParam queryParam)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, AdminDescriptorNotFoundException {
 
-        return ServiceUtility.fromXML(AdminDescriptorTO.class, this.contextHandler.retrieveAdminDescriptor(id, name));
+        return serviceUtility.fromXML(AdminDescriptorTO.class,
+                this.contextHandler.retrieveAdminDescriptor(id, name));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#retrieveAdminDescriptors(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorsTO retrieveAdminDescriptors(final String id) throws ContextNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public AdminDescriptorsTO retrieveAdminDescriptors(final String id,
+                                                       final RetrieveAdminDescriptorsQueryParam queryParam)
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(AdminDescriptorsTO.class, this.contextHandler.retrieveAdminDescriptors(id));
+        return serviceUtility.fromXML(AdminDescriptorsTO.class, this.contextHandler.retrieveAdminDescriptors(id));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextRestService#updateAdminDescriptor(java.lang.String,
-     * org.escidoc.core.domain.context.AdminDescriptorTO)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorTO updateAdminDescriptor(final String id, final AdminDescriptorTO adminDescriptorTO)
+    public AdminDescriptorTO updateAdminDescriptor(final String id,
+                                                   final UpdateAdminDescriptorQueryParam queryParam,
+                                                   final AdminDescriptorTO adminDescriptorTO)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
         InvalidXmlException {
 
-        return ServiceUtility.fromXML(AdminDescriptorTO.class,
-            this.contextHandler.updateAdminDescriptor(id, ServiceUtility.toXML(adminDescriptorTO)));
+        return serviceUtility.fromXML(AdminDescriptorTO.class,
+                this.contextHandler.updateAdminDescriptor(id, serviceUtility.toXML(adminDescriptorTO)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ResultTO open(final String id, StatusTaskParamTO statusTaskParamTO) throws ContextNotFoundException,
-        MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
-        OptimisticLockingException, InvalidXmlException, SystemException, LockingException, StreamNotFoundException {
+    public ResultTO open(final String id, final OpenQueryParam queryParam, final StatusTaskParamTO statusTaskParamTO)
+            throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
+            AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
+            SystemException, LockingException, StreamNotFoundException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contextHandler.open(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+                this.contextHandler.open(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ResultTO close(final String id, StatusTaskParamTO statusTaskParamTO) throws ContextNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        OptimisticLockingException, InvalidXmlException, InvalidStatusException, LockingException,
-        StreamNotFoundException {
+    public ResultTO close(final String id, final CloseQueryParam queryParam, final StatusTaskParamTO statusTaskParamTO)
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
+            InvalidStatusException, LockingException, StreamNotFoundException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.contextHandler.close(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+                this.contextHandler.close(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 }

@@ -40,7 +40,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.aa.UserGroupsRestService;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -49,7 +48,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- *
  */
 public class UserGroupsRestServiceImpl implements UserGroupsRestService {
 
@@ -57,10 +55,13 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
     @Qualifier("service.UserGroupHandler")
     private UserGroupHandlerInterface userGroupHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
-     * 
+     *
      */
-    public UserGroupsRestServiceImpl() {
+    protected UserGroupsRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -68,15 +69,13 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveUserGroups(
-        final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
+            final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.userGroupHandler
-						.retrieveUserGroups(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.userGroupHandler.retrieveUserGroups(serviceUtility.toMap(requestTO)));
     }
 
 }

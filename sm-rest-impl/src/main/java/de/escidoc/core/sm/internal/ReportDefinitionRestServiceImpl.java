@@ -56,6 +56,9 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
     @Qualifier("service.ReportDefinitionHandler")
     private ReportDefinitionHandlerInterface reportDefinitionHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -69,7 +72,8 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
     public ReportDefinitionTO create(final ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
         InvalidSqlException, ScopeNotFoundException, ScopeContextViolationException, SystemException {
-        return ServiceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.create(ServiceUtility.toXML(reportDefinitionTO)));
+        return serviceUtility.fromXML(ReportDefinitionTO.class,
+                this.reportDefinitionHandler.create(serviceUtility.toXML(reportDefinitionTO)));
     }
 
     /* (non-Javadoc)
@@ -87,7 +91,7 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
     @Override
     public ReportDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
-        return ServiceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.retrieve(id));
+        return serviceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.retrieve(id));
     }
 
     /* (non-Javadoc)
@@ -98,7 +102,8 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
         AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
         ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException {
-        return ServiceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.update(id, ServiceUtility.toXML(reportDefinitionTO)));
+        return serviceUtility.fromXML(ReportDefinitionTO.class,
+                this.reportDefinitionHandler.update(id, serviceUtility.toXML(reportDefinitionTO)));
     }
 
 }

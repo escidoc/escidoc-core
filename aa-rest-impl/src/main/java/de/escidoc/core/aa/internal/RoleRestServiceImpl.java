@@ -58,10 +58,13 @@ public class RoleRestServiceImpl implements RoleRestService {
     @Qualifier("service.RoleHandler")
     private RoleHandlerInterface roleHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
-    public RoleRestServiceImpl() {
+    protected RoleRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -71,7 +74,7 @@ public class RoleRestServiceImpl implements RoleRestService {
     public RoleTO create(final RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(RoleTO.class, this.roleHandler.create(ServiceUtility.toXML(roleTo)));
+        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.create(serviceUtility.toXML(roleTo)));
     }
 
     /* (non-Javadoc)
@@ -89,7 +92,7 @@ public class RoleRestServiceImpl implements RoleRestService {
     @Override
     public RoleTO retrieve(final String id) throws RoleNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(RoleTO.class, this.roleHandler.retrieve(id));
+        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.retrieve(id));
     }
 
     /* (non-Javadoc)
@@ -100,7 +103,7 @@ public class RoleRestServiceImpl implements RoleRestService {
         XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(RoleTO.class, this.roleHandler.update(id, ServiceUtility.toXML(roleTo)));
+        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.update(id, serviceUtility.toXML(roleTo)));
     }
 
     /* (non-Javadoc)
@@ -109,7 +112,7 @@ public class RoleRestServiceImpl implements RoleRestService {
     @Override
     public RoleResourcesTO retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, SystemException {
-        return ServiceUtility.fromXML(RoleResourcesTO.class, this.roleHandler.retrieveResources(id));
+        return serviceUtility.fromXML(RoleResourcesTO.class, this.roleHandler.retrieveResources(id));
     }
 
 }

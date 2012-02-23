@@ -107,6 +107,9 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     @Qualifier("service.ContainerHandler")
     private ContainerHandlerInterface containerHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     protected ContainerRestServiceImpl() {
     }
 
@@ -118,8 +121,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         AuthorizationException, InvalidStatusException, MissingMdRecordException, XmlCorruptedException,
         XmlSchemaValidationException {
 
-        return ServiceUtility.fromXML(ContainerTO.class,
-            this.containerHandler.create(ServiceUtility.toXML(containerTO)));
+        return serviceUtility.fromXML(ContainerTO.class,
+            this.containerHandler.create(serviceUtility.toXML(containerTO)));
     }
 
     @Override
@@ -133,7 +136,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     public ContainerTO retrieve(String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(ContainerTO.class, this.containerHandler.retrieve(id));
+        return serviceUtility.fromXML(ContainerTO.class, this.containerHandler.retrieve(id));
     }
 
     @Override
@@ -143,8 +146,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         RelationPredicateNotFoundException, AuthenticationException, AuthorizationException,
         MissingAttributeValueException, MissingMdRecordException {
 
-        return ServiceUtility.fromXML(ContainerTO.class,
-            this.containerHandler.update(id, ServiceUtility.toXML(containerTO)));
+        return serviceUtility.fromXML(ContainerTO.class,
+            this.containerHandler.update(id, serviceUtility.toXML(containerTO)));
     }
 
     /*
@@ -162,22 +165,13 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
-            this.containerHandler.retrieveMembers(containerId, ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+            this.containerHandler.retrieveMembers(containerId, serviceUtility.toMap(requestTO)));
     }
 
     @Override
@@ -186,8 +180,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidContextException, AuthenticationException, AuthorizationException, OptimisticLockingException,
         MissingAttributeValueException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.addMembers(id, ServiceUtility.toXML(membersTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.addMembers(id, serviceUtility.toXML(membersTaskParamTO)));
     }
 
     @Override
@@ -196,8 +190,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidItemStatusException, AuthenticationException, AuthorizationException, SystemException,
         ContainerNotFoundException, InvalidContentException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.removeMembers(id, ServiceUtility.toXML(membersTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.removeMembers(id, serviceUtility.toXML(membersTaskParamTO)));
     }
 
     // TODO not supported till version 1.4
@@ -210,7 +204,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         MissingMethodParameterException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
         SystemException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class, this.containerHandler.retrieveMdRecord(id, mdRecordId));
+        return serviceUtility.fromXML(MdRecordTO.class, this.containerHandler.retrieveMdRecord(id, mdRecordId));
     }
 
     @Override
@@ -256,29 +250,29 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidXmlException, InvalidStatusException, ReadonlyVersionException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class,
-            this.containerHandler.updateMetadataRecord(id, mdRecordId, ServiceUtility.toXML(mdRecordTO)));
+        return serviceUtility.fromXML(MdRecordTO.class,
+            this.containerHandler.updateMetadataRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO)));
     }
 
     @Override
     public MdRecordsTO retrieveMdRecords(String id) throws ContainerNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class, this.containerHandler.retrieveMdRecords(id));
+        return serviceUtility.fromXML(MdRecordsTO.class, this.containerHandler.retrieveMdRecords(id));
     }
 
     @Override
     public ContainerPropertiesTO retrieveProperties(String id) throws ContainerNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(ContainerPropertiesTO.class, this.containerHandler.retrieveProperties(id));
+        return serviceUtility.fromXML(ContainerPropertiesTO.class, this.containerHandler.retrieveProperties(id));
     }
 
     @Override
     public ContainerResourcesTO retrieveResources(String id) throws ContainerNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
+        return serviceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
     }
 
     @Override
@@ -312,7 +306,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         byte[] buffer = new byte[1024];
         try {
             InputStream ins =
-                this.containerHandler.retrieveResource(id, resourceName, ServiceUtility.toMap(requestTO)).getContent();
+                this.containerHandler.retrieveResource(id, resourceName, serviceUtility.toMap(requestTO)).getContent();
             int len;
             while ((len = ins.read(buffer)) > 0) {
                 stream.write(buffer, 0, len);
@@ -330,28 +324,28 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     public RelationsTO retrieveRelations(String id) throws ContainerNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(RelationsTO.class, this.containerHandler.retrieveRelations(id));
+        return serviceUtility.fromXML(RelationsTO.class, this.containerHandler.retrieveRelations(id));
     }
 
     @Override
      public StructMapTO retrieveStructMap( String id) throws ContainerNotFoundException,
      MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         
-        return ServiceUtility.fromXML(StructMapTO.class, this.containerHandler.retrieveStructMap(id));
+        return serviceUtility.fromXML(StructMapTO.class, this.containerHandler.retrieveStructMap(id));
     }
 
     @Override
     public VersionHistoryTO retrieveVersionHistory(String id) throws ContainerNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(VersionHistoryTO.class, this.containerHandler.retrieveVersionHistory(id));
+        return serviceUtility.fromXML(VersionHistoryTO.class, this.containerHandler.retrieveVersionHistory(id));
     }
 
     @Override
     public ParentsTO retrieveParents(String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(ParentsTO.class, this.containerHandler.retrieveParents(id));
+        return serviceUtility.fromXML(ParentsTO.class, this.containerHandler.retrieveParents(id));
     }
 
     @Override
@@ -360,8 +354,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
         InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.release(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -370,8 +364,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
         InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.submit(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -379,8 +373,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         LockingException, MissingMethodParameterException, InvalidStatusException, SystemException,
         OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.revise(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -389,8 +383,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidStatusException, SystemException, OptimisticLockingException, AlreadyWithdrawnException,
         ReadonlyVersionException, InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.withdraw(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -399,8 +393,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.lock(id, ServiceUtility.toXML(optimisticLockingTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
@@ -409,8 +403,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.unlock(id, ServiceUtility.toXML(optimisticLockingTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
@@ -420,8 +414,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         MissingElementValueException, LockingException, ReadonlyVersionException, InvalidContentException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.addContentRelations(id, ServiceUtility.toXML(relationTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
     }
 
     @Override
@@ -430,8 +424,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         InvalidXmlException, ContentRelationNotFoundException, LockingException, ReadonlyVersionException,
         AuthenticationException, AuthorizationException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.removeContentRelations(id, ServiceUtility.toXML(relationTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
     }
 
     @Override
@@ -439,8 +433,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         throws InvalidStatusException, ContainerNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.assignObjectPid(id, ServiceUtility.toXML(assignPidTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
     @Override
@@ -448,8 +442,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.containerHandler.assignVersionPid(id, ServiceUtility.toXML(assignPidTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.containerHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
 }

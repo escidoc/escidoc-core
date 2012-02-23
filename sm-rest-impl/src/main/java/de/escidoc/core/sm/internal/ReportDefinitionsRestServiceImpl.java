@@ -49,7 +49,6 @@ import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 
 /**
  * @author Michael Hoppe
- *
  */
 public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestService {
 
@@ -57,10 +56,13 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
     @Qualifier("service.ReportDefinitionHandler")
     private ReportDefinitionHandlerInterface reportDefinitionHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
-     * 
+     *
      */
-    public ReportDefinitionsRestServiceImpl() {
+    protected ReportDefinitionsRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -68,16 +70,14 @@ public class ReportDefinitionsRestServiceImpl implements ReportDefinitionsRestSe
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveReportDefinitions(
-        final SruSearchRequestParametersBean parameters)
-        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+            final SruSearchRequestParametersBean parameters)
+            throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.reportDefinitionHandler
-						.retrieveReportDefinitions(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.reportDefinitionHandler.retrieveReportDefinitions(serviceUtility.toMap(requestTO)));
     }
 
 }

@@ -59,6 +59,9 @@ public class OrganizationalUnitsRestServiceImpl implements OrganizationalUnitsRe
     @Qualifier("service.OrganizationalUnitHandler")
     private OrganizationalUnitHandlerInterface organizationalUnitHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     protected OrganizationalUnitsRestServiceImpl() {
     }
 
@@ -75,23 +78,13 @@ public class OrganizationalUnitsRestServiceImpl implements OrganizationalUnitsRe
         final String omitHighlighting) throws InvalidSearchQueryException,
         InvalidXmlException, MissingMethodParameterException, SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.organizationalUnitHandler
-						.retrieveOrganizationalUnits(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.organizationalUnitHandler.retrieveOrganizationalUnits(serviceUtility.toMap(requestTO)));
     }
 
 }

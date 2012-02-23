@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.escidoc.core</groupId>
         <artifactId>eSciDocCore</artifactId>
-        <version>${escidoc.version}</version>
+        <version>trunk-SNAPSHOT</version>
     </parent>
 
 </project>

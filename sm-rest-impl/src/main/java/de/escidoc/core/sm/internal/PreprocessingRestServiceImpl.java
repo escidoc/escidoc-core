@@ -52,6 +52,9 @@ public class PreprocessingRestServiceImpl implements PreprocessingRestService {
     @Qualifier("service.PreprocessingHandler")
     private PreprocessingHandlerInterface preprocessingHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -65,7 +68,7 @@ public class PreprocessingRestServiceImpl implements PreprocessingRestService {
     public void preprocess(final String id, final PreprocessingInformationTO preprocessingInformationTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, SystemException {
-        this.preprocessingHandler.preprocess(id, ServiceUtility.toXML(preprocessingInformationTO));
+        this.preprocessingHandler.preprocess(id, serviceUtility.toXML(preprocessingInformationTO));
     }
 
 }

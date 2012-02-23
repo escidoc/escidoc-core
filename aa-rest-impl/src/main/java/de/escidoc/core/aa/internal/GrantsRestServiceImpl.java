@@ -40,7 +40,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.aa.GrantsRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -57,10 +56,13 @@ public class GrantsRestServiceImpl implements GrantsRestService {
     @Qualifier("service.UserAccountHandler")
     private UserAccountHandlerInterface userAccountHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
-    public GrantsRestServiceImpl() {
+    protected GrantsRestServiceImpl() {
     }
 
     /*
@@ -69,13 +71,14 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
-        InvalidSearchQueryException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean parameters)
+            throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
+            AuthorizationException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
-            this.userAccountHandler.retrieveGrants(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+            this.userAccountHandler.retrieveGrants(serviceUtility.toMap(requestTO)));
     }
 
 }

@@ -103,22 +103,17 @@ public class TmeRestServiceImpl implements TmeRestService {
     @Qualifier("service.JhoveHandler")
     private JhoveHandler tmeHandler;
 
-    private JAXBContext jaxbContext;
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     protected TmeRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(TmeRequestTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
     }
 
     public JhoveTO extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException {
 
-        return ServiceUtility.fromXML(JhoveTO.class, this.tmeHandler.extract(ServiceUtility.toXML(tmeRequestTO)));
+        return serviceUtility.fromXML(JhoveTO.class, this.tmeHandler.extract(serviceUtility.toXML(tmeRequestTO)));
     }
 
 }

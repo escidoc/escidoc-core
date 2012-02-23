@@ -49,7 +49,6 @@ import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 
 /**
  * @author Michael Hoppe
- *
  */
 public class ScopesRestServiceImpl implements ScopesRestService {
 
@@ -57,10 +56,13 @@ public class ScopesRestServiceImpl implements ScopesRestService {
     @Qualifier("service.ScopeHandler")
     private ScopeHandlerInterface scopeHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
-     * 
+     *
      */
-    public ScopesRestServiceImpl() {
+    protected ScopesRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -68,15 +70,13 @@ public class ScopesRestServiceImpl implements ScopesRestService {
      */
     @Override
     public JAXBElement<? extends ResponseType> retrieveScopes(
-        final SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+            final SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-		final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.scopeHandler
-						.retrieveScopes(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.scopeHandler.retrieveScopes(serviceUtility.toMap(requestTO)));
     }
 
 }

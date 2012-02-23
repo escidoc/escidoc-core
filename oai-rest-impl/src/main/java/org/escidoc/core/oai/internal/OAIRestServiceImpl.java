@@ -19,9 +19,6 @@
  */
 package org.escidoc.core.oai.internal;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-
 import org.escidoc.core.domain.oai.SetDefinitionTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.oai.OAIRestService;
@@ -56,43 +53,35 @@ public class OAIRestServiceImpl implements OAIRestService {
     @Qualifier("service.SetDefinitionHandler")
     private SetDefinitionHandlerInterface oaiHandler;
 
-    private JAXBContext jaxbContext;
+    @Autowired
+    private ServiceUtility serviceUtility;
 
-    protected OAIRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(SetDefinitionTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
-    }
+    protected OAIRestServiceImpl() {}
 
     public SetDefinitionTO create(final SetDefinitionTO setDefinitionTO) throws UniqueConstraintViolationException,
         InvalidXmlException, MissingMethodParameterException, SystemException, AuthenticationException,
         AuthorizationException {
 
-        return ServiceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.create(ServiceUtility.toXML(setDefinitionTO)));
+        return serviceUtility.fromXML(SetDefinitionTO.class,
+            this.oaiHandler.create(serviceUtility.toXML(setDefinitionTO)));
     }
 
     public SetDefinitionTO retrieve(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
 
-        return ServiceUtility.fromXML(SetDefinitionTO.class, this.oaiHandler.retrieve(id));
+        return serviceUtility.fromXML(SetDefinitionTO.class, this.oaiHandler.retrieve(id));
     }
 
     public SetDefinitionTO update(final String id, final SetDefinitionTO setDefinitionTO)
         throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
         AuthenticationException, AuthorizationException {
 
-        return ServiceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.update(id, ServiceUtility.toXML(setDefinitionTO)));
+        return serviceUtility.fromXML(SetDefinitionTO.class,
+            this.oaiHandler.update(id, serviceUtility.toXML(setDefinitionTO)));
     }
 
     public void delete(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
-
         this.oaiHandler.delete(id);
     }
-
 }

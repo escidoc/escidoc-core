@@ -55,6 +55,9 @@ public class ReportRestServiceImpl implements ReportRestService {
     @Qualifier("service.ReportHandler")
     private ReportHandlerInterface reportHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -68,7 +71,7 @@ public class ReportRestServiceImpl implements ReportRestService {
     public ReportTO retrieve(final ReportParametersTO reportParametersTO) throws AuthenticationException,
         AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, InvalidSqlException, SystemException {
-        return ServiceUtility.fromXML(ReportTO.class, this.reportHandler.retrieve(ServiceUtility.toXML(reportParametersTO)));
+        return serviceUtility.fromXML(ReportTO.class, this.reportHandler.retrieve(serviceUtility.toXML(reportParametersTO)));
     }
 
 }

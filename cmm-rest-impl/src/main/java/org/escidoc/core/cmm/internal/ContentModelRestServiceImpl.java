@@ -56,6 +56,9 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     @Autowired
     @Qualifier("service.ContentModelHandler")
     private ContentModelHandlerInterface contentModelHandler;
+    
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     /**
      * 
@@ -68,8 +71,8 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
         MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
         XmlCorruptedException, XmlSchemaValidationException {
 
-        return ServiceUtility.fromXML(ContentModelTO.class,
-            this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+        return serviceUtility.fromXML(ContentModelTO.class,
+            this.contentModelHandler.create(serviceUtility.toXML(contentModelTO)));
 
     }
 
@@ -83,14 +86,14 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     public ContentModelTO retrieve(String id) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, MissingMethodParameterException, SystemException {
 
-        return ServiceUtility.fromXML(ContentModelTO.class, this.contentModelHandler.retrieve(id));
+        return serviceUtility.fromXML(ContentModelTO.class, this.contentModelHandler.retrieve(id));
 
     }
 
     public ContentModelPropertiesTO retrieveProperties(String id) throws ContentModelNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
 
-        return ServiceUtility.fromXML(ContentModelPropertiesTO.class,
+        return serviceUtility.fromXML(ContentModelPropertiesTO.class,
             this.contentModelHandler.retrieveProperties(id));
 
     }
@@ -98,7 +101,7 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     public ContentModelResourcesTO retrieveResources(String id) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, MissingMethodParameterException, SystemException {
 
-        return ServiceUtility.fromXML(ContentModelResourcesTO.class,
+        return serviceUtility.fromXML(ContentModelResourcesTO.class,
             this.contentModelHandler.retrieveResources(id));
 
     }
@@ -106,7 +109,7 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     public VersionHistoryTO retrieveVersionHistory(String id) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, MissingMethodParameterException, SystemException {
 
-        return ServiceUtility.fromXML(VersionHistoryTO.class, this.contentModelHandler.retrieveVersionHistory(id));
+        return serviceUtility.fromXML(VersionHistoryTO.class, this.contentModelHandler.retrieveVersionHistory(id));
 
     }
 
@@ -115,8 +118,8 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
         OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
         InvalidContentException {
 
-        return ServiceUtility.fromXML(ContentModelTO.class,
-            this.contentModelHandler.update(id, ServiceUtility.toXML(contentModelTO)));
+        return serviceUtility.fromXML(ContentModelTO.class,
+            this.contentModelHandler.update(id, serviceUtility.toXML(contentModelTO)));
 
     }
 
@@ -124,16 +127,16 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
     // public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name)
     // throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
     // ContentModelNotFoundException, SystemException {
-    // return ServiceUtility.fromXML(ContentModelTO.class,
-    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+    // return serviceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(serviceUtility.toXML(contentModelTO)));
     // }
 
     // FIXME
     // public EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name) throws
     // AuthenticationException,
     // AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException {
-    // return ServiceUtility.fromXML(ContentModelTO.class,
-    // this.contentModelHandler.create(ServiceUtility.toXML(contentModelTO)));
+    // return serviceUtility.fromXML(ContentModelTO.class,
+    // this.contentModelHandler.create(serviceUtility.toXML(contentModelTO)));
     // }
 
 }

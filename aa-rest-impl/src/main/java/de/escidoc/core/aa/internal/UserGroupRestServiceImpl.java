@@ -76,10 +76,13 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     @Qualifier("service.UserGroupHandler")
     private UserGroupHandlerInterface userGroupHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
-    public UserGroupRestServiceImpl() {
+    protected UserGroupRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -89,7 +92,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public UserGroupTO create(final UserGroupTO userGroupTO) throws UniqueConstraintViolationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.create(ServiceUtility.toXML(userGroupTO)));
+        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.create(serviceUtility.toXML(userGroupTO)));
     }
 
     /* (non-Javadoc)
@@ -107,7 +110,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     @Override
     public UserGroupTO retrieve(final String id) throws UserGroupNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.retrieve(id));
+        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.retrieve(id));
     }
 
     /* (non-Javadoc)
@@ -118,7 +121,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
         UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.update(id, ServiceUtility.toXML(userGroupTO)));
+        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.update(id, serviceUtility.toXML(userGroupTO)));
     }
 
     /* (non-Javadoc)
@@ -128,7 +131,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.activate(id, ServiceUtility.toXML(taskParam));
+        this.userGroupHandler.activate(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -138,7 +141,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.deactivate(id, ServiceUtility.toXML(taskParam));
+        this.userGroupHandler.deactivate(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -147,7 +150,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     @Override
     public GrantTO retrieveGrant(final String id, final String grantId) throws UserGroupNotFoundException, GrantNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantTO.class, this.userGroupHandler.retrieveGrant(id, grantId));
+        return serviceUtility.fromXML(GrantTO.class, this.userGroupHandler.retrieveGrant(id, grantId));
     }
 
     /* (non-Javadoc)
@@ -156,7 +159,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     @Override
     public CurrentGrantsTO retrieveCurrentGrants(final String id) throws UserGroupNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(CurrentGrantsTO.class, this.userGroupHandler.retrieveCurrentGrants(id));
+        return serviceUtility.fromXML(CurrentGrantsTO.class, this.userGroupHandler.retrieveCurrentGrants(id));
     }
 
     /* (non-Javadoc)
@@ -166,7 +169,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public GrantTO createGrant(final String id, final GrantTO grantTo) throws AlreadyExistsException, UserGroupNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantTO.class, this.userGroupHandler.createGrant(id, ServiceUtility.toXML(grantTo)));
+        return serviceUtility.fromXML(GrantTO.class, this.userGroupHandler.createGrant(id, serviceUtility.toXML(grantTo)));
     }
 
     /* (non-Javadoc)
@@ -176,7 +179,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam) throws UserGroupNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.revokeGrant(id, grantId, ServiceUtility.toXML(taskParam));
+        this.userGroupHandler.revokeGrant(id, grantId, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -186,7 +189,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userGroupHandler.revokeGrants(id, ServiceUtility.toXML(taskParam));
+        this.userGroupHandler.revokeGrants(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -194,7 +197,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      */
     @Override
     public UserGroupResourcesTO retrieveResources(final String id) throws UserGroupNotFoundException, SystemException {
-        return ServiceUtility.fromXML(UserGroupResourcesTO.class, this.userGroupHandler.retrieveResources(id));
+        return serviceUtility.fromXML(UserGroupResourcesTO.class, this.userGroupHandler.retrieveResources(id));
     }
 
     /* (non-Javadoc)
@@ -206,7 +209,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException {
-        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.addSelectors(id, ServiceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
     /* (non-Javadoc)
@@ -217,7 +220,7 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException {
-        return ServiceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.removeSelectors(id, ServiceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
 }

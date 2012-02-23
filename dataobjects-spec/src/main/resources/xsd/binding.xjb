@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1">
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  xmlns:annox="http://annox.dev.java.net"
+  version="2.1">
   <bindings>
     <globalBindings>
       <xjc:javaType name="org.joda.time.DateTime" xmlType="xs:date" adapter="org.escidoc.core.utils.jaxb.adapter.DateTimeAdapter" />
@@ -250,7 +252,7 @@
     </bindings>
   </bindings>
   
-  <!-- parents is strange and seems to be a duplication of parents defined in ou schema --> 
+  <!-- TODO: parents is strange and seems to be a duplication of parents defined in ou schema -->
   <bindings schemaLocation="parents.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.ou" />
@@ -259,7 +261,6 @@
       <class name="ParentsListTO" />
     </bindings>
   </bindings>
-  
   
 	<!-- User Account -->  
   <bindings schemaLocation="user-account.xsd">
@@ -397,158 +398,11 @@
     <schemaBindings>
       <package name="org.escidoc.core.domain.xacml.context" />
     </schemaBindings>
-    <bindings node="//xs:element[@name='Request']">
-      <class name="RequestTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Response']">
-      <class name="ResponseTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Subject']">
-      <class name="SubjectTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Resource']">
-      <class name="ResourceTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='ResourceContent']">
-      <class name="ResourceContentTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Action']">
-      <class name="ActionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Environment']">
-      <class name="EnvironmentTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Attribute']">
-      <class name="AttributeTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AttributeValue']">
-      <class name="AttributeValueTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Result']">
-      <class name="ResultTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Decision']">
-      <class name="DecisionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Status']">
-      <class name="StatusTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='StatusCode']">
-      <class name="StatusCodeTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='StatusMessage']">
-      <class name="StatusMessageTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='StatusDetail']">
-      <class name="StatusDetailTO" />
-    </bindings>
   </bindings>
   <bindings schemaLocation="cs-xacml-schema-policy-01.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.xacml.policy" />
     </schemaBindings>
-    <bindings node="//xs:element[@name='PolicySet']">
-      <class name="PolicySetTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='PolicySetIdReference']">
-      <class name="PolicySetIdReferenceTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='PolicyIdReference']">
-      <class name="PolicyIdReferenceTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='PolicySetDefaults']">
-      <class name="PolicySetDefaultsTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='PolicyDefaults']">
-      <class name="PolicyDefaultsTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='XPathVersion']">
-      <class name="XPathVersionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Policy']">
-      <class name="PolicyTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Description']">
-      <class name="DescriptionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Rule']">
-      <class name="RuleTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Target']">
-      <class name="TargetTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Subjects']">
-      <class name="SubjectsTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Subject']">
-      <class name="SubjectTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AnySubject']">
-      <class name="AnySubjectTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Resources']">
-      <class name="ResourcesTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AnyResource']">
-      <class name="AnyResourceTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Resource']">
-      <class name="ResourceTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Actions']">
-      <class name="ActionsTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AnyAction']">
-      <class name="AnyActionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Action']">
-      <class name="ActionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='SubjectMatch']">
-      <class name="SubjectMatchTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='ResourceMatch']">
-      <class name="ResourceMatchTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='ActionMatch']">
-      <class name="ActionMatchTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AttributeSelector']">
-      <class name="AttributeSelectorTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='ResourceAttributeDesignator']">
-      <class name="ResourceAttributeDesignatorTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='ActionAttributeDesignator']">
-      <class name="ActionAttributeDesignatorTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='EnvironmentAttributeDesignator']">
-      <class name="EnvironmentAttributeDesignatorTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='SubjectAttributeDesignator']">
-      <class name="SubjectAttributeDesignatorTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AttributeValue']">
-      <class name="AttributeValueTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Function']">
-      <class name="FunctionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Apply']">
-      <class name="ApplyTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Condition']">
-      <class name="ConditionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Obligations']">
-      <class name="ObligationsTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='Obligation']">
-      <class name="ObligationTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='AttributeAssignment']">
-      <class name="AttributeAssignmentTO" />
-    </bindings>
   </bindings>
   <bindings schemaLocation="role.xsd">
     <schemaBindings>
@@ -746,72 +600,9 @@
     <bindings node="//xs:element[@name='affiliation']">
       <class name="AffiliationTO" />
     </bindings>
-    <!-- references -->
-    <bindings node="//xs:element[@name='origin']">
-      <class name="OriginTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='created-by']">
-      <class name="CreatedByTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='modified-by']">
-      <class name="ModifiedByTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='revoked-by']">
-      <class name="RevokedByTO" />
-    </bindings>
     <bindings node="//xs:element[@name='granted-to']">
       <class name="GrantedToTO" />
     </bindings>
-    <bindings node="//xs:element[@name='context']">
-      <class name="ContextTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='content-model']">
-      <class name="ContentModelTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='lock-owner']">
-      <class name="LockOwnerTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='organizational-unit']">
-      <class name="OrganizationalUnitTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='scope']">
-      <class name="ScopeTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='report-definition']">
-      <class name="ReportDefinitionTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='person']">
-      <class name="PersonTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='role']">
-      <class name="RoleTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='assigned-on']">
-      <class name="AssignedOnTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='parent']">
-      <class name="ParentTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='member']">
-      <class name="MemberTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='item']">
-      <class name="ItemTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='container']">
-      <class name="ContainerTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='child']">
-      <class name="ChildTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='component']">
-      <class name="ComponentTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='predecessor']">
-      <class name="PredecessorTO" />
-    </bindings>
-    <!-- /references -->
-    <!-- TODO: Delete mapping of PredecessorLinkRequiredTO (not marshalable) -->
     <bindings node="//xs:complexType[@name='predecessorLinkRequired']">
       <class name="PredecessorLinkRequiredTO" />
     </bindings>
@@ -868,58 +659,33 @@
     <schemaBindings>
       <package name="org.escidoc.core.domain.sru"/>
     </schemaBindings>
-    <!-- 
-      The srw-types.xsd does define types only, which may be used in other XSDs. Therefore no XmlRootElement
-      is set to the generated classes. Since we want to use these classes for JAXB mapping, we have to explicitely
-      define class names for the elements themselves, in order to generate the TO-classes, whcih extends from
-      JAXBElement, which then can be used by the JAXBContext to perform a mapping to XML and vice versa. Because of this,
-      these types must not be used in any other XSD!!!
-     -->
-    <bindings node="//xs:element[@name='searchRetrieveRequest']">
-      <class name="SearchRetrieveRequestTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='searchRetrieveResponse']">
-      <class name="SearchRetrieveResponseTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='scanRequest']">
-      <class name="ScanRequestTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='scanResponse']">
-      <class name="ScanResponseTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='explainRequest']">
-      <class name="ExplainRequestTO" />
-    </bindings>
-    <bindings node="//xs:element[@name='explainResponse']">
-      <class name="ExplainResponseTO" />
-    </bindings>
     <!-- java types -->
     <bindings node="//xs:element[@name='startRecord']">
-      <javaType name="org.apache.axis.types.PositiveInteger"/>
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='maximumRecords']">
-      <javaType name="org.apache.axis.types.NonNegativeInteger"/>
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger" adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='resultSetTTL']">
-      <javaType name="org.apache.axis.types.NonNegativeInteger"/>
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger" adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='numberOfRecords']">
-      <javaType name="org.apache.axis.types.NonNegativeInteger"/>
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger" adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='resultSetIdleTime']">
-      <javaType name="org.apache.axis.types.PositiveInteger"/>
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='recordPosition']">
-      <javaType name="org.apache.axis.types.PositiveInteger"/>
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='nextRecordPosition']">
-      <javaType name="org.apache.axis.types.PositiveInteger"/>
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='responsePosition']">
-      <javaType name="org.apache.axis.types.NonNegativeInteger"/>
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger" adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
     </bindings>
     <bindings node="//xs:element[@name='maximumTerms']">
-      <javaType name="org.apache.axis.types.PositiveInteger"/>
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
   </bindings>
   <bindings schemaLocation="diagnostics.xsd">

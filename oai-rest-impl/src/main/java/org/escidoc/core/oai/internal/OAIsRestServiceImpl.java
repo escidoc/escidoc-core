@@ -43,9 +43,8 @@ import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
 
 /**
  * REST Service Implementation for OAI Set Definition Service.
- * 
+ *
  * @author SWA
- * 
  */
 @Service
 public class OAIsRestServiceImpl implements OAIsRestService {
@@ -56,26 +55,27 @@ public class OAIsRestServiceImpl implements OAIsRestService {
     @Qualifier("service.SetDefinitionHandler")
     private SetDefinitionHandlerInterface oaiHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     protected OAIsRestServiceImpl() {
     }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.escidoc.core.oai.OAIsRestService#retrieveSetDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
-	 */
-	@Override
-	public JAXBElement<? extends ResponseType> retrieveSetDefinitions(
-	    final SruSearchRequestParametersBean parameters)
-			throws AuthenticationException,
+    /*
+     * (non-Javadoc)
+     *
+     * @see de.escidoc.core.oai.OAIsRestService#retrieveSetDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     */
+    @Override
+    public JAXBElement<? extends ResponseType> retrieveSetDefinitions(
+            final SruSearchRequestParametersBean parameters)
+            throws AuthenticationException,
             AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
 
-	    final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory
-				.createRequestTO(parameters, null);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.oaiHandler
-						.retrieveSetDefinitions(ServiceUtility.toMap(requestTO))));
-	}
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.oaiHandler.retrieveSetDefinitions(serviceUtility.toMap(requestTO)));
+    }
 
 }

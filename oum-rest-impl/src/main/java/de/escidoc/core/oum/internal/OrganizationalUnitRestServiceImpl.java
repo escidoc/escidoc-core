@@ -19,9 +19,6 @@
  */
 package de.escidoc.core.oum.internal;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -30,15 +27,11 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
@@ -48,7 +41,6 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseType;
-import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,16 +59,9 @@ import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 /**
  * REST Service Implementation for Organizational Unit.
@@ -93,16 +78,10 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     @Qualifier("service.OrganizationalUnitHandler")
     private OrganizationalUnitHandlerInterface organizationalUnitHandler;
 
-    private JAXBContext jaxbContext;
+    @Autowired
+    private ServiceUtility serviceUtility;
 
-    protected OrganizationalUnitRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(OrganizationalUnitTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
-    }
+    protected OrganizationalUnitRestServiceImpl() {}
 
     @Override
     public OrganizationalUnitTO create(final OrganizationalUnitTO organizationalUnitTO) throws AuthenticationException,
@@ -110,8 +89,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitTO.class,
-            this.organizationalUnitHandler.create((ServiceUtility.toXML(organizationalUnitTO))));
+        return serviceUtility.fromXML(OrganizationalUnitTO.class,
+            this.organizationalUnitHandler.create((serviceUtility.toXML(organizationalUnitTO))));
 
     }
 
@@ -119,7 +98,7 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     public OrganizationalUnitTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.retrieve(id));
+        return serviceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.retrieve(id));
     }
 
     @Override
@@ -129,8 +108,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
         InvalidStatusException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitTO.class,
-            this.organizationalUnitHandler.update(id, ServiceUtility.toXML(organizationalUnitTO)));
+        return serviceUtility.fromXML(OrganizationalUnitTO.class,
+            this.organizationalUnitHandler.update(id, serviceUtility.toXML(organizationalUnitTO)));
     }
 
     @Override
@@ -146,8 +125,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
         OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class,
-            this.organizationalUnitHandler.updateMdRecords(id, ServiceUtility.toXML(mdRecordsTO)));
+        return serviceUtility.fromXML(MdRecordsTO.class,
+            this.organizationalUnitHandler.updateMdRecords(id, serviceUtility.toXML(mdRecordsTO)));
     }
 
     @Override
@@ -156,15 +135,15 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException, InvalidStatusException {
 
-        return ServiceUtility.fromXML(ParentsTO.class,
-            this.organizationalUnitHandler.updateParents(id, ServiceUtility.toXML(parentsTO)));
+        return serviceUtility.fromXML(ParentsTO.class,
+            this.organizationalUnitHandler.updateParents(id, serviceUtility.toXML(parentsTO)));
     }
 
     @Override
     public OrganizationalUnitPropertiesTO retrieveProperties(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitPropertiesTO.class,
+        return serviceUtility.fromXML(OrganizationalUnitPropertiesTO.class,
             this.organizationalUnitHandler.retrieveProperties(id));
     }
 
@@ -193,7 +172,7 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     public OrganizationalUnitResourcesTO retrieveResources(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(OrganizationalUnitResourcesTO.class,
+        return serviceUtility.fromXML(OrganizationalUnitResourcesTO.class,
             this.organizationalUnitHandler.retrieveResources(id));
     }
 
@@ -201,7 +180,7 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     public MdRecordsTO retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class, this.organizationalUnitHandler.retrieveMdRecords(id));
+        return serviceUtility.fromXML(MdRecordsTO.class, this.organizationalUnitHandler.retrieveMdRecords(id));
     }
 
     @Override
@@ -209,44 +188,44 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         AuthorizationException, MdRecordNotFoundException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name));
+        return serviceUtility.fromXML(MdRecordTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name));
     }
 
     @Override
     public ParentsListTO retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
+        return serviceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
     }
 
     @Override
     public JAXBElement<? extends ResponseType> retrieveParentObjects(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
-            this.organizationalUnitHandler.retrieveParentObjects(id)));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+            this.organizationalUnitHandler.retrieveParentObjects(id));
     }
 
     @Override
     public SuccessorListTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ServiceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+        return serviceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
     }
 
     @Override
     public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(Constants.SRU_CONTEXT_PATH,
-            this.organizationalUnitHandler.retrieveChildObjects(id)));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+            this.organizationalUnitHandler.retrieveChildObjects(id));
     }
 
     @Override
     public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
         OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
 
-        return ServiceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+        return serviceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
     }
 
     @Override
@@ -254,8 +233,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
         InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.organizationalUnitHandler.close(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.organizationalUnitHandler.close(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -263,8 +242,8 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
         InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.organizationalUnitHandler.open(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.organizationalUnitHandler.open(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
 }

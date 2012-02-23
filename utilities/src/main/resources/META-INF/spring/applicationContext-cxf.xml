@@ -48,6 +48,7 @@
     <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocStylesheetJAXBElementProvider">
       <property name="marshallerProperties" ref="marshallerProperties"/>
       <property name="enableBuffering" value="true"/>
+      <property name="jaxbContextProvider" ref="escidocJAXBContextProvider"/>
     </bean>
 
     <bean id="escidocExceptionMapper" class="de.escidoc.core.common.util.jaxrs.EscidocExceptionMapper"/>

@@ -8,19 +8,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
-import org.escidoc.core.domain.sru.ExplainRequestTO;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.util.xml.internal.JAXBContextProvider;
 import org.escidoc.core.domain.sru.ExplainRequestType;
 import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ScanRequestTO;
 import org.escidoc.core.domain.sru.ScanRequestType;
-import org.escidoc.core.domain.sru.SearchRetrieveRequestTO;
 import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.utils.io.Stream;
@@ -28,6 +28,8 @@ import org.escidoc.core.utils.io.Stream;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author Marko Voß
@@ -35,19 +37,24 @@ import de.escidoc.core.common.util.service.KeyValuePair;
  * 
  */
 @Deprecated
+@Guarded
 public class ServiceUtility {
 
-    private ServiceUtility() {
+    @Autowired
+    @Qualifier("escidocJAXBContextProvider")
+    private JAXBContextProvider jaxbContextProvider;
+
+    protected ServiceUtility() {
 
     }
 
     // Note: This code is slow and only for migration!
     // TODO: Replace this code and use domain objects!
-    public static final String toXML(final Object objectTO) throws SystemException {
+    public final String toXML(@NotNull
+    final Object objectTO) throws SystemException {
         final StringBuilder stringBuilder = new StringBuilder();
         try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(objectTO.getClass());
-            final Marshaller marshaller = jaxbContext.createMarshaller();
+            final Marshaller marshaller = jaxbContextProvider.getJAXBContext().createMarshaller();
             final Stream stream = new Stream();
             marshaller.marshal(objectTO, stream);
             stream.lock();
@@ -61,11 +68,13 @@ public class ServiceUtility {
 
     // Note: This code is slow and only for migration!
     // TODO: Replace this code and use domain objects!
-    public static final <T> T fromXML(final Class<T> classTO, final String xmlString) throws SystemException {
+    public final <T> T fromXML(@NotNull
+    final Class<T> classTO, @NotNull
+    @NotEmpty
+    final String xmlString) throws SystemException {
 
         try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(classTO);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            final Unmarshaller unmarshaller = jaxbContextProvider.getJAXBContext().createUnmarshaller();
             final Source src = new StreamSource(new StringReader(xmlString));
             return unmarshaller.unmarshal(src, classTO).getValue();
         }
@@ -76,10 +85,11 @@ public class ServiceUtility {
 
     // Note: This code is slow and only for migration!
     // TODO: Replace this code and use domain objects!
-    public static final Object fromXML(final String contextPath, final String xmlString) throws SystemException {
+    public final Object fromXML(@NotNull
+    @NotEmpty
+    final String xmlString) throws SystemException {
         try {
-            final JAXBContext jaxbContext = JAXBContext.newInstance(contextPath);
-            final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            final Unmarshaller unmarshaller = jaxbContextProvider.getJAXBContext().createUnmarshaller();
             final Source src = new StreamSource(new StringReader(xmlString));
             Object bindingObject = unmarshaller.unmarshal(src);
             return bindingObject;
@@ -89,20 +99,21 @@ public class ServiceUtility {
         }
     }
 
-    public static final Map<String, String[]> toMap(final JAXBElement<? extends RequestType> request) {
+    public final Map<String, String[]> toMap(@NotNull
+    final JAXBElement<? extends RequestType> request) {
         final Map<String, String[]> result = new HashMap<String, String[]>();
 
-        if (request instanceof SearchRetrieveRequestTO)
+        if (request.getDeclaredType().equals(SearchRetrieveRequestType.class))
             insertIntoMap((SearchRetrieveRequestType) request.getValue(), result);
-        else if (request instanceof ExplainRequestTO)
+        else if (request.getDeclaredType().equals(ExplainRequestType.class))
             insertIntoMap((ExplainRequestType) request.getValue(), result);
-        else if (request instanceof ScanRequestTO)
+        else if (request.getDeclaredType().equals(ScanRequestType.class))
             insertIntoMap((ScanRequestType) request.getValue(), result);
 
         return result;
     }
 
-    private static final void insertIntoMap(final SearchRetrieveRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final SearchRetrieveRequestType request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_SEARCH_OP });
 
         if (request.getMaximumRecords() != null) {
@@ -146,7 +157,7 @@ public class ServiceUtility {
         }
     }
 
-    private static final void insertIntoMap(final ExplainRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final ExplainRequestType request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_EXPLAIN_OP });
 
         if (request.getRecordPacking() != null) {
@@ -168,7 +179,7 @@ public class ServiceUtility {
         }
     }
 
-    private static final void insertIntoMap(final ScanRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final ScanRequestType request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_SCAN_OP });
 
         if (request.getStylesheet() != null) {

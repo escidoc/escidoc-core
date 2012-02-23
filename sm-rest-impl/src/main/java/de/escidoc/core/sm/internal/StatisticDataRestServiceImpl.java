@@ -50,6 +50,9 @@ public class StatisticDataRestServiceImpl implements StatisticDataRestService {
     @Qualifier("service.StatisticDataHandler")
     private StatisticDataHandlerInterface statisticDataHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -62,7 +65,7 @@ public class StatisticDataRestServiceImpl implements StatisticDataRestService {
     @Override
     public void create(final StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException {
-        this.statisticDataHandler.create(ServiceUtility.toXML(statisticDataTO));
+        this.statisticDataHandler.create(serviceUtility.toXML(statisticDataTO));
     }
 
 }

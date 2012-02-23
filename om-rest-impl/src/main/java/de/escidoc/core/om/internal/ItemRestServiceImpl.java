@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -41,7 +40,6 @@ import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundExcept
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
@@ -54,8 +52,6 @@ import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnEx
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
@@ -92,12 +88,7 @@ import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
 import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
@@ -117,16 +108,10 @@ public class ItemRestServiceImpl implements ItemRestService {
     @Qualifier("service.ItemHandler")
     private ItemHandlerInterface itemHandler;
 
-    private JAXBContext jaxbContext;
+    @Autowired
+    private ServiceUtility serviceUtility;
 
-    protected ItemRestServiceImpl() {
-        try {
-            this.jaxbContext = JAXBContext.newInstance(ItemTO.class);
-        }
-        catch (JAXBException e) {
-            LOG.error("Error on initialising JAXB context.", e);
-        }
-    }
+    protected ItemRestServiceImpl() {}
 
     @Override
     public ItemTO create(final ItemTO itemTO) throws MissingContentException, ContextNotFoundException,
@@ -136,7 +121,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         FileNotFoundException, SystemException, InvalidContentException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException, RemoteException {
 
-        return ServiceUtility.fromXML(ItemTO.class, this.itemHandler.create(ServiceUtility.toXML(itemTO)));
+        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.create(serviceUtility.toXML(itemTO)));
     }
 
     @Override
@@ -152,7 +137,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
+        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
     }
 
     @Override
@@ -164,7 +149,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, ReadonlyVersionException,
         MissingAttributeValueException, MissingMdRecordException, RemoteException {
 
-        return ServiceUtility.fromXML(ItemTO.class, this.itemHandler.update(id, ServiceUtility.toXML(itemTO)));
+        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.update(id, serviceUtility.toXML(itemTO)));
     }
 
     @Override
@@ -174,8 +159,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         FileNotFoundException, InvalidXmlException, InvalidContentException, SystemException,
         ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException, RemoteException {
 
-        return ServiceUtility.fromXML(ComponentTO.class,
-            this.itemHandler.createComponent(id, ServiceUtility.toXML(componentTO)));
+        return serviceUtility.fromXML(ComponentTO.class,
+            this.itemHandler.createComponent(id, serviceUtility.toXML(componentTO)));
     }
 
     @Override
@@ -183,7 +168,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(ComponentTO.class, this.itemHandler.retrieveComponent(id, componentId));
+        return serviceUtility.fromXML(ComponentTO.class, this.itemHandler.retrieveComponent(id, componentId));
     }
 
     @Override
@@ -191,7 +176,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveComponentMdRecords(id, componentId));
+        return serviceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveComponentMdRecords(id, componentId));
     }
 
     @Override
@@ -199,7 +184,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class,
+        return serviceUtility.fromXML(MdRecordTO.class,
             this.itemHandler.retrieveComponentMdRecord(id, componentId, mdRecordId));
     }
 
@@ -211,8 +196,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ComponentTO.class,
-            this.itemHandler.updateComponent(id, componentId, ServiceUtility.toXML(componentTO)));
+        return serviceUtility.fromXML(ComponentTO.class,
+            this.itemHandler.updateComponent(id, componentId, serviceUtility.toXML(componentTO)));
     }
 
     @Override
@@ -220,7 +205,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ComponentsTO.class, this.itemHandler.retrieveComponents(id));
+        return serviceUtility.fromXML(ComponentsTO.class, this.itemHandler.retrieveComponents(id));
     }
 
     @Override
@@ -228,7 +213,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(ComponentPropertiesTO.class,
+        return serviceUtility.fromXML(ComponentPropertiesTO.class,
             this.itemHandler.retrieveComponentProperties(id, componentId));
     }
 
@@ -244,7 +229,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class, this.itemHandler.retrieveMdRecord(id, mdRecordId));
+        return serviceUtility.fromXML(MdRecordTO.class, this.itemHandler.retrieveMdRecord(id, mdRecordId));
     }
 
     @Override
@@ -292,15 +277,15 @@ public class ItemRestServiceImpl implements ItemRestService {
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         ReadonlyViolationException, ReadonlyVersionException, RemoteException {
 
-        return ServiceUtility.fromXML(MdRecordTO.class,
-            this.itemHandler.updateMdRecord(id, mdRecordId, ServiceUtility.toXML(mdRecordTO)));
+        return serviceUtility.fromXML(MdRecordTO.class,
+            this.itemHandler.updateMdRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO)));
     }
 
     @Override
     public MdRecordsTO retrieveMdRecords(final String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveMdRecords(id));
+        return serviceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveMdRecords(id));
     }
 
     @Override
@@ -308,7 +293,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ContentStreamsTO.class, this.itemHandler.retrieveContentStreams(id));
+        return serviceUtility.fromXML(ContentStreamsTO.class, this.itemHandler.retrieveContentStreams(id));
     }
 
     @Override
@@ -316,14 +301,14 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         ContentStreamNotFoundException, RemoteException {
 
-        return ServiceUtility.fromXML(ContentStreamTO.class, this.itemHandler.retrieveContentStream(id, name));
+        return serviceUtility.fromXML(ContentStreamTO.class, this.itemHandler.retrieveContentStream(id, name));
     }
 
     @Override
     public ItemPropertiesTO retrieveProperties(final String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(ItemPropertiesTO.class, this.itemHandler.retrieveProperties(id));
+        return serviceUtility.fromXML(ItemPropertiesTO.class, this.itemHandler.retrieveProperties(id));
     }
 
     @Override
@@ -331,28 +316,28 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException {
 
-        return ServiceUtility.fromXML(VersionHistoryTO.class, this.itemHandler.retrieveVersionHistory(id));
+        return serviceUtility.fromXML(VersionHistoryTO.class, this.itemHandler.retrieveVersionHistory(id));
     }
 
     @Override
     public ParentsTO retrieveParents(final String id) throws ItemNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(ParentsTO.class, this.itemHandler.retrieveParents(id));
+        return serviceUtility.fromXML(ParentsTO.class, this.itemHandler.retrieveParents(id));
     }
 
     @Override
     public RelationsTO retrieveRelations(final String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
 
-        return ServiceUtility.fromXML(RelationsTO.class, this.itemHandler.retrieveRelations(id));
+        return serviceUtility.fromXML(RelationsTO.class, this.itemHandler.retrieveRelations(id));
     }
 
     @Override
     public ItemResourcesTO retrieveResources(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
-        return ServiceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
+        return serviceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
     }
 
     @Override
@@ -378,8 +363,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.release(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -388,8 +373,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.submit(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -399,8 +384,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         ReadonlyViolationException, ReadonlyVersionException, InvalidContentException, XmlCorruptedException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.revise(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -410,8 +395,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
         InvalidXmlException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.withdraw(id, ServiceUtility.toXML(statusTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO)));
     }
 
     @Override
@@ -420,8 +405,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.lock(id, ServiceUtility.toXML(optimisticLockingTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
@@ -430,8 +415,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.unlock(id, ServiceUtility.toXML(optimisticLockingTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
@@ -448,8 +433,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, ReadonlyVersionException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignVersionPid(id, ServiceUtility.toXML(assignPidTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
     @Override
@@ -458,8 +443,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignObjectPid(id, ServiceUtility.toXML(assignPidTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
     @Override
@@ -469,8 +454,8 @@ public class ItemRestServiceImpl implements ItemRestService {
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignContentPid(id, componentId, ServiceUtility.toXML(assignPidTaskParamTO)));
+        return serviceUtility.fromXML(ResultTO.class,
+            this.itemHandler.assignContentPid(id, componentId, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
     @Override
@@ -481,7 +466,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ReadonlyVersionException, RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
+        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
     }
 
     @Override
@@ -492,7 +477,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
         RemoteException {
 
-        return ServiceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
+        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
     }
 
 }

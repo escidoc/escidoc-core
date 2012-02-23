@@ -28,6 +28,7 @@
  */
 package org.escidoc.core.domain.sru.parameters;
 
+import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 
@@ -107,6 +108,7 @@ public class SruSearchRequestParametersBean {
      * @see SruSearchRequestParametersBean#DEFAULT_OPERATION
      */
     @NotNull
+    @NotEmpty
     public String getOperation() {
         return operation;
     }
@@ -130,6 +132,7 @@ public class SruSearchRequestParametersBean {
      * @see SruSearchRequestParametersBean#DEFAULT_START_RECORD
      */
     @NotNull
+    @NotEmpty
     public String getStartRecord() {
         return startRecord;
     }
@@ -197,6 +200,7 @@ public class SruSearchRequestParametersBean {
      * @see SruSearchRequestParametersBean#DEFAULT_RESPONSE_POSITION
      */
     @NotNull
+    @NotEmpty
     public String getResponsePosition() {
         return responsePosition;
     }

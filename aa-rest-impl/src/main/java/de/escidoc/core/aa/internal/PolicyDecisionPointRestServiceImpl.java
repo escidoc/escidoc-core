@@ -54,10 +54,13 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
     @Qualifier("service.PolicyDecisionPoint")
     private PolicyDecisionPointInterface policyDecisionPoint;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
-    public PolicyDecisionPointRestServiceImpl() {
+    protected PolicyDecisionPointRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -67,7 +70,8 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
     public PdpResultsTO evaluate(final PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(PdpResultsTO.class, this.policyDecisionPoint.evaluate(ServiceUtility.toXML(pdpRequestsTO)));
+        return serviceUtility.fromXML(PdpResultsTO.class,
+                this.policyDecisionPoint.evaluate(serviceUtility.toXML(pdpRequestsTO)));
     }
 
 }

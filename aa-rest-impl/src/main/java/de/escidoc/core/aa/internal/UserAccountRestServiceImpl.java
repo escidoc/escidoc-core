@@ -85,10 +85,13 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Qualifier("service.UserAccountHandler")
     private UserAccountHandlerInterface userAccountHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
-    public UserAccountRestServiceImpl() {
+    protected UserAccountRestServiceImpl() {
     }
 
     /* (non-Javadoc)
@@ -99,7 +102,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException,
         OrganizationalUnitNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.create(ServiceUtility.toXML(userAccountTO)));
+        return serviceUtility.fromXML(UserAccountTO.class,
+                this.userAccountHandler.create(serviceUtility.toXML(userAccountTO)));
     }
 
     /* (non-Javadoc)
@@ -108,7 +112,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public UserAccountTO retrieve(final String id) throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieve(id));
+        return serviceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieve(id));
     }
 
     /* (non-Javadoc)
@@ -120,7 +124,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException,
         OrganizationalUnitNotFoundException, SystemException {
-        return ServiceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.update(id, ServiceUtility.toXML(userAccountTO)));
+        return serviceUtility.fromXML(UserAccountTO.class,
+                this.userAccountHandler.update(id, serviceUtility.toXML(userAccountTO)));
     }
 
     /* (non-Javadoc)
@@ -138,7 +143,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public UserAccountTO retrieveCurrentUser() throws UserAccountNotFoundException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieveCurrentUser());
+        return serviceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieveCurrentUser());
     }
 
     /* (non-Javadoc)
@@ -148,28 +153,31 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public void updatePassword(final String id, final UpdatePasswordTaskParamTO taskParam) throws UserAccountNotFoundException,
         InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.updatePassword(id, ServiceUtility.toXML(taskParam));
+        this.userAccountHandler.updatePassword(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#updatePreferences(java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceListTO)
      */
     @Override
-    public UserAccountPreferenceListTO updatePreferences(final String id, final UserAccountPreferenceListTO userAccountPrefrencesTO)
+    public UserAccountPreferenceListTO updatePreferences(final String id,
+                                                         final UserAccountPreferenceListTO userAccountPrefrencesTO)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, SystemException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, MissingAttributeValueException {
-        return ServiceUtility.fromXML(UserAccountPreferenceListTO.class, this.userAccountHandler.updatePreferences(id, ServiceUtility.toXML(userAccountPrefrencesTO)));
+        return serviceUtility.fromXML(UserAccountPreferenceListTO.class,
+                this.userAccountHandler.updatePreferences(id, serviceUtility.toXML(userAccountPrefrencesTO)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.activate(id, ServiceUtility.toXML(taskParam));
+    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException,
+            UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
+            MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
+            SystemException {
+        this.userAccountHandler.activate(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -179,7 +187,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.deactivate(id, ServiceUtility.toXML(taskParam));
+        this.userAccountHandler.deactivate(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -188,7 +196,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public UserAccountResourcesTO retrieveResources(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountResourcesTO.class, this.userAccountHandler.retrieveResources(id));
+        return serviceUtility.fromXML(UserAccountResourcesTO.class, this.userAccountHandler.retrieveResources(id));
     }
 
     /* (non-Javadoc)
@@ -197,7 +205,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public CurrentGrantsTO retrieveCurrentGrants(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(CurrentGrantsTO.class, this.userAccountHandler.retrieveCurrentGrants(id));
+        return serviceUtility.fromXML(CurrentGrantsTO.class, this.userAccountHandler.retrieveCurrentGrants(id));
     }
 
     /* (non-Javadoc)
@@ -207,7 +215,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public GrantTO createGrant(final String id, final GrantTO grantTo) throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(GrantTO.class, this.userAccountHandler.createGrant(id, ServiceUtility.toXML(grantTo)));
+        return serviceUtility.fromXML(GrantTO.class, this.userAccountHandler.createGrant(id, serviceUtility.toXML(grantTo)));
     }
 
     /* (non-Javadoc)
@@ -217,27 +225,29 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public GrantTO retrieveGrant(final String id, final String grantId) throws UserAccountNotFoundException,
         GrantNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(GrantTO.class, this.userAccountHandler.retrieveGrant(id, grantId));
+        return serviceUtility.fromXML(GrantTO.class, this.userAccountHandler.retrieveGrant(id, grantId));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#revokeGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.revokeGrant(id, grantId, ServiceUtility.toXML(taskParam));
+    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam)
+            throws UserAccountNotFoundException, GrantNotFoundException,
+            AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        this.userAccountHandler.revokeGrant(id, grantId, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
-        AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        this.userAccountHandler.revokeGrants(id, ServiceUtility.toXML(taskParam));
+    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam)
+            throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+            MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
+        this.userAccountHandler.revokeGrants(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
@@ -247,7 +257,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public UserAccountPreferenceTO retrievePreference(final String id, final String name) throws UserAccountNotFoundException,
         PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(UserAccountPreferenceTO.class, this.userAccountHandler.retrievePreference(id, name));
+        return serviceUtility.fromXML(UserAccountPreferenceTO.class, this.userAccountHandler.retrievePreference(id, name));
     }
 
     /* (non-Javadoc)
@@ -256,7 +266,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public UserAccountPreferenceListTO retrievePreferences(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountPreferenceListTO.class, this.userAccountHandler.retrievePreferences(id));
+        return serviceUtility.fromXML(UserAccountPreferenceListTO.class, this.userAccountHandler.retrievePreferences(id));
     }
 
     /* (non-Javadoc)
@@ -267,7 +277,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException {
-        return ServiceUtility.fromXML(UserAccountPreferenceTO.class, this.userAccountHandler.createPreference(id, ServiceUtility.toXML(userAccountPreferenceTO)));
+        return serviceUtility.fromXML(UserAccountPreferenceTO.class,
+                this.userAccountHandler.createPreference(id, serviceUtility.toXML(userAccountPreferenceTO)));
     }
 
     /* (non-Javadoc)
@@ -279,7 +290,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException {
-        return ServiceUtility.fromXML(UserAccountPreferenceTO.class, this.userAccountHandler.updatePreference(id, preferenceName, ServiceUtility.toXML(userAccountPreferenceTO)));
+        return serviceUtility.fromXML(UserAccountPreferenceTO.class,
+                this.userAccountHandler.updatePreference(id, preferenceName, serviceUtility.toXML(userAccountPreferenceTO)));
     }
 
     /* (non-Javadoc)
@@ -300,7 +312,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return ServiceUtility.fromXML(UserAccountAttributeTO.class, this.userAccountHandler.createAttribute(id, ServiceUtility.toXML(userAccountAttributeTO)));
+        return serviceUtility.fromXML(UserAccountAttributeTO.class,
+                this.userAccountHandler.createAttribute(id, serviceUtility.toXML(userAccountAttributeTO)));
     }
 
     /* (non-Javadoc)
@@ -309,7 +322,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Override
     public UserAccountAttributeListTO retrieveAttributes(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveAttributes(id));
+        return serviceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveAttributes(id));
     }
 
     /* (non-Javadoc)
@@ -319,7 +332,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public UserAccountAttributeListTO retrieveNamedAttributes(final String id, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name));
+        return serviceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name));
     }
 
     /* (non-Javadoc)
@@ -329,7 +342,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     public UserAccountAttributeTO retrieveAttribute(final String id, final String attId) throws UserAccountNotFoundException,
         UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountAttributeTO.class, this.userAccountHandler.retrieveAttribute(id, attId));
+        return serviceUtility.fromXML(UserAccountAttributeTO.class, this.userAccountHandler.retrieveAttribute(id, attId));
     }
 
     /* (non-Javadoc)
@@ -340,7 +353,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         throws UserAccountNotFoundException, OptimisticLockingException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(UserAccountAttributeTO.class, this.userAccountHandler.updateAttribute(id, attId, ServiceUtility.toXML(userAccountAttributeTO)));
+        return serviceUtility.fromXML(UserAccountAttributeTO.class,
+                this.userAccountHandler.updateAttribute(id, attId, serviceUtility.toXML(userAccountAttributeTO)));
     }
 
     /* (non-Javadoc)
@@ -369,7 +383,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         if (role != null && role.size() > 0) {
             parameters.put("role", (String[])role.toArray());
         }
-        return ServiceUtility.fromXML(PermissionFilterTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
+        return serviceUtility.fromXML(PermissionFilterTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
     }
 
 }

@@ -56,6 +56,9 @@ public class AdminRestServiceImpl implements AdminRestService {
     @Autowired
     @Qualifier("service.AdminHandler")
     private AdminHandlerInterface adminHandler;
+    
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     /**
      * 
@@ -68,7 +71,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      */
     @Override
     public ResultTO getPurgeStatus() throws AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.getPurgeStatus());
+        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.getPurgeStatus());
     }
 
     /* (non-Javadoc)
@@ -77,7 +80,7 @@ public class AdminRestServiceImpl implements AdminRestService {
     @Override
     public ResultTO deleteObjects(DeleteObjectsTaskParamTO ids) throws AuthenticationException, AuthorizationException,
         InvalidXmlException, SystemException {
-        return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.deleteObjects(ServiceUtility.toXML(ids)));
+        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.deleteObjects(serviceUtility.toXML(ids)));
     }
 
     /* (non-Javadoc)
@@ -85,7 +88,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      */
     @Override
     public ResultTO getReindexStatus() throws AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.getReindexStatus());
+        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.getReindexStatus());
     }
 
     /* (non-Javadoc)
@@ -93,7 +96,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      */
     @Override
     public ResultTO reindex(ReindexTaskParamTO taskParam) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {
-        return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.reindex(ServiceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.reindex(serviceUtility.toXML(taskParam)));
     }
 
     /* (non-Javadoc)
@@ -112,7 +115,7 @@ public class AdminRestServiceImpl implements AdminRestService {
         String xml = this.adminHandler.getRepositoryInfo();
         xml = xml.replaceFirst("<\\!.*?>", "");
         xml = xml.replaceFirst("(<[^\\?\\!]*?)([\\/\\s>])", "$1 xmlns=\"http://java.sun.com/dtd/properties.dtd\"$2");
-        return ServiceUtility.fromXML(JavaUtilPropertiesTO.class, xml);
+        return serviceUtility.fromXML(JavaUtilPropertiesTO.class, xml);
     }
 
     /* (non-Javadoc)
@@ -120,7 +123,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      */
     @Override
     public IndexConfigurationTO getIndexConfiguration() throws AuthenticationException, AuthorizationException, SystemException {
-        return ServiceUtility.fromXML(IndexConfigurationTO.class, this.adminHandler.getIndexConfiguration());
+        return serviceUtility.fromXML(IndexConfigurationTO.class, this.adminHandler.getIndexConfiguration());
     }
 
     /* (non-Javadoc)
@@ -128,7 +131,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      */
     @Override
     public ResultTO loadExamples(@PathParam("type") String type) throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return ServiceUtility.fromXML(ResultTO.class, this.adminHandler.loadExamples(type));
+        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.loadExamples(type));
     }
 
 }

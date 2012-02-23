@@ -20,7 +20,6 @@
 
 package org.escidoc.core.cmm.internal;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -35,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
@@ -50,6 +48,9 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
     @Autowired
     @Qualifier("service.ContentModelHandler")
     private ContentModelHandlerInterface contentModelHandler;
+
+    @Autowired
+    private ServiceUtility serviceUtility;
 
     /**
      * 
@@ -70,23 +71,13 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         SystemException {
 
-        final List<KeyValuePair> additionalParams = new LinkedList<KeyValuePair>();
-        if (roleId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_ROLE, roleId));
-        }
-        if (userId != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_USER, userId));
-        }
-        if (omitHighlighting != null) {
-            additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
-        }
-
+        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+                roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestType> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-		return ((JAXBElement<? extends ResponseType>) ServiceUtility.fromXML(
-				Constants.SRU_CONTEXT_PATH , this.contentModelHandler
-						.retrieveContentModels(ServiceUtility.toMap(requestTO))));
+        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+                this.contentModelHandler.retrieveContentModels(serviceUtility.toMap(requestTO)));
     }
 
 }

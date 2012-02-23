@@ -53,6 +53,9 @@ public class ScopeRestServiceImpl implements ScopeRestService {
     @Qualifier("service.ScopeHandler")
     private ScopeHandlerInterface scopeHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -65,7 +68,7 @@ public class ScopeRestServiceImpl implements ScopeRestService {
     @Override
     public ScopeTO create(final ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
         XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, SystemException {
-        return ServiceUtility.fromXML(ScopeTO.class, this.scopeHandler.create(ServiceUtility.toXML(scopeTO)));
+        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.create(serviceUtility.toXML(scopeTO)));
     }
 
     /* (non-Javadoc)
@@ -83,7 +86,7 @@ public class ScopeRestServiceImpl implements ScopeRestService {
     @Override
     public ScopeTO retrieve(String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
-        return ServiceUtility.fromXML(ScopeTO.class, this.scopeHandler.retrieve(id));
+        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.retrieve(id));
     }
 
     /* (non-Javadoc)
@@ -93,7 +96,7 @@ public class ScopeRestServiceImpl implements ScopeRestService {
     public ScopeTO update(String id, ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
         ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException,
         SystemException {
-        return ServiceUtility.fromXML(ScopeTO.class, this.scopeHandler.update(id, ServiceUtility.toXML(scopeTO)));
+        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.update(id, serviceUtility.toXML(scopeTO)));
     }
 
 }
