@@ -11,7 +11,7 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>org.escidoc.core</groupId>
-		<version>${escidoc.version}</version>
+		<version>1.3.6-SNAPSHOT</version>
 	</parent>
 
 	<description>Organizational Unit Service package of eSciDoc Core</description>
