@@ -4,29 +4,24 @@
 package de.escidoc.core.context.internal;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 import de.escidoc.core.context.param.*;
 import net.sf.oval.guard.Guarded;
-import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.IOUtils;

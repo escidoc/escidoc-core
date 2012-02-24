@@ -8,8 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.sm.ReportParametersTO;
-import org.escidoc.core.domain.sm.ReportTO;
+import org.escidoc.core.domain.sm.report.ReportTO;
+import org.escidoc.core.domain.sm.report.parameter.ReportParametersTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
@@ -62,8 +62,8 @@ public interface ReportRestService {
      * @throws SystemException              e.
      */
     @POST
-    ReportTO retrieve(ReportParametersTO reportParametersTO) throws AuthenticationException, AuthorizationException, XmlCorruptedException,
-    XmlSchemaValidationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
-    InvalidSqlException, SystemException;
+    ReportTO retrieve(ReportParametersTO reportParametersTO) throws AuthenticationException, AuthorizationException,
+            XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
+            MissingMethodParameterException, InvalidSqlException, SystemException;
 
 }

@@ -28,17 +28,17 @@
  */
 package de.escidoc.core.aa.internal;
 
-import org.escidoc.core.domain.aa.AddSelectorsTO;
-import org.escidoc.core.domain.aa.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.GrantTO;
-import org.escidoc.core.domain.aa.RemoveSelectorsTO;
-import org.escidoc.core.domain.aa.UserGroupResourcesTO;
-import org.escidoc.core.domain.aa.UserGroupSelectorsTO;
-import org.escidoc.core.domain.aa.UserGroupTO;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
+import org.escidoc.core.domain.aa.grants.GrantTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupSelectorsTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.RevokeGrantTaskParamTO;
-import org.escidoc.core.domain.taskparam.RevokeGrantsTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
+import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
+import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTO;
+import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

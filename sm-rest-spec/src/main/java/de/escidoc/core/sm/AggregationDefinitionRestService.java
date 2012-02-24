@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.sm.AggregationDefinitionTO;
+import org.escidoc.core.domain.sm.ad.AggregationDefinitionTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -55,8 +55,9 @@ public interface AggregationDefinitionRestService {
      * @throws SystemException              ex
      */
     @PUT
-    AggregationDefinitionTO create(AggregationDefinitionTO aggregationDefinitionTO) throws AuthenticationException, AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException, ScopeNotFoundException, SystemException;
+    AggregationDefinitionTO create(AggregationDefinitionTO aggregationDefinitionTO) throws AuthenticationException,
+            AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+            MissingMethodParameterException, ScopeNotFoundException, SystemException;
 
     /**
      * Delete Aggregation Definition.<br/>

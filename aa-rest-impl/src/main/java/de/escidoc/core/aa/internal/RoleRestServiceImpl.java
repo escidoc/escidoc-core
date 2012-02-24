@@ -28,8 +28,9 @@
  */
 package de.escidoc.core.aa.internal;
 
-import org.escidoc.core.domain.aa.RoleResourcesTO;
-import org.escidoc.core.domain.aa.RoleTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.aa.role.RoleResourcesTO;
+import org.escidoc.core.domain.aa.role.RoleTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,6 +53,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  *
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class RoleRestServiceImpl implements RoleRestService {
 
     @Autowired

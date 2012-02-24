@@ -38,8 +38,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
+import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseType;
-import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -50,12 +51,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
  */
-
-@Path("/")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface GrantsRestService {
 
     /**
@@ -96,7 +92,7 @@ public interface GrantsRestService {
      * <p/>
      * See chapter "Filters" for detailed information about filter definitions.
      *
-     * @param parameters
+     * @param queryParam
      *            The Standard SRU Get-Parameters as Object
      * @return The XML representation of the grants matching the provided filter-criteria corresponding to XML-schema
      *         "grants.xsd", element grant-list as JAXBElement.
@@ -109,8 +105,10 @@ public interface GrantsRestService {
      * @throws SystemException             Thrown in case of an internal system error.
      */
     @GET
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
     JAXBElement<? extends ResponseType> retrieveGrants(
-        @QueryParam("") SruSearchRequestParametersBean parameters) 
+        @NotNull @QueryParam("") RetrieveGrantsQueryParam queryParam)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException;
 

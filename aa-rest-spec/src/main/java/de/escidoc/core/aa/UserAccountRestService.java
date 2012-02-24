@@ -43,19 +43,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import org.escidoc.core.domain.aa.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.GrantTO;
-import org.escidoc.core.domain.aa.PermissionFilterTO;
-import org.escidoc.core.domain.aa.UserAccountAttributeListTO;
-import org.escidoc.core.domain.aa.UserAccountAttributeTO;
-import org.escidoc.core.domain.aa.UserAccountPreferenceListTO;
-import org.escidoc.core.domain.aa.UserAccountPreferenceTO;
-import org.escidoc.core.domain.aa.UserAccountResourcesTO;
-import org.escidoc.core.domain.aa.UserAccountTO;
-import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.RevokeGrantTaskParamTO;
-import org.escidoc.core.domain.taskparam.RevokeGrantsTaskParamTO;
-import org.escidoc.core.domain.taskparam.UpdatePasswordTaskParamTO;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
+import org.escidoc.core.domain.aa.grants.GrantTO;
+import org.escidoc.core.domain.aa.permission.PermissionFilterTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeListTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceListTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
+import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
+import org.escidoc.core.domain.taskparam.updatepassword.UpdatePasswordTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -321,7 +321,8 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/preferences")
-    UserAccountPreferenceListTO updatePreferences(@PathParam("id") String id, UserAccountPreferenceListTO userAccountPrefrencesTO) throws UserAccountNotFoundException,
+    UserAccountPreferenceListTO updatePreferences(
+            @PathParam("id") String id, UserAccountPreferenceListTO userAccountPrefrencesTO) throws UserAccountNotFoundException,
     XmlCorruptedException, XmlSchemaValidationException, OptimisticLockingException, SystemException,
     AuthenticationException, AuthorizationException, MissingMethodParameterException,
     MissingAttributeValueException;
@@ -601,7 +602,7 @@ public interface UserAccountRestService {
      */
     @POST
     @Path("/{id}/resources/grants/grant/{grant-id}/revoke-grant")
-    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam) 
+    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam)
     throws UserAccountNotFoundException,
     GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;

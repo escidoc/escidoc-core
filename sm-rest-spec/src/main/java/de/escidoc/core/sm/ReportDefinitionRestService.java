@@ -11,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.sm.ReportDefinitionTO;
+import org.escidoc.core.domain.sm.rd.ReportDefinitionTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
@@ -60,9 +60,10 @@ public interface ReportDefinitionRestService {
      * @throws SystemException                ex
      */
     @PUT
-    ReportDefinitionTO create(ReportDefinitionTO reportDefinitionTO) throws AuthenticationException, AuthorizationException, XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
-        ScopeContextViolationException, SystemException;
+    ReportDefinitionTO create(ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
+            AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+            MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
+            ScopeContextViolationException, SystemException;
 
     /**
      * Delete the specified Report Definition.<br/>

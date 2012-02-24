@@ -30,7 +30,7 @@ import javax.ws.rs.Produces;
 import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
 import org.escidoc.core.domain.content.model.ContentModelTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;

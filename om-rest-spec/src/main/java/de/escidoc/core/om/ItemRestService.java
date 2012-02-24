@@ -21,7 +21,6 @@
 package de.escidoc.core.om;
 
 import java.rmi.RemoteException;
-import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -32,7 +31,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.components.ComponentPropertiesTO;
 import org.escidoc.core.domain.components.ComponentTO;
 import org.escidoc.core.domain.components.ComponentsTO;
@@ -45,12 +43,12 @@ import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.taskparam.AssignPidTaskParamTO;
-import org.escidoc.core.domain.taskparam.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.RelationTaskParamTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
-import org.escidoc.core.domain.version.VersionHistoryTO;
-import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTO;
 import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 
@@ -67,7 +65,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;

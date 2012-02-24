@@ -20,18 +20,17 @@
 
 package de.escidoc.core.content.relation.internal;
 
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.content.relation.PredicateListTO;
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.predicate.list.PredicateListTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;

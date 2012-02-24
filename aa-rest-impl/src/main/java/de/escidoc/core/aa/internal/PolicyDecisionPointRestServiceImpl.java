@@ -28,8 +28,10 @@
  */
 package de.escidoc.core.aa.internal;
 
-import org.escidoc.core.domain.aa.PdpRequestsTO;
-import org.escidoc.core.domain.aa.PdpResultsTO;
+import de.escidoc.core.aa.param.EvaluateQueryParam;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.aa.pdp.request.PdpRequestsTO;
+import org.escidoc.core.domain.aa.pdp.result.PdpResultsTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +50,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  *
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRestService {
 
     @Autowired
@@ -67,9 +70,10 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
      * @see de.escidoc.core.aa.PolicyDecisionPointRestService#evaluate(org.escidoc.core.domain.aa.PdpRequestsTO)
      */
     @Override
-    public PdpResultsTO evaluate(final PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException {
+    public PdpResultsTO evaluate(final EvaluateQueryParam queryParam,
+                                 final PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException,
+            XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException {
         return serviceUtility.fromXML(PdpResultsTO.class,
                 this.policyDecisionPoint.evaluate(serviceUtility.toXML(pdpRequestsTO)));
     }

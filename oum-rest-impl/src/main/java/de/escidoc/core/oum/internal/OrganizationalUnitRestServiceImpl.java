@@ -39,8 +39,13 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.OrganizationalUnitRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
+import org.escidoc.core.domain.ou.parents.ParentsListTO;
+import org.escidoc.core.domain.ou.path.list.PathListTO;
+import org.escidoc.core.domain.ou.successors.SuccessorListTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,14 +53,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import org.escidoc.core.domain.ResultTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.ou.ParentsListTO;
-import org.escidoc.core.domain.ou.PathListTO;
-import org.escidoc.core.domain.ou.SuccessorListTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
 

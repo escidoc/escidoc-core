@@ -25,7 +25,7 @@ import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
 import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
 import org.escidoc.core.domain.content.model.ContentModelTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.version.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

@@ -8,7 +8,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.sm.StatisticDataTO;
+import org.escidoc.core.domain.sm.sd.StatisticDataTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;

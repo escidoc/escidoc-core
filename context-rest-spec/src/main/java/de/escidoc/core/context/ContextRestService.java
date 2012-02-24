@@ -16,14 +16,14 @@ import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.context.param.*;
 import net.sf.oval.constraint.NotNull;
-import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
 import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sru.ResponseType;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
@@ -143,7 +143,7 @@ public interface ContextRestService {
             AuthorizationException, SystemException, AdminDescriptorNotFoundException;
 
     @GET
-    @Path("/{id}/admin-descriptor")
+    @Path("/{id}/admin-descriptors")
     @Produces(MimeTypes.TEXT_XML)
     AdminDescriptorsTO retrieveAdminDescriptors(@NotNull @PathParam("id") String id,
                                                 @NotNull @QueryParam("") RetrieveAdminDescriptorsQueryParam queryParam)

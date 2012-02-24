@@ -30,6 +30,8 @@ package de.escidoc.core.aa.internal;
 
 import javax.xml.bind.JAXBElement;
 
+import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.RequestType;
 import org.escidoc.core.domain.sru.ResponseType;
@@ -50,6 +52,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  * 
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class GrantsRestServiceImpl implements GrantsRestService {
 
     @Autowired
@@ -71,11 +74,11 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveGrants(final SruSearchRequestParametersBean parameters)
+    public JAXBElement<? extends ResponseType> retrieveGrants(final RetrieveGrantsQueryParam queryParam)
             throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
             AuthorizationException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(queryParam);
 
         return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
             this.userAccountHandler.retrieveGrants(serviceUtility.toMap(requestTO)));

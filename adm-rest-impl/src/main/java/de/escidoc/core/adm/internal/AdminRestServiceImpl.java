@@ -35,13 +35,12 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.properties.JavaUtilPropertiesTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sb.IndexConfigurationTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.DeleteObjectsTaskParamTO;
-import org.escidoc.core.domain.taskparam.IdSetTaskParamTO;
-import org.escidoc.core.domain.taskparam.ReindexTaskParamTO;
+import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
+import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

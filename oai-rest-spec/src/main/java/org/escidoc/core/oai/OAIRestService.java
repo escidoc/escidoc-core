@@ -63,7 +63,7 @@ public interface OAIRestService {
      * <li>The XML representation of the set-definition corresponding to XML-schema is returned as output.</li>
      * </ul>
      * 
-     * @param setDefinition
+     * @param setDefinitionTO
      *            The data of the resource.
      * @return The XML representation of the created set-definition corresponding to XML-schema "set-definition.xsd".
      * @throws UniqueConstraintViolationException
@@ -131,7 +131,7 @@ public interface OAIRestService {
      * 
      * @param id
      *            The id of the set-definition to be updated.
-     * @param xmlData
+     * @param setDefinitionTO
      *            The XML representation of the set-definition to be updated corresponding to XML-schema
      *            "set-definition.xsd".
      * @return The XML representation of the updated set-definition corresponding to XML-schema "set-definition.xsd".

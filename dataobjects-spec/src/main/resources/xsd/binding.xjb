@@ -53,7 +53,7 @@
   <!-- Container -->
   <bindings schemaLocation="container-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.container" />
+      <package name="org.escidoc.core.domain.container.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='container-list']">
       <class name="ContainerListTO" />
@@ -117,7 +117,7 @@
   </bindings>
   <bindings schemaLocation="predicate-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.content.relation" />
+      <package name="org.escidoc.core.domain.predicate.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='predicates']">
       <class name="PredicateListTO" />
@@ -139,7 +139,7 @@
   <!-- Context -->
   <bindings schemaLocation="context-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.context" />
+      <package name="org.escidoc.core.domain.context.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='context-list']">
       <class name="ContextListTO" />
@@ -169,7 +169,7 @@
   <!-- Item -->
   <bindings schemaLocation="item-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.item" />
+      <package name="org.escidoc.core.domain.item.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='item-list']">
       <class name="ItemListTO" />
@@ -221,7 +221,7 @@
   </bindings>
   <bindings schemaLocation="organizational-unit-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.ou" />
+      <package name="org.escidoc.core.domain.ou.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='organizational-unit-list']">
       <class name="OrganizationalUnitListTO" />
@@ -229,7 +229,7 @@
   </bindings>
   <bindings schemaLocation="organizational-unit-successors.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.ou" />
+      <package name="org.escidoc.core.domain.ou.successors" />
     </schemaBindings>
     <bindings node="//xs:element[@name='successors']">
       <class name="SuccessorListTO" />
@@ -237,7 +237,7 @@
   </bindings>
   <bindings schemaLocation="organizational-unit-path-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.ou" />
+      <package name="org.escidoc.core.domain.ou.path.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='organizational-unit-path-list']">
       <class name="PathListTO" />
@@ -245,7 +245,7 @@
   </bindings>
   <bindings schemaLocation="organizational-unit-ref.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.ou" />
+      <package name="org.escidoc.core.domain.ou.ref" />
     </schemaBindings>
     <bindings node="//xs:element[@name='organizational-unit-ref']">
       <class name="OrganizationalUnitRefTO" />
@@ -255,7 +255,7 @@
   <!-- TODO: parents is strange and seems to be a duplication of parents defined in ou schema -->
   <bindings schemaLocation="parents.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.ou" />
+      <package name="org.escidoc.core.domain.ou.parents" />
     </schemaBindings>
     <bindings node="//xs:element[@name='parents']">
       <class name="ParentsListTO" />
@@ -265,7 +265,7 @@
 	<!-- User Account -->  
   <bindings schemaLocation="user-account.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.useraccount" />
     </schemaBindings>
     <bindings node="//xs:element[@name='properties']">
       <class name="UserAccountPropertiesTO" />
@@ -279,7 +279,7 @@
   </bindings>
   <bindings schemaLocation="user-account-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.useraccount.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='user-account-list']">
       <class name="UserAccountListTO" />
@@ -287,7 +287,7 @@
   </bindings>
   <bindings schemaLocation="user-account-attributes.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.useraccount.attributes" />
     </schemaBindings>
     <bindings node="//xs:element[@name='attributes']">
       <class name="UserAccountAttributeListTO" />
@@ -298,7 +298,7 @@
   </bindings>
   <bindings schemaLocation="user-account-preferences.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.useraccount.preferences" />
     </schemaBindings>
     <bindings node="//xs:element[@name='preferences']">
       <class name="UserAccountPreferenceListTO" />
@@ -309,7 +309,7 @@
   </bindings>
   <bindings schemaLocation="user-group.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.usergroup" />
     </schemaBindings>
     <bindings node="//xs:element[@name='user-group']">
       <class name="UserGroupTO" />
@@ -333,7 +333,7 @@
   </bindings>
   <bindings schemaLocation="user-group-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.usergroup.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='user-group-list']">
       <class name="UserGroupListTO" />
@@ -341,7 +341,7 @@
   </bindings>
   <bindings schemaLocation="add-selectors.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.taskparam.selectors.add" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="AddSelectorsTO" />
@@ -352,7 +352,7 @@
   </bindings>
   <bindings schemaLocation="remove-selectors.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.taskparam.selectors.remove" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="RemoveSelectorsTO" />
@@ -360,7 +360,7 @@
   </bindings>
   <bindings schemaLocation="grants.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.grants" />
     </schemaBindings>
     <bindings node="//xs:element[@name='current-grants']">
       <class name="CurrentGrantsTO" />
@@ -377,7 +377,7 @@
   </bindings>
   <bindings schemaLocation="pdp-requests.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.pdp.request" />
     </schemaBindings>
     <bindings node="//xs:element[@name='requests']">
       <class name="PdpRequestsTO" />
@@ -385,7 +385,7 @@
   </bindings>
   <bindings schemaLocation="pdp-results.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.pdp.result" />
     </schemaBindings>
     <bindings node="//xs:element[@name='results']">
       <class name="PdpResultsTO" />
@@ -406,7 +406,7 @@
   </bindings>
   <bindings schemaLocation="role.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.role" />
     </schemaBindings>
     <bindings node="//xs:element[@name='role']">
       <class name="RoleTO" />
@@ -426,7 +426,7 @@
   </bindings>
   <bindings schemaLocation="role-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.role.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='role-list']">
       <class name="RoleListTO" />
@@ -434,7 +434,7 @@
   </bindings>
   <bindings schemaLocation="permission-filter.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.aa" />
+      <package name="org.escidoc.core.domain.aa.permission" />
     </schemaBindings>
     <bindings node="//xs:element[@name='result']">
       <class name="PermissionFilterTO" />
@@ -442,7 +442,7 @@
   </bindings>
   <bindings schemaLocation="aggregation-definition.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.ad" />
     </schemaBindings>
     <bindings node="//xs:element[@name='aggregation-definition']">
       <class name="AggregationDefinitionTO" />
@@ -477,7 +477,7 @@
   </bindings>
   <bindings schemaLocation="aggregation-definition-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.ad.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='aggregation-definition-list']">
       <class name="AggregationDefinitionListTO" />
@@ -485,7 +485,7 @@
   </bindings>
   <bindings schemaLocation="report-definition.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.rd" />
     </schemaBindings>
     <bindings node="//xs:element[@name='report-definition']">
       <class name="ReportDefinitionTO" />
@@ -496,7 +496,7 @@
   </bindings>
   <bindings schemaLocation="report-definition-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.rd.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='report-definition-list']">
       <class name="ReportDefinitionListTO" />
@@ -504,7 +504,7 @@
   </bindings>
   <bindings schemaLocation="scope.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.scope" />
     </schemaBindings>
     <bindings node="//xs:element[@name='scope']">
       <class name="ScopeTO" />
@@ -515,7 +515,7 @@
   </bindings>
   <bindings schemaLocation="scope-list.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.scope.list" />
     </schemaBindings>
     <bindings node="//xs:element[@name='scope-list']">
       <class name="ScopeListTO" />
@@ -523,7 +523,7 @@
   </bindings>
   <bindings schemaLocation="statistic-data.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.sd" />
     </schemaBindings>
     <bindings node="//xs:element[@name='statistic-record']">
       <class name="StatisticDataTO" />
@@ -531,7 +531,7 @@
   </bindings>
   <bindings schemaLocation="report.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.report" />
     </schemaBindings>
     <bindings node="//xs:element[@name='report']">
       <class name="ReportTO" />
@@ -542,7 +542,7 @@
   </bindings>
   <bindings schemaLocation="report-parameters.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.report.parameter" />
     </schemaBindings>
     <bindings node="//xs:element[@name='report-parameters']">
       <class name="ReportParametersTO" />
@@ -550,7 +550,7 @@
   </bindings>
   <bindings schemaLocation="preprocessing-information.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.sm" />
+      <package name="org.escidoc.core.domain.sm.pi" />
     </schemaBindings>
     <bindings node="//xs:element[@name='preprocessing-information']">
       <class name="PreprocessingInformationTO" />
@@ -595,7 +595,7 @@
   </bindings>
   <bindings schemaLocation="structural-relations.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.relations" />
+      <package name="org.escidoc.core.domain.relations.structural" />
     </schemaBindings>
     <bindings node="//xs:element[@name='affiliation']">
       <class name="AffiliationTO" />
@@ -609,7 +609,7 @@
   </bindings>
   <bindings schemaLocation="struct-map.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.container" />
+      <package name="org.escidoc.core.domain.container.structmap" />
     </schemaBindings>
     <bindings node="//xs:element[@name='struct-map']">
       <class name="StructMapTO" />
@@ -627,7 +627,7 @@
   </bindings>
   <bindings schemaLocation="version-history.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.version" />
+      <package name="org.escidoc.core.domain.version.history" />
     </schemaBindings>
     <bindings node="//xs:element[@name='version-history']">
       <class name="VersionHistoryTO" />
@@ -644,7 +644,7 @@
   </bindings>
   <bindings schemaLocation="Event-v1-1.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.version" />
+      <package name="org.escidoc.core.domain.version.event" />
     </schemaBindings>
     <bindings node="//xs:element[@name='event']">
       <class name="EventTO" />
@@ -697,7 +697,7 @@
   <!-- task param -->
   <bindings schemaLocation="assign-pid-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.assignpid" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="AssignPidTaskParamTO" />
@@ -705,7 +705,7 @@
   </bindings>
   <bindings schemaLocation="id-set-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.idset" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="IdSetTaskParamTO" />
@@ -713,7 +713,7 @@
   </bindings>
   <bindings schemaLocation="delete-objects-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.deleteobjects" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="DeleteObjectsTaskParamTO" />
@@ -721,7 +721,7 @@
   </bindings>
   <bindings schemaLocation="members-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.members" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="MembersTaskParamTO" />
@@ -729,7 +729,7 @@
   </bindings>
   <bindings schemaLocation="optimistic-locking-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.optimisticlocking" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="OptimisticLockingTaskParamTO" />
@@ -737,7 +737,7 @@
   </bindings>
   <bindings schemaLocation="reindex-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.reindex" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="ReindexTaskParamTO" />
@@ -745,7 +745,7 @@
   </bindings>
   <bindings schemaLocation="relation-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.relation" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="RelationTaskParamTO" />
@@ -753,7 +753,7 @@
   </bindings>
   <bindings schemaLocation="revoke-grant-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.revokegrant" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="RevokeGrantTaskParamTO" />
@@ -761,7 +761,7 @@
   </bindings>
   <bindings schemaLocation="revoke-grants-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.revokegrants" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="RevokeGrantsTaskParamTO" />
@@ -769,7 +769,7 @@
   </bindings>
   <bindings schemaLocation="status-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.status" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="StatusTaskParamTO" />
@@ -777,7 +777,7 @@
   </bindings>
   <bindings schemaLocation="update-password-task-param.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.taskparam" />
+      <package name="org.escidoc.core.domain.taskparam.updatepassword" />
     </schemaBindings>
     <bindings node="//xs:element[@name='param']">
       <class name="UpdatePasswordTaskParamTO" />
@@ -787,7 +787,7 @@
   <!-- result -->
   <bindings schemaLocation="result.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain" />
+      <package name="org.escidoc.core.domain.result" />
     </schemaBindings>
     <bindings node="//xs:element[@name='result']">
       <class name="ResultTO" />
@@ -857,7 +857,7 @@
   </bindings>
   <bindings schemaLocation="jhove.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.tme" />
+      <package name="org.escidoc.core.domain.tme.jhove" />
     </schemaBindings>
     <bindings node="//xs:element[@name='jhove']">
       <class name="JhoveTO" />

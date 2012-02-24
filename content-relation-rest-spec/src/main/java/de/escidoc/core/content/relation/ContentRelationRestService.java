@@ -29,14 +29,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.ResultTO;
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.domain.content.relation.PredicateListTO;
 import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.taskparam.StatusTaskParamTO;
+import org.escidoc.core.domain.predicate.list.PredicateListTO;
+import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -138,7 +138,7 @@ public interface ContentRelationRestService {
         ContentRelationNotFoundException, SystemException;
 
     @GET
-    @Path("{id}/md-records/md-record/{namne}")
+    @Path("{id}/md-records/md-record/{name}")
     MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("name") String name)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
         MdRecordNotFoundException, SystemException;

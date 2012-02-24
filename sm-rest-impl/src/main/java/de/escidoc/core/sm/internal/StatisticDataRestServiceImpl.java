@@ -29,7 +29,7 @@
 package de.escidoc.core.sm.internal;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.StatisticDataTO;
+import org.escidoc.core.domain.sm.sd.StatisticDataTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

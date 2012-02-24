@@ -39,8 +39,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.aa.RoleResourcesTO;
-import org.escidoc.core.domain.aa.RoleTO;
+import org.escidoc.core.domain.aa.role.RoleResourcesTO;
+import org.escidoc.core.domain.aa.role.RoleTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -59,10 +59,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  * 
  */
-
-@Path("/")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface RoleRestService {
 
     /**
@@ -100,6 +96,8 @@ public interface RoleRestService {
      * @throws SystemException              Thrown in case of an internal error.
      */
     @PUT
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
     RoleTO create(RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -153,6 +151,7 @@ public interface RoleRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MimeTypes.TEXT_XML)
     RoleTO retrieve(@PathParam("id") String id) throws RoleNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -196,6 +195,8 @@ public interface RoleRestService {
      */
     @PUT
     @Path("/{id}")
+    @Produces(MimeTypes.TEXT_XML)
+    @Consumes(MimeTypes.TEXT_XML)
     RoleTO update(@PathParam("id") String id, RoleTO roleTo) throws RoleNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
@@ -226,6 +227,7 @@ public interface RoleRestService {
      */
     @GET
     @Path("/{id}/resources")
+    @Produces(MimeTypes.TEXT_XML)
     RoleResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, SystemException;
 
