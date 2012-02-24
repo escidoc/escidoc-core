@@ -406,7 +406,7 @@
               <delimiterType>row</delimiterType>
               <keepFormat>true</keepFormat>
               <srcFiles>
-                <srcFile>${project.build.directory}/sql-resources/oracle/drop-db.sql</srcFile>
+                <srcFile>${basedir}/../common/src/main/resources/sql/oracle/drop-db.sql</srcFile>
               </srcFiles>
             </configuration>
           </execution>
