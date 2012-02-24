@@ -64,10 +64,4 @@ public class JAXBContextProvider {
         }
         return null;
     }
-
-    public static void main(String[] args) throws JAXBException {
-        JAXBContextProvider provider = new JAXBContextProvider();
-        provider.setPackageFile("org/escidoc/core/domain/jaxb.packages");
-        System.out.println(provider.getJAXBContext());
-    }
 }
