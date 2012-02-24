@@ -1,0 +1,13 @@
+<@file package="org.escidoc.core.domain" name="jaxb.packages">
+<@forAllPackages var="package">
+<#assign printpackage=false>
+<#list package.classes as class>
+<@ifHasAnnotation declaration=class annotation="javax.xml.bind.annotation.XmlRegistry">
+<#assign printpackage=true>
+</@ifHasAnnotation>
+</#list>
+<#if printpackage>
+${package.qualifiedName}
+</#if>
+</@forAllPackages>
+</@file>
