@@ -21,7 +21,7 @@
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.3">
 <userInput>
-<entry key="jdbc.driver.oracle" value="${settings.localRepository}/restricted/ojdbc/${jdbc.oracle.version}/ojdbc-14.jar"/>
+<entry key="jdbc.driver.oracle" value="${settings.localRepository}/restricted/ojdbc/${escidoc.oracle.jdbc.version}/ojdbc-14.jar"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.4">
@@ -97,27 +97,32 @@
 </com.izforge.izpack.panels.TreePacksPanel>
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
 <userInput>
+<entry key="EscidocHome" value="${escidoc.home}"/>
+</userInput>
+</com.izforge.izpack.panels.UserInputPanel>
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+<userInput>
 <entry key="AdminPassword" value="eSciDoc"/>
 <entry key="AdminUsername" value="sysadmin"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
 <userInput>
 <entry key="InspectorPassword" value="eSciDoc"/>
 <entry key="InspectorUsername" value="inspector"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
 <userInput>
 <entry key="DepositorPassword" value="eSciDoc"/>
 <entry key="DepositorUsername" value="depositor"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.InstallPanel id="EscidocInstall"/>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)"/>

@@ -90,6 +90,7 @@
 	
 	<target name="install-tomcat-conditional" unless="installJBoss">
 		<antcall target="install-tomcat" />
+		<antcall target="install-tomcat-oracle" />
 	</target>
 
 	<!-- TOMCAT -->
@@ -108,6 +109,11 @@
 		<delete dir="${install.dir}/${server.deploy.dir}/ROOT" />
 		<!-- delete tomcat's examples deployment -->
 		<delete dir="${install.dir}/${server.deploy.dir}/examples" />
+	</target>
+
+	<target name="install-tomcat-oracle" depends="copy-oracle-jdbc-jar" if="databaseIsOracle">
+		<echo level="info">installing ${DatabaseDriverFile} to ${install.dir}/${server.instance.dir}/lib/</echo>
+		<copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/${server.instance.dir}/lib/" />
 	</target>
 
 	<!-- JBOSS -->

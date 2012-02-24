@@ -97,7 +97,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
         <property name="dataSource" ref="escidoc-core.DataSource"/>  
         <property name="usersByUsernameQuery">  
             <value>  
-                select loginname, password, 'true' as active from aa.user_account where loginname = ?  
+                select loginname, password, 1 as active from aa.user_account where loginname = ?  
             </value>  
         </property>  
         <property name="authoritiesByUsernameQuery">  
@@ -106,13 +106,6 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
             </value>  
         </property>  
      </bean>  
-
-    <bean id="escidoc-core.DataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/escidoc-core"/>
-        <property name="username" value="escidoc"/>
-        <property name="password" value="escidoc"/>
-    </bean>
 
     <bean id="databaseAuthenticationProcessingFilter"  
         class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">  
