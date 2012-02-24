@@ -797,7 +797,7 @@
           <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
-            <version>1.80</version>
+            <version>1.81</version>
           </dependency>
           <dependency>
             <groupId>javax.validation</groupId>
