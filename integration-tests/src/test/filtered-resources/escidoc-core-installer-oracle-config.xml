@@ -21,7 +21,7 @@
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.3">
     <userInput>
-      <entry key="jdbc.driver.oracle" value="${settings.localRepository}/restricted/ojdbc/${jdbc.oracle.version}/ojdbc-14.jar" />
+      <entry key="jdbc.driver.oracle" value="${settings.localRepository}/restricted/ojdbc/${escidoc.oracle.jdbc.version}/ojdbc-14.jar" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.4">
