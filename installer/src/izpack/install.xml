@@ -221,6 +221,10 @@
     <variable name="DatabaseDriverClass" value="${DatabaseDriverClassPostgres}" condition="databaseIsPostgres" />
     <variable name="DatabaseDriverClass" value="${DatabaseDriverClassMySQL}" condition="databaseIsMySQL" />
     <variable name="DatabaseDriverClass" value="${DatabaseDriverClassOracle}" condition="databaseIsOracle" />
+    <!-- database identifier for migration -->
+    <variable name="MigrationDatabaseIdentifier" value="postgres" condition="databaseIsPostgres" />
+    <variable name="MigrationDatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />
+    <variable name="MigrationDatabaseIdentifier" value="oracle" condition="databaseIsOracle" />
     <!-- database identifier for JDBC URL -->
     <variable name="DatabaseIdentifier" value="postgresql" condition="databaseIsPostgres" />
     <variable name="DatabaseIdentifier" value="mysql" condition="databaseIsMySQL" />

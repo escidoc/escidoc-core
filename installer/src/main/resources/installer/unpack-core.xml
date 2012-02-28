@@ -398,18 +398,25 @@
 			<param name="target" value="${install.dir}/tools/migration/" />
 		</antcall>
 		<delete file="${install.dir}/tools/${escidoc.admin.zip}" />
+
 		<!-- modify admin-tool.properties -->
 		<propertyfile file="${INSTALL_PATH}/tools/migration/admin-tool.properties">
 			<entry key="datasource.url" value="${DatabaseURL}${DatasourceEscidoc}" />
 			<entry key="datasource.driverClassName" value="${DatabaseDriverClass}" />
 			<entry key="datasource.username" value="${DatabaseUsername}" />
 			<entry key="datasource.password" value="${DatabasePassword}" />
+		    <entry key="datasource.script.prefix" value="${MigrationDatabaseIdentifier}" />
 			<entry key="fedora.home" value="${install.dir}/fedora" />
 			<entry key="fedora.url" value="http://localhost:${EscidocPort}/fedora" />
 			<entry key="fedora.user" value="${FedoraUsername}" />
 			<entry key="fedora.password" value="${FedoraPassword}" />
 			<entry key="creator_id" value="${CreatorUserid}" />
 		</propertyfile>
+		<antcall target="copy-migration-oracle-jar" />
+	</target>
+
+	<target name="copy-migration-oracle-jar" description="Copies oracle driver jar to migration-tool lib dir" if="databaseIsOracle">
+		<copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" tofile="${install.dir}/tools/migration/lib/ojdbc.jar" />
 	</target>
 
 	<target name="db-create-scripts" depends="init, copy-oracle-jdbc-jar" description="Prepare for database creation" unless="upgradeEscidoc">
@@ -419,7 +426,7 @@
 		<move file="${install.dir}/install.tmp/database-init.xml" todir="${install.dir}/core/bin" />
 		<move file="${install.dir}/install.tmp/aa.init.user-accounts.common.sql" todir="${install.dir}/core/sql" />
 		<move file="${install.dir}/install.tmp/aa.init.grants.common.sql" todir="${install.dir}/core/sql" />
-		<move file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/core/lib" />
+		<copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/core/lib" />
 		<delete dir="${install.dir}/install.tmp/staging" />
 		<delete dir="${install.dir}/install.tmp/WEB-INF" />
 		<!--delete dir="${install.dir}/install.tmp" /-->
