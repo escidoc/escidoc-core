@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -83,7 +84,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL(this.itemUrl + itemId));
             String pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
             assignContentPid(itemId, componentId, pidParam);
             fail("Missing InvalidStatusException");
@@ -108,7 +110,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
-        String pidParam = getAssignPidTaskParam(new DateTime(lmdCreate, DateTimeZone.UTC), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmdCreate, DateTimeZone.UTC));
 
         String pidXML = assignContentPid(itemId, componentId, pidParam);
         Document pidDoc = EscidocAbstractTest.getDocument(pidXML);
@@ -153,18 +156,23 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         final String itemId = getObjidValue(itemDoc);
 
         // release item
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignObjectPid(itemId, pidParam);
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // create component
         itemDoc = EscidocAbstractTest.getDocument(update(itemId, addComponent(retrieve(itemId))));
@@ -172,7 +180,9 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         final String componentId = getComponentObjidValue(itemDoc, componentNo);
 
         // assign content PID
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         String pidXML = assignContentPid(itemId, componentId, pidParam);
 
@@ -207,20 +217,26 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         final String itemId = getObjidValue(itemDoc);
 
         // assign PIDs, release item
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignObjectPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignContentPid(itemId, componentId, pidParam);
 
@@ -229,7 +245,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
                 .getTextContent();
 
         assertNotNull(contentPid1);
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // check if returned content PID equals RELS-EXT entry
         String contentPid2 =
@@ -273,7 +290,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         String pidXML = assignContentPid(itemId, componentId, pidParam);
 
@@ -325,7 +343,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
-        String pidParam = getAssignPidTaskParam(new DateTime(wrongLmd, DateTimeZone.UTC), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(wrongLmd, DateTimeZone.UTC));
 
         try {
             assignContentPid(itemId, componentId, pidParam);
@@ -352,7 +371,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid(pidToRegister);
-        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
+        String taskParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(itemDoc));
         String pidXML = assignContentPid(itemId, componentId, taskParam);
         Document pidDoc = getDocument(pidXML);
         Node returnedPid = selectSingleNode(pidDoc, XPATH_RESULT_PID);
@@ -381,7 +401,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid("");
-        String taskParam = getAssignPidTaskParam(getLastModificationDateValue2(itemDoc), assignPidParam);
+        String taskParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(itemDoc));
 
         Class<?> ec = XmlCorruptedException.class;
 
@@ -411,7 +432,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         String resultXml = assignContentPid(itemId, componentId, pidParam);
 
@@ -441,7 +463,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.itemUrl + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         String pidXML = assignContentPid(itemId, componentId, pidParam);
 

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -385,7 +386,8 @@ public class ContainerTestBase extends OmTestBase {
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(containerUrl + itemId));
                 String pidParam =
-                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(id))), assignPidParam);
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                        getLastModificationDateValue2(getDocument(retrieve(id))));
 
                 assignObjectPid(id, pidParam);
             }
@@ -406,15 +408,15 @@ public class ContainerTestBase extends OmTestBase {
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(containerUrl + versionId));
                 String pidParam =
-                    getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))),
-                        assignPidParam);
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                        getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
                 assignVersionPid(versionId, pidParam);
             }
         }
 
         itemDoc = EscidocAbstractTest.getDocument(retrieve(id));
-        String param = getStatusTaskParam(getLastModificationDateValue2(itemDoc), null);
+        String param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(itemDoc), null);
 
         Object result = getContainerClient().release(id, param);
         if (result instanceof HttpResponse) {
@@ -661,7 +663,7 @@ public class ContainerTestBase extends OmTestBase {
                 createdXml = update(objidValue, createdXml);
                 document = EscidocAbstractTest.getDocument(createdXml);
             }
-            submit(objidValue, getStatusTaskParam(getLastModificationDateValue2(document), null));
+            submit(objidValue, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(document), null));
             createdXml = retrieve(objidValue);
             if (createVersionsAfter) {
                 createdXml = createdXml.replaceAll("the title", "the title - updated");
@@ -682,7 +684,8 @@ public class ContainerTestBase extends OmTestBase {
                     }
                     document = EscidocAbstractTest.getDocument(createdXml);
                     final String taskParam =
-                        getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
+                        TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(document),
+                            "Some withdraw comment");
                     withdraw(getObjidValue(document), taskParam);
                     createdXml = retrieve(objidValue);
                 }

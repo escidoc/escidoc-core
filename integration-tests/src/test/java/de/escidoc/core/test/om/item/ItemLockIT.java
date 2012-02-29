@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.security.client.PWCallback;
 
 import org.joda.time.DateTime;
@@ -99,7 +100,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         lock(theItemId, param);
 
         String itemXml = retrieve(theItemId);
@@ -122,7 +124,7 @@ public class ItemLockIT extends ItemTestBase {
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(itemDoc));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(itemDoc));
         unlock(theItemId, param);
     }
 
@@ -133,7 +135,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         lock(theItemId, param);
 
         String itemXml = retrieve(theItemId);
@@ -147,9 +150,9 @@ public class ItemLockIT extends ItemTestBase {
 
         assertXmlValidItem(itemXml);
 
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(itemDoc));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(itemDoc));
         itemXml = update(theItemId, itemXml);
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(itemXml)));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(itemXml)));
         unlock(theItemId, param);
 
     }
@@ -163,7 +166,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_1() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         try {
             lock(theItemId, param);
         }
@@ -209,7 +213,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_ULI_1_2() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
 
         try {
             lock(theItemId, param);
@@ -257,7 +262,8 @@ public class ItemLockIT extends ItemTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         try {
             lock(theItemId, param);
         }
@@ -288,7 +294,8 @@ public class ItemLockIT extends ItemTestBase {
 
         Class<?> ec = ItemNotFoundException.class;
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
 
         try {
             lock("escidoc:noExist", param);
@@ -305,7 +312,7 @@ public class ItemLockIT extends ItemTestBase {
     @Test(expected = OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
+        String param = TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
         lock(theItemId, param);
     }
 
@@ -315,7 +322,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
 
         try {
             lock(null, param);
@@ -336,7 +344,8 @@ public class ItemLockIT extends ItemTestBase {
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
+        String param =
+            TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)));
         String resultXml = lock(theItemId, param);
         assertXmlValidResult(resultXml);
 

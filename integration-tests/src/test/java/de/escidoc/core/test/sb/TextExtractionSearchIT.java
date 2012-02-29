@@ -29,6 +29,7 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
@@ -116,7 +117,9 @@ public class TextExtractionSearchIT extends SearchTestBase {
             String componentId = getComponentObjidValue(itemDoc, 1);
 
             // submit item
-            xml = item.submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            xml =
+                item.submit(itemId, TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
 
             // assignPids
             String pidParam = getItemPidParam(itemId, getLastModificationDateValue2(getDocument(xml)));
@@ -134,7 +137,8 @@ public class TextExtractionSearchIT extends SearchTestBase {
             // }
 
             // release item
-            item.release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            item.release(itemId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+                null));
 
             // ////////////////////////////////////////////////////////////
         }

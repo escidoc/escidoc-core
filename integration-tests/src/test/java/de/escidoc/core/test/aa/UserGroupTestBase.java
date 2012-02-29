@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyActiveException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeactiveException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -482,7 +483,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.activate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -515,7 +516,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.deactivate(groupId, taskParamXml);
         }
         catch (final AlreadyDeactiveException e) {
@@ -527,7 +528,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.activate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -568,7 +569,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.deactivate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -602,7 +603,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             String userGroupXml = handleResult(userGroupClient.retrieve(groupId));
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.activate(groupId, taskParamXml);
         }
         catch (final AlreadyActiveException e) {
@@ -614,7 +615,7 @@ public abstract class UserGroupTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userGroupXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userGroupClient.deactivate(groupId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -752,55 +753,6 @@ public abstract class UserGroupTestBase extends AaTestBase {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         return retrievedXml;
-    }
-
-    /**
-     * Adds selectors as task-params.
-     *
-     * @param selectors            list of selectors to add.
-     * @param lastModificationDate The timestamp of the resource.
-     * @return Returns the created task param xml.
-     * @throws Exception Thrown if anything fails.
-     */
-    protected String getAddSelectorsTaskParam(final List<String[]> selectors, final String lastModificationDate)
-        throws Exception {
-
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        param += ">";
-        Iterator<String[]> iterator = selectors.iterator();
-        while (iterator.hasNext()) {
-            String[] selector = iterator.next();
-            String name = selector[0];
-            String type = selector[1];
-            String value = selector[2];
-            param += "<selector name=\"" + name + "\" type=\"" + type + "\">" + value + "</selector>";
-        }
-        param += "</param>";
-
-        return param;
-    }
-
-    /**
-     * Get the XML taskParam for the method removeSelectors.
-     *
-     * @param lastModificationDate The timestamp of the resource.
-     * @return Returns the created task param xml.
-     * @throws Exception Thrown if anything fails.
-     */
-    public String getRemoveSelectorsTaskParam(final Vector<String> selectorIds, final String lastModificationDate)
-        throws Exception {
-
-        String param = "<param last-modification-date=\"" + lastModificationDate + "\" ";
-        param += " xmlns:user-group=\"http://www.escidoc.de/schemas/usergroup/0.6\" >";
-        Iterator<String> iterator = selectorIds.iterator();
-        while (iterator.hasNext()) {
-            String selectorId = iterator.next();
-
-            param += "<id>" + selectorId + "</id>";
-
-        }
-        param += "</param>";
-        return param;
     }
 
     /**

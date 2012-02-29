@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -176,13 +177,13 @@ public class CollaboratorModifierUpdateDirectMembersIT extends GrantTestBase {
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(containerId2);
         getContainerClient().addMembers(containerId,
-            getMembersTaskParam(getLastModificationDateValue2(containerDocument), ids));
+            TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDocument)));
 
         //add item to container2
         ids = new ArrayList<String>();
         ids.add(itemId);
         getContainerClient().addMembers(containerId2,
-            getMembersTaskParam(getLastModificationDateValue2(containerDocument2), ids));
+            TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDocument2)));
 
         //update item to create new version
         itemXml = itemXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");

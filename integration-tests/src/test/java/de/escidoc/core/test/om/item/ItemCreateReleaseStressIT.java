@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -124,7 +125,8 @@ public class ItemCreateReleaseStressIT extends ItemTestBase {
             getDocument(handleXmlResult(getContextClient().create(
                 getExampleTemplate("context-minimal-for-create-01.xml"))));
         String contextId = getObjidValue(contextDoc);
-        getContextClient().open(contextId, getStatusTaskParam(getLastModificationDateValue2(contextDoc), null));
+        getContextClient().open(contextId,
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(contextDoc), null));
 
         // create an item an replace the value of the public-status element
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
@@ -158,7 +160,7 @@ public class ItemCreateReleaseStressIT extends ItemTestBase {
                 //                String xml = submit(ids[i].getObjid(), param);
 
                 String xml =
-                    submit(ids[i].getObjid(), getStatusTaskParam(
+                    submit(ids[i].getObjid(), TaskParamFactory.getStatusTaskParam(
                         getLastModificationDateValue2(getDocument(retrieve(ids[i].getObjid()))), null));
 
                 ids[i].setLmd(getLastModificationDateValue(getDocument(xml)));

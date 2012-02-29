@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 
 import org.junit.Test;
@@ -173,7 +174,7 @@ public class CloseIT extends OrganizationalUnitTestBase {
 
         final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
         try {
-            close(UNKNOWN_ID, getStatusTaskParam(new DateTime(), null));
+            close(UNKNOWN_ID, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             failMissingException("Closing OU with unknown id has not been declined", ec);
         }
         catch (final Exception e) {
@@ -212,7 +213,7 @@ public class CloseIT extends OrganizationalUnitTestBase {
 
         final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
         try {
-            close(null, getStatusTaskParam(new DateTime(), null));
+            close(null, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             failMissingException("Closing OU without an id has not been declined", ec);
         }
         catch (final Exception e) {
@@ -246,7 +247,7 @@ public class CloseIT extends OrganizationalUnitTestBase {
     @Test(expected = XmlSchemaValidationException.class)
     public void testOumCou3c() throws Exception {
 
-        close(ORGANIZATIONAL_UNIT_ID, getStatusTaskParam(null, null));
+        close(ORGANIZATIONAL_UNIT_ID, TaskParamFactory.getStatusTaskParam(null));
     }
 
     /**

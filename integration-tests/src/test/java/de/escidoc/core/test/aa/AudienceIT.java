@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -170,7 +171,7 @@ public class AudienceIT extends GrantTestBase {
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(itemId);
         getContainerClient().addMembers(containerId,
-            getMembersTaskParam(getLastModificationDateValue2(containerDocument), ids));
+            TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDocument)));
     }
 
     /**

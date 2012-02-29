@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -167,7 +168,8 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         itemDoc = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         releaseWithPid(itemId);
 
         Vector<String> componentIds = getAllComponents(itemId);
@@ -558,17 +560,22 @@ public class ItemRetrieveContentIT extends ContentTestBase {
 
         // release Item to avoid authentication
         String itemId = getObjidValue(itemDoc);
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://localhost" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignObjectPid(itemId, pidParam);
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignVersionPid(itemId, pidParam);
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // get URL to content
         String hrefContent = selectSingleNode(itemDoc, "/item/components/component/content/@href").getNodeValue();

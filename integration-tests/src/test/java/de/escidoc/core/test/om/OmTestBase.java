@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
@@ -310,40 +311,6 @@ public class OmTestBase extends EscidocAbstractTest {
     }
 
     /**
-     * @param lastModDate
-     *            The last modification date of the source.
-     * @param targets
-     *            List of target ids. As much relations are added as there are tagets.
-     * @param predicate
-     *            The predicate of the relation.
-     * @return The task parameter according to the given values.
-     */
-    public String getRelationTaskParameter(
-        final String lastModDate, final Vector<String> targets, final String predicate) {
-        String taskParam = null;
-        if ((targets != null) && (targets.size() > 0)) {
-            taskParam =
-                de.escidoc.core.test.Constants.XML_HEADER
-                    + "<param xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\" "
-                    + "last-modification-date=\"" + lastModDate + "\">\n";
-            Iterator<String> it = targets.iterator();
-            while (it.hasNext()) {
-                taskParam += "<relation><targetId>" + it.next() + "</targetId><predicate>";
-                if (predicate != null) {
-                    taskParam += predicate;
-                }
-                else {
-                    taskParam += "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
-
-                }
-                taskParam += "</predicate></relation>\n";
-            }
-            taskParam += "</param>";
-        }
-        return taskParam;
-    }
-
-    /**
      * Prepare the PIDs of Container. Depending on configuration must have a Container an object and a version Pid
      * before you can release it.
      *
@@ -371,7 +338,8 @@ public class OmTestBase extends EscidocAbstractTest {
             if (selectSingleNode(getDocument(containerXml), "/container/properties/pid") == null) {
 
                 assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
-                pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+                pidParam =
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(newLmd, DateTimeZone.UTC));
 
                 objectPidXml = handleXmlResult(getContainerClient().assignObjectPid(containerId, pidParam));
                 assertXmlValidResult(objectPidXml);
@@ -385,7 +353,8 @@ public class OmTestBase extends EscidocAbstractTest {
             if (selectSingleNode(getDocument(containerXml), "/container/properties/version/pid") == null) {
 
                 assignPidParam.setUrl(new URL("http://somewhere/" + containerId));
-                pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+                pidParam =
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(newLmd, DateTimeZone.UTC));
 
                 versionPidXml = handleXmlResult(getContainerClient().assignVersionPid(containerId, pidParam));
                 assertXmlValidResult(versionPidXml);
@@ -420,7 +389,7 @@ public class OmTestBase extends EscidocAbstractTest {
             && !getItemClient().getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")) {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+            pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(newLmd, DateTimeZone.UTC));
 
             objectPidXml = handleXmlResult(getItemClient().assignObjectPid(itemId, pidParam));
             assertXmlValidResult(objectPidXml);
@@ -430,7 +399,7 @@ public class OmTestBase extends EscidocAbstractTest {
             && !getItemClient().getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-            pidParam = getAssignPidTaskParam(new DateTime(newLmd, DateTimeZone.UTC), assignPidParam);
+            pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(newLmd, DateTimeZone.UTC));
 
             versionPidXml = handleXmlResult(getItemClient().assignVersionPid(itemId, pidParam));
             assertXmlValidResult(versionPidXml);

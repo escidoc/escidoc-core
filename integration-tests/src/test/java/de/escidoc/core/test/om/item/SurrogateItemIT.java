@@ -33,6 +33,7 @@ import java.net.URL;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 
 import org.junit.Ignore;
@@ -85,19 +86,24 @@ public class SurrogateItemIT extends ItemTestBase {
 
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        String xml = submit(itemId, getStatusTaskParam(getLastModificationDateValue2(createdItemDocument), null));
+        String xml =
+            submit(itemId, TaskParamFactory
+                .getStatusTaskParam(getLastModificationDateValue2(createdItemDocument), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
         xml = assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
         xml = assignObjectPid(itemId, pidParam);
 
-        xml = release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            release(itemId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -154,20 +160,25 @@ public class SurrogateItemIT extends ItemTestBase {
         originalXlinkTitle = selectSingleNode(createdItemDocument, "/item/@title").getNodeValue();
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -243,18 +254,23 @@ public class SurrogateItemIT extends ItemTestBase {
         String itemId = getObjidValue(xml);
         String itemHref = "/ir/item/" + itemId;
 
-        xml = submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        xml =
+            submit(itemId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
         xml = assignVersionPid(itemId, pidParam);
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
         xml = assignObjectPid(itemId, pidParam);
 
-        xml = release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            release(itemId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
 
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
@@ -291,19 +307,23 @@ public class SurrogateItemIT extends ItemTestBase {
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
         String xml =
-            submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            submit(itemId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
         xml = assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
         xml = assignObjectPid(itemId, pidParam);
 
-        xml = release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            release(itemId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
         String released = retrieve(itemId);
         Document releasedDocument = getDocument(released);
 
@@ -354,20 +374,25 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String released = retrieve(itemId);
         Document releasedDocument = getDocument(released);
 
@@ -446,20 +471,26 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
-        withdraw(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), "withdraw"));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        withdraw(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), "withdraw"));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -515,19 +546,24 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -538,22 +574,25 @@ public class SurrogateItemIT extends ItemTestBase {
 
         String surrogateId = getObjidValue(createdSurrogateItem);
         String surrogateHref = "/ir/item/" + surrogateId;
-        submit(surrogateId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), null));
+        submit(surrogateId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(surrogateId))), null));
 
         // add object and version pid to release
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(surrogateId))));
 
         assignVersionPid(surrogateId, pidParam);
 
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(surrogateId))));
         assignObjectPid(surrogateId, pidParam);
 
-        release(surrogateId,
-            getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(surrogateId))), null));
+        release(surrogateId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(surrogateId))), null));
         String surrogate2ItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -584,20 +623,25 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -643,20 +687,25 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -704,20 +753,25 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(item);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
 
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String surrogateItemXml =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
                 "surrogate_escidoc_item_198_for_create.xml");
@@ -754,19 +808,24 @@ public class SurrogateItemIT extends ItemTestBase {
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL("http://somewhere/" + itemId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignVersionPid(itemId, pidParam);
 
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignObjectPid(itemId, pidParam);
 
-        release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String released = retrieve(itemId);
         Document releasedDocument = getDocument(released);
 
@@ -806,13 +865,17 @@ public class SurrogateItemIT extends ItemTestBase {
         Node secondMdRecord = selectSingleNode(surrogateDocument, "/item/md-records/md-record[@name='name1']");
         assertNull("item may not have a second md-record", secondMdRecord);
 
-        submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        submit(itemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
         // add object and version pid to release
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(itemId))));
         assignVersionPid(itemId, pidParam);
 
-        release(itemId + ":2", getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+        release(itemId + ":2", TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
         String adaptedSurrogateItem = retrieve(surrogateId);
         Document adaptedSurrogateItemDocument = getDocument(adaptedSurrogateItem);
         secondMdRecord = selectSingleNode(adaptedSurrogateItemDocument, "/item/md-records/md-record[@name='name1']");

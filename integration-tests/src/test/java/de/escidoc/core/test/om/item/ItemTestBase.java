@@ -35,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -551,7 +552,7 @@ public class ItemTestBase extends OmTestBase {
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(itemUrl + itemId));
-                String pidParam = getAssignPidTaskParam(lmd, assignPidParam);
+                String pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
                 pidXml = assignObjectPid(id, pidParam);
                 assertXmlValidResult(pidXml);
@@ -574,7 +575,7 @@ public class ItemTestBase extends OmTestBase {
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(itemUrl + versionId));
-                String pidParam = getAssignPidTaskParam(lmd, assignPidParam);
+                String pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
                 pidXml = assignVersionPid(versionId, pidParam);
                 assertXmlValidResult(pidXml);
@@ -585,7 +586,7 @@ public class ItemTestBase extends OmTestBase {
             }
         }
 
-        String param = getStatusTaskParam(lmd, null);
+        String param = TaskParamFactory.getStatusTaskParam(lmd, null);
 
         Object result = getItemClient().release(id, param);
         if (result instanceof HttpResponse) {
@@ -931,7 +932,6 @@ public class ItemTestBase extends OmTestBase {
     /**
      * Prepares an item for a test.<br> The item is created and set into the specified state.
      *
-     * @param creatorUserHandle    The eSciDoc user handle of the creator.
      * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
      *                             <code>null</code> is returned.
      * @param contextId            context to create container in
@@ -968,7 +968,7 @@ public class ItemTestBase extends OmTestBase {
                 createdXml = update(objidValue, createdXml);
                 document = EscidocAbstractTest.getDocument(createdXml);
             }
-            submit(objidValue, getStatusTaskParam(getLastModificationDateValue2(document), null));
+            submit(objidValue, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(document), null));
             createdXml = retrieve(objidValue);
             if (createVersionsAfter) {
                 createdXml = createdXml.replaceAll("Schindlmayr", "Schindlmayr u");
@@ -990,7 +990,8 @@ public class ItemTestBase extends OmTestBase {
                     if (STATUS_WITHDRAWN.equals(status)) {
                         document = EscidocAbstractTest.getDocument(createdXml);
                         final String taskParam =
-                            getStatusTaskParam(getLastModificationDateValue2(document), "Some withdraw comment");
+                            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(document),
+                                "Some withdraw comment");
                         withdraw(getObjidValue(document), taskParam);
                         createdXml = retrieve(objidValue);
                     }

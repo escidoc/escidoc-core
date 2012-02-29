@@ -41,6 +41,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.apache.xpath.XPathAPI;
@@ -126,7 +127,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
         ids.add(itemToAddID);
 
         String resultXml =
-            addMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
+            addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                getLastModificationDateValue2(containerDoc)));
 
         // check if item with id theItemId is member of theContainer
         String containerXml = retrieve(theContainerId);
@@ -162,8 +164,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
         ids.add(subContainerId);
 
         String resultXml =
-            addMembers(theContainerId, getMembersTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+            addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
 
         Document resultDoc = getDocument(resultXml);
         String lmdMethod1 = getLastModificationDateValue(resultDoc);
@@ -172,8 +174,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
         ids.add(subContainerId);
         ids.add(theItemId);
         String resultXmlAfterRemoveMembers =
-            removeMembers(theContainerId, getMembersTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+            removeMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
 
         assertXmlValidResult(resultXml);
         Document resultDocAfterRemoveMembers = getDocument(resultXmlAfterRemoveMembers);
@@ -213,7 +215,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
         ids.add(containerId);
 
         String resultXml =
-            removeMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
+            removeMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                getLastModificationDateValue2(containerDoc)));
         Document resultDoc = getDocument(resultXml);
         String lmdMethod1 = getLastModificationDateValue(resultDoc);
         assertEquals(getLastModificationDateValue(containerDoc), lmdMethod1);
@@ -235,8 +238,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
             ids.add(itemToAddID);
         }
 
-        addMembers(theContainerId, getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(this.theContainerXml)), ids));
+        addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+            getLastModificationDateValue2(getDocument(this.theContainerXml))));
 
         String containerXml = retrieve(theContainerId);
 
@@ -259,7 +262,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
             ArrayList<String> ids = new ArrayList<String>();
             ids.add(itemToAddID);
 
-            String result = addMembers(theContainerId, getMembersTaskParam(lmd, ids));
+            String result = addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids, lmd));
             lmd = getLastModificationDateValue2(getDocument(result));
         }
 
@@ -675,7 +678,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
     @Test
     public void testOM_UCO_1_2() throws Exception {
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         String testStatus = "submitted";
         String xml = retrieve(theContainerId);
@@ -770,7 +774,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
      */
     @Test
     public void testOM_UCO_1_3() throws Exception {
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -779,8 +784,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
             assignObjectPid(this.theContainerId, pidParam);
         }
@@ -792,13 +797,13 @@ public class ContainerUpdateIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theContainerId, getStatusTaskParam(
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         String testStatus = "released";
         String xml = retrieve(theContainerId);
@@ -1009,8 +1014,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
     public void testOM_UCO_6() throws Exception {
 
         String xml =
-            submit(theContainerId,
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), null));
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(theContainerXml)), null));
 
         // FIXME replace this code through releaseWithPid();
         String pidParam;
@@ -1019,7 +1024,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
-            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+            pidParam =
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
             xml = assignObjectPid(this.theContainerId, pidParam);
         }
@@ -1030,13 +1036,18 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
-            pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+            pidParam =
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
             xml = assignVersionPid(latestVersion, pidParam);
         }
 
-        xml = release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
-        xml = withdraw(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
+        xml =
+            withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
 
         xml = retrieve(this.theContainerId);
 

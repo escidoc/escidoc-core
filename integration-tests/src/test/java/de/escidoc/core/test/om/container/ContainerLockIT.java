@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNo
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
@@ -108,7 +109,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_C_lock() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         lock(theContainerId, param);
 
         String containerXml = retrieve(theContainerId);
@@ -137,7 +140,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_ULC_1_1() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -185,7 +190,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testOM_ULC_1_2() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -236,7 +243,9 @@ public class ContainerLockIT extends ContainerTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         try {
             lock(theContainerId, param);
         }
@@ -262,7 +271,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test(expected = ContainerNotFoundException.class)
     public void testOM_C_lockWrongID() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
 
         lock("escidoc:noExist", param);
     }
@@ -273,7 +284,7 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test(expected = OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
+        String param = TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
         lock(theContainerId, param);
     }
 
@@ -283,7 +294,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test(expected = MissingMethodParameterException.class)
     public void testOM_C_lockWithoutID() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         lock(null, param);
     }
 
@@ -295,7 +308,9 @@ public class ContainerLockIT extends ContainerTestBase {
     @Test
     public void testLockReturnValue01() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)));
         String resultXml = lock(theContainerId, param);
         assertXmlValidResult(resultXml);
 
@@ -326,8 +341,10 @@ public class ContainerLockIT extends ContainerTestBase {
 
     private void submitItemHelp() throws Exception {
         Object result1 =
-            getItemClient().submit(theItemId,
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+            getItemClient().submit(
+                theItemId,
+                TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
+                    null));
         if (result1 instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result1;
             assertHttpStatusOfMethod("", httpRes);

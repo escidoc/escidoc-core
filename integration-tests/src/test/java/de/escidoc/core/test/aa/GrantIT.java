@@ -39,6 +39,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExis
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyRevokedException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -712,7 +713,8 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), "Some revocation\n remark");
+        String taskParamXML =
+            TaskParamFactory.getRevokeGrantTaskParam(new DateTime(lastModificationDate), "Some revocation\n remark");
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
@@ -959,7 +961,8 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), "Some revocation\n remark");
+        String taskParamXML =
+            TaskParamFactory.getRevokeGrantTaskParam(new DateTime(lastModificationDate), "Some revocation\n remark");
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
@@ -988,7 +991,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             revokeGrant(UNKNOWN_ID, grantId, taskParamXML, null);
@@ -1010,7 +1013,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             revokeGrant(CONTEXT_ID, grantId, taskParamXML, null);
@@ -1029,7 +1032,7 @@ public class GrantIT extends GrantTestBase {
     @Test
     public void testAARvg3() throws Exception {
 
-        String taskParamXML = getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, UNKNOWN_ID, taskParamXML, null);
@@ -1048,7 +1051,7 @@ public class GrantIT extends GrantTestBase {
     @Test
     public void testAARvg3_2() throws Exception {
 
-        String taskParamXML = getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, CONTEXT_ID, taskParamXML, null);
@@ -1067,7 +1070,7 @@ public class GrantIT extends GrantTestBase {
     @Test
     public void testAARvg4() throws Exception {
 
-        String taskParamXML = getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(new DateTime("2007-01-01T01:01:01.000Z"), null);
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, null, taskParamXML, null);
@@ -1089,7 +1092,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             revokeGrant(null, grantId, taskParamXML, null);
@@ -1111,7 +1114,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
@@ -1130,7 +1133,7 @@ public class GrantIT extends GrantTestBase {
         assertNotNull("No data from retrieve. ", retrievedGrantXml);
         Document retrievedDocument = EscidocAbstractTest.getDocument(retrievedGrantXml);
         lastModificationDate = getLastModificationDateValue2(retrievedDocument);
-        taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
@@ -1171,11 +1174,7 @@ public class GrantIT extends GrantTestBase {
 
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
-        String taskParamXML =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" >\n"
-                + "<revocation-remark>some remark</revocation-remark></param>";
-
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam("some remark");
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
@@ -1191,14 +1190,9 @@ public class GrantIT extends GrantTestBase {
      */
     @Test(expected = XmlSchemaValidationException.class)
     public void testAARvg7_2() throws Exception {
-
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
-        String taskParamXML =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\" "
-                + " last-modification-date=\"2008-01-01\" />";
-
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam("2008-01-01", null);
         revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
     }
 
@@ -1213,7 +1207,7 @@ public class GrantIT extends GrantTestBase {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getRevokeGrantTaskParam(lastModificationDate, null);
+        String taskParamXML = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, null);
 
         try {
             if (handlerCode == USER_GROUP_HANDLER_CODE) {
@@ -1253,7 +1247,7 @@ public class GrantIT extends GrantTestBase {
                 break;
             }
         }
-        String taskParam = getRevokeGrantsTaskParam(grantsToRemove, "Some revocation\n remark");
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(grantsToRemove, "Some revocation\n remark");
 
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
@@ -1281,7 +1275,7 @@ public class GrantIT extends GrantTestBase {
         retrieveGrantsSuccessfully(defaultUserAccountOrGroupId, expectedGrants.size());
 
         //revoke all grants
-        String taskParam = getRevokeGrantsTaskParam(new HashSet<String>(), "Some revocation\n remark");
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(null, "Some revocation\n remark");
 
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
@@ -1309,7 +1303,7 @@ public class GrantIT extends GrantTestBase {
         retrieveGrantsSuccessfully(defaultUserAccountOrGroupId, expectedGrants.size());
 
         //revoke all grants
-        String taskParam = getRevokeGrantsTaskParam(null, "Some revocation\n remark");
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(null, "Some revocation\n remark");
 
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
@@ -1337,9 +1331,7 @@ public class GrantIT extends GrantTestBase {
         retrieveGrantsSuccessfully(defaultUserAccountOrGroupId, expectedGrants.size());
 
         //revoke all grants
-        String taskParam =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\" />";
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(null, null);
 
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParam);
@@ -1367,16 +1359,11 @@ public class GrantIT extends GrantTestBase {
         retrieveGrantsSuccessfully(defaultUserAccountOrGroupId, expectedGrants.size());
 
         //revoke no grants
-        StringBuffer taskParamXML =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
-        taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
-        taskParamXML
-            .append("</filter>").append("<revocation-remark>Some revocation\n remark</revocation-remark>").append(
-                "</param>");
+        String taskParamXML =
+            TaskParamFactory.getRevokeGrantsTaskParam(new HashSet<String>(), "Some revocation\n remark");
 
         try {
-            revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
+            revokeGrants(defaultUserAccountOrGroupId, taskParamXML);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException("Revoking grants failed. ", e);
@@ -1402,25 +1389,22 @@ public class GrantIT extends GrantTestBase {
 
         //revoke 2 existing grants and 2 grants that do not exist
         //check Transactional Functionality
-        StringBuffer taskParamXML =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
-        taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
+        Set<String> toRevoke = new HashSet<String>();
+
         int count = 0;
         for (String grantId : expectedGrants.keySet()) {
             if (count < 2) {
-                taskParamXML.append("<id>").append(grantId).append("</id>");
+                toRevoke.add(grantId);
             }
             count++;
         }
-        taskParamXML.append("<id>").append("nonexistingid1").append("</id>");
-        taskParamXML.append("<id>").append("nonexistingid2").append("</id>");
-        taskParamXML
-            .append("</filter>").append("<revocation-remark>Some revocation\n remark</revocation-remark>").append(
-                "</param>");
+        toRevoke.add("nonexistingid1");
+        toRevoke.add("nonexistingid2");
+
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(toRevoke, "Some revocation\n remark");
 
         try {
-            revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
+            revokeGrants(defaultUserAccountOrGroupId, taskParam);
             EscidocAbstractTest.failMissingException(GrantNotFoundException.class);
         }
         catch (final Exception e) {
@@ -1447,23 +1431,18 @@ public class GrantIT extends GrantTestBase {
 
         //revoke 2 existing grants and 2 grants that do not exist
         //check Transactional Functionality
-        StringBuffer taskParamXML =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n");
-        taskParamXML.append("<filter name=\"" + DC_NS_URI + "identifier" + "\">");
+        Set<String> toRevoke = new HashSet<String>();
         int count = 0;
         for (String grantId : expectedGrants.keySet()) {
             if (count < 2) {
-                taskParamXML.append("<id>").append(grantId).append("</id>");
+                toRevoke.add(grantId);
             }
             count++;
         }
-        taskParamXML
-            .append("</filter>").append("<revocation-remark>Some revocation\n remark</revocation-remark>").append(
-                "</param>");
+        String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(toRevoke, "Some revocation\n remark");
 
         try {
-            revokeGrants("nonexistinguser", taskParamXML.toString());
+            revokeGrants("nonexistinguser", taskParam);
             EscidocAbstractTest.failMissingException(notFoundException.getClass());
         }
         catch (final Exception e) {
@@ -1551,7 +1530,8 @@ public class GrantIT extends GrantTestBase {
             if (i == 1) {
                 // revoke one of the grants
                 final DateTime lastModificationDate1 = getLastModificationDateValue2(createdDocument);
-                String taskParam1Xml = getRevokeGrantTaskParam(lastModificationDate1, "Some revocation\n remark");
+                String taskParam1Xml =
+                    TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate1, "Some revocation\n remark");
 
                 try {
                     revokeGrant(defaultUserAccountOrGroupId, objid, taskParam1Xml, null);

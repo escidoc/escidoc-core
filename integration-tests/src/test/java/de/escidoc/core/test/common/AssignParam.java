@@ -41,6 +41,11 @@ public class AssignParam {
 
     }
 
+    public AssignParam(URL url, String pid) {
+        this.url = url;
+        this.pid = pid;
+    }
+
     /**
      * 
      * @return

@@ -29,6 +29,7 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.client.servlet.sb.SearchClient;
@@ -202,8 +203,9 @@ public class SbTestBase extends EscidocAbstractTest {
     protected String openOrgUnit(final String objidValue) throws Exception {
 
         String param =
-            getStatusTaskParam(getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient()
-                .retrieve(objidValue)))), "comment");
+            TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient().retrieve(
+                    objidValue)))), "comment");
 
         getOrganizationalUnitClient().open(objidValue, param);
         String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
@@ -220,8 +222,9 @@ public class SbTestBase extends EscidocAbstractTest {
     protected String closeOrgUnit(final String objidValue) throws Exception {
 
         String param =
-            getStatusTaskParam(getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient()
-                .retrieve(objidValue)))), "comment");
+            TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(handleXmlResult(getOrganizationalUnitClient().retrieve(
+                    objidValue)))), "comment");
         getOrganizationalUnitClient().close(objidValue, param);
         String createdXml = retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, objidValue);
         return createdXml;

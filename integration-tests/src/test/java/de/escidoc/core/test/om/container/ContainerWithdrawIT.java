@@ -36,6 +36,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNo
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 
 import org.apache.http.HttpResponse;
@@ -77,8 +78,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     public void testOM_WAC_2_1() throws Exception {
 
         try {
-            withdraw("bla", getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-                null));
+            withdraw("bla", TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on withdraw with non" + "existing container id.");
         }
         catch (final Exception e) {
@@ -93,8 +94,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void test_OM_WAC_2_2() throws Exception {
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -103,8 +104,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
             assignObjectPid(this.theContainerId, pidParam);
         }
@@ -116,13 +117,13 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theContainerId, getStatusTaskParam(
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         //        String param = getTheLastModificationParam(true, theContainerId);
@@ -131,7 +132,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         //                "<param last-modification-date=\"2005-01-30T11:36:42.015Z\"");
 
         try {
-            withdraw(theContainerId, getStatusTaskParam(new DateTime(), null));
+            withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             fail("No exception occurred on withdraw with " + "wrong time stamp.");
         }
         catch (final Exception e) {
@@ -147,8 +148,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     public void testOM_WAC_3_1() throws Exception {
 
         try {
-            withdraw(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-                null));
+            withdraw(null, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on withdraw with missing " + "container id.");
         }
         catch (final Exception e) {
@@ -179,11 +180,11 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOMWAC3_3() throws Exception {
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         try {
-            withdraw(theContainerId, getStatusTaskParam(
+            withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on withdraw bevore submit.");
         }
@@ -225,11 +226,11 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     @Test
     public void testOM_WAC_1() throws Exception {
         submitItemHelp();
-        submit(theSubcontainerId, getStatusTaskParam(
+        submit(theSubcontainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theSubcontainerId))), null));
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -238,8 +239,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
             assignObjectPid(this.theContainerId, pidParam);
         }
@@ -251,17 +252,19 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
         String responseXML =
-            release(theContainerId, getStatusTaskParam(
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(responseXML)), WITHDRAW_COMMENT);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(responseXML)),
+                WITHDRAW_COMMENT);
         withdraw(theContainerId, param);
         try {
             String withdrawnContainer = retrieve(theContainerId);
@@ -308,7 +311,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("Submit after withdrawn is possible.");
         }
@@ -325,7 +328,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            release(theContainerId, getStatusTaskParam(
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("Release after withdrawn is possible.");
         }
@@ -342,8 +345,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
         }
 
         try {
-            lock(theContainerId,
-                getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
+            lock(theContainerId, TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
             fail("Lock after withdrawn is possible.");
         }
         catch (final InvalidStatusException e) {
@@ -358,7 +361,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     private void submitItemHelp() throws Exception {
         DateTime lmd =
             getLastModificationDateValue2(getDocument(handleXmlResult(getItemClient().retrieve(this.theItemId))));
-        String param = getStatusTaskParam(lmd, null);
+        String param = TaskParamFactory.getStatusTaskParam(lmd, null);
 
         Object result1 = getItemClient().submit(theItemId, param);
         if (result1 instanceof HttpResponse) {
@@ -374,11 +377,11 @@ public class ContainerWithdrawIT extends ContainerTestBase {
     public void testOM_WAC_4() throws Exception {
 
         submitItemHelp();
-        submit(theSubcontainerId, getStatusTaskParam(
+        submit(theSubcontainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theSubcontainerId))), null));
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         String pidParam;
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -387,8 +390,8 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
             assignObjectPid(this.theContainerId, pidParam);
         }
@@ -400,19 +403,19 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theContainerId, getStatusTaskParam(
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
-        withdraw(theContainerId, getStatusTaskParam(
+        withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         try {
-            withdraw(theContainerId, getStatusTaskParam(
+            withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on second withdraw.");
         }

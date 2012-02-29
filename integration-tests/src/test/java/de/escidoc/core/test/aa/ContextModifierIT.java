@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -142,13 +143,13 @@ public class ContextModifierIT extends GrantTestBase {
 
         String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
-            handleResult(contextClient.open(contextId, getTheLastModificationParam(true, contextId, "comment",
-                lastModificationDate)));
+            handleResult(contextClient.open(contextId, TaskParamFactory.getStatusTaskParam(lastModificationDate,
+                "comment")));
 
         lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
         contextXml =
-            handleResult(contextClient.close(contextId, getTheLastModificationParam(true, contextId, "comment",
-                lastModificationDate)));
+            handleResult(contextClient.close(contextId, TaskParamFactory.getStatusTaskParam(lastModificationDate,
+                "comment")));
 
         try {
             contextClient.delete(contextId);

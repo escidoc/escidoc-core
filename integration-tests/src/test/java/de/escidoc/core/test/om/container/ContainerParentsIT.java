@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import java.util.ArrayList;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -105,22 +106,22 @@ public class ContainerParentsIT extends ContainerTestBase {
         }
 
         //Add members to TopLevelContainer
-        addMembers(topLevelContainerId, getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(topLevelContainerId))), middleLevelIds));
+        addMembers(topLevelContainerId, TaskParamFactory.getMembersTaskParam(middleLevelIds,
+            getLastModificationDateValue2(getDocument(retrieve(topLevelContainerId)))));
 
         //Add members to middleLevelContainer[0]
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(lowLevelContainerIds[0]);
-        addMembers(middleLevelContainerIds[0], getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[0]))), ids));
+        addMembers(middleLevelContainerIds[0], TaskParamFactory.getMembersTaskParam(ids,
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[0])))));
 
         //Add members to middleLevelContainer[1]
-        addMembers(middleLevelContainerIds[1], getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[1]))), lowLevelIds));
+        addMembers(middleLevelContainerIds[1], TaskParamFactory.getMembersTaskParam(lowLevelIds,
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[1])))));
 
         //Add members to middleLevelContainer[2]
-        addMembers(middleLevelContainerIds[2], getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[2]))), lowLevelIds));
+        addMembers(middleLevelContainerIds[2], TaskParamFactory.getMembersTaskParam(lowLevelIds,
+            getLastModificationDateValue2(getDocument(retrieve(middleLevelContainerIds[2])))));
     }
 
     /**

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Before;
@@ -81,8 +82,8 @@ public class ContainerRetrieveLargContainerIT extends ContainerTestBase {
             ArrayList<String> ids = new ArrayList<String>();
             ids.add(itemToAddID);
             try {
-                addMembers(theContainerId, getMembersTaskParam(
-                    getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+                addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                    getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
             }
             catch (final Exception e) {
                 throw new Exception(e);

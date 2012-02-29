@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.semanticstore.spo;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -39,6 +40,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -84,11 +88,12 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestNTriples() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         String format = "N-Triples";
         // String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + sourceId + "&gt;  * *", format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + sourceId + "&gt;  * *", format);
         String result = spo(param);
 
         assertTrue(result.contains(sourceId));
@@ -108,10 +113,12 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestRdfXml() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         String format = "RDF/XML";
         addRelation(sourceId, p, targetId);
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt; *", format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam(
+                "&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt; *", format);
         String result = spo(param);
 
         Node resultDoc = EscidocAbstractTest.getDocument(result);
@@ -128,12 +135,14 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestForbiddenPredicate1() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         addRelation(sourceId, p, targetId);
         p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations/isRevisionOf";
         String o = "*";
         String format = "N-Triples";
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  " + o, format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  "
+                + o, format);
         try {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
@@ -151,12 +160,14 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestForbiddenPredicate2() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         addRelation(sourceId, p, targetId);
         p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relation#isRevisionOf";
         String o = "*";
         String format = "N-Triples";
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  " + o, format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + sourceId + "&gt;  &lt;" + p + "&gt;  "
+                + o, format);
         try {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
@@ -174,13 +185,14 @@ public class SpoIT extends SpoTestBase {
     public void testSpoRequestAllowedPredicate() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
-        // String p =
-        // "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        // String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         String p = "http://www.escidoc.org/ontologies/test/content-relations#isTest\u00dc\u00c4\u00d6";
         addRelation(sourceId, p, targetId);
         String o = "*";
         String format = "N-Triples";
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + sourceId + "&gt; &lt;" + p + "&gt; " + o, format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + sourceId + "&gt; &lt;" + p + "&gt; "
+                + o, format);
         String result = spo(param);
         assertTrue(result.contains(sourceId));
         // check for one single triple (result is filtered)
@@ -194,7 +206,8 @@ public class SpoIT extends SpoTestBase {
     @Test
     public void testSpoRequestWithWrongQuery() throws Exception {
         String id = createItemHelper();
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + id + "&gt;  * * ooo", "N-Triples");
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + id + "&gt;  * * ooo", "N-Triples");
         try {
             spo(param);
             fail("No exception occured on a triple store request with a wrong query");
@@ -211,7 +224,7 @@ public class SpoIT extends SpoTestBase {
     @Test
     public void testSpoRequestWithWrongOutputFormat() throws Exception {
         String id = createItemHelper();
-        String param = getSemanticStoreQuery("&lt;info:fedora/" + id + "&gt;  * *", "bla");
+        String param = TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/" + id + "&gt;  * *", "bla");
         try {
             spo(param);
             fail("No exception occured on a triple store " + "request with a wrong output format");
@@ -243,7 +256,7 @@ public class SpoIT extends SpoTestBase {
         releaseItemHelper(sourceId);
 
         // add relation
-        String p = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf";
+        String p = TaskParamFactory.ONTOLOGY_IS_REVISION_OF;
         addRelation(sourceId, p, targetId);
 
         // update source item
@@ -252,7 +265,9 @@ public class SpoIT extends SpoTestBase {
         // query relation
         String s = "*";
         String format = "RDF/XML";
-        String param = getSemanticStoreQuery(s + " &lt;" + p + "&gt; &lt;info:fedora/" + targetId + "&gt;", format);
+        String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam(s + " &lt;" + p + "&gt; &lt;info:fedora/" + targetId
+                + "&gt;", format);
         String result = null;
         try {
             result = spo(param);
@@ -293,7 +308,8 @@ public class SpoIT extends SpoTestBase {
         OmTestBase testBase = new OmTestBase();
         String toBeSubmittedXml = handleXmlResult(testBase.getItemClient().retrieve(id));
         final String taskParam =
-            getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(toBeSubmittedXml)), null);
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                .getDocument(toBeSubmittedXml)), null);
         testBase.getItemClient().submit(id, taskParam);
     }
 
@@ -313,22 +329,14 @@ public class SpoIT extends SpoTestBase {
     private void addRelation(final String sourceId, final String predicate, final String targetId) throws Exception {
 
         OmTestBase testBase = new OmTestBase();
-        String taskParam =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\" "
-                + "last-modification-date=\""
-                + getLastModificationDateValue(EscidocAbstractTest.getDocument(handleXmlResult(testBase
-                    .getItemClient().retrieve(sourceId)))) + "\">\n";
-        taskParam += "<relation><targetId>" + targetId + "</targetId>\n";
-        taskParam += "<predicate>";
-        if (predicate != null) {
-            taskParam += predicate;
-        }
-        else {
-            taskParam += "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
-        }
-        taskParam += "</predicate></relation>\n";
-        taskParam += "</param>";
+
+        String lmd =
+            getLastModificationDateValue(EscidocAbstractTest.getDocument(handleXmlResult(testBase
+                .getItemClient().retrieve(sourceId))));
+
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, predicate));
+        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lmd, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         testBase.getItemClient().addContentRelations(sourceId, taskParam);
     }

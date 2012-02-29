@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -38,6 +39,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Test suite for UserGroupAuthorizationTest.
@@ -144,21 +146,18 @@ public class UserGroupAuthorizationIT extends GrantTestBase {
                 groupIds[i] = groupId;
                 String lastModificationDate = getLastModificationDateValue(group);
 
+                List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
                 //attach group to user
-                ArrayList<String[]> selectors = new ArrayList<String[]>();
-                String[] selector = new String[3];
                 if (i % 2 == 0) {
-                    selector[0] = "user-account";
-                    selector[1] = "internal";
-                    selector[2] = USER_ID;
+                    selectors.add(new TaskParamFactory.Selector("user-account",
+                        TaskParamFactory.SELECTOR_TYPE_INTERNAL, USER_ID));
                 }
                 else {
-                    selector[0] = "o";
-                    selector[1] = "user-attribute";
-                    selector[2] = ORGANIZATIONAL_UNIT_ID;
+                    selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+                        ORGANIZATIONAL_UNIT_ID));
                 }
-                selectors.add(selector);
-                String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+                String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
                 userGroupTestBase.addSelectors(groupId, taskParam);
 
                 //attach role collaborator for items to group
@@ -190,13 +189,11 @@ public class UserGroupAuthorizationIT extends GrantTestBase {
             String lastModificationDate = getLastModificationDateValue(group);
 
             //attach group to user
-            ArrayList<String[]> selectors = new ArrayList<String[]>();
-            String[] selector = new String[3];
-            selector[0] = "o";
-            selector[1] = "user-attribute";
-            selector[2] = ORGANIZATIONAL_UNIT_ID;
-            selectors.add(selector);
-            String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+            List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+            selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+                ORGANIZATIONAL_UNIT_ID));
+
+            String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
             userGroupTestBase.addSelectors(groupId, taskParam);
 
             //attach role administrator for item to group

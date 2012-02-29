@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 
 import org.apache.http.HttpResponse;
@@ -89,13 +90,13 @@ public class ContainerReleaseIT extends ContainerTestBase {
         String lmdSubCont = getLastModificationDateValue(getDocument(xmlData));
 
         lmdSubCont = prepareContainerPid(subContainerId, lmdSubCont);
-        submit(subContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(subContainerId))),
-            null));
+        submit(subContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(subContainerId))), null));
 
         // prepare the Container it self to release
         final String submitComment = String.valueOf(System.nanoTime());
         resultXml =
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), submitComment));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
@@ -107,7 +108,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
         final String releaseComment = String.valueOf(System.nanoTime());
         resultXml =
-            release(theContainerId, getStatusTaskParam(
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), releaseComment));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
@@ -137,7 +138,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         submitItemHelp(this.theItemId);
 
         String resultXml =
-            submit(theSubcontainerId, getStatusTaskParam(
+            submit(theSubcontainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theSubcontainerId))), null));
         assertXmlValidResult(resultXml);
 
@@ -161,14 +162,14 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
         resultXml =
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
@@ -178,8 +179,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
             assignObjectPid(this.theContainerId, pidParam);
         }
@@ -190,14 +191,14 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
         resultXml =
-            release(theContainerId, getStatusTaskParam(
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
 
@@ -218,8 +219,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
     public void testOM_RCON_2_1() throws Exception {
 
         try {
-            release("bla", getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-                null));
+            release("bla", TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on release with non" + "existing container id.");
         }
         catch (final Exception e) {
@@ -238,7 +239,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
 
         String resultXml =
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         if (getContainerClient().getPidConfig("cmm.Container.objectPid.setPidBeforeRelease", "true")
@@ -246,8 +247,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
             assignObjectPid(this.theContainerId, pidParam);
         }
         if (getContainerClient().getPidConfig("cmm.Container.versionPid.setPidBeforeRelease", "true")
@@ -257,14 +258,14 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
         try {
-            release(theContainerId, getStatusTaskParam(new DateTime(), null));
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             fail("No exception occurred on release with wrong time stamp.");
         }
         catch (final Exception e) {
@@ -280,8 +281,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
     public void testOM_RCON_3_1() throws Exception {
 
         try {
-            release(null,
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            release(null, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on release with missing " + "container id.");
         }
         catch (final Exception e) {
@@ -313,7 +314,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
     public void testOM_RCON_3_3() throws Exception {
 
         try {
-            release(theContainerId, getStatusTaskParam(
+            release(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occurred on release before submit.");
         }
@@ -391,7 +392,7 @@ public class ContainerReleaseIT extends ContainerTestBase {
      */
     private String submitItemHelp(final String itemId, final String lmd) throws Exception {
 
-        String param = getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null);
+        String param = TaskParamFactory.getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null);
 
         Object result = getItemClient().submit(itemId, param);
         if (result instanceof HttpResponse) {

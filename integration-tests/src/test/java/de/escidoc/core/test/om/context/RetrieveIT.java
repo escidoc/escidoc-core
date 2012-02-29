@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.joda.time.DateTime;
@@ -80,7 +81,7 @@ public class RetrieveIT extends ContextTestBase {
             contextId = getObjidValue(created);
 
             String lastModified = getLastModificationDateValue(created);
-            open(contextId, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+            open(contextId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
 
             // String test = null;
             // String test2 = null;

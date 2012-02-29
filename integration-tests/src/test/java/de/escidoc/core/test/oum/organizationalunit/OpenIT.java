@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Ignore;
@@ -62,7 +63,7 @@ public class OpenIT extends OrganizationalUnitTestBase {
         final String objid = getObjidValue(toBeOpenedDocument);
 
         try {
-            open(objid, getStatusTaskParam(getLastModificationDateValue2(toBeOpenedDocument),
+            open(objid, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(toBeOpenedDocument),
                 "Opened organizational unit '" + objid + "'."));
         }
         catch (final Exception e) {
@@ -200,7 +201,7 @@ public class OpenIT extends OrganizationalUnitTestBase {
 
         final Class<OrganizationalUnitNotFoundException> ec = OrganizationalUnitNotFoundException.class;
         try {
-            open(UNKNOWN_ID, getStatusTaskParam(new DateTime(), null));
+            open(UNKNOWN_ID, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             failMissingException("Opening OU with unknown id has not been declined", ec);
         }
         catch (final Exception e) {
@@ -273,7 +274,7 @@ public class OpenIT extends OrganizationalUnitTestBase {
     @Test(expected = XmlSchemaValidationException.class)
     public void testOumOou3c() throws Exception {
 
-        open(ORGANIZATIONAL_UNIT_ID, getStatusTaskParam(null, null));
+        open(ORGANIZATIONAL_UNIT_ID, TaskParamFactory.getStatusTaskParam(null));
     }
 
     /**
@@ -406,11 +407,11 @@ public class OpenIT extends OrganizationalUnitTestBase {
         final String objid = getObjidValue(toBeOpenedDocument);
 
         String lmd = getLastModificationDateValue(toBeOpenedDocument);
-        String resultXml = open(objid, getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null));
+        String resultXml = open(objid, TaskParamFactory.getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null));
         assertXmlValidResult(resultXml);
         String lmdOpen = getLastModificationDateValue(getDocument(resultXml));
 
-        resultXml = close(objid, getStatusTaskParam(new DateTime(lmdOpen, DateTimeZone.UTC), null));
+        resultXml = close(objid, TaskParamFactory.getStatusTaskParam(new DateTime(lmdOpen, DateTimeZone.UTC), null));
         assertXmlValidResult(resultXml);
         String lmdClose = getLastModificationDateValue(getDocument(resultXml));
 
@@ -436,14 +437,16 @@ public class OpenIT extends OrganizationalUnitTestBase {
         final String objid = getObjidValue(toBeOpenedDocument);
 
         final String openComment = String.valueOf(System.nanoTime());
-        String taskParam = getStatusTaskParam(getLastModificationDateValue2(toBeOpenedDocument), openComment);
+        String taskParam =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(toBeOpenedDocument), openComment);
         String resultXml = open(objid, taskParam);
         assertXmlValidResult(resultXml);
         assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(objid)),
             "/organizational-unit/properties/public-status-comment", openComment);
 
         final String closeComment = String.valueOf(System.nanoTime());
-        taskParam = getStatusTaskParam(getLastModificationDateValue2(getDocument(resultXml)), closeComment);
+        taskParam =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(resultXml)), closeComment);
 
         resultXml = close(objid, taskParam);
         assertXmlValidResult(resultXml);

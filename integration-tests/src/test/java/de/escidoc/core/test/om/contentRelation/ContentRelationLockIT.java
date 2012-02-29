@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -105,7 +106,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     public void testOM_C_lock() throws Exception {
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
         lock(theContentRelationId, param);
 
         String contentRelationXml = retrieve(theContentRelationId);
@@ -132,14 +134,16 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
         }
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(contentRelationDoc));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(contentRelationDoc));
         unlock(theContentRelationId, param);
     }
 
     @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(theContentRelationXml)));
+        String param =
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(theContentRelationXml)));
         lock(theContentRelationId, param);
 
         String contentRelationXml = retrieve(theContentRelationId);
@@ -155,9 +159,9 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
 
         assertXmlValidContentRelation(contentRelationXml);
 
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(contentRelationDoc));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(contentRelationDoc));
         String xml = update(theContentRelationId, contentRelationXml);
-        param = getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(xml)));
+        param = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(xml)));
         unlock(theContentRelationId, param);
     }
 
@@ -171,7 +175,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     public void testOM_ULI_1_1() throws Exception {
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
         try {
             lock(theContentRelationId, param);
         }
@@ -219,7 +224,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     public void testOM_ULI_1_2() throws Exception {
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
         try {
             lock(theContentRelationId, param);
         }
@@ -270,7 +276,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
         try {
             lock(theContentRelationId, param);
         }
@@ -303,7 +310,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
         Class<?> ec = ContentRelationNotFoundException.class;
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
 
         try {
             lock("escidoc:noExist", param);
@@ -320,7 +328,7 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     @Test(expected = OptimisticLockingException.class)
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
-        String param = getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
+        String param = TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("1970-01-01T00:00:00.000Z"));
         lock(theContentRelationId, param);
     }
 
@@ -331,7 +339,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     public void testOM_C_lockWithoutID() throws Exception {
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
 
         try {
             lock(null, param);
@@ -353,7 +362,8 @@ public class ContentRelationLockIT extends ContentRelationTestBase {
     public void testLockReturnValue01() throws Exception {
 
         String param =
-            getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
+            TaskParamFactory
+                .getOptimisticLockingTaskParam(getLastModificationDateValue2(getDocument(this.theContentRelationXml)));
         String resultXml = lock(theContentRelationId, param);
         assertXmlValidResult(resultXml);
 

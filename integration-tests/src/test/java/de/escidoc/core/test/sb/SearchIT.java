@@ -39,6 +39,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -153,7 +154,7 @@ public class SearchIT extends SearchTestBase {
             containerIds[i] = getObjidValue(xml);
 
             // submit container
-            xml = container.submit(containerIds[i], getStatusTaskParam(lastModDate, null));
+            xml = container.submit(containerIds[i], TaskParamFactory.getStatusTaskParam(lastModDate, null));
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[i], getLastModificationDateValue2(getDocument(xml)));
@@ -164,7 +165,8 @@ public class SearchIT extends SearchTestBase {
             // release container
             xml = container.retrieve(containerIds[i]);
             lastModDate = getLastModificationDateValue2(getDocument(xml));
-            container.release(containerIds[i], getStatusTaskParam(lastModDate, "ContainerHandler.release()"));
+            container.release(containerIds[i], TaskParamFactory.getStatusTaskParam(lastModDate,
+                "ContainerHandler.release()"));
             xml = container.retrieve(containerIds[i]);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[i], xml);
@@ -205,7 +207,7 @@ public class SearchIT extends SearchTestBase {
             String componentId = getComponentObjidValue(itemDoc, 1);
 
             // submit item
-            xml = item.submit(itemIds[i], getStatusTaskParam(lastModDate, null));
+            xml = item.submit(itemIds[i], TaskParamFactory.getStatusTaskParam(lastModDate, null));
 
             // assignPids
             String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
@@ -223,7 +225,8 @@ public class SearchIT extends SearchTestBase {
             // }
 
             // release item
-            item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            item.release(itemIds[i], TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
             if (i % 2 == 0) {
                 xml = item.retrieve(itemIds[i]);
                 xml = xml.replaceAll("Huffman", "Huffman1");
@@ -270,16 +273,16 @@ public class SearchIT extends SearchTestBase {
 
         // submit container
         xml =
-            container
-                .submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            container.submit(containerIds[0], TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
 
         // assign pids
         String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
         xml = container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
         // release container
-        container.release(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-            "ContainerHandler.release()"));
+        container.release(containerIds[0], TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), "ContainerHandler.release()"));
     }
 
     /**
@@ -311,7 +314,7 @@ public class SearchIT extends SearchTestBase {
 
                 // submit container
                 xml =
-                    container.submit(containerIds[i], getStatusTaskParam(
+                    container.submit(containerIds[i], TaskParamFactory.getStatusTaskParam(
                         getLastModificationDateValue2(getDocument(xml)), null));
 
                 // assign pids
@@ -322,8 +325,8 @@ public class SearchIT extends SearchTestBase {
                 xml = container.assignVersionPid(containerIds[i] + ":1", pidParam);
 
                 // release container
-                container.release(containerIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                    null));
+                container.release(containerIds[i], TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
             }
         }
         catch (final Exception e) {
@@ -357,7 +360,8 @@ public class SearchIT extends SearchTestBase {
                     itemIds[i] = getObjidValue(xml);
 
                     // submit item
-                    item.submit(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                    item.submit(itemIds[i], TaskParamFactory.getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(xml)), null));
 
                     // assignPids
                     Document itemDoc = EscidocAbstractTest.getDocument(xml);
@@ -378,7 +382,8 @@ public class SearchIT extends SearchTestBase {
                     // }
 
                     // release item
-                    item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                    item.release(itemIds[i], TaskParamFactory.getStatusTaskParam(
+                        getLastModificationDateValue2(getDocument(xml)), null));
 
                     // ////////////////////////////////////////////////////////////
                     i++;
@@ -395,16 +400,16 @@ public class SearchIT extends SearchTestBase {
             String xml = container.retrieve(containerIds[0]);
             // submit container
             xml =
-                container.submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                    null));
+                container.submit(containerIds[0], TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
             xml = container.assignVersionPid(containerIds[0] + ":" + (Constants.NUM_ITEMS + 1), pidParam);
 
             // release container
-            container.release(containerIds[0],
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            container.release(containerIds[0], TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
         }
         catch (final Exception e) {
             LOGGER.error("", e);
@@ -1863,8 +1868,8 @@ public class SearchIT extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
                     String taskParam =
-                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
-                            "This is a withdraw comment.");
+                        TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                            .getDocument(xml)), "This is a withdraw comment.");
 
                     item.withdraw(itemIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
@@ -1891,8 +1896,8 @@ public class SearchIT extends SearchTestBase {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
                     String taskParam =
-                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
-                            "This is a withdraw comment.");
+                        TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                            .getDocument(xml)), "This is a withdraw comment.");
 
                     container.withdraw(containerIds[i], taskParam);
                     // ////////////////////////////////////////////////////////

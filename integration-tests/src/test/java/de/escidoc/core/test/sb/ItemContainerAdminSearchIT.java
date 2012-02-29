@@ -31,6 +31,7 @@ package de.escidoc.core.test.sb;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.sb.stax.handler.AllStaxHandler;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -3909,7 +3910,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit item
-                item.submit(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                item.submit(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC),
+                    null));
                 xml = item.retrieve(objectId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = item.update(objectId, xml);
@@ -3920,8 +3922,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                         lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
                         xml =
-                            item
-                                .revise(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                            item.revise(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                                DateTimeZone.UTC), null));
                     }
                     else {
                         // assignPids
@@ -3941,8 +3943,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
                         // release item
                         xml =
-                            item.release(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                                null));
+                            item.release(objectId, TaskParamFactory.getStatusTaskParam(
+                                getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_WITHDRAWN)
                         && !status.equals(STATUS_IN_REVISION)) {
@@ -3953,8 +3955,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                     else if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         xml =
-                            item.withdraw(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                                "This is a withdraw comment."));
+                            item.withdraw(objectId, TaskParamFactory.getStatusTaskParam(
+                                getLastModificationDateValue2(getDocument(xml)), "This is a withdraw comment."));
                     }
                 }
             }
@@ -3964,8 +3966,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                     xml = container.retrieve(containerIds[i]);
                     List<String> ids = new ArrayList<String>();
                     ids.add(objectId);
-                    container.addMembers(containerIds[i], getMembersTaskParam(
-                        getLastModificationDateValue2(getDocument(xml)), ids));
+                    container.addMembers(containerIds[i], TaskParamFactory.getMembersTaskParam(ids,
+                        getLastModificationDateValue2(getDocument(xml))));
                 }
             }
             return returnHash;
@@ -4020,7 +4022,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
             if (!status.equals(STATUS_PENDING)) {
                 // submit container
                 if (containerStatus.equals(STATUS_PENDING)) {
-                    container.submit(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                    container.submit(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                        DateTimeZone.UTC), null));
 
                     xml = container.retrieve(objectId);
                     xml = xml.replaceAll("Hoppe", "Hoppe1");
@@ -4033,8 +4036,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                             xml = container.retrieve(objectId);
                             lastModDate = getLastModificationDate(xml);
                             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                            container.revise(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC),
-                                null));
+                            container.revise(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                                DateTimeZone.UTC), null));
                             containerStatus = STATUS_IN_REVISION;
                         }
                         else {
@@ -4049,7 +4052,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                             xml = container.assignVersionPid(objectId + ":" + versionNumber, pidParam);
 
                             // release container
-                            container.release(objectId, getStatusTaskParam(
+                            container.release(objectId, TaskParamFactory.getStatusTaskParam(
                                 getLastModificationDateValue2(getDocument(xml)), null));
                             containerStatus = STATUS_RELEASED;
                         }
@@ -4066,8 +4069,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                         if (containerStatus.equals(STATUS_RELEASED)) {
                             xml = container.retrieve(objectId);
                             lastModDate = getLastModificationDate(xml);
-                            container.withdraw(objectId, getStatusTaskParam(
-                                new DateTime(lastModDate, DateTimeZone.UTC), "This is a withdraw comment."));
+                            container.withdraw(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                                DateTimeZone.UTC), "This is a withdraw comment."));
                         }
                     }
                 }
@@ -4077,8 +4080,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                 xml = container.retrieve(parentContainerId);
                 List<String> ids = new ArrayList<String>();
                 ids.add(objectId);
-                container.addMembers(parentContainerId, getMembersTaskParam(
-                    getLastModificationDateValue2(getDocument(xml)), ids));
+                container.addMembers(parentContainerId, TaskParamFactory.getMembersTaskParam(ids,
+                    getLastModificationDateValue2(getDocument(xml))));
             }
             return objectId;
         }

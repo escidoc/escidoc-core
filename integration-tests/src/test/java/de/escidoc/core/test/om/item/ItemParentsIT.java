@@ -34,6 +34,7 @@ import java.util.List;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.joda.time.DateTime;
@@ -114,19 +115,19 @@ public class ItemParentsIT extends ItemTestBase {
         for (int i = 0; i < 2; i++) {
             ids.add(itemIds[i]);
         }
-        containerTestBase.addMembers(containerIds[0], getMembersTaskParam(containerLmds[0], ids));
+        containerTestBase.addMembers(containerIds[0], TaskParamFactory.getMembersTaskParam(ids, containerLmds[0]));
 
         //Add members to containerIds[1]
         ids = new ArrayList<String>();
         for (int i = 0; i < 3; i++) {
             ids.add(itemIds[i]);
         }
-        containerTestBase.addMembers(containerIds[1], getMembersTaskParam(containerLmds[1], ids));
+        containerTestBase.addMembers(containerIds[1], TaskParamFactory.getMembersTaskParam(ids, containerLmds[1]));
 
         //Add members to containerIds[2]
         ids = new ArrayList<String>();
         ids.add(itemIds[0]);
-        containerTestBase.addMembers(containerIds[2], getMembersTaskParam(containerLmds[2], ids));
+        containerTestBase.addMembers(containerIds[2], TaskParamFactory.getMembersTaskParam(ids, containerLmds[2]));
     }
 
     /**

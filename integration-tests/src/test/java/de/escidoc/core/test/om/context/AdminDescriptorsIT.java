@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -77,7 +78,7 @@ public class AdminDescriptorsIT extends ContextTestBase {
             // open Context
             String lastModificationDate = getLastModificationDateValue(EscidocAbstractTest.getDocument(contextXml));
             this.getContextClient().open(contextId,
-                getTheLastModificationParam(true, contextId, "comment", lastModificationDate));
+                TaskParamFactory.getStatusTaskParam(lastModificationDate, "comment"));
 
             String filename = "escidoc_item_198_for_create.xml";
             createItem(toString(substitute(EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",

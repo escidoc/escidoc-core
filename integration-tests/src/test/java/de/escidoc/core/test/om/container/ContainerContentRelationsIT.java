@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +47,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -90,15 +93,15 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
      */
     @Test
     public void testIssueInfr1007() throws Exception {
-        addRelation(this.containerId, "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
+        addRelation(this.containerId, TaskParamFactory.ONTOLOGY_IS_REVISION_OF);
         addRelationToLatestVersion(this.containerId, "http://escidoc.org/examples/test1");
         addRelationToLatestVersion(this.containerId, "http://escidoc.org/examples/#test2");
 
         String relationsElementXml = retrieveRelations(this.containerId);
         Document relationsElementDocument = EscidocAbstractTest.getDocument(relationsElementXml);
         selectSingleNodeAsserted(relationsElementDocument, "/relations");
-        selectSingleNodeAsserted(relationsElementDocument,
-            "/relations/relation[@predicate = 'http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf']");
+        selectSingleNodeAsserted(relationsElementDocument, "/relations/relation[@predicate = '"
+            + TaskParamFactory.ONTOLOGY_IS_REVISION_OF + "']");
         selectSingleNodeAsserted(relationsElementDocument,
             "/relations/relation[@predicate = 'http://escidoc.org/examples/test1']");
         selectSingleNodeAsserted(relationsElementDocument,
@@ -117,15 +120,17 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId + ":" + 1, taskParam);
         String containerWithRelations = retrieve(this.containerId);
         Document containerWithRelationsDocument = EscidocAbstractTest.getDocument(containerWithRelations);
-        NodeList relations = selectNodeList(containerWithRelationsDocument, "/container/relations/relation");
-        assertEquals("Number of relations is wrong ", relations.getLength(), 1);
+        NodeList relationsNode = selectNodeList(containerWithRelationsDocument, "/container/relations/relation");
+        assertEquals("Number of relations is wrong ", relationsNode.getLength(), 1);
 
         NodeList relationTargets =
             selectNodeList(containerWithRelationsDocument, "/container/relations/relation/@href");
@@ -164,13 +169,15 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId, taskParam);
         lastModDate = getTheLastModificationParam(this.containerId);
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         try {
             addContentRelations(this.containerId, taskParam);
             fail("No exception occurred on added an existing relation to " + "the item");
@@ -191,10 +198,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     public void testAddRelationWithNonExistingPredicate() throws Exception {
 
         String targetId = createContainer();
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, "bla");
+        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, "bla");
 
         try {
             addContentRelations(this.containerId, taskParam);
@@ -216,10 +225,13 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     public void testAddRelationWithNonExistingTarget() throws Exception {
 
         String targetId = "bla";
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         try {
             addContentRelations(this.containerId, taskParam);
@@ -243,11 +255,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
 
-        String taskParam = getRelationTaskParameter(lastModDate, targets, "bla");
+        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, "bla");
 
         try {
             addContentRelations(this.containerId, taskParam);
@@ -270,10 +283,13 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     public void testAddRelationWithoutId() throws Exception {
 
         String targetId = createContainer();
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         try {
             addContentRelations(null, taskParam);
@@ -313,11 +329,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     @Test
     public void testAddRelationWithTargetContainingVersionNumber() throws Exception {
 
-        Vector<String> targets = new Vector<String>();
-        targets.add("escidoc:123:1");
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation("escidoc:123:1", null));
 
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         try {
             addContentRelations(this.containerId, taskParam);
@@ -339,15 +356,18 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     public void testRemoveRelation() throws Exception {
 
         String targetId = createContainer();
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId, taskParam);
 
         lastModDate = getTheLastModificationParam(this.containerId);
 
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         removeContentRelations(this.containerId, taskParam);
         String containerWithoutContentRelations = retrieve(this.containerId);
         assertXmlValidContainer(containerWithoutContentRelations);
@@ -355,11 +375,11 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
             EscidocAbstractTest.getDocument(containerWithoutContentRelations);
         // assert that the /relations element is still delivered (even if it is
         // empty)
-        Node relations = selectSingleNode(containerWithoutContentRelationsDoc, "/container/relations");
-        assertNotNull("/relations elements has to exist", relations);
+        Node relationsNode = selectSingleNode(containerWithoutContentRelationsDoc, "/container/relations");
+        assertNotNull("/relations elements has to exist", relationsNode);
 
-        relations = selectSingleNode(containerWithoutContentRelationsDoc, "/container/relations/relation");
-        assertNull("relations may not exist", relations);
+        relationsNode = selectSingleNode(containerWithoutContentRelationsDoc, "/container/relations/relation");
+        assertNull("relations may not exist", relationsNode);
     }
 
     /**
@@ -373,18 +393,20 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId, taskParam);
 
         lastModDate = getTheLastModificationParam(this.containerId);
 
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         removeContentRelations(this.containerId, taskParam);
         lastModDate = getTheLastModificationParam(this.containerId);
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         try {
             removeContentRelations(this.containerId, taskParam);
             fail("No exception occurred on remove a already deleted relation");
@@ -407,13 +429,15 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         String targetId = createContainer();
         String sourceId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(sourceId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(sourceId, taskParam);
         lastModDate = getTheLastModificationParam(this.containerId);
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         try {
             removeContentRelations(this.containerId, taskParam);
             fail("No exception occurred on remove an relation with a" + " wrong source");
@@ -458,10 +482,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = getObjidValue(getDocument(xml));
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         String addedRelations = addContentRelations(this.containerId, taskParam);
 
         String relationId = "/ir/container/" + targetId;
@@ -480,7 +506,7 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         assertXmlExists("relation missing", container, "/container/relations[count(./relation) = '0']");
 
         lastModDate = getLastModificationDateValue(container);
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId, taskParam);
         String containerXml = retrieve(this.containerId);
 
@@ -504,13 +530,15 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = getObjidValue(getDocument(xml));
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         String addedRelations = addContentRelations(this.containerId, taskParam);
         lastModDate = getTheLastModificationParam(this.containerId);
-        taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         try {
             addedRelations = addContentRelations(this.containerId, taskParam);
             fail("No exception occurred on added an existing relation to the container");
@@ -527,10 +555,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     @Test
     public void testRemoveNonExistingRelation() throws Exception {
 
-        Vector<String> ids = new Vector<String>();
-        ids.add("bla");
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation("bla", null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, ids, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         try {
             removeContentRelations(this.containerId, taskParam);
             fail("No exception occurred on remove of a nonexising relation.");
@@ -550,7 +580,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
     @Test
     public void testRelationsWithVersionedContainer() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.containerXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.containerXml)), null);
 
         submit(this.containerId, param);
 
@@ -558,10 +589,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
             getObjidValue(create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_WithoutMembers_v1.1.xml")));
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         // add cr (updated to version 2)
         addContentRelations(this.containerId, taskParam);
@@ -674,10 +707,12 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         String resultXml = addContentRelations(this.containerId + ":" + 1, taskParam);
         assertXmlValidResult(resultXml);
@@ -702,17 +737,20 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
 
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, null);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
 
         String resultXml = addContentRelations(this.containerId + ":" + 1, taskParam);
         assertXmlValidResult(resultXml);
         Document resultDoc = EscidocAbstractTest.getDocument(resultXml);
         String lmdAddContent = getLastModificationDateValue(resultDoc);
 
-        taskParam = getRelationTaskParameter(lmdAddContent, targets, null);
+        taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lmdAddContent, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         resultXml = removeContentRelations(this.containerId, taskParam);
 
         assertXmlValidResult(resultXml);
@@ -735,13 +773,14 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
      *             If anything fails.
      */
     private void addRelation(final String objectId, final String predicate) throws Exception {
-
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, predicate));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, predicate);
+        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate,
+                TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId + ":" + 1, taskParam);
     }
 
@@ -752,13 +791,13 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
      * @throws Exception
      */
     private void addRelationToLatestVersion(final String objectId, final String predicate) throws Exception {
-
         String targetId = createContainer();
 
-        Vector<String> targets = new Vector<String>();
-        targets.add(targetId);
+        List<TaskParamFactory.Relation> relations = new ArrayList<TaskParamFactory.Relation>(1);
+        relations.add(new TaskParamFactory.Relation(targetId, null));
+
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = getRelationTaskParameter(lastModDate, targets, predicate);
+        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate, predicate);
         addContentRelations(this.containerId, taskParam);
     }
 

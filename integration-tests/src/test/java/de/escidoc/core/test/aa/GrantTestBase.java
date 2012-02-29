@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNot
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserGroupNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -316,10 +317,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
 
-        Object result =
-            client.revokeGrants(id, de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter />"
-                + "<revocation-remark>some remark</revocation-remark></param>");
+        Object result = client.revokeGrants(id, TaskParamFactory.getRevokeGrantsTaskParam(null, "some remark"));
         String resultStr = handleResult(result);
         assertNumberOfGrants(id, 0);
         return resultStr;
@@ -552,7 +550,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
             String grantXml = retrieveGrant(id, grantId);
             Document document = EscidocAbstractTest.getDocument(grantXml);
             final DateTime lastModificationDate = getLastModificationDateValue2(document);
-            taskParamXml = getRevokeGrantTaskParam(lastModificationDate, "Some revocation\n remark");
+            taskParamXml = TaskParamFactory.getRevokeGrantTaskParam(lastModificationDate, "Some revocation\n remark");
         }
         catch (final Exception e) {
             throw new Exception("couldnt retrieve grant");
@@ -738,7 +736,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
         String result = retrieve(handlerCodeInt, idToLockUnlock);
         Document document = EscidocAbstractTest.getDocument(result);
-        String taskParam = getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
+        String taskParam = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
 
         //test locking the object
         try {
@@ -769,7 +767,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
         result = retrieve(handlerCodeInt, idToLockUnlock);
         document = EscidocAbstractTest.getDocument(result);
-        taskParam = getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
+        taskParam = TaskParamFactory.getOptimisticLockingTaskParam(getLastModificationDateValue2(document));
         //unlock
         try {
             PWCallback.setHandle(handle);
@@ -843,7 +841,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
 
             //add as member
             getContainerClient().addMembers(containerId,
-                getMembersTaskParam(getLastModificationDateValue2(document), ids));
+                TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(document)));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }

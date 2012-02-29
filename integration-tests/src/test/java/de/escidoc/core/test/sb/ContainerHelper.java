@@ -29,7 +29,11 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
+import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.om.container.ContainerTestBase;
+
+import java.net.URL;
 
 /**
  * Call the Container-Service.
@@ -128,16 +132,16 @@ public class ContainerHelper extends ContainerTestBase {
      */
     public String assignVersionPid(final String id) throws Exception {
 
-        String pidParam = null;
+        String lmd = null;
         try {
-            pidParam =
-                "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(id))) + "\" >"
-                    + "<url>http://escidoc.de</url>" + "</param>";
+            lmd = getLastModificationDateValue(EscidocAbstractTest.getDocument(retrieve(id)));
         }
         catch (final RuntimeException e) {
             EscidocAbstractTest.failException("Failed to retrieve last modification date of item " + id, e);
         }
+
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(new AssignParam(new URL("http://escidoc.de"), null), lmd);
         return super.assignVersionPid(id, pidParam);
     }
 

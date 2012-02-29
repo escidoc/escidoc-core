@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.item;
 import java.net.URL;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -92,7 +93,7 @@ public class ItemReleaseOaiIT extends ItemTestBase {
             for (int i = 0; i < 20; i++) {
                 try {
                     setUp();
-                    submit(theItemId, getStatusTaskParam(
+                    submit(theItemId, TaskParamFactory.getStatusTaskParam(
                         getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
                     String pidParam;
                     if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
@@ -101,8 +102,8 @@ public class ItemReleaseOaiIT extends ItemTestBase {
                         AssignParam assignPidParam = new AssignParam();
                         assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
                         pidParam =
-                            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                                assignPidParam);
+                            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                                getLastModificationDateValue2(getDocument(retrieve(this.theItemId))));
 
                         assignObjectPid(this.theItemId, pidParam);
                     }
@@ -114,13 +115,13 @@ public class ItemReleaseOaiIT extends ItemTestBase {
                         AssignParam assignPidParam = new AssignParam();
                         assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
                         pidParam =
-                            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                                assignPidParam);
+                            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                                getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
                         assignVersionPid(latestVersion, pidParam);
                     }
 
-                    release(theItemId, getStatusTaskParam(
+                    release(theItemId, TaskParamFactory.getStatusTaskParam(
                         getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
                 }
                 catch (Exception e) {

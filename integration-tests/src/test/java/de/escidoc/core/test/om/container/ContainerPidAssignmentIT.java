@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -123,7 +124,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
 
         String resultXml =
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
@@ -132,7 +133,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId + "/" + System.nanoTime()));
-            pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+            pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmd, DateTimeZone.UTC));
 
             objectPidXml = assignObjectPid(this.theContainerId, pidParam);
             assertXmlValidResult(objectPidXml);
@@ -142,7 +143,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
             && !getContainerClient().getPidConfig("cmm.Container.versionPid.releaseWithoutPid", "false")) {
 
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theContainerId + "/" + System.nanoTime()));
-            pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+            pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmd, DateTimeZone.UTC));
 
             versionPidXml = assignVersionPid(this.theContainerId, pidParam);
             assertXmlValidResult(versionPidXml);
@@ -182,14 +183,14 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         String lmd = null;
 
         String resultXml =
-            submit(theContainerId, getStatusTaskParam(
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
                 getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + this.theContainerId + "/" + System.nanoTime()));
-        String pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+        String pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmd, DateTimeZone.UTC));
 
         objectPidXml = assignObjectPid(theContainerId, pidParam);
         assertXmlValidResult(resultXml);
@@ -204,7 +205,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         // re-assign objectPid to a Container ----------------------------
         assignPidParam.setUrl(new URL(this.containerUrl + this.theContainerId + "/" + System.nanoTime()));
-        pidParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+        pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmd, DateTimeZone.UTC));
 
         try {
             assignObjectPid(theContainerId, pidParam);
@@ -232,7 +233,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + this.theContainerId + "/" + System.nanoTime()));
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
         pid = assignObjectPid(theContainerId, pidParam);
 
@@ -248,8 +250,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         try {
             assignPidParam.setUrl(new URL("http://escidoc.de/container/resource"));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(EscidocAbstractTest
-                    .getDocument(retrieve(theContainerId))), assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(EscidocAbstractTest.getDocument(retrieve(theContainerId))));
 
             pid = assignObjectPid(theContainerId, pidParam);
             fail("InvalidStatusException expected.");
@@ -284,7 +286,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         pid = assignVersionPid(theContainerId + VERSION_SUFFIX_SEPARATOR + "2", pidParam);
         assertNotNull(pid);
@@ -311,7 +314,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
         try {
             pid = assignVersionPid(versionId, pidParam);
 
@@ -379,7 +383,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
         try {
             assignVersionPid(versionId, pidParam);
             fail("ReadonlyVersionException expected.");
@@ -417,7 +422,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         try {
             assignVersionPid(versionId, pidParam);
@@ -493,7 +499,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid("");
-        String taskParam = getAssignPidTaskParam(new DateTime(lmd, DateTimeZone.UTC), assignPidParam);
+        String taskParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmd, DateTimeZone.UTC));
 
         Class<?> ec = XmlCorruptedException.class;
 
@@ -521,7 +527,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid("");
-        String taskParam = getAssignPidTaskParam(lmd, assignPidParam);
+        String taskParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
         Class<?> ec = XmlCorruptedException.class;
 
@@ -558,7 +564,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(theContainerXml)));
 
         pid = assignObjectPid(theContainerId, pidParam);
 
@@ -593,13 +600,14 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         // release Container and assign PID
         // ----------------------------------------
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))));
 
         pid = assignObjectPid(theContainerId, pidParam);
 
@@ -639,22 +647,23 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(theContainerXml)));
 
         pid = assignObjectPid(theContainerId, pidParam);
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         // assign version PID
         assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
         assertXmlValidResult(assignVersionPid(theContainerId, pidParam));
 
-        release(theContainerId, getStatusTaskParam(
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         // check if returned pid equals RELS-EXT entry
@@ -684,7 +693,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))));
 
         try {
             pidXml = assignVersionPid(theContainerId, pidParam);
@@ -712,8 +722,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
     @Test
     public void testObjectPidInStatusWithdrawn() throws Exception {
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         theContainerXml = retrieve(theContainerId);
         assertXmlValidContainer(theContainerXml);
 
@@ -721,18 +731,20 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(theContainerXml)), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(theContainerXml)));
 
         assignObjectPid(theContainerId, pidParam);
         String versionId = getLatestVersionId(theContainerXml);
 
         assignPidParam.setUrl(new URL(this.containerUrl + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         assignVersionPid(versionId, pidParam);
 
-        release(theContainerId, getStatusTaskParam(
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
 
         String param = getTheLastModificationParam(true, theContainerId);
@@ -742,8 +754,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         try {
             assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(theContainerId))));
 
             assignObjectPid(theContainerId, pidParam);
             fail("ObjectPid assignment to a withdrawn Container is illegal.");
@@ -772,7 +784,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + containerId));
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(containerDoc), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(containerDoc));
 
         String resultXml = assignObjectPid(containerId, pidParam);
         assertXmlValidResult(resultXml);
@@ -807,7 +820,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + containerId));
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(containerDoc), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(containerDoc));
 
         String resultXml = assignVersionPid(containerId, pidParam);
         assertXmlValidResult(resultXml);
@@ -826,7 +840,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         // now check last-modification-date for the whole assignment chain and
         // for later versions
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
-        pidParam = getAssignPidTaskParam(new DateTime(lmdResult, DateTimeZone.UTC), assignPidParam);
+        pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(lmdResult, DateTimeZone.UTC));
 
         resultXml = assignObjectPid(containerId, pidParam);
         assertXmlValidResult(resultXml);
@@ -834,20 +848,22 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         lmdResult = getLastModificationDateValue(pidDoc);
 
         //resultXml = submit(containerId, getTheLastModificationParam(false, containerId, "comment", lmdResult));
-        resultXml = submit(containerId, getStatusTaskParam(getLastModificationDateValue2(pidDoc), "comment"));
+        resultXml =
+            submit(containerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(pidDoc), "comment"));
         assertXmlValidResult(resultXml);
         pidDoc = EscidocAbstractTest.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
-        release(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))),
-            "comment"));
+        release(containerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(containerId))), "comment"));
         containerXml = retrieve(containerId);
         containerXml = addCtsElement(containerXml);
         containerXml = update(containerId, containerXml);
 
         assignPidParam.setUrl(new URL(this.containerUrl + containerId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(containerId))));
 
         resultXml = assignVersionPid(containerId, pidParam);
         assertXmlValidResult(resultXml);
@@ -874,7 +890,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + this.theContainerId));
-        String pidParam = getAssignPidTaskParam(new DateTime(wrongLmd, DateTimeZone.UTC), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime(wrongLmd, DateTimeZone.UTC));
 
         assignVersionPid(this.theContainerId, pidParam);
     }
@@ -890,7 +907,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(this.containerUrl + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(new DateTime("2008-06-17T18:06:01.515Z", DateTimeZone.UTC), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, new DateTime("2008-06-17T18:06:01.515Z",
+                DateTimeZone.UTC));
 
         assignObjectPid(this.theContainerId, pidParam);
     }
@@ -911,7 +929,8 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
         String pidToRegister = "hdl:testPrefix/" + containerId;
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid(pidToRegister);
-        String pidParam = getAssignPidTaskParam(getLastModificationDateValue2(containerDoc), assignPidParam);
+        String pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(containerDoc));
 
         String pidXML = assignObjectPid(containerId, pidParam);
         compareContainerObjectPid(containerId, pidXML);
@@ -938,7 +957,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
 
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setPid(pidToRegister);
-        String taskParam = getAssignPidTaskParam(lmd, assignPidParam);
+        String taskParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
         String pidXML = assignVersionPid(containerId, taskParam);
         compareContainerVersionPid(containerId, pidXML);

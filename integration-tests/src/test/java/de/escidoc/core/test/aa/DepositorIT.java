@@ -38,6 +38,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFile
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -354,7 +355,7 @@ public class DepositorIT extends GrantTestBase {
         try {
             PWCallback.setHandle(HANDLE);
             getContainerClient().addMembers(containerId,
-                getMembersTaskParam(getLastModificationDateValue2(container), ids));
+                TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(container)));
         }
         finally {
             PWCallback.resetHandle();

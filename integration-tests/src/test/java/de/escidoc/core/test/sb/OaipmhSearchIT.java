@@ -29,6 +29,7 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.joda.time.DateTime;
@@ -128,8 +129,8 @@ public class OaipmhSearchIT extends SearchTestBase {
 
                 // submit container
                 xml =
-                    container.submit(containerIds[i], getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC),
-                        null));
+                    container.submit(containerIds[i], TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                        DateTimeZone.UTC), null));
 
                 // assign pids
                 String pidParam =
@@ -141,8 +142,8 @@ public class OaipmhSearchIT extends SearchTestBase {
                 // release container
                 xml = container.retrieve(containerIds[i]);
                 lastModDate = getLastModificationDate(xml);
-                container.release(containerIds[i],
-                    getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                container.release(containerIds[i], TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                    DateTimeZone.UTC), null));
 
             }
         }
@@ -166,7 +167,9 @@ public class OaipmhSearchIT extends SearchTestBase {
                 String componentId = getComponentObjidValue(itemDoc, 1);
 
                 // submit item
-                xml = item.submit(itemIds[i], getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                xml =
+                    item.submit(itemIds[i], TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                        DateTimeZone.UTC), null));
 
                 // assignPids
                 String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
@@ -184,7 +187,8 @@ public class OaipmhSearchIT extends SearchTestBase {
                 // }
 
                 // release item
-                item.release(itemIds[i], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                item.release(itemIds[i], TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
 
                 if (i % 2 == 0) {
                     xml = item.retrieve(itemIds[i]);
@@ -207,16 +211,16 @@ public class OaipmhSearchIT extends SearchTestBase {
 
             // submit container
             xml =
-                container.submit(containerIds[0], getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                    null));
+                container.submit(containerIds[0], TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
             xml = container.assignVersionPid(containerIds[0] + ":" + version, pidParam);
 
             // release container
-            container.release(containerIds[0],
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            container.release(containerIds[0], TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
 
             xml = container.retrieve(containerIds[0]);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
@@ -927,8 +931,8 @@ public class OaipmhSearchIT extends SearchTestBase {
                 if (itemIds[i] != null && !itemIds[i].equals("")) {
                     String xml = item.retrieve(itemIds[i]);
                     String taskParam =
-                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
-                            "This is a withdraw comment.");
+                        TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                            .getDocument(xml)), "This is a withdraw comment.");
 
                     item.withdraw(itemIds[i], taskParam);
                     // ////////////////////////////////////////////////////////
@@ -956,8 +960,8 @@ public class OaipmhSearchIT extends SearchTestBase {
                 if (containerIds[i] != null && !containerIds[i].equals("")) {
                     String xml = container.retrieve(containerIds[i]);
                     String taskParam =
-                        getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
-                            "This is a withdraw comment.");
+                        TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                            .getDocument(xml)), "This is a withdraw comment.");
 
                     container.withdraw(containerIds[i], taskParam);
                     // ////////////////////////////////////////////////////////

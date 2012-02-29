@@ -29,6 +29,7 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -469,7 +470,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit item
-                item.submit(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                item.submit(objectId, TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
                 xml = item.retrieve(objectId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = item.update(objectId, xml);
@@ -478,8 +480,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                     if (status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        item
-                            .revise(objectId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                        item.revise(objectId, TaskParamFactory.getStatusTaskParam(
+                            getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     else {
                         // assignPids
@@ -498,8 +500,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                         // }
 
                         // release item
-                        item.release(objectId,
-                            getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+                        item.release(objectId, TaskParamFactory.getStatusTaskParam(
+                            getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_WITHDRAWN)
                         && !status.equals(STATUS_IN_REVISION)) {
@@ -510,8 +512,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                     else if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         String taskParam =
-                            getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest.getDocument(xml)),
-                                "This is a withdraw comment.");
+                            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
+                                .getDocument(xml)), "This is a withdraw comment.");
 
                         item.withdraw(objectId, taskParam);
                     }
@@ -524,8 +526,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                     List<String> ids = new ArrayList<String>();
                     ids.add(objectId);
 
-                    container.addMembers(containerIds[i], getMembersTaskParam(
-                        getLastModificationDateValue2(getDocument(xml)), ids));
+                    container.addMembers(containerIds[i], TaskParamFactory.getMembersTaskParam(ids,
+                        getLastModificationDateValue2(getDocument(xml))));
                 }
             }
             return returnHash;
@@ -574,8 +576,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(STATUS_PENDING)) {
                 // submit content-relation
-                contentRelation.submit(resourceId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
-                    null));
+                contentRelation.submit(resourceId, TaskParamFactory.getStatusTaskParam(
+                    getLastModificationDateValue2(getDocument(xml)), null));
                 xml = contentRelation.retrieve(resourceId);
                 xml = xml.replaceAll("Meier", "Meier1");
                 xml = contentRelation.update(resourceId, xml);
@@ -584,13 +586,13 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                     if (status.equals(STATUS_IN_REVISION)) {
                         xml = contentRelation.retrieve(resourceId);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        contentRelation.revise(resourceId, getStatusTaskParam(
+                        contentRelation.revise(resourceId, TaskParamFactory.getStatusTaskParam(
                             getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     else {
                         // release item
                         xml = contentRelation.retrieve(resourceId);
-                        contentRelation.release(resourceId, getStatusTaskParam(
+                        contentRelation.release(resourceId, TaskParamFactory.getStatusTaskParam(
                             getLastModificationDateValue2(getDocument(xml)), null));
                     }
                     if (!status.equals(STATUS_RELEASED) && !status.equals(STATUS_IN_REVISION)) {

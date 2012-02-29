@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRela
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -96,7 +97,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
 
         DateTime t1 = getLastModificationDateValue2(getDocument(this.relationXml));
 
-        String xml = submit(this.relationId, getStatusTaskParam(t1, null));
+        String xml = submit(this.relationId, TaskParamFactory.getStatusTaskParam(t1, null));
         DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
         assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
@@ -119,12 +120,15 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     public void testSubmitAfterRelease() throws Exception {
 
         String xml =
-            submit(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)),
-                null));
-        xml = release(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            submit(this.relationId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(this.relationXml)), null));
+        xml =
+            release(this.relationId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
 
         try {
-            submit(this.relationId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+            submit(this.relationId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(xml)), null));
             fail("No exception on submit of a content relation in " + "a state 'released'");
         }
         catch (final Exception e) {
@@ -141,12 +145,13 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOmSi1_2() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         String xml = submit(this.relationId, param);
 
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
         xml = revise(this.relationId, param);
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
 
         final String revisedLastModificationDate = getLastModificationDateValue(getDocument(xml));
 
@@ -180,7 +185,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     public void testSubmitComment() throws Exception {
 
         String paramXml =
-            getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)),
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)),
                 EscidocTestBase.ENTITY_REFERENCES);
 
         submit(this.relationId, paramXml);
@@ -200,7 +205,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testReleaseBeforeSubmitContentRelation() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             release(this.relationId, param);
@@ -220,7 +226,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testReleaseContentRelation() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
 
         // validate escidoc XML
@@ -232,7 +239,7 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
             + "[text() = 'submitted']");
         assertXmlNotNull("Status comment missing", getDocument(submitXml), XPATH_CONTENT_RELATION_STATUS_COMMENT);
 
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(submitXml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(submitXml)), null);
         release(this.relationId, param);
 
         // validate escidoc XML
@@ -253,12 +260,13 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi1() throws Exception {
 
-        String paramXml = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String paramXml =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         String response = submit(this.relationId, paramXml);
 
         final Document responseDoc = getDocument(response);
         final String submittedLastModificationDate = getLastModificationDateValue(responseDoc);
-        paramXml = getStatusTaskParam(getLastModificationDateValue2(responseDoc), null);
+        paramXml = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(responseDoc), null);
 
         try {
             revise(this.relationId, paramXml);
@@ -283,7 +291,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi2() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             revise(this.relationId, param);
@@ -303,12 +312,13 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi3() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         String xml = submit(this.relationId, param);
 
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
         release(this.relationId, param);
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
 
         try {
             revise(this.relationId, param);
@@ -328,7 +338,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi5() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
 
         try {
             revise(UNKNOWN_ID, param);
@@ -368,7 +379,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi7() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
 
         try {
@@ -389,9 +401,9 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi8() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
-        param = "<param />";
 
         try {
             revise(this.relationId, null);
@@ -411,7 +423,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi9() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
         param = "<param";
 
@@ -433,7 +446,8 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testOMRvi10() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         submit(this.relationId, param);
 
         try {
@@ -522,9 +536,10 @@ public class ContentRelationLifecycleIT extends ContentRelationTestBase {
     @Test
     public void testUpdateAfterReleaseItem() throws Exception {
 
-        String param = getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
+        String param =
+            TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(this.relationXml)), null);
         String xml = submit(this.relationId, param);
-        param = getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
+        param = TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null);
         release(this.relationId, param);
 
         xml = retrieve(this.relationId);

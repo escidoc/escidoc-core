@@ -32,6 +32,7 @@ import java.net.URL;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 
 import org.junit.Before;
@@ -75,18 +76,21 @@ public class ItemContentTransformationIT extends ItemTestBase {
             createdItem = EscidocAbstractTest.getDocument(create(itemXml));
             itemId = getObjidValue(createdItem);
 
-            submit(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            submit(itemId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
             String versionId = itemId + ":1";
 
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
             String pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
             assignVersionPid(versionId, pidParam);
 
-            release(itemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
+            release(itemId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(itemId))), null));
 
             componentNo = 1;
             componentId = getObjidValue(createdItem, "/item/components/component[1]");

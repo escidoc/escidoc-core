@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -178,13 +179,13 @@ public class CollaboratorIT extends GrantTestBase {
 
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(containerId2);
-        getContainerClient().addMembers(containerId, getMembersTaskParam(lastModificationDate, ids));
+        getContainerClient().addMembers(containerId, TaskParamFactory.getMembersTaskParam(ids, lastModificationDate));
 
         //add item to container2
         lastModificationDate = getLastModificationDateValue2(containerDocument2);
         ids = new ArrayList<String>();
         ids.add(itemId);
-        getContainerClient().addMembers(containerId2, getMembersTaskParam(lastModificationDate, ids));
+        getContainerClient().addMembers(containerId2, TaskParamFactory.getMembersTaskParam(ids, lastModificationDate));
 
         //update item to create new version
         itemXml = itemXml.replaceAll("semiconductor surfaces", "semiconductor surfaces u");

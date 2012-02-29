@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -44,7 +45,7 @@ import org.w3c.dom.NodeList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Test suite for the role user-group-administrator. user-group-administrator may -create user-group -see user-groups
@@ -190,14 +191,12 @@ public class UserGroupAdminIT extends GrantTestBase {
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId, null);
         Document groupDocument = EscidocAbstractTest.getDocument(groupXml);
         String lastModificationDate = getLastModificationDateValue(groupDocument);
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        String[] selector = new String[3];
-        selector[0] = "user-account";
-        selector[1] = "internal";
-        selector[2] = TEST_USER_ACCOUNT_ID1;
 
-        selectors.add(selector);
-        String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            TEST_USER_ACCOUNT_ID1));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         userGroupTestBase.doTestAddSelectors(HANDLE, groupId, taskParam, null);
 
     }
@@ -212,14 +211,12 @@ public class UserGroupAdminIT extends GrantTestBase {
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId1, null);
         Document groupDocument = EscidocAbstractTest.getDocument(groupXml);
         String lastModificationDate = getLastModificationDateValue(groupDocument);
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        String[] selector = new String[3];
-        selector[0] = "user-account";
-        selector[1] = "internal";
-        selector[2] = TEST_USER_ACCOUNT_ID1;
 
-        selectors.add(selector);
-        String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            TEST_USER_ACCOUNT_ID1));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         userGroupTestBase.doTestAddSelectors(HANDLE, groupId1, taskParam, AuthorizationException.class);
 
     }
@@ -237,14 +234,14 @@ public class UserGroupAdminIT extends GrantTestBase {
         // /user-group/selector);
         NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
 
-        Vector<String> selectorsToRemove = new Vector<String>();
+        List<String> selectorsToRemove = new ArrayList<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
             selectorId = getIdFromHrefValue(selectorId);
             selectorsToRemove.add(selectorId);
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);
-        String taskParam = userGroupTestBase.getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
+        String taskParam = TaskParamFactory.getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
         userGroupTestBase.doTestRemoveSelectors(HANDLE, groupId, taskParam, null);
 
     }
@@ -260,14 +257,12 @@ public class UserGroupAdminIT extends GrantTestBase {
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId1, null);
         Document groupDocument = EscidocAbstractTest.getDocument(groupXml);
         String lastModificationDate = getLastModificationDateValue(groupDocument);
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        String[] selector = new String[3];
-        selector[0] = "user-account";
-        selector[1] = "internal";
-        selector[2] = TEST_USER_ACCOUNT_ID1;
 
-        selectors.add(selector);
-        String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            TEST_USER_ACCOUNT_ID1));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         groupXml = userGroupTestBase.doTestAddSelectors(null, groupId1, taskParam, null);
 
         //then try to remove selector
@@ -276,14 +271,14 @@ public class UserGroupAdminIT extends GrantTestBase {
         // /user-group/selector);
         NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
 
-        Vector<String> selectorsToRemove = new Vector<String>();
+        List<String> selectorsToRemove = new ArrayList<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
             selectorId = getIdFromHrefValue(selectorId);
             selectorsToRemove.add(selectorId);
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);
-        taskParam = userGroupTestBase.getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
+        taskParam = TaskParamFactory.getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
         userGroupTestBase.doTestRemoveSelectors(HANDLE, groupId1, taskParam, AuthorizationException.class);
 
     }

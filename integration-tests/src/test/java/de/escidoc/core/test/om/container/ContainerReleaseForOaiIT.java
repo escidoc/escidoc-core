@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 
 import org.apache.http.HttpResponse;
@@ -86,9 +87,10 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
             String lmdSubCont = getLastModificationDateValue(getDocument(xmlData));
 
             lmdSubCont = prepareContainerPid(subContainerId, lmdSubCont);
-            String param = getTheLastModificationParam(false, this.theContainerId, "", lmdSubCont);
-            submit(subContainerId, getStatusTaskParam(
-                getLastModificationDateValue2(getDocument(retrieve(subContainerId))), null));
+            String param = TaskParamFactory.getStatusTaskParam(lmdSubCont, null);
+            submit(subContainerId, param);
+            // TODO: delete this line if successful:
+            // TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(subContainerId))
 
             // prepare the Container it self to release
             param = getTheLastModificationParam(false, theContainerId, "");
@@ -99,7 +101,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
             // release the Container
             String containerLmd = getTheLastModificationDate(this.theContainerId);
             containerLmd = prepareContainerPid(this.theContainerId, containerLmd);
-            param = getTheLastModificationParam(false, this.theContainerId, "", containerLmd);
+            param = TaskParamFactory.getStatusTaskParam(containerLmd, null);
             resultXml = release(theContainerId, param);
             assertXmlValidResult(resultXml);
             lmd = getLastModificationDateValue(getDocument(resultXml));
@@ -188,7 +190,7 @@ public class ContainerReleaseForOaiIT extends ContainerTestBase {
      */
     private String submitItemHelp(final String itemId, final String lmd) throws Exception {
 
-        String param = getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null);
+        String param = TaskParamFactory.getStatusTaskParam(new DateTime(lmd, DateTimeZone.UTC), null);
 
         Object result = getItemClient().submit(itemId, param);
         if (result instanceof HttpResponse) {

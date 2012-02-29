@@ -30,6 +30,7 @@ package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -537,7 +538,7 @@ public class ItemClient extends ClientBase
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + id));
-                String pidParam = EscidocTestBase.getAssignPidTaskParam(lmd, assignPidParam);
+                String pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
                 pidXml = handleXmlResult(assignObjectPid(id, pidParam));
 
@@ -560,7 +561,7 @@ public class ItemClient extends ClientBase
 
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + versionId));
-                String pidParam = EscidocTestBase.getAssignPidTaskParam(lmd, assignPidParam);
+                String pidParam = TaskParamFactory.getAssignPidTaskParam(assignPidParam, lmd);
 
                 pidXml = handleResult(assignVersionPid(versionId, pidParam));
 
@@ -569,7 +570,7 @@ public class ItemClient extends ClientBase
             }
         }
 
-        String param = EscidocTestBase.getStatusTaskParam(lmd, null);
+        String param = TaskParamFactory.getStatusTaskParam(lmd, null);
 
         PWCallback.setHandle(creatorUserHandle);
         // now the actually method: release

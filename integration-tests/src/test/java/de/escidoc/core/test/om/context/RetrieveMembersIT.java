@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -154,7 +155,7 @@ public class RetrieveMembersIT extends ContextTestBase {
 
         }
         else if (CONTEXT_STATUS_OPENED.equals(expectedState)) {
-            open(objId, getStatusTaskParam(getLastModificationDateValue2(created), null));
+            open(objId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(created), null));
         }
         else if (CONTEXT_STATUS_CLOSED.equals(expectedState)) {
             // open(objId, getTaskParam(getLastModificationDateValue(created)));
@@ -200,22 +201,23 @@ public class RetrieveMembersIT extends ContextTestBase {
         }
         else if (STATUS_SUBMITTED.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
+            itemBase.submit(result, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(item), null));
         }
         else if (STATUS_RELEASED.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
+            itemBase.submit(result, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(item), null));
             log("Release item '" + result + "'");
             itemBase.releaseWithPid(result);
         }
         else if (STATUS_WITHDRAWN.equals(expectedState)) {
             log("Submit item '" + result + "'");
-            itemBase.submit(result, getStatusTaskParam(getLastModificationDateValue2(item), null));
+            itemBase.submit(result, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(item), null));
             log("Release item '" + result + "'");
             itemBase.releaseWithPid(result);
             log("Withdraw item '" + result + "'");
-            itemBase.withdraw(result, getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
-                .getDocument(itemBase.retrieve(result))), "Withdrawn for Context retrieve members tests!"));
+            itemBase.withdraw(result, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(itemBase.retrieve(result))),
+                "Withdrawn for Context retrieve members tests!"));
         }
         else {
             throw new Exception(expectedState + " is no valid item status!");
@@ -260,23 +262,27 @@ public class RetrieveMembersIT extends ContextTestBase {
         }
         else if (STATUS_SUBMITTED.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
+            containerBase.submit(objID, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(container),
+                null));
         }
         else if (STATUS_RELEASED.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
+            containerBase.submit(objID, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(container),
+                null));
             log("Release container '" + objID + "'");
             containerBase.releaseWithPid(objID);
         }
         else if (STATUS_WITHDRAWN.equals(expectedState)) {
             log("Submit container '" + objID + "'");
-            containerBase.submit(objID, getStatusTaskParam(getLastModificationDateValue2(container), null));
+            containerBase.submit(objID, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(container),
+                null));
             log("Release container '" + objID + "'");
 
             containerBase.releaseWithPid(objID);
             log("Withdraw container '" + objID + "'");
-            containerBase.withdraw(objID, getStatusTaskParam(getLastModificationDateValue2(EscidocAbstractTest
-                .getDocument(containerBase.retrieve(objID))), "Withdrawn for Context retrieve members tests!"));
+            containerBase.withdraw(objID, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(EscidocAbstractTest.getDocument(containerBase.retrieve(objID))),
+                "Withdrawn for Context retrieve members tests!"));
         }
         else {
             throw new Exception(expectedState + " is no valid container status!");

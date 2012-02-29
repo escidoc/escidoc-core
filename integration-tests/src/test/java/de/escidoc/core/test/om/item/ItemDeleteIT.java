@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
@@ -128,8 +129,8 @@ public class ItemDeleteIT extends ItemTestBase {
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
-        submit(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-            null));
+        submit(this.theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(this.theItemId))), null));
 
         String pidParam;
         if (getItemClient().getPidConfig("cmm.Item.objectPid.setPidBeforeRelease", "true")
@@ -138,8 +139,8 @@ public class ItemDeleteIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theItemId))));
 
             assignObjectPid(this.theItemId, pidParam);
         }
@@ -151,14 +152,14 @@ public class ItemDeleteIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
-            null));
+        release(this.theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);
@@ -183,7 +184,8 @@ public class ItemDeleteIT extends ItemTestBase {
         String itemXml = create(xml);
         this.theItemId = getObjidValue(itemXml);
 
-        submit(this.theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(itemXml)), null));
+        submit(this.theItemId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(itemXml)),
+            null));
         Class<?> ec = InvalidStatusException.class;
         try {
             delete(this.theItemId);

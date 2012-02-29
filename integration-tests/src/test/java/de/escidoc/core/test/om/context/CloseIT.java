@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.context;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocAbstractTest;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.joda.time.DateTime;
@@ -75,7 +76,8 @@ public class CloseIT extends ContextTestBase {
         String lastModified = getLastModificationDateValue(createdDoc);
 
         // open Context
-        String resultXml = open(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        String resultXml =
+            open(id, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
         String opened = retrieve(id);
         assertXmlValidResult(resultXml);
         Document resultDoc = EscidocAbstractTest.getDocument(resultXml);
@@ -85,7 +87,7 @@ public class CloseIT extends ContextTestBase {
         lastModified = getLastModificationDateValue(createdDoc);
 
         // close Context
-        resultXml = close(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        resultXml = close(id, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
         assertXmlValidResult(resultXml);
         resultDoc = EscidocAbstractTest.getDocument(resultXml);
         String lmdResultClose = getLastModificationDateValue(resultDoc);
@@ -124,12 +126,12 @@ public class CloseIT extends ContextTestBase {
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
-        open(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        open(id, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
         String opened = retrieve(id);
 
         createdDoc = EscidocAbstractTest.getDocument(opened);
         lastModified = getLastModificationDateValue(createdDoc);
-        close(id, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        close(id, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
 
         String xmlData =
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
@@ -158,7 +160,7 @@ public class CloseIT extends ContextTestBase {
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String contextId = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
-        open(contextId, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        open(contextId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
         String opened = retrieve(contextId);
 
         String xmlData =
@@ -176,7 +178,7 @@ public class CloseIT extends ContextTestBase {
         // close Context ------
         createdDoc = EscidocAbstractTest.getDocument(retrieve(contextId));
         lastModified = getLastModificationDateValue(createdDoc);
-        close(contextId, getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        close(contextId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
 
         // alter Item ----
         itemXml = addCtsElement(itemXml);

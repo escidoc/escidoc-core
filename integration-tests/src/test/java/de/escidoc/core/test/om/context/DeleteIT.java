@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -109,7 +110,7 @@ public class DeleteIT extends ContextTestBase {
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModification = getLastModificationDateValue(createdDoc);
-        open(id, getStatusTaskParam(new DateTime(lastModification, DateTimeZone.UTC), null));
+        open(id, TaskParamFactory.getStatusTaskParam(new DateTime(lastModification, DateTimeZone.UTC), null));
         delete(id);
     }
 }

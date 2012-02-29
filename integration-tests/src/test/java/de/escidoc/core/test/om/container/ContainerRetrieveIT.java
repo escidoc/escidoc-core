@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -185,7 +186,8 @@ public class ContainerRetrieveIT extends ContainerTestBase {
 
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(secondContainerId);
-        addMembers(theContainerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
+        addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+            getLastModificationDateValue2(containerDoc)));
 
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
@@ -204,8 +206,8 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         String secondItemId = createItem();
         ids = new ArrayList<String>();
         ids.add(secondItemId);
-        addMembers(theContainerId, getMembersTaskParam(
-            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), ids));
+        addMembers(theContainerId, TaskParamFactory.getMembersTaskParam(ids,
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId)))));
 
         smMembersList = getStructMapMembers(retrieve(this.theContainerId));
         mlMembersList = getMemberListMembers(retrieveMembers(this.theContainerId, new HashMap<String, String[]>()));
@@ -574,8 +576,8 @@ public class ContainerRetrieveIT extends ContainerTestBase {
 
         List<String> paramIds = new ArrayList<String>();
         paramIds.addAll(ids);
-        addMembers(containerId, getMembersTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))),
-            paramIds));
+        addMembers(containerId, TaskParamFactory.getMembersTaskParam(paramIds,
+            getLastModificationDateValue2(getDocument(retrieve(containerId)))));
 
         // check if retrieveMembers contains exactly the kind of objects -------
         String memberListXml = retrieveMembers(containerId, new HashMap<String, String[]>());

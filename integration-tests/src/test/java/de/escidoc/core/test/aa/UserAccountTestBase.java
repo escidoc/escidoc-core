@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyActiveException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeactiveException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -560,7 +561,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.activate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -594,7 +595,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             String userAccountXml = handleResult(userAccountClient.retrieve(accountId));
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.deactivate(accountId, taskParamXml);
         }
         catch (final AlreadyDeactiveException e) {
@@ -607,7 +608,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.activate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -627,7 +628,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
                 final DateTime lastModificationDate =
                     getLastModificationDateValue2(EscidocAbstractTest.getDocument(handleResult(userAccountClient
                         .retrieve(accountId))));
-                String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+                String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
                 userAccountClient.deactivate(accountId, taskParamXml);
             }
         }
@@ -655,7 +656,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(createdUserAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.deactivate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -690,7 +691,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             String userAccountXml = handleResult(userAccountClient.retrieve(accountId));
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.activate(accountId, taskParamXml);
             wasActive = false;
         }
@@ -703,7 +704,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             final DateTime lastModificationDate =
                 getLastModificationDateValue2(EscidocAbstractTest.getDocument(userAccountXml));
-            String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+            String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
             userAccountClient.deactivate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
@@ -723,7 +724,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
                 final DateTime lastModificationDate =
                     getLastModificationDateValue2(EscidocAbstractTest.getDocument(handleResult(userAccountClient
                         .retrieve(accountId))));
-                String taskParamXml = getOptimisticLockingTaskParam(lastModificationDate);
+                String taskParamXml = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
                 userAccountClient.activate(accountId, taskParamXml);
             }
         }
@@ -744,7 +745,8 @@ public abstract class UserAccountTestBase extends AaTestBase {
 
         try {
             PWCallback.setHandle(userHandle);
-            userAccountClient.updatePassword(userId, getUpdatePasswordTaskParam(new DateTime(lmd), "escidoc"));
+            userAccountClient.updatePassword(userId, TaskParamFactory.getUpdatePasswordTaskParam(new DateTime(lmd),
+                "escidoc"));
             if (expectedExceptionClass != null) {
                 EscidocAbstractTest.failMissingException(expectedExceptionClass);
             }
@@ -915,7 +917,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
 
         // open ou
         try {
-            getOrganizationalUnitClient().open(ouId, getStatusTaskParam(lastModDate, null));
+            getOrganizationalUnitClient().open(ouId, TaskParamFactory.getStatusTaskParam(lastModDate, null));
         }
         catch (final Exception e) {
             failException("Init: OU open failed. [" + ouId + "]", e);
@@ -925,7 +927,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
         try {
             orgUnitXml = handleXmlResult(getOrganizationalUnitClient().retrieve(ouId));
             lastModDate = getLastModificationDateValue2(getDocument(orgUnitXml));
-            getOrganizationalUnitClient().close(ouId, getStatusTaskParam(lastModDate, null));
+            getOrganizationalUnitClient().close(ouId, TaskParamFactory.getStatusTaskParam(lastModDate, null));
         }
         catch (final Exception e) {
             failException("Init: OU close failed.", e);

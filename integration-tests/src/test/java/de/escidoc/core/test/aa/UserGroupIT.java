@@ -39,6 +39,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import org.junit.After;
 import org.junit.Before;
@@ -47,12 +48,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Vector;
-
-import org.joda.time.DateTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -317,7 +318,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
+        String taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
         try {
             deactivate(id, taskParamXML);
@@ -337,7 +338,7 @@ public class UserGroupIT extends UserGroupTestBase {
             assertDeactiveUserGroup(retrievedUserGroupXML, createdXml, startTimestamp, beforeDeactivationTimestamp,
                 true);
         lastModificationDate = getLastModificationDateValue2(retrievedDeactivatedDocument);
-        taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
+        taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
 
         final String beforeActivationTimestamp = getNowAsTimestamp();
 
@@ -370,7 +371,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug2() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -388,7 +390,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug2_2() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -406,7 +409,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAAAug3() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             activate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -427,7 +431,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
+        final String taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             activate(id, taskParamXML);
@@ -470,7 +474,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final String createdXml = toString(createdDocument, false);
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
+        final String taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
 
         final String beforeDeactivationTimestamp = getNowAsTimestamp();
 
@@ -504,7 +508,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug2() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(UNKNOWN_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -522,7 +527,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug2_2() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(CONTEXT_ID, taskParamXML);
             EscidocAbstractTest.failMissingException(UserGroupNotFoundException.class);
@@ -540,7 +546,8 @@ public class UserGroupIT extends UserGroupTestBase {
     @Test
     public void testAADug3() throws Exception {
 
-        final String taskParamXML = getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
+        final String taskParamXML =
+            TaskParamFactory.getOptimisticLockingTaskParam(new DateTime("2007-01-01T01:01:01.111Z"));
         try {
             deactivate(null, taskParamXML);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
@@ -561,7 +568,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
+        String taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         String xmlData = null;
         try {
@@ -581,7 +588,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document document = EscidocAbstractTest.getDocument(xmlData);
         assertXmlExists("Last modification date does not exist. ", createdDocument, XPATH_USER_GROUP_LAST_MOD_DATE);
         lastModificationDate = selectSingleNode(document, XPATH_USER_GROUP_LAST_MOD_DATE).getTextContent();
-        taskParamXML = getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
+        taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(new DateTime(lastModificationDate));
 
         try {
             deactivate(id, taskParamXML);
@@ -997,7 +1004,7 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         final DateTime lastModificationDate = getLastModificationDateValue2(createdDocument);
-        final String taskParamXML = getOptimisticLockingTaskParam(lastModificationDate);
+        final String taskParamXML = TaskParamFactory.getOptimisticLockingTaskParam(lastModificationDate);
 
         try {
             deactivate(id, taskParamXML);
@@ -1677,18 +1684,15 @@ public class UserGroupIT extends UserGroupTestBase {
         final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String[] selector1 = new String[3];
-        selector1[0] = "o";
-        selector1[1] = "user-attribute";
-        selector1[2] = "escidoc:persistent1";
-        String[] selector2 = new String[3];
-        selector2[0] = "user-account";
-        selector2[1] = "internal";
-        selector2[2] = "escidoc:testsystemadministrator";
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
-        selectors.add(selector2);
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+            "escidoc:persistent1"));
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            "escidoc:testsystemadministrator"));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
+
         addSelectors(id, taskParam);
         delete(id);
         try {
@@ -1709,18 +1713,15 @@ public class UserGroupIT extends UserGroupTestBase {
         assertEquals("User-group members can not exist on user-group create", 0, selectorNodes.getLength());
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String[] selector1 = new String[3];
-        selector1[0] = "o";
-        selector1[1] = "user-attribute";
-        selector1[2] = "escidoc:persistent1";
-        String[] selector2 = new String[3];
-        selector2[0] = "user-account";
-        selector2[1] = "internal";
-        selector2[2] = "escidoc:testsystemadministrator";
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
-        selectors.add(selector2);
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+            "escidoc:persistent1"));
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            "escidoc:testsystemadministrator"));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
+
         String groupXml = addSelectors(id, taskParam);
         Document groupAfterAddMembers = getDocument(groupXml);
         NodeList selectorNodesAfterAdd = selectNodeList(groupAfterAddMembers, "/user-group/selectors/selector/@href");
@@ -1735,25 +1736,23 @@ public class UserGroupIT extends UserGroupTestBase {
 
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        String[] selector1 = new String[3];
-        selector1[0] = "o";
-        selector1[1] = "user-attribute";
-        selector1[2] = "escidoc:persistent1";
-        String[] selector2 = new String[3];
-        selector2[0] = "user-account";
-        selector2[1] = "internal";
-        selector2[2] = "escidoc:testsystemadministrator";
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
-        selectors.add(selector2);
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+            "escidoc:persistent1"));
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            "escidoc:testsystemadministrator"));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
+
         String groupXml = addSelectors(id, taskParam);
         Document userGroupDoc = getDocument(groupXml);
         String objid = getObjidValue(userGroupDoc);
         // NodeList selectorNodes = selectNodeList(userGroupDoc,
         // /user-group/selector);
         NodeList selectorNodes = selectNodeList(userGroupDoc, "/user-group/selectors/selector/@href");
-        Vector<String> selectorsToRemove = new Vector<String>();
+
+        List<String> selectorsToRemove = new ArrayList<String>();
         for (int i = 0; i < selectorNodes.getLength(); i++) {
             String selectorId = selectorNodes.item(i).getNodeValue();
             selectorId = getIdFromHrefValue(selectorId);
@@ -1761,7 +1760,7 @@ public class UserGroupIT extends UserGroupTestBase {
         }
         String lastModDate = getLastModificationDateValue(userGroupDoc);
 
-        taskParam = getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
+        taskParam = TaskParamFactory.getRemoveSelectorsTaskParam(selectorsToRemove, lastModDate);
         removeSelectors(objid, taskParam);
         String groupXmlWithoutMembers = retrieve(objid);
         Document groupWithoutMembers = getDocument(groupXmlWithoutMembers);
@@ -1785,34 +1784,27 @@ public class UserGroupIT extends UserGroupTestBase {
         String lastModificationDateMemberLevel1 = getLastModificationDateValue(createdMemberLevel1Document);
         String lastModificationDateMemberLevel2 = getLastModificationDateValue(createdMemberLevel2Document);
 
-        String[] selector1 = new String[3];
-        selector1[0] = "user-group";
-        selector1[1] = "internal";
-        selector1[2] = memberLevel1Id;
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            memberLevel1Id));
 
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDateSuperGroup);
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDateSuperGroup);
 
         addSelectors(superGroupId, taskParam);
 
-        selector1[0] = "user-group";
-        selector1[1] = "internal";
-        selector1[2] = memberLevel2Id;
-        selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
+        selectors.clear();
+        selectors.add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            memberLevel2Id));
 
-        taskParam = getAddSelectorsTaskParam(selectors, lastModificationDateMemberLevel1);
+        taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDateMemberLevel1);
 
         addSelectors(memberLevel1Id, taskParam);
 
-        selector1[0] = "user-group";
-        selector1[1] = "internal";
-        selector1[2] = superGroupId;
-        selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
+        selectors.clear();
+        selectors
+            .add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL, superGroupId));
 
-        taskParam = getAddSelectorsTaskParam(selectors, lastModificationDateMemberLevel2);
+        taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDateMemberLevel2);
         try {
 
             addSelectors(memberLevel2Id, taskParam);
@@ -1839,11 +1831,12 @@ public class UserGroupIT extends UserGroupTestBase {
 
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
 
-        selectors.add(new String[] { "organizational-unit", "internal", "escidoc:nobody" });
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("organizational-unit", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            "escidoc:nobody"));
 
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
 
         try {
             addSelectors(id, taskParam);
@@ -1869,11 +1862,12 @@ public class UserGroupIT extends UserGroupTestBase {
 
         final String id = getObjidValue(createdDocument);
         String lastModificationDate = getLastModificationDateValue(createdDocument);
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
 
-        selectors.add(new String[] { "organizational-unit", "external", "escidoc:nobody" });
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("organizational-unit", TaskParamFactory.SELECTOR_TYPE_EXTERNAL,
+            "escidoc:nobody"));
 
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
 
         try {
             addSelectors(id, taskParam);
@@ -1948,7 +1942,8 @@ public class UserGroupIT extends UserGroupTestBase {
         String ouId = getObjidValue(createdDocument);
         String ouTitle = getTitleValue(createdDocument);
 
-        organizationalUnitTestBase.open(ouId, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
+        organizationalUnitTestBase.open(ouId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(createdDocument), null));
 
         //create ou with parent=otherOu
         String[] parentValues = new String[2];
@@ -1965,8 +1960,8 @@ public class UserGroupIT extends UserGroupTestBase {
         ouXml = organizationalUnitTestBase.create(toBeCreatedXml);
         createdDocument = getDocument(ouXml);
         String ouId1 = getObjidValue(createdDocument);
-        organizationalUnitTestBase
-            .open(ouId1, getStatusTaskParam(getLastModificationDateValue2(createdDocument), null));
+        organizationalUnitTestBase.open(ouId1, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(createdDocument), null));
 
         //create user with child ou
         Document createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_create1.xml");
@@ -2003,13 +1998,12 @@ public class UserGroupIT extends UserGroupTestBase {
         Document createdGroup = getDocument(groupXml);
         childGroup = getObjidValue(createdGroup);
         String lastModificationDate = getLastModificationDateValue(createdGroup);
-        String[] selector1 = new String[3];
-        selector1[0] = attributeName;
-        selector1[1] = "user-attribute";
-        selector1[2] = attributeValue;
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
-        String taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector(attributeName, TaskParamFactory.SELECTOR_TYPE_USER_ATTR,
+            attributeValue));
+
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         addSelectors(childGroup, taskParam);
 
         //create group with user, ou and group selectors
@@ -2021,22 +2015,14 @@ public class UserGroupIT extends UserGroupTestBase {
         createdGroup = getDocument(groupXml);
         parentGroup = getObjidValue(createdGroup);
         lastModificationDate = getLastModificationDateValue(createdGroup);
-        selector1[0] = "o";
-        selector1[1] = "user-attribute";
-        selector1[2] = ouId;
-        String[] selector2 = new String[3];
-        selector2[0] = "user-account";
-        selector2[1] = "internal";
-        selector2[2] = TEST_USER_ACCOUNT_ID;
-        String[] selector3 = new String[3];
-        selector3[0] = "user-group";
-        selector3[1] = "internal";
-        selector3[2] = childGroup;
-        selectors = new ArrayList<String[]>();
-        selectors.add(selector1);
-        selectors.add(selector2);
-        selectors.add(selector3);
-        taskParam = getAddSelectorsTaskParam(selectors, lastModificationDate);
+
+        selectors.clear();
+        selectors.add(new TaskParamFactory.Selector("o", TaskParamFactory.SELECTOR_TYPE_USER_ATTR, ouId));
+        selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+            TEST_USER_ACCOUNT_ID));
+        selectors.add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL, childGroup));
+
+        taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         addSelectors(parentGroup, taskParam);
 
     }

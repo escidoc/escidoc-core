@@ -33,9 +33,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -379,10 +379,13 @@ public class ItemFilterIT extends ItemTestBase {
             String userGroupId = getObjidValue(userGroupXml);
 
             // add test user to user group
-            String taskParam = "<param last-modification-date=\"" + getLastModificationDateValue(userGroup) + "\">";
+            List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>(1);
+            selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+                USER_ID));
 
-            taskParam += "<selector name=\"user-account\" type=\"internal\">" + USER_ID + "</selector>";
-            taskParam += "</param>";
+            String taskParam =
+                TaskParamFactory.getAddSelectorsTaskParam(selectors, getLastModificationDateValue(userGroup));
+
             userGroupClient.addSelectors(userGroupId, taskParam);
 
             // give the user group access right to the item
@@ -668,7 +671,8 @@ public class ItemFilterIT extends ItemTestBase {
      */
     private String createSubmittedItem() throws Exception {
         theItemId = createItem();
-        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        submit(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -690,8 +694,8 @@ public class ItemFilterIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + this.theItemId));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theItemId))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(this.theItemId))));
 
             assignObjectPid(theItemId, pidParam);
         }
@@ -703,13 +707,14 @@ public class ItemFilterIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        release(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -725,7 +730,8 @@ public class ItemFilterIT extends ItemTestBase {
 
     private String createReleasedSubmittedItem() throws Exception {
         theItemId = createReleasedPendingItem();
-        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        submit(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
@@ -742,21 +748,22 @@ public class ItemFilterIT extends ItemTestBase {
             AssignParam assignPidParam = new AssignParam();
             assignPidParam.setUrl(new URL("http://somewhere/" + latestVersion));
             pidParam =
-                getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(latestVersion))),
-                    assignPidParam);
+                TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                    getLastModificationDateValue2(getDocument(retrieve(latestVersion))));
 
             assignVersionPid(latestVersion, pidParam);
         }
 
-        release(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
+        release(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), null));
 
         return theItemId;
     }
 
     private String createReleasedReleasedWithdrawnItem() throws Exception {
         theItemId = createReleasedReleasedItem();
-        withdraw(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theItemId))),
-            WITHDRAW_COMMENT));
+        withdraw(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theItemId))), WITHDRAW_COMMENT));
 
         return theItemId;
     }
@@ -781,9 +788,9 @@ public class ItemFilterIT extends ItemTestBase {
 
             UserAccountClient userAccountClient = new UserAccountClient();
 
-            userAccountClient.revokeGrants(userId, de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
-                + "<revocation-remark>some remark</revocation-remark></param>");
+            String taskParam = TaskParamFactory.getRevokeGrantsTaskParam(new HashSet<String>(0), "some remark");
+
+            userAccountClient.revokeGrants(userId, taskParam);
 
             UserGroupClient userGroupClient = new UserGroupClient();
             final Map<String, String[]> filterParams = new HashMap<String, String[]>();
@@ -800,9 +807,7 @@ public class ItemFilterIT extends ItemTestBase {
                 Node userGroup = userGroups.item(index);
                 String groupId = getObjidFromHref(userGroup.getNodeValue());
 
-                userGroupClient.revokeGrants(groupId, de.escidoc.core.test.Constants.XML_HEADER
-                    + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">\n" + "<filter/>"
-                    + "<revocation-remark>some remark</revocation-remark>" + "</param>");
+                userGroupClient.revokeGrants(groupId, taskParam);
             }
         }
         finally {

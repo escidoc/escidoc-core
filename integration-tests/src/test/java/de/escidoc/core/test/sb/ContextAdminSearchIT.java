@@ -29,6 +29,7 @@
 package de.escidoc.core.test.sb;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -432,13 +433,15 @@ public class ContextAdminSearchIT extends SearchTestBase {
 
             if (!status.equals(CONTEXT_STATUS_CREATED) && !status.equals(CONTEXT_STATUS_DELETED)) {
                 // open context
-                context.open(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                context.open(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC),
+                    null));
 
                 if (!status.equals(CONTEXT_STATUS_OPENED)) {
                     // close item
                     xml = context.retrieve(objectId);
                     lastModDate = getLastModificationDate(xml);
-                    context.close(objectId, getStatusTaskParam(new DateTime(lastModDate, DateTimeZone.UTC), null));
+                    context.close(objectId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModDate,
+                        DateTimeZone.UTC), null));
                 }
             }
             else if (status.equals(CONTEXT_STATUS_DELETED)) {

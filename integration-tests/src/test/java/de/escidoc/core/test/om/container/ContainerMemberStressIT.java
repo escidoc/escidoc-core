@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class ContainerMemberStressIT extends ContainerTestBase {
             ids.add(memberId);
         }
 
-        addMembers(containerId, getMembersTaskParam(getLastModificationDateValue2(containerDoc), ids));
+        addMembers(containerId, TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDoc)));
     }
 
     /**

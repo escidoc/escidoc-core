@@ -39,6 +39,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.BinaryContent;
@@ -543,7 +544,8 @@ public class ItemUpdateIT extends ItemTestBase {
     @Test
     public void testOM_UCI_2_1() throws Exception {
 
-        submit(theItemId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theItemXml)), null));
+        submit(theItemId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(this.theItemXml)), null));
         releaseWithPid(theItemId);
         theItemXml = retrieve(theItemId);
 

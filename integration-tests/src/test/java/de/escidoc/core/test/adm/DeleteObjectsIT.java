@@ -36,6 +36,7 @@ import java.util.Set;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -57,7 +58,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     public void testDeleteOneObject() throws Exception {
 
         Set<String> l = createItems(1);
-        deleteObjects(getDeleteObjectsTaskParam(l, false));
+        deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -94,7 +95,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         Set<String> l = createItems(4);
 
         // delete Items
-        deleteObjects(getDeleteObjectsTaskParam(l, false));
+        deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -134,7 +135,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         Set<String> l = createItems(4);
 
         // delete Items
-        deleteObjects(getDeleteObjectsTaskParam(l, false));
+        deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -175,7 +176,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         Set<String> l = createItems(4);
 
         // delete Items
-        deleteObjects(getDeleteObjectsTaskParam(l, true));
+        deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, true));
 
         // wait until process has finished
         final int waitTime = 5000;

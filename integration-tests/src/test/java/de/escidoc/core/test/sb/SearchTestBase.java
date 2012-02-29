@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -451,11 +452,11 @@ public class SearchTestBase extends SbTestBase {
      */
     protected final String getItemPidParam(final String itemId, final DateTime lastModificationDate) throws Exception {
 
-        AssignParam assignPidParm = new AssignParam();
-        assignPidParm.setUrl(new URL(getFrameworkUrl()
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl()
             + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId));
 
-        return EscidocTestBase.getAssignPidTaskParam(lastModificationDate, assignPidParm);
+        return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
 
     /**
@@ -471,11 +472,11 @@ public class SearchTestBase extends SbTestBase {
     protected final String getContainerPidParam(final String containerId, final DateTime lastModificationDate)
         throws Exception {
 
-        AssignParam assignPidParm = new AssignParam();
-        assignPidParm.setUrl(new URL(getFrameworkUrl()
+        AssignParam assignPidParam = new AssignParam();
+        assignPidParam.setUrl(new URL(getFrameworkUrl()
             + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId));
 
-        return EscidocTestBase.getAssignPidTaskParam(lastModificationDate, assignPidParm);
+        return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
 
     /**

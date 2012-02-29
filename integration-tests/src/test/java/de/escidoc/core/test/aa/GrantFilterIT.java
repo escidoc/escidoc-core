@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -250,7 +251,8 @@ public class GrantFilterIT extends GrantTestBase {
                             Document createdDocument = EscidocAbstractTest.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate = getLastModificationDateValue(createdDocument);
-                            String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
+                            String taskParamXML =
+                                TaskParamFactory.getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
                             revokeGrant(userId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(0).get("grantCount") == null) {
                                 revokerSysadmins.get(0).put("grantCount", "0");
@@ -274,7 +276,8 @@ public class GrantFilterIT extends GrantTestBase {
                             Document createdDocument = EscidocAbstractTest.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate = getLastModificationDateValue(createdDocument);
-                            String taskParamXML = getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
+                            String taskParamXML =
+                                TaskParamFactory.getRevokeGrantTaskParam(new DateTime(lastModificationDate), null);
                             revokeGrant(groupId, grantId, taskParamXML, revokeHandle);
                             if (revokerSysadmins.get(1).get("grantCount") == null) {
                                 revokerSysadmins.get(1).put("grantCount", "0");
@@ -2442,7 +2445,8 @@ public class GrantFilterIT extends GrantTestBase {
 
             // update password
             final DateTime lastModificationDate = new DateTime(getLastModificationDateValue(user));
-            final String taskParamXML = getUpdatePasswordTaskParam(lastModificationDate, SYSADMIN_PASSWORD);
+            final String taskParamXML =
+                TaskParamFactory.getUpdatePasswordTaskParam(lastModificationDate, SYSADMIN_PASSWORD);
 
             updatePassword(userId, taskParamXML);
 

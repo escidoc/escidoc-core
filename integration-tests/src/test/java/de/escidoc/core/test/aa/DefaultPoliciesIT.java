@@ -36,6 +36,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -45,6 +46,9 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Test suite for the default policies. Test-Set for Grant-test: create new user (userId) create 2 new groups (groupId
@@ -163,25 +167,19 @@ public class DefaultPoliciesIT extends GrantTestBase {
             String lastModificationDate1 = getLastModificationDateValue(groupDocument);
 
             //add group1 to group
-            ArrayList<String[]> selectors = new ArrayList<String[]>();
-            String[] selector = new String[3];
-            selector[0] = "user-group";
-            selector[1] = "internal";
-            selector[2] = groupId1;
+            List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+            selectors
+                .add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL, groupId1));
 
-            selectors.add(selector);
-            String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+            String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
             userGroupTestBase.doTestAddSelectors(null, groupId, taskParam, null);
 
-            //add testuser1 to group1
-            selectors = new ArrayList<String[]>();
-            selector = new String[3];
-            selector[0] = "user-account";
-            selector[1] = "internal";
-            selector[2] = TEST_USER_ACCOUNT_ID1;
+            selectors.clear();
+            selectors.add(new TaskParamFactory.Selector("user-account", TaskParamFactory.SELECTOR_TYPE_INTERNAL,
+                TEST_USER_ACCOUNT_ID1));
 
-            selectors.add(selector);
-            taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate1);
+            //add testuser1 to group1
+            taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate1);
             userGroupTestBase.doTestAddSelectors(null, groupId1, taskParam, null);
 
             //testuser create container in status pending
@@ -948,7 +946,8 @@ public class DefaultPoliciesIT extends GrantTestBase {
     @Test
     public void testAaDef2() throws Exception {
 
-        final String param = getSemanticStoreQuery("&lt;info:fedora/escidov:user1" + "&gt;  * * ooo", "N-Triples");
+        final String param =
+            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/escidov:user1&gt;  * * ooo", "N-Triples");
         try {
             PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
             spo(param);

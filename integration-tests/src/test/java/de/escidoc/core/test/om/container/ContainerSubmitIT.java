@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -74,7 +75,7 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void testOM_SC_1() throws Exception {
 
         DateTime t1 = getLastModificationDateValue2(getDocument(this.theContainerXml));
-        String xml = submit(theContainerId, getStatusTaskParam(t1, null));
+        String xml = submit(theContainerId, TaskParamFactory.getStatusTaskParam(t1, null));
         DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
         assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
@@ -98,16 +99,16 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void testOM_SC_1_2() throws Exception {
 
         String xml =
-            submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(this.theContainerXml)),
-                null));
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(this.theContainerXml)), null));
         DateTime t1 = getLastModificationDateValue2(getDocument(xml));
-        xml = revise(theContainerId, getStatusTaskParam(t1, null));
+        xml = revise(theContainerId, TaskParamFactory.getStatusTaskParam(t1, null));
 
         DateTime t2 = getLastModificationDateValue2(getDocument(xml));
 
         assertTrue("Timestamp of submitted not after pending", t1.compareTo(t2) < 0);
 
-        xml = submit(theContainerId, getStatusTaskParam(t2, null));
+        xml = submit(theContainerId, TaskParamFactory.getStatusTaskParam(t2, null));
         DateTime t3 = getLastModificationDateValue2(getDocument(xml));
 
         assertTrue("Timestamp of submitted not after in-revision", t2.compareTo(t3) < 0);
@@ -130,8 +131,8 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void testOM_SC_2_1() throws Exception {
 
         try {
-            submit("bla",
-                getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            submit("bla", TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occured on submit with non existing id.");
         }
         catch (final Exception e) {
@@ -147,7 +148,7 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void test_OM_SC_2_2() throws Exception {
 
         try {
-            submit(theContainerId, getStatusTaskParam(new DateTime(), null));
+            submit(theContainerId, TaskParamFactory.getStatusTaskParam(new DateTime(), null));
             fail("No exception occured on submit with wrong time stamp.");
         }
         catch (final Exception e) {
@@ -163,7 +164,8 @@ public class ContainerSubmitIT extends ContainerTestBase {
     public void testOM_SC_3_1() throws Exception {
 
         try {
-            submit(null, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
+            submit(null, TaskParamFactory.getStatusTaskParam(
+                getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
             fail("No exception occured on submit with missing id.");
         }
         catch (final Exception e) {

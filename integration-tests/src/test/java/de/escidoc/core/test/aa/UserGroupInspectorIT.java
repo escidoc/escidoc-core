@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -42,6 +43,7 @@ import org.w3c.dom.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Test suite for the role user-group-inspector.
@@ -140,16 +142,11 @@ public class UserGroupInspectorIT extends GrantTestBase {
         groupId1 = getObjidValue(groupDocument);
 
         //add group1 to group
-        ArrayList<String[]> selectors = new ArrayList<String[]>();
-        String[] selector = new String[3];
-        selector[0] = "user-group";
-        selector[1] = "internal";
-        selector[2] = groupId1;
+        List<TaskParamFactory.Selector> selectors = new ArrayList<TaskParamFactory.Selector>();
+        selectors.add(new TaskParamFactory.Selector("user-group", TaskParamFactory.SELECTOR_TYPE_INTERNAL, groupId1));
 
-        selectors.add(selector);
-        String taskParam = userGroupTestBase.getAddSelectorsTaskParam(selectors, lastModificationDate);
+        String taskParam = TaskParamFactory.getAddSelectorsTaskParam(selectors, lastModificationDate);
         userGroupTestBase.doTestAddSelectors(null, groupId, taskParam, null);
-
     }
 
     /**

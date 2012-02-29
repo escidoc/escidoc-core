@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.utils.DateTimeJaxbConverter;
@@ -82,8 +83,10 @@ public class ContainerDeleteIT extends ContainerTestBase {
     public void testOM_DC_7() throws Exception {
 
         String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        submit(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
-        revise(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
+        submit(containerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
+        revise(containerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
         delete(containerId);
 
         try {
@@ -166,7 +169,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
     public void testOM_DC_6() throws Exception {
 
         String containerId = createContainerFromTemplate("create_container_WithoutMembers_v1.1.xml");
-        submit(containerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
+        submit(containerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(containerId))), null));
         try {
             delete(containerId);
             EscidocAbstractTest.failMissingException("No exception occurred on delete submitted container.",
@@ -297,13 +301,13 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
             // submit Container
             lmdContainer = prepareContainerPid(containerId, lmdContainer);
-            String param =
-                getTheLastModificationParam(true, containerId, String.valueOf(System.nanoTime()), lmdContainer);
+            String param = TaskParamFactory.getStatusTaskParam(lmdContainer, String.valueOf(System.nanoTime()));
+
             String resultXml = submit(containerId, param);
             lmdContainer = getLastModificationDateValue(getDocument(resultXml));
 
             // release the Container
-            param = getTheLastModificationParam(true, containerId, String.valueOf(System.nanoTime()), lmdContainer);
+            param = TaskParamFactory.getStatusTaskParam(lmdContainer, String.valueOf(System.nanoTime()));
             release(containerId, param);
 
             // add to member list
@@ -317,7 +321,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
         // add all other as member to this Container
         String resultXml =
-            addMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer), memberIDs));
+            addMembers(pContainerId, TaskParamFactory.getMembersTaskParam(memberIDs, DateTimeJaxbConverter
+                .parseDate(lmdpContainer)));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // assert that the container is in version-status pending (because of addMembers)
@@ -329,13 +334,12 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
         // submit Container
         lmdpContainer = prepareContainerPid(pContainerId, lmdpContainer);
-        String param =
-            getTheLastModificationParam(true, pContainerId, String.valueOf(System.nanoTime()), lmdpContainer);
+        String param = TaskParamFactory.getStatusTaskParam(lmdpContainer, String.valueOf(System.nanoTime()));
         resultXml = submit(pContainerId, param);
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // release the Container
-        param = getTheLastModificationParam(true, pContainerId, String.valueOf(System.nanoTime()), lmdpContainer);
+        param = TaskParamFactory.getStatusTaskParam(lmdpContainer, String.valueOf(System.nanoTime()));
         resultXml = release(pContainerId, param);
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
@@ -345,7 +349,7 @@ public class ContainerDeleteIT extends ContainerTestBase {
         deletedMemberIDs.add(memberIDs.remove(3));
         deletedMemberIDs.add(memberIDs.remove(5));
 
-        getAdminClient().deleteObjects(getDeleteObjectsTaskParam(deletedMemberIDs, false));
+        getAdminClient().deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(deletedMemberIDs, false));
 
         // wait until process has finished
         final int waitTime = 5000;
@@ -375,12 +379,12 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
             // submit Container
             lmdContainer = prepareContainerPid(containerId, lmdContainer);
-            param = getTheLastModificationParam(true, containerId, String.valueOf(System.nanoTime()), lmdContainer);
+            param = TaskParamFactory.getStatusTaskParam(lmdContainer, String.valueOf(System.nanoTime()));
             resultXml = submit(containerId, param);
             lmdContainer = getLastModificationDateValue(getDocument(resultXml));
 
             // release the Container
-            param = getTheLastModificationParam(true, containerId, String.valueOf(System.nanoTime()), lmdContainer);
+            param = TaskParamFactory.getStatusTaskParam(lmdContainer, String.valueOf(System.nanoTime()));
             release(containerId, param);
 
             // add to member list
@@ -388,7 +392,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
         }
 
         resultXml =
-            addMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer), newMemberIDs));
+            addMembers(pContainerId, TaskParamFactory.getMembersTaskParam(newMemberIDs, DateTimeJaxbConverter
+                .parseDate(lmdpContainer)));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // check container version status
@@ -401,12 +406,12 @@ public class ContainerDeleteIT extends ContainerTestBase {
         // release Container again
         // submit Container
         lmdpContainer = prepareContainerPid(pContainerId, lmdpContainer);
-        param = getTheLastModificationParam(true, pContainerId, String.valueOf(System.nanoTime()), lmdpContainer);
+        param = TaskParamFactory.getStatusTaskParam(lmdpContainer, String.valueOf(System.nanoTime()));
         resultXml = submit(pContainerId, param);
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // release the Container
-        param = getTheLastModificationParam(true, pContainerId, String.valueOf(System.nanoTime()), lmdpContainer);
+        param = TaskParamFactory.getStatusTaskParam(lmdpContainer, String.valueOf(System.nanoTime()));
         try {
             release(pContainerId, param);
             fail("IntegritySystemException expected");
@@ -418,8 +423,8 @@ public class ContainerDeleteIT extends ContainerTestBase {
 
         // now try to fix the container again by removing the purged members from container
         resultXml =
-            removeMembers(pContainerId, getMembersTaskParam(DateTimeJaxbConverter.parseDate(lmdpContainer),
-                new ArrayList<String>(deletedMemberIDs)));
+            removeMembers(pContainerId, TaskParamFactory.getMembersTaskParam(new ArrayList<String>(deletedMemberIDs),
+                DateTimeJaxbConverter.parseDate(lmdpContainer)));
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // check container version status
@@ -440,7 +445,7 @@ public class ContainerDeleteIT extends ContainerTestBase {
         // lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // release the Container
-        param = getTheLastModificationParam(true, pContainerId, String.valueOf(System.nanoTime()), lmdpContainer);
+        param = TaskParamFactory.getStatusTaskParam(lmdpContainer, String.valueOf(System.nanoTime()));
         release(pContainerId, param);
 
         // TODO assert Members

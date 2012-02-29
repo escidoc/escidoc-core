@@ -49,15 +49,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -2640,318 +2632,21 @@ public abstract class EscidocTestBase {
      *            The comment for the param structure (withdraw comment).
      * @return Returns the created task param xml.
      * @throws Exception
-     *             If an error ocurres.
+     *             If an error occurs.
      */
     @Deprecated
     public String getTheLastModificationParam(final boolean includeComment, final String id, final String comment)
         throws Exception {
 
-        String xml = null;
+        String xml;
         if (includeComment) {
-            xml = getStatusTaskParam(new DateTime(getTheLastModificationDate(id)), comment);
+            xml = TaskParamFactory.getStatusTaskParam(new DateTime(getTheLastModificationDate(id)), comment);
         }
         else {
-            xml = getStatusTaskParam(new DateTime(getTheLastModificationDate(id)), null);
+            xml = TaskParamFactory.getStatusTaskParam(new DateTime(getTheLastModificationDate(id)), null);
         }
 
         return xml;
-    }
-
-    /**
-     * Get the last modification XML param.
-     * 
-     * @param includeComment
-     *            Flag indicating if the comment shall be additionally included.
-     * @param id
-     *            The id of the object.
-     * @param comment
-     *            The comment.
-     * @param lastModificationDate
-     *            The timestamp of the resource.
-     * @return Returns the created task param xml.
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
-    public String getTheLastModificationParam(
-        final boolean includeComment, final String id, final String comment, final String lastModificationDate)
-        throws Exception {
-
-        String param =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" "
-                + "last-modification-date=\"" + lastModificationDate + "\" >";
-
-        if (includeComment) {
-            if (comment != null) {
-                param += "<comment>" + comment + "</comment>";
-            }
-            else {
-                param += "<comment>" + WITHDRAW_COMMENT + "</comment>";
-            }
-        }
-        param += "</param>";
-
-        return param;
-    }
-
-    /**
-     * Get task parameter for optimistic-locking method.
-     * 
-     * @param timestamp
-     *            last-modification-date of the resource
-     * @return task param XML (optimistic-locking-task-param.xsd)
-     */
-    public String getOptimisticLockingTaskParam(final DateTime timestamp) {
-
-        return de.escidoc.core.test.Constants.XML_HEADER
-            + "<param xmlns=\"http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1\" "
-            + "last-modification-date=\"" + DateTimeJaxbConverter.printDate(timestamp) + "\" " + " />";
-    }
-
-    /**
-     * Get task parameter for update password method.
-     * 
-     * @param timestamp
-     *            last-modification-date of the resource
-     * @return task param XML (update-password-task-param.xsd)
-     */
-    public String getUpdatePasswordTaskParam(final DateTime timestamp, final String password) {
-
-        String taskParamXml =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/update-password-task-param/0.1\" "
-                + "last-modification-date=\"" + DateTimeJaxbConverter.printDate(timestamp) + "\" >\n";
-        if (password != null) {
-            taskParamXml += "<password>" + password + "</password>\n";
-        }
-        taskParamXml += "</param>\n";
-
-        return taskParamXml;
-    }
-
-    /**
-     * Get task parameter to revoke grant.
-     * 
-     * @param timestamp
-     *            last-modification-date of the resource
-     * @param revocationRemark
-     *            revocation remark for param. Set null to exclude revocation-remark element from XML
-     * @return task param XML (revoke-grant-task-param.xsd)
-     */
-    public String getRevokeGrantTaskParam(final DateTime timestamp, final String revocationRemark) {
-
-        String xml =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grant-task-param/0.1\">";
-
-        if (revocationRemark != null) {
-            xml += "<revocation-remark>" + revocationRemark + "</revocation-remark>\n";
-        }
-
-        xml += "</param>\n";
-
-        return xml;
-    }
-
-    /**
-     * Get task param XML for add/remove members methods (see members-task-param.xsd)
-     * 
-     * @param timestamp
-     *            Last modification date
-     * @param ids
-     *            member id parameter
-     * @return task param XML (assign-pid-task-param.xsd)
-     */
-    public static String getMembersTaskParam(final DateTime timestamp, final List<String> ids) {
-
-        String xml =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/members-task-param/0.1\" last-modification-date=\""
-                + DateTimeJaxbConverter.printDate(timestamp) + "\">\n";
-
-        for (String id : ids) {
-            xml += "<id>" + id + "</id>\n";
-        }
-
-        xml += "</param>\n";
-
-        return xml;
-    }
-
-    /**
-     * Get task param XML for add/remove members methods (see members-task-param.xsd)
-     * 
-     * @param ids
-     *            member id parameter
-     * @return task param XML (assign-pid-task-param.xsd)
-     */
-    public static String getIdSetTaskParam(final Set<String> ids) {
-
-        StringBuilder xml = new StringBuilder(de.escidoc.core.test.Constants.XML_HEADER);
-        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/id-set-task-param/0.1\">\n");
-
-        for (String id : ids) {
-            xml.append("<id>" + id + "</id>\n");
-        }
-
-        xml.append("</param>\n");
-
-        return xml.toString();
-    }
-
-    /**
-     * Get task param XML for add/remove members methods (see members-task-param.xsd)
-     * 
-     * @param ids
-     *            member id parameter
-     * @param sync
-     * @return task param XML (assign-pid-task-param.xsd)
-     */
-    public static String getDeleteObjectsTaskParam(final Set<String> ids, final Boolean sync) {
-
-        // FIXME Namespace wrong but the real is'nt defined yet (INFR-1466)
-        StringBuilder xml = new StringBuilder(de.escidoc.core.test.Constants.XML_HEADER);
-        xml.append("<param xmlns=\"http://www.escidoc.org/schemas/delete-objects-task-param/0.1\">\n");
-
-        for (String id : ids) {
-            xml.append("<id>").append(id).append("</id>\n");
-        }
-        if (sync != null) {
-            xml.append("<sync>").append(sync.toString()).append("</sync>\n");
-        }
-        xml.append("</param>\n");
-
-        return xml.toString();
-    }
-
-    /**
-     * Get task param XML for assing PID methods (see assing-pid-task-param.xsd)
-     * 
-     * @param timestamp
-     *            Last modification date
-     * @param param
-     *            Assign PID parameter
-     * @return task param XML (assign-pid-task-param.xsd)
-     */
-    public static String getAssignPidTaskParam(final DateTime timestamp, final AssignParam param) {
-
-        String xml =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/assign-pid-task-param/0.1\" last-modification-date=\""
-                + DateTimeJaxbConverter.printDate(timestamp) + "\">";
-
-        if (param.getUrl() != null) {
-            xml += "<url>" + param.getUrl() + "</url>\n";
-        }
-        if (param.getPid() != null) {
-            xml += "<pid>" + param.getPid() + "</pid>\n";
-        }
-
-        xml += "</param>\n";
-
-        return xml;
-    }
-
-    /**
-     * Get task parameter to revoke grants.
-     * 
-     * @param ids
-     *            ids for filter, Set null to exclude filter
-     * @param revocationRemark
-     *            revocation remark for param. Set null to exclude revocation-remark element from XML
-     * @return task param XML (revoke-grant-task-param.xsd)
-     */
-    public String getRevokeGrantsTaskParam(final Set<String> ids, final String revocationRemark) {
-
-        StringBuffer xml =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/revoke-grants-task-param/0.1\">");
-
-        if (ids != null && !ids.isEmpty()) {
-            xml.append("<filter name=\"" + DC_NS_URI + "identifier\">");
-            for (final String id : ids) {
-                xml.append("<id>");
-                xml.append(id);
-                xml.append("</id>\n");
-            }
-            xml.append("</filter>\n");
-        }
-
-        if (revocationRemark != null) {
-            xml.append("<revocation-remark>");
-            xml.append(revocationRemark);
-            xml.append("</revocation-remark>\n");
-        }
-
-        xml.append("</param>\n");
-
-        return xml.toString();
-    }
-
-    /**
-     * Get task parameter for status methods.
-     * 
-     * @param timestamp
-     *            Last modification date
-     * @param comment
-     *            The comment.
-     * @return task param XML (status-task-param.xsd)
-     */
-    public static String getStatusTaskParam(final DateTime timestamp, final String comment) {
-
-        StringBuffer xml =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/status-task-param/0.1\" ");
-
-        if (timestamp != null) {
-            xml.append(" last-modification-date=\"" + DateTimeJaxbConverter.printDate(timestamp) + "\"");
-        }
-        xml.append(">");
-
-        if (comment != null) {
-            xml.append("<comment>");
-            xml.append(comment);
-            xml.append("</comment>\n");
-        }
-
-        xml.append("</param>\n");
-
-        return xml.toString();
-    }
-
-    /**
-     * Get task parameter for relation methods.
-     * 
-     * @param timestamp
-     *            Last modification date
-     * @param targetId
-     *            targetId for the relation
-     * @param predicate
-     *            predicate for the relation
-     * @return task param XML (relation-task-param.xsd)
-     */
-    public String getRelationTaskParam(final DateTime timestamp, final String targetId, String predicate) {
-
-        StringBuffer xml =
-            new StringBuffer(de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/relation-task-param/0.1\" last-modification-date=\""
-                + DateTimeJaxbConverter.printDate(timestamp) + "\">");
-
-        xml.append("<relation>\n");
-
-        xml.append("<targetId>");
-        xml.append(targetId);
-        xml.append("</targetId>\n");
-
-        xml.append("<predicate>");
-        xml.append(predicate);
-        xml.append("</predicate>\n");
-
-        xml.append("</relation>\n");
-
-        xml.append("</param>\n");
-
-        return xml.toString();
     }
 
     /**
@@ -4463,22 +4158,6 @@ public abstract class EscidocTestBase {
         assertXmlExists("No xlink:type attribute found [" + xPath + "]", document,
             XPATH_USER_ACCOUNT_CURRENT_GRANTS_XLINK_TYPE);
         assertXmlEquals("Unexpected xlink:type [" + xPath + "]", document, xPath, "simple");
-    }
-
-    /**
-     * 
-     * @param query
-     * @param format
-     * @return
-     */
-    public static String getSemanticStoreQuery(final String query, final String format) {
-        String taskParam =
-            de.escidoc.core.test.Constants.XML_HEADER
-                + "<param xmlns=\"http://www.escidoc.org/schemas/semantic-store-query/0.4\" >\n";
-        taskParam += "<query>" + query + "</query>\n";
-        taskParam += "<format>" + format + "</format>\n";
-        taskParam += "</param>";
-        return taskParam;
     }
 
     /**

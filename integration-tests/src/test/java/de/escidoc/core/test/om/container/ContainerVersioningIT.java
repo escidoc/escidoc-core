@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -178,8 +179,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // check status in properties, current-version,
         // TODO version-history
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties status submitted", xml, "/container/properties/public-status[text() = 'submitted']");
         assertXmlExists("version status not submitted", xml,
@@ -194,18 +195,20 @@ public class ContainerVersioningIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
         xml = assignObjectPid(theContainerId, pidParam);
         String containerId = theContainerId + ":1";
 
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
         xml = assignVersionPid(containerId, pidParam);
 
-        release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties status released", xml, "/container/properties/public-status[text() = 'released']");
         assertXmlExists("version status not released", xml, "/container/properties/version/status[text() = 'released']");
@@ -216,7 +219,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlExists("Event released ", versionHistory,
             "/version-history/version[1]/events/event[1]/eventType[text() = 'released']");
 
-        withdraw(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties status withdrawn", xml, "/container/properties/public-status[text() = 'withdrawn']");
         assertXmlExists("version status must be released if withdrawn", xml,
@@ -367,8 +371,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlExists("version status pending", xml, "/container/properties/version/status[text() = 'pending']");
         assertXmlValidContainer(xml);
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         versionHistory = retrieveVersionHistory(theContainerId);
 
         xml = retrieve(theContainerId);
@@ -408,19 +412,21 @@ public class ContainerVersioningIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
         assignObjectPid(theContainerId, pidParam);
         String containerId = theContainerId + ":3";
 
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(containerId))));
 
         xml = assignVersionPid(containerId, pidParam);
 
-        release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("New version number", xml, "/container/properties/version/number[text() = '3']");
         assertXmlExists("Properties status released", xml, "/container/properties/public-status[text() = 'released']");
@@ -503,8 +509,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         // submit again
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         xml = retrieve(theContainerId);
         assertXmlExists("New version number", xml, "/container/properties/version/number[text() = '4']");
         assertXmlExists("Properties status released", xml, "/container/properties/public-status[text() = 'released']");
@@ -552,11 +558,13 @@ public class ContainerVersioningIT extends ContainerTestBase {
         containerId = theContainerId + ":5";
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(containerId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(containerId))));
 
         xml = assignVersionPid(containerId, pidParam);
 
-        release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("New version number", xml, "/container/properties/version/number[text() = '5']");
         assertXmlExists("Properties status released", xml, "/container/properties/public-status[text() = 'released']");
@@ -564,7 +572,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlExists("Released container latest-release", xml, "/container/properties/latest-release");
         assertXmlValidContainer(xml);
 
-        withdraw(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties status withdrawn", xml, "/container/properties/public-status[text() = 'withdrawn']");
         assertXmlExists("version status withdrawn", xml, "/container/properties/version/status[text() = 'released']");
@@ -696,8 +705,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
             "/version-history/version[1]/events/event[1]/eventType[text() = 'update']");
         assertXmlValidContainer(xml);
 
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties status submitted", xml, "/container/properties/public-status[text() = 'submitted']");
         assertXmlExists("version status submitted", xml, "/container/properties/version/status[text() = 'submitted']");
@@ -732,14 +741,16 @@ public class ContainerVersioningIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
         xml = assignObjectPid(theContainerId, pidParam);
-        pidParam = getAssignPidTaskParam(getLastModificationDateValue2(getDocument(xml)), assignPidParam);
+        pidParam =
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
         xml = assignVersionPid(theContainerId, pidParam);
 
-        release(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         xml = retrieve(theContainerId);
         assertXmlExists("Properties public-status released", xml,
             "/container/properties/public-status[text() = 'released']");
@@ -786,7 +797,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // assertExceptionType(ec, e);
         // }
 
-        withdraw(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        withdraw(theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)),
+            null));
         // try {
         xml = retrieve(theContainerId);
         // fail("No exception on retrieve after withdraw.");
@@ -879,8 +891,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         int noOfItemsPending = itemList.getLength();
 
         // release Container ---------------------------------------------------
-        submit(theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(retrieve(theContainerId))),
-            null));
+        submit(theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         releaseWithPid(theContainerId);
 
         containerXml = retrieve(theContainerId);
@@ -1014,7 +1026,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        submit(this.theContainerId, getStatusTaskParam(
+        submit(this.theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(theContainerId))), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
@@ -1092,8 +1104,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
         assignObjectPid(this.theContainerId, pidParam);
 
@@ -1101,11 +1113,13 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         xml = assignVersionPid(versionId, pidParam);
 
-        release(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(this.theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, propertiesBaseXPath + "version/number[text() = '3']");
@@ -1180,7 +1194,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // ---------------------------------------------------------------
 
         // submit again
-        submit(this.theContainerId, getStatusTaskParam(
+        submit(this.theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
@@ -1256,11 +1270,13 @@ public class ContainerVersioningIT extends ContainerTestBase {
         versionId = this.theContainerId + ":5";
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         xml = assignVersionPid(versionId, pidParam);
 
-        release(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(this.theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
         assertXmlExists("New version number", xml, propertiesBaseXPath + "version/number[text() = '5']");
@@ -1301,7 +1317,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        withdraw(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        withdraw(this.theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
         assertXmlValidContainer(xml);
@@ -1412,7 +1429,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        submit(this.theContainerId, getStatusTaskParam(
+        submit(this.theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
@@ -1437,8 +1454,8 @@ public class ContainerVersioningIT extends ContainerTestBase {
         AssignParam assignPidParam = new AssignParam();
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))),
-                assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
 
         assignObjectPid(this.theContainerId, pidParam);
 
@@ -1446,11 +1463,13 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         xml = assignVersionPid(versionId, pidParam);
 
-        release(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(this.theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
 
@@ -1473,7 +1492,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // ---------------------------------------------------------------
 
         // submit again
-        submit(this.theContainerId, getStatusTaskParam(
+        submit(this.theContainerId, TaskParamFactory.getStatusTaskParam(
             getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
@@ -1502,11 +1521,13 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
         pidParam =
-            getAssignPidTaskParam(getLastModificationDateValue2(getDocument(retrieve(versionId))), assignPidParam);
+            TaskParamFactory.getAssignPidTaskParam(assignPidParam,
+                getLastModificationDateValue2(getDocument(retrieve(versionId))));
 
         xml = assignVersionPid(versionId, pidParam);
 
-        release(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(getDocument(xml)), null));
+        release(this.theContainerId, TaskParamFactory.getStatusTaskParam(
+            getLastModificationDateValue2(getDocument(xml)), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
 
@@ -1536,7 +1557,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // ---------------------------------------------------------------
 
-        withdraw(this.theContainerId, getStatusTaskParam(getLastModificationDateValue2(xmlDoc), null));
+        withdraw(this.theContainerId, TaskParamFactory.getStatusTaskParam(getLastModificationDateValue2(xmlDoc), null));
         xml = retrieve(this.theContainerId);
         xmlDoc = getDocument(xml);
         assertXmlValidContainer(xml);

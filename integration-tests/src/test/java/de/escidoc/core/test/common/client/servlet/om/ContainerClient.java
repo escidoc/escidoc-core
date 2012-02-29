@@ -30,6 +30,7 @@ package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -382,9 +383,8 @@ public class ContainerClient extends ClientBase
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + id));
                 String pidParam =
-                    EscidocTestBase.getAssignPidTaskParam(EscidocTestBase
-                        .getLastModificationDateValue2(EscidocAbstractTest.getDocument(handleXmlResult(retrieve(id)))),
-                        assignPidParam);
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam, EscidocTestBase
+                        .getLastModificationDateValue2(EscidocAbstractTest.getDocument(handleXmlResult(retrieve(id)))));
 
                 assignObjectPid(id, pidParam);
             }
@@ -404,9 +404,9 @@ public class ContainerClient extends ClientBase
                 AssignParam assignPidParam = new AssignParam();
                 assignPidParam.setUrl(new URL(url + versionId));
                 String pidParam =
-                    EscidocTestBase.getAssignPidTaskParam(EscidocTestBase
+                    TaskParamFactory.getAssignPidTaskParam(assignPidParam, EscidocTestBase
                         .getLastModificationDateValue2(EscidocAbstractTest
-                            .getDocument(handleXmlResult(retrieve(versionId)))), assignPidParam);
+                            .getDocument(handleXmlResult(retrieve(versionId)))));
 
                 assignVersionPid(versionId, pidParam);
             }
@@ -415,7 +415,7 @@ public class ContainerClient extends ClientBase
         String containerXml = handleResult(retrieve(containerId));
         Document document = EscidocAbstractTest.getDocument(containerXml);
         String param =
-            EscidocTestBase.getStatusTaskParam(EscidocTestBase.getLastModificationDateValue2(document), null);
+            TaskParamFactory.getStatusTaskParam(EscidocTestBase.getLastModificationDateValue2(document), null);
 
         PWCallback.setHandle(creatorUserHandle);
         // now the actually method: release
