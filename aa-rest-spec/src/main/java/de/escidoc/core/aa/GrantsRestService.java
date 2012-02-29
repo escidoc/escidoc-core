@@ -33,14 +33,13 @@ package de.escidoc.core.aa;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
 import net.sf.oval.constraint.NotNull;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -107,7 +106,7 @@ public interface GrantsRestService {
     @GET
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    JAXBElement<? extends ResponseType> retrieveGrants(
+    JAXBElement<? extends ResponseTypeTO> retrieveGrants(
         @NotNull @QueryParam("") RetrieveGrantsQueryParam queryParam)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException;

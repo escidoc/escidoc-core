@@ -38,7 +38,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -52,7 +52,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  * 
  */
-
 @Path("/")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
@@ -85,7 +84,7 @@ public interface UserAccountsRestService {
      * @throws SystemException             Thrown in case of an internal system error.
      */
     @GET
-    JAXBElement<? extends ResponseType> retrieveUserAccounts(
+    JAXBElement<? extends ResponseTypeTO> retrieveUserAccounts(
         @QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
     AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
 

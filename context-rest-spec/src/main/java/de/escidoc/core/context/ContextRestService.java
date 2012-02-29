@@ -22,7 +22,7 @@ import org.escidoc.core.domain.context.ContextPropertiesTO;
 import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.result.ResultTO;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -126,7 +126,7 @@ public interface ContextRestService {
     @GET
     @Path("/{id}/resources/members")
     @Produces(MimeTypes.TEXT_XML)
-    JAXBElement<? extends ResponseType> retrieveMembers(@NotNull @PathParam("id") String id,
+    JAXBElement<? extends ResponseTypeTO> retrieveMembers(@NotNull @PathParam("id") String id,
                                                         @NotNull @QueryParam("") RetrieveMembersQueryParam queryParam,
                                                         @QueryParam("x-info5-roleId") String roleId,
                                                         @QueryParam("x-info5-userId") String userId,

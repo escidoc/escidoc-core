@@ -30,15 +30,15 @@ package de.escidoc.core.aa.internal;
 
 import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.grants.GrantTO;
+import org.escidoc.core.domain.aa.usergroup.SelectorsTO;
 import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupSelectorsTO;
 import org.escidoc.core.domain.aa.usergroup.UserGroupTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
-import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTO;
-import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTO;
+import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTaskParamTO;
+import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -204,23 +204,23 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#addSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupSelectorsTO addSelectors(final String id, final AddSelectorsTO taskParam) throws OrganizationalUnitNotFoundException,
+    public SelectorsTO addSelectors(final String id, final AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException {
-        return serviceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(SelectorsTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#removeSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupSelectorsTO removeSelectors(final String id, final RemoveSelectorsTO taskParam) throws XmlCorruptedException,
+    public SelectorsTO removeSelectors(final String id, final RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException {
-        return serviceUtility.fromXML(UserGroupSelectorsTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(SelectorsTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
 }

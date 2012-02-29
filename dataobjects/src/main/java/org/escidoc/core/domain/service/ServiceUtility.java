@@ -17,11 +17,11 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.sru.ExplainRequestTypeTO;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ScanRequestTypeTO;
+import org.escidoc.core.domain.sru.SearchRetrieveRequestTypeTO;
 import org.escidoc.core.util.xml.internal.JAXBContextProvider;
-import org.escidoc.core.domain.sru.ExplainRequestType;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ScanRequestType;
-import org.escidoc.core.domain.sru.SearchRetrieveRequestType;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.utils.io.Stream;
 
@@ -100,20 +100,20 @@ public class ServiceUtility {
     }
 
     public final Map<String, String[]> toMap(@NotNull
-    final JAXBElement<? extends RequestType> request) {
+    final JAXBElement<? extends RequestTypeTO> request) {
         final Map<String, String[]> result = new HashMap<String, String[]>();
 
-        if (request.getDeclaredType().equals(SearchRetrieveRequestType.class))
-            insertIntoMap((SearchRetrieveRequestType) request.getValue(), result);
-        else if (request.getDeclaredType().equals(ExplainRequestType.class))
-            insertIntoMap((ExplainRequestType) request.getValue(), result);
-        else if (request.getDeclaredType().equals(ScanRequestType.class))
-            insertIntoMap((ScanRequestType) request.getValue(), result);
+        if (request.getDeclaredType().equals(SearchRetrieveRequestTypeTO.class))
+            insertIntoMap((SearchRetrieveRequestTypeTO) request.getValue(), result);
+        else if (request.getDeclaredType().equals(ExplainRequestTypeTO.class))
+            insertIntoMap((ExplainRequestTypeTO) request.getValue(), result);
+        else if (request.getDeclaredType().equals(ScanRequestTypeTO.class))
+            insertIntoMap((ScanRequestTypeTO) request.getValue(), result);
 
         return result;
     }
 
-    private final void insertIntoMap(final SearchRetrieveRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final SearchRetrieveRequestTypeTO request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_SEARCH_OP });
 
         if (request.getMaximumRecords() != null) {
@@ -157,7 +157,7 @@ public class ServiceUtility {
         }
     }
 
-    private final void insertIntoMap(final ExplainRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final ExplainRequestTypeTO request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_EXPLAIN_OP });
 
         if (request.getRecordPacking() != null) {
@@ -179,7 +179,7 @@ public class ServiceUtility {
         }
     }
 
-    private final void insertIntoMap(final ScanRequestType request, final Map<String, String[]> result) {
+    private final void insertIntoMap(final ScanRequestTypeTO request, final Map<String, String[]> result) {
         result.put(Constants.SRU_PARAMETER_OPERATION, new String[] { SruRequestTypeFactory.SRW_REQUEST_SCAN_OP });
 
         if (request.getStylesheet() != null) {

@@ -9,8 +9,8 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import de.escidoc.core.context.ContextsRestService;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
 /**
- * @author Marko VoÃŸ
+ * @author Marko Voss
  * 
  */
 public class ContextsRestServiceImpl implements ContextsRestService {
@@ -49,7 +49,7 @@ public class ContextsRestServiceImpl implements ContextsRestService {
      * @see de.escidoc.core.context.ContextsRestService#retrieveContexts(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveContexts(
+    public JAXBElement<? extends ResponseTypeTO> retrieveContexts(
         final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId,
@@ -57,10 +57,10 @@ public class ContextsRestServiceImpl implements ContextsRestService {
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.contextHandler.retrieveContexts(serviceUtility.toMap(requestTO)));
     }
 

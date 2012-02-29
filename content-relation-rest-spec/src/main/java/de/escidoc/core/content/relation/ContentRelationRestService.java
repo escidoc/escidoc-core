@@ -34,7 +34,7 @@ import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.predicate.list.PredicateListTO;
+import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -145,7 +145,7 @@ public interface ContentRelationRestService {
 
     @GET
     @Path("/content-relations/retrieve-registered-predicates")
-    PredicateListTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException;
+    PredicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException;
 
     @GET
     @Path("/{id}/resources")

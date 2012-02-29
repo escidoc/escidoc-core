@@ -40,7 +40,7 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
 import org.escidoc.core.domain.result.ResultTO;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
 import org.escidoc.core.domain.taskparam.members.MembersTaskParamTO;
@@ -122,7 +122,7 @@ public interface ContainerRestService {
 
 	@GET
 	@Path("/{id}/resources/members")
-	JAXBElement<? extends ResponseType> retrieveMembers(@PathParam("id") String id,
+	JAXBElement<? extends ResponseTypeTO> retrieveMembers(@PathParam("id") String id,
         @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, 

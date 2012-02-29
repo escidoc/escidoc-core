@@ -31,8 +31,8 @@ package de.escidoc.core.aa.internal;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,13 +68,13 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
      * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveUserGroups(
+    public JAXBElement<? extends ResponseTypeTO> retrieveUserGroups(
             final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
             AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.userGroupHandler.retrieveUserGroups(serviceUtility.toMap(requestTO)));
     }
 

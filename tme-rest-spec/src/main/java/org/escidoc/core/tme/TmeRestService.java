@@ -28,7 +28,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import org.escidoc.core.domain.tme.TmeRequestTO;
+import org.escidoc.core.domain.tme.RequestTO;
 
 import org.escidoc.core.domain.tme.jhove.JhoveTO;
 import org.escidoc.core.utils.io.MimeTypes;
@@ -50,7 +50,7 @@ public interface TmeRestService {
 
     @POST
     @Path("/jhove")
-    JhoveTO extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
+    JhoveTO extract(RequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException;
 

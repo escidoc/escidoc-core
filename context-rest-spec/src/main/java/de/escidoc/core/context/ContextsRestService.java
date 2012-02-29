@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -18,10 +18,9 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * @author Marko VoÃŸ
+ * @author Marko Voss
  * 
  */
-
 @Path("/")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
@@ -48,7 +47,7 @@ public interface ContextsRestService {
      *             Thrown if a framework internal error occurs.
      */
     @GET
-    JAXBElement<? extends ResponseType> retrieveContexts(
+    JAXBElement<? extends ResponseTypeTO> retrieveContexts(
         @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, 

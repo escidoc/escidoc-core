@@ -27,7 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -60,7 +60,7 @@ public interface ContentRelationsRestService {
      *             Thrown if a framework internal error occurs.
      */
     @GET
-    JAXBElement<? extends ResponseType> retrieveContentRelations(
+    JAXBElement<? extends ResponseTypeTO> retrieveContentRelations(
         @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,
         @QueryParam("x-info5-userId") String userId, 

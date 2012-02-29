@@ -39,12 +39,11 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.OrganizationalUnitRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import org.escidoc.core.domain.ou.OrganizationalUnitTO;
-import org.escidoc.core.domain.ou.parents.ParentsListTO;
-import org.escidoc.core.domain.ou.path.list.PathListTO;
-import org.escidoc.core.domain.ou.successors.SuccessorListTO;
+import org.escidoc.core.domain.ou.path.list.OrganizationalUnitPathListTO;
+import org.escidoc.core.domain.ou.successors.SuccessorsTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -192,40 +191,40 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     }
 
     @Override
-    public ParentsListTO retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
+    public ParentsTO retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ParentsListTO.class, this.organizationalUnitHandler.retrieveParents(id));
+        return serviceUtility.fromXML(ParentsTO.class, this.organizationalUnitHandler.retrieveParents(id));
     }
 
     @Override
-    public JAXBElement<? extends ResponseType> retrieveParentObjects(final String id) throws AuthenticationException,
+    public JAXBElement<? extends ResponseTypeTO> retrieveParentObjects(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
             this.organizationalUnitHandler.retrieveParentObjects(id));
     }
 
     @Override
-    public SuccessorListTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
+    public SuccessorsTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(SuccessorListTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+        return serviceUtility.fromXML(SuccessorsTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
     }
 
     @Override
-    public JAXBElement<? extends ResponseType> retrieveChildObjects(final String id) throws AuthenticationException,
+    public JAXBElement<? extends ResponseTypeTO> retrieveChildObjects(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
             this.organizationalUnitHandler.retrieveChildObjects(id));
     }
 
     @Override
-    public PathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
+    public OrganizationalUnitPathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
         OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
 
-        return serviceUtility.fromXML(PathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+        return serviceUtility.fromXML(OrganizationalUnitPathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
     }
 
     @Override

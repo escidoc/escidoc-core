@@ -35,8 +35,8 @@ import javax.ws.rs.*;
 
 import de.escidoc.core.aa.param.EvaluateQueryParam;
 import net.sf.oval.constraint.NotNull;
-import org.escidoc.core.domain.aa.pdp.request.PdpRequestsTO;
-import org.escidoc.core.domain.aa.pdp.result.PdpResultsTO;
+import org.escidoc.core.domain.aa.pdp.request.RequestsTO;
+import org.escidoc.core.domain.aa.pdp.result.ResultsTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -526,8 +526,8 @@ public interface PolicyDecisionPointRestService {
     @PUT
     @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
-    PdpResultsTO evaluate(@NotNull @QueryParam("") EvaluateQueryParam queryParam,
-                          @NotNull PdpRequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
+    ResultsTO evaluate(@NotNull @QueryParam("") EvaluateQueryParam queryParam,
+                       @NotNull RequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
             XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
             AuthorizationException, SystemException;
 

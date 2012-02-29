@@ -30,15 +30,14 @@ package de.escidoc.core.aa.internal;
 
 import de.escidoc.core.aa.UserAccountsRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,15 +69,15 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
       * @see de.escidoc.core.aa.UserAccountsRestService#retrieveUerAccounts(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
       */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveUserAccounts(
+    public JAXBElement<? extends ResponseTypeTO> retrieveUserAccounts(
             final SruSearchRequestParametersBean parameters)
             throws MissingMethodParameterException, AuthenticationException,
             AuthorizationException, InvalidSearchQueryException,
             SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.userAccountHandler.retrieveUserAccounts(serviceUtility.toMap(requestTO)));
     }
 

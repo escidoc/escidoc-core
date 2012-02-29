@@ -42,14 +42,14 @@ import javax.ws.rs.Produces;
 
 import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.grants.GrantTO;
+import org.escidoc.core.domain.aa.usergroup.SelectorsTO;
 import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupSelectorsTO;
 import org.escidoc.core.domain.aa.usergroup.UserGroupTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
-import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTO;
-import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTO;
+import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTaskParamTO;
+import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTaskParamTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -597,7 +597,7 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/selectors-add")
-    UserGroupSelectorsTO addSelectors(@PathParam("id") String id, AddSelectorsTO taskParam) throws OrganizationalUnitNotFoundException,
+    SelectorsTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
@@ -660,7 +660,7 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/selectors-remove")
-    UserGroupSelectorsTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTO taskParam) throws XmlCorruptedException,
+    SelectorsTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException;

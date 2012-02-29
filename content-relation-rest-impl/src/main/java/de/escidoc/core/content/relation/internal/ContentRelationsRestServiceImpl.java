@@ -20,21 +20,18 @@
 
 package de.escidoc.core.content.relation.internal;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.ObjectFactory;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.service.KeyValuePair;
@@ -67,7 +64,7 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
      * @see de.escidoc.core.content.relation.ContentRelationsRestService#retrieveContentRelations(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveContentRelations(
+    public JAXBElement<? extends ResponseTypeTO> retrieveContentRelations(
         final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId,
@@ -76,10 +73,10 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>)serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>)serviceUtility.fromXML(
                 this.contentRelationHandler.retrieveContentRelations(serviceUtility.toMap(requestTO)));
     }
 

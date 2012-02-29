@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.utils.io.MimeTypes;
 
@@ -50,7 +50,7 @@ public interface AggregationDefinitionsRestService {
      * @throws SystemException             e.
      */
     @GET
-    JAXBElement<? extends ResponseType> retrieveAggregationDefinitions(
+    JAXBElement<? extends ResponseTypeTO> retrieveAggregationDefinitions(
         @QueryParam("") SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 

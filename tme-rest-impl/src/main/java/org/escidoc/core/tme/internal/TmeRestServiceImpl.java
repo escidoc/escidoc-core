@@ -28,6 +28,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.tme.service.JhoveHandler;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.tme.RequestTO;
 import org.escidoc.core.domain.tme.jhove.JhoveTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import org.escidoc.core.tme.TmeRestService;
-import org.escidoc.core.domain.tme.TmeRequestTO;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
@@ -59,7 +59,7 @@ public class TmeRestServiceImpl implements TmeRestService {
     protected TmeRestServiceImpl() {
     }
 
-    public JhoveTO extract(TmeRequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
+    public JhoveTO extract(RequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException {
 

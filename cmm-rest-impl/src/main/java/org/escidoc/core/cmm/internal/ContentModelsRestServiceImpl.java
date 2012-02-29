@@ -26,8 +26,8 @@ import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.cmm.ContentModelsRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +64,7 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
      * @see de.escidoc.core.cmm.ContentModelsRestService#retrieveContentModels(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveContentModels(
+    public JAXBElement<? extends ResponseTypeTO> retrieveContentModels(
         final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId,
@@ -73,10 +73,10 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.contentModelHandler.retrieveContentModels(serviceUtility.toMap(requestTO)));
     }
 

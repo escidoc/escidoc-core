@@ -31,8 +31,8 @@ package de.escidoc.core.aa.internal;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,13 +68,13 @@ public class RolesRestServiceImpl implements RolesRestService {
      * @see de.escidoc.core.aa.RolesRestService#retrieveRoles(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveRoles(
+    public JAXBElement<? extends ResponseTypeTO> retrieveRoles(
             final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
             AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.roleHandler.retrieveRoles(serviceUtility.toMap(requestTO)));
     }
 

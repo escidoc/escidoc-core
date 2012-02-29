@@ -24,8 +24,8 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.slf4j.Logger;
@@ -66,7 +66,7 @@ public class ItemsRestServiceImpl implements ItemsRestService {
      * @see de.escidoc.core.context.ItemsRestService#retrieveItems(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveItems(
+    public JAXBElement<? extends ResponseTypeTO> retrieveItems(
         final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId,
@@ -74,10 +74,10 @@ public class ItemsRestServiceImpl implements ItemsRestService {
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.itemHandler.retrieveItems(serviceUtility.toMap(requestTO)));
     }
 

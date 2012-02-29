@@ -8,7 +8,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.escidoc.core.domain.sm.sd.StatisticDataTO;
+import org.escidoc.core.domain.sm.sd.StatisticRecordTO;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -36,7 +36,7 @@ public interface StatisticDataRestService {
      * <b>Tasks:</b><br/> <ul> <li>The Statistic Record is created. Creation is done asynchronously by writing the
      * Statistic Record into a message-queue.</li> <li>No data is returned.</li> </ul>
      *
-     * @param statisticDataTO The XML representation of the Statistic Record to be created corresponding to XML-schema
+     * @param statisticRecordTO The XML representation of the Statistic Record to be created corresponding to XML-schema
      *                "statistic-data.xsd" as TO.
      * @throws AuthenticationException Thrown in case of failed authentication.
      * @throws AuthorizationException  Thrown in case of failed authorization.
@@ -45,7 +45,7 @@ public interface StatisticDataRestService {
      * @throws SystemException         ex
      */
     @PUT
-    void create(StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
+    void create(StatisticRecordTO statisticRecordTO) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException;
 
 }

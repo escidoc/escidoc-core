@@ -37,10 +37,10 @@ import org.escidoc.core.domain.aa.grants.GrantTO;
 import org.escidoc.core.domain.aa.permission.PermissionFilterTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeListTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceListTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
@@ -160,12 +160,11 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#updatePreferences(java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceListTO)
      */
     @Override
-    public UserAccountPreferenceListTO updatePreferences(final String id,
-                                                         final UserAccountPreferenceListTO userAccountPrefrencesTO)
+    public PreferencesTO updatePreferences(final String id, final PreferencesTO userAccountPrefrencesTO)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, SystemException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, MissingAttributeValueException {
-        return serviceUtility.fromXML(UserAccountPreferenceListTO.class,
+        return serviceUtility.fromXML(PreferencesTO.class,
                 this.userAccountHandler.updatePreferences(id, serviceUtility.toXML(userAccountPrefrencesTO)));
     }
 
@@ -254,30 +253,30 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrievePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public UserAccountPreferenceTO retrievePreference(final String id, final String name) throws UserAccountNotFoundException,
+    public PreferenceTO retrievePreference(final String id, final String name) throws UserAccountNotFoundException,
         PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return serviceUtility.fromXML(UserAccountPreferenceTO.class, this.userAccountHandler.retrievePreference(id, name));
+        return serviceUtility.fromXML(PreferenceTO.class, this.userAccountHandler.retrievePreference(id, name));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrievePreferences(java.lang.String)
      */
     @Override
-    public UserAccountPreferenceListTO retrievePreferences(final String id) throws UserAccountNotFoundException,
+    public PreferencesTO retrievePreferences(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountPreferenceListTO.class, this.userAccountHandler.retrievePreferences(id));
+        return serviceUtility.fromXML(PreferencesTO.class, this.userAccountHandler.retrievePreferences(id));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#createPreference(java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceTO)
      */
     @Override
-    public UserAccountPreferenceTO createPreference(final String id, final UserAccountPreferenceTO userAccountPreferenceTO)
+    public PreferenceTO createPreference(final String id, final PreferenceTO userAccountPreferenceTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException {
-        return serviceUtility.fromXML(UserAccountPreferenceTO.class,
+        return serviceUtility.fromXML(PreferenceTO.class,
                 this.userAccountHandler.createPreference(id, serviceUtility.toXML(userAccountPreferenceTO)));
     }
 
@@ -285,12 +284,12 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#updatePreference(java.lang.String, java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceTO)
      */
     @Override
-    public UserAccountPreferenceTO updatePreference(
-        final String id, final String preferenceName, final UserAccountPreferenceTO userAccountPreferenceTO)
+    public PreferenceTO updatePreference(
+        final String id, final String preferenceName, final PreferenceTO userAccountPreferenceTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException {
-        return serviceUtility.fromXML(UserAccountPreferenceTO.class,
+        return serviceUtility.fromXML(PreferenceTO.class,
                 this.userAccountHandler.updatePreference(id, preferenceName, serviceUtility.toXML(userAccountPreferenceTO)));
     }
 
@@ -308,11 +307,11 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#createAttribute(java.lang.String, org.escidoc.core.domain.aa.UserAccountAttributeTO)
      */
     @Override
-    public UserAccountAttributeTO createAttribute(final String id, final UserAccountAttributeTO userAccountAttributeTO)
+    public AttributeTO createAttribute(final String id, final AttributeTO userAccountAttributeTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return serviceUtility.fromXML(UserAccountAttributeTO.class,
+        return serviceUtility.fromXML(AttributeTO.class,
                 this.userAccountHandler.createAttribute(id, serviceUtility.toXML(userAccountAttributeTO)));
     }
 
@@ -320,40 +319,40 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveAttributes(java.lang.String)
      */
     @Override
-    public UserAccountAttributeListTO retrieveAttributes(final String id) throws UserAccountNotFoundException,
+    public AttributesTO retrieveAttributes(final String id) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveAttributes(id));
+        return serviceUtility.fromXML(AttributesTO.class, this.userAccountHandler.retrieveAttributes(id));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveNamedAttributes(java.lang.String, java.lang.String)
      */
     @Override
-    public UserAccountAttributeListTO retrieveNamedAttributes(final String id, final String name)
+    public AttributesTO retrieveNamedAttributes(final String id, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountAttributeListTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name));
+        return serviceUtility.fromXML(AttributesTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public UserAccountAttributeTO retrieveAttribute(final String id, final String attId) throws UserAccountNotFoundException,
+    public AttributeTO retrieveAttribute(final String id, final String attId) throws UserAccountNotFoundException,
         UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountAttributeTO.class, this.userAccountHandler.retrieveAttribute(id, attId));
+        return serviceUtility.fromXML(AttributeTO.class, this.userAccountHandler.retrieveAttribute(id, attId));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#updateAttribute(java.lang.String, java.lang.String, org.escidoc.core.domain.aa.UserAccountAttributeTO)
      */
     @Override
-    public UserAccountAttributeTO updateAttribute(final String id, final String attId, final UserAccountAttributeTO userAccountAttributeTO)
+    public AttributeTO updateAttribute(final String id, final String attId, final AttributeTO userAccountAttributeTO)
         throws UserAccountNotFoundException, OptimisticLockingException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountAttributeTO.class,
+        return serviceUtility.fromXML(AttributeTO.class,
                 this.userAccountHandler.updateAttribute(id, attId, serviceUtility.toXML(userAccountAttributeTO)));
     }
 

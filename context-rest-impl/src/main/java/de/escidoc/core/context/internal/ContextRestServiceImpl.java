@@ -18,8 +18,8 @@ import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
@@ -180,7 +180,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveMembers(final String id,
+    public JAXBElement<? extends ResponseTypeTO> retrieveMembers(final String id,
                                                                final RetrieveMembersQueryParam queryParam,
                                                                final String roleId, final String userId,
                                                                final String omitHighlighting)
@@ -189,10 +189,10 @@ public class ContextRestServiceImpl implements ContextRestService {
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
 
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(queryParam, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.contextHandler.retrieveMembers(id, serviceUtility.toMap(requestTO)));
     }
 

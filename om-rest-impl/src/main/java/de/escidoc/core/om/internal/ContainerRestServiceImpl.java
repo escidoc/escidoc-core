@@ -37,8 +37,8 @@ import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
@@ -157,7 +157,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
      * java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveMembers(
+    public JAXBElement<? extends ResponseTypeTO> retrieveMembers(
         final String containerId, 
         final SruSearchRequestParametersBean parameters, 
         final String roleId,
@@ -167,10 +167,10 @@ public class ContainerRestServiceImpl implements ContainerRestService {
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
             this.containerHandler.retrieveMembers(containerId, serviceUtility.toMap(requestTO)));
     }
 
@@ -298,7 +298,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
             additionalParams.add(new KeyValuePair(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, omitHighlighting));
         }
 
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
         // call business method and write out

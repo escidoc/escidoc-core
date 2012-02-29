@@ -29,7 +29,7 @@
 package de.escidoc.core.sm.internal;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.sd.StatisticDataTO;
+import org.escidoc.core.domain.sm.sd.StatisticRecordTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -63,9 +63,9 @@ public class StatisticDataRestServiceImpl implements StatisticDataRestService {
      * @see de.escidoc.core.sm.StatisticDataRestService#create(org.escidoc.core.domain.sm.StatisticDataTO)
      */
     @Override
-    public void create(final StatisticDataTO statisticDataTO) throws AuthenticationException, AuthorizationException,
+    public void create(final StatisticRecordTO statisticRecordTO) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException {
-        this.statisticDataHandler.create(serviceUtility.toXML(statisticDataTO));
+        this.statisticDataHandler.create(serviceUtility.toXML(statisticRecordTO));
     }
 
 }

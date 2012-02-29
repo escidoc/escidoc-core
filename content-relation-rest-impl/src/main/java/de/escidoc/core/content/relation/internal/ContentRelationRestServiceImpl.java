@@ -25,7 +25,7 @@ import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.predicate.list.PredicateListTO;
+import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
@@ -190,10 +190,10 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     }
 
     @Override
-    public PredicateListTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
+    public PredicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
         SystemException {
 
-        return serviceUtility.fromXML(PredicateListTO.class,
+        return serviceUtility.fromXML(PredicatesTO.class,
             this.contentRelationHandler.retrieveRegisteredPredicates());
     }
 

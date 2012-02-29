@@ -22,8 +22,8 @@ package org.escidoc.core.oai.internal;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.oai.OAIsRestService;
@@ -33,7 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -67,14 +66,14 @@ public class OAIsRestServiceImpl implements OAIsRestService {
      * @see de.escidoc.core.oai.OAIsRestService#retrieveSetDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveSetDefinitions(
+    public JAXBElement<? extends ResponseTypeTO> retrieveSetDefinitions(
             final SruSearchRequestParametersBean parameters)
             throws AuthenticationException,
             AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
 
-        final JAXBElement<? extends RequestType> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.oaiHandler.retrieveSetDefinitions(serviceUtility.toMap(requestTO)));
     }
 

@@ -19,14 +19,13 @@
  */
 package de.escidoc.core.om.internal;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestType;
-import org.escidoc.core.domain.sru.ResponseType;
+import org.escidoc.core.domain.sru.RequestTypeTO;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.slf4j.Logger;
@@ -35,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -71,7 +69,7 @@ public class ContainersRestServiceImpl implements ContainersRestService {
      * @see de.escidoc.core.context.ContainersRestService#retrieveContainers(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseType> retrieveContainers(
+    public JAXBElement<? extends ResponseTypeTO> retrieveContainers(
         final SruSearchRequestParametersBean parameters, 
         final String roleId, 
         final String userId,
@@ -80,10 +78,10 @@ public class ContainersRestServiceImpl implements ContainersRestService {
 
         final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestType> requestTO =
+        final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
 
-        return (JAXBElement<? extends ResponseType>) serviceUtility.fromXML(
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.containerHandler.retrieveContainers(serviceUtility.toMap(requestTO)));
     }
 

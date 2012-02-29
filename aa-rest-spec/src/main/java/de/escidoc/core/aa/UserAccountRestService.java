@@ -48,10 +48,10 @@ import org.escidoc.core.domain.aa.grants.GrantTO;
 import org.escidoc.core.domain.aa.permission.PermissionFilterTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeListTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.UserAccountAttributeTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceListTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.UserAccountPreferenceTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
@@ -305,7 +305,7 @@ public interface UserAccountRestService {
      * user.
      *
      * @param id         The User Account ID.
-     * @param userAccountPrefrencesTO The XML representation of the set of preferences as TO.
+     * @param userAccountPreferencesTO The XML representation of the set of preferences as TO.
      * @return The XML representation of the updated set of preferences as TO.
      * @throws UserAccountNotFoundException   If an User Account with the specified userId does not exist.
      * @throws XmlCorruptedException          If the XML representation is invalid.
@@ -321,8 +321,8 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/preferences")
-    UserAccountPreferenceListTO updatePreferences(
-            @PathParam("id") String id, UserAccountPreferenceListTO userAccountPrefrencesTO) throws UserAccountNotFoundException,
+    PreferencesTO updatePreferences(
+            @PathParam("id") String id, PreferencesTO userAccountPreferencesTO) throws UserAccountNotFoundException,
     XmlCorruptedException, XmlSchemaValidationException, OptimisticLockingException, SystemException,
     AuthenticationException, AuthorizationException, MissingMethodParameterException,
     MissingAttributeValueException;
@@ -694,7 +694,7 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/{id}/resources/preferences/preference/{name}")
-    UserAccountPreferenceTO retrievePreference(@PathParam("id") String id, @PathParam("name") String name) throws UserAccountNotFoundException,
+    PreferenceTO retrievePreference(@PathParam("id") String id, @PathParam("name") String name) throws UserAccountNotFoundException,
     PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
     SystemException;
 
@@ -714,7 +714,7 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/{id}/resources/preferences")
-    UserAccountPreferenceListTO retrievePreferences(@PathParam("id") String id) throws UserAccountNotFoundException, MissingMethodParameterException,
+    PreferencesTO retrievePreferences(@PathParam("id") String id) throws UserAccountNotFoundException, MissingMethodParameterException,
     AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -752,7 +752,7 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/preferences/preference")
-    UserAccountPreferenceTO createPreference(@PathParam("id") String id, UserAccountPreferenceTO userAccountPreferenceTO)
+    PreferenceTO createPreference(@PathParam("id") String id, PreferenceTO userAccountPreferenceTO)
     throws AlreadyExistsException,
     UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
@@ -797,10 +797,10 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/preferences/preference/{name}")
-    UserAccountPreferenceTO updatePreference(
+    PreferenceTO updatePreference(
         @PathParam("id") String id, 
         @PathParam("name") String preferenceName, 
-        UserAccountPreferenceTO userAccountPreferenceTO)
+        PreferenceTO userAccountPreferenceTO)
     throws AlreadyExistsException,
     UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
@@ -868,10 +868,9 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/attributes/attribute")
-    UserAccountAttributeTO createAttribute(@PathParam("id") String id, UserAccountAttributeTO userAccountAttributeTO)
-    throws AlreadyExistsException,
-    UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
-    MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    AttributeTO createAttribute(@PathParam("id") String id, AttributeTO userAccountAttributeTO)
+            throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieves user attribute objects associated to the User Account identified by the provided User Account
@@ -890,7 +889,7 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/{id}/resources/attributes")
-    UserAccountAttributeListTO retrieveAttributes(@PathParam("id") String id) throws UserAccountNotFoundException, MissingMethodParameterException,
+    AttributesTO retrieveAttributes(@PathParam("id") String id) throws UserAccountNotFoundException, MissingMethodParameterException,
     AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -912,7 +911,7 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/{id}/resources/attributes/{name}")
-    UserAccountAttributeListTO retrieveNamedAttributes(@PathParam("id") String id, @PathParam("name") String name) 
+    AttributesTO retrieveNamedAttributes(@PathParam("id") String id, @PathParam("name") String name)
     throws UserAccountNotFoundException,
     UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
     AuthorizationException, SystemException;
@@ -936,7 +935,7 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/{id}/resources/attributes/attribute/{att-id}")
-    UserAccountAttributeTO retrieveAttribute(@PathParam("id") String id, @PathParam("att-id") String attId) 
+    AttributeTO retrieveAttribute(@PathParam("id") String id, @PathParam("att-id") String attId)
     throws UserAccountNotFoundException,
     UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
     AuthorizationException, SystemException;
@@ -979,10 +978,10 @@ public interface UserAccountRestService {
      */
     @PUT
     @Path("/{id}/resources/attributes/attribute/{att-id}")
-    UserAccountAttributeTO updateAttribute(
+    AttributeTO updateAttribute(
         @PathParam("id") String id, 
         @PathParam("att-id") String attId, 
-        UserAccountAttributeTO userAccountAttributeTO)
+        AttributeTO userAccountAttributeTO)
     throws UserAccountNotFoundException,
     OptimisticLockingException, UserAttributeNotFoundException, ReadonlyElementViolationException,
     XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
@@ -1036,9 +1035,8 @@ public interface UserAccountRestService {
     @Path("/retrievePermissionFilterQuery")
     PermissionFilterTO retrievePermissionFilterQuery(
                         @QueryParam("index") Set<String> index, 
-                        @QueryParam("user") Set<String> user, 
-                        @QueryParam("role") Set<String> role) 
-    throws SystemException,
-    InvalidSearchQueryException, AuthenticationException, AuthorizationException;
+                        @QueryParam("user") Set<String> user,
+                        @QueryParam("role") Set<String> role) throws SystemException,
+            InvalidSearchQueryException, AuthenticationException, AuthorizationException;
 
 }

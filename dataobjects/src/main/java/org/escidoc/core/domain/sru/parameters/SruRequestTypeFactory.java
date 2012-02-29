@@ -45,7 +45,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
+    public static final JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
         if (isExplainRequest(sruParams)) {
@@ -80,7 +80,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
+    public static final JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final KeyValuePair... keyValuePairs) {
         List<KeyValuePair> pairs = new ArrayList<KeyValuePair>(keyValuePairs.length);
         for (KeyValuePair pair : keyValuePairs) {
@@ -95,7 +95,7 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<? extends RequestType> createRequestTO(@NotNull
+    public static final JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams) {
         return createRequestTO(sruParams, new ArrayList<KeyValuePair>(0));
     }
@@ -158,10 +158,10 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<SearchRetrieveRequestType> createSearchRetrieveRequestTO(@NotNull
+    public static final JAXBElement<SearchRetrieveRequestTypeTO> createSearchRetrieveRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        final SearchRetrieveRequestType searchType = factory.createSearchRetrieveRequestType();
+        final SearchRetrieveRequestTypeTO searchType = factory.createSearchRetrieveRequestTypeTO();
         searchType.setMaximumRecords(createNonNegativeInteger(sruParams.getMaximumRecords()));
         searchType.setQuery(sruParams.getQuery());
         searchType.setRecordPacking(sruParams.getRecordPacking());
@@ -193,10 +193,10 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<ExplainRequestType> createExplainRequestTO(@NotNull
+    public static final JAXBElement<ExplainRequestTypeTO> createExplainRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        final ExplainRequestType explainType = factory.createExplainRequestType();
+        final ExplainRequestTypeTO explainType = factory.createExplainRequestTypeTO();
         explainType.setRecordPacking(sruParams.getRecordPacking());
         try {
             if (sruParams.getStylesheet() != null) {
@@ -219,10 +219,10 @@ public class SruRequestTypeFactory {
      * @return
      */
     @NotNull
-    public static final JAXBElement<ScanRequestType> createScanRequestTO(@NotNull
+    public static final JAXBElement<ScanRequestTypeTO> createScanRequestTO(@NotNull
     final SruSearchRequestParametersBean sruParams, final List<KeyValuePair> additionalParams) {
 
-        final ScanRequestType scanType = factory.createScanRequestType();
+        final ScanRequestTypeTO scanType = factory.createScanRequestTypeTO();
         scanType.setMaximumTerms(createPositiveInteger(sruParams.getMaximumTerms()));
         scanType.setResponsePosition(createNonNegativeInteger(sruParams.getResponsePosition()));
         scanType.setScanClause(sruParams.getScanClause());
@@ -247,11 +247,11 @@ public class SruRequestTypeFactory {
      * @param additionalParams
      * @return
      */
-    private static ExtraDataType createExtraDataType(final List<KeyValuePair> additionalParams) {
+    private static ExtraDataTypeTO createExtraDataType(final List<KeyValuePair> additionalParams) {
         if (additionalParams == null || additionalParams.size() == 0)
             return null;
 
-        final ExtraDataType extra = new ExtraDataType();
+        final ExtraDataTypeTO extra = factory.createExtraDataTypeTO();
         extra.getAny().addAll(additionalParams);
         return extra;
     }
