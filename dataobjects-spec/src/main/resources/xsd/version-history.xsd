@@ -16,6 +16,7 @@
     xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
     targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.4"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
+  
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="Event-v1-1.xsd"/>

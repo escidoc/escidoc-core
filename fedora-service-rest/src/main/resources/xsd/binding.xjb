@@ -148,6 +148,9 @@
         <elementName suffix="TO" />
       </nameXmlTransform>
     </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='version']//xs:element[@name='timestamp']">
+      <property name="lastEventTimestamp" />
+    </bindings>
   </bindings>
   <bindings schemaLocation="xlink.xsd">
     <schemaBindings>

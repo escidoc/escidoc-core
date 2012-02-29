@@ -389,25 +389,25 @@
 
   <xs:simpleType name="status-type">
     <xs:restriction base="xs:token">
-      <xs:enumeration value="pending"></xs:enumeration>
-      <xs:enumeration value="submitted"></xs:enumeration>
-      <xs:enumeration value="in-revision"></xs:enumeration>
-      <xs:enumeration value="released"></xs:enumeration>
-      <xs:enumeration value="withdrawn"></xs:enumeration>
+      <xs:enumeration value="pending"/>
+      <xs:enumeration value="submitted"/>
+      <xs:enumeration value="in-revision"/>
+      <xs:enumeration value="released"/>
+      <xs:enumeration value="withdrawn"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="valid-status-type">
     <xs:restriction base="xs:token">
-      <xs:enumeration value="valid"></xs:enumeration>
-      <xs:enumeration value="invalid"></xs:enumeration>
+      <xs:enumeration value="valid"/>
+      <xs:enumeration value="invalid"/>
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="lock-status-type">
     <xs:restriction base="xs:token">
-      <xs:enumeration value="locked"></xs:enumeration>
-      <xs:enumeration value="unlocked"></xs:enumeration>
+      <xs:enumeration value="locked"/>
+      <xs:enumeration value="unlocked"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

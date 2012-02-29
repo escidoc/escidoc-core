@@ -779,8 +779,8 @@ public class ContainerContentRelationsIT extends ContainerTestBase {
         relations.add(new TaskParamFactory.Relation(targetId, predicate));
 
         String lastModDate = getTheLastModificationParam(this.containerId);
-        String taskParam = TaskParamFactory.getRelationTaskParam(relations, lastModDate,
-                TaskParamFactory.ONTOLOGY_IS_PART_OF);
+        String taskParam =
+            TaskParamFactory.getRelationTaskParam(relations, lastModDate, TaskParamFactory.ONTOLOGY_IS_PART_OF);
         addContentRelations(this.containerId + ":" + 1, taskParam);
     }
 

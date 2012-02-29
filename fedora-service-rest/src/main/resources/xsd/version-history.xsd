@@ -1,46 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.3" xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3" xmlns:premis="http://www.loc.gov/standards/premis/v1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0">
-  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="premis.xsd"/>
+<!--
+	Changes applied to this schema (since Version 03, Februar, 2008):
+	- Februar, 2008
+	- version changed to 04.
+	
+	- made element /version-history/version/valid-status optional
+	
+-->
+<xs:schema
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:premis="http://www.loc.gov/standards/premis/v1"
+    xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4"
+    xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+    targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.4"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+  
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="premis.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  
   <xs:element name="version-history">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="escidocVersions:version"/>
+        <xs:element ref="escidocVersions:version" maxOccurs="unbounded"/>
       </xs:sequence>
+      <xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
+      <xs:attribute ref="xml:base" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="version">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="escidocVersions:version-number"/>
-        <xs:element ref="escidocVersions:timestamp"/>
-        <xs:element ref="escidocVersions:version-status"/>
-        <xs:element ref="escidocVersions:valid-status"/>
-        <xs:element ref="escidocVersions:comment"/>
+        <xs:element name="pid" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
+                <xs:attribute name="user" type="xs:string" use="required"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="version-number" type="xs:int"/>
+        <xs:element name="timestamp" type="xs:dateTime"/>
+        <xs:element name="version-status" type="common-types:status-type"/>
+        <xs:element name="valid-status" type="common-types:valid-status-type" minOccurs="0"/>
+        <xs:element name="comment"/>
         <xs:element ref="escidocVersions:events"/>
       </xs:sequence>
-      <xs:attribute name="objid" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="timestamp" use="required" type="xs:dateTime">
-        <xs:annotation>
-          <xs:appinfo>
-            <jaxb:property name="fedoraTimestamp"/>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:attribute>
+      <xs:attribute name="objid" type="common-types:objid" use="required"/>
+      <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
       <xs:attribute ref="xlink:href" use="required"/>
-      <xs:attribute ref="xlink:title"/>
+      <xs:attribute ref="xlink:title" use="required"/>
       <xs:attribute ref="xlink:type" use="required"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="version-number" type="xs:integer"/>
-  <xs:element name="timestamp" type="xs:dateTime"/>
-  <xs:element name="version-status" type="xs:NCName"/>
-  <xs:element name="valid-status" type="xs:NCName"/>
-  <xs:element name="comment" type="xs:string"/>
   <xs:element name="events">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="premis:event"/>
+        <xs:element ref="premis:event" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
