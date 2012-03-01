@@ -39,9 +39,13 @@ import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.net.URL;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -284,6 +288,65 @@ public class ContainerReleaseIT extends ContainerTestBase {
             Class<?> ec = InvalidStatusException.class;
             EscidocAbstractTest.assertExceptionType(ec.getName() + " expected.", ec, e);
         }
+    }
+
+    /**
+     * Test INFR-1467. Remove a member on a released Container.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRemoveMembersOnReleasedContainer() throws Exception {
+        String lmd, tmpLmd, param, resultXml, comment;
+        Document doc;
+
+        // prepare a Item child to release
+        resultXml = submitItemHelp(this.theItemId);
+        assertXmlValidResult(resultXml);
+        lmd = getLastModificationDateValue(getDocument(resultXml));
+        tmpLmd = prepareItemPid(this.theItemId, lmd);
+        assertTimestampIsEqualOrAfter("Wrong last modification date", tmpLmd, lmd);
+
+        // prepare the Container itself to release
+        comment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(true, theContainerId, comment);
+        resultXml = submit(theContainerId, param);
+        assertXmlValidResult(resultXml);
+        lmd = getLastModificationDateValue(getDocument(resultXml));
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", comment);
+
+        // release the Container
+        tmpLmd = getTheLastModificationDate(this.theContainerId);
+        tmpLmd = prepareContainerPid(this.theContainerId, tmpLmd);
+        comment = String.valueOf(System.nanoTime());
+        param = getTheLastModificationParam(true, this.theContainerId, comment, tmpLmd);
+        resultXml = release(theContainerId, param);
+        assertXmlValidResult(resultXml);
+        lmd = getLastModificationDateValue(getDocument(resultXml));
+        assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, tmpLmd);
+        assertXmlEquals("Comment string not as expected", EscidocAbstractTest.getDocument(retrieve(theContainerId)),
+            "/container/properties/public-status-comment", comment);
+
+        // get version number of released Container
+        Node node = selectSingleNode(getDocument(retrieve(theContainerId)), "/container/properties/version/number");
+        Integer versionNumber = Integer.parseInt(node.getTextContent());
+
+        // remove member
+        tmpLmd = lmd;
+        param = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\"" + lmd + "\">\n" +
+                "<id>" + theItemId + "</id>" + "</param>";
+        resultXml = removeMembers(theContainerId, param);
+        assertXmlValidResult(resultXml);
+        doc = getDocument(resultXml);
+        lmd = getLastModificationDateValue(doc);
+        assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, tmpLmd);
+
+        // check for new version number
+        node = selectSingleNode(getDocument(retrieve(theContainerId)), "/container/properties/version/number");
+        Integer newVersionNumber = Integer.parseInt(node.getTextContent());
+        assertTrue("The version number did not increase! (" + newVersionNumber + " is not greater than " +
+                versionNumber + ")", newVersionNumber.compareTo(versionNumber) > 0);
     }
 
     /**
