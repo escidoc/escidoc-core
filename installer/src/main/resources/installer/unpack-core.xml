@@ -109,6 +109,10 @@
 		<delete dir="${install.dir}/${server.deploy.dir}/ROOT" />
 		<!-- delete tomcat's examples deployment -->
 		<delete dir="${install.dir}/${server.deploy.dir}/examples" />
+		<antcall target="move-file-with-save">
+			<param name="source" value="${install.dir}/install.tmp/tomcat/server.xml" />
+			<param name="target" value="${install.dir}/${server.web.conf.dir}/server.xml" />
+		</antcall>
 	</target>
 
 	<target name="install-tomcat-oracle" depends="copy-oracle-jdbc-jar" if="databaseIsOracle">
