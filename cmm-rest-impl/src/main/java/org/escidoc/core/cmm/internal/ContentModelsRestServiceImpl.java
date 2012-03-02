@@ -21,6 +21,7 @@
 package org.escidoc.core.cmm.internal;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
@@ -71,7 +72,7 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         SystemException {
 
-        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);

@@ -20,6 +20,7 @@
 package de.escidoc.core.om.internal;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
@@ -76,7 +77,7 @@ public class ContainersRestServiceImpl implements ContainersRestService {
         final String omitHighlighting) throws MissingMethodParameterException,
         InvalidSearchQueryException, InvalidXmlException, SystemException {
 
-        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
         final JAXBElement<? extends RequestTypeTO> requestTO =
             SruRequestTypeFactory.createRequestTO(parameters, additionalParams);

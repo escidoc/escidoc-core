@@ -14,7 +14,7 @@
     <param-value>
       classpath:/META-INF/spring/applicationContext-common.xml
       classpath:/META-INF/spring/applicationContext-dataobjects-spec.xml
-      classpath:/META-INF/spring/applicationContext-dataobjects.xml
+      classpath:/META-INF/spring/applicationContext-cl-utility.xml
       classpath:/META-INF/spring/applicationContext-task-executor.xml
       classpath:/META-INF/spring/applicationContext-cxf.xml
       classpath:/META-INF/spring/applicationContext-cache.xml

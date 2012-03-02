@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.common.util.jaxrs;
+package org.escidoc.core.jaxrs.ext;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -42,6 +42,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.aopalliance.aop.AspectException;
+import org.escidoc.core.domain.exception.ExceptionTOFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +53,6 @@ import de.escidoc.core.common.exceptions.application.security.SecurityException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
-import de.escidoc.core.common.util.jaxb.ExceptionTOFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 

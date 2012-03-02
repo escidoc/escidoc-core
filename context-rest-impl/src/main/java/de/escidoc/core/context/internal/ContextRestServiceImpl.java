@@ -186,7 +186,7 @@ public class ContextRestServiceImpl implements ContextRestService {
                                                                final String omitHighlighting)
             throws ContextNotFoundException, MissingMethodParameterException, SystemException {
 
-        final List<KeyValuePair> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
+        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
                 roleId, userId, omitHighlighting);
 
         final JAXBElement<? extends RequestTypeTO> requestTO =

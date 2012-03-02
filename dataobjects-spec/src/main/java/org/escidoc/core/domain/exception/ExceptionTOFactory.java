@@ -1,9 +1,6 @@
-package de.escidoc.core.common.util.jaxb;
+package org.escidoc.core.domain.exception;
 
 import java.io.IOException;
-
-import org.escidoc.core.domain.exception.CauseTO;
-import org.escidoc.core.domain.exception.ExceptionTO;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -15,8 +12,10 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public final class ExceptionTOFactory {
 
+    private static final ObjectFactory factory = new ObjectFactory();
+
     /**
-     * private default Constructor to prevent initialization.
+     * private default Constructor to prevent instantiation.
      */
     private ExceptionTOFactory() {
     }
@@ -30,10 +29,10 @@ public final class ExceptionTOFactory {
      * @throws SystemException e
      */
     public static ExceptionTO generateExceptionTO(final Throwable e) throws IOException, SystemException {
-        ExceptionTO exceptionTo = new ExceptionTO();
+        ExceptionTO exceptionTo = factory.createExceptionTO();
 
         if (e.getCause() != null) {
-            CauseTO causeTo = new CauseTO();
+            CauseTO causeTo = factory.createCauseTO();
             causeTo.setException(generateExceptionTO(e.getCause()));
             exceptionTo.setCause(causeTo);
         }
@@ -61,9 +60,8 @@ public final class ExceptionTOFactory {
      */
     private static String getStackTraceString(final Throwable e) {
 
-        final StringBuilder result = new StringBuilder("");
-        final StackTraceElement[] elements = e.getStackTrace();
-        for (final StackTraceElement element : elements) {
+        final StringBuilder result = new StringBuilder();
+        for (final StackTraceElement element : e.getStackTrace()) {
             result.append("    ");
             result.append(element);
             result.append('\n');
