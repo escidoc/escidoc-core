@@ -334,8 +334,9 @@ public class ContainerReleaseIT extends ContainerTestBase {
 
         // remove member
         tmpLmd = lmd;
-        param = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\"" + lmd + "\">\n" +
-                "<id>" + theItemId + "</id>" + "</param>";
+        param =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<param last-modification-date=\"" + lmd + "\">\n"
+                + "<id>" + theItemId + "</id>" + "</param>";
         resultXml = removeMembers(theContainerId, param);
         assertXmlValidResult(resultXml);
         doc = getDocument(resultXml);
@@ -345,8 +346,8 @@ public class ContainerReleaseIT extends ContainerTestBase {
         // check for new version number
         node = selectSingleNode(getDocument(retrieve(theContainerId)), "/container/properties/version/number");
         Integer newVersionNumber = Integer.parseInt(node.getTextContent());
-        assertTrue("The version number did not increase! (" + newVersionNumber + " is not greater than " +
-                versionNumber + ")", newVersionNumber.compareTo(versionNumber) > 0);
+        assertTrue("The version number did not increase! (" + newVersionNumber + " is not greater than "
+            + versionNumber + ")", newVersionNumber.compareTo(versionNumber) > 0);
     }
 
     /**

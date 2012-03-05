@@ -43,14 +43,12 @@ public interface FedoraServiceRESTEndpoint {
 
     @PUT
     @Path("/objects/{pid}")
-    @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     void updateObject(
         @NotNull @PathParam("") UpdateObjectPathParam path, @NotNull @QueryParam("") UpdateObjectQueryParam query);
 
     @DELETE
     @Path("/objects/{pid}")
-    @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.TEXT_XML)
     void deleteObject(
         @NotNull @PathParam("") DeleteObjectPathParam path, @NotNull @QueryParam("") DeleteObjectQueryParam query);
@@ -132,7 +130,6 @@ public interface FedoraServiceRESTEndpoint {
 
     @DELETE
     @Path("/objects/{pid}/datastreams/{dsID}")
-    @Produces(MimeTypes.TEXT_XML)
     @Consumes(MimeTypes.APPLICATION_JSON)
     void deleteDatastream(
         @NotNull @PathParam("") DeleteDatastreamPathParam path,
