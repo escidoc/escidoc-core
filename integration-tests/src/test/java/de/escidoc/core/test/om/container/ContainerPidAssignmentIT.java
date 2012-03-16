@@ -69,7 +69,7 @@ public class ContainerPidAssignmentIT extends ContainerTestBase {
     private final String containerUrl;
 
     public ContainerPidAssignmentIT() {
-        containerUrl = getFrameworkUrl() + "/ir/container/";
+        containerUrl = getBaseUrl() + "/ir/container/";
     }
 
     /**

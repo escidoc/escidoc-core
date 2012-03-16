@@ -35,6 +35,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -72,7 +73,7 @@ public class ItemTestBase extends OmTestBase {
     }
 
     public ItemTestBase() {
-        itemUrl = getFrameworkUrl() + "/ir/item/";
+        itemUrl = getBaseUrl() + "/ir/item/";
     }
 
     /**
@@ -218,7 +219,7 @@ public class ItemTestBase extends OmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         }
         else if (result instanceof String) {
@@ -245,7 +246,7 @@ public class ItemTestBase extends OmTestBase {
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 binContent = new BinaryContent();
-                binContent.setContent(httpRes.getEntity().getContent());
+                binContent.setContent(EntityUtil.getContent(httpRes.getEntity()));
                 Header contentType = httpRes.getFirstHeader("Content-Type");
                 if (contentType != null) {
                     binContent.setMimeType(contentType.getValue());
@@ -279,7 +280,7 @@ public class ItemTestBase extends OmTestBase {
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 binContent = new BinaryContent();
-                binContent.setContent(httpRes.getEntity().getContent());
+                binContent.setContent(EntityUtil.getContent(httpRes.getEntity()));
                 Header contentType = httpRes.getFirstHeader("Content-Type");
                 binContent.setMimeType(contentType.getValue());
                 // binContent.setFileName(fileName);
@@ -303,7 +304,7 @@ public class ItemTestBase extends OmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         }
         else if (result instanceof String) {

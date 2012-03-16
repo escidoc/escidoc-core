@@ -29,6 +29,7 @@
 package de.escidoc.core.aa.internal;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,6 +42,7 @@ import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
 import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
 import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
 import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
@@ -367,22 +369,22 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.Set, java.util.Set, java.util.Set)
+     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.List, java.util.List, java.util.List)
      */
     @Override
-    public PermissionFilterTO retrievePermissionFilterQuery(final Set<String> index, final Set<String> user, final Set<String> role) throws SystemException,
+    public ResultTO retrievePermissionFilterQuery(final List<String> index, final List<String> user, final List<String> role) throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException {
         Map<String, String[]> parameters = new HashMap<String, String[]>();
         if (index != null && index.size() > 0) {
-            parameters.put("index", (String[])index.toArray());
+            parameters.put("index", index.toArray(new String[index.size()]));
         }
         if (user != null && user.size() > 0) {
-            parameters.put("user", (String[])user.toArray());
+            parameters.put("user", user.toArray(new String[user.size()]));
         }
         if (role != null && role.size() > 0) {
-            parameters.put("role", (String[])role.toArray());
+            parameters.put("role", role.toArray(new String[role.size()]));
         }
-        return serviceUtility.fromXML(PermissionFilterTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
+        return serviceUtility.fromXML(ResultTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
     }
 
 }

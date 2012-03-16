@@ -53,7 +53,7 @@ public class PreprocessingClient extends ClientBase {
     public Object preprocess(final String id, final Object preprocessingInformationXml) throws Exception {
 
         return callEsciDoc("Preprocessing.preprocess", METHOD_PREPROCESS_STATISTICS, Constants.HTTP_METHOD_POST,
-            Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
+            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
             changeToString(preprocessingInformationXml));
     }
 

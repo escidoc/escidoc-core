@@ -30,6 +30,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import org.escidoc.core.domain.components.ComponentPropertiesTO;
 import org.escidoc.core.domain.components.ComponentTO;
@@ -49,6 +50,7 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 
@@ -75,6 +77,7 @@ import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundEx
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -102,7 +105,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ItemRestService {
 
     @PUT
-    @Path("/{id}")
     ItemTO create(ItemTO itemTO) throws MissingContentException, ContextNotFoundException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException, AuthenticationException,
@@ -122,7 +124,7 @@ public interface ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
 
-    @POST
+    @PUT
     @Path("/{id}")
     ItemTO update(@PathParam("id") String id, ItemTO itemTO) throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
@@ -360,4 +362,11 @@ public interface ItemRestService {
         ContentRelationNotFoundException, AlreadyDeletedException, LockingException, ReadonlyViolationException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
         RemoteException;
+
+    @GET
+    @Path("{id}/components/component/{componentId}/content")
+    Response retrieveContent(final String id, final String contentId) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
+        ResourceNotFoundException;
+
 }

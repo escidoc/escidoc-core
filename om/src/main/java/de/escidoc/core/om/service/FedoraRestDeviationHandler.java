@@ -29,6 +29,7 @@
 package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -38,6 +39,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -76,7 +79,13 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
     @Override
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map<String, String[]> parameters) throws SystemException {
-        return handler.getDatastreamDissemination(pid, dsID, parameters);
+        try {
+            return handler.getDatastreamDissemination(pid, URLDecoder.decode(dsID, XmlUtility.CHARACTER_ENCODING),
+                parameters);
+        }
+        catch (UnsupportedEncodingException e) {
+            throw new SystemException(e);
+        }
     }
 
     /**

@@ -29,6 +29,7 @@
 package de.escidoc.core.test.common.fedora;
 
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
@@ -134,7 +135,7 @@ public class TripleStoreTestBase {
                 throw new Exception("Bad request. Http response : " + resultCode);
             }
 
-            String result = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            String result = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
             if (result == null) {
                 return null;
             }

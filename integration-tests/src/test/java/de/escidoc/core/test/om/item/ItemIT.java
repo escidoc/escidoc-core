@@ -1421,7 +1421,7 @@ public class ItemIT extends ItemTestBase {
         String createdItem = retrieve(itemId);
         Document createdItemDoc = EscidocAbstractTest.getDocument(createdItem);
         createdItemDoc =
-            (Document) substitute(createdItemDoc, "/item/components/component/content/@href", getFrameworkUrl());
+            (Document) substitute(createdItemDoc, "/item/components/component/content/@href", getBaseUrl());
         createdItem = toString(createdItemDoc, true);
         final String createdXml = create(createdItem);
 
@@ -1565,7 +1565,7 @@ public class ItemIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node xmlItemDoc = deleteElement(xmlItem, "/item/components/component[not(@href) or position() = 1]");
         // set URL
-        String urlWithParam = getFrameworkUrl() + "?p1=v1&p2=v2";
+        String urlWithParam = getBaseUrl() + "?p1=v1&p2=v2";
         xmlItemDoc = substitute(xmlItemDoc, "/item/components/component/content/@href", urlWithParam);
         // set storage
         String storage = "external-url";

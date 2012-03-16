@@ -31,7 +31,7 @@
  */
 package de.escidoc.core.aa;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -52,6 +52,7 @@ import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
 import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
 import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
 import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
+import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
@@ -1033,10 +1034,10 @@ public interface UserAccountRestService {
      */
     @GET
     @Path("/retrievePermissionFilterQuery")
-    PermissionFilterTO retrievePermissionFilterQuery(
-                        @QueryParam("index") Set<String> index, 
-                        @QueryParam("user") Set<String> user,
-                        @QueryParam("role") Set<String> role) throws SystemException,
+    ResultTO retrievePermissionFilterQuery(
+                        @QueryParam("index") List<String> index, 
+                        @QueryParam("user") List<String> user,
+                        @QueryParam("role") List<String> role) throws SystemException,
             InvalidSearchQueryException, AuthenticationException, AuthorizationException;
 
 }

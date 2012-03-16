@@ -9,8 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
-import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -50,7 +50,7 @@ public interface FedoraDeviationRestService {
      */
     @GET
     @Path("/objects/{id}/datastreams/{ds-id}/content")
-    EscidocBinaryContent getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId)
+    Response getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId)
         throws SystemException;
 
     /**

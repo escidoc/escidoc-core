@@ -652,8 +652,8 @@ public class UserAccountIT extends UserAccountTestBase {
 
         // Currently, new created user accounts have predefined password
         // PubManR2
-        getUserManagementWrapperClient().login(loginName, "PubManR2", false, true,
-            getFrameworkUrl() + "/ir/item/escidoc:1", true);
+        getUserManagementWrapperClient().login(loginName, "PubManR2", false, true, getBaseUrl() + "/ir/item/escidoc:1",
+            true);
     }
 
     /**

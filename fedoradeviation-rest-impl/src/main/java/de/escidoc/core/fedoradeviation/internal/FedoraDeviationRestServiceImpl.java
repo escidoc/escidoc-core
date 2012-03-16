@@ -31,6 +31,9 @@ package de.escidoc.core.fedoradeviation.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
+import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,6 +57,9 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
     @Qualifier("service.FedoraRestDeviationHandler")
     private FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler;
 
+    @Autowired
+    private ServiceUtility serviceUtility;
+
     /**
      * 
      */
@@ -72,9 +78,10 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
      * @see de.escidoc.core.fedoradeviation.FedoraDeviationRestService#getDatastreamDissemination(java.lang.String, java.lang.String, java.util.Map)
      */
     @Override
-    public EscidocBinaryContent getDatastreamDissemination(final String id, final String dsId)
+    public Response getDatastreamDissemination(final String id, final String dsId)
         throws SystemException {
-        return fedoraRestDeviationHandler.getDatastreamDissemination(id, dsId, new HashMap<String, String[]>());
+        EscidocBinaryContent content = fedoraRestDeviationHandler.getDatastreamDissemination(id, dsId, new HashMap<String, String[]>());
+        return serviceUtility.toResponse(content);
     }
 
     /* (non-Javadoc)

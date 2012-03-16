@@ -82,7 +82,7 @@ public class ItemContentTransformationIT extends ItemTestBase {
             String versionId = itemId + ":1";
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/item/" + versionId));
+            assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/item/" + versionId));
             String pidParam =
                 TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                     getLastModificationDateValue2(getDocument(retrieve(versionId))));

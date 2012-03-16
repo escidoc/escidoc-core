@@ -292,7 +292,7 @@ public class UpdateIT extends ContextTestBase {
         String id = getObjidValue(createdDoc);
         String toBeChanged = null;
         Node update = null;
-        toBeChanged = getAttributeValue(createdDoc, "/context", XLINK_HREF_ESCIDOC);
+        toBeChanged = getAttributeValue(createdDoc, "/context", NAME_HREF);
         update = substitute(createdDoc, "/context/@href", toBeChanged + "12");
         update(id, toString(update, false));
     }
@@ -314,7 +314,7 @@ public class UpdateIT extends ContextTestBase {
         assertXmlValidContext(created);
         Document createdDoc = EscidocAbstractTest.getDocument(created);
         String id = getObjidValue(createdDoc);
-        String toBeChanged = getAttributeValue(createdDoc, "/context", XLINK_TITLE_ESCIDOC);
+        String toBeChanged = getAttributeValue(createdDoc, "/context", NAME_TITLE);
         Node update = substitute(createdDoc, "/context/@title", toBeChanged + "12");
         String s = toString(update, false);
         update(id, s);
@@ -604,7 +604,7 @@ public class UpdateIT extends ContextTestBase {
             Document createdDoc = EscidocAbstractTest.getDocument(created);
             String xpath = "/context/properties/creator";
             String id = getObjidValue(createdDoc);
-            String toBeChanged = getAttributeValue(createdDoc, xpath, XLINK_HREF_ESCIDOC);
+            String toBeChanged = getAttributeValue(createdDoc, xpath, NAME_HREF);
             Node update = substitute(createdDoc, xpath + "/@href", toBeChanged + "12");
             update(id, toString(update, false));
             fail(ec + " expected but no error occured!");
@@ -635,7 +635,7 @@ public class UpdateIT extends ContextTestBase {
             Document createdDoc = EscidocAbstractTest.getDocument(created);
             String xpath = "/context/properties/organizational-units/organizational-unit";
             String id = getObjidValue(createdDoc);
-            String toBeChanged = getAttributeValue(createdDoc, xpath, XLINK_HREF_ESCIDOC);
+            String toBeChanged = getAttributeValue(createdDoc, xpath, NAME_HREF);
             Node update = substitute(createdDoc, xpath + "/@href", toBeChanged + "12");
             String s = toString(update, false);
             update(id, s);

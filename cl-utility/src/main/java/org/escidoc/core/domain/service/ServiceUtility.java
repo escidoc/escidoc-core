@@ -3,11 +3,17 @@
  */
 package org.escidoc.core.domain.service;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.*;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -18,6 +24,7 @@ import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.sru.*;
 import org.escidoc.core.domain.sru.parameters.SruConstants;
 import org.escidoc.core.util.xml.internal.JAXBContextProvider;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -137,6 +144,37 @@ public class ServiceUtility {
 
         return result;
     }
+
+    public final Response toResponse(@NotNull
+        final EscidocBinaryContent content) throws SystemException {
+            final String externalContentRedirectUrl = content.getRedirectUrl();
+            try {
+                if (externalContentRedirectUrl != null) {
+                    // redirect
+                    return Response.seeOther(new URI(externalContentRedirectUrl)).entity(
+                        "<html><body><a href=\"" + externalContentRedirectUrl + "\">The requested binary content"
+                            + " is externally available under this location: " + externalContentRedirectUrl
+                            + "</a></body></html>").type("text/html").status(Status.SEE_OTHER).build();
+                }
+                else {
+                    // response with content
+                    ResponseBuilder responseBuilder =
+                        Response
+                            .ok(content.getContent()).header("Cache-Control", "no-cache").header("Pragma", "no-cache")
+                            .type(content.getMimeType());
+                    if (content.getFileName() != null) {
+                        responseBuilder.header("Content-Disposition", "inline;filename=\"" + content.getFileName() + '\"');
+                    }
+                    return responseBuilder.build();
+                }
+            }
+            catch (URISyntaxException e) {
+                throw new SystemException(e);
+            }
+            catch (IOException e) {
+                throw new SystemException(e);
+            }
+        }
 
     /**
      *

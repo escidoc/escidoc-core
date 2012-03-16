@@ -80,7 +80,7 @@ public class ItemPIDAssignmentIT extends ItemTestBase {
     private final String itemUrl;
 
     public ItemPIDAssignmentIT() {
-        itemUrl = getFrameworkUrl() + "/ir/item/";
+        itemUrl = getBaseUrl() + "/ir/item/";
     }
 
     /**

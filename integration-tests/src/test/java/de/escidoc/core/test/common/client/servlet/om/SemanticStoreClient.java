@@ -47,8 +47,8 @@ public class SemanticStoreClient extends ClientBase {
      */
     public Object spo(final String queryParam) throws Exception {
 
-        return callEsciDoc("SemanticStore.spo", METHOD_SPO, Constants.HTTP_METHOD_POST,
-            Constants.SEMANTIC_STORE_BASE_URI + Constants.SPO, new String[] {}, queryParam);
+        return callEsciDoc("SemanticStore.spo", METHOD_SPO, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+            + Constants.SEMANTIC_STORE_BASE_URI + Constants.SPO, new String[] {}, queryParam);
     }
 
 }

@@ -29,6 +29,8 @@
 package de.escidoc.core.om.business.fedora.deviation;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -82,9 +84,10 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
+        String decodedDsId = dsID.replaceAll("\\|", "\\/");
         EscidocBinaryContent content = null;
         try {
-            content = this.indexerResourceRequester.getResource(getHref(dsID));
+            content = this.indexerResourceRequester.getResource(getHref(decodedDsId));
         }
         catch (final SystemException e) {
             if (LOGGER.isWarnEnabled()) {
@@ -98,7 +101,7 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         if (content != null) {
             return content;
         }
-        LOGGER.error(StringUtility.format("could not get resource for cache", dsID));
+        LOGGER.error(StringUtility.format("could not get resource for cache", decodedDsId));
 
         return null;
     }

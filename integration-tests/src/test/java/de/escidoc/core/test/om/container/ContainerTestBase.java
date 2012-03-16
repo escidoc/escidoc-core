@@ -32,6 +32,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Test the handler of the container resource.
@@ -165,7 +167,7 @@ public class ContainerTestBase extends OmTestBase {
     private final String containerUrl;
 
     public ContainerTestBase() {
-        containerUrl = getFrameworkUrl() + "/ir/container/";
+        containerUrl = getBaseUrl() + Constants.CONTAINER_BASE_URI;
     }
 
     /**
@@ -329,9 +331,16 @@ public class ContainerTestBase extends OmTestBase {
         return handleXmlResult(getContainerClient().removeMembers(id, taskParam));
     }
 
-    protected String createItem(final String id, final String itemXml) throws Exception {
+    public String createItem(final String id, final String itemXml) throws Exception {
+        Document containerDoc = getDocument(handleXmlResult(getContainerClient().retrieve(id)));
 
-        return handleXmlResult(getContainerClient().createItem(id, itemXml));
+        String createdItem = handleXmlResult(getItemClient().create(itemXml));
+        String createdItemId = getObjidValue(createdItem);
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(createdItemId);
+        addMembers(id, TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDoc)));
+
+        return handleXmlResult(getItemClient().retrieve(createdItemId));
     }
 
     /**
@@ -342,9 +351,16 @@ public class ContainerTestBase extends OmTestBase {
      * @return The XML representation of the new created Container.
      * @throws Exception Thrown if creation failed.
      */
-    protected String createContainer(final String id, final String containerXml) throws Exception {
+    public String createContainer(final String id, final String containerXml) throws Exception {
+        Document containerDoc = getDocument(handleXmlResult(getContainerClient().retrieve(id)));
 
-        return handleXmlResult(getContainerClient().createContainer(id, containerXml));
+        String createdContainer = handleXmlResult(getContainerClient().create(containerXml));
+        String createdContainerId = getObjidValue(createdContainer);
+        ArrayList<String> ids = new ArrayList<String>();
+        ids.add(createdContainerId);
+        addMembers(id, TaskParamFactory.getMembersTaskParam(ids, getLastModificationDateValue2(containerDoc)));
+
+        return handleXmlResult(getContainerClient().retrieve(createdContainerId));
     }
 
     /**

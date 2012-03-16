@@ -51,7 +51,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("SetDefinition.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.SET_DEFINITION_BASE_URI, new String[] { id });
+            Constants.ESCIDOC_BASE_URI + Constants.SET_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -64,8 +64,8 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
     @Override
     public Object create(final Object setDefinitionXml) throws Exception {
 
-        return callEsciDoc("SetDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.SET_DEFINITION_BASE_URI, new String[] {}, changeToString(setDefinitionXml));
+        return callEsciDoc("SetDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.SET_DEFINITION_BASE_URI, new String[] {}, changeToString(setDefinitionXml));
     }
 
     /**
@@ -79,7 +79,7 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
     public Object delete(final String id) throws Exception {
 
         return callEsciDoc("SetDefinition.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.SET_DEFINITION_BASE_URI, new String[] { id });
+            Constants.ESCIDOC_BASE_URI + Constants.SET_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -93,8 +93,8 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
     @Override
     public Object update(final String id, final Object setDefinitionXml) throws Exception {
 
-        return callEsciDoc("SetDefinition.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.SET_DEFINITION_BASE_URI, new String[] { id }, changeToString(setDefinitionXml));
+        return callEsciDoc("SetDefinition.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.SET_DEFINITION_BASE_URI, new String[] { id }, changeToString(setDefinitionXml));
     }
 
     /**
@@ -106,7 +106,8 @@ public class SetDefinitionClient extends ClientBase implements ResourceHandlerCl
      */
     public Object retrieveSetDefinitions(final Map<String, String[]> filter) throws Exception {
         return callEsciDoc("SetDefinition.retrieveSetDefinitions", METHOD_RETRIEVE_SET_DEFINITIONS,
-            Constants.HTTP_METHOD_GET, Constants.SET_DEFINITIONS_BASE_URI, new String[] {}, filter);
+            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.SET_DEFINITIONS_BASE_URI,
+            new String[] {}, filter);
     }
 
     /**

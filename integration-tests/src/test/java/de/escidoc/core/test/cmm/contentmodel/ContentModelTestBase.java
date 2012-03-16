@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.cmm.CmmTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -294,9 +295,9 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/item/"
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + "/ir/item/"
                         + getObjidValue(getDocument(itemXml)) + "/resources/trans", null, MimeTypes.TEXT_XML, null);
-                String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+                String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
@@ -328,10 +329,10 @@ public class ContentModelTestBase extends CmmTestBase {
                 // check behavior
                 HttpResponse httpRes =
                     HttpHelper
-                        .executeHttpRequest(Constants.HTTP_METHOD_GET, getFrameworkUrl() + "/ir/container/"
+                        .executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + "/ir/container/"
                             + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MimeTypes.TEXT_XML,
                             null);
-                String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+                String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
 

@@ -78,7 +78,7 @@ public interface OrganizationalUnitRestService {
     OrganizationalUnitTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
-    @POST
+    @PUT
     @Path("/{id}")
     OrganizationalUnitTO update(@PathParam("id") String id, OrganizationalUnitTO organizationalUnitTO)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,

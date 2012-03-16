@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
@@ -236,14 +237,14 @@ public class ContainerReferenceIT extends ContainerTestBase {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        String httpUrl = getFrameworkUrl() + href;
+        String httpUrl = getBaseUrl() + href;
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 
         if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
 
             throw new Exception("Retrieve of " + href + " failed. " + httpRes.getStatusLine().getReasonPhrase() + " - "
-                + EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+                + EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8));
         }
 
         return httpRes;

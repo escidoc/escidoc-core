@@ -193,7 +193,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
             "/version-history/version[1]/events/event[1]/eventType[text() = 'submitted']");
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + theContainerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + theContainerId));
         String pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -201,7 +201,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         xml = assignObjectPid(theContainerId, pidParam);
         String containerId = theContainerId + ":1";
 
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + containerId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam, getLastModificationDateValue2(getDocument(xml)));
 
@@ -410,7 +410,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -418,7 +418,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assignObjectPid(theContainerId, pidParam);
         String containerId = theContainerId + ":3";
 
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + containerId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(containerId))));
@@ -556,7 +556,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // release again
         containerId = theContainerId + ":5";
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + containerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + containerId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(containerId))));
@@ -739,7 +739,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         assertXmlValidContainer(xml);
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -1102,7 +1102,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // ---------------------------------------------------------------
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -1111,7 +1111,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         String versionId = this.theContainerId + ":3";
 
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + versionId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(versionId))));
@@ -1268,7 +1268,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         // release again
         versionId = this.theContainerId + ":5";
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + versionId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(versionId))));
@@ -1452,7 +1452,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // ---------------------------------------------------------------
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + this.theContainerId));
         String pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -1461,7 +1461,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
 
         String versionId = this.theContainerId + ":3";
 
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + versionId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(versionId))));
@@ -1519,7 +1519,7 @@ public class ContainerVersioningIT extends ContainerTestBase {
         // release again
         versionId = this.theContainerId + ":5";
 
-        assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + versionId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + versionId));
         pidParam =
             TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                 getLastModificationDateValue2(getDocument(retrieve(versionId))));

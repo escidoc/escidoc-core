@@ -53,6 +53,12 @@ public class PropertiesProvider {
 
     public static final String ESCIDOC_SERVER_PORT = "server.port";
 
+    public static final String ESCIDOC_SERVER_CONTEXT = "server.context";
+
+    public static final String ESCIDOC_FEDORAGSEARCH_CONTEXT = "fedoragsearch.context";
+
+    public static final String ESCIDOC_SRW_CONTEXT = "srw.context";
+
     public static final String ESCIDOC_VERSION = "escidoc-core.build";
 
     public static final String FEDORA_URL = "fedora.url";

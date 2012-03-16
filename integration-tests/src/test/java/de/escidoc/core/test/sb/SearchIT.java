@@ -123,8 +123,7 @@ public class SearchIT extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                + urlParameters;
+            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -229,6 +228,8 @@ public class SearchIT extends SearchTestBase {
                 getLastModificationDateValue2(getDocument(xml)), null));
             if (i % 2 == 0) {
                 xml = item.retrieve(itemIds[i]);
+                itemDoc = getDocument(xml);
+                xml = toString(itemDoc, false);
                 xml = xml.replaceAll("Huffman", "Huffman1");
                 item.update(itemIds[i], xml);
                 versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
@@ -296,8 +297,7 @@ public class SearchIT extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
         String httpUrl =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                + urlParameters;
+            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -957,7 +957,7 @@ public class SearchIT extends SearchTestBase {
     public void testSBSR21() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
@@ -974,7 +974,7 @@ public class SearchIT extends SearchTestBase {
     public void testSBSR22() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.language=de");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/xyz.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("10", getNumberOfHits(response));
@@ -1831,7 +1831,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/scanResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/scanResponse.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));
@@ -1848,7 +1848,7 @@ public class SearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=berg");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/yxr.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/yxr.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));

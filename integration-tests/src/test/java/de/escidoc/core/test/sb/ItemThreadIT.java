@@ -90,7 +90,7 @@ public class ItemThreadIT extends SearchTestBase {
      */
     @Test
     public void testServlet() throws Exception {
-        HttpRequester requester = new HttpRequester(getFrameworkUrl() + "/fedoradeviation/describe", "mih:mih");
+        HttpRequester requester = new HttpRequester(getBaseUrl() + "/fedoradeviation/describe", "mih:mih");
         String response = requester.doGet("");
     }
 

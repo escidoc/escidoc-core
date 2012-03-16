@@ -47,8 +47,8 @@ public class IngestClient extends ClientBase implements ResourceHandlerClientInt
      * @throws Exception If the service call fails.
      */
     public Object ingest(final String xmlData) throws Exception {
-        return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.INGEST_BASE_URI,
-            new String[] {}, changeToString(xmlData));
+        return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.INGEST_BASE_URI, new String[] {}, changeToString(xmlData));
 
     }
 

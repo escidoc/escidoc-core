@@ -57,8 +57,8 @@ public class JhoveIT extends JhoveTestBase {
 
         Document resultDoc = getDocument(result);
         selectSingleNodeAsserted(resultDoc, "/jhove");
-        assertJhoveRepInfo(resultDoc, getFrameworkUrl() + "/images/escidoc-logo.jpg", "JPEG-hul", "1.2", "5304",
-            "JPEG", "1.02", "Well-Formed and valid", "JPEG-hul");
+        assertJhoveRepInfo(resultDoc, getBaseUrl() + "/images/escidoc-logo.jpg", "JPEG-hul", "1.2", "5304", "JPEG",
+            "1.02", "Well-Formed and valid", "JPEG-hul");
         assertJhoveRepInfo(resultDoc, file.toString(), "PDF-hul", "1.7", "129361", "PDF", "1.4",
             "Well-Formed and valid", "PDF-hul");
         assertEquals("Jhove report does not contain expected number of results!", 2, selectNodeList(resultDoc,

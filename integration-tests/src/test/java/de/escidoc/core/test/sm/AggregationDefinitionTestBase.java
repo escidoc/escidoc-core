@@ -32,6 +32,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import de.escidoc.core.test.EntityUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +58,7 @@ public class AggregationDefinitionTestBase extends SmTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {
@@ -96,7 +98,7 @@ public class AggregationDefinitionTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -118,7 +120,7 @@ public class AggregationDefinitionTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -140,7 +142,7 @@ public class AggregationDefinitionTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

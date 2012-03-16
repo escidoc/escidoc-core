@@ -111,13 +111,15 @@ private List<String> getLoginMethods() {
 		    if (loginMethods.size() == 1) {
 		    	String loginUrlPostfix = loginMethods.iterator().next();
 		        EscidocServlet.doRedirect(response, null, "<html><body><a href=\""
+		        		+ this.getServletContext().getContextPath()
 		        		+ Login.BASE_PATH_LOGIN
 		                + loginUrlPostfix
 		                + queryString
 		                + "\">Resource available under this location: "
+		        		+ this.getServletContext().getContextPath()
 		                + Login.BASE_PATH_LOGIN
 		                + loginUrlPostfix + queryString +"</a></body></html>",
-		                Login.BASE_PATH_LOGIN + loginUrlPostfix + queryString,
+		                this.getServletContext().getContextPath() + Login.BASE_PATH_LOGIN + loginUrlPostfix + queryString,
 		                HttpServletResponse.SC_MOVED_TEMPORARILY, true);
 		    }
 		    
@@ -138,7 +140,7 @@ private List<String> getLoginMethods() {
                     <tr>
                       <td>&nbsp;</td>
                       <td>
-                        <a href="/aa/login/<%= loginMethod %><%= queryString %>"><%= loginMethod %></a>
+                        <a href="<%= this.getServletContext().getContextPath() %>/aa/login/<%= loginMethod %><%= queryString %>"><%= loginMethod %></a>
                       </td>
                     </tr>
 		    <%

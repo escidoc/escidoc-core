@@ -37,11 +37,11 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.transport.servlet.AbstractHTTPServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -73,7 +73,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  *
  * @author Michael Schneider
  */
-public class Login extends HttpServlet {
+public class Login extends AbstractHTTPServlet {
 
     /**
      * The logger.
@@ -132,6 +132,8 @@ public class Login extends HttpServlet {
 
     private static final String LOGOUT_POSTFIX = "logout";
 
+    private static final String LOGIN_POSTFIX = "login";
+
     // TODO values was cloned to EsidocServlet (to reduce common package
     // dependencies)
     public static final String AUTHENTICATION = "eSciDocUserHandle";
@@ -152,6 +154,8 @@ public class Login extends HttpServlet {
     private static final String LOGOUT_FILENAME = BASE_PATH_LOGIN + "logout.html";
 
     private static final String LOGOUT_REDIRECT_FILENAME = BASE_PATH_LOGIN + "logout-redirect.html";
+
+    private static final String LOGIN_METHOD_SELECT_JSP = BASE_PATH_LOGIN + "login-select.jsp";
 
     private final Map<String, String> templates = new HashMap<String, String>();
 
@@ -204,28 +208,28 @@ public class Login extends HttpServlet {
      * @throws IOException      e.
      */
     @Override
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException,
-        IOException {
+    public void invoke(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
             doLogout(request, response);
         }
         else {
-            doLogin(request, response);
-        }
-    }
-
-    /**
-     * See Interface for functional description.
-     */
-    @Override
-    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException,
-        IOException {
-
-        if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
-            doLogout(request, response);
-        }
-        else {
-            doLogin(request, response);
+            if (request.getRequestURL().toString().endsWith(LOGIN_POSTFIX)) {
+                //No Login-Method selected, so redirect to select-jsp
+                try {
+                    StringBuilder url =
+                        new StringBuilder(this.getServletContext().getContextPath() + LOGIN_METHOD_SELECT_JSP);
+                    if (request.getQueryString() != null && !request.getQueryString().isEmpty()) {
+                        url.append("?").append(request.getQueryString());
+                    }
+                    sendRedirectingResponse(response, "", url.toString());
+                }
+                catch (IOException e) {
+                    throw new ServletException(e);
+                }
+            }
+            else {
+                doLogin(request, response);
+            }
         }
     }
 
@@ -240,8 +244,7 @@ public class Login extends HttpServlet {
      * @throws IOException      Thrown in case of an IO error.
      * @throws ServletException Thrown in case of any other error.
      */
-    private void doLogout(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
-        ServletException {
+    private void doLogout(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
         response.setContentType("text/html");
         // Try to identify the user by the cookie containing the
@@ -262,7 +265,7 @@ public class Login extends HttpServlet {
 
             sendLoggedOut(request, response);
         }
-        catch (final WebserverSystemException e) {
+        catch (final Exception e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -276,8 +279,7 @@ public class Login extends HttpServlet {
      * @throws ServletException e.
      * @throws IOException      e.
      */
-    private void doLogin(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
-        ServletException {
+    private void doLogin(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 
         try {
             response.setContentType("text/html");
@@ -376,7 +378,7 @@ public class Login extends HttpServlet {
             }
             doLoginOfExistingUser(request, response, userAccount);
         }
-        catch (final SystemException e) {
+        catch (final Exception e) {
             throw new ServletException(e.getMessage(), e);
         }
     }

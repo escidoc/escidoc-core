@@ -48,7 +48,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      */
     public Object deleteObjects(final String xml) throws Exception {
         return callEsciDoc("Admin.deleteObjects", METHOD_DELETE_OBJECTS, Constants.HTTP_METHOD_POST,
-            Constants.DELETE_OBJECTS_BASE_URI, new String[] {}, changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.DELETE_OBJECTS_BASE_URI, new String[] {}, changeToString(xml));
 
     }
 
@@ -61,7 +61,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     public Object getPurgeStatus() throws Exception {
 
         return callEsciDoc("Admin.getPurgeStatus", METHOD_GET_PURGE_STATUS, Constants.HTTP_METHOD_GET,
-            Constants.DELETE_OBJECTS_BASE_URI, new String[] {});
+            Constants.ESCIDOC_BASE_URI + Constants.DELETE_OBJECTS_BASE_URI, new String[] {});
     }
 
     /**
@@ -73,7 +73,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     public Object getRepositoryInfo() throws Exception {
 
         return callEsciDoc("Admin.getRepositoryInfo", METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
-            Constants.REPOSITORY_INFO_BASE_URI, new String[] {});
+            Constants.ESCIDOC_BASE_URI + Constants.REPOSITORY_INFO_BASE_URI, new String[] {});
     }
 
     /**
@@ -85,7 +85,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     public Object getIndexConfiguration() throws Exception {
 
         return callEsciDoc("Admin.getIndexConfiguration", METHOD_GET_INDEX_CONFIGURATION, Constants.HTTP_METHOD_GET,
-            Constants.INDEX_CONFIGURATION_BASE_URI, new String[] {});
+            Constants.ESCIDOC_BASE_URI + Constants.INDEX_CONFIGURATION_BASE_URI, new String[] {});
     }
 
     /**
@@ -97,7 +97,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      */
     public Object loadExamples(final String type) throws Exception {
         return callEsciDoc("Admin.loadExamples", METHOD_LOAD_EXAMPLES, Constants.HTTP_METHOD_GET,
-            Constants.LOAD_EXAMPLES_BASE_URI, new String[] { type });
+            Constants.ESCIDOC_BASE_URI + Constants.LOAD_EXAMPLES_BASE_URI, new String[] { type });
     }
 
     /**
@@ -108,7 +108,7 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
      * @throws Exception If the service call fails.
      */
     public Object reindex(final boolean clearIndex, final String indexName) throws Exception {
-        return callEsciDoc("Admin.reindex", METHOD_REINDEX, Constants.HTTP_METHOD_POST, Constants.REINDEX_BASE_URI,
-            new String[] { new Boolean(clearIndex).toString(), indexName });
+        return callEsciDoc("Admin.reindex", METHOD_REINDEX, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+            + Constants.REINDEX_BASE_URI, new String[] { new Boolean(clearIndex).toString(), indexName });
     }
 }

@@ -30,6 +30,8 @@ package de.escidoc.core.test.tests;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.om.OmTestBase;
+import de.escidoc.core.test.om.container.ContainerTestBase;
+
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -40,7 +42,7 @@ import static org.junit.Assert.fail;
  *
  * @author Steffen Wagner
  */
-public class AssertTests extends OmTestBase {
+public class AssertTests extends ContainerTestBase {
 
     /**
      * Check if the assertXmlEquals method throws an exception if the name of the root elements differs.
@@ -58,7 +60,7 @@ public class AssertTests extends OmTestBase {
                     .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
             String containerId = getObjidValue(containerXml);
-            String itemXml = handleXmlResult(getContainerClient().createItem(containerId, tempItemXml));
+            String itemXml = handleXmlResult(createItem(containerId, tempItemXml));
 
             // both documents should differ at least in the root elements
             assertXmlEquals("createItem() response should equals retrieve", containerXml, itemXml);

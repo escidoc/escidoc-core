@@ -47,8 +47,8 @@ public class JhoveClient extends ClientBase {
      */
     public Object identify(final String param) throws Exception {
 
-        return callEsciDoc("Jhove.extract", METHOD_EXTRACT, Constants.HTTP_METHOD_POST, Constants.JHOVE_BASE_URI,
-            new String[] {}, param);
+        return callEsciDoc("Jhove.extract", METHOD_EXTRACT, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+            + Constants.JHOVE_BASE_URI, new String[] {}, param);
     }
 
 }

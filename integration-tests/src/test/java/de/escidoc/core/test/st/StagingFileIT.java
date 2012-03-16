@@ -42,6 +42,7 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -79,7 +80,7 @@ public class StagingFileIT extends StagingFileTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        final String stagingFileXml = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         EscidocAbstractTest.assertXmlValidStagingFile(stagingFileXml);
         Document document = EscidocAbstractTest.getDocument(stagingFileXml);
@@ -119,7 +120,7 @@ public class StagingFileIT extends StagingFileTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document = EscidocAbstractTest.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+        Document document = EscidocAbstractTest.getDocument(EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8));
 
         String objidValue = getIdFromRootElementHref(document);
 
@@ -198,13 +199,13 @@ public class StagingFileIT extends StagingFileTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        Document document = EscidocAbstractTest.getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+        Document document = EscidocAbstractTest.getDocument(EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8));
 
         String objidValue = getIdFromRootElementHref(document);
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            httpRes.getEntity().getContent().close();
+            EntityUtil.getContent(httpRes.getEntity()).close();
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
@@ -212,7 +213,7 @@ public class StagingFileIT extends StagingFileTestBase {
 
         try {
             httpRes = retrieveStagingFile(objidValue);
-            httpRes.getEntity().getContent().close();
+            EntityUtil.getContent(httpRes.getEntity()).close();
             EscidocAbstractTest.failMissingException("Upload Servlet's get method did not decline"
                 + " repeated retrieval of a staging file, ", StagingFileNotFoundException.class);
         }
@@ -243,12 +244,12 @@ public class StagingFileIT extends StagingFileTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        final String stagingFileXml = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         EscidocAbstractTest.assertXmlValidStagingFile(stagingFileXml);
         Document document = EscidocAbstractTest.getDocument(stagingFileXml);
         String stagingFileHref =
-            Constants.PROTOCOL + "://" + EscidocTestBase.getFrameworkHost() + ":" + EscidocTestBase.getFrameworkPort()
+            Constants.PROTOCOL + "://" + EscidocTestBase.getBaseHost() + ":" + EscidocTestBase.getBasePort()
                 + selectSingleNode(document, "/staging-file/@href").getTextContent();
 
         Document itemDoc =

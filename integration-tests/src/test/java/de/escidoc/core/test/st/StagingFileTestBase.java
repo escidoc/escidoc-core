@@ -39,6 +39,7 @@ import java.io.InputStream;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
@@ -132,7 +133,7 @@ public abstract class StagingFileTestBase extends EscidocAbstractTest {
         Object result = getStagingFileClient().retrieveTestData(filename);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            return new ByteArrayInputStream(EntityUtils.toByteArray(httpRes.getEntity()));
+            return new ByteArrayInputStream(EntityUtil.toByteArray(httpRes.getEntity()));
         }
         else {
             fail("Unsupported result type [" + result.getClass().getName() + "]");
@@ -152,7 +153,7 @@ public abstract class StagingFileTestBase extends EscidocAbstractTest {
     public static void assertResponseContentMatchesSourceFile(final HttpResponse httpRes, final InputStream origContent)
         throws IOException {
 
-        InputStream responseContent = httpRes.getEntity().getContent();
+        InputStream responseContent = EntityUtil.getContent(httpRes.getEntity());
         assertNotNull("GET failed! Response's content not found", responseContent);
         byte[] bufferR = new byte[1];
         byte[] bufferO = new byte[1];

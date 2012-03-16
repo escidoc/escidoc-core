@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -258,7 +259,7 @@ public class ItemContentURLIT extends ItemTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        final String stagingFileXml = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         String url = "";
         if (withXmlBase) {

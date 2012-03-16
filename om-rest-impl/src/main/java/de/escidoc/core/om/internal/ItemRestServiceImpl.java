@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundEx
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -92,6 +93,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.rmi.RemoteException;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Service Implementation for Item.
@@ -480,4 +485,10 @@ public class ItemRestServiceImpl implements ItemRestService {
         return serviceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
     }
 
+    @Override
+    public Response retrieveContent(final String id, final String contentId) throws AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
+        ResourceNotFoundException {
+        return serviceUtility.toResponse(this.itemHandler.retrieveContent(id, contentId));
+    }
 }

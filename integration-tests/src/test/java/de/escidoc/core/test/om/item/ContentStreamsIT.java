@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -139,7 +140,7 @@ public class ContentStreamsIT extends ItemTestBase {
                 Node hrefNode = nl.item(i);
                 String href = hrefNode.getNodeValue();
                 if (href.startsWith("/")) {
-                    href = getFrameworkUrl() + href;
+                    href = getBaseUrl() + href;
                 }
                 HttpGet get = new HttpGet(href);
                 get.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
@@ -194,7 +195,7 @@ public class ContentStreamsIT extends ItemTestBase {
             String newTitle = "something";
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@title", newTitle);
             String newHref =
-                getFrameworkUrl()
+                getBaseUrl()
                     + selectSingleNodeAsserted(itemDoc,
                         "/item/content-streams/content-stream[@name = 'internal_xml']/@href").getNodeValue();
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@href", newHref);
@@ -310,14 +311,13 @@ public class ContentStreamsIT extends ItemTestBase {
             // retrieve old version of content
 
             String tocHref =
-                HttpHelper.createUrl(Constants.PROTOCOL, getFrameworkHost() + ":" + getFrameworkPort(),
-                    Constants.ITEM_BASE_URI, new String[] { createdItemId + ":1",
-                        "/content-streams/content-stream/toc/content" });
+                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(), Constants.ITEM_BASE_URI,
+                    new String[] { createdItemId + ":1", "/content-streams/content-stream/toc/content" });
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(tocHref);
             httpGet.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
             HttpResponse httpRes = httpClient.execute(httpGet);
-            String oldInlineContent = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            String oldInlineContent = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
             assertHttpStatusOK("Retrieving content stream '" + tocHref + "': ", httpRes);
 

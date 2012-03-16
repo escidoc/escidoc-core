@@ -46,8 +46,8 @@ public class StatisticDataClient extends ClientBase {
      * @throws Exception If the service call fails.
      */
     public Object create(final Object statisticDataXml) throws Exception {
-        return callEsciDoc("StatisticData.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.STATISTIC_DATA_BASE_URI, new String[] {}, changeToString(statisticDataXml));
+        return callEsciDoc("StatisticData.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_DATA_BASE_URI, new String[] {}, changeToString(statisticDataXml));
     }
 
 }

@@ -47,8 +47,8 @@ public class ReportClient extends ClientBase {
      */
     public Object retrieve(final String xml) throws Exception {
 
-        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_POST,
-            Constants.STATISTIC_REPORT_BASE_URI, new String[] {}, xml);
+        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_REPORT_BASE_URI, new String[] {}, xml);
     }
 
 }

@@ -94,7 +94,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ContainerRestService {
 
     @PUT
-    @Path("/{id}")
     ContainerTO create(final ContainerTO containerTO) throws ContextNotFoundException, ContentModelNotFoundException,
         InvalidContentException, MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, SystemException, ReferencedResourceNotFoundException,
@@ -112,7 +111,7 @@ public interface ContainerRestService {
     ContainerTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException;
 
-    @POST
+    @PUT
     @Path("/{id}")
     ContainerTO update(@PathParam("id") String id, ContainerTO containerTO) throws ContainerNotFoundException,
         LockingException, InvalidContentException, MissingMethodParameterException, InvalidXmlException,

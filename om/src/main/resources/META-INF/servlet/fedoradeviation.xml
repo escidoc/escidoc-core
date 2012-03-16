@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapping>
 	<define>
-		<var name="DS-ID" regexp="/(.*/content)" />
+		<var name="DS-ID" regexp="/([^/?]*)" />
 		<var name="OBJECT-ID" regexp="/([^/?]*)" />
 	</define>
 	<resource name="FedoraDescribeDeviation"

@@ -109,8 +109,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
         String httpUrl =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                + urlParameters;
+            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
             null, null, null);
         // /////////////////////////////////////////////////////////////////////
@@ -570,7 +569,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
             + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
@@ -586,7 +585,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
             + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/xyz.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));

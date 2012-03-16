@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyActiveException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeactiveException;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -73,7 +74,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
@@ -120,7 +121,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
             if (xmlResult.equals("")) {
@@ -170,7 +171,7 @@ public abstract class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;

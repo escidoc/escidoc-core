@@ -50,8 +50,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     @Override
     public Object create(final Object userXml) throws Exception {
 
-        return callEsciDoc("UserAccount.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] {}, changeToString(userXml));
+        return callEsciDoc("UserAccount.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.USER_ACCOUNT_BASE_URI, new String[] {}, changeToString(userXml));
     }
 
     /**
@@ -64,7 +64,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     @Override
     public Object delete(final String id) throws Exception {
         return callEsciDoc("UserAccount.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id });
     }
 
     /**
@@ -77,7 +77,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     @Override
     public Object retrieve(final String id) throws Exception {
         return callEsciDoc("UserAccount.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id });
     }
 
     /**
@@ -88,7 +88,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      */
     public Object retrieveCurrentUser() throws Exception {
         return callEsciDoc("UserAccount.retrieveCurrentUser", METHOD_RETRIEVE_CURRENT_USER, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI + "/current", new String[] {});
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI + "/current", new String[] {});
     }
 
     /**
@@ -100,7 +100,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      */
     public Object retrieveResources(final String id) throws Exception {
         return callEsciDoc("UserAccount.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
     }
 
     /**
@@ -112,7 +112,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
      */
     public Object retrieveUserAccounts(final Map<String, String[]> filter) throws Exception {
         return callEsciDoc("UserAccount.retrieveUserAccounts", METHOD_RETRIEVE_USER_ACCOUNTS,
-            Constants.HTTP_METHOD_GET, Constants.USER_ACCOUNTS_BASE_URI, new String[] {}, filter);
+            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNTS_BASE_URI, new String[] {},
+            filter);
     }
 
     /**
@@ -126,8 +127,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     @Override
     public Object update(final String id, final Object userXml) throws Exception {
 
-        return callEsciDoc("UserAccount.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id }, changeToString(userXml));
+        return callEsciDoc("UserAccount.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.USER_ACCOUNT_BASE_URI, new String[] { id }, changeToString(userXml));
     }
 
     /**
@@ -141,7 +142,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object updatePassword(final String id, final Object taskParamXml) throws Exception {
 
         return callEsciDoc("UserAccount.updatePassword", METHOD_UPDATE_PASSWORD, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "update-password" }, changeToString(taskParamXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "update-password" },
+            changeToString(taskParamXml));
     }
 
     /**
@@ -155,7 +157,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object activate(final String id, final String taskParamXml) throws Exception {
 
         return callEsciDoc("UserAccount.activate", METHOD_ACTIVATE, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "activate" }, changeToString(taskParamXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "activate" },
+            changeToString(taskParamXml));
     }
 
     /**
@@ -169,7 +172,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object deactivate(final String id, final String taskParamXml) throws Exception {
 
         return callEsciDoc("UserAccount.deactivate", METHOD_DEACTIVATE, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "deactivate" }, changeToString(taskParamXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "deactivate" },
+            changeToString(taskParamXml));
     }
 
     /**
@@ -183,7 +187,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveCurrentGrants(final String id) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveCurrentGrants", METHOD_RETRIEVE_CURRENT_GRANTS,
-            Constants.HTTP_METHOD_GET, Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/current-grants" });
+            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id,
+                "resources/current-grants" });
     }
 
     /**
@@ -198,7 +203,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object createGrant(final String id, final String grantXml) throws Exception {
 
         return callEsciDoc("UserAccount.createGrant", METHOD_CREATE_GRANT, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "/resources/grants/grant" }, changeToString(grantXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI,
+            new String[] { id, "/resources/grants/grant" }, changeToString(grantXml));
     }
 
     /**
@@ -213,7 +219,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveGrant(final String id, final String grantId) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveGrant", METHOD_RETRIEVE_GRANT, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/grants/grant", grantId });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/grants/grant",
+                grantId });
     }
 
     /**
@@ -230,7 +237,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
 
         String[] pathElements = new String[] { id, "resources/grants/grant", grantId, "revoke-grant" };
         return callEsciDoc("UserAccount.revokeGrant", METHOD_REVOKE_GRANT, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNT_BASE_URI, pathElements, changeToString(taskParamXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, pathElements, changeToString(taskParamXml));
     }
 
     /**
@@ -246,7 +253,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
 
         String[] pathElements = new String[] { id, "resources/grants/revoke-grants" };
         return callEsciDoc("UserAccount.revokeGrants", METHOD_REVOKE_GRANTS, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNT_BASE_URI, pathElements, changeToString(filterXml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, pathElements, changeToString(filterXml));
     }
 
     /**
@@ -260,7 +267,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveGrants(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveGrants", METHOD_RETRIEVE_GRANTS, Constants.HTTP_METHOD_GET,
-            Constants.GRANTS_BASE_URI, new String[] {}, filter);
+            Constants.ESCIDOC_BASE_URI + Constants.GRANTS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -273,7 +280,7 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrievePreferences(final String id) throws Exception {
 
         return callEsciDoc("UserAccount.retrievePreferences", METHOD_RETRIEVE_PREFERENCES, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences" });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences" });
     }
 
     /**
@@ -287,7 +294,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrievePreference(final String id, final String name) throws Exception {
 
         return callEsciDoc("UserAccount.retrievePreference", METHOD_RETRIEVE_PREFERENCE, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences/preference", name });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id,
+                "resources/preferences/preference", name });
     }
 
     /**
@@ -301,8 +309,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object createPreference(final String id, final String xml) throws Exception {
 
         return callEsciDoc("UserAccount.createPreference", METHOD_CREATE_PREFERENCE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences/preference" },
-            changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id,
+                "resources/preferences/preference" }, changeToString(xml));
     }
 
     /**
@@ -316,7 +324,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object deletePreference(final String id, final String name) throws Exception {
 
         return callEsciDoc("UserAccount.deletePreference", METHOD_DELETE_PREFERENCE, Constants.HTTP_METHOD_DELETE,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences/preference", name });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id,
+                "resources/preferences/preference", name });
     }
 
     /**
@@ -330,7 +339,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object updatePreferences(final String id, final String xml) throws Exception {
 
         return callEsciDoc("UserAccount.updatePreferences", METHOD_UPDATE_PREFERENCES, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences" }, changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences" },
+            changeToString(xml));
     }
 
     /**
@@ -345,8 +355,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object updatePreference(final String id, final String name, final String xml) throws Exception {
 
         return callEsciDoc("UserAccount.updatePreference", METHOD_UPDATE_PREFERENCE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { id, "resources/preferences/preference", name },
-            changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { id,
+                "resources/preferences/preference", name }, changeToString(xml));
     }
 
     /**
@@ -360,8 +370,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object createAttribute(final String userId, final String xml) throws Exception {
 
         return callEsciDoc("UserAccount.createAttribute", METHOD_CREATE_ATTRIBUTE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes/attribute" },
-            changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { userId,
+                "resources/attributes/attribute" }, changeToString(xml));
     }
 
     /**
@@ -374,7 +384,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveAttributes(final String userId) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveAttributes", METHOD_RETRIEVE_ATTRIBUTES, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes" });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI,
+            new String[] { userId, "resources/attributes" });
     }
 
     /**
@@ -388,8 +399,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveNamedAttributes(final String userId, final String name) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveNamedAttributes", METHOD_RETRIEVE_NAMED_ATTRIBUTES,
-            Constants.HTTP_METHOD_GET, Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes",
-                name });
+            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] {
+                userId, "resources/attributes", name });
     }
 
     /**
@@ -403,7 +414,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object retrieveAttribute(final String userId, final String attributeId) throws Exception {
 
         return callEsciDoc("UserAccount.retrieveAttribute", METHOD_RETRIEVE_ATTRIBUTE, Constants.HTTP_METHOD_GET,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes/attribute", attributeId });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { userId,
+                "resources/attributes/attribute", attributeId });
     }
 
     /**
@@ -418,8 +430,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object updateAttribute(final String userId, final String attributeId, final String xml) throws Exception {
 
         return callEsciDoc("UserAccount.updateAttribute", METHOD_UPDATE_ATTRIBUTE, Constants.HTTP_METHOD_PUT,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes/attribute", attributeId },
-            changeToString(xml));
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { userId,
+                "resources/attributes/attribute", attributeId }, changeToString(xml));
     }
 
     /**
@@ -434,7 +446,8 @@ public class UserAccountClient extends GrantClient implements ResourceHandlerCli
     public Object deleteAttribute(final String userId, final String attributeId) throws Exception {
 
         return callEsciDoc("UserAccount.deleteAttribute", METHOD_DELETE_ATTRIBUTE, Constants.HTTP_METHOD_DELETE,
-            Constants.USER_ACCOUNT_BASE_URI, new String[] { userId, "resources/attributes/attribute", attributeId });
+            Constants.ESCIDOC_BASE_URI + Constants.USER_ACCOUNT_BASE_URI, new String[] { userId,
+                "resources/attributes/attribute", attributeId });
     }
 
 }

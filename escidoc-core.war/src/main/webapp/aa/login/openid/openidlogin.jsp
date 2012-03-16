@@ -36,7 +36,7 @@
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000">
-<form name="form1" method="post" action="/aa/openid/j_spring_openid_security_check">
+<form name="form1" method="post" action="../../openid/j_spring_openid_security_check">
   <table width="97%" border="0">
     <tr> 
       <td width="26%" height="69">

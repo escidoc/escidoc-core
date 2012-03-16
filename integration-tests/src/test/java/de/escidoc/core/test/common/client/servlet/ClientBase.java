@@ -81,6 +81,7 @@ import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
 import de.escidoc.core.common.exceptions.remote.EscidocException;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
@@ -689,8 +690,8 @@ public abstract class ClientBase {
         final String filename, final Map<String, String[]> parameters) throws Exception {
         Object result = null;
         String httpUrl =
-            HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getFrameworkHost() + ":"
-                + EscidocTestBase.getFrameworkPort(), httpBaseUri, pathElements, parameter, false);
+            HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getBaseHost() + ":"
+                + EscidocTestBase.getBasePort(), httpBaseUri, pathElements, parameter, false);
         logRestServiceCall(label, httpMethod, httpUrl, body);
         if (NOXML.equals(body)) {
             result = HttpHelper.executeHttpRequest(getHttpClient(), httpMethod, httpUrl, null, mimeType, parameters);
@@ -716,7 +717,7 @@ public abstract class ClientBase {
      */
     private void throwCorrespondingException(final HttpResponse result) throws Exception {
 
-        String exceptionXML = ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
+        String exceptionXML = ResourceProvider.getContentsFromInputStream(EntityUtil.getContent(result.getEntity()));
 
         System.out.println(exceptionXML);
 
@@ -1013,7 +1014,7 @@ public abstract class ClientBase {
      */
     protected String getResponseBodyAsUTF8(final HttpResponse httpRes) throws UnsupportedEncodingException, IOException {
 
-        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        return EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -1151,7 +1152,7 @@ public abstract class ClientBase {
         InputStream ins = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            ins = httpRes.getEntity().getContent();
+            ins = EntityUtil.getContent(httpRes.getEntity());
         }
         return ins;
     }

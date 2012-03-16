@@ -51,8 +51,8 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
     @Override
     public Object create(final Object roleXml) throws Exception {
 
-        return callEsciDoc("Role.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
-            new String[] {}, changeToString(roleXml));
+        return callEsciDoc("Role.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.ROLE_BASE_URI, new String[] {}, changeToString(roleXml));
     }
 
     /**
@@ -64,8 +64,8 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      */
     @Override
     public Object delete(final String id) throws Exception {
-        return callEsciDoc("Role.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ROLE_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("Role.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
+            + Constants.ROLE_BASE_URI, new String[] { id });
     }
 
     /**
@@ -77,8 +77,8 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      */
     @Override
     public Object retrieve(final String id) throws Exception {
-        return callEsciDoc("Role.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ROLE_BASE_URI,
-            new String[] { id });
+        return callEsciDoc("Role.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
+            + Constants.ROLE_BASE_URI, new String[] { id });
     }
 
     /**
@@ -90,7 +90,7 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
      */
     public Object retrieveResources(final String id) throws Exception {
         return callEsciDoc("Role.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ROLE_BASE_URI, new String[] { id, "resources" });
+            Constants.ESCIDOC_BASE_URI + Constants.ROLE_BASE_URI, new String[] { id, "resources" });
     }
 
     /**
@@ -104,8 +104,8 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
     @Override
     public Object update(final String id, final Object roleXml) throws Exception {
 
-        return callEsciDoc("Role.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ROLE_BASE_URI,
-            new String[] { id }, changeToString(roleXml));
+        return callEsciDoc("Role.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.ROLE_BASE_URI, new String[] { id }, changeToString(roleXml));
     }
 
     /**
@@ -118,6 +118,6 @@ public class RoleClient extends ClientBase implements ResourceHandlerClientInter
     public Object retrieveRoles(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Role.retrieveRoles", METHOD_RETRIEVE_ROLES, Constants.HTTP_METHOD_GET,
-            Constants.ROLES_BASE_URI, new String[] {}, filter);
+            Constants.ESCIDOC_BASE_URI + Constants.ROLES_BASE_URI, new String[] {}, filter);
     }
 }

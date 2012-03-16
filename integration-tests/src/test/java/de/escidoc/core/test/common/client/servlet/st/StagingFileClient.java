@@ -53,7 +53,8 @@ public class StagingFileClient extends ClientBase {
         throws Exception {
 
         return callEsciDocWithBinaryContent("StagingFile.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent, mimeType, filename);
+            Constants.ESCIDOC_BASE_URI + Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent, mimeType,
+            filename);
     }
 
     /**
@@ -66,7 +67,7 @@ public class StagingFileClient extends ClientBase {
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("StagingFile.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
+            Constants.ESCIDOC_BASE_URI + Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
     }
 
     /**

@@ -219,7 +219,7 @@ public class UserManagementWrapperIT extends UserAccountTestBase {
         assertNotNull(eSciDocUserHandle);
 
         try {
-            logout(getFrameworkUrl(), eSciDocUserHandle, true);
+            logout(getBaseUrl(), eSciDocUserHandle, true);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
@@ -253,7 +253,7 @@ public class UserManagementWrapperIT extends UserAccountTestBase {
         assertNotNull(eSciDocUserHandle);
 
         try {
-            logout(getFrameworkUrl(), eSciDocUserHandle, false);
+            logout(getBaseUrl(), eSciDocUserHandle, false);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
@@ -348,7 +348,7 @@ public class UserManagementWrapperIT extends UserAccountTestBase {
 
         try {
             PWCallback.setHandle(UNKNOWN_ESCIDOC_USER_HANDLE);
-            logout(getFrameworkUrl());
+            logout(getBaseUrl());
         }
         catch (final Exception e) {
             failException(e);
@@ -381,7 +381,7 @@ public class UserManagementWrapperIT extends UserAccountTestBase {
 
         try {
             PWCallback.setHandle(UNKNOWN_ESCIDOC_USER_HANDLE);
-            logout(getFrameworkUrl());
+            logout(getBaseUrl());
         }
         catch (final Exception e) {
             failException(e);

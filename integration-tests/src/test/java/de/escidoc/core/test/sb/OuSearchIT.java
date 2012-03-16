@@ -108,8 +108,7 @@ public class OuSearchIT extends SearchTestBase {
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
 
         String httpUrl =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
-                + urlParameters;
+            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
         HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl
             + INDEX_NAME, null, null, null);
         // ////////////////////////////////////////////////////////////////////
@@ -480,7 +479,7 @@ public class OuSearchIT extends SearchTestBase {
     public void testSBOUSR16() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/searchRetrieveResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
@@ -496,7 +495,7 @@ public class OuSearchIT extends SearchTestBase {
     public void testSBOUSR17() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/xyz.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
@@ -961,7 +960,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/scanResponse.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/scanResponse.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));
@@ -977,7 +976,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
-        parameters.put(FILTER_PARAMETER_STYLESHEET, getFrameworkUrl() + "/srw/yxr.xsl");
+        parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/yxr.xsl");
         String response = scan(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals(null, getDiagnostics(response));

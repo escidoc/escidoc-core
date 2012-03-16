@@ -36,12 +36,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AuthorizationFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationFilter.class);
 
     public static final String COOKIE_LOGIN = "escidocCookie";
+
+    public final Pattern urlPattern = Pattern.compile(".*\\/aa\\/login.*");
+
+    public Matcher urlMatcher = urlPattern.matcher("");
 
     @Override
     public void init(final FilterConfig filterConfig) throws ServletException {
@@ -52,9 +58,11 @@ public class AuthorizationFilter implements Filter {
         throws IOException, ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
-        final String[] authValues = getAuthValues(httpRequest, httpResponse);
-        if (authValues[1] != null) {
-            UserContext.setUserContext(authValues[1]);
+        if (!urlMatcher.reset(httpRequest.getRequestURI()).matches()) {
+            final String[] authValues = getAuthValues(httpRequest, httpResponse);
+            if (authValues[1] != null) {
+                UserContext.setUserContext(authValues[1]);
+            }
         }
         chain.doFilter(request, response);
     }

@@ -293,7 +293,7 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
             cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-definition");
         mdRecord.setAttribute("name", testDefinitionName);
         Element mdRecordContent = cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:schema");
-        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", getFrameworkUrl()
+        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", getBaseUrl()
             + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 

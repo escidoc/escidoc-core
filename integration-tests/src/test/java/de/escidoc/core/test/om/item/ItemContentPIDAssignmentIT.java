@@ -60,7 +60,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
     private final String itemUrl;
 
     public ItemContentPIDAssignmentIT() {
-        itemUrl = getFrameworkUrl() + "/ir/item/";
+        itemUrl = getBaseUrl() + "/ir/item/";
     }
 
     /**
@@ -313,7 +313,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         Element contentNode = (Element) selectSingleNode(itemDoc, componentXpath + "/content");
         Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
-        String imageUrl = getFrameworkUrl() + "/images/escidoc-logo.jpg";
+        String imageUrl = getBaseUrl() + "/images/escidoc-logo.jpg";
 
         attr.setValue(imageUrl);
         contentNode.setAttributeNode(attr);

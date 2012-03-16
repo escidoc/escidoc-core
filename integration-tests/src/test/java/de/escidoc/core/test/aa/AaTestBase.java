@@ -49,6 +49,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -537,9 +538,7 @@ public class AaTestBase extends EscidocAbstractTest {
         final Object result = getClient(handlerCode).delete(id);
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            if (httpRes.getEntity() != null) {
-                httpRes.getEntity().consumeContent();
-            }
+            EntityUtil.consumeContent(httpRes.getEntity());
             assertHttpStatusOfMethod("204", httpRes);
         }
     }
@@ -596,8 +595,8 @@ public class AaTestBase extends EscidocAbstractTest {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-            httpRes.getEntity().consumeContent();
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
+            EntityUtil.consumeContent(httpRes.getEntity());
             assertHttpStatusOfMethod("", httpRes);
 
         }
@@ -695,7 +694,7 @@ public class AaTestBase extends EscidocAbstractTest {
         final Object result = getStagingFileClient().create(binaryContent, mimeType, filename);
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            httpRes.getEntity().consumeContent();
+            EntityUtil.consumeContent(httpRes.getEntity());
             return httpRes;
         }
         else {
@@ -719,7 +718,7 @@ public class AaTestBase extends EscidocAbstractTest {
         final Object result = getUserAccountClient().deactivate(id, xml);
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            httpRes.getEntity().consumeContent();
+            EntityUtil.consumeContent(httpRes.getEntity());
             assertHttpStatusOfMethod("", httpRes);
         }
     }
@@ -4037,7 +4036,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
             // Check status-code when requesting resource with invalid handle
             final String httpUrl =
-                getFrameworkUrl() + Constants.ROLE_BASE_URI + "/" + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                getBaseUrl() + Constants.ROLE_BASE_URI + "/" + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
             final int statusCode = getStatusCode(httpUrl);
             if (statusCode != HttpServletResponse.SC_FOUND) {
@@ -4224,7 +4223,7 @@ public class AaTestBase extends EscidocAbstractTest {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
             assertNoRedirect(httpRes);
             assertLogoutCookies(httpRes);
@@ -4259,7 +4258,7 @@ public class AaTestBase extends EscidocAbstractTest {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             final HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
             assertRedirect(httpRes, redirectUrl);
             assertLogoutCookies(httpRes);

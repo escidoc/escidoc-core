@@ -47,6 +47,9 @@ import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
+import de.escidoc.core.test.om.container.ContainerTestBase;
+import de.escidoc.core.test.sb.ContainerHelper;
+import de.escidoc.core.test.sb.ItemHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -61,6 +64,12 @@ public class ItemFilterIT extends ItemTestBase {
     private String theItemXml;
 
     private String theItemId;
+
+    private ContainerTestBase containerTestBase;
+
+    public ItemFilterIT() {
+        containerTestBase = new ContainerTestBase();
+    }
 
     /**
      * Test successfully retrieving a filtered item-list filtering by created-by.
@@ -310,15 +319,15 @@ public class ItemFilterIT extends ItemTestBase {
                     .getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
             String c1 = createContainer();
 
-            getContainerClient().createItem(c1, itemXml);
-            String c11 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
-            getContainerClient().createItem(c11, itemXml);
-            getContainerClient().createItem(c11, itemXml);
-            String c12 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
-            getContainerClient().createItem(c12, itemXml);
-            getContainerClient().createItem(c12, itemXml);
-            String c13 = getObjidValue(handleXmlResult(getContainerClient().createContainer(c1, containerXml)));
-            getContainerClient().createItem(c13, itemXml);
+            containerTestBase.createItem(c1, itemXml);
+            String c11 = getObjidValue(handleXmlResult(containerTestBase.createContainer(c1, containerXml)));
+            containerTestBase.createItem(c11, itemXml);
+            containerTestBase.createItem(c11, itemXml);
+            String c12 = getObjidValue(handleXmlResult(containerTestBase.createContainer(c1, containerXml)));
+            containerTestBase.createItem(c12, itemXml);
+            containerTestBase.createItem(c12, itemXml);
+            String c13 = getObjidValue(handleXmlResult(containerTestBase.createContainer(c1, containerXml)));
+            containerTestBase.createItem(c13, itemXml);
 
             // give the user access right to the top level container
             String grantXml =

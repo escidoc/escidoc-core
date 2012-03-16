@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.business;
 
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**

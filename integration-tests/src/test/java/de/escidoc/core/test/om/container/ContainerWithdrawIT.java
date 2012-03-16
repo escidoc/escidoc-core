@@ -102,7 +102,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             && !getContainerClient().getPidConfig("cmm.Container.objectPid.releaseWithoutPid", "false")) {
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + this.theContainerId));
+            assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + this.theContainerId));
             pidParam =
                 TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                     getLastModificationDateValue2(getDocument(retrieve(this.theContainerId))));
@@ -115,7 +115,7 @@ public class ContainerWithdrawIT extends ContainerTestBase {
             String latestVersion = getLatestVersionObjidValue(theContainerXml);
 
             AssignParam assignPidParam = new AssignParam();
-            assignPidParam.setUrl(new URL(getFrameworkUrl() + "/ir/container/" + latestVersion));
+            assignPidParam.setUrl(new URL(getBaseUrl() + "/ir/container/" + latestVersion));
             pidParam =
                 TaskParamFactory.getAssignPidTaskParam(assignPidParam,
                     getLastModificationDateValue2(getDocument(retrieve(latestVersion))));

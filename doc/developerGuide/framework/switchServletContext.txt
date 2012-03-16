@@ -1,0 +1,163 @@
+to run tests with new or old interface do the following:
+
+-directory escidoc-core.war/src/main/webapp/WEB-INF:
+	-copy content of web.xml.new or web.xml.old in web.xml
+
+-eSciDocCore/pom.xml adapt property escidoc.server.context
+
+-eSciDocCore/data/jboss/server/default/conf/escidoc-core.properties:
+	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url
+
+-eSciDocCore/installer/src/main/resources/config/escidoc/core/escidoc-core.custom.properties:
+	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url
+
+-eSciDocCore/installer/src/main/resources/installer/unpack-core.xml:
+	-replace 
+		<!-- move escidoc.war to tomcat -->
+		<move tofile="${install.dir}/${server.deploy.dir}/escidoc.war">
+	with
+		<!-- replace ROOT webapp with escidoc -->
+		<move tofile="${install.dir}/${server.deploy.dir}/ROOT.war">
+
+
+
+
+to switch the servlet-context edit the following files:
+-eSciDocCore/pom.xml adapt property escidoc.server.context
+-eSciDocCore/data/jboss/server/default/conf/escidoc-core.properties:
+	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url
+-eSciDocCore/installer/src/main/resources/config/escidoc/core/escidoc-core.custom.properties:
+	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url
+-eSciDocCore/installer/src/main/resources/installer/unpack-core.xml:
+	-replace 
+		<!-- move escidoc.war to tomcat -->
+		<move tofile="${install.dir}/${server.deploy.dir}/escidoc.war">
+	with
+		<!-- replace ROOT webapp with escidoc -->
+		<move tofile="${install.dir}/${server.deploy.dir}/ROOT.war">
+		
+
+to change the url where services are located (service-base-url) edit the following files:
+-eSciDocCore/integration-tests/src/test/filtered-resources/escidoc.properties:
+	-adapt server.service.uri
+-eSciDocCore/escidoc-core.war/src/main/webapp/WEB-INF/web.xml:
+	-authorizationFilter
+	-with service-base-url:
+  		<filter-mapping>
+    		<filter-name>authorizationFilter</filter-name>
+    		<url-pattern>/services/*</url-pattern>
+  		</filter-mapping>
+		<servlet>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<servlet-class>de.escidoc.core.aa.servlet.Login</servlet-class>
+  		</servlet>
+
+  		<servlet>
+    		<servlet-name>LoginSelect</servlet-name>
+    		<jsp-file>/aa/login/login-select.jsp</jsp-file>
+  		</servlet>
+  		<servlet>
+    		<servlet-name>CXFServlet</servlet-name>
+    		<display-name>CXF Servlet</display-name>
+    		<servlet-class>
+      			org.apache.cxf.transport.servlet.CXFServlet
+    		</servlet-class>
+  		</servlet>
+  		<servlet-mapping>
+    		<servlet-name>CXFServlet</servlet-name>
+    		<url-pattern>/services/*</url-pattern>
+  		</servlet-mapping>
+		<servlet-mapping>
+    		<servlet-name>LoginSelect</servlet-name>
+    		<url-pattern>/aa/login</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginSelect</servlet-name>
+    		<url-pattern>/aa/login/</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<url-pattern>/aa/login/database</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<url-pattern>/aa/login/ldap</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<url-pattern>/aa/login/shibboleth</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<url-pattern>/aa/login/openid</url-pattern>
+  		</servlet-mapping>
+  		<servlet-mapping>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<url-pattern>/aa/logout</url-pattern>
+  		</servlet-mapping>
+
+
+	-without service-base-url:
+  		<filter-mapping>
+    		<filter-name>authorizationFilter</filter-name>
+    		<url-pattern>/*</url-pattern>
+  		</filter-mapping>
+  		<servlet>
+    		<servlet-name>LoginServlet</servlet-name>
+    		<servlet-class>de.escidoc.core.aa.servlet.Login</servlet-class>
+    		<init-param>
+      		<param-name>static-resources-list</param-name>
+      		<param-value>
+        		(\S)+.html 
+        		(\S)+.jpg 
+        		(\S)+.xsl 
+      		</param-value>
+    		</init-param>
+    		<init-param>
+      		<param-name>redirects-list</param-name>
+      		<param-value>
+        		/aa/login/login-select.jsp 
+      		</param-value>
+    		</init-param>
+    		<init-param>
+      		<param-name>redirect-servlet-name</param-name>
+      		<param-value>LoginSelect</param-value>
+    		</init-param>
+  		</servlet>
+
+  		<servlet>
+    		<servlet-name>CXFServlet</servlet-name>
+    		<display-name>CXF Servlet</display-name>
+    		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    		<init-param>
+      		<param-name>static-resources-list</param-name>
+      		<param-value>
+        		(\S)+.html 
+        		(\S)+.jpg 
+        		(\S)+.xsl 
+      		</param-value>
+    		</init-param>
+    		<init-param>
+      		<param-name>redirects-list</param-name>
+      		<param-value>
+        		/aa/logout(\S)* 
+        		/aa/login(\S)* 
+      		</param-value>
+    		</init-param>
+    		<init-param>
+      		<param-name>redirect-servlet-name</param-name>
+      		<param-value>LoginServlet</param-value>
+    		</init-param>
+  		</servlet>
+
+  		<servlet>
+    		<servlet-name>LoginSelect</servlet-name>
+    		<jsp-file>/aa/login/login-select.jsp</jsp-file>
+  		</servlet>
+  		<servlet-mapping>
+    		<servlet-name>CXFServlet</servlet-name>
+    		<url-pattern>/*</url-pattern>
+  		</servlet-mapping>
+
+	
+		

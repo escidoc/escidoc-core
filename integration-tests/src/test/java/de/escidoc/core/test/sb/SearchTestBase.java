@@ -47,6 +47,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.AssignParam;
@@ -136,7 +137,7 @@ public class SearchTestBase extends SbTestBase {
         long time = System.currentTimeMillis();
         String query = "PID=" + id + " or distinction.rootPid=" + id;
         String httpUrl =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName
+            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName
                 + "?query=" + URLEncoder.encode(query, DEFAULT_CHARSET);
 
         for (;;) {
@@ -146,7 +147,7 @@ public class SearchTestBase extends SbTestBase {
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
-                Matcher m = numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
+                Matcher m = numberOfRecordsPattern.matcher(EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8));
 
                 if (m.find()) {
                     if (checkExists && (Integer.parseInt(m.group(1)) > 0)) {
@@ -178,7 +179,7 @@ public class SearchTestBase extends SbTestBase {
         Object result = getSearchClient().search(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
         assertHttpStatusOfMethod("", httpRes);
-        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        return EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -196,7 +197,7 @@ public class SearchTestBase extends SbTestBase {
         Object result = getSearchClient().explain(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
         assertHttpStatusOfMethod("", httpRes);
-        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        return EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -215,7 +216,7 @@ public class SearchTestBase extends SbTestBase {
         Object result = getSearchClient().scan(parameters, database);
         HttpResponse httpRes = (HttpResponse) result;
         assertHttpStatusOfMethod("", httpRes);
-        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+        return EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
@@ -453,8 +454,8 @@ public class SearchTestBase extends SbTestBase {
     protected final String getItemPidParam(final String itemId, final DateTime lastModificationDate) throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl()
-            + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI
+            + itemId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
@@ -473,7 +474,7 @@ public class SearchTestBase extends SbTestBase {
         throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getFrameworkUrl()
+        assignPidParam.setUrl(new URL(getBaseUrl()
             + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);

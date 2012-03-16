@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.item;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
@@ -181,7 +182,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         while (compIt.hasNext()) {
             String compo = compIt.next();
             page +=
-                "<img src=\"" + getFrameworkUrl() + "/ir/item/" + itemId + "/components/component/" + compo
+                "<img src=\"" + getBaseUrl() + "/ir/item/" + itemId + "/components/component/" + compo
                     + "/content\" alt=\"" + compo + "\" border=\"1\" />\n";
         }
         page += "</body>\n";
@@ -351,7 +352,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
 
         // write out file
         File temp = File.createTempFile(tempFileName, "tmp");
-        ByteArrayOutputStream barray = readBinaryContent(httpRes.getEntity().getContent());
+        ByteArrayOutputStream barray = readBinaryContent(EntityUtil.getContent(httpRes.getEntity()));
         FileOutputStream fos = new FileOutputStream(temp);
         fos.write(barray.toByteArray());
         fos.flush();

@@ -1012,7 +1012,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     protected String getSchemaLocationBase() {
         if (BASE_URL_SCHEMA_LOCATION == null) {
             // Maybe it would be better to load the schema from www.escidoc.org
-            BASE_URL_SCHEMA_LOCATION = getFrameworkUrl() + "/xsd/";
+            BASE_URL_SCHEMA_LOCATION = getBaseUrl() + "/xsd/";
         }
         return BASE_URL_SCHEMA_LOCATION + "rest";
     }
@@ -2253,7 +2253,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
         if (EscidocTestBase.stagingFileSchema == null) {
             EscidocTestBase.stagingFileSchema =
-                EscidocTestBase.getSchema(getFrameworkUrl() + "/xsd/rest/staging-file/0.3/staging-file.xsd");
+                EscidocTestBase.getSchema(getBaseUrl() + "/xsd/rest/staging-file/0.3/staging-file.xsd");
         }
         EscidocTestBase.assertXmlValid(toBeAsserted, EscidocTestBase.stagingFileSchema);
     }
@@ -2343,7 +2343,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         }
 
         String framworkTemplateUrl = "http://localhost:8080";
-        String frameworkUrl = getFrameworkUrl();
+        String frameworkUrl = getBaseUrl();
 
         if (frameworkUrl != null && !framworkTemplateUrl.equals(frameworkUrl)) {
             template = template.replace(framworkTemplateUrl, frameworkUrl);

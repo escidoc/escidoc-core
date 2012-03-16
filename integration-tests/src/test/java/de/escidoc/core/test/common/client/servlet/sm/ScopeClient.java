@@ -50,8 +50,8 @@ public class ScopeClient extends ClientBase {
     @Override
     public Object create(final Object scopeXml) throws Exception {
 
-        return callEsciDoc("Scope.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.STATISTIC_SCOPE_BASE_URI, new String[] {}, changeToString(scopeXml));
+        return callEsciDoc("Scope.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_SCOPE_BASE_URI, new String[] {}, changeToString(scopeXml));
     }
 
     /**
@@ -64,8 +64,8 @@ public class ScopeClient extends ClientBase {
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("Scope.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
+        return callEsciDoc("Scope.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
     }
 
     /**
@@ -78,8 +78,8 @@ public class ScopeClient extends ClientBase {
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("Scope.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
+        return callEsciDoc("Scope.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id });
     }
 
     /**
@@ -92,7 +92,7 @@ public class ScopeClient extends ClientBase {
     public Object retrieveScopes(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Scope.retrieveScopes", METHOD_RETRIEVE_SCOPES, Constants.HTTP_METHOD_GET,
-            Constants.STATISTIC_SCOPES_BASE_URI, new String[] {}, filter);
+            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_SCOPES_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -106,8 +106,8 @@ public class ScopeClient extends ClientBase {
     @Override
     public Object update(final String id, final Object scopeXml) throws Exception {
 
-        return callEsciDoc("Scope.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id }, changeToString(scopeXml));
+        return callEsciDoc("Scope.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+            + Constants.STATISTIC_SCOPE_BASE_URI, new String[] { id }, changeToString(scopeXml));
     }
 
 }

@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserGroupNotFoundException;
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -164,7 +165,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }
@@ -187,7 +188,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }
@@ -211,7 +212,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }
@@ -234,7 +235,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }
@@ -272,7 +273,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }
@@ -296,7 +297,7 @@ public abstract class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
 
         }

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
@@ -536,7 +537,7 @@ public final class HttpHelper {
         client.getCookieStore().clear();
 
         final String loginServletUrl =
-            EscidocTestBase.getFrameworkUrl() + Constants.LOGIN_URI + "?target="
+            EscidocTestBase.getBaseUrl() + Constants.LOGIN_URI + "?target="
                 + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
         final HttpGet loginMethod = new HttpGet(loginServletUrl);
         httpRes = client.execute(loginMethod);
@@ -550,7 +551,8 @@ public final class HttpHelper {
         // spring security filter will redirect to login form as no login
         // parameters are sent
         // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?
-        final String responseBody = ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
+        final String responseBody =
+            ResourceProvider.getContentsFromInputStream(EntityUtil.getContent(httpRes.getEntity()));
         assertEquals("Unexpected status of LoginServlet response, ", HttpServletResponse.SC_OK, status);
         assertNotNull("No response body received, ", responseBody);
         assertTrue("Response does not contain the expected login" + " page. ", responseBody
@@ -559,7 +561,7 @@ public final class HttpHelper {
         // Second step: Send filled login form
         final HttpPost postMethod =
             new HttpPost(
-                (EscidocTestBase.getFrameworkUrl() + Constants.AA_BASE_URI + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
+                (EscidocTestBase.getBaseUrl() + Constants.AA_BASE_URI + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
@@ -581,7 +583,7 @@ public final class HttpHelper {
         if (expectedAuthenticationFailure) {
             // redirect to repeated login page
             assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
-                EscidocTestBase.getFrameworkUrl() + Constants.LOGIN_URI + "/login-repeated.html", retrievedRedirectUrl);
+                EscidocTestBase.getBaseUrl() + Constants.LOGIN_URI + "/login-repeated.html", retrievedRedirectUrl);
             return httpRes;
         }
         else {
@@ -600,7 +602,7 @@ public final class HttpHelper {
 
                 // FIXME: add assertion for page content
                 final String deactivatedUserAccountPageBody =
-                    ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
+                    ResourceProvider.getContentsFromInputStream(EntityUtil.getContent(httpRes.getEntity()));
                 assertNotNull("No response body received, ", deactivatedUserAccountPageBody);
                 assertTrue("Response does not contain the expected information" + " about deactivated account page. ",
                     deactivatedUserAccountPageBody.indexOf("Your account has been deactivated") != -1);
@@ -654,11 +656,11 @@ public final class HttpHelper {
             // first step: Call the login servlet
             final String logoutServletUrl;
             if (targetUrl == null) {
-                logoutServletUrl = EscidocTestBase.getFrameworkUrl() + "/aa/logout";
+                logoutServletUrl = EscidocTestBase.getBaseUrl() + "/aa/logout";
             }
             else {
                 logoutServletUrl =
-                    EscidocTestBase.getFrameworkUrl() + "/aa/logout?target="
+                    EscidocTestBase.getBaseUrl() + "/aa/logout?target="
                         + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             }
             final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
@@ -668,7 +670,7 @@ public final class HttpHelper {
 
             if (userHandle == null) {
 
-                cookie.setDomain(EscidocTestBase.getFrameworkHost());
+                cookie.setDomain(EscidocTestBase.getBaseHost());
                 cookie.setPath("/");
 
                 cookie.setSecure(false);
@@ -678,7 +680,7 @@ public final class HttpHelper {
             //String domain, String name, String value, String path, int maxAge, boolean secure
             else {
                 cookie.setValue(userHandle);
-                cookie.setDomain(EscidocTestBase.getFrameworkHost());
+                cookie.setDomain(EscidocTestBase.getBaseHost());
                 cookie.setPath("/");
 
                 cookie.setSecure(false);

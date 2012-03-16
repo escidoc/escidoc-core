@@ -50,7 +50,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      */
     private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
 
-    private final String schemaLocationReplacement = EscidocTestBase.getFrameworkUrl() + "/xsd";
+    private final String schemaLocationReplacement = EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd";
 
     /**
      * Replaces base-part of system-id.

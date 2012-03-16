@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
@@ -184,7 +185,7 @@ public class SbTestBase extends EscidocAbstractTest {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {

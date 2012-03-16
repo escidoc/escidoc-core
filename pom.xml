@@ -1121,7 +1121,7 @@
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.8</saxon.version>
-    <escidoc.fedoragsearch.version>1.5.21</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.5.22</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.5.14</escidoc.srw.version>
     <srw.version>1.5.9</srw.version>
     <migration-tool.version>1.5.0</migration-tool.version>
@@ -1137,6 +1137,7 @@
 
     <escidoc.server.host>localhost</escidoc.server.host>
     <escidoc.server.port>8080</escidoc.server.port>
+    <escidoc.server.context></escidoc.server.context>
     <escidoc.server.url>http://${escidoc.server.host}:${escidoc.server.port}</escidoc.server.url>
 
     <escidoc.database.host>localhost</escidoc.database.host>

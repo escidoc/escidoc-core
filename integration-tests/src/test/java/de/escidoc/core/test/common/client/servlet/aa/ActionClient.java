@@ -48,7 +48,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      */
     public Object retrieveResources(final String id) throws Exception {
         return callEsciDoc("Action.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id, "resources" });
+            Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id, "resources" });
     }
 
     /**
@@ -62,7 +62,8 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object createUnsecuredActions(final String contextId, final String actions) throws Exception {
 
         return callEsciDoc("Action.createUnsecuredActions", METHOD_CREATE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_PUT,
-            Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId }, changeToString(actions));
+            Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId },
+            changeToString(actions));
     }
 
     /**
@@ -75,7 +76,8 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object deleteUnsecuredActions(final String contextId) throws Exception {
 
         return callEsciDoc("Action.deleteUnsecuredActions", METHOD_DELETE_UNSECURED_ACTIONS,
-            Constants.HTTP_METHOD_DELETE, Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
+            Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI,
+            new String[] { contextId });
     }
 
     /**
@@ -88,6 +90,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object retrieveUnsecuredActions(final String contextId) throws Exception {
 
         return callEsciDoc("Action.retrieveUnsecuredActions", METHOD_RETRIEVE_UNSECURED_ACTIONS,
-            Constants.HTTP_METHOD_GET, Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId });
+            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI,
+            new String[] { contextId });
     }
 }
