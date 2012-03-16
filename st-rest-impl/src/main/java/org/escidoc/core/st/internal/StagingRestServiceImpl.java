@@ -19,13 +19,11 @@
  */
 package org.escidoc.core.st.internal;
 
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.st.service.StagingFileHandler;
+import javax.ws.rs.core.Response;
+
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.st.StagingFileTO;
+import org.escidoc.core.st.StagingRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import org.escidoc.core.st.StagingRestService;
-import org.escidoc.core.domain.st.StagingFileTO;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.st.service.StagingFileHandler;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
@@ -65,10 +67,10 @@ public class StagingRestServiceImpl implements StagingRestService {
     }
 
     @Override
-    public EscidocBinaryContent retrieve(final String stagingFileId) throws StagingFileNotFoundException,
+    public Response retrieve(final String stagingFileId) throws StagingFileNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
 
-        return this.stagingHandler.retrieve(stagingFileId);
+        return serviceUtility.toResponse(this.stagingHandler.retrieve(stagingFileId));
     }
 
 }
