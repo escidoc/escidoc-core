@@ -433,7 +433,7 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='organizational-unit']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='organizational-unit']/@*[local-name()='last-modification-date']"/>
             </element>
         </userdefined-index>
 		<userdefined-index name="title">

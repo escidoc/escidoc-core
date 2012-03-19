@@ -365,7 +365,7 @@ public interface ItemRestService {
 
     @GET
     @Path("{id}/components/component/{componentId}/content")
-    Response retrieveContent(final String id, final String contentId) throws AuthenticationException,
+    Response retrieveContent(@PathParam("id")  String id, @PathParam("componentId") String componentId) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
         ResourceNotFoundException;
 

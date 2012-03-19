@@ -369,10 +369,10 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='predicate'], '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
                 <element index="TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='predicate'], ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -504,10 +504,10 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='predicate'], '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
                 <element index="TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='predicate'], ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>

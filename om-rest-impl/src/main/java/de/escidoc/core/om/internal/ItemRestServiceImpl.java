@@ -486,9 +486,9 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public Response retrieveContent(final String id, final String contentId) throws AuthenticationException,
+    public Response retrieveContent(final String id, final String componentId) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
         ResourceNotFoundException {
-        return serviceUtility.toResponse(this.itemHandler.retrieveContent(id, contentId));
+        return serviceUtility.toResponse(this.itemHandler.retrieveContent(id, componentId));
     }
 }

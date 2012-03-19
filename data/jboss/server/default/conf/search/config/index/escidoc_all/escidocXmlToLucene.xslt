@@ -368,7 +368,7 @@
             <xsl:call-template name="writeIndexField">
                 <xsl:with-param name="context" select="$context"/>
                 <xsl:with-param name="fieldname">content-relation</xsl:with-param>
-                <xsl:with-param name="fieldvalue" select="concat(./@predicate, ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
+                <xsl:with-param name="fieldvalue" select="concat(./@*[local-name()='predicate'], ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                 <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
             </xsl:call-template>
@@ -410,7 +410,7 @@
   				<!-- INDEX FULLTEXT -->
 				<IndexField index="TOKENIZED" store="YES" termVector="NO">
 					<xsl:attribute name="dsId">
-						<xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+						<xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
 					</xsl:attribute>
 					<xsl:attribute name="IFname">
 						<xsl:value-of select="concat($CONTEXTNAME,'.fulltext')"/>
@@ -423,7 +423,7 @@
 				<!-- SEPERATELY STORE EACH FULLTEXT IN DIFFERENT FIELD FOR HIGHLIGHTING -->
     			<IndexField index="NO" store="YES" termVector="NO">
 					<xsl:attribute name="dsId">
-						<xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+						<xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
 					</xsl:attribute>
 					<xsl:attribute name="IFname">
 						<xsl:value-of select="concat('stored_fulltext',$matchNum)"/>
@@ -435,7 +435,7 @@
 					<xsl:attribute name="IFname">
 						<xsl:value-of select="concat('stored_filename',$matchNum)"/>
 					</xsl:attribute>
-					<xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+					<xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
 				</IndexField>
 
 				<xsl:choose>
@@ -621,10 +621,10 @@
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="$ITEM_METADATAPATH/*[local-name()='publication']/@type"/>
+                <xsl:value-of select="$ITEM_METADATAPATH/*[local-name()='publication']/@*[local-name()='type']"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="$CONTAINER_METADATAPATH/*[local-name()='publication']/@type"/>
+                <xsl:value-of select="$CONTAINER_METADATAPATH/*[local-name()='publication']/@*[local-name()='type']"/>
             </element>
         </userdefined-index>
 		<userdefined-index name="most-recent-date">
@@ -653,12 +653,12 @@
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='creator']/@role">
+            <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='creator']/@*[local-name()='role']">
                 <element index="TOKENIZED">
                     <xsl:value-of select="."/>
                 </element>
             </xsl:for-each>
-            <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='creator']/@role">
+            <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='creator']/@*[local-name()='role']">
                 <element index="TOKENIZED">
                     <xsl:value-of select="."/>
                 </element>
@@ -741,10 +741,10 @@
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='item']/@*[local-name()='last-modification-date']"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='container']/@*[local-name()='last-modification-date']"/>
             </element>
         </userdefined-index>
 		<userdefined-index name="member-count">
@@ -769,22 +769,22 @@
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="$ITEM_METADATAPATH/*/@type"/>
+                <xsl:value-of select="$ITEM_METADATAPATH/*/@*[local-name()='type']"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="$CONTAINER_METADATAPATH/*/@type"/>
+                <xsl:value-of select="$CONTAINER_METADATAPATH/*/@*[local-name()='type']"/>
             </element>
         </userdefined-index>
         <userdefined-index name="source.type">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='source']/@type">
+            <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='source']/@*[local-name()='type']">
                 <element index="TOKENIZED">
                     <xsl:value-of select="."/>
                 </element>
             </xsl:for-each>
-            <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='source']/@type">
+            <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='source']/@*[local-name()='type']">
                 <element index="TOKENIZED">
                     <xsl:value-of select="."/>
                 </element>
@@ -940,12 +940,12 @@
 			</xsl:attribute>
 			<xsl:for-each select="$ITEM_METADATAPATH//*">
 				<element index="TOKENIZED">
-					<xsl:value-of select="./@type"/>
+					<xsl:value-of select="./@*[local-name()='type']"/>
 				</element>
 			</xsl:for-each>
 			<xsl:for-each select="$CONTAINER_METADATAPATH//*">
 				<element index="TOKENIZED">
-					<xsl:value-of select="./@type"/>
+					<xsl:value-of select="./@*[local-name()='type']"/>
 				</element>
 			</xsl:for-each>
 		</userdefined-index>

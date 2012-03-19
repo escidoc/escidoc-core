@@ -478,7 +478,7 @@ Notes:
                 <!-- INDEX FULLTEXT -->
                 <IndexField index="TOKENIZED" store="YES" termVector="NO">
                     <xsl:attribute name="dsId">
-                        <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+                        <xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
                     </xsl:attribute>
                     <xsl:attribute name="IFname">
                         <xsl:value-of select="concat($FIELDSEPARATOR,'fulltext')"/>
@@ -491,7 +491,7 @@ Notes:
                 <!-- SEPERATELY STORE EACH FULLTEXT IN DIFFERENT FIELD FOR HIGHLIGHTING -->
                 <IndexField index="NO" store="YES" termVector="NO">
                     <xsl:attribute name="dsId">
-                        <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+                        <xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
                     </xsl:attribute>
                     <xsl:attribute name="IFname">
                         <xsl:value-of select="concat('aa_stored_fulltext',$matchNum)"/>
@@ -503,7 +503,7 @@ Notes:
                     <xsl:attribute name="IFname">
                         <xsl:value-of select="concat('aa_stored_filename',$matchNum)"/>
                     </xsl:attribute>
-                    <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
+                    <xsl:value-of select="$components[$num]/*[local-name()='content']/@*[local-name()='href']"/>
                 </IndexField>
 
                 <xsl:choose>

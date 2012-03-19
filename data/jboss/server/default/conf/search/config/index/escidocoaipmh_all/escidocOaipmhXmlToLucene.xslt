@@ -112,7 +112,7 @@ Notes:
                 <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
-                <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='item']/@*[local-name()='last-modification-date']"/>
             </oai-object:last-modification-date>
             <oai-object:latest-release-date>
                 <xsl:value-of select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
@@ -162,7 +162,7 @@ Notes:
                 <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
-                <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='container']/@*[local-name()='last-modification-date']"/>
             </oai-object:last-modification-date>
             <oai-object:latest-release-date>
                 <xsl:value-of select="/*[local-name()='container']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
@@ -478,10 +478,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED" store="NO" sortfield="YES">
-                <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='item']/@*[local-name()='last-modification-date']"/>
             </element>
             <element index="UN_TOKENIZED" store="NO" sortfield="YES">
-                <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='container']/@*[local-name()='last-modification-date']"/>
             </element>
         </userdefined-index>
         <userdefined-index name="objid">
@@ -501,12 +501,12 @@ Notes:
             </xsl:attribute>
             <xsl:for-each select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record']">
                 <element index="TOKENIZED" store="NO" sortfield="NO">
-                    <xsl:value-of select="concat(./@name,'@',namespace-uri(./*))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='name'],'@',namespace-uri(./*))"/>
                 </element>
             </xsl:for-each>
             <xsl:for-each select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record']">
                 <element index="TOKENIZED" store="NO" sortfield="NO">
-                    <xsl:value-of select="concat(./@name,'@',namespace-uri(./*))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='name'],'@',namespace-uri(./*))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>

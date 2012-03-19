@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -103,7 +104,20 @@ public class FedoraRestDeviationHandler implements FedoraRestDeviationHandlerInt
         }
         LOGGER.error(StringUtility.format("could not get resource for cache", decodedDsId));
 
-        return null;
+        content = new EscidocBinaryContent();
+        try {
+            content.setContent(new ByteArrayInputStream(new byte[0]));
+        }
+        catch (IOException e) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting datastream dissemination.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting datastream dissemination.", e);
+            }
+            throw new SystemException(e);
+        }
+        return content;
     }
 
     /**
