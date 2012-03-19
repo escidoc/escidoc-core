@@ -77,7 +77,7 @@
     </dependency>
     <dependency>
       <groupId>org.escidoc.core</groupId>
-      <artifactId>dataobjects</artifactId>
+      <artifactId>cl-utility</artifactId>
     </dependency>
   </dependencies>
 
