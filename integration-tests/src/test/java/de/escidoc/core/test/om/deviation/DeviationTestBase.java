@@ -78,7 +78,8 @@ public class DeviationTestBase extends OmTestBase {
      * @throws Exception Thrown if delete fails.
      */
     public String getDatastreamDissimination(final String id, final String componentId) throws Exception {
-        return getDeviationClient().getDatastreamDissimination(id, componentId);
+
+        return getDeviationClient().getDatastreamDissimination(id, componentId.replaceAll("\\/", "\\|"));
     }
 
 }
