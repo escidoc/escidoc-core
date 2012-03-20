@@ -383,10 +383,10 @@ Notes:
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="ouHref" select="/*[local-name()='organizational-unit']/@*[local-name()='href']"/>
+                <xsl:if test="string($ouHref) and normalize-space($ouHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                        concat($ouHref,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
                 </xsl:if>
 			</element>
 		</userdefined-index>
@@ -421,10 +421,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="userAccountHref" select="$PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href']"/>
+                <xsl:if test="string($userAccountHref) and normalize-space($userAccountHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
+                        $userAccountHref,'/user-account/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
         </userdefined-index>
@@ -433,7 +433,7 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='organizational-unit']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='organizational-unit']/@*[local-name()='last-modification-date']"/>
             </element>
         </userdefined-index>
 		<userdefined-index name="title">

@@ -5,7 +5,7 @@ to run tests with new or old interface do the following:
 
 -eSciDocCore/pom.xml adapt property escidoc.server.context
 
--eSciDocCore/data/jboss/server/default/conf/escidoc-core.properties:
+-eSciDocCore/installer/src/main/resources/config/escidoc/default/escidoc-core.properties:
 	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url
 
 -eSciDocCore/installer/src/main/resources/config/escidoc/core/escidoc-core.custom.properties:

@@ -37,6 +37,11 @@
 	<!-- Parameters that get passed while calling this stylesheet-transformation -->
 	<xsl:param name="SUPPORTED_MIMETYPES"/>
 
+    <!-- The name of the servlet-context of escidoc
+         Used to prefix uris as it is possible to configure the 
+         servlet context name of escidoc -->
+    <xsl:param name="ESCIDOC_SERVLET_CONTEXT_NAME"/>
+
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
@@ -673,17 +678,17 @@
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="contentModelHref" select="$ITEM_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href']"/>
+                <xsl:if test="string($contentModelHref) and normalize-space($contentModelHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/cmm/content-model/',$objectId),'/content-model/properties/name','','','false','false')"/>
+                        $contentModelHref,'/content-model/properties/name','','','false','false')"/>
                 </xsl:if>
 			</element>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="contentModelHref" select="$CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href']"/>
+                <xsl:if test="string($contentModelHref) and normalize-space($contentModelHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/cmm/content-model/',$objectId),'/content-model/properties/name','','','false','false')"/>
+                        $contentModelHref,'/content-model/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
 		</userdefined-index>
@@ -692,17 +697,17 @@
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="contextHref" select="$ITEM_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href']"/>
+                <xsl:if test="string($contextHref) and normalize-space($contextHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/ir/context/',$objectId,'/properties'),'/properties/name','','','false','false')"/>
+                        concat($contextHref,'/properties'),'/properties/name','','','false','false')"/>
                 </xsl:if>
 			</element>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="contextHref" select="$CONTAINER_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href']"/>
+                <xsl:if test="string($contextHref) and normalize-space($contextHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/ir/context/',$objectId,'/properties'),'/properties/name','','','false','false')"/>
+                        concat($contextHref,'/properties'),'/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
 		</userdefined-index>
@@ -711,17 +716,17 @@
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="userAccountHref" select="$ITEM_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href']"/>
+                <xsl:if test="string($userAccountHref) and normalize-space($userAccountHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
+                        $userAccountHref,'/user-account/properties/name','','','false','false')"/>
                 </xsl:if>
 			</element>
 			<element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                <xsl:variable name="userAccountHref" select="$CONTAINER_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href']"/>
+                <xsl:if test="string($userAccountHref) and normalize-space($userAccountHref)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
+                        $userAccountHref,'/user-account/properties/name','','','false','false')"/>
                 </xsl:if>
 			</element>
 		</userdefined-index>
@@ -731,10 +736,10 @@
 			</xsl:attribute>
 			<xsl:for-each select="$COMPONENT_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href']">
 				<element index="TOKENIZED">
-                    <xsl:variable name="objectId" select="normalize-space(string-helper:getSubstringAfterLast(., '/'))"/>
-                    <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                    <xsl:variable name="userAccountHref" select="normalize-space(.)"/>
+                    <xsl:if test="string($userAccountHref) and normalize-space($userAccountHref)!=''">
                         <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                            concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
+                            $userAccountHref,'/user-account/properties/name','','','false','false')"/>
                     </xsl:if>
 				</element>
   			</xsl:for-each>
@@ -906,8 +911,16 @@
 				<element index="TOKENIZED">
                     <xsl:variable name="objectId" select="normalize-space(.)"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                        <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                      <xsl:choose>
+                        <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                            concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:if>
 				</element>
 			</xsl:for-each>
@@ -915,8 +928,16 @@
 				<element index="TOKENIZED">
                     <xsl:variable name="objectId" select="normalize-space(.)"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                        <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                      <xsl:choose>
+                        <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                            concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:if>
 				</element>
 			</xsl:for-each>

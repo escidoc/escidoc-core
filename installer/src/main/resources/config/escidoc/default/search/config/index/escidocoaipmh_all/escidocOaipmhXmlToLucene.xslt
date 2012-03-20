@@ -60,6 +60,11 @@ Notes:
     <!-- Include stylesheet that writes important fields for gsearch -->
     <xsl:include href="index/gsearchAttributes.xslt"/>
     
+    <!-- The name of the servlet-context of escidoc
+         Used to prefix uris as it is possible to configure the 
+         servlet context name of escidoc -->
+    <xsl:param name="ESCIDOC_SERVLET_CONTEXT_NAME"/>
+
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">NO</xsl:variable>
 
@@ -107,7 +112,7 @@ Notes:
                 <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
-                <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='item']/@*[local-name()='last-modification-date']"/>
             </oai-object:last-modification-date>
             <oai-object:latest-release-date>
                 <xsl:value-of select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
@@ -118,13 +123,26 @@ Notes:
             <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                    <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
-                    <xsl:for-each select="xalan:tokenize($parentous, ' ')">
-                        <oai-object:organizational-unit-id>
-                            <xsl:value-of select="."/>
-                        </oai-object:organizational-unit-id>
-                    </xsl:for-each>
+                  <xsl:choose>
+                    <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:if>
             </xsl:for-each>
             <oai-object:deleted>
@@ -144,7 +162,7 @@ Notes:
                 <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
-                <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='container']/@*[local-name()='last-modification-date']"/>
             </oai-object:last-modification-date>
             <oai-object:latest-release-date>
                 <xsl:value-of select="/*[local-name()='container']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
@@ -155,13 +173,26 @@ Notes:
             <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                    <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
-                    <xsl:for-each select="xalan:tokenize($parentous, ' ')">
-                        <oai-object:organizational-unit-id>
-                            <xsl:value-of select="."/>
-                        </oai-object:organizational-unit-id>
-                    </xsl:for-each>
+                  <xsl:choose>
+                    <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:variable name="parentous" select="escidoc-core-accessor:getObjectAttribute(
+                          concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','true','true')"/>
+                      <xsl:for-each select="xalan:tokenize($parentous, ' ')">
+                          <oai-object:organizational-unit-id>
+                              <xsl:value-of select="."/>
+                          </oai-object:organizational-unit-id>
+                      </xsl:for-each>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:if>
             </xsl:for-each>
             <oai-object:deleted>
@@ -447,10 +478,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED" store="NO" sortfield="YES">
-                <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='item']/@*[local-name()='last-modification-date']"/>
             </element>
             <element index="UN_TOKENIZED" store="NO" sortfield="YES">
-                <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
+                <xsl:value-of select="/*[local-name()='container']/@*[local-name()='last-modification-date']"/>
             </element>
         </userdefined-index>
         <userdefined-index name="objid">
@@ -470,12 +501,12 @@ Notes:
             </xsl:attribute>
             <xsl:for-each select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record']">
                 <element index="TOKENIZED" store="NO" sortfield="NO">
-                    <xsl:value-of select="concat(./@name,'@',namespace-uri(./*))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='name'],'@',namespace-uri(./*))"/>
                 </element>
             </xsl:for-each>
             <xsl:for-each select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record']">
                 <element index="TOKENIZED" store="NO" sortfield="NO">
-                    <xsl:value-of select="concat(./@name,'@',namespace-uri(./*))"/>
+                    <xsl:value-of select="concat(./@*[local-name()='name'],'@',namespace-uri(./*))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
