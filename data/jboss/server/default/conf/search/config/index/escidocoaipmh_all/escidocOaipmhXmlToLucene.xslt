@@ -446,10 +446,10 @@ Notes:
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="UN_TOKENIZED" store="NO" sortfield="YES">
+            <element index="TOKENIZED" store="NO" sortfield="YES">
                 <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
             </element>
-            <element index="UN_TOKENIZED" store="NO" sortfield="YES">
+            <element index="TOKENIZED" store="NO" sortfield="YES">
                 <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
             </element>
         </userdefined-index>
