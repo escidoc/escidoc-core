@@ -50,6 +50,8 @@
 	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
 	<classpathentry kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="adm-impl/target/classes" path="adm-impl/src/main/resources"/>
+	<classpathentry kind="src" output="aspects/target/classes" path="aspects/src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="aspects/target/classes" path="aspects/src/main/resources"/>
 	<classpathentry kind="src" output="cmm/target/classes" path="cmm/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="cmm/target/classes" path="cmm/src/main/resources"/>
 	<classpathentry kind="src" output="oai/target/classes" path="oai/src/main/java"/>
