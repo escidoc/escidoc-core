@@ -22,8 +22,6 @@ package de.escidoc.core.om.internal;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
@@ -38,9 +36,7 @@ import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
-import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
+import org.escidoc.core.domain.sru.*;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
 import org.escidoc.core.domain.taskparam.members.MembersTaskParamTO;
@@ -48,6 +44,7 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -56,7 +53,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
@@ -88,7 +84,6 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
@@ -166,13 +161,10 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         MissingMethodParameterException, ContainerNotFoundException, SystemException {
 
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-            this.containerHandler.retrieveMembers(containerId, serviceUtility.toMap(requestTO)));
+            this.containerHandler.retrieveMembers(containerId, map));
     }
 
     @Override
@@ -288,28 +280,18 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         OperationNotFoundException {
 
         // prepare parameter list
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
+        EscidocBinaryContent content = this.containerHandler.retrieveResource(id, resourceName, map);
 
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
-
-        // call business method and write out
         Stream stream = new Stream();
-        byte[] buffer = new byte[1024];
         try {
-            InputStream ins =
-                this.containerHandler.retrieveResource(id, resourceName, serviceUtility.toMap(requestTO)).getContent();
-            int len;
-            while ((len = ins.read(buffer)) > 0) {
-                stream.write(buffer, 0, len);
-            }
+            IOUtils.copy(content.getContent(), stream);
         }
         catch (IOException e) {
-            LOG.error("Stream copy error", e);
-            throw new SystemException(e);
+            String msg = "Failed to copy stream";
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
-
         return stream;
     }
 
@@ -438,5 +420,4 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         return serviceUtility.fromXML(ResultTO.class,
             this.containerHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
-
 }

@@ -20,16 +20,13 @@
 
 package org.escidoc.core.cmm.internal;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.cmm.ContentModelsRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,7 +34,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.KeyValuePair;
 
 /**
  * 
@@ -72,13 +68,10 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
         final String omitHighlighting) throws InvalidSearchQueryException,
         SystemException {
 
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.contentModelHandler.retrieveContentModels(serviceUtility.toMap(requestTO)));
+                this.contentModelHandler.retrieveContentModels(map));
     }
 
 }

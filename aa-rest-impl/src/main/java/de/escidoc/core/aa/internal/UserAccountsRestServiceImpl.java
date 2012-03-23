@@ -36,14 +36,13 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.xml.bind.JAXBElement;
+import java.util.Map;
 
 /**
  * @author Michael Hoppe
@@ -75,10 +74,10 @@ public class UserAccountsRestServiceImpl implements UserAccountsRestService {
             AuthorizationException, InvalidSearchQueryException,
             SystemException {
 
-        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.userAccountHandler.retrieveUserAccounts(serviceUtility.toMap(requestTO)));
+                this.userAccountHandler.retrieveUserAccounts(map));
     }
 
 }

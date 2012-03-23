@@ -8,109 +8,125 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="userAccountRestService" address="/aa/user-account">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="userAccountsRestService" address="/aa/user-accounts">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="userGroupRestService" address="/aa/user-group">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="userGroupsRestService" address="/aa/user-groups">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="grantsRestService" address="/aa/grants">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="roleRestService" address="/aa/role">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="rolesRestService" address="/aa/roles">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
-    <jaxrs:server id="pdpRestService" address="/aa/pdp">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
+  <jaxrs:server id="userAccountRestService" address="/aa/user-account">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="userAccountsRestService" address="/aa/user-accounts">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="userGroupRestService" address="/aa/user-group">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="userGroupsRestService" address="/aa/user-groups">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="grantsRestService" address="/aa/grants">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="roleRestService" address="/aa/role">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="rolesRestService" address="/aa/roles">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+  <jaxrs:server id="pdpRestService" address="/aa/pdp">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
 
 </beans>

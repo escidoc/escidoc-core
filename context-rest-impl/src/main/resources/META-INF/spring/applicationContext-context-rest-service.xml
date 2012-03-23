@@ -8,32 +8,36 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="contextRestService" address="/ir/context">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.context.internal.ContextRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
+  <jaxrs:server id="contextRestService" address="/ir/context">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.context.internal.ContextRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
 
-    <jaxrs:server id="contextsRestService" address="/ir/contexts">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="de.escidoc.core.context.internal.ContextsRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
+  <jaxrs:server id="contextsRestService" address="/ir/contexts">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="de.escidoc.core.context.internal.ContextsRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
 
 </beans>

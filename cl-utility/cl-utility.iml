@@ -16,6 +16,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="policies" />
+    <orderEntry type="library" name="Maven: org.apache.xmlgraphics:batik-ext:1.7" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />
@@ -79,7 +80,7 @@
     <orderEntry type="library" name="Maven: org.apache.camel:camel-core:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-spring:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.camel:camel-jaxb:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.5" level="project" />
     <orderEntry type="module" module-name="statistic-service-spec" />
     <orderEntry type="module" module-name="fedora-service-client" />
     <orderEntry type="module" module-name="fedora-service-rest" />

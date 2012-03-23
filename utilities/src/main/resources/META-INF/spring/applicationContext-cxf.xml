@@ -37,7 +37,7 @@
 
     <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
-    <bean name="fedoraJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
+    <bean name="fedoraJaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
         <property name="enableBuffering" value="true"/>
     </bean>
 
@@ -45,10 +45,9 @@
       <entry key="com.sun.xml.bind.xmlHeaders" value="${escidoc-core.xslt.std}"/>
     </util:map>
 
-    <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocStylesheetJAXBElementProvider">
+    <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
       <property name="marshallerProperties" ref="marshallerProperties"/>
       <property name="enableBuffering" value="true"/>
-      <property name="jaxbContextProvider" ref="escidocJAXBContextProvider"/>
     </bean>
 
     <bean id="cachedOutputStreamMessageBodyReader"

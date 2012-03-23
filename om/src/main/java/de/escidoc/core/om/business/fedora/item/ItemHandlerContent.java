@@ -151,7 +151,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
         else {
             try {
-                // bin content can be got with the Stream (getContent()),
+                // bin content can be got with the Stream (getStream()),
                 // but try to stream
                 final MimeStream mimeStream =
                     this.getFedoraServiceClient().getMimeTypedBinaryContent(component.getId(), "content",

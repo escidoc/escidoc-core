@@ -19,15 +19,12 @@
  */
 package de.escidoc.core.om.internal;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +33,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.om.ItemsRestService;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 
@@ -73,13 +69,10 @@ public class ItemsRestServiceImpl implements ItemsRestService {
         final String userId,
         final String omitHighlighting) throws SystemException {
 
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.itemHandler.retrieveItems(serviceUtility.toMap(requestTO)));
+                this.itemHandler.retrieveItems(map));
     }
 
 }

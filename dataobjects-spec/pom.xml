@@ -25,19 +25,10 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-          <generateDirectory>target/generated-sources/java</generateDirectory>
-          <removeOldOutput>true</removeOldOutput>
-          <extension>true</extension>
-          <strict>true</strict>
-          <verbose>true</verbose>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>apt-maven-plugin</artifactId>
-        <version>1.0-alpha-4</version>
         <configuration>
           <factory>net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory</factory>
           <fork>false</fork>

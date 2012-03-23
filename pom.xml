@@ -318,6 +318,23 @@
             <extension>true</extension>
             <strict>true</strict>
             <verbose>false</verbose>
+            <args>
+              <arg>-Xinheritance</arg>
+              <arg>-Xwildcard</arg>
+              <arg>-Xdomhandler</arg>
+            </args>
+            <plugins>
+              <plugin>
+                <groupId>org.jvnet.jaxb2_commons</groupId>
+                <artifactId>jaxb2-basics</artifactId>
+                <version>0.6.3</version>
+              </plugin>
+              <plugin>
+                <groupId>org.escidoc</groupId>
+                <artifactId>jaxb-domhandler-plugin</artifactId>
+                <version>1.0</version>
+              </plugin>
+            </plugins>
           </configuration>
         </plugin>
 
@@ -428,6 +445,12 @@
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
           <version>0.5.5.201112152213</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>apt-maven-plugin</artifactId>
+          <version>1.0-alpha-4</version>
         </plugin>
 
       </plugins>
@@ -1102,9 +1125,9 @@
   <properties>
     <slf4j.version>1.6.1</slf4j.version>
     <log4j.version>1.2.16</log4j.version>
-    <jaxb2-basics.version>0.6.2</jaxb2-basics.version>
+    <jaxb2-basics.version>0.6.3</jaxb2-basics.version>
     <!-- do not update jaxb.version to 2.2.4 because this will not work on JBoss 6(+) -->
-    <jaxb.version>2.2.3</jaxb.version>
+    <jaxb.version>2.2.5</jaxb.version>
     <aspectj.version>1.6.12</aspectj.version>
     <spring.version>3.0.7.RELEASE</spring.version>
     <cxf.version>2.5.1</cxf.version>
@@ -1196,6 +1219,12 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-ext</artifactId>
+      <version>1.7</version>
+    </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>junit</groupId>

@@ -56,7 +56,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#getContent()
+     * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#getStream()
      */
     @Override
     public String getContent() {

@@ -36,10 +36,8 @@ import org.escidoc.core.services.fedora.GetBinaryContentPathParam;
 import org.escidoc.core.services.fedora.GetBinaryContentQueryParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
-import org.escidoc.core.services.fedora.GetDatastreamPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfilePathParam;
 import org.escidoc.core.services.fedora.GetDatastreamProfileQueryParam;
-import org.escidoc.core.services.fedora.GetDatastreamQueryParam;
 import org.escidoc.core.services.fedora.GetDisseminationPathParam;
 import org.escidoc.core.services.fedora.GetDisseminationQueryParam;
 import org.escidoc.core.services.fedora.GetObjectProfilePathParam;
@@ -258,7 +256,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         	throw new ServerWebApplicationException(response);
         }
         String contentType = null;
-        List<Object> contentTypeList = (List<Object>)response.getMetadata().get("Content-Type");
+        List<Object> contentTypeList = response.getMetadata().get("Content-Type");
         if (!contentTypeList.isEmpty()){
             contentType =  contentTypeList.get(0).toString();
         }

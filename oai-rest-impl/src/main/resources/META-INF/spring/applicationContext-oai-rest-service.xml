@@ -8,32 +8,36 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd"
        default-lazy-init="false">
 
-    <jaxrs:server id="oaiRestService" address="/oai/set-definition">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="org.escidoc.core.oai.internal.OAIRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-             <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
+  <jaxrs:server id="oaiRestService" address="/oai/set-definition">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="org.escidoc.core.oai.internal.OAIRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
 
-    <jaxrs:server id="oaisRestService" address="/oai/set-definitions">
-        <jaxrs:providers>
-          <ref bean="escidocJaxbProvider"/>
-          <ref bean="escidocExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:serviceBeans>
-            <bean class="org.escidoc.core.oai.internal.OAIsRestServiceImpl"/>
-        </jaxrs:serviceBeans>
-        <jaxrs:features>
-            <ref bean="compressGZIPFeature"/>
-            <ref bean="loggingFeature"/>
-        </jaxrs:features>
-    </jaxrs:server>
+  <jaxrs:server id="oaisRestService" address="/oai/set-definitions">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="org.escidoc.core.oai.internal.OAIsRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
 
 </beans>

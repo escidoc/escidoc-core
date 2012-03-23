@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1">
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1"
+  xmlns:dh="http://www.escidoc.org/xjc/domhandler"
+  xmlns:wildcard="http://jaxb2-commons.dev.java.net/basic/wildcard"
+  xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance">
   <bindings>
     <globalBindings>
       <xjc:javaType name="org.joda.time.DateTime" xmlType="xs:date" adapter="org.escidoc.core.utils.jaxb.adapter.DateTimeAdapter" />
@@ -41,13 +44,18 @@
       </nameXmlTransform>
     </schemaBindings>
     <bindings node="//xs:complexType[@name='digitalObjectType']">
+      <!-- TODO: check requirement of this extension and try to solve this using the inheritance addon -->
       <class name="DigitalObjectTypeTO" implClass="org.escidoc.core.services.fedora.DigitalObjectTypeTOExtension" />
     </bindings>
     <bindings node="//xs:complexType[@name='datastreamType']">
+      <!-- TODO: check requirement of this extension and try to solve this using the inheritance addon -->
       <class name="DatastreamTypeTO" implClass="org.escidoc.core.services.fedora.DatastreamTypeTOExtension" />
     </bindings>
     <bindings node="//xs:complexType[@name='xmlContentType']">
-      <class name="XmlContentTypeTO" implClass="org.escidoc.core.services.fedora.XmlContentTypeDatastreamHolderTO" />
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
     </bindings>
   </bindings>
   <bindings schemaLocation="pidList-1.0.xsd">

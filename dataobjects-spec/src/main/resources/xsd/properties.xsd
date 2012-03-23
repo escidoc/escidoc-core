@@ -78,14 +78,14 @@
       <xs:documentation/>
     </xs:annotation>
   </xs:element>
-  <xs:element name="visibility" type="xs:string">
+  <xs:element name="visibility" type="xs:token">
     <xs:annotation>
       <xs:documentation>The name of a scope in which the resource is visible. This kind of
         visibility overrides access rights.
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="label" type="xs:string">
+  <xs:element name="label" type="xs:token">
     <xs:annotation>
       <xs:documentation>The label of the resource, has to be unique in the repository scope
       </xs:documentation>
@@ -188,9 +188,9 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexType>
-      <!--xs:sequence>
+      <xs:sequence>
           <xs:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
-      </xs:sequence-->
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <!-- versions -->

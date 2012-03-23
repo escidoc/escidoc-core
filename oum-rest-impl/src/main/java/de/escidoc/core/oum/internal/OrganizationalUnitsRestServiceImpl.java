@@ -19,15 +19,12 @@
  */
 package de.escidoc.core.oum.internal;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +36,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.oum.OrganizationalUnitsRestService;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 
@@ -77,13 +73,10 @@ public class OrganizationalUnitsRestServiceImpl implements OrganizationalUnitsRe
         final String omitHighlighting) throws InvalidSearchQueryException,
         InvalidXmlException, MissingMethodParameterException, SystemException {
 
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(parameters, additionalParams);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.organizationalUnitHandler.retrieveOrganizationalUnits(serviceUtility.toMap(requestTO)));
+                this.organizationalUnitHandler.retrieveOrganizationalUnits(map));
     }
 
 }

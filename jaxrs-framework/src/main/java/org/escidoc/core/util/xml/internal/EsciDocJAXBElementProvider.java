@@ -1,53 +1,77 @@
 package org.escidoc.core.util.xml.internal;
 
-import net.sf.oval.guard.Guarded;
-import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.lang.reflect.Type;
+import java.util.Map;
 
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.ext.Provider;
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLStreamReader;
-import java.io.InputStream;
-import java.io.OutputStream;
+
+import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * eSciDoc specific implementation of {@link JAXBElementProvider}.
+ * Generates stylesheet-header with given stylesheet-path
  *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
+ * @author Michael Hoppe
  */
-@Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
-        assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
+@Produces({"application/xml", "application/*+xml", "text/xml"})
+@Consumes({"application/xml", "application/*+xml", "text/xml"})
+@Provider
 public class EsciDocJAXBElementProvider extends JAXBElementProvider {
 
-    public static final Logger LOG = LoggerFactory.getLogger(EsciDocJAXBElementProvider.class);
+    private final String XML_HEADERS_PATH = "com.sun.xml.bind.xmlHeaders";
+
+    private JAXBContextProvider jaxbContextProvider;
 
     @Override
-    protected Object unmarshalFromInputStream(@NotNull final Unmarshaller unmarshaller, @NotNull final InputStream is,
-                                              final MediaType mt) throws JAXBException {
-        final EsciDocUnmarshallerListener unmarshallerListener = new EsciDocUnmarshallerListener(is);
-        unmarshaller.setListener(unmarshallerListener);
-        return unmarshaller.unmarshal(unmarshallerListener.getFilteredXmlStreamReader());
+    public void setMarshallerProperties(Map<String, Object> marshallProperties) {
+        overrideXmlHeadersProperty(marshallProperties);
+        super.setMarshallerProperties(marshallProperties);
     }
 
-    @Override
-    protected Object unmarshalFromReader(@NotNull final Unmarshaller unmarshaller,
-                                         @NotNull final XMLStreamReader reader, final MediaType mt)
-            throws JAXBException {
-        final EsciDocUnmarshallerListener unmarshallerListener = new EsciDocUnmarshallerListener(reader);
-        unmarshaller.setListener(unmarshallerListener);
-        return unmarshaller.unmarshal(unmarshallerListener.getFilteredXmlStreamReader());
+    public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {
+        this.jaxbContextProvider = jaxbContextProvider;
     }
 
-    @Override
-    protected void marshalToOutputStream(@NotNull final Marshaller marshaller, final Object obj,
-                                         @NotNull final OutputStream os, final MediaType mt) throws Exception {
-        final EsciDocMarshallerListener marshallerListener = new EsciDocMarshallerListener(os);
-        marshaller.setListener(marshallerListener);
-        marshaller.marshal(obj, marshallerListener.getXMLStreamWriter());
+    protected JAXBContext getJAXBContext(Class<?> type, Type genericType) throws JAXBException {
+        if (this.jaxbContextProvider != null) {
+            return this.jaxbContextProvider.getJAXBContext();
+        } else {
+            return super.getJAXBContext(type, genericType);
+        }
     }
 
+    /**
+     * eSciDoc maintains a configurable property escidoc-core.xslt.std
+     * that holds the name of an xml-header stylesheet.
+     * This name is set as marshallProperty "com.sun.xml.bind.xmlHeaders" for
+     * the cxf JAXBElementProvider in applicationContext-cxf.xml.
+     * But property has to get surrounded with <?xml-stylesheet type=... or set to empty
+     * if escidoc-core.xslt.std is not defined.
+     *
+     * @param marshallProperties marshallProperties
+     */
+    private void overrideXmlHeadersProperty(Map<String, Object> marshallProperties) {
+        String xmlHeaders = (String) marshallProperties.get(XML_HEADERS_PATH);
+        if (xmlHeaders != null && !xmlHeaders.isEmpty()) {
+            if (!(xmlHeaders.startsWith("http://") || xmlHeaders.startsWith("https://"))) {
+                String baseurl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
+                if (!baseurl.endsWith("/")) {
+                    baseurl += "/";
+                }
+
+                if (xmlHeaders.startsWith("./")) {
+                    xmlHeaders = baseurl + xmlHeaders.substring(2, xmlHeaders.length());
+                } else if (xmlHeaders.startsWith("/")) {
+                    xmlHeaders = baseurl + xmlHeaders.substring(1, xmlHeaders.length());
+                }
+            }
+            marshallProperties.put(XML_HEADERS_PATH, "<?xml-stylesheet type=\"text/xsl\" href=\"" + xmlHeaders + "\"?>\n");
+        }
+    }
 }

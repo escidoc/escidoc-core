@@ -4,7 +4,6 @@
 package de.escidoc.core.context.internal;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
@@ -18,9 +17,7 @@ import org.escidoc.core.domain.context.ContextResourcesTO;
 import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -54,7 +51,6 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.KeyValuePair;
 import de.escidoc.core.context.ContextRestService;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
@@ -150,8 +146,8 @@ public class ContextRestServiceImpl implements ContextRestService {
         throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        Map<String, String[]> map = serviceUtility.toMap(SruRequestTypeFactory.createRequestTO(
-                queryParam, SruRequestTypeFactory.getDefaultAdditionalParams(roleId, userId, omitHighlighting)));
+        Map<String, String[]> map = serviceUtility.handleSruRequest(queryParam, roleId, userId, omitHighlighting);
+
         EscidocBinaryContent content = this.contextHandler.retrieveResource(id, resourceName, map);
         Stream stream = new Stream();
         try {
@@ -181,19 +177,15 @@ public class ContextRestServiceImpl implements ContextRestService {
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveMembers(final String id,
-                                                               final RetrieveMembersQueryParam queryParam,
-                                                               final String roleId, final String userId,
-                                                               final String omitHighlighting)
+                                                                 final RetrieveMembersQueryParam queryParam,
+                                                                 final String roleId, final String userId,
+                                                                 final String omitHighlighting)
             throws ContextNotFoundException, MissingMethodParameterException, SystemException {
 
-        final List<Map.Entry<String, String>> additionalParams = SruRequestTypeFactory.getDefaultAdditionalParams(
-                roleId, userId, omitHighlighting);
-
-        final JAXBElement<? extends RequestTypeTO> requestTO =
-            SruRequestTypeFactory.createRequestTO(queryParam, additionalParams);
+        Map<String, String[]> map = serviceUtility.handleSruRequest(queryParam, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.contextHandler.retrieveMembers(id, serviceUtility.toMap(requestTO)));
+                this.contextHandler.retrieveMembers(id, map));
     }
 
     /**

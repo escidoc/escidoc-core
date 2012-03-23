@@ -33,9 +33,7 @@ import javax.xml.bind.JAXBElement;
 import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
 import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -46,6 +44,8 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.Map;
 
 /**
  * @author Michael Hoppe
@@ -77,10 +77,10 @@ public class GrantsRestServiceImpl implements GrantsRestService {
             throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
             AuthorizationException, SystemException {
 
-        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(queryParam);
+        final Map<String, String[]> map = serviceUtility.handleSruRequest(queryParam, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-            this.userAccountHandler.retrieveGrants(serviceUtility.toMap(requestTO)));
+            this.userAccountHandler.retrieveGrants(map));
     }
 
 }

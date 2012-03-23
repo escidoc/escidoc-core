@@ -14,14 +14,9 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public final class Stream extends OutputStream {
 
     private static final Logger LOG = LoggerFactory.getLogger(Stream.class);
@@ -52,28 +47,20 @@ public final class Stream extends OutputStream {
         }
     }
 
-    @XmlTransient
     private boolean outputLocked;
 
-    @XmlTransient
     private OutputStream currentStream;
 
-    @XmlTransient
     private long threshold = DEFAULT_THRESHOLD;
 
-    @XmlTransient
     private long totalLength;
 
-    @XmlTransient
     private boolean inMemory;
 
-    @XmlTransient
     private boolean tempFileFailed;
 
-    @XmlTransient
     private File tempFile;
 
-    @XmlTransient
     private File outputDirectory = DEFAULT_TEMP_DIR;
 
     public Stream(final PipedInputStream stream) throws IOException {

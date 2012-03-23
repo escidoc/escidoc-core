@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
-  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1">
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" version="2.1"
+  xmlns:dh="http://www.escidoc.org/xjc/domhandler"
+  xmlns:wildcard="http://jaxb2-commons.dev.java.net/basic/wildcard">
   <bindings>
     <globalBindings>
       <xjc:javaType name="org.joda.time.DateTime" xmlType="xs:date" adapter="org.escidoc.core.utils.jaxb.adapter.DateTimeAdapter" />
@@ -113,7 +115,10 @@
       </nameXmlTransform>
     </schemaBindings>
     <bindings node="/xs:schema//xs:element[@name='content-stream']">
-      <class name="ContentStreamTO" implClass="org.escidoc.core.domain.content.stream.ContentStreamDatastreamHolderTO" />
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
     </bindings>
   </bindings>
   
@@ -142,7 +147,10 @@
       <class name="ContextResourcesTO" />
     </bindings>
     <bindings node="/xs:schema//xs:element[@name='admin-descriptor']">
-      <class name="AdminDescriptorTO" implClass="org.escidoc.core.domain.context.AdminDescriptorDatastreamHolderTO" />
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
     </bindings>
   </bindings>
   
@@ -171,6 +179,8 @@
       <class name="ItemResourcesTO" />
     </bindings>
   </bindings>
+
+  <!-- MdRecord(s) -->
   <bindings schemaLocation="md-records.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.metadatarecords" />
@@ -180,7 +190,10 @@
       </nameXmlTransform>
     </schemaBindings>
     <bindings node="/xs:schema//xs:element[@name='md-record']">
-      <class name="MdRecordTO" implClass="org.escidoc.core.domain.metadatarecords.MdRecordDatastreamHolderTO" />
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
     </bindings>
   </bindings>
   
@@ -496,7 +509,10 @@
       </nameXmlTransform>
     </schemaBindings>
     <bindings node="/xs:schema//xs:element[@name='content-model-specific']">
-      <class name="ContentModelSpecificTO" implClass="org.escidoc.core.domain.properties.ContentModelSpecificDatastreamHolderTO" />
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
     </bindings>
     <bindings node="/xs:schema//xs:element[@name='type']">
       <property name="resourceType" />
@@ -585,6 +601,13 @@
         <elementName suffix="TO" />
       </nameXmlTransform>
     </schemaBindings>
+    <!-- lax content -->
+    <bindings node="/xs:schema//xs:complexType[@name='extraDataType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
     <!-- java types -->
     <bindings node="/xs:schema//xs:element[@name='startRecord']">
       <xjc:javaType name="org.apache.axis.types.PositiveInteger" adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
@@ -807,7 +830,7 @@
   <!-- java.util.Properties -->
   <bindings schemaLocation="javautilproperties.xsd">
     <schemaBindings>
-      <package name="org.escidoc.core.domain.properties" />
+      <package name="org.escidoc.core.domain.properties.java" />
       <nameXmlTransform>
         <typeName suffix="TO" />
         <elementName suffix="TO" />

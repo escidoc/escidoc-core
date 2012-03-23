@@ -31,9 +31,7 @@ package de.escidoc.core.sm.internal;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,6 +43,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.AggregationDefinitionsRestService;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
+
+import java.util.Map;
 
 /**
  * @author Michael Hoppe
@@ -73,10 +73,10 @@ public class AggregationDefinitionsRestServiceImpl implements AggregationDefinit
             throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
             AuthorizationException, SystemException {
 
-        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.aggregationDefinitionHandler.retrieveAggregationDefinitions(serviceUtility.toMap(requestTO)));
+                this.aggregationDefinitionHandler.retrieveAggregationDefinitions(map));
     }
 
 }

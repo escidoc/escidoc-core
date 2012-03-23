@@ -22,9 +22,7 @@ package org.escidoc.core.oai.internal;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.RequestTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.oai.OAIsRestService;
 import org.slf4j.Logger;
@@ -39,6 +37,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
+
+import java.util.Map;
 
 /**
  * REST Service Implementation for OAI Set Definition Service.
@@ -71,10 +71,10 @@ public class OAIsRestServiceImpl implements OAIsRestService {
             throws AuthenticationException,
             AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
 
-        final JAXBElement<? extends RequestTypeTO> requestTO = SruRequestTypeFactory.createRequestTO(parameters);
+        final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.oaiHandler.retrieveSetDefinitions(serviceUtility.toMap(requestTO)));
+                this.oaiHandler.retrieveSetDefinitions(map));
     }
 
 }

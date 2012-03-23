@@ -1,17 +1,24 @@
 package org.escidoc.core.domain.sru.parameters;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.axis.types.PositiveInteger;
+import org.escidoc.core.domain.properties.java.EntryTO;
 import org.escidoc.core.domain.sru.*;
 
+import org.escidoc.core.domain.sru.ObjectFactory;
+import org.escidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.xml.StreamElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,17 +33,18 @@ public class SruRequestTypeFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(SruRequestTypeFactory.class);
 
-    private static final ObjectFactory factory = new ObjectFactory();
+    private static final ObjectFactory FACTORY = new ObjectFactory();
 
     /**
-     * 
+     *
      * @param sruParams
      * @param additionalParams
      * @return
+     * @throws JAXBException
      */
     @NotNull
     public static JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) {
+    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) throws JAXBException {
 
         if (isExplainRequest(sruParams)) {
             return createExplainRequestTO(sruParams, additionalParams);
@@ -64,18 +72,17 @@ public class SruRequestTypeFactory {
     }
 
     /**
-     * 
+     *
      * @param sruParams
-     * @param additionalParams
+     * @param additionalParam
      * @return
+     * @throws JAXBException
      */
     @NotNull
     public static JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams, final Map.Entry<String, String>... additionalParams) {
-        List<Map.Entry<String, String>> pairs = new ArrayList<Map.Entry<String, String>>(additionalParams.length);
-        for (Map.Entry<String, String> pair : additionalParams) {
-            pairs.add(pair);
-        }
+    final SruSearchRequestParametersBean sruParams, final Map.Entry<String, String>... additionalParam) throws JAXBException {
+        List<Map.Entry<String, String>> pairs = new ArrayList<Map.Entry<String, String>>(additionalParam.length);
+        Collections.addAll(pairs, additionalParam);
         return createRequestTO(sruParams, pairs);
     }
 
@@ -83,10 +90,11 @@ public class SruRequestTypeFactory {
      *
      * @param sruParams
      * @return
+     * @throws JAXBException
      */
     @NotNull
     public static JAXBElement<? extends RequestTypeTO> createRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams) {
+    final SruSearchRequestParametersBean sruParams) throws JAXBException {
         return createRequestTO(sruParams, new ArrayList<Map.Entry<String, String>>(0));
     }
 
@@ -115,7 +123,8 @@ public class SruRequestTypeFactory {
     }
 
     /**
-     * 
+     *
+     * @param sruParams
      * @return
      */
     public static boolean isSearchRequest(@NotNull
@@ -124,7 +133,8 @@ public class SruRequestTypeFactory {
     }
 
     /**
-     * 
+     *
+     * @param sruParams
      * @return
      */
     public static boolean isExplainRequest(@NotNull
@@ -133,7 +143,8 @@ public class SruRequestTypeFactory {
     }
 
     /**
-     * 
+     *
+     * @param sruParams
      * @return
      */
     public static boolean isScanRequest(@NotNull
@@ -143,16 +154,16 @@ public class SruRequestTypeFactory {
 
     /**
      *
-     *
      * @param sruParams
      * @param additionalParams
      * @return
+     * @throws JAXBException
      */
     @NotNull
     public static JAXBElement<SearchRetrieveRequestTypeTO> createSearchRetrieveRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) {
+    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) throws JAXBException {
 
-        final SearchRetrieveRequestTypeTO searchType = factory.createSearchRetrieveRequestTypeTO();
+        final SearchRetrieveRequestTypeTO searchType = FACTORY.createSearchRetrieveRequestTypeTO();
         searchType.setMaximumRecords(createNonNegativeInteger(sruParams.getMaximumRecords()));
         searchType.setQuery(sruParams.getQuery());
         searchType.setRecordPacking(sruParams.getRecordPacking());
@@ -174,7 +185,7 @@ public class SruRequestTypeFactory {
         searchType.setVersion(sruParams.getVersion());
         searchType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return factory.createSearchRetrieveRequest(searchType);
+        return FACTORY.createSearchRetrieveRequest(searchType);
     }
 
     /**
@@ -185,9 +196,9 @@ public class SruRequestTypeFactory {
      */
     @NotNull
     public static JAXBElement<ExplainRequestTypeTO> createExplainRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) {
+    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) throws JAXBException {
 
-        final ExplainRequestTypeTO explainType = factory.createExplainRequestTypeTO();
+        final ExplainRequestTypeTO explainType = FACTORY.createExplainRequestTypeTO();
         explainType.setRecordPacking(sruParams.getRecordPacking());
         try {
             if (sruParams.getStylesheet() != null) {
@@ -202,7 +213,7 @@ public class SruRequestTypeFactory {
         explainType.setVersion(sruParams.getVersion());
         explainType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return factory.createExplainRequest(explainType);
+        return FACTORY.createExplainRequest(explainType);
     }
 
     /**
@@ -211,9 +222,9 @@ public class SruRequestTypeFactory {
      */
     @NotNull
     public static JAXBElement<ScanRequestTypeTO> createScanRequestTO(@NotNull
-    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) {
+    final SruSearchRequestParametersBean sruParams, final List<Map.Entry<String, String>> additionalParams) throws JAXBException {
 
-        final ScanRequestTypeTO scanType = factory.createScanRequestTypeTO();
+        final ScanRequestTypeTO scanType = FACTORY.createScanRequestTypeTO();
         scanType.setMaximumTerms(createPositiveInteger(sruParams.getMaximumTerms()));
         scanType.setResponsePosition(createNonNegativeInteger(sruParams.getResponsePosition()));
         scanType.setScanClause(sruParams.getScanClause());
@@ -230,7 +241,7 @@ public class SruRequestTypeFactory {
         scanType.setVersion(sruParams.getVersion());
         scanType.setExtraRequestData(createExtraDataType(additionalParams));
 
-        return factory.createScanRequest(scanType);
+        return FACTORY.createScanRequest(scanType);
     }
 
     /**
@@ -238,12 +249,27 @@ public class SruRequestTypeFactory {
      * @param additionalParams
      * @return
      */
-    private static ExtraDataTypeTO createExtraDataType(final List<Map.Entry<String, String>> additionalParams) {
+    private static ExtraDataTypeTO createExtraDataType(final List<Map.Entry<String, String>> additionalParams) throws JAXBException {
         if (additionalParams == null || additionalParams.size() == 0)
             return null;
 
-        final ExtraDataTypeTO extra = factory.createExtraDataTypeTO();
-        extra.getAny().addAll(additionalParams);
+        final JAXBContext context = JAXBContext.newInstance(EntryTO.class.getPackage().getName());
+        final ExtraDataTypeTO extra = FACTORY.createExtraDataTypeTO();
+
+        for (Map.Entry<String, String> entry : additionalParams) {
+            final EntryTO entryTO = new EntryTO();
+            entryTO.setKey(entry.getKey());
+            entryTO.setContent(entry.getValue());
+            final Stream stream = new Stream();
+            context.createMarshaller().marshal(entryTO, stream);
+            try {
+                stream.close();
+            } catch (IOException e) {
+                LOG.warn("Unable to close stream.", e);
+            }
+            extra.getAny().add(new StreamElement(stream));
+        }
+
         return extra;
     }
 
