@@ -1012,7 +1012,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     protected String getSchemaLocationBase() {
         if (BASE_URL_SCHEMA_LOCATION == null) {
             // Maybe it would be better to load the schema from www.escidoc.org
-            BASE_URL_SCHEMA_LOCATION = getBaseUrl() + "/xsd/";
+            BASE_URL_SCHEMA_LOCATION = getBaseUrl() + getFrameworkContext() + "/xsd/";
         }
         return BASE_URL_SCHEMA_LOCATION + "rest";
     }

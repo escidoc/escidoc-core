@@ -596,7 +596,7 @@ public interface UserGroupRestService {
      *                                      Thrown if the hierarchy of User Groups is violated.
      */
     @POST
-    @Path("/{id}/selectors-add")
+    @Path("/{id}/selectors/add")
     SelectorsTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
@@ -659,7 +659,7 @@ public interface UserGroupRestService {
      * @throws XmlSchemaValidationException Thrown if the provided XML data is not schema conform
      */
     @POST
-    @Path("/{id}/selectors-remove")
+    @Path("/{id}/selectors/remove")
     SelectorsTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
