@@ -1148,6 +1148,7 @@
     <escidoc.srw.version>1.5.14</escidoc.srw.version>
     <srw.version>1.5.9</srw.version>
     <migration-tool.version>1.5.0</migration-tool.version>
+    <escidoc.oaiprovider.version>0.0.7</escidoc.oaiprovider.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <java.source.version>1.6</java.source.version>

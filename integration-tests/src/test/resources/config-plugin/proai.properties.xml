@@ -1,0 +1,6 @@
+<processor>
+    <modify>
+        <name>proai.driverPollSeconds</name>
+        <value>60</value>
+    </modify>
+</processor>
