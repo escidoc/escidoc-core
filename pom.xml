@@ -922,6 +922,7 @@
     <srw.version>1.3.20</srw.version>
     <escidoc.saxon.version>1.0.7</escidoc.saxon.version>
     <migration-tool.version>1.3.5</migration-tool.version>
+    <escidoc.oaiprovider.version>0.0.7</escidoc.oaiprovider.version>
     <java.source.version>1.6</java.source.version>
     <java.target.version>1.6</java.target.version>
     <!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder>

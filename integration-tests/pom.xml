@@ -126,6 +126,14 @@
                   <context>testdata</context>
                 </properties>
               </deployable>
+              <deployable>
+                <groupId>org.escidoc</groupId>
+                <artifactId>oaiprovider</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>escidoc-oaiprovider</context>
+                </properties>
+              </deployable>
             </deployables>
           </configuration>
         </configuration>
@@ -565,12 +573,18 @@
 	</build>
 
 	<dependencies>
-	<dependency>
+      <dependency>
 		<groupId>org.escidoc</groupId>
 		<artifactId>testdata</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
 		<type>war</type>
-	</dependency>
+	   </dependency>
+	   <dependency>
+	     <groupId>org.escidoc</groupId>
+	     <artifactId>oaiprovider</artifactId>
+	     <version>${escidoc.oaiprovider.version}</version>
+	     <type>war</type>
+	   </dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>common</artifactId>
@@ -930,6 +944,26 @@
 									</srcFiles>
 								</configuration>
 							</execution>
+                            <execution>
+                              <id>initialize-proai</id>
+                              <phase>process-sources</phase>
+                              <goals>
+                                <goal>execute</goal>
+                              </goals>
+                              <configuration>
+                                <driver>org.postgresql.Driver</driver>
+                                <url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+                                </url>
+                                <autocommit>true</autocommit>
+                                <srcFiles>
+                                  <!-- the initialize phase allows no filtering. Furthermore is creating 
+                                    database part of the test phase. That's why here should only be these tables 
+                                    are generated where hibernate depends on. -->
+                                  <srcFile>${project.build.directory}/sql-resources/postgres/test/test.init.proai.sql
+                                  </srcFile>
+                                </srcFiles>
+                              </configuration>
+                            </execution>
 						</executions>
 					</plugin>
 				</plugins>
@@ -1088,6 +1122,28 @@
 									</srcFiles>
 								</configuration>
 							</execution>
+              <execution>
+                <id>ininialize-proai</id>
+                <phase>process-sources</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <driver>oracle.jdbc.driver.OracleDriver</driver>
+                  <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+                  </url>
+                  <username>${escidoc.database.user}</username>
+                  <password>${escidoc.database.password}</password>
+                  <autocommit>true</autocommit>
+                  <delimiter>;</delimiter>
+                  <delimiterType>normal</delimiterType>
+                  <keepFormat>false</keepFormat>
+                  <srcFiles>
+                    <srcFile>${basedir}/target/sql-resources/oracle/test/test.init.proai.sql
+                    </srcFile>
+                  </srcFiles>
+                </configuration>
+              </execution>
 						</executions>
 					</plugin>
 				</plugins>
