@@ -263,6 +263,12 @@
               <input>${project.build.directory}/escidoc/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</input>
               <config>src/test/resources/config-plugin/escidocoaipmh_all.xml</config>
             </transformation>
+            <transformation>
+              <type>properties</type>
+              <input>src/test/configurations/proai.properties</input>
+              <output>/escidoc/jboss/server/default/conf/proai.properties</output>
+              <config>src/test/resources/config-plugin/proai.properties.xml</config>
+            </transformation>
           </transformations>
         </configuration>
         <executions>
@@ -445,6 +451,28 @@
             </configuration>
           </execution>
           <execution>
+            <id>initialize-proai [postgres]</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.postgres.skip}</skip>
+              <driver>org.postgresql.Driver</driver>
+              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
+              </url>
+              <settingsKey>escidoc-core-db-admin</settingsKey>
+              <autocommit>true</autocommit>
+              <srcFiles>
+                <!-- the initialize phase allows no filtering. Furthermore is creating 
+                  database part of the test phase. That's why here should only be these tables 
+                  are generated where hibernate depends on. -->
+                <srcFile>${project.build.directory}/sql-resources/postgres/test/test.init.proai.sql
+                </srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+          <execution>
             <id>insert-test-user [oracle]</id>
             <phase>pre-integration-test</phase>
             <goals>
@@ -465,6 +493,29 @@
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.users.sql</srcFile>
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.groups.sql</srcFile>
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.sm.create.sql</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ininialize-proai [oracle]</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.oracle.skip}</skip>
+              <driver>oracle.jdbc.driver.OracleDriver</driver>
+              <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+              </url>
+              <username>${escidoc.database.user}</username>
+              <password>${escidoc.database.password}</password>
+              <autocommit>true</autocommit>
+              <delimiter>;</delimiter>
+              <delimiterType>normal</delimiterType>
+              <keepFormat>false</keepFormat>
+              <srcFiles>
+                <srcFile>${basedir}/target/sql-resources/oracle/test/test.init.proai.sql
+                </srcFile>
               </srcFiles>
             </configuration>
           </execution>
@@ -520,6 +571,14 @@
                 <type>war</type>
                 <properties>
                   <context>testdata</context>
+                </properties>
+              </deployable>
+              <deployable>
+                <groupId>org.escidoc</groupId>
+                <artifactId>oaiprovider</artifactId>
+                <type>war</type>
+                <properties>
+                  <context>escidoc-oaiprovider</context>
                 </properties>
               </deployable>
             </deployables>
@@ -641,6 +700,12 @@
       <version>0.0.3-SNAPSHOT</version>
       <type>war</type>
     </dependency>
+     <dependency>
+       <groupId>org.escidoc</groupId>
+       <artifactId>oaiprovider</artifactId>
+       <version>${escidoc.oaiprovider.version}</version>
+       <type>war</type>
+     </dependency>
    <dependency>
       <groupId>org.escidoc.core</groupId>
       <artifactId>common</artifactId>
