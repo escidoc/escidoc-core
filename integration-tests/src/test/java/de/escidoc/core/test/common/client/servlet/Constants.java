@@ -58,6 +58,8 @@ public class Constants {
 
     public static final String SEARCH_BASE_URI = EscidocTestBase.getSrwContext() + "/search";
 
+    public static final String OAIPMH_BASE_URI = EscidocTestBase.getOaiproviderContext();
+
     public static final String INSTITUTIONAL_REPOSITORY_URI = "/ir";
 
     public static final String AA_URI = "/aa";

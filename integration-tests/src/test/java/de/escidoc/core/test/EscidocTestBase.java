@@ -579,6 +579,10 @@ public abstract class EscidocTestBase {
 
     public static final String TEMPLATE_SET_DEFINITION_PATH = TEMPLATE_OAI_PATH + "/setdefinition";
 
+    public static final String TEMPLATE_OAIPROVIDERTEST_ITEM_PATH = TEMPLATE_OAI_PATH + "/item";
+
+    public static final String TEMPLATE_OAIPROVIDERTEST_CONTAINER_PATH = TEMPLATE_OAI_PATH + "/container";
+
     public static final String TEMPLATE_SM_PATH = TEMPLATE_BASE_PATH + "/sm/template";
 
     public static final String TEMPLATE_STAT_DATA_PATH = TEMPLATE_SM_PATH + "/statisticdata";
@@ -949,6 +953,8 @@ public abstract class EscidocTestBase {
     private static String frameworkServiceUri = null;
 
     private static String fedoragsearchContext = null;
+
+    private static String oaiproviderContext = null;
 
     private static String srwContext = null;
 
@@ -1590,6 +1596,19 @@ public abstract class EscidocTestBase {
                 PropertiesProvider.getInstance().getProperty("fedoragsearch.context", "/fedoragsearch");
         }
         return fedoragsearchContext;
+    }
+
+    /**
+     * Get the context-path of oaiprovider (read from properties).
+     * 
+     * @return the context of oaiprovider
+     */
+    public static String getOaiproviderContext() {
+        if (oaiproviderContext == null) {
+            oaiproviderContext =
+                PropertiesProvider.getInstance().getProperty("oaiprovider.context", "/escidoc-oaiprovider/");
+        }
+        return oaiproviderContext;
     }
 
     /**

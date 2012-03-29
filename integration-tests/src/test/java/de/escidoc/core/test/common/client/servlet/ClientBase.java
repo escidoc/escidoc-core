@@ -715,7 +715,7 @@ public abstract class ClientBase {
      * @throws Exception
      *             In any case.
      */
-    private void throwCorrespondingException(final HttpResponse result) throws Exception {
+    protected void throwCorrespondingException(final HttpResponse result) throws Exception {
 
         String exceptionXML = ResourceProvider.getContentsFromInputStream(EntityUtil.getContent(result.getEntity()));
 
