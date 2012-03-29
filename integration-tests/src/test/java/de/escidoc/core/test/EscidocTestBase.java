@@ -579,6 +579,10 @@ public abstract class EscidocTestBase {
 
     public static final String TEMPLATE_SET_DEFINITION_PATH = TEMPLATE_OAI_PATH + "/setdefinition";
 
+    public static final String TEMPLATE_OAIPROVIDERTEST_ITEM_PATH = TEMPLATE_OAI_PATH + "/item";
+
+    public static final String TEMPLATE_OAIPROVIDERTEST_CONTAINER_PATH = TEMPLATE_OAI_PATH + "/container";
+
     public static final String TEMPLATE_SM_PATH = TEMPLATE_BASE_PATH + "/sm/template";
 
     public static final String TEMPLATE_STAT_DATA_PATH = TEMPLATE_SM_PATH + "/statisticdata";

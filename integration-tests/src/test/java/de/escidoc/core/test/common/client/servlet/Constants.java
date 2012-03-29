@@ -99,6 +99,8 @@ public class Constants {
     public static final String CONTENT_RELATION_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
 
+    public static final String OAIPMH_BASE_URI = ESCIDOC_BASE_URI + "escidoc-oaiprovider/";
+
     public static final String CONTENT_RELATIONS_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relations";
 
