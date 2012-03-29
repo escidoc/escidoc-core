@@ -797,7 +797,7 @@ public abstract class ClientBase {
      * @param result The http result object describing the error.
      * @throws Exception In any case.
      */
-    private void throwCorrespondingException(final HttpResponse result) throws Exception {
+    protected void throwCorrespondingException(final HttpResponse result) throws Exception {
 
         String exceptionXML = ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
 

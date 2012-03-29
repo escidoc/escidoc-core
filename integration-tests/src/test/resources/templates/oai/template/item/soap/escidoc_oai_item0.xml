@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+                  xmlns:prop="http://escidoc.de/core/01/properties/"
+                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10">
+   <escidocItem:properties>
+      <prop:public-status>released</prop:public-status>
+      <srel:context objid="escidoc:persistent3"/>
+      <srel:content-model objid="escidoc:persistent4"/>
+      <prop:pid>hdl:escidoc-dummy-pid</prop:pid>
+      <prop:content-model-specific>
+         <element1>cms-test1</element1>
+         <element2>cms-test2</element2>
+      </prop:content-model-specific>
+   </escidocItem:properties>
+   <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+      <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/">
+                <metadata:metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                    xmlns:metadata="http://escidoc.de/metadata/0.1/">
+                    <metadata:title>title</metadata:title>
+                    <metadata:type>type</metadata:type>
+                </metadata:metadata>
+      </escidocMetadataRecords:md-record>
+      <escidocMetadataRecords:md-record name="oaipmhtest" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
+                                        xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                        xmlns:oaitest="http://www.openarchives.org/OAI/2.0/oai_dc/">
+          <oaitest:dc>
+            <dc:title>item1</dc:title>
+            <dc:description>item1</dc:description>
+            <dc:type>music</dc:type>
+          </oaitest:dc>
+      </escidocMetadataRecords:md-record>
+   </escidocMetadataRecords:md-records>
+   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9" />
+</escidocItem:item>

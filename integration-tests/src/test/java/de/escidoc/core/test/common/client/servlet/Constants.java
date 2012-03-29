@@ -108,6 +108,8 @@ public class Constants {
 
     public static final String TOC_BASE_URI = ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/toc";
 
+    public static final String OAIPMH_BASE_URI = ESCIDOC_BASE_URI + "escidoc-oaiprovider/";
+
     public static final String CONTENT_RELATION_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
 
