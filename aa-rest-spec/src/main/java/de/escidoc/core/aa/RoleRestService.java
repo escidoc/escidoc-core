@@ -59,6 +59,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  * 
  */
+@Path("/aa/role")
 public interface RoleRestService {
 
     /**

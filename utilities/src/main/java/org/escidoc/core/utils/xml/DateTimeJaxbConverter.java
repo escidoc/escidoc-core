@@ -16,6 +16,11 @@ public final class DateTimeJaxbConverter {
     private DateTimeJaxbConverter() {
     }
 
+    /**
+     *
+     * @param dateString
+     * @return
+     */
     public static DateTime parseDate(final String dateString) {
         if (dateString == null) {
             return null;
@@ -24,6 +29,11 @@ public final class DateTimeJaxbConverter {
         return new DateTime(calendar.getTimeInMillis(), DateTimeZone.forTimeZone(calendar.getTimeZone()));
     }
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     public static String printDate(final DateTime date) {
         if (date == null) {
             return null;

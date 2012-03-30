@@ -51,6 +51,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  * 
  */
+@Path("/aa/pdp")
 public interface PolicyDecisionPointRestService {
 
     /**

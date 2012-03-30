@@ -45,7 +45,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author SWA
  * 
  */
-@Path("/")
+@Path("/oai/set-definition")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface OAIRestService {

@@ -31,10 +31,7 @@
  */
 package de.escidoc.core.aa;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
@@ -51,6 +48,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * @author Michael Hoppe
  */
+@Path("/aa/grants")
 public interface GrantsRestService {
 
     /**

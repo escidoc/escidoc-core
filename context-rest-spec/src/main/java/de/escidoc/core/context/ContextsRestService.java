@@ -21,7 +21,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Marko Voss
  * 
  */
-@Path("/")
+@Path("/ir/contexts")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContextsRestService {

@@ -58,7 +58,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.ItemRestService;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import org.escidoc.core.domain.result.ResultTO;
@@ -68,6 +67,7 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.jaxrs.ext.GenericResponse;
 import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
@@ -89,13 +89,9 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 /**
@@ -133,16 +129,20 @@ public class ItemRestServiceImpl implements ItemRestService {
     public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
         SystemException, RemoteException {
-
         this.itemHandler.delete(id);
     }
 
     @Override
-    public ItemTO retrieve(final String id) throws ItemNotFoundException, ComponentNotFoundException,
+    public GenericResponse<ItemTO> retrieve(final String id) throws ItemNotFoundException, ComponentNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException {
 
-        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
+        final ItemTO item = serviceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
+        final Response.ResponseBuilder b = Response.ok();
+        if (item.getLastModificationDate() != null) {
+            b.lastModified(item.getLastModificationDate().toDate());
+        }
+        return new GenericResponse<ItemTO>(b, item);
     }
 
     @Override
@@ -244,10 +244,8 @@ public class ItemRestServiceImpl implements ItemRestService {
 
         Stream stream = new Stream();
         try {
-            InputStream inputStream =
-                new ByteArrayInputStream(this.itemHandler.retrieveMdRecordContent(id, mdRecordId).getBytes(
-                    XmlUtility.CHARACTER_ENCODING));
-            IOUtils.copy(inputStream, stream);
+            Reader reader = new StringReader(this.itemHandler.retrieveMdRecordContent(id, mdRecordId));
+            IOUtils.copy(reader, stream);
         }
         catch (IOException e) {
             LOG.error("Failed to copy stream", e);
@@ -263,10 +261,8 @@ public class ItemRestServiceImpl implements ItemRestService {
 
         Stream stream = new Stream();
         try {
-            InputStream inputStream =
-                new ByteArrayInputStream(this.itemHandler.retrieveDcRecordContent(id).getBytes(
-                    XmlUtility.CHARACTER_ENCODING));
-            IOUtils.copy(inputStream, stream);
+            Reader reader = new StringReader(this.itemHandler.retrieveDcRecordContent(id));
+            IOUtils.copy(reader, stream);
         }
         catch (IOException e) {
             LOG.error("Failed to copy stream", e);

@@ -19,9 +19,7 @@
  */
 package de.escidoc.core.om.internal;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
@@ -84,7 +82,6 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.ContainerRestService;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
@@ -207,10 +204,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
 
         Stream stream = new Stream();
         try {
-            InputStream inputStream =
-                new ByteArrayInputStream(this.containerHandler.retrieveMdRecordContent(id, mdRecordId).getBytes(
-                    XmlUtility.CHARACTER_ENCODING));
-            IOUtils.copy(inputStream, stream);
+            Reader reader = new StringReader(this.containerHandler.retrieveMdRecordContent(id, mdRecordId));
+            IOUtils.copy(reader, stream);
         }
         catch (IOException e) {
             LOG.error("Failed to copy stream", e);
@@ -225,10 +220,8 @@ public class ContainerRestServiceImpl implements ContainerRestService {
 
         Stream stream = new Stream();
         try {
-            InputStream inputStream =
-                new ByteArrayInputStream(this.containerHandler.retrieveDcRecordContent(id).getBytes(
-                    XmlUtility.CHARACTER_ENCODING));
-            IOUtils.copy(inputStream, stream);
+            Reader reader = new StringReader(this.containerHandler.retrieveDcRecordContent(id));
+            IOUtils.copy(reader, stream);
         }
         catch (IOException e) {
             LOG.error("Failed to copy stream", e);

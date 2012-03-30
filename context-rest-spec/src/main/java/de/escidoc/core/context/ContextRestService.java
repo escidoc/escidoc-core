@@ -54,6 +54,7 @@ import org.escidoc.core.utils.io.Stream;
 /**
  * @author Marko Voß
  */
+@Path("/ir/context")
 public interface ContextRestService {
 
     @PUT

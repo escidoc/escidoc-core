@@ -6,54 +6,54 @@
         http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
         http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd"
        default-lazy-init="false">
-    <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+  <import resource="classpath:META-INF/cxf/cxf.xml"/>
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <cxf:bus>
-        <cxf:features>
-            <ref bean="loggingFeature"/>
-        </cxf:features>
-    </cxf:bus>
+  <cxf:bus>
+    <cxf:features>
+      <ref bean="loggingFeature"/>
+    </cxf:features>
+  </cxf:bus>
 
-    <http-conf:conduit name="*.http-conduit">
-        <http-conf:client AutoRedirect="true"/>
-    </http-conf:conduit>
+  <http-conf:conduit name="*.http-conduit">
+    <http-conf:client AutoRedirect="true"/>
+  </http-conf:conduit>
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.properties</value>
-                <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.custom.properties</value>
-            </list>
-        </property>
-        <property name="ignoreResourceNotFound" value="true"/>
-    </bean>
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.properties</value>
+        <value>file:///${ESCIDOC_HOME}/conf/escidoc-core.custom.properties</value>
+      </list>
+    </property>
+    <property name="ignoreResourceNotFound" value="true"/>
+  </bean>
 
-    <bean id="compressGZIPFeature" class="org.escidoc.core.util.html.internal.EscidocGzipFeature">
-	  <property name="threshold">
-	    <value>0</value>
-	  </property>
-    </bean>
+  <bean id="compressGZIPFeature" class="org.escidoc.core.util.html.internal.EscidocGzipFeature">
+    <property name="threshold">
+      <value>0</value>
+    </property>
+  </bean>
 
-    <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
+  <bean id="loggingFeature" class="org.apache.cxf.feature.LoggingFeature"/>
 
-    <bean name="fedoraJaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
-        <property name="enableBuffering" value="true"/>
-    </bean>
+  <bean name="fedoraJaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+    <property name="enableBuffering" value="true"/>
+  </bean>
 
-    <util:map id="marshallerProperties">
-      <entry key="com.sun.xml.bind.xmlHeaders" value="${escidoc-core.xslt.std}"/>
-    </util:map>
+  <util:map id="marshallerProperties">
+    <entry key="com.sun.xml.bind.xmlHeaders" value="${escidoc-core.xslt.std}"/>
+  </util:map>
 
-    <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
-      <property name="marshallerProperties" ref="marshallerProperties"/>
-      <property name="enableBuffering" value="true"/>
-    </bean>
+  <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
+    <property name="marshallerProperties" ref="marshallerProperties"/>
+    <property name="enableBuffering" value="true"/>
+  </bean>
 
-    <bean id="cachedOutputStreamMessageBodyReader"
-          class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>
+  <bean id="cachedOutputStreamMessageBodyReader"
+        class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>
 
-    <bean id="cachedOutputStreamMessageBodyWriter"
-          class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyWriter"/>
+  <bean id="cachedOutputStreamMessageBodyWriter"
+        class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyWriter"/>
 
 </beans>

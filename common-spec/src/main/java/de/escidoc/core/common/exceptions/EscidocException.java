@@ -171,8 +171,7 @@ public class EscidocException extends Exception {
      * @param cause Throwable
      */
     protected EscidocException(final Throwable cause) {
-        // FIXME: better solution insrtead of empty string needed
-        super("", cause);
+        super(cause);
         this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
         this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
@@ -225,8 +224,7 @@ public class EscidocException extends Exception {
      * @param httpStatusMsg  the http status message
      */
     protected EscidocException(final Throwable cause, final int httpStatusCode, final String httpStatusMsg) {
-        // FIXME: better solution instead of empty string needed
-        super("", cause);
+        super(cause);
         this.httpStatusCode = httpStatusCode;
         this.httpStatusMsg = httpStatusMsg;
     }

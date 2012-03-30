@@ -1,6 +1,7 @@
 package org.escidoc.core.domain.exception;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -12,13 +13,14 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public final class ExceptionTOFactory {
 
-    private static final ObjectFactory factory = new ObjectFactory();
+    private static final ObjectFactory FACTORY = new ObjectFactory();
 
     /**
      * private default Constructor to prevent instantiation.
      */
     private ExceptionTOFactory() {
     }
+
 
     /**
      * Make ExceptionTO JAXB-Object out of Exception-Object.
@@ -29,10 +31,10 @@ public final class ExceptionTOFactory {
      * @throws SystemException e
      */
     public static ExceptionTO generateExceptionTO(final Throwable e) throws IOException, SystemException {
-        ExceptionTO exceptionTo = factory.createExceptionTO();
+        ExceptionTO exceptionTo = FACTORY.createExceptionTO();
 
         if (e.getCause() != null) {
-            CauseTO causeTo = factory.createCauseTO();
+            CauseTO causeTo = FACTORY.createCauseTO();
             causeTo.setException(generateExceptionTO(e.getCause()));
             exceptionTo.setCause(causeTo);
         }
@@ -50,6 +52,57 @@ public final class ExceptionTOFactory {
         }
 
         return exceptionTo;
+    }
+
+    /**
+     * TODO: StackTrace
+     * @param exceptionTO the {@link ExceptionTO} to map to a {@link Throwable}
+     * @return
+     * @throws Exception
+     */
+    public static Throwable createThrowable(final ExceptionTO exceptionTO) throws Exception {
+        Throwable result;
+        Class<? extends Throwable> throwableClass = null;
+
+        // load class
+        try {
+            Class<?> clazz = Class.forName(exceptionTO.getClazz());
+            if (Throwable.class.isAssignableFrom(clazz)) {
+                throwableClass = (Class<? extends Throwable>) clazz;
+            }
+        } catch (ClassNotFoundException ignored) {}
+        // fallback
+        if (throwableClass == null) {
+            throwableClass = Exception.class;
+        }
+
+        Constructor<? extends Throwable> constructor;
+        try {
+            // we expect a constructor with parameters: String message & Throwable cause
+            constructor = throwableClass.getDeclaredConstructor(String.class, Throwable.class);
+            if (exceptionTO.getCause() != null && exceptionTO.getCause().getException() != null) {
+                result = constructor.newInstance(exceptionTO.getMessage(),
+                        createThrowable(exceptionTO.getCause().getException()));
+            } else {
+                result = constructor.newInstance(exceptionTO.getMessage(), null);
+            }
+        } catch (NoSuchMethodException e) {
+            try {
+                // fallback to constructor with parameter: String message
+                constructor = throwableClass.getDeclaredConstructor(String.class);
+                result = constructor.newInstance(exceptionTO.getMessage());
+            } catch (NoSuchMethodException e1) {
+                try {
+                    // fallback to default constructor
+                    result = throwableClass.getDeclaredConstructor().newInstance();
+                } catch (NoSuchMethodException e2) {
+                    // we give up
+                    throw new InstantiationException("Unable to instantiate class: " + throwableClass.getName());
+                }
+            }
+        }
+
+        return result;
     }
 
     /**

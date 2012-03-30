@@ -88,7 +88,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author SWA
  * 
  */
-@Path("/")
+@Path("/ir/container")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContainerRestService {

@@ -820,7 +820,7 @@
           <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
-            <version>1.81</version>
+            <version>${oval.version}</version>
           </dependency>
           <dependency>
             <groupId>javax.validation</groupId>
@@ -1131,6 +1131,7 @@
     <aspectj.version>1.6.12</aspectj.version>
     <spring.version>3.0.7.RELEASE</spring.version>
     <cxf.version>2.5.1</cxf.version>
+    <oval.version>1.81</oval.version>
     <camel.version>2.9.0</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.6.9.Final</hibernate.version>
@@ -1369,7 +1370,7 @@
       <dependency>
         <groupId>net.sf.oval</groupId>
         <artifactId>oval</artifactId>
-        <version>1.70</version>
+        <version>${oval.version}</version>
       </dependency>
 
       <!-- Specs -->

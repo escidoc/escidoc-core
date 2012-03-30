@@ -36,6 +36,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -57,6 +58,8 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
+ * The {@link ExceptionMapper} implementation to handle {@link EscidocException}s on server-side.
+ *
  * @author Michael Hoppe
  *
  */
@@ -81,11 +84,6 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
     private static final String XML_RESPONSE_CONTENT_TYPE = "text/xml; charset=" + XmlUtility.CHARACTER_ENCODING;
 
     /**
-     * HTTP header Cache-Control (since HTTP 1.1).
-     */
-    private static final String HTTP_HEADER_CACHE_CONTROL = "Cache-Control";
-
-    /**
      * The No-Cache directive for Cache-Control Header and Pragma to prevent caching of the http response.
      */
     private static final String HTTP_HEADER_VALUE_NO_CACHE = "no-cache";
@@ -94,16 +92,6 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
      * HTTP Pragma.
      */
     private static final String HTTP_HEADER_PRAGMA = "Pragma";
-
-    /**
-     * HTTP Content-Type.
-     */
-    private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
-
-    /**
-     * HTTP Location.
-     */
-    private static final String HTTP_HEADER_LOCATION = "Location";
 
     private static final String HEADER_ESCIDOC_EXCEPTION = "eSciDocException";
 
@@ -124,12 +112,10 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
      * @return Returns Exception as ResponseBuilder.
      */
     private ResponseBuilder handleException(final Throwable e) {
+        if (e == null) return null;
 
         try {
-            if (e == null) {
-                return null;
-            }
-            else if (e instanceof InvocationTargetException) {
+            if (e instanceof InvocationTargetException) {
                 return handleException(((InvocationTargetException) e).getTargetException());
             }
             else if (e instanceof AspectException) {
@@ -200,7 +186,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
 
         ResponseBuilder responseBuilder = Response.status(httpStatusCode);
         initResponse(responseBuilder);
-        responseBuilder.header(HTTP_HEADER_LOCATION, redirectLocation);
+        responseBuilder.header(HttpHeaders.LOCATION, redirectLocation);
         if (exception.getClass().getName() != null) {
             responseBuilder.header(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         }
@@ -223,7 +209,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
         responseBuilder.header(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         if (exception instanceof SecurityException) {
             if (((SecurityException) exception).getRedirectLocation() != null) {
-                responseBuilder.header(HTTP_HEADER_LOCATION, ((SecurityException) exception).getRedirectLocation());
+                responseBuilder.header(HttpHeaders.LOCATION, ((SecurityException) exception).getRedirectLocation());
             }
         }
         responseBuilder.entity(ExceptionTOFactory.generateExceptionTO(exception));
@@ -239,9 +225,9 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
      *            The {@code ResponseBuilder} object to that the no-cache headers shall be added.
      */
     private void initResponse(final ResponseBuilder responseBuilder) {
-        responseBuilder.header(HTTP_HEADER_CACHE_CONTROL, HTTP_HEADER_VALUE_NO_CACHE);
+        responseBuilder.header(HttpHeaders.CACHE_CONTROL, HTTP_HEADER_VALUE_NO_CACHE);
         responseBuilder.header(HTTP_HEADER_PRAGMA, HTTP_HEADER_VALUE_NO_CACHE);
-        responseBuilder.header(HTTP_HEADER_CONTENT_TYPE, XML_RESPONSE_CONTENT_TYPE);
+        responseBuilder.header(HttpHeaders.CONTENT_TYPE, XML_RESPONSE_CONTENT_TYPE);
     }
 
     /**
@@ -274,7 +260,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
             return new String[] { "ShibbolethUser", handle };
         }
         // Authentication via Auth-Header
-        else if (httpRequest.getHeader("Authorization") != null && httpRequest.getHeader("Authorization").length() != 0) {
+        else if (httpRequest.getHeader("Authorization") != null && !httpRequest.getHeader("Authorization").isEmpty()) {
             String authHeader = httpRequest.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {
@@ -303,9 +289,9 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
         Cookie result = null;
         final Cookie[] cookies = httpRequest.getCookies();
         if (cookies != null && cookies.length > 0) {
-            for (final Cookie cooky : cookies) {
-                if (name.equals(cooky.getName())) {
-                    result = cooky;
+            for (final Cookie cookie : cookies) {
+                if (name.equals(cookie.getName())) {
+                    result = cookie;
                     break;
                 }
             }

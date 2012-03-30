@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 
-@Path("/")
+@Path("/statistic/scopes")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ScopesRestService {

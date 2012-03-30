@@ -21,7 +21,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 
-@Path("/")
+@Path("/statistic/statistic-data")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface StatisticDataRestService {

@@ -34,7 +34,7 @@ import org.escidoc.core.utils.io.MimeTypes;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-@Path("/")
+@Path("/ir/content-relations")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContentRelationsRestService {

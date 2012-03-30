@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author MIH
  * 
  */
-@Path("/")
+@Path("/ir/containers")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ContainersRestService {

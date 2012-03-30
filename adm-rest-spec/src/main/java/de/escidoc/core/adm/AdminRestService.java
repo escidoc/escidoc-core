@@ -25,7 +25,7 @@ import javax.ws.rs.*;
  * 
  */
 
-@Path("/")
+@Path("/adm/admin")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface AdminRestService {

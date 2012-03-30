@@ -53,7 +53,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 
-@Path("/")
+@Path("/aa/roles")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface RolesRestService {

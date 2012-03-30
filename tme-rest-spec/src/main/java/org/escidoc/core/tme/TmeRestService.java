@@ -43,7 +43,7 @@ import javax.ws.rs.Produces;
  * @author SWA
  * 
  */
-@Path("/")
+@Path("/tme/jhove")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface TmeRestService {

@@ -32,6 +32,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.jaxrs.model.wadl.ElementClass;
 import org.escidoc.core.domain.components.ComponentPropertiesTO;
 import org.escidoc.core.domain.components.ComponentTO;
 import org.escidoc.core.domain.components.ComponentsTO;
@@ -50,7 +51,7 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.domain.version.history.VersionHistoryTO;
-import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.jaxrs.ext.GenericResponse;
 import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 
@@ -99,7 +100,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author SWA
  *
  */
-@Path("/")
+@Path("/ir/item")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface ItemRestService {
@@ -120,7 +121,7 @@ public interface ItemRestService {
 
     @GET
     @Path("/{id}")
-    ItemTO retrieve(@PathParam("id") String id) throws ItemNotFoundException, ComponentNotFoundException,
+    @ElementClass(response = ItemTO.class) GenericResponse<ItemTO> retrieve(@PathParam("id") String id) throws ItemNotFoundException, ComponentNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
 

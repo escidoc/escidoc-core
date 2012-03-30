@@ -53,7 +53,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 
-@Path("/")
+@Path("/aa/user-groups")
 @Produces(MimeTypes.TEXT_XML)
 @Consumes(MimeTypes.TEXT_XML)
 public interface UserGroupsRestService {
