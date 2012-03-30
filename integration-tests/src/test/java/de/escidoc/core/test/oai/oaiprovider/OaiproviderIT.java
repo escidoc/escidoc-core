@@ -205,12 +205,12 @@ public class OaiproviderIT extends OaiproviderTestBase {
         }
         Thread.sleep(waitForPollMillies);
         String xml = oaiProviderClient.retrieve("verb=ListRecords&metadataPrefix=oai_dc&from=" + from);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record", 8);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/header[@status='deleted']", 8);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='music']", 0);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='video']", 0);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='music']", 0);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='video']", 0);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record", 8);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/header[@status='deleted']", 8);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='music']", 0);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='video']", 0);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='music']", 0);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='video']", 0);
     }
 
     /**
@@ -221,11 +221,11 @@ public class OaiproviderIT extends OaiproviderTestBase {
     @Test
     public void testRetrieveOaiDc() throws Exception {
         String xml = oaiProviderClient.retrieve("verb=ListRecords&metadataPrefix=oai_dc&from=" + from);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record", 8);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='music']", 2);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='video']", 2);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='music']", 2);
-//        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='video']", 2);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record", 8);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='music']", 2);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='item1' and type='video']", 2);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='music']", 2);
+        assertNodeCount(xml, "/OAI-PMH/ListRecords/record/metadata/dc[title='container1' and type='video']", 2);
     }
 
 }
