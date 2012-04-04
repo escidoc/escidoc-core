@@ -46,7 +46,6 @@ import java.util.TreeMap;
 import javax.xml.stream.XMLStreamException;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -55,6 +54,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.business.Constants;
@@ -730,7 +730,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, MimeTypes.TEXT_XML);
+        final Datastream newMDS = new Datastream(name, getItem().getId(), xmlDataBytes, MediaType.TEXT_XML.toString());
         newMDS.addAlternateId(Datastream.METADATA_ALTERNATE_ID); // this is the
         // reason for
         // setMdRecord etc.
@@ -931,7 +931,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ItemNotFoundException, OperationNotFoundException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(MimeTypes.TEXT_XML);
+        content.setMimeType(MediaType.TEXT_XML.toString());
 
         if ("version-history".equals(resourceName)) {
             try {
@@ -1785,7 +1785,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
                 }
                 final Datastream ds =
-                    new Datastream(entry.getKey(), getItem().getId(), xmlBytes, MimeTypes.TEXT_XML, mdProperties);
+                    new Datastream(entry.getKey(), getItem().getId(), xmlBytes, MediaType.TEXT_XML.toString(),
+                        mdProperties);
                 final Map<String, String> mdRecordAttributes = mdAttributesMap.get(entry.getKey());
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId(mdRecordAttributes.get("type"));

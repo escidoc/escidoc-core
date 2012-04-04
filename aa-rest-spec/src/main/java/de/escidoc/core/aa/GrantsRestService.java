@@ -32,12 +32,12 @@
 package de.escidoc.core.aa;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
 import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -102,8 +102,8 @@ public interface GrantsRestService {
      * @throws SystemException             Thrown in case of an internal system error.
      */
     @GET
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveGrants(
         @NotNull @QueryParam("") RetrieveGrantsQueryParam queryParam)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,

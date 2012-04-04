@@ -49,10 +49,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.MediaType;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
@@ -422,7 +422,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             sp.parse(new ByteArrayInputStream(getWov().getStream()));
             final ByteArrayOutputStream wovExtNew = addNewSubtreesHandler.getOutputStreams();
             final byte[] wovNewBytes = wovExtNew.toByteArray();
-            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, MimeTypes.TEXT_XML));
+            setWov(new Datastream(DATASTREAM_WOV, getId(), wovNewBytes, MediaType.TEXT_XML.toString()));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

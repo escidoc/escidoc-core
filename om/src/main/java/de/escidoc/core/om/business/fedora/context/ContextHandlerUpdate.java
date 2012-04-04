@@ -46,13 +46,11 @@ import javax.xml.stream.XMLStreamException;
 
 import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -101,6 +99,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesUpdateHandler;
+import org.springframework.http.MediaType;
 
 /**
  * @author Steffen Wagner
@@ -734,7 +733,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
                 new Datastream("DC", getContext().getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    MimeTypes.TEXT_XML);
+                    MediaType.TEXT_XML.toString());
             if (!oldDs.equals(newDs)) {
                 // TODO check if update is allowed
                 getContext().setDc(newDs);
@@ -771,10 +770,10 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 final Datastream oldDs = adminDescriptors.get(name);
                 final Datastream newDs =
                     new Datastream(name, getContext().getId(),
-                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), MimeTypes.TEXT_XML);
+                        ((ByteArrayOutputStream) entry.getValue()).toByteArray(), MediaType.TEXT_XML.toString());
                 newDs.addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
-                if (oldDs.equals(newDs) && MimeTypes.TEXT_XML.equals(oldDs.getMimeType())) {
+                if (oldDs.equals(newDs) && MediaType.TEXT_XML.toString().equals(oldDs.getMimeType())) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId()
                             + " with admin-descriptor " + name + " skipped.");

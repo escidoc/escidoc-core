@@ -10,9 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.sm.scope.ScopeTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -28,8 +28,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/statistic/scope")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface ScopeRestService {
 
     /**
@@ -52,6 +50,8 @@ public interface ScopeRestService {
      * @throws SystemException              ex
      */
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ScopeTO create(ScopeTO scopeTO) throws AuthenticationException, AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException, SystemException;
 
@@ -99,6 +99,7 @@ public interface ScopeRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     ScopeTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException;
 
@@ -128,6 +129,8 @@ public interface ScopeRestService {
      */
     @PUT
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ScopeTO update(@PathParam("id") String id, ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
         ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException,
         SystemException;

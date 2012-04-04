@@ -3,7 +3,7 @@
  */
 package org.escidoc.core.services.fedora;
 
-import org.escidoc.core.utils.io.MimeTypes;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Marko Voß
@@ -13,7 +13,7 @@ public class ListDatastreamProfilesQueryParam {
 
     private String asOfDateTime;
 
-    private String format = MimeTypes.TEXT_XML;
+    private String format = MediaType.TEXT_XML;
 
     public String getAsOfDateTime() {
         return asOfDateTime;

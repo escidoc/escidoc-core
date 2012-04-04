@@ -46,7 +46,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -57,6 +56,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
+import org.springframework.http.MediaType;
 
 /**
  * This class contains common methods for all handler methods.
@@ -94,7 +94,8 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
             }
             final Datastream ds =
                 new Datastream(stringByteArrayOutputStreamEntry.getKey(), getOrganizationalUnit().getId(),
-                    stringByteArrayOutputStreamEntry.getValue().toByteArray(), MimeTypes.TEXT_XML, mdProperties);
+                    stringByteArrayOutputStreamEntry.getValue().toByteArray(), MediaType.TEXT_XML.toString(),
+                    mdProperties);
             final Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
@@ -121,7 +122,7 @@ public class OrganizationalUnitHandlerUpdate extends OrganizationalUnitHandlerCr
 
         getOrganizationalUnit().setDc(
             new Datastream(Datastream.DC_DATASTREAM, getOrganizationalUnit().getId(), dc
-                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString()));
     }
 
     /**

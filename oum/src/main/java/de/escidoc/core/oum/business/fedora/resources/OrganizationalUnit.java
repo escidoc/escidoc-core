@@ -42,7 +42,6 @@ import org.escidoc.core.services.fedora.AddDatastreamPathParam;
 import org.escidoc.core.services.fedora.AddDatastreamQueryParam;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +64,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface;
+import org.springframework.http.MediaType;
 
 /**
  * Resource implementation of an organizational unit resource.
@@ -443,7 +443,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
                             if (dcNewContent != null && dcNewContent.trim().length() > 0) {
                                 try {
                                     setDc(new Datastream(Datastream.DC_DATASTREAM, getId(), dcNewContent
-                                        .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                                        .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString()));
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e.getMessage(), e);
@@ -603,7 +603,7 @@ public class OrganizationalUnit extends GenericResource implements Organizationa
     }
 
     /**
-     * @param publicStatus
+     * @param publicStatusComment
      *            the publicStatus to set
      */
     public void setPublicStatusComment(final String publicStatusComment) {

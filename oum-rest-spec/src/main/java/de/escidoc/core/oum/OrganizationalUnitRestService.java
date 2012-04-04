@@ -28,6 +28,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
@@ -41,7 +42,6 @@ import org.escidoc.core.domain.ou.successors.SuccessorsTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -63,11 +63,11 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 @Path("/oum/organizational-unit")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface OrganizationalUnitRestService {
 
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     OrganizationalUnitTO create(OrganizationalUnitTO organizationalUnitTO) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
         MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
@@ -75,11 +75,14 @@ public interface OrganizationalUnitRestService {
 
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     OrganizationalUnitTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @PUT
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     OrganizationalUnitTO update(@PathParam("id") String id, OrganizationalUnitTO organizationalUnitTO)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
@@ -94,12 +97,16 @@ public interface OrganizationalUnitRestService {
 
     @POST
     @Path("/{id}/md-records")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     MdRecordsTO updateMdRecords(@PathParam("id") String id, MdRecordsTO mdRecordTO) throws AuthenticationException,
         AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
         OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
 
     @POST
     @Path("/{id}/parents")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ParentsTO updateParents(@PathParam("id") String id, ParentsTO parentsTO) throws AuthenticationException,
         AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
@@ -107,64 +114,80 @@ public interface OrganizationalUnitRestService {
 
     @GET
     @Path("/{id}/properties")
+    @Produces(MediaType.TEXT_XML)
     OrganizationalUnitPropertiesTO retrieveProperties(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources/{name}")
+    @Produces(MediaType.TEXT_XML)
     Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
         throws OrganizationalUnitNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OperationNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
     OrganizationalUnitResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/md-records")
+    @Produces(MediaType.TEXT_XML)
     MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/md-records/md-record/{name}")
+    @Produces(MediaType.TEXT_XML)
     MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("name") String name)
         throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/parents")
+    @Produces(MediaType.TEXT_XML)
     ParentsTO retrieveParents(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
      @GET
      @Path("/{id}/resources/parent-objects")
-     JAXBElement<? extends ResponseTypeTO> retrieveParentObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+     @Produces(MediaType.TEXT_XML)
+     JAXBElement<? extends ResponseTypeTO> retrieveParentObjects(@PathParam("id") String id)
+         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+         OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources/successors")
+    @Produces(MediaType.TEXT_XML)
     SuccessorsTO retrieveSuccessors(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
 
      @GET
      @Path("/{id}/resources/child-objects")
-     JAXBElement<? extends ResponseTypeTO> retrieveChildObjects(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-     MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException;
+     @Produces(MediaType.TEXT_XML)
+     JAXBElement<? extends ResponseTypeTO> retrieveChildObjects(@PathParam("id") String id)
+         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+         OrganizationalUnitNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources/path-list")
-    OrganizationalUnitPathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
+    @Produces(MediaType.TEXT_XML)
+    OrganizationalUnitPathListTO retrievePathList(@PathParam("id") String id) throws AuthenticationException,
+        AuthorizationException, OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException;
 
     @POST
     @Path("/{id}/close")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO close(@PathParam("id") String id, StatusTaskParamTO closeParam) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
         InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;
 
     @POST
     @Path("/{id}/open")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO open(@PathParam("id") String id, StatusTaskParamTO openParams) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
         InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException;

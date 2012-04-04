@@ -39,7 +39,6 @@ import org.escidoc.core.services.fedora.GetDatastreamHistoryPathParam;
 import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -67,6 +66,7 @@ import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtContentRelationsReadHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.http.MediaType;
 
 /**
  * Implementation of a Fedora Container Object which consist of datastreams managed in Fedora Digital Repository System.
@@ -405,7 +405,7 @@ public class Container extends GenericVersionableResourcePid implements Containe
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
@@ -630,7 +630,8 @@ public class Container extends GenericVersionableResourcePid implements Containe
             }
             else {
                 this.escidocRelsExt =
-                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(), MimeTypes.TEXT_XML);
+                    new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(), getRelsExt().getStream(), MediaType.TEXT_XML
+                        .toString());
                 escidocRelsExt.setControlGroup("M");
                 setEscidocRelsExt(this.escidocRelsExt);
 

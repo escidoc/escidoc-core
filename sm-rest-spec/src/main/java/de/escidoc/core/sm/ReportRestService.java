@@ -7,10 +7,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.sm.report.ReportTO;
 import org.escidoc.core.domain.sm.report.parameter.ReportParametersTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -27,8 +27,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/statistic/report")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface ReportRestService {
 
     /**
@@ -62,6 +60,8 @@ public interface ReportRestService {
      * @throws SystemException              e.
      */
     @POST
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ReportTO retrieve(ReportParametersTO reportParametersTO) throws AuthenticationException, AuthorizationException,
             XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
             MissingMethodParameterException, InvalidSqlException, SystemException;

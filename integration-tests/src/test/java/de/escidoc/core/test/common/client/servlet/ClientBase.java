@@ -62,14 +62,13 @@ import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -983,7 +982,7 @@ public abstract class ClientBase {
      *            The message printed if assertion fails.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
-        assertContentType(message, MimeTypes.TEXT_XML, "utf-8", httpRes);
+        assertContentType(message, MediaType.TEXT_XML.toString(), "utf-8", httpRes);
     }
 
     public static void assertContentType(

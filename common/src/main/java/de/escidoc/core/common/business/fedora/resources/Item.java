@@ -42,7 +42,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
@@ -55,13 +54,13 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
@@ -617,7 +616,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);

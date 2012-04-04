@@ -26,17 +26,17 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.escidoc.core.domain.st.StagingFileTO;
-import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.utils.io.Stream;
 
 /**
  * 
@@ -44,8 +44,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 @Path("/st/staging-file")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface StagingRestService {
 
     /**
@@ -59,7 +57,7 @@ public interface StagingRestService {
      * representation of the staging file corresponding to XML-schema "stagingfile.xsd". This contains an link to the
      * file stored in the staging area.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param binaryContent The binary content that shall be uploaded to the staging area.
+     * @param stream The binary content that shall be uploaded to the staging area.
      * @return The XML representation of the staging file corresponding to XML-schema "stagingfile.xsd".
      * @throws MissingMethodParameterException
      *                                 TODO
@@ -68,7 +66,9 @@ public interface StagingRestService {
      * @throws SystemException         TODO
      */
     @PUT
-    StagingFileTO create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    StagingFileTO create(final Stream stream) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -92,6 +92,7 @@ public interface StagingRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Response retrieve(@PathParam("id") String stagingFileId) throws StagingFileNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
 

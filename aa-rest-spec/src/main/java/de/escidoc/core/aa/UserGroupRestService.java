@@ -39,6 +39,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.grants.GrantTO;
@@ -50,7 +51,6 @@ import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
 import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTaskParamTO;
 import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTaskParamTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -80,8 +80,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/aa/user-group")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface UserGroupRestService {
 
     /**
@@ -117,6 +115,8 @@ public interface UserGroupRestService {
      * @throws SystemException              Thrown in case of an internal system error.
      */
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     UserGroupTO create(UserGroupTO userGroupTO) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -160,6 +160,7 @@ public interface UserGroupRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     UserGroupTO retrieve(@PathParam("id") String id) throws UserGroupNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -202,6 +203,8 @@ public interface UserGroupRestService {
      */
     @PUT
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     UserGroupTO update(@PathParam("id") String id, UserGroupTO userGroupTO) throws UserGroupNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
@@ -243,9 +246,11 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/activate")
-    void activate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
+    @Consumes(MediaType.TEXT_XML)
+    void activate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyActiveException, UserGroupNotFoundException, XmlCorruptedException,
+        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Deactivate a User Group.<br/>
@@ -284,9 +289,11 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/deactivate")
-    void deactivate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
+    @Consumes(MediaType.TEXT_XML)
+    void deactivate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyDeactiveException, UserGroupNotFoundException, XmlCorruptedException,
+        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve the specified Grant of the User Group.<br/> This Grant contains information about a Role that has been
@@ -317,8 +324,10 @@ public interface UserGroupRestService {
      */
     @GET
     @Path("/{id}/resources/grants/grant/{grant-id}")
-    GrantTO retrieveGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId) throws UserGroupNotFoundException, GrantNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    GrantTO retrieveGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId)
+        throws UserGroupNotFoundException, GrantNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve the Grants of an User Group that are currently valid, i.e. that currently have not been revoked.<br/>
@@ -348,8 +357,10 @@ public interface UserGroupRestService {
      */
     @GET
     @Path("/{id}/resources/current-grants")
-    CurrentGrantsTO retrieveCurrentGrants(@PathParam("id") String id) throws UserGroupNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    CurrentGrantsTO retrieveCurrentGrants(@PathParam("id") String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Create a Grant for the User Group.<br>
@@ -394,6 +405,8 @@ public interface UserGroupRestService {
      */
     @PUT
     @Path("/{id}/resources/grants/grant")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     GrantTO createGrant(@PathParam("id") String id, GrantTO grantTo) throws AlreadyExistsException, UserGroupNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -452,9 +465,11 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/resources/grants/grant/{grant-id}/revoke-grant")
-    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam) throws UserGroupNotFoundException,
-        GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @Consumes(MediaType.TEXT_XML)
+    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam)
+        throws UserGroupNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Revoke grants.<br/>
@@ -521,7 +536,9 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/resources/grants/revoke-grants")
-    void revokeGrants(@PathParam("id") String id, RevokeGrantsTaskParamTO taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
+    @Consumes(MediaType.TEXT_XML)
+    void revokeGrants(@PathParam("id") String id, RevokeGrantsTaskParamTO taskParam)
+        throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
@@ -535,6 +552,7 @@ public interface UserGroupRestService {
      */
     @GET
     @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
     UserGroupResourcesTO retrieveResources(@PathParam("id") String id) throws UserGroupNotFoundException, SystemException;
 
     /**
@@ -597,6 +615,8 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/selectors/add")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     SelectorsTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
@@ -660,6 +680,8 @@ public interface UserGroupRestService {
      */
     @POST
     @Path("/{id}/selectors/remove")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     SelectorsTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,

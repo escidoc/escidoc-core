@@ -39,7 +39,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import org.escidoc.core.utils.io.MimeTypes;
+import org.springframework.http.MediaType;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
@@ -85,8 +85,8 @@ public class ContentStreamHandler extends WriteHandler {
         if (this.inContentStreams
             && this.contentStreamName != null
             && getWriter() != null
-            && MimeTypes.TEXT_XML.equals(contentStreams.get(this.contentStreamName).get(
-                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
+            && MediaType.TEXT_XML.toString().equals(
+                contentStreams.get(this.contentStreamName).get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
             getWriter().writeCharacters(data);
         }
         return data;
@@ -222,8 +222,10 @@ public class ContentStreamHandler extends WriteHandler {
                     }
 
                     if (storage.equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                        if (MimeTypes.TEXT_XML.equals(contentStreams.get(this.contentStreamName).get(
-                            Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
+                        if (MediaType.TEXT_XML
+                            .toString().equals(
+                                contentStreams.get(this.contentStreamName).get(
+                                    Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
 
                             // check if control group is changed
                             if (curControlGroup != null

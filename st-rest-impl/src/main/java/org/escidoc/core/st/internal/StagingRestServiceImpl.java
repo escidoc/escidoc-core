@@ -25,6 +25,7 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.st.StagingFileTO;
 import org.escidoc.core.st.StagingRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.st.service.StagingFileHandler;
+
+import java.io.IOException;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
@@ -60,10 +63,16 @@ public class StagingRestServiceImpl implements StagingRestService {
     }
 
     @Override
-    public StagingFileTO create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
+    public StagingFileTO create(final Stream stream) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(StagingFileTO.class, this.stagingHandler.create(binaryContent));
+        EscidocBinaryContent content = new EscidocBinaryContent();
+        try {
+            content.setContent(stream.getInputStream());
+        } catch (IOException e) {
+            throw new SystemException(e.getMessage(), e);
+        }
+        return serviceUtility.fromXML(StagingFileTO.class, this.stagingHandler.create(content));
     }
 
     @Override

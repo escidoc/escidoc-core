@@ -67,7 +67,8 @@ public class ItemComponentExternalContentIT extends ItemTestBase {
     @Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl() throws Exception {
 
-        createItemWithExternalBinaryContent(STORAGE_EXTERNAL_URL);
+        String[] ids = createItemWithExternalBinaryContent(STORAGE_EXTERNAL_URL);
+        System.out.println(ids[0]);
 
         assertEquals("The attribute 'href' has a wrong value", urlBeforeCreate, urlAfterCreate);
     }

@@ -1,7 +1,6 @@
 package org.escidoc.core.services.fedora;
 
-import org.escidoc.core.utils.io.MimeTypes;
-
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public final class ModifyDatastreamQueryParam {
     private DatastreamState dsState;
     private String formatURI;
     private ChecksumType checksumType;
-    private String mimeType = MimeTypes.TEXT_XML;
+    private String mimeType = MediaType.TEXT_XML;
     private String logMessage;
     private Boolean ignoreContent;
     private String lastModifiedDate;

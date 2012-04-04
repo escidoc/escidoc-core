@@ -10,9 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.sm.ad.AggregationDefinitionTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -29,8 +29,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/statistic/aggregation-definition")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface AggregationDefinitionRestService {
 
     /**
@@ -55,6 +53,8 @@ public interface AggregationDefinitionRestService {
      * @throws SystemException              ex
      */
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     AggregationDefinitionTO create(AggregationDefinitionTO aggregationDefinitionTO) throws AuthenticationException,
             AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
             MissingMethodParameterException, ScopeNotFoundException, SystemException;
@@ -107,6 +107,7 @@ public interface AggregationDefinitionRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     AggregationDefinitionTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 

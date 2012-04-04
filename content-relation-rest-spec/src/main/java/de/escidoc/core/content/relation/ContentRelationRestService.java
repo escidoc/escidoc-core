@@ -28,6 +28,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
 import org.escidoc.core.domain.content.relation.ContentRelationTO;
@@ -37,7 +38,6 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -57,11 +57,11 @@ import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssigned
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 @Path("/ir/content-relation")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface ContentRelationRestService {
 
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ContentRelationTO create(ContentRelationTO contentRelationTO) throws SystemException, InvalidContentException,
         MissingAttributeValueException, RelationPredicateNotFoundException, InvalidXmlException,
         ReferencedResourceNotFoundException, MissingMethodParameterException, AuthorizationException,
@@ -69,11 +69,14 @@ public interface ContentRelationRestService {
 
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     ContentRelationTO retrieve(@PathParam("id") String id) throws SystemException, ContentRelationNotFoundException,
         AuthorizationException, AuthenticationException;
 
     @PUT
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ContentRelationTO update(@PathParam("id") String id, ContentRelationTO contentRelationTO) throws SystemException,
         InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
         RelationPredicateNotFoundException, InvalidStatusException, ContentRelationNotFoundException,
@@ -87,11 +90,14 @@ public interface ContentRelationRestService {
 
     @GET
     @Path("{id}/properties")
+    @Produces(MediaType.TEXT_XML)
     ContentRelationPropertiesTO retrieveProperties(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, SystemException;
 
     @POST
     @Path("{id}/lock")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO lock(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidContentException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
@@ -99,6 +105,8 @@ public interface ContentRelationRestService {
 
     @POST
     @Path("{id}/unlock")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO unlock(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
@@ -106,6 +114,8 @@ public interface ContentRelationRestService {
 
     @POST
     @Path("{id}/submit")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO submit(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
@@ -113,6 +123,8 @@ public interface ContentRelationRestService {
 
     @POST
     @Path("{id}/revise")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO revise(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, XmlCorruptedException,
@@ -120,6 +132,8 @@ public interface ContentRelationRestService {
 
     @POST
     @Path("{id}/release")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO release(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
@@ -127,6 +141,8 @@ public interface ContentRelationRestService {
 
     @POST
     @Path("{id}/assign-object-pid")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO assignObjectPid(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, OptimisticLockingException, InvalidXmlException, SystemException,
@@ -134,21 +150,25 @@ public interface ContentRelationRestService {
 
     @GET
     @Path("{id}/md-records")
+    @Produces(MediaType.TEXT_XML)
     MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, SystemException;
 
     @GET
     @Path("{id}/md-records/md-record/{name}")
+    @Produces(MediaType.TEXT_XML)
     MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("name") String name)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
         MdRecordNotFoundException, SystemException;
 
     @GET
     @Path("/content-relations/retrieve-registered-predicates")
+    @Produces(MediaType.TEXT_XML)
     PredicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException;
 
     @GET
     @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
     ContentRelationResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, MissingMethodParameterException, SystemException;
 

@@ -20,16 +20,15 @@
 
 package org.escidoc.core.oai;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -43,8 +42,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 @Path("/oai/set-definitions")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface OAIsRestService {
 
      /**
@@ -69,6 +66,7 @@ public interface OAIsRestService {
      * @throws SystemException If an error occurs.
      */
     @GET
+    @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveSetDefinitions(
         @QueryParam("") SruSearchRequestParametersBean parameters) throws AuthenticationException,
             AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException;

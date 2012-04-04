@@ -43,7 +43,6 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +73,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
+import org.springframework.http.MediaType;
 
 /**
  * Contains methods pertaining update of an item. Is extended at least by FedoraItemHandler.
@@ -250,8 +250,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
             final Datastream ds =
-                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, MimeTypes.TEXT_XML,
-                    mdProperties);
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, MediaType.TEXT_XML
+                    .toString(), mdProperties);
             final Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
@@ -301,7 +301,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             final Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id, getComponentRelsExtWithVelocity(id, properties,
-                    false).getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                    false).getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
             component.setRelsExt(newRelsExt);
             component.persist();
         }
@@ -328,7 +328,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             final Datastream oldDs = getItem().getCts();
             final Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getItem().getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                    .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
 
             if (oldDs == null || !oldDs.equals(newDs)) {
                 getItem().setCts(newDs);

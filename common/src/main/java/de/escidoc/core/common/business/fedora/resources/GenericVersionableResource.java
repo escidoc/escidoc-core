@@ -34,7 +34,6 @@ import org.escidoc.core.services.fedora.GetDatastreamHistoryQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -64,6 +63,7 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.springframework.http.MediaType;
 
 /**
  * Generic Versionable Resource.
@@ -839,7 +839,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov = tmpWov.replaceAll(XmlTemplateProviderConstants.TIMESTAMP_PLACEHOLDER, timestamp.toString());
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), tmpWov
-                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString()));
         }
         catch (final Exception e1) {
             throw new WebserverSystemException(e1);
@@ -938,7 +938,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString()));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

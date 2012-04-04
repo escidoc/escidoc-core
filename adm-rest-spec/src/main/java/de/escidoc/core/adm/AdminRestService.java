@@ -16,9 +16,9 @@ import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sb.IndexConfigurationTO;
 import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Michael Hoppe
@@ -26,8 +26,6 @@ import javax.ws.rs.*;
  */
 
 @Path("/adm/admin")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface AdminRestService {
 
     /**
@@ -40,6 +38,7 @@ public interface AdminRestService {
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
     @Path("/deleteobjects")
+    @Produces(MediaType.TEXT_XML)
     ResultTO getPurgeStatus() throws AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -82,6 +81,8 @@ public interface AdminRestService {
      */
     @POST
     @Path("/deleteobjects")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO deleteObjects(DeleteObjectsTaskParamTO ids) throws AuthenticationException, AuthorizationException,
     InvalidXmlException, SystemException;
 
@@ -96,6 +97,7 @@ public interface AdminRestService {
      */
     @GET
     @Path("/reindex")
+    @Produces(MediaType.TEXT_XML)
     ResultTO getReindexStatus() throws AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -137,7 +139,10 @@ public interface AdminRestService {
      */
     @POST
     @Path("/reindex")
-    ResultTO reindex(ReindexTaskParamTO taskParam) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
+    ResultTO reindex(ReindexTaskParamTO taskParam)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
      * Decrease the type of the current status of the running reindexing process by 1.
@@ -151,7 +156,9 @@ public interface AdminRestService {
      */
     @POST
     @Path("/decrease-reindex-status")
-    void decreaseReindexStatus(String objectType) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
+    @Consumes(MediaType.TEXT_PLAIN)
+    void decreaseReindexStatus(String objectType)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
      * Provides an XML structure containing public configuration properties of the eSciDoc Infrastructure and the
@@ -165,8 +172,10 @@ public interface AdminRestService {
      */
     @GET
     @Path("/get-repository-info")
-    JavaUtilPropertiesTO getRepositoryInfo() throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
-    EncodingSystemException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    JavaUtilPropertiesTO getRepositoryInfo()
+        throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException, SystemException;
 
     /**
      * Provides a xml structure containing the index-configuration as TO.
@@ -179,7 +188,9 @@ public interface AdminRestService {
      */
     @GET
     @Path("/get-index-configuration")
-    IndexConfigurationTO getIndexConfiguration() throws AuthenticationException, AuthorizationException, WebserverSystemException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    IndexConfigurationTO getIndexConfiguration()
+        throws AuthenticationException, AuthorizationException, WebserverSystemException, SystemException;
 
     /**
      * Loads a set of example objects into the framework.
@@ -194,6 +205,8 @@ public interface AdminRestService {
      */
     @GET
     @Path("/load-examples/{type}")
-    ResultTO loadExamples(@PathParam("type") String type) throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
+    @Produces(MediaType.TEXT_XML)
+    ResultTO loadExamples(@PathParam("type") String type)
+        throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
 
 }

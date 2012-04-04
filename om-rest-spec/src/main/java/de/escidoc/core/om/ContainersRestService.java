@@ -20,16 +20,15 @@
 
 package de.escidoc.core.om;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -42,8 +41,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 @Path("/ir/containers")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface ContainersRestService {
 
     /**
@@ -71,6 +68,7 @@ public interface ContainersRestService {
      *             Thrown if a framework internal error occurs.
      */
     @GET
+    @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveContainers(
         @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,

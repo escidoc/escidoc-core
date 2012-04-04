@@ -50,7 +50,6 @@ import org.escidoc.core.services.fedora.IngestQueryParam;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -59,6 +58,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
@@ -515,7 +515,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             try {
                 newDs =
                     new Datastream("DC", getContentModel().getId(), dcNew.getBytes(XmlUtility.CHARACTER_ENCODING),
-                        MimeTypes.TEXT_XML);
+                        MediaType.TEXT_XML.toString());
             }
             catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -589,7 +589,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
             getContentModel().setOtherStream(
                 name + "_xsd",
                 new Datastream(name + "_xsd", getContentModel().getId(), xsdUrl,
-                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED, MimeTypes.TEXT_XML));
+                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED, MediaType.TEXT_XML
+                        .toString()));
         }
 
         // Resource Definitions
@@ -615,7 +616,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                     final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                     query.setDsLabel("Transformation instructions for operation '" + resourceDefinition.getName()
                         + "'.");
-                    query.setMimeType(MimeTypes.TEXT_XML);
+                    query.setMimeType(MediaType.TEXT_XML.toString());
                     query.setDsLocation(resourceDefinition.getXsltHref());
                     this.fedoraServiceClient.modifyDatastream(path, query, null);
                 }

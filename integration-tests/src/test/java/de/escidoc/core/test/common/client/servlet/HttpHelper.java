@@ -56,7 +56,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.escidoc.core.utils.io.MimeTypes;
+import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
@@ -223,7 +223,7 @@ public final class HttpHelper {
         final HttpPost httpPost = new HttpPost(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity = new StringEntity((String) body, MimeTypes.TEXT_XML, HTTP_DEFAULT_CHARSET);
+            requestEntity = new StringEntity((String) body, MediaType.TEXT_XML.toString(), HTTP_DEFAULT_CHARSET);
         }
         else if (body instanceof InputStream) {
             requestEntity = new InputStreamEntity((InputStream) body, -1);
@@ -257,7 +257,7 @@ public final class HttpHelper {
         final HttpPut httpPut = new HttpPut(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
-            requestEntity = new StringEntity((String) body, MimeTypes.TEXT_XML, HTTP_DEFAULT_CHARSET);
+            requestEntity = new StringEntity((String) body, MediaType.TEXT_XML.toString(), HTTP_DEFAULT_CHARSET);
 
         }
         else if (body instanceof InputStream) {

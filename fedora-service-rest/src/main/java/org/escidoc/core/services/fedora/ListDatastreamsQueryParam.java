@@ -1,6 +1,6 @@
 package org.escidoc.core.services.fedora;
 
-import org.escidoc.core.utils.io.MimeTypes;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
@@ -8,7 +8,7 @@ import org.escidoc.core.utils.io.MimeTypes;
 public final class ListDatastreamsQueryParam {
 
     private String asOfDateTime;
-    private String format = MimeTypes.TEXT_XML;
+    private String format = MediaType.TEXT_XML;
 
     public String getAsOfDateTime() {
         return asOfDateTime;

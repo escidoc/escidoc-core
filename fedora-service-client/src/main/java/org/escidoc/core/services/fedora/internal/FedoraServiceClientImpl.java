@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import net.sf.oval.guard.Guarded;
@@ -67,7 +67,6 @@ import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
 import org.escidoc.core.utils.VoidObject;
 import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.MimeStream;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -246,7 +245,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         final Client client = WebClient.client(this.fedoraService);
         final WebClient webClient = WebClient.fromClient(client);
         String path = "/objects/" + pid + "/datastreams/" + dsID + "/content";
-        webClient.accept(MimeTypes.ALL).path(path);
+        webClient.accept(MediaType.WILDCARD).path(path);
         if (timestamp != null) {
         	webClient.query("asOfDateTime", timestamp.withZone(DateTimeZone.UTC).toString(TIMESTAMP_FORMAT));
         }
@@ -340,7 +339,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         final Client client = WebClient.client(this.fedoraService);
         final WebClient webClient = WebClient.fromClient(client);
         webClient
-            .accept(MimeTypes.APPLICATION_JSON).path("/objects/" + path.getPid() + "/datastreams/" + path.getDsID())
+            .accept(MediaType.APPLICATION_JSON).path("/objects/" + path.getPid() + "/datastreams/" + path.getDsID())
             .delete();
     }
 
@@ -536,7 +535,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         if (versionDate != null) {
             path = path + versionDate.toString();
         }
-        final Response response = webClient.accept(MimeTypes.ALL).path(path).get();
+        final Response response = webClient.accept(MediaType.WILDCARD).path(path).get();
 
         if (response.getStatus() == Response.Status.NOT_FOUND.getStatusCode()) {
             throw new ResourceNotFoundException("\"" + path + "\" not found");
@@ -564,8 +563,7 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
 
     @Override
     @Async
-    public Future<MimeStream> getMimeTypedBinaryContentAsync(
-        @NotNull final String pid, @NotNull final String dsId, final DateTime versionDate)
+    public Future<MimeStream> getMimeTypedBinaryContentAsync(final String pid, final String dsId, final DateTime versionDate)
         throws ResourceNotFoundException, SystemException {
         return new AsyncResult<MimeStream>(getMimeTypedBinaryContent(pid, dsId, versionDate));
     }

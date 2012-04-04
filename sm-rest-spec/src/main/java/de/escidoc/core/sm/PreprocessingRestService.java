@@ -7,10 +7,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.sm.pi.PreprocessingInformationTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -25,8 +24,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/statistic/preprocessing")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface PreprocessingRestService {
 
     /**
@@ -49,6 +46,7 @@ public interface PreprocessingRestService {
      */
     @POST
     @Path("/{id}")
+    @Consumes(MediaType.TEXT_XML)
     void preprocess(@PathParam("id") String id, PreprocessingInformationTO preprocessingInformationTO) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
         SystemException;

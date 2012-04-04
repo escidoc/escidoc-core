@@ -31,12 +31,12 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.domain.tme.RequestTO;
 
 import org.escidoc.core.domain.tme.jhove.JhoveTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * 
@@ -44,12 +44,12 @@ import javax.ws.rs.Produces;
  * 
  */
 @Path("/tme/jhove")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface TmeRestService {
 
     @POST
     @Path("/jhove")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     JhoveTO extract(RequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException;

@@ -26,7 +26,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
-import org.escidoc.core.utils.io.MimeTypes;
+import org.springframework.http.MediaType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -61,7 +61,7 @@ public class MdRecordCreate implements Serializable {
 
     private String schema;
 
-    private String mimeType = MimeTypes.TEXT_XML;
+    private String mimeType = MediaType.TEXT_XML.toString();
 
     /*
      * Storage (Fedora) specific values

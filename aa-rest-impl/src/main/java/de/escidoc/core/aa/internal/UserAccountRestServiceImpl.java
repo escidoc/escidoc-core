@@ -31,11 +31,9 @@ package de.escidoc.core.aa.internal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
 import org.escidoc.core.domain.aa.grants.GrantTO;
-import org.escidoc.core.domain.aa.permission.PermissionFilterTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
 import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
 import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;

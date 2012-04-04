@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.context.param.*;
@@ -24,7 +25,6 @@ import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -58,8 +58,8 @@ import org.escidoc.core.utils.io.Stream;
 public interface ContextRestService {
 
     @PUT
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ContextTO create(@NotNull @QueryParam("") CreateQueryParam queryParam,
                      @NotNull ContextTO contextTO)
             throws MissingMethodParameterException, ContextNameNotUniqueException,
@@ -70,7 +70,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ContextTO retrieve(@NotNull @PathParam("id") String id,
                        @NotNull @QueryParam("") RetrieveQueryParam queryParam)
             throws ContextNotFoundException, MissingMethodParameterException,
@@ -78,8 +78,8 @@ public interface ContextRestService {
 
     @PUT
     @Path("/{id}")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ContextTO update(@NotNull @PathParam("id") String id,
                      @NotNull @QueryParam("") UpdateQueryParam queryParam,
                      @NotNull ContextTO contextTO)
@@ -99,14 +99,14 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/properties")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ContextPropertiesTO retrieveProperties(@NotNull @PathParam("id") String id,
                                            @NotNull @QueryParam("") RetrievePropertiesQueryParam queryParam)
             throws ContextNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources/{resourceName}")
-    @Produces(MimeTypes.ALL)
+    @Produces(MediaType.WILDCARD)
     Stream retrieveResource(@NotNull @PathParam("id") String id,
                             @NotNull @PathParam("resourceName") String resourceName,
                             @NotNull @QueryParam("") RetrieveResourceQueryParam queryParam,
@@ -118,7 +118,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/resources")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ContextResourcesTO retrieveResources(@NotNull @PathParam("id") String id,
                                          @NotNull @QueryParam("") RetrieveResourcesQueryParam queryParam)
             throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
@@ -126,7 +126,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/resources/members")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveMembers(@NotNull @PathParam("id") String id,
                                                         @NotNull @QueryParam("") RetrieveMembersQueryParam queryParam,
                                                         @QueryParam("x-info5-roleId") String roleId,
@@ -136,7 +136,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/admin-descriptor/{name}")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     AdminDescriptorTO retrieveAdminDescriptor(@NotNull @PathParam("id") String id,
                                               @NotNull @PathParam("name") String name,
                                               @NotNull @QueryParam("") RetrieveAdminDescriptorQueryParam queryParam)
@@ -145,7 +145,7 @@ public interface ContextRestService {
 
     @GET
     @Path("/{id}/admin-descriptors")
-    @Produces(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     AdminDescriptorsTO retrieveAdminDescriptors(@NotNull @PathParam("id") String id,
                                                 @NotNull @QueryParam("") RetrieveAdminDescriptorsQueryParam queryParam)
             throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
@@ -153,8 +153,8 @@ public interface ContextRestService {
 
     @POST
     @Path("/{id}/admin-descriptor/")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     AdminDescriptorTO updateAdminDescriptor(@NotNull @PathParam("id") String id,
                                             @NotNull @QueryParam("") UpdateAdminDescriptorQueryParam queryParam,
                                             @NotNull AdminDescriptorTO adminDescriptorTO)
@@ -164,8 +164,8 @@ public interface ContextRestService {
 
     @POST
     @Path("/{id}/open")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO open(@NotNull @PathParam("id") String id,
                   @NotNull @QueryParam("") OpenQueryParam queryParam,
                   @NotNull StatusTaskParamTO statusTaskParam)
@@ -175,8 +175,8 @@ public interface ContextRestService {
 
     @POST
     @Path("/{id}/close")
-    @Produces(MimeTypes.TEXT_XML)
-    @Consumes(MimeTypes.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ResultTO close(@NotNull @PathParam("id") String id,
                    @NotNull @QueryParam("") CloseQueryParam queryParam,
                    @NotNull StatusTaskParamTO statusTaskParam)

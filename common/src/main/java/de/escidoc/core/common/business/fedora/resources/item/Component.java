@@ -35,7 +35,6 @@ import java.util.Set;
 import org.escidoc.core.services.fedora.UpdateObjectPathParam;
 import org.escidoc.core.services.fedora.UpdateObjectQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +68,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
+import org.springframework.http.MediaType;
 
 /**
  * Component resource of eSciDoc.
@@ -317,7 +317,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     try {
                         newDc =
                             new Datastream("DC", getId(), dcContent.getBytes(XmlUtility.CHARACTER_ENCODING),
-                                MimeTypes.TEXT_XML);
+                                MediaType.TEXT_XML.toString());
                     }
                     catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
@@ -426,7 +426,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                                 try {
                                     dcNew =
                                         new Datastream("DC", getId(), dcNewContent
-                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
                                 }
                                 catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);

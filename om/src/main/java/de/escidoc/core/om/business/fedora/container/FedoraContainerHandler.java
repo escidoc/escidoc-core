@@ -56,7 +56,6 @@ import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.escidoc.core.utils.io.Stream;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -65,6 +64,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.business.Constants;
@@ -623,7 +623,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         try {
             final Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, getContainer().getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML);
+                    .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString());
 
             if (oldDs == null || !oldDs.equals(newDs)) {
                 // TODO check if update is allowed
@@ -1155,7 +1155,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             }
             final Datastream ds =
                 new Datastream(stringByteArrayOutputStreamEntry.getKey(), getContainer().getId(), xmlBytes,
-                    MimeTypes.TEXT_XML, mdProperties);
+                    MediaType.TEXT_XML.toString(), mdProperties);
             final Map mdRecordAttributes = (Map) mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -1230,7 +1230,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
         ContainerNotFoundException, OperationNotFoundException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(MimeTypes.TEXT_XML);
+        content.setMimeType(MediaType.TEXT_XML.toString());
 
         if ("members".equals(resourceName)) {
             try {
@@ -2213,7 +2213,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 final byte[] relsExtNewBytes = Utility.updateRelsExt(elements, null, null, getContainer(), null);
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
-                        MimeTypes.TEXT_XML));
+                        MediaType.TEXT_XML.toString()));
             }
             final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
             if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
@@ -2336,7 +2336,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
                 final byte[] relsExtNewBytes = Utility.updateRelsExt(null, removeElements, null, getContainer(), null);
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
-                        MimeTypes.TEXT_XML));
+                        MediaType.TEXT_XML.toString()));
 
                 // updateTimeStamp
                 getUtility().makeVersion("Container.removeMembers", null, getContainer());
@@ -2490,7 +2490,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
 
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
-                        MimeTypes.TEXT_XML));
+                        MediaType.TEXT_XML.toString()));
                 final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                     getUtility().makeVersion("Container.addContentRelations", null, getContainer());
@@ -2618,7 +2618,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid implements Conta
             try {
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM, getContainer().getId(), relsExtNewBytes,
-                        MimeTypes.TEXT_XML));
+                        MediaType.TEXT_XML.toString()));
                 final DateTime endTimestamp = getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.isEqual(endTimestamp)) {
                     getUtility().makeVersion("Container.removeContentRelations", null, getContainer());

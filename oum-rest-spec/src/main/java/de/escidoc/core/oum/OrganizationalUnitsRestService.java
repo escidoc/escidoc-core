@@ -20,16 +20,15 @@
 
 package de.escidoc.core.oum;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -37,8 +36,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 @Path("/oum/organizational-units")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface OrganizationalUnitsRestService {
 
     /**
@@ -62,6 +59,7 @@ public interface OrganizationalUnitsRestService {
      * @throws SystemException             Thrown in case of an internal error.
      */
     @GET
+    @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveOrganizationalUnits(
         @QueryParam("") SruSearchRequestParametersBean parameters, 
         @QueryParam("x-info5-roleId") String roleId,

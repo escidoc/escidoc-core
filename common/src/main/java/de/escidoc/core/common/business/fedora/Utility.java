@@ -69,11 +69,11 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 import org.apache.xpath.XPathAPI;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -975,7 +975,7 @@ public class Utility {
                         + versionEntry);
             final Datastream ds =
                 new Datastream("version-history", resource.getId(), newWov.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    MimeTypes.TEXT_XML);
+                    MediaType.TEXT_XML.toString());
             resource.setWov(ds);
         }
         catch (final StreamNotFoundException e) {
@@ -1018,7 +1018,7 @@ public class Utility {
                     "(<" + Constants.WOV_NAMESPACE_PREFIX + ":events[^>]*>)", "$1" + newEventEntry);
 
             resource.setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY, resource.getId(), newWovString
-                .getBytes(XmlUtility.CHARACTER_ENCODING), MimeTypes.TEXT_XML));
+                .getBytes(XmlUtility.CHARACTER_ENCODING), MediaType.TEXT_XML.toString()));
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);

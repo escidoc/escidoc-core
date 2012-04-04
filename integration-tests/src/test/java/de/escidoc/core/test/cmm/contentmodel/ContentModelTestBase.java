@@ -36,8 +36,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.om.OmTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.escidoc.core.utils.io.MimeTypes;
+import org.springframework.http.MediaType;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -296,7 +295,8 @@ public class ContentModelTestBase extends CmmTestBase {
                 // check behavior
                 HttpResponse httpRes =
                     HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + "/ir/item/"
-                        + getObjidValue(getDocument(itemXml)) + "/resources/trans", null, MimeTypes.TEXT_XML, null);
+                        + getObjidValue(getDocument(itemXml)) + "/resources/trans", null,
+                        MediaType.TEXT_XML.toString(), null);
                 String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
                 Document resultCheckDoc = getDocument(resultCheckString);
@@ -328,10 +328,9 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper
-                        .executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + "/ir/container/"
-                            + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MimeTypes.TEXT_XML,
-                            null);
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + "/ir/container/"
+                        + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MediaType.TEXT_XML
+                        .toString(), null);
                 String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");

@@ -9,43 +9,47 @@
        default-lazy-init="false">
 
   <!-- Available services -->
-  <bean id="service.ir.item"            class="de.escidoc.core.om.internal.ItemRestServiceImpl"/>
-  <bean id="service.ir.items"           class="de.escidoc.core.om.internal.ItemsRestServiceImpl"/>
-  <bean id="service.ir.container"       class="de.escidoc.core.om.internal.ContainerRestServiceImpl"/>
-  <bean id="service.ir.containers"      class="de.escidoc.core.om.internal.ContainersRestServiceImpl"/>
-  <bean id="service.ir.content-rel"     class="de.escidoc.core.content.relation.internal.ContentRelationRestServiceImpl"/>
-  <bean id="service.ir.content-rels"    class="de.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
-  <bean id="service.ir.context"         class="de.escidoc.core.context.internal.ContextRestServiceImpl"/>
-  <bean id="service.ir.contexts"        class="de.escidoc.core.context.internal.ContextsRestServiceImpl"/>
-  <bean id="service.cmm.content-model"  class="org.escidoc.core.cmm.internal.ContentModelRestServiceImpl"/>
-  <bean id="service.cmm.content-models" class="org.escidoc.core.cmm.internal.ContentModelsRestServiceImpl"/>
-  <bean id="service.oai.oai"            class="org.escidoc.core.oai.internal.OAIRestServiceImpl"/>
-  <bean id="service.oai.oais"           class="org.escidoc.core.oai.internal.OAIsRestServiceImpl"/>
-  <bean id="service.oum.ou"             class="de.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
-  <bean id="service.oum.ous"            class="de.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
-  <bean id="service.staging"            class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
-  <bean id="service.tme"                class="org.escidoc.core.tme.internal.TmeRestServiceImpl"/>
-  <bean id="service.aa.user-account"    class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
-  <bean id="service.aa.user-accounts"   class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
-  <bean id="service.aa.user-group"      class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
-  <bean id="service.aa.user-groups"     class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
-  <bean id="service.aa.grants"          class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
-  <bean id="service.aa.role"            class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
-  <bean id="service.aa.roles"           class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
-  <bean id="service.aa.pdp"             class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
-  <bean id="service.sm.aggr-def"        class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
-  <bean id="service.sm.aggr-defs"       class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
-  <bean id="service.sm.report-def"      class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
-  <bean id="service.sm.report-defs"     class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
-  <bean id="service.sm.preprocessing"   class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
-  <bean id="service.sm.report"          class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
-  <bean id="service.sm.scope"           class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
-  <bean id="service.sm.scopes"          class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
-  <bean id="service.sm.statistic-data"  class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
-  <bean id="service.adm.admin"          class="de.escidoc.core.adm.internal.AdminRestServiceImpl"/>
-  <bean id="service.fedora.deviation"   class="de.escidoc.core.fedoradeviation.internal.FedoraDeviationRestServiceImpl"/>
+  <bean id="service.ir.item"                  class="de.escidoc.core.om.internal.ItemRestServiceImpl"/>
+  <bean id="service.ir.item-filter"           class="de.escidoc.core.om.internal.ItemsRestServiceImpl"/>
+  <bean id="service.ir.container"             class="de.escidoc.core.om.internal.ContainerRestServiceImpl"/>
+  <bean id="service.ir.container-filter"      class="de.escidoc.core.om.internal.ContainersRestServiceImpl"/>
+  <bean id="service.ir.content-rel"           class="de.escidoc.core.content.relation.internal.ContentRelationRestServiceImpl"/>
+  <bean id="service.ir.content-rel-filter"    class="de.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
+  <bean id="service.ir.context"               class="de.escidoc.core.context.internal.ContextRestServiceImpl"/>
+  <bean id="service.ir.context-filter"        class="de.escidoc.core.context.internal.ContextsRestServiceImpl"/>
+  <bean id="service.cmm.content-model"        class="org.escidoc.core.cmm.internal.ContentModelRestServiceImpl"/>
+  <bean id="service.cmm.content-model-filter" class="org.escidoc.core.cmm.internal.ContentModelsRestServiceImpl"/>
+  <bean id="service.oai.oai"                  class="org.escidoc.core.oai.internal.OAIRestServiceImpl"/>
+  <bean id="service.oai.oai-filter"           class="org.escidoc.core.oai.internal.OAIsRestServiceImpl"/>
+  <bean id="service.oum.ou"                   class="de.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
+  <bean id="service.oum.ou-filter"            class="de.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
+  <bean id="service.staging"                  class="org.escidoc.core.st.internal.StagingRestServiceImpl"/>
+  <bean id="service.tme"                      class="org.escidoc.core.tme.internal.TmeRestServiceImpl"/>
+  <bean id="service.aa.user-account"          class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
+  <bean id="service.aa.user-account-filter"   class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
+  <bean id="service.aa.user-group"            class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
+  <bean id="service.aa.user-group-filter"     class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
+  <bean id="service.aa.grants"                class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
+  <bean id="service.aa.role"                  class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
+  <bean id="service.aa.role-filter"           class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
+  <bean id="service.aa.pdp"                   class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
+  <bean id="service.sm.aggr-def"              class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
+  <bean id="service.sm.aggr-def-filter"       class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
+  <bean id="service.sm.report-def"            class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
+  <bean id="service.sm.report-def-filter"     class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
+  <bean id="service.sm.preprocessing"         class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
+  <bean id="service.sm.report"                class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
+  <bean id="service.sm.scope"                 class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
+  <bean id="service.sm.scope-filter"          class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
+  <bean id="service.sm.statistic-data"        class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
+  <bean id="service.adm.admin"                class="de.escidoc.core.adm.internal.AdminRestServiceImpl"/>
+  <bean id="service.fedora.deviation"         class="de.escidoc.core.fedoradeviation.internal.FedoraDeviationRestServiceImpl"/>
 
-  <jaxrs:server id="RestServices" address="">
+  <!--
+  We do not need dynamic sub-resource resolution, because of we define our JAX-RS interfaces and do not dynamically add
+  other endpoints. This will increase performance.
+  -->
+  <jaxrs:server id="RestServices" address="" staticSubresourceResolution="true">
     <jaxrs:providers>
       <ref bean="escidocJaxbProvider"/>
       <ref bean="escidocExceptionMapper"/>
@@ -55,37 +59,37 @@
     <jaxrs:serviceBeans>
       <!-- Configured services available on runtime -->
       <ref bean="service.ir.item"/>
-      <ref bean="service.ir.items"/>
+      <ref bean="service.ir.item-filter"/>
       <ref bean="service.ir.container"/>
-      <ref bean="service.ir.containers"/>
+      <ref bean="service.ir.container-filter"/>
       <ref bean="service.ir.content-rel"/>
-      <ref bean="service.ir.content-rels"/>
+      <ref bean="service.ir.content-rel-filter"/>
       <ref bean="service.ir.context"/>
-      <ref bean="service.ir.contexts"/>
+      <ref bean="service.ir.context-filter"/>
       <ref bean="service.cmm.content-model"/>
-      <ref bean="service.cmm.content-models"/>
+      <ref bean="service.cmm.content-model-filter"/>
       <ref bean="service.oai.oai"/>
-      <ref bean="service.oai.oais"/>
+      <ref bean="service.oai.oai-filter"/>
       <ref bean="service.oum.ou"/>
-      <ref bean="service.oum.ous"/>
+      <ref bean="service.oum.ou-filter"/>
       <ref bean="service.staging"/>
       <ref bean="service.tme"/>
       <ref bean="service.aa.user-account"/>
-      <ref bean="service.aa.user-accounts"/>
+      <ref bean="service.aa.user-account-filter"/>
       <ref bean="service.aa.user-group"/>
-      <ref bean="service.aa.user-groups"/>
+      <ref bean="service.aa.user-group-filter"/>
       <ref bean="service.aa.grants"/>
       <ref bean="service.aa.role"/>
-      <ref bean="service.aa.roles"/>
+      <ref bean="service.aa.role-filter"/>
       <ref bean="service.aa.pdp"/>
       <ref bean="service.sm.aggr-def"/>
-      <ref bean="service.sm.aggr-defs"/>
+      <ref bean="service.sm.aggr-def-filter"/>
       <ref bean="service.sm.report-def"/>
-      <ref bean="service.sm.report-defs"/>
+      <ref bean="service.sm.report-def-filter"/>
       <ref bean="service.sm.preprocessing"/>
       <ref bean="service.sm.report"/>
       <ref bean="service.sm.scope"/>
-      <ref bean="service.sm.scopes"/>
+      <ref bean="service.sm.scope-filter"/>
       <ref bean="service.sm.statistic-data"/>
       <ref bean="service.adm.admin"/>
       <ref bean="service.fedora.deviation"/>

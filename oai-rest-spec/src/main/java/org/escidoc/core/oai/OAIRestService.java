@@ -27,9 +27,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.oai.SetDefinitionTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -46,8 +46,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  */
 @Path("/oai/set-definition")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface OAIRestService {
 
     /**
@@ -80,6 +78,8 @@ public interface OAIRestService {
      *             Thrown if the authorization fails.
      */
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     SetDefinitionTO create(SetDefinitionTO setDefinitionTO) throws UniqueConstraintViolationException,
         InvalidXmlException, MissingMethodParameterException, SystemException, AuthenticationException,
         AuthorizationException;
@@ -112,6 +112,7 @@ public interface OAIRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     SetDefinitionTO retrieve(@PathParam("id") String id) throws ResourceNotFoundException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException;
 
@@ -150,6 +151,8 @@ public interface OAIRestService {
      */
     @PUT
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     SetDefinitionTO update(@PathParam("id") String id, SetDefinitionTO setDefinitionTO)
         throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
         AuthenticationException, AuthorizationException;

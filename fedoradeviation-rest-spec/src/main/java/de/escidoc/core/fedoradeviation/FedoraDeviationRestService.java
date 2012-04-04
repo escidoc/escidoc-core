@@ -3,15 +3,13 @@
  */
 package de.escidoc.core.fedoradeviation;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 
@@ -21,8 +19,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/fedoradeviation")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface FedoraDeviationRestService {
 
     /**
@@ -35,6 +31,7 @@ public interface FedoraDeviationRestService {
      */
     @GET
     @Path("/objects/{id}/export")
+    @Produces(MediaType.TEXT_XML)
     String export(@PathParam("id") String id) throws SystemException;
 
 
@@ -50,6 +47,7 @@ public interface FedoraDeviationRestService {
      */
     @GET
     @Path("/objects/{id}/datastreams/{ds-id}/content")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Response getDatastreamDissemination(@PathParam("id") String id, @PathParam("ds-id") String dsId)
         throws SystemException;
 
@@ -62,6 +60,7 @@ public interface FedoraDeviationRestService {
      */
     @GET
     @Path("/describe")
+    @Produces(MediaType.TEXT_XML)
     String getFedoraDescription(@QueryParam("xml") String xml) throws Exception;
 
 }

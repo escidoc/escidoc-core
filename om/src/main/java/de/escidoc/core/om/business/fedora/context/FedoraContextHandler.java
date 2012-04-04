@@ -63,11 +63,11 @@ import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationH
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -213,7 +213,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate implements Contex
         throws OperationNotFoundException, ContextNotFoundException, SystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(MimeTypes.TEXT_XML);
+        content.setMimeType(MediaType.TEXT_XML.toString());
 
         if ("members".equals(resourceName)) {
             try {

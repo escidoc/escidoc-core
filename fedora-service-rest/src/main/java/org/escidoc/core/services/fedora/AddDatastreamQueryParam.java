@@ -1,7 +1,6 @@
 package org.escidoc.core.services.fedora;
 
-import org.escidoc.core.utils.io.MimeTypes;
-
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public final class AddDatastreamQueryParam {
     private String formatURI;
     private ChecksumType checksumType;
     private String checksum;
-    private String mimeType = MimeTypes.TEXT_XML;
+    private String mimeType = MediaType.TEXT_XML;
     private String logMessage;
 
     public ControlGroup getControlGroup() {

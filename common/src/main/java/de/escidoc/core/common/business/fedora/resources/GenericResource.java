@@ -30,15 +30,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.validation.constraints.NotNull;
-
+import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -70,6 +68,7 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import org.springframework.http.MediaType;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream, locking and sync mechanisms.
@@ -521,7 +520,7 @@ public class GenericResource implements FedoraResource {
 
         // TODO for resources that don't use versions could the RELS-EXT set to
         // override mode
-        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, MimeTypes.TEXT_XML));
+        setRelsExt(new Datastream(Datastream.RELS_EXT_DATASTREAM, this.id, relsExt, MediaType.TEXT_XML.toString()));
     }
 
     /**

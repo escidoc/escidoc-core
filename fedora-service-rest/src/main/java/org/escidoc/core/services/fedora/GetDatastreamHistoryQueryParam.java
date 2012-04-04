@@ -2,7 +2,7 @@ package org.escidoc.core.services.fedora;
 
 import net.sf.oval.guard.Guarded;
 
-import org.escidoc.core.utils.io.MimeTypes;
+import javax.ws.rs.core.MediaType;
 
 /**
  * 
@@ -13,7 +13,7 @@ import org.escidoc.core.utils.io.MimeTypes;
     assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
 public final class GetDatastreamHistoryQueryParam {
 
-    private String format = MimeTypes.TEXT_XML;
+    private String format = MediaType.TEXT_XML;
 
     /**
      * @return the format

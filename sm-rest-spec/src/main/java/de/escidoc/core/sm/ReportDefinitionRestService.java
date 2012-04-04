@@ -10,9 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.escidoc.core.domain.sm.rd.ReportDefinitionTO;
-import org.escidoc.core.utils.io.MimeTypes;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -31,8 +31,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 
 @Path("/statistic/report-definition")
-@Produces(MimeTypes.TEXT_XML)
-@Consumes(MimeTypes.TEXT_XML)
 public interface ReportDefinitionRestService {
 
     /**
@@ -60,6 +58,8 @@ public interface ReportDefinitionRestService {
      * @throws SystemException                ex
      */
     @PUT
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
     ReportDefinitionTO create(ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
             AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
             MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
@@ -112,6 +112,7 @@ public interface ReportDefinitionRestService {
      */
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     ReportDefinitionTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
 
@@ -146,9 +147,11 @@ public interface ReportDefinitionRestService {
      */
     @PUT
     @Path("/{id}")
-    ReportDefinitionTO update(@PathParam("id") String id, ReportDefinitionTO reportDefinitionTO) throws AuthenticationException, AuthorizationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException, ScopeNotFoundException,
-        InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException, XmlCorruptedException,
-        SystemException;
+    @Produces(MediaType.TEXT_XML)
+    @Consumes(MediaType.TEXT_XML)
+    ReportDefinitionTO update(@PathParam("id") String id, ReportDefinitionTO reportDefinitionTO)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
+        XmlSchemaValidationException, XmlCorruptedException, SystemException;
 
 }

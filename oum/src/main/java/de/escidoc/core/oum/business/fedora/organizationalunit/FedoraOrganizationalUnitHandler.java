@@ -31,7 +31,6 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
@@ -79,11 +78,11 @@ import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterfac
 import de.escidoc.core.oum.business.utility.OumUtility;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -698,7 +697,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         throws OperationNotFoundException, OrganizationalUnitNotFoundException, SystemException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setMimeType(MimeTypes.TEXT_XML);
+        content.setMimeType(MediaType.TEXT_XML.toString());
 
         try {
             if ("relations".equals(resourceName)) {

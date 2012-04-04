@@ -38,9 +38,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.junit.Test;
+import org.springframework.http.MediaType;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -200,7 +199,7 @@ public class ContentStreamsIT extends ItemTestBase {
                         "/item/content-streams/content-stream[@name = 'internal_xml']/@href").getNodeValue();
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@href", newHref);
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@mime-type",
-                MimeTypes.TEXT_XML);
+                MediaType.TEXT_XML.toString());
 
             String updateXml = toString(itemDoc, false);
             String updatedXml = update(createdItemId, updateXml);
@@ -226,7 +225,7 @@ public class ContentStreamsIT extends ItemTestBase {
                 "/item/content-streams/content-stream[@storage = 'external-managed' and @title = '" + newTitle + "']");
             selectSingleNodeAsserted(updatedDoc,
                 "/item/content-streams/content-stream[@storage = 'external-managed' and @mime-type = '"
-                    + MimeTypes.TEXT_XML + "']");
+                    + MediaType.TEXT_XML.toString() + "']");
         }
         finally {
             if (createdItemId != null) {

@@ -41,11 +41,11 @@ import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.MediaType;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -442,7 +442,7 @@ public class ContentModel extends GenericVersionableResourcePid implements Versi
         try {
             final Datastream ds =
                 new Datastream("DS-COMPOSITE-MODEL", getId(), xml.getBytes(XmlUtility.CHARACTER_ENCODING),
-                    MimeTypes.TEXT_XML);
+                    MediaType.TEXT_XML.toString());
             setDsCompositeModel(ds);
         }
         catch (final UnsupportedEncodingException e) {

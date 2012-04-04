@@ -3,9 +3,8 @@ package org.escidoc.core.services.fedora;
 import java.util.Collection;
 import java.util.concurrent.Future;
 
-import javax.validation.constraints.NotNull;
-
 import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
 
 import org.escidoc.core.services.fedora.access.ObjectDatastreamsTO;
 import org.escidoc.core.services.fedora.access.ObjectProfileTO;
@@ -131,7 +130,7 @@ public interface FedoraServiceClient {
 
     Future<DatastreamProfilesTO> getDatastreamProfilesAsync(@NotNull String pid, DateTime timestamp);
 
-    DatastreamProfilesTO getDatastreamProfilesByAltId(@NotNull String pid, @NotNull String altId, DateTime timestamp);
+    DatastreamProfilesTO getDatastreamProfilesByAltId(@NotNull String pid, String altId, DateTime timestamp);
 
     Future<DatastreamProfilesTO> getDatastreamProfilesByAltIdAsync(
         @NotNull String pid, @NotNull String altId, DateTime timestamp);

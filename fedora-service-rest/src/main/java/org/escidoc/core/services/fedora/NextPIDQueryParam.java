@@ -1,6 +1,6 @@
 package org.escidoc.core.services.fedora;
 
-import org.escidoc.core.utils.io.MimeTypes;
+import javax.ws.rs.core.MediaType;
 
 import static org.escidoc.core.utils.Preconditions.checkState;
 
@@ -13,7 +13,7 @@ public final class NextPIDQueryParam {
 
     private String namespace;
     private int numPIDs = DEFAULT_NUMBER_OF_PIDS;
-    private String format = MimeTypes.TEXT_XML;
+    private String format = MediaType.TEXT_XML;
 
     public String getNamespace() {
         return namespace;
