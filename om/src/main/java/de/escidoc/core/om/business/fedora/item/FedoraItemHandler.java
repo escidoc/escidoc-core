@@ -33,15 +33,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.xml.stream.XMLStreamException;
 
@@ -1574,7 +1567,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
             .getLastModificationDate(), "Item " + getItem().getId())) {
 
-            getItem().setLocked(false, null);
+            getItem().setLocked(false, new String[]{});
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
