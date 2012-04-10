@@ -1092,6 +1092,11 @@
     <triplestore.database.password>riTriples</triplestore.database.password>
     <triplestore.database.temp.tablespace>TEMP</triplestore.database.temp.tablespace>
 
+    <proai.database.name>proai</proai.database.name>
+    <proai.database.user>proai</proai.database.user>
+    <proai.database.password>proai</proai.database.password>
+    <proai.database.temp.tablespace>TEMP</proai.database.temp.tablespace>
+
     <fedora.admin.user>fedoraAdmin</fedora.admin.user>
     <fedora.admin.password>fedoraAdmin</fedora.admin.password>
     
@@ -1106,6 +1111,8 @@
     <fedora.database.default.tablespace>fedora</fedora.database.default.tablespace>
     <triplestore.oracle.database>oraesci01</triplestore.oracle.database>
     <triplestore.database.default.tablespace>triples</triplestore.database.default.tablespace>
+    <proai.oracle.database>oraesci01</proai.oracle.database>
+    <proai.database.default.tablespace>escidoc</proai.database.default.tablespace>
 
     <jetty.port>9090</jetty.port>
 

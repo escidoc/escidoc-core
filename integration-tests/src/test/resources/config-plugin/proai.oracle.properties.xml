@@ -1,0 +1,22 @@
+<processor>
+    <modify>
+        <name>proai.driverPollSeconds</name>
+        <value>60</value>
+    </modify>
+    <modify>
+        <name>proai.db.url</name>
+        <value>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${proai.oracle.database}</value>
+    </modify>
+    <modify>
+        <name>proai.db.driverClassName</name>
+        <value>oracle.jdbc.driver.OracleDriver</value>
+    </modify>
+    <modify>
+        <name>proai.db.username</name>
+        <value>${proai.database.user}</value>
+    </modify>
+    <modify>
+        <name>proai.db.password</name>
+        <value>${proai.database.password}</value>
+    </modify>
+</processor>
