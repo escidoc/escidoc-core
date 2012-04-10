@@ -154,8 +154,29 @@
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
-            <id>copy-drop-script [oracle]</id>
-            <phase>-pre-clean</phase>
+            <id>copy-proai-create-script [postgres]</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <!-- this plugin does not support skipping -->
+              <!-- <skip>${database.oracle.skip}</skip> -->
+              <outputDirectory>${project.build.directory}/sql-resources/postgres</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/../common/src/main/resources/sql/postgres</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>create-proai-db.sql</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-proai-create-script [oracle]</id>
+            <phase>validate</phase>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -167,6 +188,9 @@
                 <resource>
                   <directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
                   <filtering>true</filtering>
+                  <includes>
+                    <include>create-proai-db.sql</include>
+                  </includes>
                 </resource>
               </resources>
             </configuration>
@@ -299,66 +323,6 @@
       <plugin>
         <groupId>com.google.code.maven-config-processor-plugin</groupId>
         <artifactId>maven-config-processor-plugin</artifactId>
-        <configuration>
-          <transformations>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/escidoc-core.custom.properties</input>
-              <config>src/test/resources/config-plugin/pid-settings.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/escidoc-core.custom.properties</input>
-              <config>src/test/resources/config-plugin/ontologie-settings.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/content_model_admin/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/content_model_admin.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/content_relation_admin/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/content_relation_admin.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/context_admin/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/context_admin.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/item_container_admin/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/item_container_admin.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/ou_admin/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/ou_admin.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/escidoc_all/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/escidoc_all.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/escidocou_all/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/escidocou_all.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>${escidoc.home}/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</input>
-              <config>src/test/resources/config-plugin/escidocoaipmh_all.xml</config>
-            </transformation>
-            <transformation>
-              <type>properties</type>
-              <input>src/test/configurations/proai.properties</input>
-              <output>escidoc/core/conf/proai.properties</output>
-              <config>src/test/resources/config-plugin/proai.properties.xml</config>
-            </transformation>
-          </transformations>
-        </configuration>
         <executions>
           <execution>
             <id>overwrite-configuration</id>
@@ -368,6 +332,94 @@
             </goals>
             <configuration>
               <skip>${skipITs}</skip>
+              <transformations>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/escidoc-core.custom.properties</input>
+                  <config>src/test/resources/config-plugin/pid-settings.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/escidoc-core.custom.properties</input>
+                  <config>src/test/resources/config-plugin/ontologie-settings.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/content_model_admin/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/content_model_admin.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/content_relation_admin/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/content_relation_admin.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/context_admin/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/context_admin.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/item_container_admin/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/item_container_admin.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/ou_admin/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/ou_admin.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/escidoc_all/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/escidoc_all.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/escidocou_all/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/escidocou_all.xml</config>
+                </transformation>
+                <transformation>
+                  <type>properties</type>
+                  <input>${escidoc.home}/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</input>
+                  <config>src/test/resources/config-plugin/escidocoaipmh_all.xml</config>
+                </transformation>
+              </transformations>
+            </configuration>
+          </execution>
+          <execution>
+            <id>overwrite-proai-configuration [postgres]</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.postgres.skip}</skip>
+              <transformations>
+                <transformation>
+                  <type>properties</type>
+                  <input>src/test/configurations/proai.properties</input>
+                  <output>${escidoc.home}/conf/proai.properties</output>
+                  <config>src/test/resources/config-plugin/proai.postgres.properties.xml</config>
+                </transformation>
+              </transformations>
+            </configuration>
+          </execution>
+          <execution>
+            <id>overwrite-proai-configuration [oracle]</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.oracle.skip}</skip>
+              <transformations>
+                <transformation>
+                  <type>properties</type>
+                  <input>src/test/configurations/proai.properties</input>
+                  <output>${escidoc.home}/conf/proai.properties</output>
+                  <config>src/test/resources/config-plugin/proai.oracle.properties.xml</config>
+                </transformation>
+              </transformations>
             </configuration>
           </execution>
         </executions>
@@ -404,8 +456,25 @@
             </configuration>
           </execution>
           <execution>
+            <id>drop-escidoc-role [postgres]</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.postgres.skip}</skip>
+              <driver>org.postgresql.Driver</driver>
+              <!-- need another database to drop the targeted one -->
+              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
+              <settingsKey>escidoc-core-db-admin</settingsKey>
+              <autocommit>true</autocommit>
+              <sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
+              <onError>continue</onError>
+            </configuration>
+          </execution>
+          <execution>
             <id>drop-escidoc-db [oracle]</id>
-            <phase>pre-clean</phase>
+            <phase>clean</phase>
             <goals>
               <goal>execute</goal>
             </goals>
@@ -422,23 +491,6 @@
               <srcFiles>
                 <srcFile>${basedir}/../common/src/main/resources/sql/oracle/drop-db.sql</srcFile>
               </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
-            <id>drop-escidoc-role [postgres]</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.postgres.skip}</skip>
-              <driver>org.postgresql.Driver</driver>
-              <!-- need another database to drop the targeted one -->
-              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-              <settingsKey>escidoc-core-db-admin</settingsKey>
-              <autocommit>true</autocommit>
-              <sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
-              <onError>continue</onError>
             </configuration>
           </execution>
           <!-- CLEAN [fedora/triplestore-db] -->
@@ -515,6 +567,62 @@
               </srcFiles>
             </configuration>
           </execution>
+          <!-- CLEAN [proai-db] -->
+          <execution>
+            <id>drop-proai-db [postgres]</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.postgres.skip}</skip>
+              <driver>org.postgresql.Driver</driver>
+              <!-- need another database to drop the targeted one -->
+              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
+              <settingsKey>escidoc-core-db-admin</settingsKey>
+              <autocommit>true</autocommit>
+              <sqlCommand>DROP DATABASE IF EXISTS "${proai.database.name}"</sqlCommand>
+              <onError>continue</onError>
+            </configuration>
+          </execution>
+          <execution>
+            <id>drop-proai-role [postgres]</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.postgres.skip}</skip>
+              <driver>org.postgresql.Driver</driver>
+              <!-- need another database to drop the targeted one -->
+              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
+              <settingsKey>escidoc-core-db-admin</settingsKey>
+              <autocommit>true</autocommit>
+              <sqlCommand>DROP ROLE IF EXISTS "${proai.database.user}"</sqlCommand>
+              <onError>continue</onError>
+            </configuration>
+          </execution>
+          <execution>
+            <id>drop-proai-db [oracle]</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <skip>${escidoc.oracle.skip}</skip>
+              <driver>oracle.jdbc.driver.OracleDriver</driver>
+              <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${proai.oracle.database}</url>
+              <username>${escidoc.oracle.database.admin.user}</username>
+              <password>${escidoc.oracle.database.admin.password}</password>
+              <autocommit>true</autocommit>
+              <delimiter>/</delimiter>
+              <delimiterType>row</delimiterType>
+              <keepFormat>true</keepFormat>
+              <srcFiles>
+                <srcFile>${basedir}/../common/src/main/resources/sql/oracle/drop-proai-db.sql</srcFile>
+              </srcFiles>
+            </configuration>
+          </execution>
           <!-- PRE-INTEGRATION-TEST -->
           <execution>
             <id>insert-test-user [postgres]</id>
@@ -552,11 +660,7 @@
               <settingsKey>escidoc-core-db-admin</settingsKey>
               <autocommit>true</autocommit>
               <srcFiles>
-                <!-- the initialize phase allows no filtering. Furthermore is creating 
-                  database part of the test phase. That's why here should only be these tables 
-                  are generated where hibernate depends on. -->
-                <srcFile>${project.build.directory}/sql-resources/postgres/test/test.init.proai.sql
-                </srcFile>
+                <srcFile>${project.build.directory}/sql-resources/postgres/create-proai-db.sql</srcFile>
               </srcFiles>
             </configuration>
           </execution>
@@ -585,7 +689,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>ininialize-proai [oracle]</id>
+            <id>initialize-proai [oracle]</id>
             <phase>pre-integration-test</phase>
             <goals>
               <goal>execute</goal>
@@ -595,15 +699,14 @@
               <driver>oracle.jdbc.driver.OracleDriver</driver>
               <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
               </url>
-              <username>${escidoc.database.user}</username>
-              <password>${escidoc.database.password}</password>
+              <username>${escidoc.oracle.database.admin.user}</username>
+              <password>${escidoc.oracle.database.admin.password}</password>
               <autocommit>true</autocommit>
               <delimiter>;</delimiter>
               <delimiterType>normal</delimiterType>
               <keepFormat>false</keepFormat>
               <srcFiles>
-                <srcFile>${basedir}/target/sql-resources/oracle/test/test.init.proai.sql
-                </srcFile>
+                <srcFile>${project.build.directory}/sql-resources/oracle/create-proai-db.sql</srcFile>
               </srcFiles>
             </configuration>
           </execution>
