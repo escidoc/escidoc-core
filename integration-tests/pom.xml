@@ -856,6 +856,25 @@
 									</resources>
 								</configuration>
 							</execution>
+                            <execution>
+                              <id>copy-proai-create-script [postgres]</id>
+                              <phase>validate</phase>
+                              <goals>
+                                <goal>copy-resources</goal>
+                              </goals>
+                              <configuration>
+                                <outputDirectory>${project.build.directory}/sql-resources/postgres</outputDirectory>
+                                <resources>
+                                  <resource>
+                                    <directory>${basedir}/../common/src/main/resources/sql/postgres</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                      <include>create-proai-db.sql</include>
+                                    </includes>
+                                  </resource>
+                                </resources>
+                              </configuration>
+                            </execution>
 						</executions>
 					</plugin>
 
@@ -876,8 +895,8 @@
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
-              <username>${escidoc.postgres.database.admin.user}</username>
-              <password>${escidoc.postgres.database.admin.password}</password>
+                            <username>${escidoc.postgres.database.admin.user}</username>
+                            <password>${escidoc.postgres.database.admin.password}</password>
 						</configuration>
 						<executions>
 							<execution>
@@ -945,6 +964,40 @@
 								</configuration>
 							</execution>
                             <execution>
+                              <id>drop-proai-db</id>
+                              <!-- actually should the phase be post-integration-tests, but the 
+                                JBoss could be still active if the same phase to shutwon it is used. -->
+                              <phase>clean</phase>
+                              <goals>
+                                <goal>execute</goal>
+                              </goals>
+                              <configuration>
+                                <!-- need another database to drop the targeted one -->
+                                <url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres
+                                </url>
+                                <autocommit>true</autocommit>
+                                <sqlCommand>DROP DATABASE IF EXISTS "${proai.database.name}"
+                                </sqlCommand>
+                                <onError>continue</onError>
+                              </configuration>
+                            </execution>
+                            <execution>
+                              <id>drop-proai-role [postgres]</id>
+                              <phase>clean</phase>
+                              <goals>
+                                <goal>execute</goal>
+                              </goals>
+                              <configuration>
+                                <driver>org.postgresql.Driver</driver>
+                                <!-- need another database to drop the targeted one -->
+                                <url>jdbc:postgresql://${escidoc.database.postgresql.url}/postgres</url>
+                                <settingsKey>escidoc-core-db-admin</settingsKey>
+                                <autocommit>true</autocommit>
+                                <sqlCommand>DROP ROLE IF EXISTS "${proai.database.user}"</sqlCommand>
+                                <onError>continue</onError>
+                              </configuration>
+                            </execution>
+                            <execution>
                               <id>initialize-proai</id>
                               <phase>process-sources</phase>
                               <goals>
@@ -959,8 +1012,7 @@
                                   <!-- the initialize phase allows no filtering. Furthermore is creating 
                                     database part of the test phase. That's why here should only be these tables 
                                     are generated where hibernate depends on. -->
-                                  <srcFile>${project.build.directory}/sql-resources/postgres/test/test.init.proai.sql
-                                  </srcFile>
+                                  <srcFile>${project.build.directory}/sql-resources/postgres/create-proai-db.sql</srcFile>
                                 </srcFiles>
                               </configuration>
                             </execution>
@@ -987,24 +1039,25 @@
 						<artifactId>maven-resources-plugin</artifactId>
 						<version>2.5</version>
 						<executions>
-							<execution>
-								<id>copy-drop-script</id>
-								<phase>clean</phase>
-								<goals>
-									<goal>copy-resources</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/target/sql-resources/oracle
-									</outputDirectory>
-									<resources>
-										<resource>
-											<directory>${basedir}/../common/src/main/resources/sql/oracle
-											</directory>
-											<filtering>true</filtering>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
+                              <execution>
+                                <id>copy-proai-create-script [oracle]</id>
+                                <phase>validate</phase>
+                                <goals>
+                                  <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                  <outputDirectory>${project.build.directory}/sql-resources/oracle</outputDirectory>
+                                  <resources>
+                                    <resource>
+                                      <directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
+                                      <filtering>true</filtering>
+                                      <includes>
+                                        <include>create-proai-db.sql</include>
+                                      </includes>
+                                    </resource>
+                                  </resources>
+                                </configuration>
+                              </execution>
 							<execution>
 								<id>copy-foxml-resources</id>
 								<phase>process-sources</phase>
@@ -1089,11 +1142,30 @@
 									<delimiterType>row</delimiterType>
 									<keepFormat>true</keepFormat>
 									<srcFiles>
-										<srcFile>${basedir}/target/sql-resources/oracle/drop-db.sql
-										</srcFile>
+										<srcFile>${basedir}/target/sql-resources/oracle/drop-db.sql</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>
+                            <execution>
+                              <id>drop-proai-db [oracle]</id>
+                              <phase>clean</phase>
+                              <goals>
+                                <goal>execute</goal>
+                              </goals>
+                              <configuration>
+                                <driver>oracle.jdbc.driver.OracleDriver</driver>
+                                <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${proai.oracle.database}</url>
+                                <username>${escidoc.oracle.database.admin.user}</username>
+                                <password>${escidoc.oracle.database.admin.password}</password>
+                                <autocommit>true</autocommit>
+                                <delimiter>/</delimiter>
+                                <delimiterType>row</delimiterType>
+                                <keepFormat>true</keepFormat>
+                                <srcFiles>
+                                  <srcFile>${basedir}/../common/src/main/resources/sql/oracle/drop-proai-db.sql</srcFile>
+                                </srcFiles>
+                              </configuration>
+                            </execution>
 							<execution>
 								<id>insert-test-user</id>
 								<phase>process-sources</phase>
@@ -1122,28 +1194,27 @@
 									</srcFiles>
 								</configuration>
 							</execution>
-              <execution>
-                <id>ininialize-proai</id>
-                <phase>process-sources</phase>
-                <goals>
-                  <goal>execute</goal>
-                </goals>
-                <configuration>
-                  <driver>oracle.jdbc.driver.OracleDriver</driver>
-                  <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
-                  </url>
-                  <username>${escidoc.database.user}</username>
-                  <password>${escidoc.database.password}</password>
-                  <autocommit>true</autocommit>
-                  <delimiter>;</delimiter>
-                  <delimiterType>normal</delimiterType>
-                  <keepFormat>false</keepFormat>
-                  <srcFiles>
-                    <srcFile>${basedir}/target/sql-resources/oracle/test/test.init.proai.sql
-                    </srcFile>
-                  </srcFiles>
-                </configuration>
-              </execution>
+                            <execution>
+                              <id>initialize-proai</id>
+                              <phase>process-sources</phase>
+                              <goals>
+                                <goal>execute</goal>
+                              </goals>
+                              <configuration>
+                                <driver>oracle.jdbc.driver.OracleDriver</driver>
+                                <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
+                                </url>
+                                <username>${escidoc.oracle.database.admin.user}</username>
+                                <password>${escidoc.oracle.database.admin.password}</password>
+                                <autocommit>true</autocommit>
+                                <delimiter>;</delimiter>
+                                <delimiterType>normal</delimiterType>
+                                <keepFormat>false</keepFormat>
+                                <srcFiles>
+                                  <srcFile>${project.build.directory}/sql-resources/oracle/create-proai-db.sql</srcFile>
+                                </srcFiles>
+                              </configuration>
+                            </execution>
 						</executions>
 					</plugin>
 				</plugins>

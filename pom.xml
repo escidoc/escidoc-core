@@ -958,6 +958,12 @@
     <triplestore.database.password>riTriples</triplestore.database.password>
     <triplestore.default.tablespace>triples</triplestore.default.tablespace>
     <triplestore.temp.tablespace>TEMP</triplestore.temp.tablespace>
+    <proai.database.name>proai</proai.database.name>
+    <proai.database.user>proai</proai.database.user>
+    <proai.database.password>proai</proai.database.password>
+    <proai.database.temp.tablespace>TEMP</proai.database.temp.tablespace>
+    <proai.oracle.database>oraesci01</proai.oracle.database>
+    <proai.database.default.tablespace>escidoc</proai.database.default.tablespace>
 
     <!-- debugging (default: deactivated) -->
     <cargo.wait>false</cargo.wait>
