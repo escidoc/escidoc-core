@@ -84,21 +84,16 @@ public final class CustomStatusBuilder {
 
         final List<String> codeList = new ArrayList<String>();
         codeList.add(status);
-        String message = e.getMessage();
-        if (message == null) {
-            message = e.getClass().getName();
-        }
         if (e instanceof EscidocException) {
             try {
-                final StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append('\n');
+                final StringBuilder errorMsg = new StringBuilder();
                 errorMsg.append(XmlUtility.CDATA_START);
                 errorMsg.append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append(XmlUtility.CDATA_END);
                 return new Status(codeList, errorMsg.toString());
             }
             catch (final Exception e1) {
-                final StringBuilder errorMsg = new StringBuilder(message);
+                final StringBuilder errorMsg = new StringBuilder();
                 errorMsg.append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append("\n\nException deserializing failed due to ");
                 errorMsg.append(e1);
@@ -107,15 +102,14 @@ public final class CustomStatusBuilder {
         }
         else {
             try {
-                final StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append("\n<exception>");
+                final StringBuilder errorMsg = new StringBuilder();
+                errorMsg.append("<exception>");
                 errorMsg.append(quoteCdata(EscidocException.getStackTraceXml(e)));
                 errorMsg.append("</exception>");
                 return new Status(codeList, errorMsg.toString());
             }
             catch (final Exception e1) {
-                final StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append('\n');
+                final StringBuilder errorMsg = new StringBuilder();
                 final StringWriter sw = new StringWriter();
                 try {
                     final PrintWriter pw = new PrintWriter(sw);
