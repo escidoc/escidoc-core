@@ -398,7 +398,7 @@
                 <transformation>
                   <type>properties</type>
                   <input>src/test/configurations/proai.properties</input>
-                  <output>${escidoc.home}/conf/proai.properties</output>
+                  <output>/escidoc/core/conf/proai.properties</output>
                   <config>src/test/resources/config-plugin/proai.postgres.properties.xml</config>
                 </transformation>
               </transformations>
@@ -416,7 +416,7 @@
                 <transformation>
                   <type>properties</type>
                   <input>src/test/configurations/proai.properties</input>
-                  <output>${escidoc.home}/conf/proai.properties</output>
+                  <output>/escidoc/core/conf/proai.properties</output>
                   <config>src/test/resources/config-plugin/proai.oracle.properties.xml</config>
                 </transformation>
               </transformations>
