@@ -210,10 +210,10 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="parentsHref" select="/*/*[local-name()='resources']/*[local-name()='parents']/@*[local-name()='href']"/>
-                <xsl:if test="string($parentsHref) and normalize-space($parentsHref)!=''">
+                <xsl:variable name="href" select="/*/@*[local-name()='href']"/>
+                <xsl:if test="string($href) and normalize-space($href)!=''">
                   <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                      $parentsHref,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                      concat($href, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
                 </xsl:if>
             </element>
         </userdefined-index>
@@ -389,10 +389,10 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="parentsHref" select="/*/*[local-name()='resources']/*[local-name()='parents']/@*[local-name()='href']"/>
-                <xsl:if test="string($parentsHref) and normalize-space($parentsHref)!=''">
+                <xsl:variable name="href" select="/*/@*[local-name()='href']"/>
+                <xsl:if test="string($href) and normalize-space($href)!=''">
                   <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                      $parentsHref,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                      concat($href, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
                 </xsl:if>
             </element>
         </userdefined-index>

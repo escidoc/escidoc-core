@@ -37,11 +37,6 @@
 	<!-- Parameters that get passed while calling this stylesheet-transformation -->
 	<xsl:param name="SUPPORTED_MIMETYPES"/>
 
-    <!-- The name of the servlet-context of escidoc
-         Used to prefix uris as it is possible to configure the 
-         servlet context name of escidoc -->
-    <xsl:param name="ESCIDOC_SERVLET_CONTEXT_NAME"/>
-
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
@@ -911,16 +906,8 @@
 				<element index="TOKENIZED">
                     <xsl:variable name="objectId" select="normalize-space(.)"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                      <xsl:choose>
-                        <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
-                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                            concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
                           <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
                     </xsl:if>
 				</element>
 			</xsl:for-each>
@@ -928,16 +915,8 @@
 				<element index="TOKENIZED">
                     <xsl:variable name="objectId" select="normalize-space(.)"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                      <xsl:choose>
-                        <xsl:when test="string($ESCIDOC_SERVLET_CONTEXT_NAME) and normalize-space($ESCIDOC_SERVLET_CONTEXT_NAME)!=''">
-                          <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                            concat('/',$ESCIDOC_SERVLET_CONTEXT_NAME,'/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
                           <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
                     </xsl:if>
 				</element>
 			</xsl:for-each>

@@ -14,7 +14,6 @@ changes since version 1.4
 			
 	January 2012:
 		- change indexing-stylesheets:
-			- Include transform-parameter ESCIDOC_SERVLET_CONTEXT_NAME taken from escidoc-configuration
 			- Replace hardcoded path in calls to escidoc-core-accessor with href taken from xml.
 		- change exception-xml:
 			- remove html-elements p and h1

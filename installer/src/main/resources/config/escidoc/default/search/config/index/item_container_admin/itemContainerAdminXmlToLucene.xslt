@@ -616,7 +616,7 @@ Notes:
     
     <!-- USER DEFINED INDEX FIELDS -->
     <xsl:variable name="userdefined-indexes">
-        <xsl:variable name="href" select="/*/*[local-name()='resources']/*[local-name()='parents']/@*[local-name()='href']"/>
+        <xsl:variable name="href" select="/*/@*[local-name()='href']"/>
         <userdefined-index name="resources/parent">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
@@ -624,14 +624,14 @@ Notes:
             <element index="UN_TOKENIZED">
                 <xsl:if test="string($href) and $href != ''">
                 	<xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                		$href,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                		concat($href, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
                 </xsl:if>
             </element>
         </userdefined-index>
         
         <xsl:if test="string($href) and $href != ''">
         	<xsl:variable name="parents" select="escidoc-core-accessor:getObjectAttribute(
-                		$href,'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                		concat($href, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
         	<xsl:if test="not($parents)">
 	        	<userdefined-index no-field-separator="true">
 	            	<xsl:attribute name="context">
