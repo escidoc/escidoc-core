@@ -1567,7 +1567,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         if (Utility.checkOptimisticLockingCriteria(getItem().getLastModificationDate(), taskParameter
             .getLastModificationDate(), "Item " + getItem().getId())) {
 
-            getItem().setLocked(false, new String[]{});
+            getItem().setLocked(false, new String[] {});
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
