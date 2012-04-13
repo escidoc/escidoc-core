@@ -1,10 +1,10 @@
 /**
  * create proai user role
  */  
-CREATE ROLE "proai" LOGIN PASSWORD 'proai' VALID UNTIL 'infinity';
+CREATE ROLE "${oaiprovider.database.user}" LOGIN PASSWORD '${oaiprovider.database.password}' VALID UNTIL 'infinity';
 
 /**
  * create proai database
  */   
-CREATE DATABASE "proai" WITH ENCODING='UTF8' OWNER="proai";
+CREATE DATABASE "${oaiprovider.database.name}" WITH ENCODING='UTF8' OWNER="${oaiprovider.database.user}" TEMPLATE=template0;
 

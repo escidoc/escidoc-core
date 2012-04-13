@@ -5,7 +5,7 @@
     </modify>
     <modify>
         <name>proai.db.url</name>
-        <value>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${escidoc.database.name}</value>
+        <value>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/${oaiprovider.database.name}</value>
     </modify>
     <modify>
         <name>proai.db.driverClassName</name>
@@ -13,10 +13,10 @@
     </modify>
     <modify>
         <name>proai.db.username</name>
-        <value>${proai.database.user}</value>
+        <value>${oaiprovider.database.user}</value>
     </modify>
     <modify>
         <name>proai.db.password</name>
-        <value>${proai.database.password}</value>
+        <value>${oaiprovider.database.password}</value>
     </modify>
 </processor>

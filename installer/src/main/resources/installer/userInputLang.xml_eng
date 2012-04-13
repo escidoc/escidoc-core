@@ -36,8 +36,8 @@
   <str id="OracleRootDatabaseText" txt="Database SID:"/>
 
   <str id="UserCredentials" txt="User Credentials for Database and Role Creation"/>
-  <str id="UserCredentialsText" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user."/>
-  <str id="UserCredentialsText2" txt="Please provide the user credentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created."/>
+  <str id="UserCredentialsText" txt="The installer will create the necessary/missing databases and roles for you. In common database setups, this requires a privileged user."/>
+  <str id="UserCredentialsText2" txt="Please provide the user credentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used during runtime."/>
   <str id="DatabaseAdminUsername" txt="Database Admin Username:"/>
   <str id="UsernameValidator" txt="Username must not be an empty string."/>
   <str id="DatabaseAdminPassword" txt="Database Admin Password:"/>
@@ -56,6 +56,10 @@
   <str id="DatabaseDefaultTablespace" txt="Database Default Tablespace:"/>
   <str id="DatabaseTemporaryTablespace" txt="Database Temporary Tablespace:"/>
 
+  <str id="CreateOaiproviderDatabaseDescription" txt="Oaiprovider-Database"/>
+  <str id="CreateDatabase" txt="Create"/>
+  <str id="DatabaseAlreadyExists" txt="Already exists"/>
+
   <str id="FedoraUsername" txt="Fedora Username:"/>
   <str id="FedoraPassword" txt="Fedora Password:"/>
 
@@ -68,6 +72,9 @@
 
   <str id="TriplestoreDatabaseUser" txt="Triplestore Database User"/>
   <str id="TriplestoreDatabaseUserText" txt="The database user specified here will be created by the installer and will be used at runtime to access the riTriples database. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!"/>
+
+  <str id="OaiproviderDatabaseUser" txt="Oaiprovider Database User"/>
+  <str id="OaiproviderUserText" txt="The Oaiprovider Database User will be used for Oaiprovider-specific database tables."/>
 
   <str id="eSciDocHomeSelection" txt="Location of the eSciDoc Home directoy"/>
   <str id="eSciDocHomeSelectionText" txt="The eSciDoc Home directory represents the location, where to store the eSciDoc configurations, which can be manipulated by the administrator. This location can act independently of the installation location of eSciDoc."/>

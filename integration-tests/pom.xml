@@ -70,14 +70,6 @@
                     <context>testdata</context>
                   </properties>
                 </deployable>
-                <deployable>
-                  <groupId>org.escidoc</groupId>
-                  <artifactId>oaiprovider</artifactId>
-                  <type>war</type>
-                  <properties>
-                    <context>escidoc-oaiprovider</context>
-                  </properties>
-                </deployable>
               </deployables>
             </configuration>
           </configuration>
@@ -153,48 +145,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
-          <execution>
-            <id>copy-proai-create-script [postgres]</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <!-- this plugin does not support skipping -->
-              <!-- <skip>${database.oracle.skip}</skip> -->
-              <outputDirectory>${project.build.directory}/sql-resources/postgres</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/../common/src/main/resources/sql/postgres</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>create-proai-db.sql</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>copy-proai-create-script [oracle]</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <!-- this plugin does not support skipping -->
-              <!-- <skip>${database.oracle.skip}</skip> -->
-              <outputDirectory>${project.build.directory}/sql-resources/oracle</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/../common/src/main/resources/sql/oracle</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>create-proai-db.sql</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
           <execution>
             <id>copy-filtered-test-config</id>
             <phase>prepare-package</phase>
@@ -567,62 +517,6 @@
               </srcFiles>
             </configuration>
           </execution>
-          <!-- CLEAN [proai-db] -->
-          <execution>
-            <id>drop-proai-db [postgres]</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.postgres.skip}</skip>
-              <driver>org.postgresql.Driver</driver>
-              <!-- need another database to drop the targeted one -->
-              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-              <settingsKey>escidoc-core-db-admin</settingsKey>
-              <autocommit>true</autocommit>
-              <sqlCommand>DROP DATABASE IF EXISTS "${proai.database.name}"</sqlCommand>
-              <onError>continue</onError>
-            </configuration>
-          </execution>
-          <execution>
-            <id>drop-proai-role [postgres]</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.postgres.skip}</skip>
-              <driver>org.postgresql.Driver</driver>
-              <!-- need another database to drop the targeted one -->
-              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres</url>
-              <settingsKey>escidoc-core-db-admin</settingsKey>
-              <autocommit>true</autocommit>
-              <sqlCommand>DROP ROLE IF EXISTS "${proai.database.user}"</sqlCommand>
-              <onError>continue</onError>
-            </configuration>
-          </execution>
-          <execution>
-            <id>drop-proai-db [oracle]</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.oracle.skip}</skip>
-              <driver>oracle.jdbc.driver.OracleDriver</driver>
-              <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${proai.oracle.database}</url>
-              <username>${escidoc.oracle.database.admin.user}</username>
-              <password>${escidoc.oracle.database.admin.password}</password>
-              <autocommit>true</autocommit>
-              <delimiter>/</delimiter>
-              <delimiterType>row</delimiterType>
-              <keepFormat>true</keepFormat>
-              <srcFiles>
-                <srcFile>${basedir}/../common/src/main/resources/sql/oracle/drop-proai-db.sql</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
           <!-- PRE-INTEGRATION-TEST -->
           <execution>
             <id>insert-test-user [postgres]</id>
@@ -647,24 +541,6 @@
             </configuration>
           </execution>
           <execution>
-            <id>initialize-proai [postgres]</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.postgres.skip}</skip>
-              <driver>org.postgresql.Driver</driver>
-              <url>jdbc:postgresql://${escidoc.database.host}:${escidoc.database.port}/postgres
-              </url>
-              <settingsKey>escidoc-core-db-admin</settingsKey>
-              <autocommit>true</autocommit>
-              <srcFiles>
-                <srcFile>${project.build.directory}/sql-resources/postgres/create-proai-db.sql</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
             <id>insert-test-user [oracle]</id>
             <phase>pre-integration-test</phase>
             <goals>
@@ -685,28 +561,6 @@
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.users.sql</srcFile>
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.aa.init.groups.sql</srcFile>
                 <srcFile>${basedir}/target/sql-resources/oracle/test/test.sm.create.sql</srcFile>
-              </srcFiles>
-            </configuration>
-          </execution>
-          <execution>
-            <id>initialize-proai [oracle]</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <skip>${escidoc.oracle.skip}</skip>
-              <driver>oracle.jdbc.driver.OracleDriver</driver>
-              <url>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${escidoc.oracle.database}
-              </url>
-              <username>${escidoc.oracle.database.admin.user}</username>
-              <password>${escidoc.oracle.database.admin.password}</password>
-              <autocommit>true</autocommit>
-              <delimiter>;</delimiter>
-              <delimiterType>normal</delimiterType>
-              <keepFormat>false</keepFormat>
-              <srcFiles>
-                <srcFile>${project.build.directory}/sql-resources/oracle/create-proai-db.sql</srcFile>
               </srcFiles>
             </configuration>
           </execution>
@@ -832,12 +686,6 @@
       <version>0.0.3-SNAPSHOT</version>
       <type>war</type>
     </dependency>
-   <dependency>
-     <groupId>org.escidoc</groupId>
-     <artifactId>oaiprovider</artifactId>
-     <version>${escidoc.oaiprovider.version}</version>
-     <type>war</type>
-   </dependency>
     <dependency>
       <groupId>org.escidoc.core</groupId>
       <artifactId>common</artifactId>

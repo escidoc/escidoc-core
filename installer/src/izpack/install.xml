@@ -193,6 +193,11 @@
     <variable name="TriplestorePasswordOracle" value="riTriples" />
     <variable name="TriplestoreDefaultTablespace" value="triples" />
     <variable name="TriplestoreTempTablespace" value="TEMP" />
+    <!-- Oaiprovider user -->
+    <variable name="OaiproviderUsername" value="proai" />
+    <variable name="OaiproviderPassword" value="proai" />
+    <variable name="OaiproviderDefaultTablespace" value="proai" />
+    <variable name="OaiproviderTempTablespace" value="TEMP" />
     <!-- Identifier prefix -->
     <variable name="sid-prefix" value="escidoc" />
     <!-- Infrastructure administrator user -->
@@ -260,6 +265,9 @@
     <variable name="DatasourceTriplestore" value="riTriples" condition="databaseIsPostgres" />
     <variable name="DatasourceTriplestore" value="" condition="databaseIsMySQL" />
     <variable name="DatasourceTriplestore" value="${RootDatabaseName}" condition="databaseIsOracle" />
+    <variable name="DatasourceOaiprovider" value="proai" condition="databaseIsPostgres" />
+    <variable name="DatasourceOaiprovider" value="" condition="databaseIsMySQL" />
+    <variable name="DatasourceOaiprovider" value="${RootDatabaseName}" condition="databaseIsOracle" />
     <variable name="HibernateDialect" value="PostgreSQLDialect" condition="databaseIsPostgres" />
     <variable name="HibernateDialect" value="MySQLDialect" condition="databaseIsMySQL" />
     <variable name="HibernateDialect" value="Oracle8iDialect" condition="databaseIsOracle" />
@@ -351,6 +359,10 @@
       <name>AuthenticationMethod</name>
       <value>shibboleth</value>
     </condition>
+    <condition type="variable" id="createOaiproviderDatabase">
+      <name>DoCreateOaiproviderDatabase</name>
+      <value>true</value>
+    </condition>
   </conditions>
   <!--
     The panels section.
@@ -366,27 +378,29 @@
     <panel classname="UserInputPanel" id="UserInputPanel.3" condition="databaseIsOracle" />
     <panel classname="UserInputPanel" id="UserInputPanel.4" condition="databaseIsPostgres" />
     <panel classname="UserInputPanel" id="UserInputPanel.5" condition="databaseIsOracle" />
-    <panel classname="UserInputPanel" id="UserInputPanel.6" condition="installEscidoc+databaseIsPostgres">
+    <panel classname="UserInputPanel" id="UserInputPanel.6" condition="databaseIsPostgres">
       <validator classname="JDBCValidator" />
     </panel>
-    <panel classname="UserInputPanel" id="UserInputPanel.7" condition="installEscidoc+databaseIsOracle" />
+    <panel classname="UserInputPanel" id="UserInputPanel.7" condition="databaseIsOracle" />
     <panel classname="UserInputPanel" id="UserInputPanel.8" condition="databaseIsPostgres" />
     <panel classname="UserInputPanel" id="UserInputPanel.9" condition="databaseIsOracle" />
     <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
     <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
     <panel classname="UserInputPanel" id="UserInputPanel.12" condition="databaseIsOracle" />
-    <panel classname="UserInputPanel" id="UserInputPanel.13" condition="fullDialog" />
+    <panel classname="UserInputPanel" id="UserInputPanel.13" condition="databaseIsPostgres" />
+    <panel classname="UserInputPanel" id="UserInputPanel.14" condition="databaseIsOracle" />
+    <panel classname="UserInputPanel" id="UserInputPanel.15" condition="fullDialog" />
     <panel classname="JDKPathPanel" id="CommonJDKPath" />
-    <panel classname="UserInputPanel" id="UserInputPanel.14" />
+    <panel classname="UserInputPanel" id="UserInputPanel.16" />
     <panel classname="TargetPanel" id="EscidocTarget" />
     <panel classname="TreePacksPanel" id="EscidocPacks" />
-    <panel classname="UserInputPanel" id="UserInputPanel.15" condition="installEscidoc+authMethodIsFormBased" />
-    <panel classname="UserInputPanel" id="UserInputPanel.16" condition="authMethodIsFormBased" />
     <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc+authMethodIsFormBased" />
+    <panel classname="UserInputPanel" id="UserInputPanel.18" condition="authMethodIsFormBased" />
+    <panel classname="UserInputPanel" id="UserInputPanel.19" condition="installEscidoc+authMethodIsFormBased" />
     <!-- panel classname="DataCheckPanel" id="Debug" / -->
     <panel classname="InstallPanel" id="EscidocInstall" />
-    <panel classname="UserInputPanel" id="UserInputPanel.18" condition="upgradeEscidoc+runMigration" />
-    <panel classname="UserInputPanel" id="UserInputPanel.19" condition="upgradeEscidoc+runMigration" />
+    <panel classname="UserInputPanel" id="UserInputPanel.20" condition="upgradeEscidoc+runMigration" />
+    <panel classname="UserInputPanel" id="UserInputPanel.21" condition="upgradeEscidoc+runMigration" />
     <panel classname="ProcessPanel" condition="upgradeEscidoc+runMigration" />
     <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
     <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc+runMigration" />
@@ -414,6 +428,8 @@
       <!-- Configuration files -->
       <file src="config/escidoc/core/escidoc-core.custom.properties" targetdir="$INSTALL_PATH/install.tmp" />
       <parsable targetfile="$INSTALL_PATH/install.tmp/escidoc-core.custom.properties" />
+      <file src="config/escidoc/core/proai.properties" targetdir="$INSTALL_PATH/install.tmp" />
+      <parsable targetfile="$INSTALL_PATH/install.tmp/proai.properties" />
       <fileset dir="config/lucene" includes="*" targetdir="$INSTALL_PATH/install.tmp/lucene" />
       <fileset dir="config/tomcat" includes="**/*" targetdir="$INSTALL_PATH/install.tmp/tomcat" />
     </pack>
@@ -422,7 +438,7 @@
       <description />
       <file src="packages/tomcat/apache-tomcat-${TomcatVersion}.zip" targetdir="$INSTALL_PATH/install.tmp" />
 <!--       <file src="../../../assembly/target/escidoc-core-${project.version}-jboss-patch.zip" targetdir="$INSTALL_PATH/install.tmp" /> -->
-      <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="installEscidoc+databaseIsPostgres" />
+      <file src="${jdbc.driver.postgres}" targetdir="$INSTALL_PATH/install.tmp" condition="databaseIsPostgres" />
       <!--file src="${jdbc.driver.mysql}" targetdir="$INSTALL_PATH/install.tmp" / -->
       <!-- <file src="config/jboss/run.conf" targetdir="$INSTALL_PATH/install.tmp" /> -->
       <!-- <parsable targetfile="$INSTALL_PATH/install.tmp/run.conf" /> -->
@@ -465,6 +481,7 @@
       <fileset dir="config/escidoc/data" includes="**/*" targetdir="$INSTALL_PATH/install.tmp/escidoc-data" />
       <fileset dir="packages/fedoragsearch" includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
       <fileset dir="packages/srw" includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
+      <fileset dir="packages/oaiprovider" includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
       <fileset dir="packages/saxon" includes="*.war" targetdir="$INSTALL_PATH/install.tmp" />
     </pack>
 
@@ -533,6 +550,14 @@
       <file src="config/escidoc/core/aa.init.user-accounts.common.sql" targetdir="$INSTALL_PATH/install.tmp" />
       <parsable targetfile="$INSTALL_PATH/install.tmp/aa.init.user-accounts.common.sql" />
       <file src="config/escidoc/core/aa.init.grants.common.sql" targetdir="$INSTALL_PATH/install.tmp" />
+    </pack>
+
+    <pack name="Oaipmh Database Creation" id="oaipmh.databasecreation.package" required="no" condition="upgradeEscidoc+createOaiproviderDatabase">
+      <description />
+      <file src="config/escidoc/core/database.properties" targetdir="$INSTALL_PATH/install.tmp" />
+      <parsable targetfile="$INSTALL_PATH/install.tmp/database.properties" />
+      <file src="config/escidoc/core/database-init.xml" targetdir="$INSTALL_PATH/install.tmp" />
+      <parsable targetfile="$INSTALL_PATH/install.tmp/database-init.xml" />
     </pack>
 
     <pack name="Database Initialization" id="databaseinitialization.package" parent="configuration.package"

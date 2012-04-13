@@ -319,6 +319,11 @@
 				<include name="srw*.war" />
 			</fileset>
 		</move>
+		<move tofile="${install.dir}/${server.deploy.dir}/escidoc-oaiprovider.war">
+			<fileset dir="${install.dir}/install.tmp/">
+				<include name="oaiprovider*.war" />
+			</fileset>
+		</move>
 		<move tofile="${install.dir}/${server.deploy.dir}/saxon.war">
 			<fileset dir="${install.dir}/install.tmp/">
 				<include name="saxon*.war" />
@@ -367,6 +372,10 @@
 		<antcall target="move-file-with-save">
 			<param name="source" value="${install.dir}/install.tmp/escidoc-core.custom.properties" />
 			<param name="target" value="${escidoc.home}/conf/escidoc-core.custom.properties" />
+		</antcall>
+		<antcall target="move-file-with-save">
+			<param name="source" value="${install.dir}/install.tmp/proai.properties" />
+			<param name="target" value="${escidoc.home}/conf/proai.properties" />
 		</antcall>
 	</target>
 
@@ -436,8 +445,25 @@
 		<!--delete dir="${install.dir}/install.tmp" /-->
 	</target>
 
+	<target name="oaipmh-db-create-scripts" depends="init, copy-oracle-jdbc-jar" description="Prepare oaipmh for database creation">
+		<!-- prepare for database creation -->
+		<echo level="info">Prepare oaipmh for database creation</echo>
+		<move file="${install.dir}/install.tmp/database.properties" todir="${install.dir}/core/etc" />
+		<move file="${install.dir}/install.tmp/database-init.xml" todir="${install.dir}/core/bin" />
+		<copy file="${install.dir}/install.tmp/${DatabaseDriverFile}" todir="${install.dir}/core/lib" />
+		<delete dir="${install.dir}/install.tmp/staging" />
+		<delete dir="${install.dir}/install.tmp/WEB-INF" />
+		<!--delete dir="${install.dir}/install.tmp" /-->
+	</target>
+
 	<target name="create-db" description="create database escidoc-core" unless="upgradeEscidoc">
 		<ant antfile="${INSTALL_PATH}/core/bin/database-init.xml" target="create-db">
+			<property file="${INSTALL_PATH}/core/etc/database.properties" />
+		</ant>
+	</target>
+
+	<target name="oaipmh-create-db" description="create database for oaipmh">
+		<ant antfile="${INSTALL_PATH}/core/bin/database-init.xml" target="oaipmh-create-db">
 			<property file="${INSTALL_PATH}/core/etc/database.properties" />
 		</ant>
 	</target>

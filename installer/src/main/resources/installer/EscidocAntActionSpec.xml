@@ -40,6 +40,15 @@
     </antcall>
   </pack>
 
+  <pack name="Oaipmh Database Creation">
+    <antcall order="afterpacks" id="oaipmh.database.scripts" logfile="${INSTALL_PATH}/install.log/db-scripts.log" buildfile="${INSTALL_PATH}/install.tmp/unpack-core.xml">
+      <target name="oaipmh-db-create-scripts" />
+    </antcall>
+    <antcall order="afterpacks" id="oaipmh.database.creation" logfile="${INSTALL_PATH}/install.log/db-create.log" buildfile="${INSTALL_PATH}/install.tmp/unpack-core.xml">
+      <target name="oaipmh-create-db" />
+    </antcall>
+  </pack>
+
   <pack name="Roles and Users Creation">
     <antcall order="afterpacks" id="database.userroles" logfile="${INSTALL_PATH}/install.log/db-roles.log" buildfile="${INSTALL_PATH}/install.tmp/unpack-core.xml">
       <target name="create-roles" />

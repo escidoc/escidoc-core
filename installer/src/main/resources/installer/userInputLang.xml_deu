@@ -36,7 +36,7 @@
   <str id="OracleRootDatabaseText" txt="Datenbank-SID:"/>
 
   <str id="UserCredentials" txt="Berechtigungen f&#252;r das Anlegen der Datenbanken und Benutzerrollen"/>
-  <str id="UserCredentialsText" txt="Der Installer wird die notwendigen Datenbanken und Benutzerrollen f&#252;r Sie anlegen. Normalerweise wird daf&#252;r ein privilegierter Datenbankbenutzer ben&#246;tigt."/>
+  <str id="UserCredentialsText" txt="Der Installer wird die notwendigen bzw. fehlenden Datenbanken und Benutzerrollen f&#252;r Sie anlegen. Normalerweise wird daf&#252;r ein privilegierter Datenbankbenutzer ben&#246;tigt."/>
   <str id="UserCredentialsText2" txt="Bitte geben Sie die Daten eines Datenbankbenutzers mit ausreichenden Rechten an. Diese Daten werden nirgends gespeichert und nicht weiter verwendet, nachdem die notwendigen Datenbanken und Benutzerrollen angelegt wurden."/>
   <str id="DatabaseAdminUsername" txt="Datenbank-Admin-Benutzername:"/>
   <str id="UsernameValidator" txt="Benutzername darf nicht leer sein."/>
@@ -55,6 +55,10 @@
 
   <str id="DatabaseDefaultTablespace" txt="Default-Datenbank-Tablespace:"/>
   <str id="DatabaseTemporaryTablespace" txt="tempor&#228;rer Datenbank-Tablespace:"/>
+  
+  <str id="CreateOaiproviderDatabaseDescription" txt="Oaiprovider-Datenbank"/>
+  <str id="CreateDatabase" txt="Neu anlegen"/>
+  <str id="DatabaseAlreadyExists" txt="Existiert bereits"/>
 
   <str id="FedoraUsername" txt="Fedora-Benutzername:"/>
   <str id="FedoraPassword" txt="Fedora-Passwort:"/>
@@ -68,6 +72,9 @@
 
   <str id="TriplestoreDatabaseUser" txt="Triplestore-Datenbankbenutzer"/>
   <str id="TriplestoreDatabaseUserText" txt="Dieser Datenbankbenutzer wird vom Installer angelegt und zur Laufzeit f&#252;r die Zugriffe auf die riTriples-Datenbank benutzt. Bitte achten Sie darauf, keinen schon vorhandenen Benutzer anzugeben, da der Installer den Benutzer zuerst l&#246;scht und dann neu anlegt!"/>
+
+  <str id="OaiproviderDatabaseUser" txt="Oaiprovider-Datenbankbenutzer"/>
+  <str id="OaiproviderUserText" txt="Der Oaiprovider-Datenbankbenutzer wird fÃ¼r Oaiprovider-spezifische Tabellen benutzt."/>
 
   <str id="eSciDocHomeSelection" txt="Auswahl des eSciDoc Home Verzeichnisses"/>
   <str id="eSciDocHomeSelectionText" txt="Das eSciDoc Home Verzeichnis repr&#228;sentiert das Verzeichnis, in dem die eSciDoc Konfigurationen gespeichert werden. Dieses Verzeichnis kann unabh&#228;ngig vom Installationsverzeichnis von eSciDoc agieren."/>

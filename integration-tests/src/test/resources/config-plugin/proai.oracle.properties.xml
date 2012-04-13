@@ -5,7 +5,7 @@
     </modify>
     <modify>
         <name>proai.db.url</name>
-        <value>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${proai.oracle.database}</value>
+        <value>jdbc:oracle:thin:@${escidoc.oracle.host}:${escidoc.oracle.port}:${oaiprovider.oracle.database}</value>
     </modify>
     <modify>
         <name>proai.db.driverClassName</name>
@@ -13,10 +13,10 @@
     </modify>
     <modify>
         <name>proai.db.username</name>
-        <value>${proai.database.user}</value>
+        <value>${oaiprovider.database.user}</value>
     </modify>
     <modify>
         <name>proai.db.password</name>
-        <value>${proai.database.password}</value>
+        <value>${oaiprovider.database.password}</value>
     </modify>
 </processor>

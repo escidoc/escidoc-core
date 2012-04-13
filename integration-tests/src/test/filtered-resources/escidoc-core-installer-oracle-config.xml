@@ -78,6 +78,17 @@
 <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.13">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
+<userInput>
+<entry key="OaiproviderUsername" value="${oaiprovider.database.user}"/>
+<entry key="OaiproviderPassword" value="${oaiprovider.database.password}"/>
+<entry key="OaiproviderDefaultTablespace" value="${oaiprovider.database.default.tablespace}"/>
+<entry key="OaiproviderTempTablespace" value="${oaiprovider.database.temp.tablespace}"/>
+</userInput>
+</com.izforge.izpack.panels.UserInputPanel>
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+<userInput/>
+</com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.JDKPathPanel id="CommonJDKPath"/>
 <com.izforge.izpack.panels.TargetPanel id="EscidocTarget">
 <installpath>${project.build.directory}${file.separator}escidoc</installpath>
@@ -92,37 +103,38 @@
 <pack index="6" name="Admin Tool" selected="true"/>
 <pack index="7" name="Configuration and Initialization" selected="true"/>
 <pack index="8" name="Database Creation" selected="true"/>
-<pack index="9" name="Database Initialization" selected="true"/>
-<pack index="10" name="Roles and Users Creation" selected="true"/>
+<pack index="9" name="Oaipmh Database Creation" selected="false"/>
+<pack index="10" name="Database Initialization" selected="true"/>
+<pack index="11" name="Roles and Users Creation" selected="true"/>
 </com.izforge.izpack.panels.TreePacksPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.14">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
 <userInput>
 <entry key="EscidocHome" value="${escidoc.home}"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.15">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
 <userInput>
 <entry key="AdminPassword" value="eSciDoc"/>
 <entry key="AdminUsername" value="sysadmin"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.16">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
 <userInput>
 <entry key="InspectorPassword" value="eSciDoc"/>
 <entry key="InspectorUsername" value="inspector"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
 <userInput>
 <entry key="DepositorPassword" value="eSciDoc"/>
 <entry key="DepositorUsername" value="depositor"/>
 </userInput>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.InstallPanel id="EscidocInstall"/>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.20">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
-<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
+<com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.21">
 <userInput/>
 </com.izforge.izpack.panels.UserInputPanel>
 <com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)"/>

@@ -367,8 +367,86 @@
     <field type="divider" align="bottom" />
   </panel>
 
+  <panel order="13" id="Oaiprovider database user for Postgres">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="OaiproviderDatabaseUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="OaiproviderUserText" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="OaiproviderUsername">
+      <spec id="OaiproviderUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="OaiproviderPassword">
+      <spec>
+        <pwd id="OaiproviderPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <field type="radio" variable="DoCreateOaiproviderDatabase" conditionid="upgradeEscidoc">
+    <field type="divider" align="top" />
+      <description id="CreateOaiproviderDatabaseDescription" />
+      <spec>
+        <choice id="CreateDatabase" value="true" />
+        <choice id="DatabaseAlreadyExists" value="false" set="true" />
+      </spec>
+    </field>
+    <field type="divider" align="bottom" />
+  </panel>
+
+  <panel order="14" id="Oaiprovider database user for Oracle">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="OaiproviderDatabaseUser" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="OaiproviderUserText" />
+    <field type="space" />
+    <!-- Username -->
+    <field type="text" align="left" variable="OaiproviderUsername">
+      <spec id="OaiproviderUsername" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="UsernameValidator" />
+    </field>
+    <field type="space" />
+    <!-- Password -->
+    <field type="password" align="left" variable="OaiproviderPassword">
+      <spec>
+        <pwd id="OaiproviderPassword" size="25" set="" />
+        <pwd id="RetypePassword" size="25" set="" />
+      </spec>
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="PasswordValidator" />
+      <validator class="com.izforge.izpack.util.PasswordEqualityValidator" id="PasswordEqualityValidator" />
+    </field>
+    <field type="space" />
+    <!-- Default tablespace -->
+    <field type="text" align="left" variable="OaiproviderDefaultTablespace">
+      <spec id="DatabaseDefaultTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <!-- Temporary tablespace -->
+    <field type="text" align="left" variable="OaiproviderTempTablespace">
+      <spec id="DatabaseTemporaryTablespace" size="25" set="" />
+      <validator class="com.izforge.izpack.util.NotEmptyValidator" id="TablespaceValidator" />
+    </field>
+    <field type="space" />
+    <field type="radio" variable="DoCreateOaiproviderDatabase" conditionid="upgradeEscidoc">
+    <field type="divider" align="top" />
+      <description id="CreateOaiproviderDatabaseDescription" />
+      <spec>
+        <choice id="CreateDatabase" value="true" />
+        <choice id="DatabaseAlreadyExists" value="false" set="true" />
+      </spec>
+    </field>
+    <field type="divider" align="bottom" />
+  </panel>
+
   <!--
-    <panel order="13" id="Select authentication method">
+    <panel order="15" id="Select authentication method">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Authentication Method" bold="true" size="1" />
     <field type="divider" align="top"/>
@@ -389,7 +467,7 @@
     </panel>
   -->
 
-  <panel order="14" id="eSciDoc Home Selection">
+  <panel order="16" id="eSciDoc Home Selection">
     <createForPack name="eSciDoc" />
     <field type="title" id="eSciDocHomeSelection" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -402,7 +480,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="15" id="System administrator user">
+  <panel order="17" id="System administrator user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" id="SystemAdministratorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -427,7 +505,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="16" id="System inspector user">
+  <panel order="18" id="System inspector user">
     <createForPack name="Install Scripts" />
     <field type="title" id="SystemInspectorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -452,7 +530,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="17" id="Depositor user">
+  <panel order="19" id="Depositor user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" id="DepositorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -477,7 +555,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="18" id="Backup">
+  <panel order="20" id="Backup">
     <createForPack name="eSciDoc" />
     <field type="title" id="Backup" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -486,7 +564,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="19" id="Migration">
+  <panel order="21" id="Migration">
     <createForPack name="eSciDoc" />
     <field type="title" id="Migration" bold="true" size="1" />
     <field type="divider" align="top" />

@@ -31,6 +31,10 @@
 		<antcall target="execute-special-sql">
 			<param name="script" value="${script.prefix}/drop-fedora-db.sql" />
 		</antcall>
+		<echo level="info">Executing script ${sql.dir}/${script.prefix}/drop-proai-db.sql</echo>
+		<antcall target="execute-special-sql">
+			<param name="script" value="${script.prefix}/drop-proai-db.sql" />
+		</antcall>
 		<echo level="info">Executing script ${sql.dir}/${script.prefix}/create-db.sql</echo>
 		<antcall target="execute-sql">
 			<param name="script" value="${script.prefix}/create-db.sql" />
@@ -38,6 +42,23 @@
                 <echo level="info">Executing script ${sql.dir}/${script.prefix}/create-fedora-db.sql</echo>
 		<antcall target="execute-sql">
 			<param name="script" value="${script.prefix}/create-fedora-db.sql" />
+		</antcall>
+        <echo level="info">Executing script ${sql.dir}/${script.prefix}/create-proai-db.sql</echo>
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}/create-proai-db.sql" />
+		</antcall>
+	</target>
+
+	<target name="oaipmh-create-db" description="Creates database for oaipmh">
+		<!-- creates all databases and schemas -->
+		<echo level="info">Creating database for oaipmh</echo>
+		<echo level="info">Executing script ${sql.dir}/${script.prefix}/drop-proai-db.sql</echo>
+		<antcall target="execute-special-sql">
+			<param name="script" value="${script.prefix}/drop-proai-db.sql" />
+		</antcall>
+        <echo level="info">Executing script ${sql.dir}/${script.prefix}/create-proai-db.sql</echo>
+		<antcall target="execute-sql">
+			<param name="script" value="${script.prefix}/create-proai-db.sql" />
 		</antcall>
 	</target>
 
