@@ -4,11 +4,11 @@
 package de.escidoc.core.context.internal;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import de.escidoc.core.context.param.*;
 import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.context.AdminDescriptorTO;
 import org.escidoc.core.domain.context.AdminDescriptorsTO;
@@ -18,6 +18,7 @@ import org.escidoc.core.domain.context.ContextTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -84,7 +85,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextTO create(final CreateQueryParam queryParam, final ContextTO contextTO)
+    public ContextTO create(final ContextTO contextTO)
             throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
             AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
             MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
@@ -98,7 +99,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextTO retrieve(final String id, final RetrieveQueryParam queryParam)
+    public ContextTO retrieve(final String id)
             throws ContextNotFoundException, MissingMethodParameterException,
             AuthenticationException, AuthorizationException, SystemException {
         return serviceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
@@ -108,7 +109,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextTO update(final String id, final UpdateQueryParam queryParam, final ContextTO contextTO)
+    public ContextTO update(final String id, final ContextTO contextTO)
             throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
             InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
             ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
@@ -121,7 +122,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public void delete(final String id, final DeleteQueryParam queryParam)
+    public void delete(final String id)
             throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
             InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
         this.contextHandler.delete(id);
@@ -131,7 +132,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextPropertiesTO retrieveProperties(final String id, final RetrievePropertiesQueryParam queryParam)
+    public ContextPropertiesTO retrieveProperties(final String id)
             throws ContextNotFoundException, SystemException {
         return serviceUtility.fromXML(ContextPropertiesTO.class, this.contextHandler.retrieveProperties(id));
     }
@@ -140,15 +141,13 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public Stream retrieveResource(final String id, final String resourceName,
-                                   final RetrieveResourceQueryParam queryParam,
-                                   final String roleId, String userId, String omitHighlighting)
+    public Stream retrieveResource(final String id, final String resourceName)
         throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        Map<String, String[]> map = serviceUtility.handleSruRequest(queryParam, roleId, userId, omitHighlighting);
-
-        EscidocBinaryContent content = this.contextHandler.retrieveResource(id, resourceName, map);
+        // simulate Map for compatibility (see retrieveMembers for retrieval of members)
+        EscidocBinaryContent content =
+            this.contextHandler.retrieveResource(id, resourceName, new HashMap<String, String[]>());
         Stream stream = new Stream();
         try {
             IOUtils.copy(content.getContent(), stream);
@@ -165,7 +164,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextResourcesTO retrieveResources(final String id, final RetrieveResourcesQueryParam queryParam)
+    public ContextResourcesTO retrieveResources(final String id)
             throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         
@@ -177,7 +176,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveMembers(final String id,
-                                                                 final RetrieveMembersQueryParam queryParam,
+                                                                 final SruSearchRequestParametersBean queryParam,
                                                                  final String roleId, final String userId,
                                                                  final String omitHighlighting)
             throws ContextNotFoundException, MissingMethodParameterException, SystemException {
@@ -192,8 +191,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorTO retrieveAdminDescriptor(final String id, final String name,
-                                                     final RetrieveAdminDescriptorQueryParam queryParam)
+    public AdminDescriptorTO retrieveAdminDescriptor(final String id, final String name)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, AdminDescriptorNotFoundException {
 
@@ -205,8 +203,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorsTO retrieveAdminDescriptors(final String id,
-                                                       final RetrieveAdminDescriptorsQueryParam queryParam)
+    public AdminDescriptorsTO retrieveAdminDescriptors(final String id)
             throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
             AuthorizationException, SystemException {
 
@@ -218,7 +215,6 @@ public class ContextRestServiceImpl implements ContextRestService {
      */
     @Override
     public AdminDescriptorTO updateAdminDescriptor(final String id,
-                                                   final UpdateAdminDescriptorQueryParam queryParam,
                                                    final AdminDescriptorTO adminDescriptorTO)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
@@ -232,7 +228,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ResultTO open(final String id, final OpenQueryParam queryParam, final StatusTaskParamTO statusTaskParamTO)
+    public ResultTO open(final String id, final StatusTaskParamTO statusTaskParamTO)
             throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
             AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
             SystemException, LockingException, StreamNotFoundException {
@@ -245,7 +241,7 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ResultTO close(final String id, final CloseQueryParam queryParam, final StatusTaskParamTO statusTaskParamTO)
+    public ResultTO close(final String id, final StatusTaskParamTO statusTaskParamTO)
             throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
             AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
             InvalidStatusException, LockingException, StreamNotFoundException {

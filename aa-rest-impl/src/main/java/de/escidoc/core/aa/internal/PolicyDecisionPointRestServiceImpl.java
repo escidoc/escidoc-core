@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.internal;
 
-import de.escidoc.core.aa.param.EvaluateQueryParam;
 import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.aa.pdp.request.RequestsTO;
 import org.escidoc.core.domain.aa.pdp.result.ResultsTO;
@@ -70,8 +69,7 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
      * @see de.escidoc.core.aa.PolicyDecisionPointRestService#evaluate(org.escidoc.core.domain.aa.PdpRequestsTO)
      */
     @Override
-    public ResultsTO evaluate(final EvaluateQueryParam queryParam,
-                                 final RequestsTO pdpRequestsTO) throws ResourceNotFoundException,
+    public ResultsTO evaluate(final RequestsTO pdpRequestsTO) throws ResourceNotFoundException,
             XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
             AuthenticationException, AuthorizationException, SystemException {
         return serviceUtility.fromXML(ResultsTO.class,

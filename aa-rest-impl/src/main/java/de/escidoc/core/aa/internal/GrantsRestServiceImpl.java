@@ -30,10 +30,10 @@ package de.escidoc.core.aa.internal;
 
 import javax.xml.bind.JAXBElement;
 
-import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
 import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -73,7 +73,7 @@ public class GrantsRestServiceImpl implements GrantsRestService {
      * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveGrants(final RetrieveGrantsQueryParam queryParam)
+    public JAXBElement<? extends ResponseTypeTO> retrieveGrants(final SruSearchRequestParametersBean queryParam)
             throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
             AuthorizationException, SystemException {
 

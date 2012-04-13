@@ -35,7 +35,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
-import de.escidoc.core.aa.param.RetrieveGrantsQueryParam;
 import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 
@@ -44,6 +43,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
 /**
  * @author Michael Hoppe
@@ -105,7 +105,7 @@ public interface GrantsRestService {
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveGrants(
-        @NotNull @QueryParam("") RetrieveGrantsQueryParam queryParam)
+        @NotNull @QueryParam("") SruSearchRequestParametersBean queryParam)
         throws MissingMethodParameterException, InvalidSearchQueryException, AuthenticationException,
         AuthorizationException, SystemException;
 
