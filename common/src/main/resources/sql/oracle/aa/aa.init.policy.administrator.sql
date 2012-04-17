@@ -22,6 +22,7 @@ BEGIN
             info:escidoc/names:aa:1.0:action:retrieve-context 
             info:escidoc/names:aa:1.0:action:close-context 
             info:escidoc/names:aa:1.0:action:open-context 
+            info:escidoc/names:aa:1.0:action:retrieve-role 
             info:escidoc/names:aa:1.0:action:create-grant 
             info:escidoc/names:aa:1.0:action:revoke-grant 
             info:escidoc/names:aa:1.0:action:retrieve-grant 
