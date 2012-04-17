@@ -105,7 +105,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testWithdrawUnknownItemDecline() throws Exception {
-
         doTestWithdrawItem(HANDLE, PWCallback.DEFAULT_HANDLE, null, ItemNotFoundException.class);
     }
 
@@ -116,7 +115,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testWithdrawItem() throws Exception {
-
         doTestWithdrawItem(HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RELEASED, null);
     }
 
@@ -127,7 +125,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testRetrieveUserAccountById() throws Exception {
-
         doTestRetrieveUserAccount(HANDLE, null, "byId", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
     }
 
@@ -138,8 +135,17 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testRetrieveUserAccountByLoginName() throws Exception {
-
         doTestRetrieveUserAccount(HANDLE, null, "byLoginName", PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE, null);
+    }
+
+    /**
+     * Test retrieving a role by an administrator.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testRetriveRole() throws Exception {
+        doTestRetrieveRole(HANDLE, ROLE_ID_SYSTEM_ADMINISTRATOR, null);
     }
 
     /**
@@ -149,7 +155,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testCreateGrant() throws Exception {
-
         final String createdXml = doTestCreateItem(PWCallback.DEFAULT_HANDLE, null);
         final String itemHref = Constants.ITEM_BASE_URI + "/" + getObjidValue(createdXml);
         doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, itemHref, ROLE_HREF_COLLABORATOR, null);
@@ -162,7 +167,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testCreateGrantContainer() throws Exception {
-
         final String createdXml = doTestCreateContainer(PWCallback.DEFAULT_HANDLE, null);
         final String containerHref = Constants.CONTAINER_BASE_URI + "/" + getObjidValue(createdXml);
         doTestCreateGrant(HANDLE, grantCreationUserOrGroupId, containerHref, ROLE_HREF_COLLABORATOR, null);
@@ -175,7 +179,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testAaAdministratorLogout() throws Exception {
-
         doTestLogout(LOGINNAME, PASSWORD);
     }
 
@@ -186,7 +189,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
      */
     @Test
     public void testAaAdministratorRc() throws Exception {
-
         // create context using System-Administrator
         PWCallback.resetHandle();
 

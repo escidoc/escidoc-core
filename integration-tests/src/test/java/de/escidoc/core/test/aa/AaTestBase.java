@@ -2456,6 +2456,38 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
+     * Tests retrieving a role.
+     *
+     * @param userHandle             The escidoc user handle.
+     * @param roleId                The id of the role.
+     * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
+     *                               success.
+     * @throws Exception If anything fails.
+     */
+    protected void doTestRetrieveRole(
+        final String userHandle, final String roleId, final Class<?> expectedExceptionClass) throws Exception {
+
+        try {
+            PWCallback.setHandle(userHandle);
+            retrieve(ROLE_HANDLER_CODE, roleId);
+            if (expectedExceptionClass != null) {
+                EscidocRestSoapTestBase.failMissingException(expectedExceptionClass);
+            }
+        }
+        catch (final Exception e) {
+            if (expectedExceptionClass == null) {
+                EscidocRestSoapTestBase.failException(e);
+            }
+            else {
+                EscidocRestSoapTestBase.assertExceptionType(expectedExceptionClass, e);
+            }
+        }
+        finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
      * Tests retrieving a scope.
      *
      * @param userHandle             The escidoc user handle.
