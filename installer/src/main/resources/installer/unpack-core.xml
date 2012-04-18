@@ -289,8 +289,8 @@
 			<param name="target" value="${install.dir}/core" />
 		</antcall>
 		<delete file="${install.dir}/install.tmp/${escidoc.core.zip}" />
-		<!-- replace ROOT webapp with escidoc -->
-		<move tofile="${install.dir}/${server.deploy.dir}/ROOT.war">
+		<!-- move escidoc.war to tomcat -->
+		<move tofile="${install.dir}/${server.deploy.dir}/escidoc.war">
 			<fileset dir="${install.dir}/core/war">
 				<include name="escidoc-core*.war" />
 			</fileset>

@@ -1162,7 +1162,7 @@
 
     <escidoc.server.host>localhost</escidoc.server.host>
     <escidoc.server.port>8080</escidoc.server.port>
-    <escidoc.server.context></escidoc.server.context>
+    <escidoc.server.context>escidoc</escidoc.server.context>
     <escidoc.server.url>http://${escidoc.server.host}:${escidoc.server.port}</escidoc.server.url>
 
     <escidoc.database.host>localhost</escidoc.database.host>
