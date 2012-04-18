@@ -1569,6 +1569,9 @@ public abstract class EscidocTestBase {
     public static String getFrameworkContext() {
         if (frameworkContext == null) {
             frameworkContext = PropertiesProvider.getInstance().getProperty("server.context", "/escidoc");
+            if (!frameworkContext.startsWith("/")) {
+                frameworkContext = "/" + frameworkContext;
+            }
         }
         return frameworkContext;
     }

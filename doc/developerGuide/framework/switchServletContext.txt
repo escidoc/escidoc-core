@@ -3,7 +3,7 @@ to run tests with new or old interface do the following:
 -directory escidoc-core.war/src/main/webapp/WEB-INF:
 	-copy content of web.xml.new or web.xml.old in web.xml
 
--eSciDocCore/pom.xml adapt property escidoc.server.context ("escidoc" or empty)
+-eSciDocCore/pom.xml adapt property escidoc.server.context ("/escidoc" or empty)
 
 -eSciDocCore/installer/src/main/resources/config/escidoc/default/escidoc-core.properties:
 	-adapt escidoc-core.baseurl and escidoc-core.selfurl and admin-tool.url (append /escidoc or not)
