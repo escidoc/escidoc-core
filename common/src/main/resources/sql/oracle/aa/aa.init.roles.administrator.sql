@@ -103,3 +103,9 @@ INSERT INTO aa.scope_def
     ('escidoc:rlc-scope-def-administrator-user-group', 'escidoc:role-administrator', 'user-group', 
      null);
 
+INSERT INTO aa.scope_def 
+    (id, role_id, object_type, attribute_id)
+     VALUES
+    ('escidoc:rlc-scope-def-administrator-role', 'escidoc:role-administrator', 'role', 
+     null);
+
