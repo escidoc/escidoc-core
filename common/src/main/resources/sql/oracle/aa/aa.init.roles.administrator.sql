@@ -17,9 +17,6 @@
               <para>close the context,</para>
             </listitem>
             <listitem>
-              <para>retrieve roles,</para>
-            </listitem>
-            <listitem>
               <para>retrieve containers and items,</para>
             </listitem>
             <listitem>
