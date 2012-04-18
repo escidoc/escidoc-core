@@ -121,13 +121,7 @@ public class SmTestBase extends EscidocAbstractTest {
      * @throws Exception e
      */
     public String getPrimKey(final String xml) throws Exception {
-        String id = null;
-        Pattern hrefPattern = Pattern.compile("xlink:href=\"([^\"]*)\"");
-        Matcher m = hrefPattern.matcher(xml);
-        if (m.find()) {
-            id = m.group(1);
-            id = id.replaceFirst(".*\\/", "");
-        }
+        String id = getObjidValue(xml);
         return id;
     }
 
