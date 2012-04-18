@@ -139,16 +139,6 @@ public class AdministratorAbstractTest extends GrantTestBase {
     }
 
     /**
-     * Test retrieving a role by an administrator.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testRetriveRole() throws Exception {
-        doTestRetrieveRole(HANDLE, ROLE_ID_SYSTEM_ADMINISTRATOR, null);
-    }
-
-    /**
      * Test creating grant for an user account by an administrator.
      *
      * @throws Exception If anything fails.
