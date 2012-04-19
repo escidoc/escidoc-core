@@ -12,6 +12,10 @@
 		<istrue value="${DatabaseIsOracle}" />
 	</condition>
 
+	<condition property="deployOaiprovider">
+		<istrue value="${DeployOaiprovider}" />
+	</condition>
+
 	<!-- Install JBoss if property is set. Install Tomcat by default. -->
 	<condition property="installJBoss">
 		<istrue value="${InstallJBoss}" />
@@ -69,6 +73,9 @@
 		<condition property="server.web.conf.dir" value="tomcat/conf">
 			<isfalse value="installJBoss" />
 		</condition>
+		<condition property="server.web.bin.dir" value="tomcat/bin">
+			<isfalse value="installJBoss" />
+		</condition>
 	</target>
 
 	<target name="copy-oracle-jdbc-jar" if="databaseIsOracle">
@@ -113,6 +120,16 @@
 			<param name="source" value="${install.dir}/install.tmp/tomcat/server.xml" />
 			<param name="target" value="${install.dir}/${server.web.conf.dir}/server.xml" />
 		</antcall>
+		<antcall target="move-file-with-save">
+			<param name="source" value="${install.dir}/install.tmp/tomcat/catalina.bat" />
+			<param name="target" value="${install.dir}/${server.web.bin.dir}/catalina.bat" />
+		</antcall>
+		<antcall target="move-file-with-save">
+			<param name="source" value="${install.dir}/install.tmp/tomcat/catalina.sh" />
+			<param name="target" value="${install.dir}/${server.web.bin.dir}/catalina.sh" />
+		</antcall>
+		<chmod dir="${install.dir}/tomcat" perm="755" 
+		       includes="**/*"/>
 	</target>
 
 	<target name="install-tomcat-oracle" depends="copy-oracle-jdbc-jar" if="databaseIsOracle">
@@ -319,14 +336,18 @@
 				<include name="srw*.war" />
 			</fileset>
 		</move>
-		<move tofile="${install.dir}/${server.deploy.dir}/escidoc-oaiprovider.war">
-			<fileset dir="${install.dir}/install.tmp/">
-				<include name="oaiprovider*.war" />
-			</fileset>
-		</move>
+		<antcall target="copy-oaiprovider" />
 		<move tofile="${install.dir}/${server.deploy.dir}/saxon.war">
 			<fileset dir="${install.dir}/install.tmp/">
 				<include name="saxon*.war" />
+			</fileset>
+		</move>
+	</target>
+	
+	<target name="copy-oaiprovider" if="deployOaiprovider">
+		<move tofile="${install.dir}/${server.deploy.dir}/escidoc-oaiprovider.war">
+			<fileset dir="${install.dir}/install.tmp/">
+				<include name="oaiprovider*.war" />
 			</fileset>
 		</move>
 	</target>
@@ -373,6 +394,10 @@
 			<param name="source" value="${install.dir}/install.tmp/escidoc-core.custom.properties" />
 			<param name="target" value="${escidoc.home}/conf/escidoc-core.custom.properties" />
 		</antcall>
+		<antcall target="copy-oai-properties" />
+	</target>
+	
+	<target name="copy-oai-properties" if="deployOaiprovider">
 		<antcall target="move-file-with-save">
 			<param name="source" value="${install.dir}/install.tmp/proai.properties" />
 			<param name="target" value="${escidoc.home}/conf/proai.properties" />
@@ -460,9 +485,10 @@
 		<ant antfile="${INSTALL_PATH}/core/bin/database-init.xml" target="create-db">
 			<property file="${INSTALL_PATH}/core/etc/database.properties" />
 		</ant>
+		<antcall target="oaipmh-create-db" />
 	</target>
 
-	<target name="oaipmh-create-db" description="create database for oaipmh">
+	<target name="oaipmh-create-db" description="create database for oaipmh" if="deployOaiprovider">
 		<ant antfile="${INSTALL_PATH}/core/bin/database-init.xml" target="oaipmh-create-db">
 			<property file="${INSTALL_PATH}/core/etc/database.properties" />
 		</ant>
