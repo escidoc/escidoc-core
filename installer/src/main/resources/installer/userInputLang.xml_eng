@@ -60,6 +60,11 @@
   <str id="CreateDatabase" txt="Create"/>
   <str id="DatabaseAlreadyExists" txt="Already exists"/>
 
+  <str id="DeployOaiproviderQuestion" txt="Oaiprovider"/>
+  <str id="DeployOaiproviderDescription" txt="Do you want to install the Escidoc-Oaiprovider?"/>
+  <str id="DeployOaiprovider" txt="Yes"/>
+  <str id="DontDeployOaiprovider" txt="No"/>
+
   <str id="FedoraUsername" txt="Fedora Username:"/>
   <str id="FedoraPassword" txt="Fedora Password:"/>
 

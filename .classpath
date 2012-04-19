@@ -6,11 +6,9 @@
 	<classpathentry kind="src" output="om-spec/target/classes" path="om-spec/src/main/java"/>
 	<classpathentry kind="src" output="om-spec/target/test-classes" path="om-spec/src/test/java"/>
     <classpathentry kind="src" output="om-rest-spec/target/classes" path="om-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="om-rest-spec/target/test-classes" path="om-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="st-spec/target/classes" path="st-spec/src/main/java"/>
 	<classpathentry kind="src" output="st-spec/target/test-classes" path="st-spec/src/test/java"/>
     <classpathentry kind="src" output="st-rest-spec/target/classes" path="st-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="st-rest-spec/target/test-classes" path="st-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="sm-spec/target/classes" path="sm-spec/src/main/java"/>
 	<classpathentry kind="src" output="sm-spec/target/test-classes" path="sm-spec/src/test/java"/>
 	<classpathentry kind="src" output="sm-rest-spec/target/classes" path="sm-rest-spec/src/main/java"/>
@@ -18,15 +16,12 @@
 	<classpathentry kind="src" output="oum-spec/target/classes" path="oum-spec/src/main/java"/>
 	<classpathentry kind="src" output="oum-spec/target/test-classes" path="oum-spec/src/test/java"/>
     <classpathentry kind="src" output="oum-rest-spec/target/classes" path="oum-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="oum-rest-spec/target/test-classes" path="oum-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="oai-spec/target/classes" path="oai-spec/src/main/java"/>
 	<classpathentry kind="src" output="oai-spec/target/test-classes" path="oai-spec/src/test/java"/>
     <classpathentry kind="src" output="oai-rest-spec/target/classes" path="oai-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="oai-rest-spec/target/test-classes" path="oai-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="tme-spec/target/classes" path="tme-spec/src/main/java"/>
 	<classpathentry kind="src" output="tme-spec/target/test-classes" path="tme-spec/src/test/java"/>
     <classpathentry kind="src" output="tme-rest-spec/target/classes" path="tme-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="tme-rest-spec/target/test-classes" path="tme-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="adm-spec/target/classes" path="adm-spec/src/main/java"/>
 	<classpathentry kind="src" output="adm-spec/target/test-classes" path="adm-spec/src/test/java"/>
 	<classpathentry kind="src" output="adm-rest-spec/target/classes" path="adm-rest-spec/src/main/java"/>
@@ -34,7 +29,6 @@
 	<classpathentry kind="src" output="cmm-spec/target/classes" path="cmm-spec/src/main/java"/>
 	<classpathentry kind="src" output="cmm-spec/target/test-classes" path="cmm-spec/src/test/java"/>
     <classpathentry kind="src" output="cmm-rest-spec/target/classes" path="cmm-rest-spec/src/main/java"/>
-    <classpathentry kind="src" output="cmm-rest-spec/target/test-classes" path="cmm-rest-spec/src/test/java"/>
     <classpathentry kind="src" output="content-relation-rest-spec/target/classes" path="content-relation-rest-spec/src/main/java"/>
     <classpathentry kind="src" output="content-relation-rest-spec/target/test-classes" path="content-relation-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="aa-spec/target/classes" path="aa-spec/src/main/java"/>
@@ -48,6 +42,8 @@
 	<classpathentry kind="src" output="context-rest-spec/target/test-classes" path="context-rest-spec/src/test/java"/>
 	<classpathentry kind="src" output="fedoradeviation-rest-spec/target/classes" path="fedoradeviation-rest-spec/src/main/java"/>
 	<classpathentry kind="src" output="fedoradeviation-rest-spec/target/test-classes" path="fedoradeviation-rest-spec/src/test/java"/>
+    <classpathentry kind="src" output="cl-utility/target/classes" path="cl-utility/src/main/java"/>
+    <classpathentry kind="src" output="cl-utility/target/test-classes" path="cl-utility/src/test/java"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/test-classes" path="jaxrs-framework/src/test/java"/>
 	<classpathentry excluding="**" kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/resources"/>
 	<classpathentry kind="src" output="jaxrs-framework/target/classes" path="jaxrs-framework/src/main/java"/>
@@ -73,8 +69,6 @@
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="common/target/classes" path="common/src/main/filtered-resources"/>
 	<classpathentry kind="src" output="common/target/test-classes" path="common/src/test/java"/>
-    <classpathentry kind="src" output="dataobjects/target/classes" path="dataobjects/src/main/java"/>
-    <classpathentry excluding="**" kind="src" output="dataobjects/target/classes" path="dataobjects/src/main/resources"/>
 	<classpathentry kind="src" output="aa/target/classes" path="aa/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="aa/target/classes" path="aa/src/main/resources"/>
 	<classpathentry kind="src" output="aa-rest-impl/target/classes" path="aa-rest-impl/src/main/java"/>
@@ -144,7 +138,8 @@
 	<classpathentry kind="src" output="purge-service-impl/target/classes" path="purge-service-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="purge-service-impl/target/classes" path="purge-service-impl/src/main/resources"/>
 	<classpathentry kind="src" output="purge-service-impl/target/test-classes" path="purge-service-impl/src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+  <classpathentry kind="src" output="installer/target/classes" path="installer/src/main/java"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
     <classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -2598,69 +2598,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     /**
-     * Gets the xml representation of a filter criteria with the specified name and value.
-     * 
-     * @param filterName
-     *            The name of the filter.
-     * @param filterValue
-     *            The value of the filter. if this is <code>null</code>, an empty filter element is returned.
-     * @return Returns the filter element.
-     */
-    public static String getFilter(final String filterName, final String filterValue) {
-
-        if (filterValue == null) {
-            return "<filter name=\"" + filterName + "\"/>";
-        }
-        else {
-            return "<filter name=\"" + filterName + "\">" + filterValue + "</filter>";
-        }
-    }
-
-    /**
-     * Gets the xml representation of a order-by specification with the specified name and sorting.
-     * 
-     * @param orderByPredicate
-     *            The name of the predicate used for ordering.
-     * @param ascending
-     *            Flag indicating if ascending (<code>true</code>) or descendinf (<code>false</code>) sorting shall be
-     *            performed.
-     * @return Returns the order-by element.
-     */
-    public static String getOrderBy(final String orderByPredicate, final boolean ascending) {
-
-        if (ascending) {
-            return "<order-by sorting=\"ascending\">" + orderByPredicate + "</order-by>";
-        }
-        else {
-            return "<order-by sorting=\"descending\">" + orderByPredicate + "</order-by>";
-        }
-    }
-
-    /**
-     * Gets the xml representation of an offset specification with the specified value.
-     * 
-     * @param offset
-     *            The offset value.
-     * @return Returns the offset element.
-     */
-    public static String getOffset(final int offset) {
-
-        return "<offset>" + offset + "</offset>";
-    }
-
-    /**
-     * Gets the xml representation of a limit specification with the specified value.
-     * 
-     * @param limit
-     *            The limit value.
-     * @return Returns the limit element.
-     */
-    public static String getLimit(final int limit) {
-
-        return "<limit>" + limit + "</limit>";
-    }
-
-    /**
      * Get the status of the Object (Item/Container).
      * 
      * @param objid

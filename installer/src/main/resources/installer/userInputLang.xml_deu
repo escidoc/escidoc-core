@@ -60,6 +60,11 @@
   <str id="CreateDatabase" txt="Neu anlegen"/>
   <str id="DatabaseAlreadyExists" txt="Existiert bereits"/>
 
+  <str id="DeployOaiproviderQuestion" txt="Oaiprovider"/>
+  <str id="DeployOaiproviderDescription" txt="Wollen sie den Escidoc-Oaiprovider installieren?"/>
+  <str id="DeployOaiprovider" txt="Ja"/>
+  <str id="DontDeployOaiprovider" txt="Nein"/>
+
   <str id="FedoraUsername" txt="Fedora-Benutzername:"/>
   <str id="FedoraPassword" txt="Fedora-Passwort:"/>
 
@@ -74,7 +79,7 @@
   <str id="TriplestoreDatabaseUserText" txt="Dieser Datenbankbenutzer wird vom Installer angelegt und zur Laufzeit f&#252;r die Zugriffe auf die riTriples-Datenbank benutzt. Bitte achten Sie darauf, keinen schon vorhandenen Benutzer anzugeben, da der Installer den Benutzer zuerst l&#246;scht und dann neu anlegt!"/>
 
   <str id="OaiproviderDatabaseUser" txt="Oaiprovider-Datenbankbenutzer"/>
-  <str id="OaiproviderUserText" txt="Der Oaiprovider-Datenbankbenutzer wird fÃ¼r Oaiprovider-spezifische Tabellen benutzt."/>
+  <str id="OaiproviderUserText" txt="Der Oaiprovider-Datenbankbenutzer wird f&#252;r Oaiprovider-spezifische Tabellen benutzt."/>
 
   <str id="eSciDocHomeSelection" txt="Auswahl des eSciDoc Home Verzeichnisses"/>
   <str id="eSciDocHomeSelectionText" txt="Das eSciDoc Home Verzeichnis repr&#228;sentiert das Verzeichnis, in dem die eSciDoc Konfigurationen gespeichert werden. Dieses Verzeichnis kann unabh&#228;ngig vom Installationsverzeichnis von eSciDoc agieren."/>

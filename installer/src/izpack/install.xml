@@ -310,6 +310,7 @@
     <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
     <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
     <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
+    <variable name="DeployOaiprovider" value="true" condition="deployOaiprovider" />
   </dynamicvariables>
 
   <conditions>
@@ -363,6 +364,10 @@
       <name>DoCreateOaiproviderDatabase</name>
       <value>true</value>
     </condition>
+    <condition type="variable" id="deployOaiprovider">
+      <name>DoDeployOaiprovider</name>
+      <value>true</value>
+    </condition>
   </conditions>
   <!--
     The panels section.
@@ -387,20 +392,21 @@
     <panel classname="UserInputPanel" id="UserInputPanel.10" condition="databaseIsPostgres" />
     <panel classname="UserInputPanel" id="UserInputPanel.11" condition="databaseIsOracle" />
     <panel classname="UserInputPanel" id="UserInputPanel.12" condition="databaseIsOracle" />
-    <panel classname="UserInputPanel" id="UserInputPanel.13" condition="databaseIsPostgres" />
-    <panel classname="UserInputPanel" id="UserInputPanel.14" condition="databaseIsOracle" />
-    <panel classname="UserInputPanel" id="UserInputPanel.15" condition="fullDialog" />
+    <panel classname="UserInputPanel" id="UserInputPanel.13" />
+    <panel classname="UserInputPanel" id="UserInputPanel.14" condition="databaseIsPostgres+deployOaiprovider" />
+    <panel classname="UserInputPanel" id="UserInputPanel.15" condition="databaseIsOracle+deployOaiprovider" />
+    <panel classname="UserInputPanel" id="UserInputPanel.16" condition="fullDialog" />
     <panel classname="JDKPathPanel" id="CommonJDKPath" />
-    <panel classname="UserInputPanel" id="UserInputPanel.16" />
+    <panel classname="UserInputPanel" id="UserInputPanel.17" />
     <panel classname="TargetPanel" id="EscidocTarget" />
     <panel classname="TreePacksPanel" id="EscidocPacks" />
-    <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc+authMethodIsFormBased" />
-    <panel classname="UserInputPanel" id="UserInputPanel.18" condition="authMethodIsFormBased" />
-    <panel classname="UserInputPanel" id="UserInputPanel.19" condition="installEscidoc+authMethodIsFormBased" />
+    <panel classname="UserInputPanel" id="UserInputPanel.18" condition="installEscidoc+authMethodIsFormBased" />
+    <panel classname="UserInputPanel" id="UserInputPanel.19" condition="authMethodIsFormBased" />
+    <panel classname="UserInputPanel" id="UserInputPanel.20" condition="installEscidoc+authMethodIsFormBased" />
     <!-- panel classname="DataCheckPanel" id="Debug" / -->
     <panel classname="InstallPanel" id="EscidocInstall" />
-    <panel classname="UserInputPanel" id="UserInputPanel.20" condition="upgradeEscidoc+runMigration" />
     <panel classname="UserInputPanel" id="UserInputPanel.21" condition="upgradeEscidoc+runMigration" />
+    <panel classname="UserInputPanel" id="UserInputPanel.22" condition="upgradeEscidoc+runMigration" />
     <panel classname="ProcessPanel" condition="upgradeEscidoc+runMigration" />
     <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
     <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc+runMigration" />

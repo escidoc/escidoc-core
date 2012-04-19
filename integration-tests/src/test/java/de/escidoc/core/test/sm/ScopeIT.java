@@ -220,7 +220,7 @@ public class ScopeIT extends ScopeTestBase {
         }
         catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
-            assertEquals(exceptionType, "XmlCorruptedException");
+            assertEquals("XmlCorruptedException", exceptionType);
         }
     }
 

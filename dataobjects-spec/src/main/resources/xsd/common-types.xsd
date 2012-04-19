@@ -389,6 +389,9 @@
 
   <xs:simpleType name="status-type">
     <xs:restriction base="xs:token">
+      <xs:enumeration value="created"/>
+      <xs:enumeration value="opened"/>
+      <xs:enumeration value="closed"/>
       <xs:enumeration value="pending"/>
       <xs:enumeration value="submitted"/>
       <xs:enumeration value="in-revision"/>

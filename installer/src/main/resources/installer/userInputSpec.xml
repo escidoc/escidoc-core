@@ -367,7 +367,22 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="13" id="Oaiprovider database user for Postgres">
+  <panel order="13" id="Deploy Oaiprovider Question">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="DeployOaiproviderQuestion" bold="true" size="1" />
+    <field type="space" />
+    <field type="radio" variable="DoDeployOaiprovider">
+    <field type="divider" align="top" />
+      <description id="DeployOaiproviderDescription" />
+      <spec>
+        <choice id="DeployOaiprovider" value="true" />
+        <choice id="DontDeployOaiprovider" value="false" set="true" />
+      </spec>
+    </field>
+    <field type="divider" align="bottom" />
+  </panel>
+
+  <panel order="14" id="Oaiprovider database user for Postgres">
     <createForPack name="eSciDoc" />
     <field type="title" id="OaiproviderDatabaseUser" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -400,7 +415,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="14" id="Oaiprovider database user for Oracle">
+  <panel order="15" id="Oaiprovider database user for Oracle">
     <createForPack name="eSciDoc" />
     <field type="title" id="OaiproviderDatabaseUser" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -446,7 +461,7 @@
   </panel>
 
   <!--
-    <panel order="15" id="Select authentication method">
+    <panel order="16" id="Select authentication method">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Authentication Method" bold="true" size="1" />
     <field type="divider" align="top"/>
@@ -467,7 +482,7 @@
     </panel>
   -->
 
-  <panel order="16" id="eSciDoc Home Selection">
+  <panel order="17" id="eSciDoc Home Selection">
     <createForPack name="eSciDoc" />
     <field type="title" id="eSciDocHomeSelection" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -480,7 +495,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="17" id="System administrator user">
+  <panel order="18" id="System administrator user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" id="SystemAdministratorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -505,7 +520,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="18" id="System inspector user">
+  <panel order="19" id="System inspector user">
     <createForPack name="Install Scripts" />
     <field type="title" id="SystemInspectorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -530,7 +545,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="19" id="Depositor user">
+  <panel order="20" id="Depositor user">
     <createForPack name="Roles and Users Creation" />
     <field type="title" id="DepositorCredentials" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -555,7 +570,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="20" id="Backup">
+  <panel order="21" id="Backup">
     <createForPack name="eSciDoc" />
     <field type="title" id="Backup" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -564,7 +579,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="21" id="Migration">
+  <panel order="22" id="Migration">
     <createForPack name="eSciDoc" />
     <field type="title" id="Migration" bold="true" size="1" />
     <field type="divider" align="top" />
