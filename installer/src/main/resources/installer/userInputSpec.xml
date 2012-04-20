@@ -483,7 +483,24 @@
     <field type="divider" align="bottom" />
   </panel>
   
-  <panel order="17" id="JBoss Security">
+  <panel order="17" id="Remove JMX- + Management Console">
+    <createForPack name="eSciDoc" />
+    <field type="title" id="RemoveJMXConsoleTitle" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" id="RemoveJMXConsoleText" />
+    <field type="space" />
+    <field type="radio" variable="DoRemoveJmxConsole">
+      <description align="left" id="RemoveJmxQuestion" />
+      <spec>
+        <choice id="removeJmxChoiceFalse" value="false" set="true" />
+        <choice id="removeJmxChoiceTrue" value="true" />
+      </spec>
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
+  
+  <panel order="18" id="JBoss Security">
     <createForPack name="eSciDoc" />
     <field type="title" id="JBossSecurityTitle" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -508,7 +525,7 @@
     <field type="divider" align="bottom" />
   </panel>
   
-  <panel order="18" id="JBoss HTTPS">
+  <panel order="19" id="JBoss HTTPS">
     <createForPack name="eSciDoc" />
     <field type="title" id="JBossHttpsTitle" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -534,7 +551,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="19" id="Backup">
+  <panel order="20" id="Backup">
     <createForPack name="eSciDoc" />
     <field type="title" id="Backup" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -543,7 +560,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="20" id="Migration">
+  <panel order="21" id="Migration">
     <createForPack name="eSciDoc" />
     <field type="title" id="Migration" bold="true" size="1" />
     <field type="divider" align="top" />

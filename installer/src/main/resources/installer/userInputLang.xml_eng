@@ -90,8 +90,14 @@
   <str id="DepositorUsername" txt="Depositor Username:"/>
   <str id="DepositorPassword" txt="Depositor Password:"/>
 
+  <str id="RemoveJMXConsoleTitle" txt="JBoss JXM-Console"/>
+  <str id="RemoveJMXConsoleText" txt="The JBoss JXM-Console und Web-Console are potential entry-points for hackers. Therefore these consoles shouldnt be installed in production environments. If you do not want to delete these consoles, you can secure them with a password in the next installation-step."/>
+  <str id="RemoveJmxQuestion" txt="Delete JMX-Konsole and Web-Konsole?"/>
+  <str id="removeJmxChoiceFalse" txt="No"/>
+  <str id="removeJmxChoiceTrue" txt="Yes"/>
+
   <str id="JBossSecurityTitle" txt="JBoss Security"/>
-  <str id="JBossSecurityTitleText" txt="Please choose the username and password to use to secure the JBoss JMX-Console and the JBoss Web Console."/>
+  <str id="JBossSecurityTitleText" txt="Please choose the username and password to use to secure the JBoss JMX-Console and the JBoss Web-Console."/>
   <str id="JBossUsername" txt="JBoss Username:"/>
   <str id="JBossPassword" txt="JBoss Password:"/>
   

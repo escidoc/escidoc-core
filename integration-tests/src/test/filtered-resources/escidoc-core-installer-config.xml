@@ -106,18 +106,23 @@
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.17">
     <userInput>
+      <entry key="DoRemoveJmxConsole" value="true" />
+    </userInput>
+  </com.izforge.izpack.panels.UserInputPanel>
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
+    <userInput>
       <entry key="JBossUsername" value="${jboss.auth.basic.user}" />
       <entry key="JBossPassword" value="${jboss.auth.basic.pass}" />
     </userInput>
   </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.18">
-    <userInput />
-  </com.izforge.izpack.panels.UserInputPanel>
-  <com.izforge.izpack.panels.InstallPanel id="EscidocInstall" />
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.19">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
+  <com.izforge.izpack.panels.InstallPanel id="EscidocInstall" />
   <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.20">
+    <userInput />
+  </com.izforge.izpack.panels.UserInputPanel>
+  <com.izforge.izpack.panels.UserInputPanel id="UserInputPanel.21">
     <userInput />
   </com.izforge.izpack.panels.UserInputPanel>
   <com.izforge.izpack.panels.ProcessPanel id="UNKNOWN (com.izforge.izpack.panels.ProcessPanel)" />
