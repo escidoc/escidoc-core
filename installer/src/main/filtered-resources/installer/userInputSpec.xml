@@ -513,7 +513,24 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="18" id="JBoss Security">
+  <panel order="18" id="Remove JMX- + Management Console">
+    <createForPack name="eSciDoc" />
+    <field type="title" txt="JBoss JXM-Console" bold="true" size="1" />
+    <field type="divider" align="top" />
+    <field type="staticText" align="left" txt="The JBoss JXM-Console und Web-Console are potential entry-points for hackers. Therefore these consoles shouldnt be installed in production environments. If you do not want to delete these consoles, you can secure them with a password in the next installation-step." />
+    <field type="space" />
+    <field type="radio" variable="DoRemoveJmxConsole">
+      <description align="left" txt="Delete JMX-Konsole and Web-Konsole?" />
+      <spec>
+        <choice txt="No" value="false" set="true" />
+        <choice txt="Yes" value="true" />
+      </spec>
+    </field>
+    <field type="space" />
+    <field type="divider" align="bottom" />
+  </panel>
+  
+  <panel order="19" id="JBoss Security">
     <createForPack name="eSciDoc" />
     <field type="title" txt="JBoss Security" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -539,7 +556,7 @@
     <field type="divider" align="bottom" />
   </panel>
   
-  <panel order="19" id="JBoss HTTPS">
+  <panel order="20" id="JBoss HTTPS">
     <createForPack name="eSciDoc" />
     <field type="title" txt="JBoss Security - HTTPS (optional)" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -565,7 +582,7 @@
     </field>
   </panel>
 
-  <panel order="20" id="Database backup">
+  <panel order="21" id="Database backup">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Database Backup" bold="true" size="1" />
     <field type="divider" align="top" />
@@ -575,7 +592,7 @@
     <field type="divider" align="bottom" />
   </panel>
 
-  <panel order="21" id="Database migration">
+  <panel order="22" id="Database migration">
     <createForPack name="eSciDoc" />
     <field type="title" txt="Database Migration" bold="true" size="1" />
     <field type="divider" align="top" />

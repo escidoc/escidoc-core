@@ -274,6 +274,7 @@
       <variable name="ShibbolethOut" value="" condition="authMethodIsShibboleth" />
       <variable name="UpgradeEscidoc" value="true" condition="upgradeEscidoc" />
       <variable name="DatabaseIsOracle" value="true" condition="databaseIsOracle" />
+      <variable name="RemoveJmxConsole" value="true" condition="removeJmxConsole" />
       <!-- static texts dependent on install/upgrade for user input panels -->
       <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" condition="installEscidoc" />
       <variable name="EscidocDatabaseUserText" value="The datebase user specified here will be used at runtime for eSciDoc. This user should not have administrative privileges." condition="upgradeEscidoc" />
@@ -329,6 +330,10 @@
         <name>AuthenticationMethod</name>
         <value>shibboleth</value>
       </condition>
+      <condition type="variable" id="removeJmxConsole">
+        <name>DoRemoveJmxConsole</name>
+        <value>true</value>
+      </condition>
     </conditions>
     <!-- 
         The panels section.
@@ -364,11 +369,12 @@
         <panel classname="UserInputPanel" id="UserInputPanel.16" condition="authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.17" condition="installEscidoc+authMethodIsFormBased" />
         <panel classname="UserInputPanel" id="UserInputPanel.18" />
-        <panel classname="UserInputPanel" id="UserInputPanel.19" />
+        <panel classname="UserInputPanel" id="UserInputPanel.19" condition="!removeJmxConsole" />
+        <panel classname="UserInputPanel" id="UserInputPanel.20" condition="!removeJmxConsole" />
         <!-- panel classname="DataCheckPanel" id="Debug" / -->
         <panel classname="InstallPanel" id="EscidocInstall" />
-        <panel classname="UserInputPanel" id="UserInputPanel.20" condition="upgradeEscidoc" />
         <panel classname="UserInputPanel" id="UserInputPanel.21" condition="upgradeEscidoc" />
+        <panel classname="UserInputPanel" id="UserInputPanel.22" condition="upgradeEscidoc" />
         <panel classname="ProcessPanel" condition="runDatabaseMigration" />
         <panel classname="HTMLInfoPanel" id="installInfo" condition="installEscidoc" />
         <panel classname="HTMLInfoPanel" id="upgradeInfo" condition="upgradeEscidoc" />
