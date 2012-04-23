@@ -1145,7 +1145,7 @@
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.8</saxon.version>
-    <escidoc.fedoragsearch.version>1.5.23</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.5.25</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.5.14</escidoc.srw.version>
     <srw.version>1.5.9</srw.version>
     <migration-tool.version>1.5.1</migration-tool.version>
