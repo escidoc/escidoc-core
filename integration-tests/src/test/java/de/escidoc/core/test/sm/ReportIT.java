@@ -156,42 +156,6 @@ public class ReportIT extends ReportTestBase {
     }
 
     /**
-     * triggers preprocessing via jmx-console.
-     *
-     * @param methodIndex methodIndex
-     * @throws Exception If anything fails.
-     */
-    private void triggerPreprocessing(final String methodIndex) throws Exception {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.MONTH, 1);
-        cal.set(Calendar.YEAR, 2009);
-
-        String urlParameters = PREPROCESSING_URL + cal.getTimeInMillis();
-
-        Matcher methodIndexMatcher = METHOD_INDEX_PATTERN.matcher(urlParameters);
-        urlParameters = methodIndexMatcher.replaceAll(methodIndex);
-
-        String httpUrl = getFrameworkUrl() + Constants.ESCIDOC_BASE_URI + urlParameters;
-        long time = System.currentTimeMillis();
-        HttpResponse result = HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, "", null);
-        String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);
-        response = " preprocessing needed " + (System.currentTimeMillis() - time) + response;
-        try {
-            assertMatches("String does not match es expected. " + response,
-                "Operation completed successfully without a return value", response);
-        }
-        catch (final AssertionError e) {
-            if (methodIndex.equals(STATISTIC_PREPROCESSOR_METHOD_INDEX)) {
-                triggerPreprocessing("1");
-            }
-            else {
-                throw e;
-            }
-        }
-    }
-
-    /**
      * triggers preprocessing via framework-interface.
      *
      * @param aggrDefinitionId aggrDefinitionId
@@ -252,7 +216,9 @@ public class ReportIT extends ReportTestBase {
         }
 
         // trigger Preprocessing once again/////////////////////////////////////
-        triggerPreprocessing(STATISTIC_PREPROCESSOR_METHOD_INDEX);
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            triggerPreprocessing(aggregationDefinitionIds[i], "2009-02-01");
+        }
         // /////////////////////////////////////////////////////////////////////
 
         for (int i = 0; i < aggregationDefinitionIds.length; i++) {
