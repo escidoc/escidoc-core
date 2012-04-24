@@ -19,6 +19,10 @@ to run tests with new or old interface do the following:
 		<!-- replace ROOT webapp with escidoc -->
 		<move tofile="${install.dir}/${server.deploy.dir}/ROOT.war">
 	or vice versa
+	
+-eSciDocCore/installer/src/main/resources/config/escidoc/core/proai.properties
+ + eSciDocCore/integration-tests/src/test/configurations/proai.properties:
+  add escidoc/ to property driver.escidoc.baseURL or not.
 
 
 
