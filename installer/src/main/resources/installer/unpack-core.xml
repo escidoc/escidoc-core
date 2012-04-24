@@ -113,7 +113,7 @@
       <param name="target" value="${install.dir}/tomcat" />
     </antcall>
     <!-- delete root webapp so that escidoc can use the root context -->
-    <delete dir="${install.dir}/${server.deploy.dir}/ROOT" />
+    <!-- delete dir="${install.dir}/${server.deploy.dir}/ROOT" / -->
     <!-- delete tomcat's examples deployment -->
     <delete dir="${install.dir}/${server.deploy.dir}/examples" />
     <antcall target="move-file-with-save">
