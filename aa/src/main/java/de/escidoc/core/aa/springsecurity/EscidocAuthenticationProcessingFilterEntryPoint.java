@@ -38,7 +38,7 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.util.RedirectUrlBuilder;
 
 /**
- * Overwrites AuthenticationProcessingFilterEntryPoint to enable to use absolute urls for the login-form.
+ * Overwrites LoginUrlAuthenticationEntryPoint to enable to use absolute urls for the login-form.
  *
  * @author Michael Hoppe
  */
