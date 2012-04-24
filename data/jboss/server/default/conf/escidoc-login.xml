@@ -221,6 +221,22 @@ default-lazy-init="false">
 		<property name="consumer" ref="myOpenID4JavaConsumer" />
 		<property name="openidProviderRegex" value=".*" />
 		<property name="providerRegexFailureUrl" value="/aa/login/openidlogin.jsp?login_error=true" />
+        <property name="loginButtonInfos">
+          <list>
+            <map> 
+              <entry key="url"><value>https://me.yahoo.com</value></entry>
+              <entry key="image"><value>../../images/yahoo.png</value></entry>
+              <entry key="height"><value>32</value></entry>
+              <entry key="width"><value>32</value></entry>
+            </map>
+            <map> 
+              <entry key="url"><value>https://www.google.com/accounts/o8/id</value></entry>
+              <entry key="image"><value>../../images/google.png</value></entry>
+              <entry key="height"><value>32</value></entry>
+              <entry key="width"><value>32</value></entry>
+            </map>
+          </list>        
+        </property>
 	</bean>
  	<bean id="openIDAuthenticationProvider" class="org.springframework.security.openid.OpenIDAuthenticationProvider">
   		<property name="userDetailsService" ref="openidUserDetailsService" />

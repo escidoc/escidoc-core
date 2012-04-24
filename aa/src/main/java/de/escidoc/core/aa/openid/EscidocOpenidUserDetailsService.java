@@ -28,13 +28,8 @@
  */
 package de.escidoc.core.aa.openid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.openid.OpenIDAttribute;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 

@@ -29,6 +29,8 @@
 package de.escidoc.core.aa.openid;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +48,8 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
     private Pattern openidProviderPattern = null;
 
     private String providerRegexFailureUrl = null;
+
+    private List<Map<String, String>> loginButtonInfos = null;
 
     /**
      * Authentication has two phases.
@@ -87,6 +91,26 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      */
     public void setProviderRegexFailureUrl(final String providerRegexFailureUrl) {
         this.providerRegexFailureUrl = providerRegexFailureUrl;
+    }
+
+    /**
+     * Sets the information for login-buttons in login-page
+     * 
+     * @param loginButtonInfos
+     *            loginButtonInfos
+     */
+    public void setLoginButtonInfos(final List<Map<String, String>> loginButtonInfos) {
+        this.loginButtonInfos = loginButtonInfos;
+    }
+
+    /**
+     * Gets the information for login-buttons in login-page
+     * 
+     * @return loginButtonInfos
+     *            loginButtonInfos
+     */
+    public List<Map<String, String>> getLoginButtonInfos() {
+        return this.loginButtonInfos;
     }
 
 }
