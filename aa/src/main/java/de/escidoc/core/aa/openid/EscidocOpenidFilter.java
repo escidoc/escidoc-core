@@ -51,6 +51,8 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
 
     private List<Map<String, String>> loginButtonInfos = null;
 
+    private List<Map<String, String>> loginTextInfos = null;
+
     /**
      * Authentication has two phases.
      * <ol>
@@ -111,6 +113,26 @@ public class EscidocOpenidFilter extends OpenIDAuthenticationFilter {
      */
     public List<Map<String, String>> getLoginButtonInfos() {
         return this.loginButtonInfos;
+    }
+
+    /**
+     * Sets the information for login-textfields in login-page
+     * 
+     * @param loginTextInfos
+     *            loginTextInfos
+     */
+    public void setLoginTextInfos(final List<Map<String, String>> loginTextInfos) {
+        this.loginTextInfos = loginTextInfos;
+    }
+
+    /**
+     * Gets the information for login-textfields in login-page
+     * 
+     * @return loginTextInfos
+     *            loginTextInfos
+     */
+    public List<Map<String, String>> getLoginTextInfos() {
+        return this.loginTextInfos;
     }
 
 }

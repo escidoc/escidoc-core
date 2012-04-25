@@ -352,8 +352,11 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 	Filter-Chain for OpenID-Login.
 	To disable, comment in filter-chain with filters=disabledAuthenticationProcessingFilter.
 	To enable, comment out filter-chain with filters=disabledAuthenticationProcessingFilter and comment in the other one.
-    Set openidProviderRegex in bean with id=openidAuthenticationProcessingFilter to restrict allowed openId-Providers
-    Set List of OpenID-Attributes in bean with id=myOpenID4JavaConsumer to set supported OpenID-Attributes.
+    -Set openidProviderRegex in bean with id=openidFilter to restrict allowed openId-Providers
+      -Configure loginTextInfos + loginButtonInfos
+       -loginTextInfos shows textfields to enter openId-identifier
+       -loginButtonInfos shows buttons. Click on button redirects to OpenID-Provider.
+    -Set List of OpenID-Attributes in bean with id=myOpenID4JavaConsumer to set supported OpenID-Attributes.
 	 -->
 
     <bean id="openidInitializer" class="de.escidoc.core.aa.openid.EscidocOpenidInitializer" lazy-init="false"/>
@@ -365,7 +368,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
             <!-- security:filter-chain pattern="/aa/login/openid$|/aa/login/openid[^/].*$|/aa/openid/j_spring_openid_security_check|/aa/openid/spring_openid_security_check" 
                        filters="httpSessionContextIntegrationFilter,
                                 openidLogoutFilter,
-                                openidAuthenticationProcessingFilter,
+                                openidFilter,
                                 securityContextHolderAwareRequestFilter,
                                 openidExceptionTranslationFilter,
                                 openidFilterSecurityInterceptor" / -->
@@ -374,11 +377,19 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     
 	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />    
 
-	<bean id="openidAuthenticationProcessingFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
+	<bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
     	<property name="authenticationManager" ref="openIDAuthenticationManager"/>
 		<property name="consumer" ref="myOpenID4JavaConsumer" />
 		<property name="openidProviderRegex" value=".*" />
 		<property name="providerRegexFailureUrl" value="/aa/login/openid/openidlogin.jsp?login_error=true" />
+    <property name="loginTextInfos">
+      <list>
+        <map> 
+          <entry key="text"><value></value></entry>
+          <entry key="label"><value>Please enter your OpenID Identity</value></entry>
+        </map>
+      </list>        
+    </property>
     <property name="loginButtonInfos">
       <list>
         <map> 

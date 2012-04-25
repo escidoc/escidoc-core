@@ -132,7 +132,7 @@ public class Login extends AbstractHTTPServlet {
 
     private static final String LOGOUT_POSTFIX = "logout";
 
-    private static final String LOGIN_POSTFIX = "login";
+    private static final String LOGIN_POSTFIX_PATTERN = ".*login/*";
 
     // TODO values was cloned to EsidocServlet (to reduce common package
     // dependencies)
@@ -213,7 +213,7 @@ public class Login extends AbstractHTTPServlet {
             doLogout(request, response);
         }
         else {
-            if (request.getRequestURL().toString().endsWith(LOGIN_POSTFIX)) {
+            if (request.getRequestURL().toString().matches(LOGIN_POSTFIX_PATTERN)) {
                 //No Login-Method selected, so redirect to select-jsp
                 try {
                     StringBuilder url =
