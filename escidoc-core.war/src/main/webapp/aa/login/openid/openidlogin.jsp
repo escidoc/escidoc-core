@@ -44,7 +44,7 @@
     <tr>
       <td width="26%" height="69">
         <div align="right">
-          <img src="../../images/escidoc-logo.jpg" width="153" height="58" />
+          <img src="../../../images/escidoc-logo.jpg" width="153" height="58" />
         </div>
       </td>
       <td width="3%" height="69">&nbsp;</td>
@@ -80,7 +80,7 @@
     <tr>
       <td width="26%" height="69">
         <div align="right">
-          <img src="../../images/openid-icon.png" width="58" height="58" />
+          <img src="../../../images/openid-icon.png" width="58" height="58" />
         </div>
       </td>
       <td width="3%">&nbsp;</td>
