@@ -109,7 +109,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     
     <bean id="contextSource"
         class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
-        <constructor-arg value="ldap://ldap.example.org/ou=example,ou=org"/>
+        <constructor-arg value="ldap://141.66.11.51/dc=fiz-karlsruhe,dc=de"/>
     </bean>
 
     <bean id="userSearch"
@@ -171,8 +171,8 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
         <security:custom-filter before="AUTHENTICATION_PROCESSING_FILTER"/>
     </bean>
     <bean id="entryPoint" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationEntryPoint">
-        <property name="serviceProviderBaseUrl" value="http://sp.example.org" />
-        <property name="sessionInitiatorPath" value="/Shibboleth.sso/Login" />
+        <property name="serviceProviderBaseUrl" value="https://esfedrep5.fiz-karlsruhe.de:8545" />
+        <property name="sessionInitiatorPath" value="/Shibboleth.sso/DS" />
     </bean>
     <bean id="shibProvider" class="de.escidoc.core.aa.shibboleth.ShibbolethAuthenticationProvider">
         <security:custom-authentication-provider />
