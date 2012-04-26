@@ -155,6 +155,8 @@
       <param-value>
         (\S)+.html 
         (\S)+.jpg 
+        (\S)+.png 
+        (\S)+.gif 
         (\S)+.xsl 
         (\S)+.xsd 
       </param-value>
@@ -180,6 +182,8 @@
       <param-value>
         (\S)+.html 
         (\S)+.jpg 
+        (\S)+.png 
+        (\S)+.gif 
         (\S)+.xsl 
         (\S)+.xsd 
       </param-value>
