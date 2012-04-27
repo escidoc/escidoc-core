@@ -109,10 +109,10 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 
     <bean id="databaseAuthenticationProcessingFilter"  
         class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">  
-        <property name="authenticationManager" ref="eSciDocDatabaseAuthenticationManager"/>  
- 		<property name="authenticationFailureHandler" ref="databaseFailureHandler"/>
- 		<property name="authenticationSuccessHandler" ref="databaseSuccessHandler"/>
-        <property name="filterProcessesUrl" value="/aa/database/j_spring_security_check"/>  
+      <property name="authenticationManager" ref="eSciDocDatabaseAuthenticationManager"/>  
+      <property name="authenticationFailureHandler" ref="databaseFailureHandler"/>
+      <property name="authenticationSuccessHandler" ref="databaseSuccessHandler"/>
+      <property name="filterProcessesUrl" value="/aa/database/j_spring_security_check"/>  
     </bean>         
 
 	<bean id="databaseSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
@@ -189,10 +189,10 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
     
     <bean id="ldapAuthenticationProcessingFilter"  
         class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">  
-        <property name="authenticationManager" ref="eSciDocLdapAuthenticationManager"/>  
- 		<property name="authenticationFailureHandler" ref="ldapFailureHandler"/>
- 		<property name="authenticationSuccessHandler" ref="ldapSuccessHandler"/>
-        <property name="filterProcessesUrl" value="/aa/ldap/j_spring_security_check"/>  
+      <property name="authenticationManager" ref="eSciDocLdapAuthenticationManager"/>  
+      <property name="authenticationFailureHandler" ref="ldapFailureHandler"/>
+      <property name="authenticationSuccessHandler" ref="ldapSuccessHandler"/>
+      <property name="filterProcessesUrl" value="/aa/ldap/j_spring_security_check"/>  
     </bean>         
 
 	<bean id="ldapSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
@@ -378,8 +378,9 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
 	<bean id="openidUserDetailsService" class="de.escidoc.core.aa.openid.EscidocOpenidUserDetailsService" />    
 
 	<bean id="openidFilter" class="de.escidoc.core.aa.openid.EscidocOpenidFilter">
-    	<property name="authenticationManager" ref="openIDAuthenticationManager"/>
+    <property name="authenticationManager" ref="openIDAuthenticationManager"/>
 		<property name="consumer" ref="myOpenID4JavaConsumer" />
+    <property name="filterProcessesUrl" value="/aa/openid/j_spring_openid_security_check"/>  
 		<property name="openidProviderRegex" value=".*" />
 		<property name="providerRegexFailureUrl" value="/aa/login/openid/openidlogin.jsp?login_error=true" />
     <property name="loginTextInfos">
