@@ -32,7 +32,7 @@
 
 <%@ page
   import="de.escidoc.core.common.util.SpringApplicationContextHolder,de.escidoc.core.aa.openid.EscidocOpenidFilter,java.util.Map"%>
-<% final String submitUrl = "../j_spring_openid_security_check"; %> 
+<% final String submitUrl = "../../openid/j_spring_openid_security_check"; %> 
 <html>
 <head>
 <title>eSciDoc - Open ID Login page</title>
