@@ -119,6 +119,7 @@ public interface ItemRestService {
 
     @GET
     @Path("/{id}")
+    @Produces(MediaType.TEXT_XML)
     ItemTO retrieve(@PathParam("id") String id) throws ItemNotFoundException, ComponentNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
@@ -137,6 +138,8 @@ public interface ItemRestService {
 
     @PUT
     @Path("/{id}/components/component")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ComponentTO createComponent(@PathParam("id") String id, ComponentTO componentTO) throws MissingContentException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
@@ -145,18 +148,21 @@ public interface ItemRestService {
 
     @GET
     @Path("{id}/components/component/{componentId}")
+    @Produces(MediaType.TEXT_XML)
     ComponentTO retrieveComponent(@PathParam("id") String id, @PathParam("componentId") String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException;
 
     @GET
     @Path("{id}/components/component/{componentId}/md-records")
+    @Produces(MediaType.TEXT_XML)
     MdRecordsTO retrieveComponentMdRecords(@PathParam("id") String id, @PathParam("componentId") String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException;
 
     @GET
     @Path("{id}/components/component/{componentId}/md-records/md-record/{mdRecordId}")
+    @Produces(MediaType.TEXT_XML)
     MdRecordTO retrieveComponentMdRecord(
         @PathParam("id") String id, @PathParam("componentId") String componentId,
         @PathParam("mdRecordId") String mdRecordId) throws ItemNotFoundException, AuthenticationException,
@@ -165,6 +171,8 @@ public interface ItemRestService {
 
     @PUT
     @Path("{id}/components/component")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ComponentTO updateComponent(
         @PathParam("id") String id, @PathParam("componentId") String componentId, ComponentTO componentTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
@@ -175,12 +183,14 @@ public interface ItemRestService {
 
     @GET
     @Path("{id}/components")
+    @Produces(MediaType.TEXT_XML)
     ComponentsTO retrieveComponents(@PathParam("id") String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
         RemoteException;
 
     @GET
     @Path("{id}/components/component/{componentId}/properties")
+    @Produces(MediaType.TEXT_XML)
     ComponentPropertiesTO retrieveComponentProperties(
         @PathParam("id") String id, @PathParam("componentId") String componentId) throws ItemNotFoundException,
         ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
@@ -196,24 +206,29 @@ public interface ItemRestService {
 
     @GET
     @Path("{id}/md-records/md-record/{mdRecordId}")
+    @Produces(MediaType.TEXT_XML)
     MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException;
 
     @GET
     @Path("/{id}/md-records/md-record/{mdRecordId}/content")
+    @Produces(MediaType.TEXT_XML)
     Stream retrieveMdRecordContent(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId) throws ItemNotFoundException,
         MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException;
     
     @GET
     @Path("/{id}/resources/dc/content")
+    @Produces(MediaType.TEXT_XML)
     Stream retrieveDcRecordContent(@PathParam("id") String id) throws ItemNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, MdRecordNotFoundException,
         SystemException;
 
     @PUT
     @Path("{id}/md-records/md-record/{mdRecordId}")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     MdRecordTO updateMdRecord(
         @PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId, MdRecordTO mdRecordTO)
         throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
@@ -223,57 +238,68 @@ public interface ItemRestService {
 
     @GET
     @Path("{id}/md-records")
+    @Produces(MediaType.TEXT_XML)
     MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
     @GET
     @Path("{id}/content-streams")
+    @Produces(MediaType.TEXT_XML)
     ContentStreamsTO retrieveContentStreams(@PathParam("id") String id) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
 
     @GET
     @Path("{id}/content-streams/content-stream/{name}")
+    @Produces(MediaType.TEXT_XML)
     ContentStreamTO retrieveContentStream(@PathParam("id") String id, @PathParam("name") String name)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, ContentStreamNotFoundException, RemoteException;
 
     @GET
     @Path("{id}/properties")
+    @Produces(MediaType.TEXT_XML)
     ItemPropertiesTO retrieveProperties(@PathParam("id") String id) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
 
     @GET
     @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
     ItemResourcesTO retrieveResources(@PathParam("id") String id) throws ItemNotFoundException,
     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/{name}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OperationNotFoundException;
 
     @GET
     @Path("{id}/resources/version-history")
+    @Produces(MediaType.TEXT_XML)
     VersionHistoryTO retrieveVersionHistory(@PathParam("id") String id) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         RemoteException;
 
     @GET
     @Path("{id}/resources/parents")
+    @Produces(MediaType.TEXT_XML)
     ParentsTO retrieveParents(@PathParam("id") String id) throws ItemNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         RemoteException;
 
     @GET
     @Path("{id}/relations")
+    @Produces(MediaType.TEXT_XML)
     RelationsTO retrieveRelations(@PathParam("id") String id) throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, RemoteException;
 
     @POST
     @Path("{id}/release")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO release(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -281,6 +307,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/submit")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO submit(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -288,6 +316,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/revise")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO revise(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
         AuthorizationException, ItemNotFoundException, ComponentNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -296,6 +326,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/withdraw")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO withdraw(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
         ComponentNotFoundException, NotPublishedException, LockingException, AlreadyWithdrawnException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
@@ -304,6 +336,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/lock")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO lock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidContentException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
@@ -311,6 +345,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/unlock")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO unlock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -325,6 +361,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/assign-version-pid")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO assignVersionPid(@PathParam("id") String id, AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -332,6 +370,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/assign-object-pid")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO assignObjectPid(@PathParam("id") String id, AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
@@ -339,6 +379,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/components/component/{componentId}/assign-content-pid")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO assignContentPid(
         @PathParam("id") String id, @PathParam("componentId") String componentId,
         AssignPidTaskParamTO assignPidTaskParamTO) throws ItemNotFoundException, LockingException,
@@ -348,6 +390,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/content-relations/add")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO addContentRelations(@PathParam("id") String id, RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
@@ -357,6 +401,8 @@ public interface ItemRestService {
 
     @POST
     @Path("{id}/content-relations/remove")
+    @Consumes(MediaType.TEXT_XML)
+    @Produces(MediaType.TEXT_XML)
     ResultTO removeContentRelations(@PathParam("id") String id, RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         InvalidStatusException, MissingElementValueException, InvalidContentException, InvalidXmlException,
