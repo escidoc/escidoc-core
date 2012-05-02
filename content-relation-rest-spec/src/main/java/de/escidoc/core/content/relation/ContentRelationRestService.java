@@ -37,6 +37,8 @@ import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -98,7 +100,7 @@ public interface ContentRelationRestService {
     @Path("{id}/lock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO lock(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+    ResultTO lock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidContentException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidStatusException;
@@ -107,7 +109,7 @@ public interface ContentRelationRestService {
     @Path("{id}/unlock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO unlock(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+    ResultTO unlock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
         InvalidStatusException;
@@ -143,7 +145,7 @@ public interface ContentRelationRestService {
     @Path("{id}/assign-object-pid")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO assignObjectPid(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO)
+    ResultTO assignObjectPid(@PathParam("id") String id, AssignPidTaskParamTO assignPidTaskParamTO)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, OptimisticLockingException, InvalidXmlException, SystemException,
         PidAlreadyAssignedException;

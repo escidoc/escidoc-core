@@ -28,6 +28,8 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -117,23 +119,23 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     }
 
     @Override
-    public ResultTO lock(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+    public ResultTO lock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidContentException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidStatusException {
 
         return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.lock(id, serviceUtility.toXML(statusTaskParamTO)));
+            this.contentRelationHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
-    public ResultTO unlock(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+    public ResultTO unlock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
         InvalidStatusException {
 
         return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.unlock(id, serviceUtility.toXML(statusTaskParamTO)));
+            this.contentRelationHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
     }
 
     @Override
@@ -167,12 +169,12 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     }
 
     @Override
-    public ResultTO assignObjectPid(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
+    public ResultTO assignObjectPid(String id, AssignPidTaskParamTO assignPidTaskParamTO) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException {
 
         return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.assignObjectPid(id, serviceUtility.toXML(statusTaskParamTO)));
+            this.contentRelationHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
     }
 
     @Override

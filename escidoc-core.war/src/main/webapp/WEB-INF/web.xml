@@ -154,6 +154,7 @@
       <param-name>static-resources-list</param-name>
       <param-value>
         (\S)+.html 
+        (\S)+.xml 
         (\S)+.jpg 
         (\S)+.png 
         (\S)+.gif 
@@ -181,6 +182,7 @@
       <param-name>static-resources-list</param-name>
       <param-value>
         (\S)+.html 
+        (\S)+.xml 
         (\S)+.jpg 
         (\S)+.png 
         (\S)+.gif 
