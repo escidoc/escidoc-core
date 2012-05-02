@@ -190,6 +190,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
         String prefix = determineOrganizationalUnitNamespacePrefix(document);
         String xlinkPrefix = determineXlinkNamespacePrefix(document);
+        String srelPrefix = determineSrelNamespacePrefix(document);
         Element parents = null;
         final int numberParents = parentValues.length / 2;
         if (numberParents > 0) {
@@ -206,7 +207,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 final String parentId = parentValues[i];
                 final String parentTitle = parentValues[i + numberParents];
                 final Element parentRef =
-                    createReferencingElementNode(document, SREL_NS_URI, SREL_PREFIX_TEMPLATES, NAME_PARENT,
+                    createReferencingElementNode(document, SREL_NS_URI, srelPrefix, NAME_PARENT,
                         xlinkPrefix, parentTitle, "/oum/organizational-unit/" + parentId, withRestReadOnly);
                 parents.appendChild(parentRef);
             }
@@ -263,6 +264,24 @@ public class OrganizationalUnitTestBase extends OumTestBase {
             root = selectSingleNode(document, XPATH_PARENTS);
         }
         return determinePrefix(root);
+    }
+
+    /**
+     * Determines the namespace prefix of the structural relations used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the structural relations element of the document
+     * @throws Exception If anything fails.
+     */
+    private String determineSrelNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ORGANIZATIONAL_UNIT_CREATED_BY);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            return SREL_PREFIX_TEMPLATES;
+        }
     }
 
     /**
@@ -814,7 +833,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         deleteElement(ouDoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         insertParentsElement(ouDoc, XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, parentsWithTitle, false);
 
-        String toBeUpdatedXml = toString(ouDoc, false).replaceAll(SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
+        String toBeUpdatedXml = toString(ouDoc, false);
 
         PWCallback.setHandle(handle);
         try {
