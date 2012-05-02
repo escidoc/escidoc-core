@@ -67,7 +67,6 @@ public interface StagingRestService {
      */
     @PUT
     @Produces(MediaType.TEXT_XML)
-    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     StagingFileTO create(final Stream stream) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
