@@ -1577,18 +1577,6 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Get the service-uri of the framework (read from properties).
-     * 
-     * @return the service-uri of the framework
-     */
-    public static String getFrameworkServiceUri() {
-        if (frameworkServiceUri == null) {
-            frameworkServiceUri = PropertiesProvider.getInstance().getProperty("server.service.uri", "");
-        }
-        return frameworkServiceUri;
-    }
-
-    /**
      * Get the context-path of fedoragsearch (read from properties).
      * 
      * @return the context of fedoragsearch

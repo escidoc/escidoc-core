@@ -4068,7 +4068,8 @@ public class AaTestBase extends EscidocAbstractTest {
 
             // Check status-code when requesting resource with invalid handle
             final String httpUrl =
-                getBaseUrl() + Constants.ROLE_BASE_URI + "/" + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.ROLE_BASE_URI + "/"
+                    + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
             final int statusCode = getStatusCode(httpUrl);
             if (statusCode != HttpServletResponse.SC_FOUND) {

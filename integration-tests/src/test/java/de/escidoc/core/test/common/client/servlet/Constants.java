@@ -52,8 +52,6 @@ public class Constants {
 
     public static final String ESCIDOC_BASE_URI = EscidocTestBase.getFrameworkContext();
 
-    public static final String ESCIDOC_SERVICE_URI = EscidocTestBase.getFrameworkServiceUri();
-
     public static final String FEDORAGSEARCH_BASE_URI = EscidocTestBase.getFedoragsearchContext() + "/rest";
 
     public static final String SEARCH_BASE_URI = EscidocTestBase.getSrwContext() + "/search";
@@ -88,70 +86,63 @@ public class Constants {
 
     public static final String SPO = "/spo";
 
-    public static final String AA_BASE_URI = ESCIDOC_SERVICE_URI + AA_URI;
+    public static final String AA_BASE_URI = AA_URI;
 
     public static final String LOGIN_DEFAULT_PROVIDER = "/database";
 
     public static final String LOGIN_URI = AA_BASE_URI + "/login" + LOGIN_DEFAULT_PROVIDER;
 
-    public static final String CONTEXT_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/context";
+    public static final String CONTEXT_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/context";
 
-    public static final String CONTEXTS_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/contexts";
+    public static final String CONTEXTS_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/contexts";
 
-    public static final String CONTAINER_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/container";
+    public static final String CONTAINER_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/container";
 
-    public static final String XML_SCHEMA_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/xml-schema";
+    public static final String XML_SCHEMA_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/xml-schema";
 
-    public static final String CONTAINERS_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/containers";
+    public static final String CONTAINERS_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/containers";
 
-    public static final String JHOVE_BASE_URI = ESCIDOC_SERVICE_URI + "/tme/jhove";
+    public static final String JHOVE_BASE_URI = "/tme/jhove";
 
-    public static final String ITEM_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/item";
+    public static final String ITEM_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/item";
 
-    public static final String INGEST_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/ingest";
+    public static final String INGEST_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/ingest";
 
-    public static final String CONTENT_RELATION_BASE_URI =
-        ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
+    public static final String CONTENT_RELATION_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/content-relation";
 
-    public static final String CONTENT_RELATIONS_BASE_URI =
-        ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/content-relations";
+    public static final String CONTENT_RELATIONS_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/content-relations";
 
-    public static final String ITEMS_BASE_URI = ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/items";
+    public static final String ITEMS_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/items";
 
-    public static final String SET_DEFINITIONS_BASE_URI = ESCIDOC_SERVICE_URI + OAI_URI + "/set-definitions";
+    public static final String SET_DEFINITIONS_BASE_URI = OAI_URI + "/set-definitions";
 
-    public static final String SEMANTIC_STORE_BASE_URI =
-        ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/semantic-store";
+    public static final String SEMANTIC_STORE_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/semantic-store";
 
-    public static final String SET_DEFINITION_BASE_URI = ESCIDOC_SERVICE_URI + OAI_URI + "/set-definition";
+    public static final String SET_DEFINITION_BASE_URI = OAI_URI + "/set-definition";
 
-    public static final String REPOSITORY_INFO_BASE_URI =
-        ESCIDOC_SERVICE_URI + ADMIN_URI + "/admin/get-repository-info";
+    public static final String REPOSITORY_INFO_BASE_URI = ADMIN_URI + "/admin/get-repository-info";
 
-    public static final String INDEX_CONFIGURATION_BASE_URI =
-        ESCIDOC_SERVICE_URI + ADMIN_URI + "/admin/get-index-configuration";
+    public static final String INDEX_CONFIGURATION_BASE_URI = ADMIN_URI + "/admin/get-index-configuration";
 
-    public static final String DELETE_OBJECTS_BASE_URI = ESCIDOC_SERVICE_URI + ADMIN_URI + "/admin/deleteobjects";
+    public static final String DELETE_OBJECTS_BASE_URI = ADMIN_URI + "/admin/deleteobjects";
 
-    public static final String LOAD_EXAMPLES_BASE_URI = ESCIDOC_SERVICE_URI + ADMIN_URI + "/admin/load-examples";
+    public static final String LOAD_EXAMPLES_BASE_URI = ADMIN_URI + "/admin/load-examples";
 
-    public static final String REINDEX_BASE_URI = ESCIDOC_SERVICE_URI + ADMIN_URI + "/admin/reindex";
+    public static final String REINDEX_BASE_URI = ADMIN_URI + "/admin/reindex";
 
-    public static final String LICENSE_TYPE_BASE_URI =
-        ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/license-type";
+    public static final String LICENSE_TYPE_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/license-type";
 
-    public static final String LICENSE_TYPES_BASE_URI =
-        ESCIDOC_SERVICE_URI + INSTITUTIONAL_REPOSITORY_URI + "/license-types";
+    public static final String LICENSE_TYPES_BASE_URI = INSTITUTIONAL_REPOSITORY_URI + "/license-types";
 
-    public static final String MD_SCHEMA_BASE_URI = ESCIDOC_SERVICE_URI + "/mm/mdschema";
+    public static final String MD_SCHEMA_BASE_URI = "/mm/mdschema";
 
-    public static final String ORGANIZATIONAL_UNIT_BASE_URI = ESCIDOC_SERVICE_URI + "/oum/organizational-unit";
+    public static final String ORGANIZATIONAL_UNIT_BASE_URI = "/oum/organizational-unit";
 
-    public static final String ORGANIZATIONAL_UNITS_BASE_URI = ESCIDOC_SERVICE_URI + "/oum/organizational-units";
+    public static final String ORGANIZATIONAL_UNITS_BASE_URI = "/oum/organizational-units";
 
-    public static final String CONTENT_MODEL_BASE_URI = ESCIDOC_SERVICE_URI + "/cmm/content-model";
+    public static final String CONTENT_MODEL_BASE_URI = "/cmm/content-model";
 
-    public static final String CONTENT_MODELS_BASE_URI = ESCIDOC_SERVICE_URI + "/cmm/content-models";
+    public static final String CONTENT_MODELS_BASE_URI = "/cmm/content-models";
 
     public static final String PDP_BASE_URI = AA_BASE_URI + "/pdp";
 
@@ -159,7 +150,7 @@ public class Constants {
 
     public static final String ROLES_BASE_URI = AA_BASE_URI + "/roles";
 
-    public static final String STAGING_FILE_BASE_URI = ESCIDOC_SERVICE_URI + "/st/staging-file";
+    public static final String STAGING_FILE_BASE_URI = "/st/staging-file";
 
     public static final String USER_ACCOUNT_BASE_URI = AA_BASE_URI + "/user-account";
 
@@ -171,32 +162,27 @@ public class Constants {
 
     public static final String USER_GROUPS_BASE_URI = AA_BASE_URI + "/user-groups";
 
-    public static final String USER_MANAGEMENT_WRAPPER_BASE_URI = ESCIDOC_SERVICE_URI + "/aa";
+    public static final String USER_MANAGEMENT_WRAPPER_BASE_URI = "/aa";
 
-    public static final String STATISTIC_DATA_BASE_URI = ESCIDOC_SERVICE_URI + STATISTIC_URI + "/statistic-data";
+    public static final String STATISTIC_DATA_BASE_URI = STATISTIC_URI + "/statistic-data";
 
-    public static final String STATISTIC_AGGREGATION_DEFINITION_BASE_URI =
-        ESCIDOC_SERVICE_URI + STATISTIC_URI + "/aggregation-definition";
+    public static final String STATISTIC_AGGREGATION_DEFINITION_BASE_URI = STATISTIC_URI + "/aggregation-definition";
 
-    public static final String STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI =
-        ESCIDOC_SERVICE_URI + STATISTIC_URI + "/aggregation-definitions";
+    public static final String STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI = STATISTIC_URI + "/aggregation-definitions";
 
-    public static final String STATISTIC_REPORT_DEFINITION_BASE_URI =
-        ESCIDOC_SERVICE_URI + STATISTIC_URI + "/report-definition";
+    public static final String STATISTIC_REPORT_DEFINITION_BASE_URI = STATISTIC_URI + "/report-definition";
 
-    public static final String STATISTIC_REPORT_DEFINITIONS_BASE_URI =
-        ESCIDOC_SERVICE_URI + STATISTIC_URI + "/report-definitions";
+    public static final String STATISTIC_REPORT_DEFINITIONS_BASE_URI = STATISTIC_URI + "/report-definitions";
 
-    public static final String STATISTIC_REPORT_BASE_URI = ESCIDOC_SERVICE_URI + STATISTIC_URI + "/report";
+    public static final String STATISTIC_REPORT_BASE_URI = STATISTIC_URI + "/report";
 
-    public static final String STATISTIC_SCOPE_BASE_URI = ESCIDOC_SERVICE_URI + STATISTIC_URI + "/scope";
+    public static final String STATISTIC_SCOPE_BASE_URI = STATISTIC_URI + "/scope";
 
-    public static final String STATISTIC_SCOPES_BASE_URI = ESCIDOC_SERVICE_URI + STATISTIC_URI + "/scopes";
+    public static final String STATISTIC_SCOPES_BASE_URI = STATISTIC_URI + "/scopes";
 
-    public static final String STATISTIC_PREPROCESSING_BASE_URI =
-        ESCIDOC_SERVICE_URI + STATISTIC_URI + "/preprocessing";
+    public static final String STATISTIC_PREPROCESSING_BASE_URI = STATISTIC_URI + "/preprocessing";
 
-    public static final String UNSECURED_ACTIONS_BASE_URI = ESCIDOC_SERVICE_URI + "/aa/unsecured-actions";
+    public static final String UNSECURED_ACTIONS_BASE_URI = "/aa/unsecured-actions";
 
     public static final String TEST_DATA_BASE_URI = "/testdata/testDocuments";
 
@@ -363,7 +349,7 @@ public class Constants {
     // *****************************************************************
     // * Login specific constants
     // *
-    public static final String UM_LOGIN_BASE_URI = ESCIDOC_SERVICE_URI + "/login";
+    public static final String UM_LOGIN_BASE_URI = "/login";
 
     public static final String UM_LOGIN_COOKIE = "escidocCookie";
 

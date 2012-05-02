@@ -537,7 +537,7 @@ public final class HttpHelper {
         client.getCookieStore().clear();
 
         final String loginServletUrl =
-            EscidocTestBase.getBaseUrl() + Constants.LOGIN_URI + "?target="
+            EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.LOGIN_URI + "?target="
                 + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
         final HttpGet loginMethod = new HttpGet(loginServletUrl);
         httpRes = client.execute(loginMethod);
@@ -560,8 +560,8 @@ public final class HttpHelper {
 
         // Second step: Send filled login form
         final HttpPost postMethod =
-            new HttpPost(
-                (EscidocTestBase.getBaseUrl() + Constants.AA_BASE_URI + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
+            new HttpPost((EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.AA_BASE_URI
+                + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
         formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
@@ -583,7 +583,8 @@ public final class HttpHelper {
         if (expectedAuthenticationFailure) {
             // redirect to repeated login page
             assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
-                EscidocTestBase.getBaseUrl() + Constants.LOGIN_URI + "/login-repeated.html", retrievedRedirectUrl);
+                EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.LOGIN_URI
+                    + "/login-repeated.html", retrievedRedirectUrl);
             return httpRes;
         }
         else {
@@ -656,11 +657,11 @@ public final class HttpHelper {
             // first step: Call the login servlet
             final String logoutServletUrl;
             if (targetUrl == null) {
-                logoutServletUrl = EscidocTestBase.getBaseUrl() + "/aa/logout";
+                logoutServletUrl = EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/aa/logout";
             }
             else {
                 logoutServletUrl =
-                    EscidocTestBase.getBaseUrl() + "/aa/logout?target="
+                    EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/aa/logout?target="
                         + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             }
             final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
