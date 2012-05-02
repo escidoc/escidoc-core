@@ -271,7 +271,7 @@ public interface ItemRestService {
 
     @GET
     @Path("/{id}/resources/{name}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.TEXT_XML)
     Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OperationNotFoundException;
