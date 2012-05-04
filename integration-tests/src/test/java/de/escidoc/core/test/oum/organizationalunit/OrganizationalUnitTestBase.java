@@ -207,8 +207,8 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 final String parentId = parentValues[i];
                 final String parentTitle = parentValues[i + numberParents];
                 final Element parentRef =
-                    createReferencingElementNode(document, SREL_NS_URI, srelPrefix, NAME_PARENT,
-                        xlinkPrefix, parentTitle, "/oum/organizational-unit/" + parentId, withRestReadOnly);
+                    createReferencingElementNode(document, SREL_NS_URI, srelPrefix, NAME_PARENT, xlinkPrefix,
+                        parentTitle, "/oum/organizational-unit/" + parentId, withRestReadOnly);
                 parents.appendChild(parentRef);
             }
         }
