@@ -33,6 +33,7 @@ import org.escidoc.core.domain.sm.report.ReportTO;
 import org.escidoc.core.domain.sm.report.parameter.ReportParametersTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -49,6 +50,7 @@ import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class ReportRestServiceImpl implements ReportRestService {
 
     @Autowired

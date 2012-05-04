@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
@@ -48,6 +49,7 @@ import java.io.IOException;
  * 
  */
 @Service
+@Transactional
 public class StagingRestServiceImpl implements StagingRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(StagingRestServiceImpl.class);

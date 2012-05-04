@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.ItemsRestService;
@@ -43,6 +44,7 @@ import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
  * 
  */
 @Service
+@Transactional
 public class ItemsRestServiceImpl implements ItemsRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ItemsRestServiceImpl.class);

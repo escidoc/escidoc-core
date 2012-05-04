@@ -35,6 +35,7 @@ import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.RolesRestService;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
@@ -49,6 +50,7 @@ import java.util.Map;
 /**
  * @author Michael Hoppe
  */
+@Transactional
 public class RolesRestServiceImpl implements RolesRestService {
 
     @Autowired

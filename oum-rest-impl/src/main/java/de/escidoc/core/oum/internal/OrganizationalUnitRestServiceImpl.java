@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
@@ -69,6 +70,7 @@ import java.io.InputStream;
  * 
  */
 @Service
+@Transactional
 public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(OrganizationalUnitRestServiceImpl.class);

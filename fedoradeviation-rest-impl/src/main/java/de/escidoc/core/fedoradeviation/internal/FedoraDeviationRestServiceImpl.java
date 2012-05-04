@@ -37,6 +37,7 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.fedoradeviation.FedoraDeviationRestService;
@@ -47,6 +48,7 @@ import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestService {
 
     @Autowired

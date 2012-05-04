@@ -43,6 +43,7 @@ import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.PathParam;
 
@@ -50,6 +51,7 @@ import javax.ws.rs.PathParam;
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class AdminRestServiceImpl implements AdminRestService {
 
     @Autowired

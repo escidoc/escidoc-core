@@ -36,6 +36,7 @@ import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.GrantsRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
@@ -52,6 +53,7 @@ import java.util.Map;
  * 
  */
 @Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Transactional
 public class GrantsRestServiceImpl implements GrantsRestService {
 
     @Autowired

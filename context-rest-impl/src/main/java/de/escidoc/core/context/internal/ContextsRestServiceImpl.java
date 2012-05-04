@@ -12,6 +12,7 @@ import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -22,6 +23,7 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
  * @author Marko Voss
  * 
  */
+@Transactional
 public class ContextsRestServiceImpl implements ContextsRestService {
 
     @Autowired

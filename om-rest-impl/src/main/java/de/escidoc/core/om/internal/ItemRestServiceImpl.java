@@ -75,6 +75,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.escidoc.core.domain.item.ItemTO;
 import org.escidoc.core.domain.item.ItemPropertiesTO;
@@ -101,6 +102,7 @@ import javax.ws.rs.core.*;
  * 
  */
 @Service
+@Transactional
 public class ItemRestServiceImpl implements ItemRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ItemRestServiceImpl.class);

@@ -33,6 +33,7 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -58,6 +59,7 @@ import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
  * @author ?, SWA
  * 
  */
+@Transactional
 public class ContentRelationRestServiceImpl implements ContentRelationRestService {
 
     @Autowired

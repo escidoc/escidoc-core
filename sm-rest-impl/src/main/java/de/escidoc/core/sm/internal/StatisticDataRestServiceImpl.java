@@ -32,6 +32,7 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.sd.StatisticRecordTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
@@ -44,6 +45,7 @@ import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class StatisticDataRestServiceImpl implements StatisticDataRestService {
 
     @Autowired

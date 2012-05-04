@@ -41,6 +41,7 @@ import org.escidoc.core.domain.taskparam.selectors.add.AddSelectorsTaskParamTO;
 import org.escidoc.core.domain.taskparam.selectors.remove.RemoveSelectorsTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.UserGroupRestService;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
@@ -70,6 +71,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class UserGroupRestServiceImpl implements UserGroupRestService {
 
     @Autowired

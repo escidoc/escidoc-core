@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -60,6 +61,7 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
  * 
  */
 @Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Transactional
 public class ContextRestServiceImpl implements ContextRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ContextRestServiceImpl.class);

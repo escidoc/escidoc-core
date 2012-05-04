@@ -34,6 +34,7 @@ import org.escidoc.core.domain.aa.pdp.result.ResultsTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.PolicyDecisionPointRestService;
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
@@ -50,6 +51,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  *
  */
 @Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Transactional
 public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRestService {
 
     @Autowired

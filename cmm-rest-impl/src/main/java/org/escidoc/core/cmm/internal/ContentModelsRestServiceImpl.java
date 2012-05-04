@@ -30,6 +30,7 @@ import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -40,6 +41,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author SWA
  * 
  */
+@Transactional
 public class ContentModelsRestServiceImpl implements ContentModelsRestService {
 
     @Autowired

@@ -32,6 +32,7 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.ad.AggregationDefinitionTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -48,6 +49,7 @@ import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterfa
  * @author Michael Hoppe
  *
  */
+@Transactional
 public class AggregationDefinitionRestServiceImpl implements AggregationDefinitionRestService {
 
     @Autowired
