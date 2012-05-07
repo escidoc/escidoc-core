@@ -48,7 +48,6 @@ import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
 import org.escidoc.core.domain.taskparam.updatepassword.UpdatePasswordTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.UserAccountRestService;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
@@ -80,7 +79,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author Michael Hoppe
  *
  */
-@Transactional
 public class UserAccountRestServiceImpl implements UserAccountRestService {
 
     @Autowired

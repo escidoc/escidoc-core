@@ -68,6 +68,15 @@
   </filter>
 
   <filter>
+    <filter-name>hibernateFilter</filter-name>
+    <filter-class>de.escidoc.core.common.persistence.hibernate.CustomHibernateSessionFilter</filter-class>
+    <init-param>
+      <param-name>sessionFactoryBeanName</param-name>
+      <param-value>escidoc-core.SessionFactory</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
     <filter-name>authorizationFilter</filter-name>
     <filter-class>de.escidoc.core.aa.servlet.AuthorizationFilter</filter-class>
   </filter>
@@ -113,6 +122,11 @@
   <filter-mapping>
     <filter-name>springSecurityOpenidFilterChain</filter-name>
     <url-pattern>/aa/openid/j_spring_openid_security_check/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>hibernateFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <filter-mapping>

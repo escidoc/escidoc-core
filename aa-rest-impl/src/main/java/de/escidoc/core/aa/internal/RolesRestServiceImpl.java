@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.aa.internal;
 
+import java.util.Map;
+
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.domain.service.ServiceUtility;
@@ -35,7 +37,6 @@ import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.aa.RolesRestService;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
@@ -45,12 +46,9 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import java.util.Map;
-
 /**
  * @author Michael Hoppe
  */
-@Transactional
 public class RolesRestServiceImpl implements RolesRestService {
 
     @Autowired

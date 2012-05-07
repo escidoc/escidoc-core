@@ -82,7 +82,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface #create(org.escidoc.core.utils.io.EscidocBinaryContent)
      */
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String create(final EscidocBinaryContent binaryContent) throws MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SqlDatabaseSystemException, WebserverSystemException {
         final StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);

@@ -28,7 +28,6 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.version.history.VersionHistoryTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -52,7 +51,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author SWA
  * 
  */
-@Transactional
 public class ContentModelRestServiceImpl implements ContentModelRestService {
 
     @Autowired

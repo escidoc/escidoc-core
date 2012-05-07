@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -47,7 +46,6 @@ import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
  * 
  */
 @Service
-@Transactional
 public class ContainersRestServiceImpl implements ContainersRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ContainersRestServiceImpl.class);

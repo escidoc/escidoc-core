@@ -19,6 +19,16 @@
  */
 package org.escidoc.core.tme.internal;
 
+import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.tme.RequestTO;
+import org.escidoc.core.domain.tme.jhove.JhoveTO;
+import org.escidoc.core.tme.TmeRestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -27,17 +37,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.tme.service.JhoveHandler;
-import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.tme.RequestTO;
-import org.escidoc.core.domain.tme.jhove.JhoveTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import org.escidoc.core.tme.TmeRestService;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
@@ -46,7 +45,6 @@ import org.escidoc.core.tme.TmeRestService;
  * 
  */
 @Service
-@Transactional
 public class TmeRestServiceImpl implements TmeRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(TmeRestServiceImpl.class);

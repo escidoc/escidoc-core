@@ -32,7 +32,6 @@ import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sm.rd.ReportDefinitionTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -51,7 +50,6 @@ import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
  * @author Michael Hoppe
  *
  */
-@Transactional
 public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestService {
 
     @Autowired

@@ -19,7 +19,9 @@
  */
 package de.escidoc.core.om.internal;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
@@ -34,7 +36,7 @@ import org.escidoc.core.domain.ou.ParentsTO;
 import org.escidoc.core.domain.relations.RelationsTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sru.*;
+import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
 import org.escidoc.core.domain.taskparam.members.MembersTaskParamTO;
@@ -50,7 +52,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -93,7 +94,6 @@ import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
  * 
  */
 @Service
-@Transactional
 public class ContainerRestServiceImpl implements ContainerRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ContainerRestServiceImpl.class);

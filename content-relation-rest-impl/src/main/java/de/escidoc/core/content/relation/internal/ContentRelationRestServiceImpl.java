@@ -21,8 +21,8 @@
 package de.escidoc.core.content.relation.internal;
 
 import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
+import org.escidoc.core.domain.content.relation.ContentRelationTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
 import org.escidoc.core.domain.predicate.list.PredicatesTO;
@@ -33,7 +33,6 @@ import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTask
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -59,7 +58,6 @@ import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
  * @author ?, SWA
  * 
  */
-@Transactional
 public class ContentRelationRestServiceImpl implements ContentRelationRestService {
 
     @Autowired

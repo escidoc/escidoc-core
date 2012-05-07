@@ -19,6 +19,43 @@
  */
 package de.escidoc.core.om.internal;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.rmi.RemoteException;
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+
+import org.apache.cxf.jaxrs.ext.MessageContext;
+import org.escidoc.core.domain.components.ComponentPropertiesTO;
+import org.escidoc.core.domain.components.ComponentTO;
+import org.escidoc.core.domain.components.ComponentsTO;
+import org.escidoc.core.domain.content.stream.ContentStreamTO;
+import org.escidoc.core.domain.content.stream.ContentStreamsTO;
+import org.escidoc.core.domain.item.ItemPropertiesTO;
+import org.escidoc.core.domain.item.ItemResourcesTO;
+import org.escidoc.core.domain.item.ItemTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
+import org.escidoc.core.domain.ou.ParentsTO;
+import org.escidoc.core.domain.relations.RelationsTO;
+import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.service.ServiceUtility;
+import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
+import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
+import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -60,40 +97,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationE
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.ItemRestService;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
-import org.apache.cxf.jaxrs.ext.MessageContext;
-import org.escidoc.core.domain.result.ResultTO;
-import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
-import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
-import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
-import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
-import org.escidoc.core.utils.io.IOUtils;
-import org.escidoc.core.utils.io.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import org.escidoc.core.domain.item.ItemTO;
-import org.escidoc.core.domain.item.ItemPropertiesTO;
-import org.escidoc.core.domain.item.ItemResourcesTO;
-import org.escidoc.core.domain.components.ComponentTO;
-import org.escidoc.core.domain.components.ComponentsTO;
-import org.escidoc.core.domain.components.ComponentPropertiesTO;
-import org.escidoc.core.domain.content.stream.ContentStreamTO;
-import org.escidoc.core.domain.content.stream.ContentStreamsTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-
-import java.io.*;
-import java.rmi.RemoteException;
-
-import javax.ws.rs.core.*;
 
 /**
  * REST Service Implementation for Item.
@@ -102,7 +105,6 @@ import javax.ws.rs.core.*;
  * 
  */
 @Service
-@Transactional
 public class ItemRestServiceImpl implements ItemRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ItemRestServiceImpl.class);

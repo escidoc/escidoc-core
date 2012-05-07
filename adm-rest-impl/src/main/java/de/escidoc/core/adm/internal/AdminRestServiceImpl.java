@@ -28,13 +28,8 @@
  */
 package de.escidoc.core.adm.internal;
 
-import de.escidoc.core.adm.AdminRestService;
-import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.system.SystemException;
+import javax.ws.rs.PathParam;
+
 import org.escidoc.core.domain.properties.java.JavaUtilPropertiesTO;
 import org.escidoc.core.domain.result.ResultTO;
 import org.escidoc.core.domain.sb.IndexConfigurationTO;
@@ -43,15 +38,19 @@ import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.ws.rs.PathParam;
+import de.escidoc.core.adm.AdminRestService;
+import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
  *
  */
-@Transactional
 public class AdminRestServiceImpl implements AdminRestService {
 
     @Autowired
