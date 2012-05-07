@@ -293,12 +293,11 @@
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>
 				<prop:content-category>pre-print</prop:content-category>
-				<prop:file-name>newlogo2.jpg</prop:file-name>
+				<prop:file-name>1.jpeg</prop:file-name>
 				<prop:mime-type>application/octet-stream</prop:mime-type>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed"/>
-				<!-- http://localhost:8082/fedora/images/newlogo2.jpg -->
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" storage="internal-managed"/>
 		<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
 				<escidocMetadataRecords:md-record

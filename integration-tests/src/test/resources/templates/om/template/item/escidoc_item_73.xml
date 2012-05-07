@@ -119,7 +119,7 @@
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:title="the content"
-				prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg" />
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" />
 			<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
@@ -188,7 +188,7 @@
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:title="the content"
-				prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg" />
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" />
 			<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.3"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"

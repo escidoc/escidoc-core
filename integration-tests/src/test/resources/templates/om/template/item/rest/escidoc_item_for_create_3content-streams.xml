@@ -25,7 +25,7 @@
 	<content-streams:content-streams
 		xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7">
 		<content-streams:content-stream name="internal_xml"
-			mime-type="text/xml" prefix-xlink:href="http://localhost:8082/ir/xml/EPFull_1277907.xml"
+			mime-type="text/xml" prefix-xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1277907.xml"
 			storage="internal-managed" />
 		<content-streams:content-stream name="redirect_image"
 			prefix-xlink:type="simple" prefix-xlink:title="An image"

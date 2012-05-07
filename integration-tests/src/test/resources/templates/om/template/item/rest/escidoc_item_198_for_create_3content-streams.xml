@@ -132,7 +132,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<content-streams:content-streams xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7">
-		<content-streams:content-stream name="internal_xml" mime-type="text/xml" prefix-xlink:href="http://localhost:8082/ir/xml/EPFull_1277907.xml"
+		<content-streams:content-stream name="internal_xml" mime-type="text/xml" prefix-xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1277907.xml"
 			storage="internal-managed"/>
 		<content-streams:content-stream 
 				name="redirect_image" prefix-xlink:type="simple" prefix-xlink:title="An image" 
@@ -307,11 +307,11 @@
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>
 				<prop:content-category>image</prop:content-category>
-				<prop:file-name>newlogo2.jpg</prop:file-name>
+				<prop:file-name>1.jpeg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed"/>
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" storage="internal-managed"/>
 				<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
 				<escidocMetadataRecords:md-record
@@ -449,7 +449,6 @@
 					<md2-content/>
 				</escidocMetadataRecords:md-record>
 			</escidocMetadataRecords:md-records>
-				<!-- http://localhost:8082/fedora/images/newlogo2.jpg -->
 		</escidocComponents:component>
 	</escidocComponents:components>
 	<relations:relations />

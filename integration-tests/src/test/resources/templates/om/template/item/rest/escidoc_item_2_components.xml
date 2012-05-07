@@ -149,7 +149,7 @@
 				
 			</escidocComponents:properties>
 			<escidocComponents:content  prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed"/>
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" storage="internal-managed"/>
 				<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
 				<escidocMetadataRecords:md-record
@@ -287,7 +287,6 @@
 					<md2-content/>
 				</escidocMetadataRecords:md-record>
 			</escidocMetadataRecords:md-records>
-				<!--  http://localhost:8082/fedora/images/newlogo2.jpg -->
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties
@@ -303,8 +302,7 @@
 				
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed"/>
-				<!--  http://localhost:8082/fedora/images/newlogo2.jpg -->
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" storage="internal-managed"/>
 		<escidocMetadataRecords:md-records
 				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
 				<escidocMetadataRecords:md-record

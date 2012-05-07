@@ -157,12 +157,11 @@
 			<escidocComponents:properties>
 				<escidocComponents:visibility>public</escidocComponents:visibility>
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
-				<escidocComponents:file-name>newlogo2.jpg</escidocComponents:file-name>
+				<escidocComponents:file-name>1.jpeg</escidocComponents:file-name>
 				<escidocComponents:mime-type>image/jpeg</escidocComponents:mime-type>
 			</escidocComponents:properties>
 			<escidocComponents:content
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" />
-			<!-- http://localhost:8082/fedora/images/newlogo2.jpg -->
+				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" />
 		</escidocComponents:component>
 	</escidocComponents:components>
 	<prefix-relations:relations>

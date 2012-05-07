@@ -209,7 +209,7 @@
 				<escidocComponents:upload-method>manual</escidocComponents:upload-method>
 			</escidocComponents:properties>
 				<!-- This is supposed to be the Link to the binary content -->
-			<escidocComponents:content prefix-xlink:type="simple" prefix-xlink:title="Content" prefix-xlink:href="http://escidev6:8082/images/newlogo2.jpg"/>
+			<escidocComponents:content prefix-xlink:type="simple" prefix-xlink:title="Content" prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg"/>
 			
 				
 			
