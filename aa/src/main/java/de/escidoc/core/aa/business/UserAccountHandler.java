@@ -1574,9 +1574,7 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         UserAccountNotFoundException {
 
         securityHelper.clearUserGroups(userId);
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        userAccount.touch();
-        dao.update(userAccount);
+        retrieveUserAccountById(userId).touch();
     }
 
     /**
@@ -1800,7 +1798,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         sendUserAccountUpdateEvent(userId);
 
         userAccount.touch();
-        dao.update(userAccount);
 
         return renderer.renderPreference(userAccount, preference);
     }
@@ -1893,7 +1890,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         sendUserAccountUpdateEvent(userId);
 
         userAccount.touch();
-        dao.update(userAccount);
 
         return renderer.renderPreference(userAccount, preference);
     }
@@ -1921,7 +1917,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
                 // update user in policy cache; rights may depend on preferences
                 sendUserAccountUpdateEvent(userId);
                 userAccount.touch();
-                dao.update(userAccount);
                 return;
             }
         }
@@ -2009,7 +2004,6 @@ public class UserAccountHandler implements UserAccountHandlerInterface {
         sendUserAccountUpdateEvent(userId);
 
         userAccount.touch();
-        dao.update(userAccount);
 
         // TODO create XML via renderPreference
         return renderer.renderPreferences(userAccount, currentPreferences);
