@@ -31,6 +31,7 @@
         <include>org.escidoc:fedoragsearch:zip:sources</include>
         <include>org.escidoc:srw:zip:sources</include>
         <include>org.escidoc:SRW:zip:sources</include>
+        <include>org.escidoc:escidoc-analyzers:zip:sources</include>
       </includes>
     </dependencySet>
   </dependencySets>
