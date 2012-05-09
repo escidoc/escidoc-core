@@ -45,6 +45,13 @@
       <type>zip</type>
       <version>${srw.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.escidoc</groupId>
+      <artifactId>escidoc-analyzers</artifactId>
+      <classifier>sources</classifier>
+      <type>zip</type>
+      <version>${escidoc-analyzers.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
