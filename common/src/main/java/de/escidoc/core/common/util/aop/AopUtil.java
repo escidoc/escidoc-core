@@ -28,17 +28,19 @@ package de.escidoc.core.common.util.aop;
  */
 public final class AopUtil {
 
-    public static final int PRECEDENCE_STATISTIC_INTERCEPTOR = 0;
+    public static final int PRECEDENCE_HIBERNATE_INTERCEPTOR = 0;
 
-    public static final int PRECEDENCE_AUTHENTICATION_INTERCEPTOR = 1;
+    public static final int PRECEDENCE_STATISTIC_INTERCEPTOR = 1;
 
-    public static final int PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR = 2;
+    public static final int PRECEDENCE_AUTHENTICATION_INTERCEPTOR = 2;
 
-    public static final int PRECEDENCE_XML_VALIDATION_INTERCEPTOR = 3;
+    public static final int PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR = 3;
 
-    public static final int PRECEDENCE_SECURITY_INTERCEPTOR = 4;
+    public static final int PRECEDENCE_XML_VALIDATION_INTERCEPTOR = 4;
 
-    public static final int PRECEDENCE_XML_HEADER_INTERCEPTOR = 5;
+    public static final int PRECEDENCE_SECURITY_INTERCEPTOR = 5;
+
+    public static final int PRECEDENCE_XML_HEADER_INTERCEPTOR = 6;
 
     /**
      * Private constructor to prevent initialization.

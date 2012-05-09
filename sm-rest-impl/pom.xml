@@ -41,6 +41,10 @@
         <configuration>
           <aspectLibraries>
             <aspectLibrary>
+              <groupId>org.escidoc.core</groupId>
+              <artifactId>common</artifactId>
+            </aspectLibrary>
+            <aspectLibrary>
               <groupId>org.springframework</groupId>
               <artifactId>spring-aspects</artifactId>
             </aspectLibrary>

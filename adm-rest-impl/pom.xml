@@ -35,28 +35,32 @@
     </parent>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <configuration>
-                    <aspectLibraries>
-                        <aspectLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-aspects</artifactId>
-						</aspectLibrary>
-                        <aspectLibrary>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>policies</artifactId>
-						</aspectLibrary>
-						<aspectLibrary>
-							<groupId>org.escidoc.core</groupId>
-							<artifactId>aspects</artifactId>
-						</aspectLibrary>
-                    </aspectLibraries>
-                </configuration>
-            </plugin>
-        </plugins>
+  <plugins>
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>aspectj-maven-plugin</artifactId>
+      <configuration>
+        <aspectLibraries>
+          <aspectLibrary>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>common</artifactId>
+          </aspectLibrary>
+          <aspectLibrary>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+          </aspectLibrary>
+          <aspectLibrary>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>policies</artifactId>
+          </aspectLibrary>
+          <aspectLibrary>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>aspects</artifactId>
+          </aspectLibrary>
+        </aspectLibraries>
+      </configuration>
+    </plugin>
+  </plugins>
     </build>
 
     <dependencies>

@@ -28,6 +28,22 @@
  */
 package de.escidoc.core.oai.business.persistence.hibernate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+
+import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -36,21 +52,6 @@ import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.oai.business.filter.SetDefinitionFilter;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.persistence.SetDefinitionDaoInterface;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * @author Rozita Friedman

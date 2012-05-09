@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.sm.business.persistence.hibernate;
 
+import java.util.Collection;
+import java.util.Date;
+
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface;
-import org.hibernate.SessionFactory;
-
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * Database-Backend for the PreprocessingLogs database-table.

@@ -69,6 +69,13 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="statisticService" ref="de.escidoc.core.statistic.StatisticService"/>
     </bean>
 
+    <bean id="common.HibernateInterceptor" class="de.escidoc.core.common.util.aop.HibernateInterceptorAdvice"
+          factory-method="aspectOf" lazy-init="false">
+         <property name="sessionFactory">
+           <ref bean="escidoc-core.SessionFactory"/>
+         </property>
+    </bean>
+
     <bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
           factory-method="aspectOf" lazy-init="false">
         <property name="xmlUtility">

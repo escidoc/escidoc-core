@@ -28,19 +28,19 @@
  */
 package de.escidoc.core.sm.business.persistence.hibernate;
 
+import java.util.Collection;
+
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataAccessException;
+
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.sm.business.filter.ReportDefinitionFilter;
 import de.escidoc.core.sm.business.persistence.SmReportDefinitionsDaoInterface;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.dao.DataAccessException;
-
-import java.util.Collection;
 
 /**
  * Database-Backend for the Report-Definitions database-table.

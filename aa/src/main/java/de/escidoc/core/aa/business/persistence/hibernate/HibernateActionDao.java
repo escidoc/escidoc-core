@@ -28,15 +28,15 @@
  */
 package de.escidoc.core.aa.business.persistence.hibernate;
 
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import de.escidoc.core.aa.business.persistence.ActionDaoInterface;
 import de.escidoc.core.aa.business.persistence.UnsecuredActionList;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
-
-import java.util.List;
 
 /**
  * Escidoc action data access object using hibernate.

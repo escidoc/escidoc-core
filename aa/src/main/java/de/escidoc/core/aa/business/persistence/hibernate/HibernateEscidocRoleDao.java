@@ -28,6 +28,23 @@
  */
 package de.escidoc.core.aa.business.persistence.hibernate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.hibernate.HibernateException;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+
 import de.escidoc.core.aa.business.filter.RoleFilter;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
@@ -38,23 +55,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.common.util.list.ListSorting;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.Subqueries;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * Escidoc role data access object using hibernate.
