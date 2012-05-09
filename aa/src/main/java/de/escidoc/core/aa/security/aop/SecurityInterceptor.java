@@ -75,7 +75,7 @@ import java.util.regex.Pattern;
  * @author Roland Werner (Accenture)
  */
 @Aspect
-@DeclarePrecedence("de.escidoc.core.common.util.aop.HibernateInterceptorAdvice, "
+@DeclarePrecedence("de.escidoc.core.common.util.aop.HibernateInterceptor, "
     + "org.escidoc.core.aspects.TraceInterceptor, " + "de.escidoc.core.common.util.aop.ParameterCheckInterceptor, "
     + "de.escidoc.core.common.util.aop.XmlValidationInterceptor, "
     + "de.escidoc.core.aa.security.aop.AuthenticationInterceptor, "
