@@ -1058,6 +1058,7 @@
     <escidoc.fedoragsearch.version>1.4.27</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.4.18</escidoc.srw.version>
     <srw.version>1.4.9</srw.version>
+    <escidoc-analyzers.version>1.4.4</escidoc-analyzers.version>
     <escidoc.saxon.version>1.0.7</escidoc.saxon.version>
     <migration-tool.version>1.4.2</migration-tool.version>
     <escidoc.oaiprovider.version>0.0.10</escidoc.oaiprovider.version>
