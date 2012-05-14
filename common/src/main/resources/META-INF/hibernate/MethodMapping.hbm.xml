@@ -144,7 +144,7 @@
 
     <set
         name="invocationMappings"
-        lazy="true"
+        lazy="false"
         inverse="false"
 		cascade="all,delete-orphan"
 

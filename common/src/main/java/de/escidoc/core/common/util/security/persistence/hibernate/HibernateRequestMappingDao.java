@@ -22,7 +22,6 @@ package de.escidoc.core.common.util.security.persistence.hibernate;
 
 import java.util.List;
 
-import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -57,13 +56,6 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport implements R
                 Restrictions.eq("methodName", methodName)).addOrder(Order.desc("execBefore"));
         final List<MethodMapping> methodMappings = getHibernateTemplate().findByCriteria(criteria);
 
-        // initialize the invocation mappings (as they are always needed but
-        // middlegen does not allow to specify it as lazy="false" because it
-        // does not store this option in the properties file.
-        for (final MethodMapping methodMapping : methodMappings) {
-            getSession().lock(methodMapping, LockMode.NONE);
-            getHibernateTemplate().initialize(methodMapping.getInvocationMappings());
-        }
         return methodMappings;
     }
 
