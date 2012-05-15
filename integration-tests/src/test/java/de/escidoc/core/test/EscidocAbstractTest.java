@@ -950,9 +950,9 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     public void assertXmlValidParents(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
-        assertAllPlaceholderResolved(xmlData);
+        assertXmlValidOrganizationalUnit(xmlData);
+//        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
+//        assertAllPlaceholderResolved(xmlData);
     }
 
     public void assertXmlValidContainerRefList(final String xmlData) throws Exception {
