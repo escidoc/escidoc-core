@@ -59,7 +59,7 @@ public class HibernateInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_HIBERNATE_INTERCEPTOR;
     }
 
-    @Around("execution(public * de.escidoc.core.*.internal.*RestServiceImpl.*(..))")
+    @Around("execution(public * de.escidoc.core..internal.*RestServiceImpl.*(..))")
     public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean participate = false;
         if (TransactionSynchronizationManager.hasResource(sessionFactory)) {
