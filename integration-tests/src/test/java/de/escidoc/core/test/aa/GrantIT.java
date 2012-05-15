@@ -1188,7 +1188,6 @@ public class GrantIT extends GrantTestBase {
      *
      * @throws Exception If anything fails.
      */
-    @Test(expected = XmlSchemaValidationException.class)
     public void testAARvg7_2() throws Exception {
         Document createdDocument = createGrantSuccessfully("escidoc_grant_for_create.xml");
         String grantId = getObjidValue(createdDocument);

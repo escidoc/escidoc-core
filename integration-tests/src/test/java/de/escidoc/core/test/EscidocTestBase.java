@@ -254,7 +254,7 @@ public abstract class EscidocTestBase {
      * Pattern used in modfyNamespacePrefixes to find and replace prefixes.
      */
     private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_REPLACE_PREFIXES =
-        Pattern.compile("(</{0,1}|[\\s])([a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
+        Pattern.compile("(</{0,1}|[\\s])([0-9a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
 
     /**
      * Pattern used in modfyNamespacePrefixes to fix namespace declarations after changing prefixes.
@@ -1405,12 +1405,15 @@ public abstract class EscidocTestBase {
                 Node expectedAttribute = expectedAttributes.item(i);
                 String expectedAttributeNamespace = expectedAttribute.getNamespaceURI();
                 Node toBeAssertedAttribute = null;
+                final String expectedAttributeNodeName = expectedAttribute.getNodeName();
                 if (expectedAttributeNamespace != null) {
                     final String localName = expectedAttribute.getLocalName();
                     toBeAssertedAttribute =
                         toBeAssertedAttributes.getNamedItemNS(expectedAttributeNamespace, localName);
-                    assertNotNull(message + " Expected attribute " + expectedAttribute.getNodeName(),
-                        toBeAssertedAttribute);
+                    if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
+                            toBeAssertedAttribute);
+                    }
                 }
                 else {
                     // not namespace aware parsed. Attributes may have different
@@ -1420,17 +1423,20 @@ public abstract class EscidocTestBase {
                     // attribute by the node name. If this fails, xpath
                     // selection is used after extracting the expected
                     // attribute name
-                    final String expectedAttributeNodeName = expectedAttribute.getNodeName();
                     toBeAssertedAttribute = toBeAssertedAttributes.getNamedItem(expectedAttributeNodeName);
                     if (toBeAssertedAttribute == null) {
                         final String attributeName = getLocalName(expectedAttribute);
                         final String attributeXpath = "@" + attributeName;
                         toBeAssertedAttribute = selectSingleNode(toBeAsserted, attributeXpath);
                     }
-                    assertNotNull(message + " Expected attribute " + expectedAttributeNodeName, toBeAssertedAttribute);
+                    if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName, toBeAssertedAttribute);
+                    }
                 }
-                assertEquals(message + " Attribute value mismatch [" + expectedAttribute.getNodeName() + "] ",
-                    expectedAttribute.getTextContent(), toBeAssertedAttribute.getTextContent());
+                if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                    assertEquals(message + " Attribute value mismatch [" + expectedAttribute.getNodeName() + "] ",
+                        expectedAttribute.getTextContent(), toBeAssertedAttribute.getTextContent());
+                }
             }
         }
         // As mixed content (text + child elements) is not supported,
