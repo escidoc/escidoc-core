@@ -35,6 +35,7 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
@@ -47,7 +48,11 @@ import org.escidoc.core.domain.exception.ExceptionTOFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ctc.wstx.exc.WstxParsingException;
+
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.security.SecurityException;
@@ -137,6 +142,9 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
             else if (e instanceof EscidocException) {
                 return doDeclineHttpRequest((EscidocException) e);
             }
+            else if (e.getCause() != null && e.getCause() instanceof WstxParsingException) {
+                return doDeclineHttpRequest(new XmlCorruptedException(e.getMessage(), e));
+            }
             else if (e instanceof UndeclaredThrowableException) {
                 final Throwable undeclaredThrowable = ((UndeclaredThrowableException) e).getUndeclaredThrowable();
                 if (undeclaredThrowable.getClass().getName().equals(AuthenticationException.class.getName())) {
@@ -146,6 +154,13 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
                     return doDeclineHttpRequest(new WebserverSystemException(StringUtility.format(
                         "Undeclared throwable during method execution", undeclaredThrowable.getClass().getName()),
                         undeclaredThrowable));
+                }
+            }
+            else if (e instanceof WebApplicationException) {
+                if (((WebApplicationException) e).getResponse() != null
+                    && ((WebApplicationException) e).getResponse().getStatus() >= 400 && ((WebApplicationException) e)
+                        .getResponse().getStatus() < 407) {
+                    return doDeclineHttpRequest(new MissingMethodParameterException("Mandatory Parameter is missing"));
                 }
             }
 
