@@ -468,7 +468,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ReadonlyVersionException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
+        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
     }
 
     @Override
@@ -479,7 +479,7 @@ public class ItemRestServiceImpl implements ItemRestService {
         AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
         RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.retrieve(id));
+        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
     }
 
     @Override

@@ -631,9 +631,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         final String predicate = "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isPartOf";
 
-        String itemWithCR =
-            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+        String itemWithCR = addRelationToItemXml(this.itemXml, predicate, targetId);
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
@@ -662,9 +660,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
 
         final String predicate = "http://escidoc.org/examples/test1";
 
-        String itemWithCR =
-            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+        String itemWithCR = addRelationToItemXml(this.itemXml, predicate, targetId);
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
@@ -693,9 +689,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
             create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
         final String targetId = getObjidValue(targetItemXml);
 
-        String itemWithCR =
-            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+        String itemWithCR = addRelationToItemXml(this.itemXml, predicate, targetId);
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
@@ -732,9 +726,7 @@ public class ItemContentRelationsIT extends ItemTestBase {
             create(getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml"));
         final String targetId = getObjidValue(targetItemXml);
 
-        String itemWithCR =
-            this.itemXml.replace("</relations:relations>", "<relations:relation " + "predicate=\"" + predicate + "\" "
-                + "xlink:href=\"/ir/item/" + targetId + "\" /></relations:relations>");
+        String itemWithCR = addRelationToItemXml(this.itemXml, predicate, targetId);
 
         String updatedItemXml = update(itemId, itemWithCR);
         Document updatedItemDoc = getDocument(updatedItemXml);
@@ -811,4 +803,33 @@ public class ItemContentRelationsIT extends ItemTestBase {
         return TaskParamFactory.getRelationTaskParam(relations, lastModDate,
             "http://www.escidoc.org/ontologies/test/content-relations#isTest\u00dc\u00c4\u00d6");
     }
+
+    /**
+     * Add relation to item xml.
+     *
+     * @param xml item-xml
+     * @param predicate relation-predicate
+     * @param targetId relation-targetId
+     * @return item-xml with relation
+     */
+    private String addRelationToItemXml(final String xml, final String predicate, final String targetId) {
+        String itemWithCR = null;
+        String xlinkPrefix = xml.replaceFirst("(?s).*?\\s([^\\s]*?):href.*", "$1");
+        if (xml.matches("(?s).*<([^>\\/]*?):relations[^>]*?\\/\\s*?>.*")) {
+            itemWithCR =
+                xml.replaceFirst("(?s)<([^>\\/]*?):relations[^>]*?\\/\\s*?>", "<$1:relations>" + "<$1:relation "
+                    + "predicate=\"" + predicate + "\" " + xlinkPrefix + ":href=\"/ir/item/" + targetId + "\" />"
+                    + "</$1:relations>");
+        }
+        else if (xml.matches("(?s).*</([^>]*?):relations>.*")) {
+            itemWithCR =
+                xml.replaceFirst("(?s)</([^>]*?):relations>", "<$1:relation " + "predicate=\"" + predicate + "\" "
+                    + xlinkPrefix + ":href=\"/ir/item/" + targetId + "\" />" + "</$1:relations>");
+        }
+        else {
+            itemWithCR = xml;
+        }
+        return itemWithCR;
+    }
+
 }
