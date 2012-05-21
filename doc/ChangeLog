@@ -18,6 +18,9 @@ changes since version 1.4
 		- change exception-xml:
 			- remove html-elements p and h1
 			
+  May 2012:
+    - adapt mapping-mpdl2dc-onlyMD.xsl to support namespace-prefixes on attribute creator:role
+      
 changes since version 1.3
 --------------------------
 	May 2011:
