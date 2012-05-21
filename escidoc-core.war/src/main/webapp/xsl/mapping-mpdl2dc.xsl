@@ -67,7 +67,7 @@
 		</oai_dc:dc>
 	</xsl:template>
 	<xsl:template name="creators">
-		<xsl:for-each select="*/*[local-name() = 'creator' and @role='author'][1]">
+		<xsl:for-each select="*/*[local-name() = 'creator' and @*[local-name()='role']='author'][1]">
 			<dc:creator>
 				<xsl:choose>
 					<xsl:when test="./types:person">
@@ -86,7 +86,7 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="contributors">
-		<xsl:for-each select="*/*[local-name() = 'creator' and @role!='author']">
+		<xsl:for-each select="*/*[local-name() = 'creator' and @*[local-name()='role']!='author']">
 			<dc:contributor>
 				<xsl:choose>
 					<xsl:when test="./types:person">
