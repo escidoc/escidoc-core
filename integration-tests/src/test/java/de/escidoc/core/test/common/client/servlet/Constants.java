@@ -58,6 +58,10 @@ public class Constants {
 
     public static final String OAIPMH_BASE_URI = EscidocTestBase.getOaiproviderContext();
 
+    public static final String FEDORA_BASE_URI = EscidocTestBase.getFedoraContext();
+
+    public static final String TESTDATA_BASE_URI = EscidocTestBase.getTestdataContext();
+
     public static final String INSTITUTIONAL_REPOSITORY_URI = "/ir";
 
     public static final String AA_URI = "/aa";

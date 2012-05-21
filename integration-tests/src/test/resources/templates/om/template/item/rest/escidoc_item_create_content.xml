@@ -46,7 +46,7 @@
 			</escidocComponents:properties>
 
 			<escidocComponents:content
-				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg"
 				storage="internal-managed" />
 		</escidocComponents:component>
 

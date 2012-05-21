@@ -35,6 +35,8 @@ import org.fcrepo.server.types.gen.Datastream;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 
 import de.escidoc.core.common.exceptions.remote.system.FedoraSystemException;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 
@@ -61,9 +63,9 @@ public class Client {
 
         try {
             fc =
-                new FedoraClient(PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL),
-                    PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER), PropertiesProvider
-                        .getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD));
+                new FedoraClient(EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI, PropertiesProvider
+                    .getInstance().getProperty(PropertiesProvider.FEDORA_USER), PropertiesProvider
+                    .getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD));
             apia = fc.getAPIA();
             apim = fc.getAPIM();
 

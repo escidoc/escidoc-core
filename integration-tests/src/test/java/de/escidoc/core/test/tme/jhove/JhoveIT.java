@@ -4,6 +4,8 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.TmeException
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
@@ -44,8 +46,8 @@ public class JhoveIT extends JhoveTestBase {
 
         // prepare item with pdf content
         File f =
-            downloadTempFile(new URL(PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
-                + "/testDocuments/" + "ges-eSciDoc-article.pdf"));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/testDocuments/"
+                + "ges-eSciDoc-article.pdf"));
         URL file = uploadFileToStagingServlet(f, "application/pdf");
 
         Document template = getTemplateAsDocument(TEMPLATE_TME_PATH, "request.xml");

@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 
 import de.escidoc.core.test.EntityUtil;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -2475,8 +2476,7 @@ public class AaTestBase extends EscidocAbstractTest {
         PWCallback.setHandle(userHandle);
 
         final File f =
-            downloadTempFile(new URL(PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
-                + "/" + testUploadFile));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/" + testUploadFile));
 
         final InputStream fileInputStream = new FileInputStream(f);
 

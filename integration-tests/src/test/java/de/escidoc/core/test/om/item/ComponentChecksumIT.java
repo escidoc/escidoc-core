@@ -29,6 +29,8 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -108,17 +110,10 @@ public class ComponentChecksumIT extends ItemTestBase {
             selectSingleNode(itemDoc,
                 "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String fedoraUrl = PropertiesProvider.getInstance().getProperty("fedora.url", "http://localhost:8082/fedora");
-
-        String imageUrl = fedoraUrl + "/images/newlogo2.jpg";
+        String imageUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI + "/images/newlogo2.jpg";
 
         // change url to the one from creation of item
-        Element contentNode =
-            (Element) selectSingleNode(itemDoc, "//components/component"
-                + "[properties/mime-type = 'image/jpeg']/content");
-        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
-        attr.setValue(imageUrl);
-        contentNode.setAttributeNode(attr);
+        substitute(itemDoc, "//components/component" + "[properties/mime-type = 'image/jpeg']/content/@href", imageUrl);
 
         String tmp = toString(itemDoc, false);
         String itemXml = update(this.theItemId, tmp);
@@ -151,18 +146,10 @@ public class ComponentChecksumIT extends ItemTestBase {
             selectSingleNode(itemDoc,
                 "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String imageUrl =
-            "http://" + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME) + ":"
-                + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
-                + "/images/escidoc-logo.jpg";
+        String imageUrl = getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/images/escidoc-logo.jpg";
 
         // change url to the one of a different image
-        Element contentNode =
-            (Element) selectSingleNode(itemDoc, "//components/component"
-                + "[properties/mime-type = 'image/jpeg']/content");
-        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
-        attr.setValue(imageUrl);
-        contentNode.setAttributeNode(attr);
+        substitute(itemDoc, "//components/component" + "[properties/mime-type = 'image/jpeg']/content/@href", imageUrl);
 
         String tmp = toString(itemDoc, false);
         String itemXml = update(this.theItemId, tmp);

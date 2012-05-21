@@ -61,13 +61,9 @@ public class PropertiesProvider {
 
     public static final String ESCIDOC_VERSION = "escidoc-core.build";
 
-    public static final String FEDORA_URL = "fedora.url";
-
     public static final String FEDORA_USER = "fedora.user";
 
     public static final String FEDORA_PASSWORD = "fedora.passwd";
-
-    public static final String TESTDATA_URL = "testdata.baseurl";
 
     public static final String DIGILIB_SCALER_URL = "digilib.scaler";
 

@@ -951,8 +951,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public void assertXmlValidParents(final String xmlData) throws Exception {
         assertXmlValidOrganizationalUnit(xmlData);
-//        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
-//        assertAllPlaceholderResolved(xmlData);
+        //        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
+        //        assertAllPlaceholderResolved(xmlData);
     }
 
     public void assertXmlValidContainerRefList(final String xmlData) throws Exception {
@@ -2329,14 +2329,14 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
         // replace URLs if they don't fit to the current framework config
         String fedoraTemplateUrl = "http://localhost:8082/fedora";
-        String fedoraUrl = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL);
+        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
 
         if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
             template = template.replace(fedoraTemplateUrl, fedoraUrl);
         }
 
         String testdataTemplateUrl = "http://localhost:8082/ir/";
-        String testdataUrl = PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL);
+        String testdataUrl = EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI;
 
         if (testdataUrl != null && !testdataTemplateUrl.equals(testdataUrl)) {
             template = template.replace(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");

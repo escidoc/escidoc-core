@@ -956,6 +956,10 @@ public abstract class EscidocTestBase {
 
     private static String oaiproviderContext = null;
 
+    private static String fedoraContext = null;
+
+    private static String testdataContext = null;
+
     private static String srwContext = null;
 
     private static String baseUrl = null;
@@ -1430,7 +1434,8 @@ public abstract class EscidocTestBase {
                         toBeAssertedAttribute = selectSingleNode(toBeAsserted, attributeXpath);
                     }
                     if (!expectedAttributeNodeName.startsWith("xmlns:")) {
-                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName, toBeAssertedAttribute);
+                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
+                            toBeAssertedAttribute);
                     }
                 }
                 if (!expectedAttributeNodeName.startsWith("xmlns:")) {
@@ -1606,6 +1611,30 @@ public abstract class EscidocTestBase {
                 PropertiesProvider.getInstance().getProperty("oaiprovider.context", "/escidoc-oaiprovider/");
         }
         return oaiproviderContext;
+    }
+
+    /**
+     * Get the context-path of fedora (read from properties).
+     * 
+     * @return the context of fedora
+     */
+    public static String getFedoraContext() {
+        if (fedoraContext == null) {
+            fedoraContext = PropertiesProvider.getInstance().getProperty("fedora.context", "/fedora");
+        }
+        return fedoraContext;
+    }
+
+    /**
+     * Get the context-path of testdata (read from properties).
+     * 
+     * @return the context of testdata
+     */
+    public static String getTestdataContext() {
+        if (testdataContext == null) {
+            testdataContext = PropertiesProvider.getInstance().getProperty("testdata.context", "/testdata");
+        }
+        return testdataContext;
     }
 
     /**

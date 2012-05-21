@@ -29,7 +29,7 @@
 				<prop:content-category>pre-print</prop:content-category>
 			</escidocComponents:properties>
 			<escidocComponents:content
-				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg"
 				storage="internal-managed" />
 
 			<escidocMetadataRecords:md-records>
@@ -167,7 +167,7 @@
 				<prop:content-category>pre-print</prop:content-category>
 			</escidocComponents:properties>
 			<escidocComponents:content
-				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg"
 				storage="internal-managed" />
 
 			<escidocMetadataRecords:md-records>
@@ -305,7 +305,7 @@
 				<prop:content-category>pre-print</prop:content-category>
 			</escidocComponents:properties>
 			<escidocComponents:content
-				xlink:href="http://localhost:8080/images/escidoc-banner.jpg"
+				xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg"
 				storage="internal-managed" />
 
 			<escidocMetadataRecords:md-records>

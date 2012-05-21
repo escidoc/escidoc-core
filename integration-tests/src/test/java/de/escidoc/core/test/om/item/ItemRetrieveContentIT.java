@@ -35,6 +35,7 @@ import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
@@ -260,8 +261,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL) + "/get/" + componentId
-                + "/content";
+            EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI + "/get/" + componentId + "/content";
 
         String auth =
             PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"
@@ -365,8 +365,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL) + "/get/" + componentId
-                + "/content";
+            EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI + "/get/" + componentId + "/content";
 
         String auth =
             PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"
@@ -619,9 +618,8 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-03.xml");
 
         Document item = EscidocAbstractTest.getDocument(itemXml);
-        substitute(item, "/item/components/component/content/@href", PropertiesProvider.getInstance().getProperty(
-            PropertiesProvider.TESTDATA_URL)
-            + "/testDocuments/images/head-v0.1.png");
+        substitute(item, "/item/components/component/content/@href", EscidocTestBase.getBaseUrl()
+            + Constants.TESTDATA_BASE_URI + "/testDocuments/images/head-v0.1.png");
         substitute(item, "/item/components/component/properties/mime-type", "image/png");
         String xmlTmp = toString(item, false);
 

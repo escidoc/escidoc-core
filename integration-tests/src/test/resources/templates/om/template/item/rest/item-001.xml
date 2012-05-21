@@ -59,7 +59,7 @@
 				<prop:mime-type>image/jpeg</prop:mime-type>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8080/images/escidoc-logo.jpg" storage="internal-managed"/>
+				prefix-xlink:href="http://localhost:8080/escidoc/images/escidoc-logo.jpg" storage="internal-managed"/>
 				<md-records:md-records>
 		<md-records:md-record name="escidoc" md-type="DC">
 				<some:dc-metadata xmlns:some="http://escidoc.de" xmlns:dc="http://purl.org/dc/elements/1.1/">

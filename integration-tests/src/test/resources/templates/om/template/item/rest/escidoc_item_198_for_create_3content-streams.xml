@@ -136,12 +136,12 @@
 			storage="internal-managed"/>
 		<content-streams:content-stream 
 				name="redirect_image" prefix-xlink:type="simple" prefix-xlink:title="An image" 
-				prefix-xlink:href="http://localhost:8080/images/escidoc-banner.jpg" 
+				prefix-xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg" 
 				mime-type="image/jpeg" 
 				storage="external-url"/>
 		<content-streams:content-stream 
 				name="external_image" prefix-xlink:type="simple" prefix-xlink:title="Another image" 
-				prefix-xlink:href="http://localhost:8080/images/escidoc-banner.jpg" 
+				prefix-xlink:href="http://localhost:8080/escidoc/images/escidoc-banner.jpg" 
 				mime-type="image/jpeg" 
 				storage="external-managed"/>
 	</content-streams:content-streams>

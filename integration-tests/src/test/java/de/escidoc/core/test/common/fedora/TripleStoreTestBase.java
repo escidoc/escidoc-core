@@ -30,6 +30,7 @@ package de.escidoc.core.test.common.fedora;
 
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.test.EntityUtil;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
@@ -98,7 +99,7 @@ public class TripleStoreTestBase {
     }
 
     protected String getFedoraUrl() throws Exception {
-        return PropertiesProvider.getInstance().getProperty("fedora.url", "http://localhost:8082/fedora");
+        return EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
     }
 
     /**

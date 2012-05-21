@@ -31,6 +31,8 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
@@ -242,8 +244,7 @@ public class ItemContentURLIT extends ItemTestBase {
 
         // download file from test data service to local tempfile
         File f =
-            downloadTempFile(new URL(PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
-                + "/" + testUploadFile));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/" + testUploadFile));
 
         InputStream fileInputStream = new FileInputStream(f);
 
@@ -278,8 +279,7 @@ public class ItemContentURLIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
 
         // content to staging
-        String fedoraUrl =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL, "http://localhost:8082/fedora");
+        String fedoraUrl = PropertiesProvider.getInstance().getProperty("fedora.url", "http://localhost:8082/fedora");
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
         deleteElement(this.theItemDoc, "/item/components/component[not(content/@href)]");
@@ -313,8 +313,7 @@ public class ItemContentURLIT extends ItemTestBase {
         this.theItemId = getObjidValue(this.theItemDoc);
 
         // content to staging
-        String fedoraUrl =
-            PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL, "http://localhost:8082/fedora");
+        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
         this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component[1]/content/@href", url);
