@@ -296,7 +296,8 @@ public class TaskParamFactory {
      * @param timestamp The timestamp of the resource.
      * @return Returns the created task param xml.
      */
-    public static String getReindexTaskParam(final String indexName, final boolean clearIndex, final boolean commitWrites) {
+    public static String getReindexTaskParam(
+        final String indexName, final boolean clearIndex, final boolean commitWrites) {
         StringBuilder xml = getOpenedTaskParamElement(NS_TP_REINDEX);
         xml.append(">\n");
 

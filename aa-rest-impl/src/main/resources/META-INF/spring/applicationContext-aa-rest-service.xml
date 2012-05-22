@@ -16,7 +16,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.UserAccountRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -31,7 +31,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.UserAccountsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -46,7 +46,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.UserGroupRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -61,7 +61,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.UserGroupsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -76,7 +76,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.GrantsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -91,7 +91,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.RoleRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.RoleRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -106,7 +106,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.RolesRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.RolesRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -121,7 +121,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
+      <bean class="org.escidoc.core.aa.internal.PolicyDecisionPointRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>

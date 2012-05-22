@@ -16,7 +16,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
+      <bean class="org.escidoc.core.oum.internal.OrganizationalUnitRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -32,7 +32,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
+      <bean class="org.escidoc.core.oum.internal.OrganizationalUnitsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>

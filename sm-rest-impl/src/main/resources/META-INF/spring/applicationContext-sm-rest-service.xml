@@ -16,7 +16,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.AggregationDefinitionRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -31,7 +31,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.AggregationDefinitionsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -46,7 +46,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.ReportDefinitionRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -61,7 +61,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.ReportDefinitionsRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -76,7 +76,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.PreprocessingRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -91,7 +91,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.ReportRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.ReportRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -106,7 +106,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.ScopeRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -121,7 +121,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.ScopesRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
@@ -136,7 +136,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
+      <bean class="org.escidoc.core.sm.internal.StatisticDataRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>

@@ -16,7 +16,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.adm.internal.AdminRestServiceImpl"/>
+      <bean class="org.escidoc.core.adm.internal.AdminRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>

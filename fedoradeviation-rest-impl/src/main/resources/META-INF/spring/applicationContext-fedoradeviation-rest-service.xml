@@ -16,7 +16,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <bean class="de.escidoc.core.fedoradeviation.internal.FedoraDeviationRestServiceImpl"/>
+      <bean class="org.escidoc.core.fedoradeviation.internal.FedoraDeviationRestServiceImpl"/>
     </jaxrs:serviceBeans>
     <jaxrs:features>
       <ref bean="compressGZIPFeature"/>
