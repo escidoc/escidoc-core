@@ -175,7 +175,7 @@ public class TaskParamFactory {
         StringBuilder xml = getOpenedTaskParamElement(NS_TP_UPDATE_PASSWORD, timestamp);
 
         if (password == null) {
-            xml.append("/>");
+            xml.append(">");
         }
         else {
             xml.append(">\n");
