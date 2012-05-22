@@ -37,6 +37,8 @@ public class TaskParamFactory {
 
     private static final String NS_TP_SELECTOR_REMOVE = "http://www.escidoc.de/schemas/removeselectors/0.6";
 
+    private static final String NS_TP_REINDEX = "http://www.escidoc.org/schemas/reindex-task-param/0.1";
+
     private static final String NS_TP_MEMBERS = "http://www.escidoc.org/schemas/members-task-param/0.1";
 
     private static final String NS_TP_ID_SET = "http://www.escidoc.org/schemas/id-set-task-param/0.1";
@@ -285,6 +287,25 @@ public class TaskParamFactory {
             xml.append("<id>").append(id).append("</id>\n");
         }
         return xml.append("</param>").toString();
+    }
+
+    /**
+     * Get the XML taskParam for the method reindex.
+     *
+     * @param selectorIds The IDs to remove.
+     * @param timestamp The timestamp of the resource.
+     * @return Returns the created task param xml.
+     */
+    public static String getReindexTaskParam(final String indexName, final boolean clearIndex, final boolean commitWrites) {
+        StringBuilder xml = getOpenedTaskParamElement(NS_TP_REINDEX);
+        xml.append(">\n");
+
+        if (indexName != null) {
+            xml.append("  <index-name>").append(indexName).append("</index-name>\n");
+        }
+        xml.append("  <clear-index>").append(clearIndex).append("</clear-index>\n");
+        xml.append("  <commit-writes>").append(commitWrites).append("</commit-writes>\n");
+        return xml.append("</param>\n").toString();
     }
 
     /**

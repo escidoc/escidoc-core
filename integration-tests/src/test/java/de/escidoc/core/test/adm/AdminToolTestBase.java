@@ -130,7 +130,7 @@ public class AdminToolTestBase extends EscidocAbstractTest {
      * @return item XML
      * @throws Exception If anything fails.
      */
-    protected String reindex(final boolean clearIndex, final String indexName) throws Exception {
-        return handleXmlResult(adminClient.reindex(clearIndex, indexName));
+    protected String reindex(final String reindexTaskParamXml) throws Exception {
+        return handleXmlResult(adminClient.reindex(reindexTaskParamXml));
     }
 }

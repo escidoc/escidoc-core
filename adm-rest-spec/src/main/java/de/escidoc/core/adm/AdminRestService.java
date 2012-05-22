@@ -37,6 +37,7 @@ public interface AdminRestService {
      *                                 handle.
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
+    @GET
     @Path("/deleteobjects")
     @Produces(MediaType.TEXT_XML)
     ResultTO getPurgeStatus() throws AuthenticationException, AuthorizationException, SystemException;

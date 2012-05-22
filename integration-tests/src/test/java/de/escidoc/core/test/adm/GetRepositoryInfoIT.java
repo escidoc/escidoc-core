@@ -60,9 +60,10 @@ public class GetRepositoryInfoIT extends AdminToolTestBase {
         String line = null;
 
         while ((line = reader.readLine()) != null) {
-            if (!line.startsWith("<?xml-stylesheet")) {
-                output.append(line);
+            if (line.contains("<?xml-stylesheet")) {
+                line = line.replaceFirst("<\\?xml-stylesheet[^>]*?>", "");
             }
+            output.append(line);
         }
 
         Properties repositoryInfo = new Properties();

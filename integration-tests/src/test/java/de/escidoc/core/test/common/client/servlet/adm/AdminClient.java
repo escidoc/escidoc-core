@@ -103,12 +103,12 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     /**
      * Reindex
      *
-     * @param indexName name of Index
+     * @param reindexTaskParamXml reindexTaskParamXml
      * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
-    public Object reindex(final boolean clearIndex, final String indexName) throws Exception {
+    public Object reindex(final Object reindexTaskParamXml) throws Exception {
         return callEsciDoc("Admin.reindex", METHOD_REINDEX, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.REINDEX_BASE_URI, new String[] { new Boolean(clearIndex).toString(), indexName });
+            + Constants.REINDEX_BASE_URI, new String[] {}, changeToString(reindexTaskParamXml));
     }
 }

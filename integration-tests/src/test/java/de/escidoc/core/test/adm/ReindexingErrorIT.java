@@ -30,6 +30,8 @@ package de.escidoc.core.test.adm;
 
 import org.junit.Test;
 
+import de.escidoc.core.test.TaskParamFactory;
+
 /**
  * Test suite for the reindex method of the admin tool.
  *
@@ -44,7 +46,7 @@ public class ReindexingErrorIT extends AdminToolTestBase {
      */
     @Test
     public void testReindexingError() throws Exception {
-        reindex(false, "errorTest");
+        reindex(TaskParamFactory.getReindexTaskParam("errorTest", false, true));
     }
 
 }

@@ -130,7 +130,7 @@ public class AdminRestServiceImpl implements AdminRestService {
      * @see de.escidoc.core.adm.AdminRestService#loadExamples(java.util.String)
      */
     @Override
-    public ResultTO loadExamples(@PathParam("type") String type) throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
+    public ResultTO loadExamples(String type) throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
         return serviceUtility.fromXML(ResultTO.class, this.adminHandler.loadExamples(type));
     }
 
