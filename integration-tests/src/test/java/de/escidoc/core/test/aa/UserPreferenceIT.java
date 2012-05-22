@@ -172,17 +172,17 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
-
-        ec = XmlSchemaValidationException.class;
         try {
-            createPreference(userId, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " >" + value
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\">" + value
                 + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
+
+        ec = XmlSchemaValidationException.class;
         try {
-            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\">" + value
+            createPreference(userId, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " >" + value
                 + "</preference>");
         }
         catch (final Exception e) {

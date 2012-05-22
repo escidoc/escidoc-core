@@ -47,6 +47,7 @@ import org.aopalliance.aop.AspectException;
 import org.escidoc.core.domain.exception.ExceptionTOFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXParseException;
 
 import com.ctc.wstx.exc.WstxParsingException;
 
@@ -142,7 +143,8 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
             else if (e instanceof EscidocException) {
                 return doDeclineHttpRequest((EscidocException) e);
             }
-            else if (e.getCause() != null && e.getCause() instanceof WstxParsingException) {
+            else if (e.getCause() != null && (e.getCause() instanceof WstxParsingException
+                || e.getCause() instanceof SAXParseException)) {
                 return doDeclineHttpRequest(new XmlCorruptedException(e.getMessage(), e));
             }
             else if (e instanceof UndeclaredThrowableException) {
