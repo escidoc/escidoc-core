@@ -591,7 +591,7 @@ public interface UserGroupRestService {
      *
      * @param id   The User Group ID.
      * @param taskParam The list of selectors to add to the User Group as TO. (See example above.)
-     * @return last-modification-date within XML (result.xsd) as TO
+     * @return UserGroup as XML (user-group.xsd) as TO
      * @throws OrganizationalUnitNotFoundException
      *                                      Thrown if an Organizational Unit with the provided ID does not exist in the
      *                                      framework.
@@ -617,7 +617,7 @@ public interface UserGroupRestService {
     @Path("/{id}/selectors/add")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    SelectorsTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
+    UserGroupTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
@@ -659,7 +659,7 @@ public interface UserGroupRestService {
      *
      * @param id   The User Group ID.
      * @param taskParam The list of Selectors to remove from the User Group as TO. (See example above.)
-     * @return last-modification-date within XML (result.xsd) as TO
+     * @return UserGroup as XML (user-group.xsd) as TO
      * @throws UserGroupNotFoundException   Thrown if a User Group with the provided id does not exist in the
      *                                      framework.
      * @throws MissingMethodParameterException
@@ -682,7 +682,7 @@ public interface UserGroupRestService {
     @Path("/{id}/selectors/remove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    SelectorsTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
+    UserGroupTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException;

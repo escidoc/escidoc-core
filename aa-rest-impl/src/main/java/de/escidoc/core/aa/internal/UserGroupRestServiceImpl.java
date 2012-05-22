@@ -204,23 +204,23 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#addSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public SelectorsTO addSelectors(final String id, final AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
+    public UserGroupTO addSelectors(final String id, final AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException {
-        return serviceUtility.fromXML(SelectorsTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#removeSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public SelectorsTO removeSelectors(final String id, final RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
+    public UserGroupTO removeSelectors(final String id, final RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException {
-        return serviceUtility.fromXML(SelectorsTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
+        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
     }
 
 }
