@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.business.interfaces.IngestableResource;

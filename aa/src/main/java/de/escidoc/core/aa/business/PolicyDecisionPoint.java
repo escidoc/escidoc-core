@@ -315,8 +315,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     public String evaluate(final String requestsXml) throws ResourceNotFoundException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException {
 
-        xmlUtility.validate(requestsXml, XmlUtility.getPdpRequestsSchemaLocation());
-
         final List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
         final StringBuilder buf = new StringBuilder("<results xmlns=\"");

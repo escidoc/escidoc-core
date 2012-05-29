@@ -20,7 +20,6 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -170,7 +169,6 @@ public interface ItemHandlerInterface {
      * @throws MissingAttributeValueException
      *             It a mandatory attribute value is missing.
      */
-    @Validate(param = 0, resolver = "getItemSchemaLocation")
     String create(String xmlData) throws MissingContentException, ContextNotFoundException,
         ContentModelNotFoundException, ReadonlyElementViolationException, MissingElementValueException,
         ReadonlyAttributeViolationException, AuthenticationException, AuthorizationException, XmlCorruptedException,
@@ -343,7 +341,6 @@ public interface ItemHandlerInterface {
      * @throws RelationPredicateNotFoundException
      *             If the predicate of a given relation is unknown.
      */
-    @Validate(param = 1, resolver = "getItemSchemaLocation")
     String update(String id, String xmlData) throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
         MissingLicenceException, ComponentNotFoundException, MissingContentException, MissingAttributeValueException,
@@ -418,7 +415,6 @@ public interface ItemHandlerInterface {
      * @throws OptimisticLockingException
      *             If the provided latest-modification-date does not match.
      */
-    @Validate(param = 1, resolver = "getItemSchemaLocation")
     String createComponent(final String id, final String xmlData) throws MissingContentException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
@@ -572,7 +568,6 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             If the Item is not in its latest version specified.
      */
-    @Validate(param = 2, resolver = "getItemSchemaLocation")
     String updateComponent(final String id, final String componentId, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
         MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
@@ -960,7 +955,6 @@ public interface ItemHandlerInterface {
      *             Thrown in case of an invalid status.
      */
     @Deprecated
-    @Validate(param = 1, resolver = "getItemSchemaLocation")
     String createMetadataRecord(final String id, final String xmlData) throws ItemNotFoundException,
         ComponentNotFoundException, XmlSchemaNotFoundException, LockingException, MissingAttributeValueException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
@@ -1009,7 +1003,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown in case of an invalid status.
      */
-    @Validate(param = 1, resolver = "getItemSchemaLocation")
     String createMdRecord(final String id, final String xmlData) throws ItemNotFoundException, SystemException,
         InvalidXmlException, LockingException, MissingAttributeValueException, InvalidStatusException,
         ComponentNotFoundException, AuthorizationException, AuthenticationException, MissingMethodParameterException;
@@ -1177,7 +1170,6 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             If the Item is not in its latest version specified.
      */
-    @Validate(param = 2, resolver = "getItemSchemaLocation")
     String updateMdRecord(final String id, final String mdRecordId, final String xmlData) throws ItemNotFoundException,
         XmlSchemaNotFoundException, LockingException, InvalidContentException, MdRecordNotFoundException,
         AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
@@ -1779,7 +1771,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
@@ -1858,7 +1849,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
@@ -1939,7 +1929,6 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException, InvalidContentException, OptimisticLockingException,
@@ -2021,7 +2010,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         NotPublishedException, LockingException, AlreadyWithdrawnException, AuthenticationException,
         AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException,
@@ -2083,7 +2071,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown if Item is in status withdrawn.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidContentException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
@@ -2141,7 +2128,6 @@ public interface ItemHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException;
@@ -2258,7 +2244,6 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided Item version id is not a latest version.
      */
-    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -2372,7 +2357,6 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws ItemNotFoundException,
         ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -2491,7 +2475,6 @@ public interface ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided item version id is not a latest version.
      */
-    @Validate(param = 2, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignContentPid(final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
@@ -2614,7 +2597,6 @@ public interface ItemHandlerInterface {
      * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
      */
-    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String taskParameter) throws SystemException,
         ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
@@ -2734,7 +2716,6 @@ public interface ItemHandlerInterface {
      * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
      */
-    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException, ItemNotFoundException,
         ComponentNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         InvalidContentException, InvalidXmlException, ContentRelationNotFoundException, AlreadyDeletedException,

@@ -20,7 +20,6 @@
 
 package de.escidoc.core.oum.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -90,7 +89,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
      * @throws XmlSchemaValidationException   Thrown if the schema validation of the provided data failed.
      */
-    @Validate(param = 0, resolver = "getOrganizationalUnitSchemaLocation", root = "organizational-unit")
     String create(String xml) throws AuthenticationException, AuthorizationException, InvalidStatusException,
         MissingAttributeValueException, MissingElementValueException, MissingMethodParameterException,
         MissingMdRecordException, OrganizationalUnitNotFoundException, SystemException, XmlCorruptedException,
@@ -177,7 +175,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                      handle.
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
-    @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "organizational-unit")
     String update(String id, String xml) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
@@ -202,7 +199,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                      handle.
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
-    @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "md-records")
     String updateMdRecords(String id, String xml) throws AuthenticationException, AuthorizationException,
         InvalidXmlException, InvalidStatusException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
@@ -237,7 +233,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                      handle.
      * @throws AuthorizationException       Thrown if the authorization failed.
      */
-    @Validate(param = 1, resolver = "getOrganizationalUnitSchemaLocation", root = "parents")
     String updateParents(String id, String xml) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
@@ -538,7 +533,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String open(String id, String taskParam) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitNotFoundException, SystemException;
@@ -571,7 +565,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *                                    handle.
      * @throws AuthorizationException     Thrown if the authorization failed.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String close(String id, String taskParam) throws AuthenticationException, AuthorizationException,
         InvalidStatusException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitNotFoundException, SystemException;

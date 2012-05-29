@@ -29,24 +29,18 @@
 package de.escidoc.core.common.util.xml.cache;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 
-import javax.xml.XMLConstants;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
+import org.escidoc.core.util.xml.internal.EscidocSchemaHandler;
 import org.springframework.stereotype.Service;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.KeyGenerator;
 import com.googlecode.ehcache.annotations.Property;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.xml.SchemaBaseResourceResolver;
 
 /**
  * Cache for xml {@code Schema} objects.<br> This cache is used to avoid multiple parsing of the same schema.
@@ -74,20 +68,11 @@ public class SchemasCache {
     @Cacheable(cacheName = "schemasCache", selfPopulating = true, keyGenerator = @KeyGenerator(name = "HashCodeCacheKeyGenerator", properties = { @Property(name = "includeMethod", value = "false") }))
     public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
 
-        final URLConnection conn = new URL(schemaUri).openConnection();
-        final SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
-        // set resource resolver to change schema-location-host
-        sf.setResourceResolver(new SchemaBaseResourceResolver());
-
-        final Schema schema;
-        try {
-            schema = sf.newSchema(new SAXSource(new InputSource(conn.getInputStream())));
-        }
-        catch (final SAXException e) {
-            throw new WebserverSystemException("Problem with schema " + schemaUri + ". ", e);
-        }
-        return schema;
+        return EscidocSchemaHandler.createSchema(new ArrayList<String>() {
+            {
+                add(schemaUri);
+            }
+        }, null);
     }
 
 }

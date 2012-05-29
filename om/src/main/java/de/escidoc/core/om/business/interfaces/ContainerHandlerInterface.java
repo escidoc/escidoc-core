@@ -32,7 +32,6 @@ import java.util.Map;
 
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;

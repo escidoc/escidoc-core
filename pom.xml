@@ -1975,6 +1975,11 @@
         <version>2.11.0</version>
       </dependency>
       <dependency>
+        <groupId>xml-resolver</groupId>
+        <artifactId>xml-resolver</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency>
         <groupId>org.codehaus.woodstox</groupId>
         <artifactId>woodstox-core-asl</artifactId>
         <version>${wstx.version}</version>

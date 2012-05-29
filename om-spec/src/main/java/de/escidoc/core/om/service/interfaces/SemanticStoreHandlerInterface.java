@@ -20,7 +20,6 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -110,7 +109,6 @@ public interface SemanticStoreHandlerInterface {
      * @deprecated
      */
     @Deprecated
-    @Validate(param = 0, resolver = "getSematicStoreQuerySchemaLocation")
     String spo(final String taskParam) throws SystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, InvalidXmlException, MissingElementValueException,
         AuthenticationException, AuthorizationException;

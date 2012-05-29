@@ -20,7 +20,6 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
@@ -134,7 +133,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown if the status of the specified context is not valid for executing the action.
      */
-    @Validate(param = 0, resolver = "getContainerSchemaLocation")
     String create(final String xmlData) throws ContextNotFoundException, ContentModelNotFoundException,
         InvalidContentException, MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, SystemException, ReferencedResourceNotFoundException,
@@ -308,7 +306,6 @@ public interface ContainerHandlerInterface {
      * @throws MissingAttributeValueException
      *             It a mandatory attribute value is missing.
      */
-    @Validate(param = 1, resolver = "getContainerSchemaLocation")
     String update(final String id, final String xmlData) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, InvalidXmlException, OptimisticLockingException,
         InvalidStatusException, ReadonlyVersionException, SystemException, ReferencedResourceNotFoundException,
@@ -451,7 +448,6 @@ public interface ContainerHandlerInterface {
      * @throws OptimisticLockingException
      *             If the provided latest-modification-date does not match.
      */
-    @Validate(param = 1, resolver = "getMembersTaskParamSchemaLocation")
     String addMembers(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, InvalidContextException,
         AuthenticationException, AuthorizationException, OptimisticLockingException, MissingAttributeValueException;
@@ -533,7 +529,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidContentException
      *             Thrown if the taskParam has invalid content
      */
-    @Validate(param = 1, resolver = "getMembersTaskParamSchemaLocation")
     String removeMembers(final String id, final String taskParam) throws ContextNotFoundException, LockingException,
         XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException, InvalidItemStatusException,
         AuthenticationException, AuthorizationException, SystemException, ContainerNotFoundException,
@@ -591,7 +586,6 @@ public interface ContainerHandlerInterface {
      *             Thrown if taskParam contains invalid data.
      */
     @Deprecated
-    @Validate(param = 2, resolver = "getContainerSchemaLocation")
     String createMetadataRecord(final String id, final String xmlData) throws ContainerNotFoundException,
         InvalidXmlException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException;
@@ -641,7 +635,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam contains invalid data.
      */
-    @Validate(param = 1, resolver = "getContainerSchemaLocation")
     String createMdRecord(final String id, final String xmlData) throws ContainerNotFoundException,
         InvalidXmlException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException;
@@ -783,7 +776,6 @@ public interface ContainerHandlerInterface {
      * @throws ReadonlyVersionException
      *             If the provided container id does not identify the latest version.
      */
-    @Validate(param = 2, resolver = "getContainerSchemaLocation")
     String updateMetadataRecord(final String id, final String mdRecordId, final String xmlData)
         throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
@@ -1353,7 +1345,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, ReadonlyVersionException, InvalidXmlException;
@@ -1426,7 +1417,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, ReadonlyVersionException, InvalidXmlException;
@@ -1495,7 +1485,6 @@ public interface ContainerHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, XmlCorruptedException;
@@ -1570,7 +1559,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String withdraw(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, InvalidStatusException,
         SystemException, OptimisticLockingException, AlreadyWithdrawnException, ReadonlyVersionException,
@@ -1628,7 +1616,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidStatusException, InvalidXmlException;
@@ -1684,7 +1671,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if taskParam contains invalid data.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         OptimisticLockingException, InvalidStatusException, InvalidXmlException;
@@ -1765,7 +1751,6 @@ public interface ContainerHandlerInterface {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    @Validate(param = 1, resolver = "getItemSchemaLocation")
     @Deprecated
     String createItem(final String containerId, final String xmlData) throws ContainerNotFoundException,
         MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
@@ -1843,7 +1828,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown if an organizational unit is in an invalid status.
      */
-    @Validate(param = 1, resolver = "getContainerSchemaLocation")
     @Deprecated
     String createContainer(final String containerId, final String xmlData) throws MissingMethodParameterException,
         ContainerNotFoundException, LockingException, ContextNotFoundException, ContentModelNotFoundException,
@@ -1980,7 +1964,6 @@ public interface ContainerHandlerInterface {
      * @throws MissingMethodParameterException
      *             Thrown if one of expected input parameter is missing.
      */
-    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String addContentRelations(final String id, final String param) throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
         AlreadyExistsException, InvalidStatusException, InvalidXmlException, MissingElementValueException,
@@ -2105,7 +2088,6 @@ public interface ContainerHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
-    @Validate(param = 1, resolver = "getRelationTaskParamSchemaLocation")
     String removeContentRelations(final String id, final String param) throws SystemException,
         ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
         InvalidXmlException, ContentRelationNotFoundException, LockingException, ReadonlyVersionException,
@@ -2216,7 +2198,6 @@ public interface ContainerHandlerInterface {
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws InvalidStatusException,
         ContainerNotFoundException, LockingException, MissingMethodParameterException, OptimisticLockingException,
         SystemException, InvalidXmlException;
@@ -2327,7 +2308,6 @@ public interface ContainerHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      */
-    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignVersionPid(final String id, final String taskParam) throws ContainerNotFoundException,
         LockingException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;

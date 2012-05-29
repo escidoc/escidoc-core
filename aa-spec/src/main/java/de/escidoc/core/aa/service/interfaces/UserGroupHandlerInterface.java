@@ -20,7 +20,6 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -85,7 +84,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 0, resolver = "getUserGroupSchemaLocation")
     String create(String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -165,7 +163,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getUserGroupSchemaLocation")
     String update(String groupId, String xmlData) throws UserGroupNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
@@ -205,7 +202,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     void activate(String groupId, String taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -245,7 +241,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     void deactivate(String groupId, String taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -358,7 +353,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getGrantsSchemaLocation")
     String createGrant(String groupId, String grantXML) throws AlreadyExistsException, UserGroupNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -415,7 +409,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 2, resolver = "getRevokeGrantTaskParamSchemaLocation")
     void revokeGrant(String groupId, String grantId, String taskParam) throws UserGroupNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -483,7 +476,6 @@ public interface UserGroupHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getRevokeGrantsTaskParamSchemaLocation")
     void revokeGrants(String groupId, String taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -588,7 +580,6 @@ public interface UserGroupHandlerInterface {
      * @throws UserGroupHierarchyViolationException
      *                                      Thrown if the hierarchy of User Groups is violated.
      */
-    @Validate(param = 1, resolver = "getAddSelectorsSchemaLocation")
     String addSelectors(String groupId, String taskParam) throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
@@ -650,7 +641,6 @@ public interface UserGroupHandlerInterface {
      *                                      validation failed).
      * @throws XmlSchemaValidationException Thrown if the provided XML data is not schema conform
      */
-    @Validate(param = 1, resolver = "getRemoveSelectorsSchemaLocation")
     String removeSelectors(String groupId, String taskParam) throws XmlCorruptedException,
         XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
         UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,

@@ -159,6 +159,15 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
 
         Class ec = XmlCorruptedException.class;
         try {
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\"" + value
+                + "</preference>");
+        }
+        catch (final Exception e) {
+            assertExceptionType(ec, e);
+        }
+
+        ec = XmlSchemaValidationException.class;
+        try {
             createPreference(userId, "<preferenc xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " name=\"" + key
                 + "\">" + value + "</preference>");
         }
@@ -173,16 +182,14 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
             assertExceptionType(ec, e);
         }
         try {
-            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\">" + value
+            createPreference(userId, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " >" + value
                 + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
-
-        ec = XmlSchemaValidationException.class;
         try {
-            createPreference(userId, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " >" + value
+            createPreference(userId, "<preference xmlns=\"http://www.escidoc.de\"" + " name=\"" + key + "\">" + value
                 + "</preference>");
         }
         catch (final Exception e) {

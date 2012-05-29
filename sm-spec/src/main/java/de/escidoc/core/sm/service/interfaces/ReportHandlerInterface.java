@@ -20,7 +20,6 @@
 
 package de.escidoc.core.sm.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -67,7 +66,6 @@ public interface ReportHandlerInterface {
      * @throws InvalidSqlException          e.
      * @throws SystemException              e.
      */
-    @Validate(param = 0, resolver = "getReportParametersSchemaLocation")
     String retrieve(String xml) throws AuthenticationException, AuthorizationException, XmlCorruptedException,
         XmlSchemaValidationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException;

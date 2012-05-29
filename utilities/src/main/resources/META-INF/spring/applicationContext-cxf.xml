@@ -46,10 +46,22 @@
   </util:map>
 
   <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
+    <property name="schemaHandler" ref="schemaHolder"/>
     <property name="marshallerProperties" ref="marshallerProperties"/>
     <property name="enableBuffering" value="true"/>
   </bean>
 
+  <bean id="schemaHolder" class="org.escidoc.core.util.xml.internal.EscidocSchemaHandler">
+    <property name="resourceResolver" ref="resourceResolver"/>
+  </bean>
+    
+  <bean id="resourceResolver" class="org.escidoc.core.util.xml.internal.SchemaBaseResourceResolver">
+     <constructor-arg ref="catalogResolver"/>
+     <constructor-arg value="${escidoc-core.xsd-path}/catalog.xml"/>
+  </bean>
+    
+  <bean id="catalogResolver" class="org.apache.xerces.util.XMLCatalogResolver"/>
+    
   <bean id="cachedOutputStreamMessageBodyReader"
         class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>
 

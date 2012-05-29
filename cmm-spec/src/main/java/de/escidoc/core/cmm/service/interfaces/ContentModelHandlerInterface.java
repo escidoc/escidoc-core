@@ -20,7 +20,6 @@
 
 package de.escidoc.core.cmm.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -79,7 +78,6 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
      * @throws XmlSchemaValidationException   Thrown if the schema validation of the provided data failed.
      */
-    @Validate(param = 0, resolver = "getContentModelSchemaLocation", root = "content-model")
     String create(String xmlData) throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
         XmlCorruptedException, XmlSchemaValidationException;
@@ -243,7 +241,6 @@ public interface ContentModelHandlerInterface extends IngestableResource {
      * @throws InvalidContentException        If the given XML data contains invalid values.
      * @throws MissingAttributeValueException If a required attribute is missing.
      */
-    @Validate(param = 1, resolver = "getContentModelSchemaLocation", root = "content-model")
     String update(String id, String xmlData) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,

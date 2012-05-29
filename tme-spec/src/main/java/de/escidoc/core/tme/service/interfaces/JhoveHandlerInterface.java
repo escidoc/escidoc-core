@@ -20,7 +20,6 @@
 
 package de.escidoc.core.tme.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -51,7 +50,6 @@ public interface JhoveHandlerInterface {
      * @throws SystemException              If an internal error occurred.
      * @throws TmeException                 If the invocation of jhove classes fails.
      */
-    @Validate(param = 0, resolver = "getTmeRequestsSchemaLocation", root = "request")
     String extract(final String requests) throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
         TmeException;

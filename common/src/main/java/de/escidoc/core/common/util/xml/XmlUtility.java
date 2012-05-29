@@ -20,7 +20,52 @@
 
 package de.escidoc.core.common.util.xml;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.Validator;
+
+import org.apache.commons.pool.impl.StackKeyedObjectPool;
+import org.codehaus.stax2.XMLOutputFactory2;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.escidoc.core.util.xml.internal.SchemaUtility;
+import org.escidoc.core.utils.io.Charsets;
+import org.escidoc.core.utils.io.IOUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import com.ctc.wstx.exc.WstxParsingException;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -42,47 +87,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.CheckRootElementStaxHandler;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
-import org.apache.commons.pool.impl.StackKeyedObjectPool;
-import org.codehaus.stax2.XMLOutputFactory2;
-import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.XMLUnit;
-import org.escidoc.core.utils.io.Charsets;
-import org.escidoc.core.utils.io.IOUtils;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Helper class to support Xml stuff in eSciDoc.<br> This class provides the validation of XML data using specified
@@ -182,84 +186,6 @@ public final class XmlUtility {
     private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('(' + ESC_QUOT + ')');
 
     private static final Pattern PATTERN_ESC_APOS = Pattern.compile('(' + ESC_APOS + ')');
-
-    private static String containerRestSchemaLocation;
-
-    private static String relationsSchemaLocation;
-
-    private static String itemRestSchemaLocation;
-
-    private static String organizationalUnitRestSchemaLocation;
-
-    private static String filterSchemaLocationRest;
-
-    private static String organizationalUnitListRestSchemaLocation;
-
-    private static String organizationalUnitPathListRestSchemaLocation;
-
-    private static String organizationalUnitRefListRestSchemaLocation;
-
-    private static String pdpRequestsSchemaLocation;
-
-    private static String tmeRequestsSchemaLocation;
-
-    private static String containersFilterRestSchemaLocation;
-
-    private static String semanticStoreQuerySchemaLocation;
-
-    private static String containerMembersFilterRestSchemaLocation;
-
-    private static String contextRestSchemaLocation;
-
-    private static String contentRelationRestSchemaLocation;
-
-    private static String contentModelRestSchemaLocation;
-
-    private static String setDefinitionRestSchemaLocation;
-
-    private static String contextsFilterSchemaLocationRest;
-
-    private static String contextMembersFilterSchemaLocationRest;
-
-    private static String xmlSchemaSchemaLocation;
-
-    private static String updatePasswordTaskParamSchemaLocation;
-
-    private static String revokeGrantTaskParamSchemaLocation;
-
-    private static String revokeGrantsTaskParamSchemaLocation;
-
-    private static String membersTaskParamSchemaLocation;
-
-    private static String assignPidTaskParamSchemaLocation;
-
-    private static String idSetTaskParamSchemaLocation;
-
-    private static String deleteObjectsParamSchemaLocation;
-
-    private static String relationTaskParamSchemaLocation;
-
-    private static String statusTaskParamSchemaLocation;
-
-    private static String optimiticLockingTaskParamSchemaLocation;
-
-    private static String reindexTaskParamSchemaLocation;
-
-    private static String stagingFileSchemaLocation;
-
-    private static String statisticDataSchemaLocation;
-
-    private static String aggregationDefinitionRestSchemaLocation;
-
-    private static String reportDefinitionRestSchemaLocation;
-
-    private static String reportRestSchemaLocation;
-
-    private static String scopeRestSchemaLocation;
-
-    private static String reportParametersRestSchemaLocation;
-
-    private static String preprocessingInformationSchemaLocation;
 
     private static String stylesheetDefinition;
 
@@ -474,8 +400,6 @@ public final class XmlUtility {
 
     private static final String BASE_REPORT_DEFINITION = BASE_SM + NAME_REPORT_DEFINITION + '/';
 
-    private static final Map<String, String> REST_SCHEMA_LOCATIONS = new HashMap<String, String>();
-
     public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/' + NAME_USER_ACCOUNT + '/' + NAME_PROPERTIES;
 
     /**
@@ -524,22 +448,24 @@ public final class XmlUtility {
         final String schemaLocation;
         switch (type) {
             case ITEM:
-                schemaLocation = getItemSchemaLocation();
+                schemaLocation = SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.ITEM_SCHEMA_LOCATION_NAME);
                 break;
             case CONTAINER:
-                schemaLocation = getContainerSchemaLocation();
+                schemaLocation = SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.CONTAINER_SCHEMA_LOCATION_NAME);
                 break;
             case CONTEXT:
-                schemaLocation = getContextSchemaLocation();
+                schemaLocation = SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.CONTEXT_SCHEMA_LOCATION_NAME);
                 break;
             case OU:
-                schemaLocation = getOrganizationalUnitSchemaLocation();
+                schemaLocation =
+                    SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.ORGANIZATIONAL_UNIT_SCHEMA_LOCATION_NAME);
                 break;
             case CONTENT_RELATION:
-                schemaLocation = getContentRelationSchemaLocation();
+                schemaLocation =
+                    SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.CONTENT_RELATION_SCHEMA_LOCATION_NAME);
                 break;
             case CONTENT_MODEL:
-                schemaLocation = getContentModelSchemaLocation();
+                schemaLocation = SchemaUtility.SCHEMA_LOCATIONS.get(SchemaUtility.CONTENT_MODEL_SCHEMA_LOCATION_NAME);
                 break;
             default:
                 throw new WebserverSystemException("Unknown schema location for resoure type " + type);
@@ -1527,571 +1453,6 @@ public final class XmlUtility {
             }
         }
         return stylesheetDefinition;
-    }
-
-    /**
-     * @return Returns the adminDescriptorSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getAdminDescriptorSchemaLocation() {
-        if (contextRestSchemaLocation == null) {
-            final String subPath = "context/0.4/context.xsd";
-            contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + subPath;
-        }
-        return contextRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the containerSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContainerSchemaLocation() {
-        if (containerRestSchemaLocation == null) {
-            containerRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/container" + Constants.CONTAINER_NS_URI_SCHEMA_VERSION + "/container.xsd";
-        }
-        return containerRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the Semantic Store Schema Location.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getSematicStoreQuerySchemaLocation() {
-        if (semanticStoreQuerySchemaLocation == null) {
-            semanticStoreQuerySchemaLocation = getSchemaBaseUrl() + "rest/common/0.4/semantic-store-query.xsd";
-        }
-        return semanticStoreQuerySchemaLocation;
-    }
-
-    /**
-     * @return Returns the containerMembersFilterSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContainerMembersFilterSchemaLocation() {
-        if (containerMembersFilterRestSchemaLocation == null) {
-            containerMembersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-members.xsd";
-        }
-        return containerMembersFilterRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the containersFilterSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContainersFilterSchemaLocation() {
-        if (containersFilterRestSchemaLocation == null) {
-            containersFilterRestSchemaLocation = getSchemaBaseUrl() + "rest/container/0.3/filter-containers.xsd";
-        }
-        return containersFilterRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the content relation schema location.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContentModelSchemaLocation() {
-        if (contentModelRestSchemaLocation == null) {
-            final String contentModelXsd =
-                "content-model" + Constants.CONTENT_MODEL_NS_URI_SCHEMA_VERSION + "/content-model.xsd";
-            contentModelRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentModelXsd;
-        }
-        return contentModelRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the contextSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContextSchemaLocation() {
-        if (contextRestSchemaLocation == null) {
-            final String contextXsd = "context" + Constants.CONTEXT_NS_URI_SCHEMA_VERSION + "/context.xsd";
-            contextRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contextXsd;
-        }
-        return contextRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the content relation schema location.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContentRelationSchemaLocation() {
-        if (contentRelationRestSchemaLocation == null) {
-            final String contentRelationXsd =
-                "content-relation" + Constants.CONTENT_RELATION_NS_URI_SCHEMA_VERSION + "/content-relation.xsd";
-            contentRelationRestSchemaLocation = getSchemaBaseUrl() + "rest/" + contentRelationXsd;
-        }
-        return contentRelationRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the contextSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getSetDefinitionSchemaLocation() {
-        if (setDefinitionRestSchemaLocation == null) {
-            final String setDefinitionXsd = "set-definition/0.2/set-definition.xsd";
-            setDefinitionRestSchemaLocation = getSchemaBaseUrl() + "rest/" + setDefinitionXsd;
-        }
-        return setDefinitionRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the contextsFilterSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContextsFilterSchemaLocation() {
-        if (contextsFilterSchemaLocationRest == null) {
-            contextsFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/context/0.3/filter-contexts.xsd";
-        }
-        return contextsFilterSchemaLocationRest;
-    }
-
-    /**
-     * @return Returns the contextMembersFilterSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getContextMembersFilterSchemaLocation() {
-        if (contextMembersFilterSchemaLocationRest == null) {
-            contextMembersFilterSchemaLocationRest = getSchemaBaseUrl() + "rest/" + "context/0.3/filter-contexts.xsd";
-        }
-        return contextMembersFilterSchemaLocationRest;
-    }
-
-    /**
-     * @return Returns the grantsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getGrantsSchemaLocation() {
-
-        return getSchemaLocation("user-account/0.5/grants.xsd");
-    }
-
-    /**
-     * @return Returns the preferencesSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getPreferencesSchemaLocation() {
-
-        return getSchemaLocation("user-account/0.1/preferences.xsd");
-    }
-
-    /**
-     * @return Returns the preferencesSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getAttributesSchemaLocation() {
-
-        return getSchemaLocation("user-account/0.1/attributes.xsd");
-    }
-
-    /**
-     * @return Returns the itemSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getItemSchemaLocation() {
-        if (itemRestSchemaLocation == null) {
-            itemRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/item" + Constants.ITEM_NS_URI_SCHEMA_VERSION + "/item.xsd";
-        }
-        return itemRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the relationsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRelationsSchemaLocation() {
-        if (relationsSchemaLocation == null) {
-            relationsSchemaLocation = getSchemaBaseUrl() + "rest/common/0.3/relations.xsd";
-        }
-        return relationsSchemaLocation;
-    }
-
-    /**
-     * @return Returns the organizationalUnitSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getOrganizationalUnitSchemaLocation() {
-        if (organizationalUnitRestSchemaLocation == null) {
-            organizationalUnitRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                    + Constants.ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION + "/organizational-unit.xsd";
-        }
-        return organizationalUnitRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the organizationalUnitListSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getOrganizationalUnitListSchemaLocation() {
-        if (organizationalUnitListRestSchemaLocation == null) {
-            organizationalUnitListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/" + NAME_ORGANIZATIONAL_UNIT
-                    + Constants.CONTAINER_LIST_NS_URI_SCHEMA_VERSION + "/organizational-unit-list.xsd";
-        }
-        return organizationalUnitListRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the organizationalUnitPathListSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getOrganizationalUnitPathListSchemaLocation() {
-        if (organizationalUnitPathListRestSchemaLocation == null) {
-            organizationalUnitPathListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-path-list.xsd";
-        }
-        return organizationalUnitPathListRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the organizationalUnitRefListSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getOrganizationalUnitRefListSchemaLocation() {
-        if (organizationalUnitRefListRestSchemaLocation == null) {
-            organizationalUnitRefListRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/organizational-unit/0.4/organizational-unit-ref-list.xsd";
-        }
-        return organizationalUnitRefListRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the filterSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getFilterSchemaLocation() {
-        if (filterSchemaLocationRest == null) {
-            filterSchemaLocationRest = getSchemaBaseUrl() + "rest/common/0.4/filter.xsd";
-        }
-        return filterSchemaLocationRest;
-    }
-
-    /**
-     * @return Returns the pdpRequestsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getPdpRequestsSchemaLocation() {
-        if (pdpRequestsSchemaLocation == null) {
-            pdpRequestsSchemaLocation = getSchemaBaseUrl() + "rest/pdp/0.3/requests.xsd";
-        }
-        return pdpRequestsSchemaLocation;
-    }
-
-    /**
-     * @return Returns the roleSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRoleSchemaLocation() {
-        return getSchemaLocation("role/0.5/role.xsd");
-    }
-
-    /**
-     * @return Returns the stagingFileSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getStagingFileSchemaLocation() {
-
-        if (stagingFileSchemaLocation == null) {
-            stagingFileSchemaLocation = getSchemaBaseUrl() + "rest/staging-file/0.3/staging-file.xsd";
-        }
-        return stagingFileSchemaLocation;
-    }
-
-    /**
-     * @return Returns the tmeRequestsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getTmeRequestsSchemaLocation() {
-        if (tmeRequestsSchemaLocation == null) {
-            tmeRequestsSchemaLocation = getSchemaBaseUrl() + "tme/0.1/request.xsd";
-        }
-        return tmeRequestsSchemaLocation;
-    }
-
-    /**
-     * @return Returns the unsecuredActionsSchemaLocation dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getUnsecuredActionsSchemaLocation() {
-
-        return getSchemaLocation("role/0.4/unsecured-actions.xsd");
-    }
-
-    /**
-     * @return Returns the userAccountSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getUserAccountSchemaLocation() {
-
-        return getSchemaLocation("user-account" + Constants.USER_ACCOUNT_NS_URI_SCHEMA_VERSION + "/user-account.xsd");
-    }
-
-    /**
-     * @return Returns the addSelectorsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getAddSelectorsSchemaLocation() {
-
-        return getSchemaLocation("user-group/0.6/add-selectors.xsd");
-    }
-
-    /**
-     * @return Returns the removeSelectorsSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRemoveSelectorsSchemaLocation() {
-
-        return getSchemaLocation("user-group/0.6/remove-selectors.xsd");
-    }
-
-    /**
-     * @return Returns the userGroupSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getUserGroupSchemaLocation() {
-
-        return getSchemaLocation("user-group/0.6/user-group.xsd");
-    }
-
-    /**
-     * @return Returns the statisticDataSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getStatisticDataSchemaLocation() {
-
-        if (statisticDataSchemaLocation == null) {
-            statisticDataSchemaLocation = getSchemaBaseUrl() + "rest/statistic-data/0.3/statistic-data.xsd";
-        }
-        return statisticDataSchemaLocation;
-    }
-
-    /**
-     * @return Returns the aggregationDefinitionSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getAggregationDefinitionSchemaLocation() {
-        if (aggregationDefinitionRestSchemaLocation == null) {
-            aggregationDefinitionRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/aggregation-definition"
-                    + Constants.AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition.xsd";
-        }
-        return aggregationDefinitionRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the reportDefinitionSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getReportDefinitionSchemaLocation() {
-        if (reportDefinitionRestSchemaLocation == null) {
-            reportDefinitionRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report-definition" + Constants.REPORT_DEFINITION_NS_URI_SCHEMA_VERSION
-                    + "/report-definition.xsd";
-        }
-        return reportDefinitionRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the scopeSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getScopeSchemaLocation() {
-        if (scopeRestSchemaLocation == null) {
-            scopeRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/scope" + Constants.SCOPE_NS_URI_SCHEMA_VERSION + "/scope.xsd";
-        }
-        return scopeRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the reportSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getReportSchemaLocation() {
-        if (reportRestSchemaLocation == null) {
-            reportRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_NS_URI_SCHEMA_VERSION + "/report.xsd";
-        }
-        return reportRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the ReportParametersSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getReportParametersSchemaLocation() {
-        if (reportParametersRestSchemaLocation == null) {
-            reportParametersRestSchemaLocation =
-                getSchemaBaseUrl() + "rest/report" + Constants.REPORT_PARAMETERS_NS_URI_SCHEMA_VERSION
-                    + "/report-parameters.xsd";
-        }
-        return reportParametersRestSchemaLocation;
-    }
-
-    /**
-     * @return Returns the PreprocessingInformationSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getPreprocessingInformationSchemaLocation() {
-
-        if (preprocessingInformationSchemaLocation == null) {
-            preprocessingInformationSchemaLocation =
-                getSchemaBaseUrl() + "rest/preprocessing-information"
-                    + Constants.PREPROCESSING_INFORMATION_NS_URI_SCHEMA_VERSION + "/preprocessing-information.xsd";
-        }
-        return preprocessingInformationSchemaLocation;
-    }
-
-    /**
-     * @return Returns the UpdatePasswordTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getUpdatePasswordTaskParamSchemaLocation() {
-        if (updatePasswordTaskParamSchemaLocation == null) {
-            updatePasswordTaskParamSchemaLocation =
-                getSchemaBaseUrl() + "rest/common/0.1/update-password-task-param.xsd";
-        }
-        return updatePasswordTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the revoke-grant-task-param schema location.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRevokeGrantTaskParamSchemaLocation() {
-        if (revokeGrantTaskParamSchemaLocation == null) {
-            revokeGrantTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/revoke-grant-task-param.xsd";
-        }
-        return revokeGrantTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the revoke-grants-task-param schema location.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRevokeGrantsTaskParamSchemaLocation() {
-        if (revokeGrantsTaskParamSchemaLocation == null) {
-            revokeGrantsTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/revoke-grants-task-param.xsd";
-        }
-        return revokeGrantsTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the MembersTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getMembersTaskParamSchemaLocation() {
-        if (membersTaskParamSchemaLocation == null) {
-            membersTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/members-task-param.xsd";
-        }
-        return membersTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the AssignPidTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getAssignPidTaskParamSchemaLocation() {
-        if (assignPidTaskParamSchemaLocation == null) {
-            assignPidTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/assign-pid-task-param.xsd";
-        }
-        return assignPidTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the DeletionTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getIdSetTaskParamSchemaLocation() {
-        if (idSetTaskParamSchemaLocation == null) {
-            idSetTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/id-set-task-param.xsd";
-        }
-        return idSetTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the DeleteObjectsTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getDeleteObjectsTaskParamSchemaLocation() {
-        if (deleteObjectsParamSchemaLocation == null) {
-            deleteObjectsParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/delete-objects-task-param.xsd";
-        }
-        return deleteObjectsParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the RelationTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getRelationTaskParamSchemaLocation() {
-        if (relationTaskParamSchemaLocation == null) {
-            relationTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/relation-task-param.xsd";
-        }
-        return relationTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the StatusTaskParamSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getStatusTaskParamSchemaLocation() {
-        if (statusTaskParamSchemaLocation == null) {
-            statusTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/status-task-param.xsd";
-        }
-        return statusTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the schema location of optimitic-locking-task-param schema.
-     * @throws WebserverSystemException
-     *             In case of an error.
-     */
-    public static String getOptimisticLockingTaskParamSchemaLocation() {
-        if (optimiticLockingTaskParamSchemaLocation == null) {
-            optimiticLockingTaskParamSchemaLocation =
-                getSchemaBaseUrl() + "rest/common/0.1/optimistic-locking-task-param.xsd";
-        }
-        return optimiticLockingTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the schema location of reindex-task-param schema.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getReindexTaskParamSchemaLocation() {
-        if (reindexTaskParamSchemaLocation == null) {
-            reindexTaskParamSchemaLocation = getSchemaBaseUrl() + "rest/common/0.1/reindex-task-param.xsd";
-        }
-        return reindexTaskParamSchemaLocation;
-    }
-
-    /**
-     * @return Returns the xmlSchemaSchemaLocation.
-     * @throws WebserverSystemException In case of an error.
-     */
-    public static String getXmlSchemaSchemaLocation() {
-        if (xmlSchemaSchemaLocation == null) {
-            xmlSchemaSchemaLocation = getSchemaBaseUrl() + "common/0.2/xml-schema.xsd";
-        }
-        return xmlSchemaSchemaLocation;
-    }
-
-    /**
-     * @param commonPart The tailing part of a schema location, e.g. role/0.4/role.xsd.
-     * @return Returns the complete schema location for the provided value dependent on UserContext flag isRestAccess.
-     * @throws WebserverSystemException In case of an error.
-     */
-    private static String getSchemaLocation(final String commonPart) {
-        String result = REST_SCHEMA_LOCATIONS.get(commonPart);
-        if (result == null) {
-            result = getSchemaBaseUrl() + "rest/" + commonPart;
-            REST_SCHEMA_LOCATIONS.put(commonPart, result);
-        }
-        return result;
     }
 
     /**

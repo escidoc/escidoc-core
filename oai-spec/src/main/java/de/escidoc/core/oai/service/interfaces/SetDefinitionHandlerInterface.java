@@ -20,7 +20,6 @@
 
 package de.escidoc.core.oai.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -61,7 +60,6 @@ public interface SetDefinitionHandlerInterface {
      * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
      * @throws AuthorizationException  Thrown if the authorization fails.
      */
-    @Validate(param = 0, resolver = "getSetDefinitionSchemaLocation")
     String create(final String setDefinition) throws UniqueConstraintViolationException, InvalidXmlException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException;
 
@@ -106,7 +104,6 @@ public interface SetDefinitionHandlerInterface {
      *                                    eSciDocUserHandle.
      * @throws AuthorizationException     Thrown if the authorization fails.
      */
-    @Validate(param = 1, resolver = "getSetDefinitionSchemaLocation")
     String update(final String id, final String xmlData) throws ResourceNotFoundException, OptimisticLockingException,
         MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException;
 

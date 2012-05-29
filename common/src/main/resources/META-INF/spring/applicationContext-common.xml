@@ -76,13 +76,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
          </property>
     </bean>
 
-    <bean id="common.XmlValidationInterceptor" class="de.escidoc.core.common.util.aop.XmlValidationInterceptor"
-          factory-method="aspectOf" lazy-init="false">
-        <property name="xmlUtility">
-            <ref bean="common.xml.XmlUtility"/>
-        </property>
-    </bean>
-
     <bean id="escidoc.core.business.EscidocIdProvider" class="de.escidoc.core.common.persistence.EscidocIdProvider">
         <property name="numberPrefetchedIds">
             <value>${escidoc-core.identifier.numberPrefetched}</value>

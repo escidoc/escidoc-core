@@ -104,6 +104,10 @@
     </dependency>
     <dependency>
       <groupId>org.escidoc.core</groupId>
+      <artifactId>dataobjects-spec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.escidoc.core</groupId>
       <artifactId>common-spec</artifactId>
     </dependency>
     <dependency>

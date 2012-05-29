@@ -83,7 +83,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
         utility.checkIsContext(contextId);
 
-        final ByteArrayInputStream in = validateUnsecuredActions(actions);
+        final ByteArrayInputStream in = XmlUtility.convertToByteArrayInputStream(actions);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_UNSECURED_ACTIONS);
         final UnsecuredActionStaxHandler unsecuredActionStaxHandler = new UnsecuredActionStaxHandler();
@@ -144,21 +144,6 @@ public class ActionHandler implements ActionHandlerInterface {
             unsecuredActionList = new UnsecuredActionList(contextId, null);
         }
         return this.renderer.renderUnsecuredActionList(unsecuredActionList);
-    }
-
-    /**
-     * Validates data of a unsecured action list.
-     *
-     * @param xmlData The xml data.
-     * @return Returns the xml data in a {@code ByteArrayInputStream}.
-     * @throws XmlSchemaValidationException Thrown if data in not valid.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws WebserverSystemException     Thrown in case of any other failure.
-     */
-    private ByteArrayInputStream validateUnsecuredActions(final String xmlData) throws XmlCorruptedException,
-        WebserverSystemException, XmlSchemaValidationException {
-
-        return xmlUtility.createValidatedByteArrayInputStream(xmlData, XmlUtility.getUnsecuredActionsSchemaLocation());
     }
 
 }

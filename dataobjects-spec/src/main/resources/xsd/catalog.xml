@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+  <system
+    systemId="components.xsd"
+    uri="/xsd/components.xsd" />
+
+  <system
+    systemId="version.xsd"
+    uri="/xsd/version.xsd" />
+
+  <system
+    systemId="result.xsd"
+    uri="/xsd/result.xsd" />
+
+  <system
+    systemId="scope.xsd"
+    uri="/xsd/scope.xsd" />
+
+  <system
+    systemId="pdp-results.xsd"
+    uri="/xsd/pdp-results.xsd" />
+
+  <system
+    systemId="delete-objects-task-param.xsd"
+    uri="/xsd/delete-objects-task-param.xsd" />
+
+  <system
+    systemId="jhove.xsd"
+    uri="/xsd/jhove.xsd" />
+
+  <system
+    systemId="xcql.xsd"
+    uri="/xsd/xcql.xsd" />
+
+  <system
+    systemId="staging-file.xsd"
+    uri="/xsd/staging-file.xsd" />
+
+  <system
+    systemId="exception.xsd"
+    uri="/xsd/exception.xsd" />
+
+  <system
+    systemId="struct-map.xsd"
+    uri="/xsd/struct-map.xsd" />
+
+  <system
+    systemId="Event-v1-1.xsd"
+    uri="/xsd/Event-v1-1.xsd" />
+
+  <system
+    systemId="report-parameters.xsd"
+    uri="/xsd/report-parameters.xsd" />
+
+  <system
+    systemId="report.xsd"
+    uri="/xsd/report.xsd" />
+
+  <system
+    systemId="grants.xsd"
+    uri="/xsd/grants.xsd" />
+
+  <system
+    systemId="revoke-grant-task-param.xsd"
+    uri="/xsd/revoke-grant-task-param.xsd" />
+
+  <system
+    systemId="javautilproperties.xsd"
+    uri="/xsd/javautilproperties.xsd" />
+
+  <system
+    systemId="user-account-attributes.xsd"
+    uri="/xsd/user-account-attributes.xsd" />
+
+  <system
+    systemId="tme-request.xsd"
+    uri="/xsd/tme-request.xsd" />
+
+  <system
+    systemId="organizational-unit-ref.xsd"
+    uri="/xsd/organizational-unit-ref.xsd" />
+
+  <system
+    systemId="content-relation.xsd"
+    uri="/xsd/content-relation.xsd" />
+
+  <system
+    systemId="md-records.xsd"
+    uri="/xsd/md-records.xsd" />
+
+  <system
+    systemId="common-types.xsd"
+    uri="/xsd/common-types.xsd" />
+
+  <system
+    systemId="container-list.xsd"
+    uri="/xsd/container-list.xsd" />
+
+  <system
+    systemId="context.xsd"
+    uri="/xsd/context.xsd" />
+
+  <system
+    systemId="predicate-list.xsd"
+    uri="/xsd/predicate-list.xsd" />
+
+  <system
+    systemId="content-model.xsd"
+    uri="/xsd/content-model.xsd" />
+
+  <system
+    systemId="id-set-task-param.xsd"
+    uri="/xsd/id-set-task-param.xsd" />
+
+  <system
+    systemId="context-list.xsd"
+    uri="/xsd/context-list.xsd" />
+
+  <system
+    systemId="role-list.xsd"
+    uri="/xsd/role-list.xsd" />
+
+  <system
+    systemId="pdp-requests.xsd"
+    uri="/xsd/pdp-requests.xsd" />
+
+  <system
+    systemId="user-account-list.xsd"
+    uri="/xsd/user-account-list.xsd" />
+
+  <system
+    systemId="user-group-list.xsd"
+    uri="/xsd/user-group-list.xsd" />
+
+  <system
+    systemId="role.xsd"
+    uri="/xsd/role.xsd" />
+
+  <system
+    systemId="report-definition.xsd"
+    uri="/xsd/report-definition.xsd" />
+
+  <system
+    systemId="statistic-data.xsd"
+    uri="/xsd/statistic-data.xsd" />
+
+  <system
+    systemId="release.xsd"
+    uri="/xsd/release.xsd" />
+
+  <system
+    systemId="user-account.xsd"
+    uri="/xsd/user-account.xsd" />
+
+  <system
+    systemId="remove-selectors.xsd"
+    uri="/xsd/remove-selectors.xsd" />
+
+  <system
+    systemId="cs-xacml-schema-context-01.xsd"
+    uri="/xsd/cs-xacml-schema-context-01.xsd" />
+
+  <system
+    systemId="index-configuration.xsd"
+    uri="/xsd/index-configuration.xsd" />
+
+  <system
+    systemId="optimistic-locking-task-param.xsd"
+    uri="/xsd/optimistic-locking-task-param.xsd" />
+
+  <system
+    systemId="add-selectors.xsd"
+    uri="/xsd/add-selectors.xsd" />
+
+  <system
+    systemId="revoke-grants-task-param.xsd"
+    uri="/xsd/revoke-grants-task-param.xsd" />
+
+  <system
+    systemId="content-streams.xsd"
+    uri="/xsd/content-streams.xsd" />
+
+  <system
+    systemId="relations.xsd"
+    uri="/xsd/relations.xsd" />
+
+  <system
+    systemId="members-task-param.xsd"
+    uri="/xsd/members-task-param.xsd" />
+
+  <system
+    systemId="organizational-unit-path-list.xsd"
+    uri="/xsd/organizational-unit-path-list.xsd" />
+
+  <system
+    systemId="srw-types.xsd"
+    uri="/xsd/srw-types.xsd" />
+
+  <system
+    systemId="structural-relations.xsd"
+    uri="/xsd/structural-relations.xsd" />
+
+  <system
+    systemId="organizational-unit-successors.xsd"
+    uri="/xsd/organizational-unit-successors.xsd" />
+
+  <system
+    systemId="item-list.xsd"
+    uri="/xsd/item-list.xsd" />
+
+  <system
+    systemId="aggregation-definition-list.xsd"
+    uri="/xsd/aggregation-definition-list.xsd" />
+
+  <system
+    systemId="user-group.xsd"
+    uri="/xsd/user-group.xsd" />
+
+  <system
+    systemId="scope-list.xsd"
+    uri="/xsd/scope-list.xsd" />
+
+  <system
+    systemId="user-account-preferences.xsd"
+    uri="/xsd/user-account-preferences.xsd" />
+
+  <system
+    systemId="relation-task-param.xsd"
+    uri="/xsd/relation-task-param.xsd" />
+
+  <system
+    systemId="aggregation-definition.xsd"
+    uri="/xsd/aggregation-definition.xsd" />
+
+  <system
+    systemId="assign-pid-task-param.xsd"
+    uri="/xsd/assign-pid-task-param.xsd" />
+
+  <system
+    systemId="status-task-param.xsd"
+    uri="/xsd/status-task-param.xsd" />
+
+  <system
+    systemId="xml.xsd"
+    uri="/xsd/xml.xsd" />
+
+  <system
+    systemId="set-definition.xsd"
+    uri="/xsd/set-definition.xsd" />
+
+  <system
+    systemId="organizational-unit.xsd"
+    uri="/xsd/organizational-unit.xsd" />
+
+  <system
+    systemId="permission-filter.xsd"
+    uri="/xsd/permission-filter.xsd" />
+
+  <system
+    systemId="diagnostics.xsd"
+    uri="/xsd/diagnostics.xsd" />
+
+  <system
+    systemId="preprocessing-information.xsd"
+    uri="/xsd/preprocessing-information.xsd" />
+
+  <system
+    systemId="properties.xsd"
+    uri="/xsd/properties.xsd" />
+
+  <system
+    systemId="xlink.xsd"
+    uri="/xsd/xlink.xsd" />
+
+  <system
+    systemId="version-history.xsd"
+    uri="/xsd/version-history.xsd" />
+
+  <system
+    systemId="cs-xacml-schema-policy-01.xsd"
+    uri="/xsd/cs-xacml-schema-policy-01.xsd" />
+
+  <system
+    systemId="container.xsd"
+    uri="/xsd/container.xsd" />
+
+  <system
+    systemId="srw-extra-data.xsd"
+    uri="/xsd/srw-extra-data.xsd" />
+
+  <system
+    systemId="report-definition-list.xsd"
+    uri="/xsd/report-definition-list.xsd" />
+
+  <system
+    systemId="item.xsd"
+    uri="/xsd/item.xsd" />
+
+  <system
+    systemId="organizational-unit-list.xsd"
+    uri="/xsd/organizational-unit-list.xsd" />
+
+  <system
+    systemId="reindex-task-param.xsd"
+    uri="/xsd/reindex-task-param.xsd" />
+
+  <system
+    systemId="update-password-task-param.xsd"
+    uri="/xsd/update-password-task-param.xsd" />
+
+    <!-- uri
+      name="http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"
+      uri="file:///usr/share/xml/docbook-xsl-1.73.1/html/docbook.xsl" />
+    <uri
+      name="http://docbook.sourceforge.net/release/xsl/current/html/chunk.xsl"
+      uri="file:///usr/share/xml/docbook-xsl-1.73.1/html/chunk.xsl" / >
+
+   <rewriteSystem systemIdStartString="http://www.w3.org/TR/xhtml1/DTD/" rewritePrefix="file:///path/to/dtds/" / -->
+
+</catalog>

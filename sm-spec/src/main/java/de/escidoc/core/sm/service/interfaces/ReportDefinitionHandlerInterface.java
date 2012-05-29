@@ -20,7 +20,6 @@
 
 package de.escidoc.core.sm.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -66,7 +65,6 @@ public interface ReportDefinitionHandlerInterface {
      * @throws InvalidSqlException            ex
      * @throws SystemException                ex
      */
-    @Validate(param = 0, resolver = "getReportDefinitionSchemaLocation")
     String create(String xmlData) throws AuthenticationException, AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
         ScopeContextViolationException, SystemException;
@@ -172,7 +170,6 @@ public interface ReportDefinitionHandlerInterface {
      * @throws XmlCorruptedException          e.
      * @throws SystemException                e.
      */
-    @Validate(param = 1, resolver = "getReportDefinitionSchemaLocation")
     String update(String reportDefinitionId, String xmlData) throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, ScopeNotFoundException,
         InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException, XmlCorruptedException,

@@ -20,7 +20,6 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -120,7 +119,6 @@ public interface ContextHandlerInterface {
      * @throws XmlCorruptedException          Thrown if the schema validation of the provided data failed.
      * @throws XmlSchemaValidationException   Thrown if the schema validation of the provided data failed.
      */
-    @Validate(param = 0, resolver = "getContextSchemaLocation")
     String create(final String xmlData) throws AuthenticationException, AuthorizationException,
         ContentModelNotFoundException, ContextNameNotUniqueException, InvalidContentException,
         MissingAttributeValueException, MissingElementValueException, MissingMethodParameterException,
@@ -234,7 +232,6 @@ public interface ContextHandlerInterface {
      * @throws MissingElementValueException  Thrown if element value is missing.
      * @throws SystemException               If case of internal error.
      */
-    @Validate(param = 1, resolver = "getContextSchemaLocation")
     String update(String id, String xmlData) throws AuthenticationException, AuthorizationException,
         ContextNotFoundException, InvalidContentException, InvalidStatusException, InvalidXmlException,
         MissingMethodParameterException, OptimisticLockingException, ReadonlyAttributeViolationException,
@@ -351,7 +348,6 @@ public interface ContextHandlerInterface {
      * @throws OptimisticLockingException Thrown if Context was altered by third on update.
      * @throws SystemException            If case of internal error.
      */
-    @Validate(param = 1, resolver = "getContextSchemaLocation")
     String updateAdminDescriptor(final String id, final String xmlData) throws AdminDescriptorNotFoundException,
         AuthenticationException, AuthorizationException, ContextNotFoundException, InvalidXmlException,
         MissingMethodParameterException, OptimisticLockingException, SystemException;
@@ -439,7 +435,6 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String open(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;
@@ -477,7 +472,6 @@ public interface ContextHandlerInterface {
      * @throws StreamNotFoundException    Thrown if required stream could not be found.
      * @throws SystemException            If case of internal error.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String close(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContextNotFoundException, InvalidStatusException, InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, LockingException, StreamNotFoundException;

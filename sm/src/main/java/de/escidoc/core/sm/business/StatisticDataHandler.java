@@ -109,7 +109,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-        xmlUtility.validate(xmlData, XmlUtility.getStatisticDataSchemaLocation());
 
         // parse
         final StaxParser sp = new StaxParser();

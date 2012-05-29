@@ -8,8 +8,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
 
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
+import org.apache.cxf.jaxrs.utils.schemas.SchemaHandler;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
@@ -27,11 +31,23 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider {
     private final String XML_HEADERS_PATH = "com.sun.xml.bind.xmlHeaders";
 
     private JAXBContextProvider jaxbContextProvider;
+    
+    private SchemaHandler schemaHandler;
 
     @Override
     public void setMarshallerProperties(Map<String, Object> marshallProperties) {
         overrideXmlHeadersProperty(marshallProperties);
         super.setMarshallerProperties(marshallProperties);
+    }
+
+    @Override
+    public void setSchemaHandler(SchemaHandler schemaHandler) {
+        this.schemaHandler = schemaHandler;
+    }
+    
+    @Override
+    protected Schema getSchema() {
+        return schemaHandler.getSchema();
     }
 
     public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {
@@ -44,6 +60,22 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider {
         } else {
             return super.getJAXBContext(type, genericType);
         }
+    }
+
+    protected Unmarshaller createUnmarshaller(Class<?> cls, Type genericType, boolean isCollection) 
+    throws JAXBException {
+        if (super.getSchema() == null) {
+            super.setSchema(getSchema());
+        }
+        return super.createUnmarshaller(cls, genericType, isCollection);
+    }
+    
+    protected void validateObjectIfNeeded(Marshaller marshaller, Object obj) 
+    throws JAXBException {
+        if (super.getSchema() == null) {
+            super.setSchema(getSchema());
+        }
+        super.validateObjectIfNeeded(marshaller, obj);
     }
 
     /**

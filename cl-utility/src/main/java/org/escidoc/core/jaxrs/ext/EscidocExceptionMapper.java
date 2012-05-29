@@ -53,6 +53,7 @@ import com.ctc.wstx.exc.WstxParsingException;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -143,9 +144,18 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
             else if (e instanceof EscidocException) {
                 return doDeclineHttpRequest((EscidocException) e);
             }
-            else if (e.getCause() != null && (e.getCause() instanceof WstxParsingException
-                || e.getCause() instanceof SAXParseException)) {
-                return doDeclineHttpRequest(new XmlCorruptedException(e.getMessage(), e));
+            else if (e.getCause() != null && e.getCause() instanceof SAXParseException) {
+                final String errorMsg =
+                    "Error in line " + ((SAXParseException)e.getCause()).getLineNumber() + ", column " + ((SAXParseException)e.getCause()).getColumnNumber() + ". " + e.getMessage();
+                if (e.getCause().getMessage().startsWith("cvc")) {
+                    return doDeclineHttpRequest(new XmlSchemaValidationException(errorMsg, e.getCause()));
+                }
+                else {
+                    return doDeclineHttpRequest(new XmlCorruptedException(errorMsg, e.getCause()));
+                }
+            }
+            else if (e.getCause() != null && e.getCause() instanceof WstxParsingException) {
+                return doDeclineHttpRequest(new XmlCorruptedException(e.getCause()));
             }
             else if (e instanceof UndeclaredThrowableException) {
                 final Throwable undeclaredThrowable = ((UndeclaredThrowableException) e).getUndeclaredThrowable();

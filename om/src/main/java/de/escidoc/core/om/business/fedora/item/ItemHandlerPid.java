@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Utility;

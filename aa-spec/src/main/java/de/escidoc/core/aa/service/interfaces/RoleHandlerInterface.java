@@ -20,7 +20,6 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -77,7 +76,6 @@ public interface RoleHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal error.
      */
-    @Validate(param = 0, resolver = "getRoleSchemaLocation")
     String create(String xmlData) throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -168,7 +166,6 @@ public interface RoleHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal error.
      */
-    @Validate(param = 1, resolver = "getRoleSchemaLocation")
     String update(String roleId, String xmlData) throws RoleNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
         OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,

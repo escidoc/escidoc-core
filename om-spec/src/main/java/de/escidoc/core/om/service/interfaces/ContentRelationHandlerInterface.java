@@ -20,7 +20,6 @@
 
 package de.escidoc.core.om.service.interfaces;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -79,7 +78,6 @@ public interface ContentRelationHandlerInterface {
      *                                        Thrown if a provided relation type is not on the predicate list.
      * @throws SystemException                Thrown if a framework internal error occurs.
      */
-    @Validate(param = 0, resolver = "getContentRelationSchemaLocation")
     String create(final String xmlData) throws AuthenticationException, AuthorizationException,
         MissingAttributeValueException, MissingMethodParameterException, InvalidXmlException, InvalidContentException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, SystemException;
@@ -201,7 +199,6 @@ public interface ContentRelationHandlerInterface {
      * @throws MissingAttributeValueException Thrown if attribute value is missing
      * @throws SystemException                Thrown if a framework internal error occurs.
      */
-    @Validate(param = 1, resolver = "getContentRelationSchemaLocation")
     String update(final String id, final String xmlData) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, OptimisticLockingException, InvalidContentException, InvalidStatusException,
         LockingException, MissingAttributeValueException, MissingMethodParameterException, SystemException,
@@ -242,7 +239,6 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String lock(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidStatusException;
@@ -280,7 +276,6 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      * @throws InvalidStatusException     Thrown if resource is not locked.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     String unlock(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidContentException, InvalidStatusException;
@@ -318,7 +313,6 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String submit(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException;
@@ -356,7 +350,6 @@ public interface ContentRelationHandlerInterface {
      * @throws XmlCorruptedException      Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String revise(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, XmlCorruptedException, InvalidContentException;
@@ -394,7 +387,6 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException        Thrown if the taskParam has invalid structure.
      * @throws InvalidContentException    Thrown if the content of taskParam is invalid.
      */
-    @Validate(param = 1, resolver = "getStatusTaskParamSchemaLocation")
     String release(final String id, final String taskParam) throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException, InvalidStatusException, MissingMethodParameterException,
         SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException;
@@ -417,7 +409,6 @@ public interface ContentRelationHandlerInterface {
      * @throws InvalidXmlException         Thrown if taskParam has invalid XML.
      * @throws SystemException             Thrown in case of internal error.
      */
-    @Validate(param = 1, resolver = "getAssignPidTaskParamSchemaLocation")
     String assignObjectPid(final String id, final String taskParam) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException;

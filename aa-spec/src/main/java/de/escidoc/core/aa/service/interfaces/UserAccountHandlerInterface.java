@@ -24,7 +24,6 @@ import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -96,8 +95,7 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 0, resolver = "getUserAccountSchemaLocation")
-    String create(String xmlData) throws UniqueConstraintViolationException, InvalidStatusException,
+     String create(String xmlData) throws UniqueConstraintViolationException, InvalidStatusException,
         XmlCorruptedException, XmlSchemaValidationException, OrganizationalUnitNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
@@ -206,7 +204,6 @@ public interface UserAccountHandlerInterface {
      *                                        not exist.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getUserAccountSchemaLocation")
     String update(String userId, String xmlData) throws UserAccountNotFoundException,
         UniqueConstraintViolationException, InvalidStatusException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
@@ -253,7 +250,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getUpdatePasswordTaskParamSchemaLocation")
     void updatePassword(String userId, String taskParam) throws UserAccountNotFoundException, InvalidStatusException,
         XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException, AuthenticationException,
         AuthorizationException, SystemException;
@@ -277,7 +273,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws MissingAttributeValueException If there is no last modificate date attribute.
      */
-    @Validate(param = 1, resolver = "getPreferencesSchemaLocation", root = "preferences")
     String updatePreferences(String userId, String preferencesXML) throws UserAccountNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException, OptimisticLockingException, SystemException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException,
@@ -317,7 +312,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     void activate(String userId, String taskParam) throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -357,7 +351,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getOptimisticLockingTaskParamSchemaLocation")
     void deactivate(String userId, String taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
@@ -524,7 +517,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getGrantsSchemaLocation")
     String createGrant(String userId, String grantXML) throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -611,7 +603,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 2, resolver = "getRevokeGrantTaskParamSchemaLocation")
     void revokeGrant(String userId, String grantId, String taskParam) throws UserAccountNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -679,7 +670,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getRevokeGrantsTaskParamSchemaLocation")
     void revokeGrants(String userId, String taskParam) throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -805,7 +795,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getPreferencesSchemaLocation", root = "preference")
     String createPreference(String userId, String preferenceXML) throws AlreadyExistsException,
         UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
@@ -848,7 +837,6 @@ public interface UserAccountHandlerInterface {
      * @throws OptimisticLockingException     If the give last modification timestamp does not match the current one.
      * @throws MissingAttributeValueException If there is no last modificate date attribute.
      */
-    @Validate(param = 2, resolver = "getPreferencesSchemaLocation", root = "preference")
     String updatePreference(String userId, String preferenceName, String preferenceXML) throws AlreadyExistsException,
         UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
@@ -912,7 +900,6 @@ public interface UserAccountHandlerInterface {
      * @throws AuthorizationException       Thrown if the authorization fails.
      * @throws SystemException              Thrown in case of an internal system error.
      */
-    @Validate(param = 1, resolver = "getAttributesSchemaLocation", root = "attribute")
     String createAttribute(String userId, String attributeXml) throws AlreadyExistsException,
         UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -1013,7 +1000,6 @@ public interface UserAccountHandlerInterface {
      * @throws SystemException                Thrown in case of an internal system error.
      * @throws OptimisticLockingException     If the give last modification timestamp does not match the current one.
      */
-    @Validate(param = 2, resolver = "getAttributesSchemaLocation", root = "attribute")
     String updateAttribute(String userId, String attributeId, String attributeXML) throws UserAccountNotFoundException,
         OptimisticLockingException, UserAttributeNotFoundException, ReadonlyElementViolationException,
         XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,

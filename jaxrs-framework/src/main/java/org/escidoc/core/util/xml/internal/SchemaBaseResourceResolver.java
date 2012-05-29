@@ -18,16 +18,15 @@
  * terms.
  */
 
-package de.escidoc.core.common.util.xml;
+package org.escidoc.core.util.xml.internal;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.IOException;
+import java.net.URL;
 
 import org.apache.xerces.dom.DOMInputImpl;
+import org.apache.xerces.util.XMLCatalogResolver;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
-
-import de.escidoc.core.common.business.Constants;
 
 /**
  * Helper class to change the base-url of imported schemas.
@@ -36,11 +35,18 @@ import de.escidoc.core.common.business.Constants;
  */
 public class SchemaBaseResourceResolver implements LSResourceResolver {
 
-    /**
-     * Pattern used to detect base-url of schema-location in imported schemas.
-     */
-    private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
-
+    private XMLCatalogResolver catalogResolver;
+    
+    public SchemaBaseResourceResolver(XMLCatalogResolver catalogResolver, String[] catalogList) {
+        this.catalogResolver = catalogResolver;
+        String[] cList = new String[catalogList.length];
+        for (int i = 0; i < catalogList.length; i++) {
+            URL xmlCatalogUrl = SchemaBaseResourceResolver.class.getClassLoader().getResource(catalogList[i]);
+            cList[i] = xmlCatalogUrl.toExternalForm();
+        }
+        this.catalogResolver.setCatalogList(cList);
+    }
+    
     /**
      * Replaces base-part of system-id.
      *
@@ -55,17 +61,18 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
     public LSInput resolveResource(
         final String type, final String namespaceURI, final String publicId, final String systemId, final String baseURI) {
         if (systemId != null) {
-            final Matcher schemaLocationMatcher = PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
-            if (schemaLocationMatcher.find()) {
-                final String systemIdLocal = schemaLocationMatcher.replaceAll(XmlUtility.getSchemaBaseUrl());
-                return new DOMInputImpl(publicId, systemIdLocal, baseURI);
+            String systemIdLocal;
+            try {
+                systemIdLocal = catalogResolver.resolveSystem(systemId);
             }
-            else {
+            catch (IOException e) {
                 return null;
             }
+            return new DOMInputImpl(publicId, systemIdLocal, baseURI);
         }
         else {
             return null;
         }
     }
+    
 }
