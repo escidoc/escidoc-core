@@ -91,10 +91,6 @@ public final class CustomStatusBuilder {
         if (e instanceof EscidocException) {
             try {
                 final StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append('\n');
-                errorMsg.append(XmlUtility.CDATA_START);
-                errorMsg.append(quoteCdata(((EscidocException) e).toXmlString()));
-                errorMsg.append(XmlUtility.CDATA_END);
                 return new Status(codeList, errorMsg.toString());
             }
             catch (final Exception e1) {
