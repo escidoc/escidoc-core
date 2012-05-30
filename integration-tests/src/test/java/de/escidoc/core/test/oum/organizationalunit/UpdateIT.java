@@ -583,27 +583,6 @@ public class UpdateIT extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining update of an organizational unit with with missing id.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testOumUou2g() throws Exception {
-
-        final Class<MissingMethodParameterException> ec = MissingMethodParameterException.class;
-
-        final String toBeUpdatedXml = createSuccessfully("escidoc_ou_create.xml");
-
-        try {
-            update(null, toBeUpdatedXml);
-            failMissingException("No exception occured on update with missing id.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(ec, e);
-        }
-    }
-
-    /**
      * Test declining update of an organizational unit with with missing organizational unit xml.
      *
      * @throws Exception If anything fails.

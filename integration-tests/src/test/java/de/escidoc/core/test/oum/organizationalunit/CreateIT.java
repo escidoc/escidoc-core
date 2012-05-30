@@ -379,7 +379,7 @@ public class CreateIT extends OrganizationalUnitTestBase {
     @Test
     public void testOumCou2b() throws Exception {
 
-        Class<XmlCorruptedException> ec = XmlCorruptedException.class;
+        Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
 
         final String toBeCreatedXml = getTemplateAsString(TEMPLATE_ITEM_PATH, "escidoc_item_198.xml");
 

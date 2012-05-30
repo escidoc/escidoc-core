@@ -30,6 +30,7 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
@@ -64,8 +65,11 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
 
         Document ou2doc = getDocument(ou2xml);
 
-        Element parent = ou2doc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
+        String srelPrefix = determineSrelNamespacePrefix(ou2doc);
+        String xlinkPrefix = determineXlinkNamespacePrefix(ou2doc);
+        Element parent =
+            ou2doc.createElementNS("http://escidoc.de/core/01/structural-relations/", srelPrefix + ":parent");
+        parent.setAttribute(xlinkPrefix + ":href", "/oum/organizational-unit/" + ou1id);
 
         Node parents = selectSingleNode(ou2doc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         parents.appendChild(parent);
@@ -100,8 +104,11 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
         String parentsXml = retrieveParents(ou2id);
         Document ou2parents = getDocument(parentsXml);
 
-        Element parent = ou2parents.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ou1id);
+        String srelPrefix = determineSrelNamespacePrefix(ou2parents);
+        String xlinkPrefix = determineXlinkNamespacePrefix(ou2parents);
+        Element parent =
+            ou2parents.createElementNS("http://escidoc.de/core/01/structural-relations/", srelPrefix + ":parent");
+        parent.setAttribute(xlinkPrefix + ":href", "/oum/organizational-unit/" + ou1id);
 
         Node parents = selectSingleNode(ou2parents, "/parents");
         parents.appendChild(parent);
@@ -317,7 +324,7 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
     @Test
     public void test_OUM_UPOU_5_2() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
+        final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument = getDocument(createdXml);
@@ -340,7 +347,7 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
     @Test
     public void test_OUM_UPOU_5_3() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
+        final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument = getDocument(createdXml);
@@ -447,23 +454,30 @@ public class UpdateParentsIT extends OrganizationalUnitTestBase {
         String ouCid = getObjidValue(ouCdoc);
 
         // A parentOf B
+        String srelPrefix = determineSrelNamespacePrefix(ouBdoc);
+        String xlinkPrefix = determineXlinkNamespacePrefix(ouBdoc);
         Node parents = selectSingleNode(ouBdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        Element parent = ouBdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        Element parent =
+            ouBdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", srelPrefix + ":parent");
+        parent.setAttribute(xlinkPrefix + ":href", "/oum/organizational-unit/" + ouAid);
         parents.appendChild(parent);
         ouBdoc = getDocument(update(ouBid, toString(ouBdoc, true)));
 
         // B parentOf C
+        srelPrefix = determineSrelNamespacePrefix(ouCdoc);
+        xlinkPrefix = determineXlinkNamespacePrefix(ouCdoc);
         parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
-        parent = ouCdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", "srel:parent");
-        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouBid);
+        parent = ouCdoc.createElementNS("http://escidoc.de/core/01/structural-relations/", srelPrefix + ":parent");
+        parent.setAttribute(xlinkPrefix + ":href", "/oum/organizational-unit/" + ouBid);
         parents.appendChild(parent);
         ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
 
         // A parentOf C
+        srelPrefix = determineSrelNamespacePrefix(ouCdoc);
+        xlinkPrefix = determineXlinkNamespacePrefix(ouCdoc);
         parents = selectSingleNode(ouCdoc, XPATH_ORGANIZATIONAL_UNIT_PARENTS);
         parent = (Element) selectSingleNode(parents, XPATH_ORGANIZATIONAL_UNIT_PARENT);
-        parent.setAttribute("xlink:href", "/oum/organizational-unit/" + ouAid);
+        parent.setAttribute(xlinkPrefix + ":href", "/oum/organizational-unit/" + ouAid);
         ouCdoc = getDocument(update(ouCid, toString(ouCdoc, true)));
     }
 }

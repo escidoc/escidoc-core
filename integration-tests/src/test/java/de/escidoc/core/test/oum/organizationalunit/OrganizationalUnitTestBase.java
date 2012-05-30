@@ -34,6 +34,7 @@ import de.escidoc.core.test.oum.OumTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -273,13 +274,57 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      * @return Returns the namespace prefix of the structural relations element of the document
      * @throws Exception If anything fails.
      */
-    private String determineSrelNamespacePrefix(final Document document) throws Exception {
+    protected String determineSrelNamespacePrefix(final Document document) throws Exception {
 
         Node root = selectSingleNode(document, XPATH_ORGANIZATIONAL_UNIT_CREATED_BY);
         if (root != null) {
             return determinePrefix(root);
         }
         else {
+            NodeList list = document.getChildNodes();
+            for (int i = 0; i < list.getLength(); i++) {
+                Node n = list.item(i);
+                NamedNodeMap attributes = n.getAttributes();
+                if (attributes != null) {
+                    for (int j = 0; j < attributes.getLength(); j++) {
+                        Node no = attributes.item(j);
+                        if (no.getNodeValue().equals(STRUCTURAL_RELATIONS_NS_URI)) {
+                            return no.getNodeName().replaceAll(".*?:(.*)", "$1");
+                        }
+                    }
+                }
+            }
+            return SREL_PREFIX_TEMPLATES;
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the structural relations used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the structural relations element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineOuNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ORGANIZATIONAL_UNIT);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            NodeList list = document.getChildNodes();
+            for (int i = 0; i < list.getLength(); i++) {
+                Node n = list.item(i);
+                NamedNodeMap attributes = n.getAttributes();
+                if (attributes != null) {
+                    for (int j = 0; j < attributes.getLength(); j++) {
+                        Node no = attributes.item(j);
+                        if (no.getNodeValue().equals(ORGANIZATIONAL_UNIT_NS_URI)) {
+                            return no.getNodeName().replaceAll(".*?:(.*)", "$1");
+                        }
+                    }
+                }
+            }
             return SREL_PREFIX_TEMPLATES;
         }
     }
@@ -293,7 +338,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      *         returned.
      * @throws Exception If anything fails.
      */
-    private String determineXlinkNamespacePrefix(final Document document) throws Exception {
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
 
         Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
         if (hrefAttr != null) {
@@ -310,7 +355,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      * @param node The <code>Node</code> to get the namespace prefix from.
      * @return Returns the namespace prefix of the provided <code>Node</code>.
      */
-    private String determinePrefix(final Node node) {
+    protected String determinePrefix(final Node node) {
         String prefix = node.getPrefix();
         if (prefix == null) {
             prefix = node.getNodeName().replaceAll(":.*", "");

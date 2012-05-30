@@ -44,7 +44,9 @@ import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
@@ -1019,6 +1021,38 @@ public class ItemTestBase extends OmTestBase {
             substitute(itemDoc, "/item/properties/context/@href", contextHref);
         }
         return toString(itemDoc, false);
+    }
+
+    /**
+     * Determines the namespace prefix of the provided node.
+     *
+     * @param node The <code>Node</code> to get the namespace prefix from.
+     * @return Returns the namespace prefix of the provided <code>Node</code>.
+     */
+    protected String determinePrefix(final Node node) {
+        String prefix = node.getPrefix();
+        if (prefix == null) {
+            prefix = node.getNodeName().replaceAll(":.*", "");
+        }
+        return prefix;
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineMdRecordNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ITEM_MD_RECORD);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            return "";
+        }
     }
 
 }

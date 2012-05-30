@@ -103,7 +103,7 @@ public interface OrganizationalUnitRestService {
         AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
         OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException;
 
-    @POST
+    @PUT
     @Path("/{id}/parents")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)

@@ -298,10 +298,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         // update OU2
         Document ou2doc = getDocument(retrieve(ou2Id));
 
-        predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "srel:predecessor");
+        String srelPrefix = determineSrelNamespacePrefix(ou2doc);
+        String xlinkPrefix = determineXlinkNamespacePrefix(ou2doc);
+        predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, srelPrefix + ":predecessor");
 
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-            + ou3Id);
+        predecessorElement.setAttributeNS(XLINK_NS_URI, xlinkPrefix + ":href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+            + "/" + ou3Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         ou2doc.adoptNode(predecessorElement);
@@ -333,13 +335,15 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         Document ou1doc = getDocument(retrieve(ou1Id));
 
+        String srelPrefix = determineSrelNamespacePrefix(ou1doc);
+        String xlinkPrefix = determineXlinkNamespacePrefix(ou1doc);
+        String ouPrefix = determineOuNamespacePrefix(ou1doc);
         // append OU1 as predecessor to OU1
-        Element predecessorsElement =
-            ou1doc.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "organizational-unit:predecessors");
+        Element predecessorsElement = ou1doc.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, ouPrefix + ":predecessors");
 
-        Element predecessorElement = ou1doc.createElementNS(SREL_NS_URI, "srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-            + ou1Id);
+        Element predecessorElement = ou1doc.createElementNS(SREL_NS_URI, srelPrefix + ":predecessor");
+        predecessorElement.setAttributeNS(XLINK_NS_URI, xlinkPrefix + ":href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
+            + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);

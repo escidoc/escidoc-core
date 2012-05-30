@@ -125,6 +125,9 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
             if (e instanceof InvocationTargetException) {
                 return handleException(((InvocationTargetException) e).getTargetException());
             }
+            else if (e instanceof IllegalArgumentException) {
+                return doDeclineHttpRequest(new XmlSchemaValidationException(e.getMessage(), e));
+            }
             else if (e instanceof AspectException) {
                 return handleException(e.getCause());
             }

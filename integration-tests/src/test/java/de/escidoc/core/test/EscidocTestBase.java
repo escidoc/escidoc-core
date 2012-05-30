@@ -1414,7 +1414,7 @@ public abstract class EscidocTestBase {
                     final String localName = expectedAttribute.getLocalName();
                     toBeAssertedAttribute =
                         toBeAssertedAttributes.getNamedItemNS(expectedAttributeNamespace, localName);
-                    if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                    if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
                         assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
                             toBeAssertedAttribute);
                     }
@@ -1433,12 +1433,12 @@ public abstract class EscidocTestBase {
                         final String attributeXpath = "@" + attributeName;
                         toBeAssertedAttribute = selectSingleNode(toBeAsserted, attributeXpath);
                     }
-                    if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                    if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
                         assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
                             toBeAssertedAttribute);
                     }
                 }
-                if (!expectedAttributeNodeName.startsWith("xmlns:")) {
+                if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
                     assertEquals(message + " Attribute value mismatch [" + expectedAttribute.getNodeName() + "] ",
                         expectedAttribute.getTextContent(), toBeAssertedAttribute.getTextContent());
                 }
