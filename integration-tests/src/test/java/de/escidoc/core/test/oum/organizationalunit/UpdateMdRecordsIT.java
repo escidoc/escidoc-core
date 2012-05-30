@@ -29,6 +29,7 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
@@ -325,7 +326,7 @@ public class UpdateMdRecordsIT extends OrganizationalUnitTestBase {
     @Test
     public void testOumUms5c() throws Exception {
 
-        final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
+        final Class<XmlSchemaValidationException> ec = XmlSchemaValidationException.class;
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final Document toBeUpdatedDocument = getDocument(createdXml);
