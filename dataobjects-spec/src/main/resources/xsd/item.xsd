@@ -335,6 +335,8 @@
         </xs:element>
       </xs:sequence>
       <xs:attributeGroup
+              ref="common-types:eSciDocResourceIdentityAttributes"/>
+      <xs:attributeGroup
           ref="common-types:eSciDocRootElementAttributes"/>
     </xs:complexType>
   </xs:element>
