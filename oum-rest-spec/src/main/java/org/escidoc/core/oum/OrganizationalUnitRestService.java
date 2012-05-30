@@ -95,7 +95,7 @@ public interface OrganizationalUnitRestService {
         MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
         OrganizationalUnitHasChildrenException, SystemException;
 
-    @POST
+    @PUT
     @Path("/{id}/md-records")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
