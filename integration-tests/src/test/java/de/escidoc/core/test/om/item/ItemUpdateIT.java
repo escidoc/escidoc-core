@@ -28,21 +28,16 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.BinaryContent;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Iterator;
+import java.util.Vector;
+
+import javax.xml.transform.TransformerException;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -56,15 +51,20 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.transform.TransformerException;
-import java.util.Iterator;
-import java.util.Vector;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 
 /**
  * Test the mock implementation of the item resource.
@@ -124,9 +124,10 @@ public class ItemUpdateIT extends ItemTestBase {
 
         // Node componentMdRecords =
         // selectSingleNode(createdDocument, mdRecordsPath);
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
         Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4",
-                "escidocMetadataRecords:md-record");
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "escidoc");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("oai_dc");
@@ -145,8 +146,8 @@ public class ItemUpdateIT extends ItemTestBase {
         selectSingleNode(createdDocument, "/item/components/component/md-records").appendChild(mdRecord);
         String itemWith2ComponentMdRecordXml = toString(createdDocument, true);
         String replaced =
-            itemWith2ComponentMdRecordXml.replaceFirst("<escidocItem:item",
-                "<escidocItem:item xmlns:dc=\"http://purl.org/dc/elements/1.1/\" ");
+            itemWith2ComponentMdRecordXml.replaceFirst("<([^>]*?):item",
+                "<$1:item xmlns:dc=\"http://purl.org/dc/elements/1.1/\" ");
         String updatedXml = update(createdItemId, replaced);
         Document updatedDocument = getDocument(updatedXml);
         Node escidocComponentMdRecord = selectSingleNode(updatedDocument, mdRecordPath);
@@ -190,8 +191,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String itemId = getObjidValue(itemXml);
 
         // update with component
-        itemXml = itemXml.replace("</escidocComponents:components>", component + "</escidocComponents:components>");
-        itemXml = itemXml.replaceAll("prefix-xlink", "xlink");
+        itemXml = insertComponent(component, item, itemXml);
         Document updateItem = getDocument(itemXml);
         selectSingleNodeAsserted(updateItem, "/item/components/component/md-records/md-record");
         String temp = toString(updateItem, false);
@@ -236,18 +236,6 @@ public class ItemUpdateIT extends ItemTestBase {
         Document updateDocument = EscidocAbstractTest.getDocument(updatedXml);
         // check for component with metadata
         selectSingleNodeAsserted(updateDocument, "/item/components/component/md-records/md-record");
-    }
-
-    /**
-     * Test update Item without id (id= null).
-     * 
-     * @throws Exception
-     *             If framework
-     */
-    @Test(expected = MissingMethodParameterException.class)
-    public void testUpdateWithNullId() throws Exception {
-
-        update(null, this.theItemXml);
     }
 
     /**
@@ -606,10 +594,8 @@ public class ItemUpdateIT extends ItemTestBase {
 
         // add new component to item
         // string op start
-        String theItemXmlWith2AddComp = insertNamespacesInRootElement(theItemXml);
-        theItemXmlWith2AddComp =
-            theItemXmlWith2AddComp.replaceFirst("</escidocComponents:components>", toString(newComponent, true)
-                + toString(newComponent, true) + "</escidocComponents:components>");
+        String theItemXmlWith2AddComp = insertComponent(toString(newComponent, true), curItem, theItemXml);
+        theItemXmlWith2AddComp = insertComponent(toString(newComponent, true), curItem, theItemXmlWith2AddComp);
         // string op end
 
         // DOM op
@@ -663,10 +649,7 @@ public class ItemUpdateIT extends ItemTestBase {
         // add new component to item
         // TODO replace string ops against DOM ops
         // string op start
-        String theItemXmlWith1AddComp = insertNamespacesInRootElement(theItemXml);
-        theItemXmlWith1AddComp =
-            theItemXmlWith1AddComp.replaceFirst("</escidocComponents:components>", toString(newComponent, true)
-                + "</escidocComponents:components>");
+        String theItemXmlWith1AddComp = insertComponent(toString(newComponent, true), curItem, theItemXml);
         // string op end
 
         String newItemXml = theItemXmlWith1AddComp;
@@ -731,17 +714,9 @@ public class ItemUpdateIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         Node newComponent =
             selectSingleNode(EscidocAbstractTest.getDocument(templateComponentXml), "/item/components/component[1]");
-        String newComponentXml = toString(newComponent, true);
-        newComponentXml =
-            newComponentXml.replaceFirst("<escidocComponents:component",
-                "<escidocComponents:component xmlns:prefix-xlink=\"http://www.w3.org/1999/xlink\" ");
         // add new component to item
         // string op start
-        String theItemXmlX =
-            theItemXml.replaceFirst("</escidocComponents:components>", "X</escidocComponents:components>");
-        String newItemXml =
-            theItemXmlX.replaceFirst("X</escidocComponents:components>", newComponentXml
-                + "</escidocComponents:components>");
+        String newItemXml = insertComponent(toString(newComponent, true), curItem, theItemXml);
 
         update(theItemId, newItemXml);
         String xml = retrieve(theItemId);
@@ -768,10 +743,11 @@ public class ItemUpdateIT extends ItemTestBase {
         Document item = EscidocAbstractTest.getDocument(theItemXml);
         Node node = selectSingleNode(item, "/item/properties/context");
 
+        String xlinkNsPrefix = determineXlinkNamespacePrefix(item);
         // remove context.href
         NamedNodeMap atts = node.getAttributes();
         if (atts != null) {
-            atts.removeNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
+            atts.removeNamedItem(xlinkNsPrefix + ":href");
         }
 
         String newItemXml = toString(item, false);
@@ -950,8 +926,9 @@ public class ItemUpdateIT extends ItemTestBase {
         Node component = selectSingleNode(curItem, "/item/components/component[1]");
         NamedNodeMap atts = component.getAttributes();
 
+        String xlinkNsPrefix = determineXlinkNamespacePrefix(curItem);
         Node newItem = null;
-        Node hrefNode = atts.getNamedItem(EscidocTestBase.XLINK_HREF_ESCIDOC);
+        Node hrefNode = atts.getNamedItem(xlinkNsPrefix + ":href");
         String hrefVal = hrefNode.getNodeValue();
         String hrefNewVal = hrefVal.replaceFirst("/component/escidoc:[^\"]+", "/component/escidoc:x");
         hrefNode.setNodeValue(hrefNewVal);
@@ -993,12 +970,12 @@ public class ItemUpdateIT extends ItemTestBase {
     /**
      * Update binary content by link
      * 
-     * @test.name Update Component content by href
-     * @test.id OM_UCI_10-3
-     * @test.input XML item with Component with new binary content link
-     * @test.expected Error message
+     * @Test.name Update Component content by href
+     * @Test.id OM_UCI_10-3
+     * @Test.input XML item with Component with new binary content link
+     * @Test.expected Error message
      * 
-     * @test.status Implemented
+     * @Test.status Implemented
      * 
      * @throws Exception
      *             If anything fails.
@@ -1017,7 +994,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String imageUrl =
             "http://" + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME) + ":"
                 + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
-                + "/images/escidoc-logo.jpg";
+                + Constants.ESCIDOC_BASE_URI + "/images/escidoc-logo.jpg";
 
         Node itemWithNewContentHref =
             substitute(newItem, "/item/components/component[@href = '/ir/item/" + this.theItemId
@@ -1082,7 +1059,7 @@ public class ItemUpdateIT extends ItemTestBase {
         // description and file-name are set throu metadata "escidoc"
         // (file-size and locator-url do not longer exist in component)
         // TODO check if values are new
-        newItem = (Document) substitute(newItem, basePath + "valid-status", testStringValue);
+        newItem = (Document) substitute(newItem, basePath + "valid-status", "invalid");
         newItem = (Document) substitute(newItem, basePath + "visibility", "institutional");
         newItem = (Document) substitute(newItem, basePath + "content-category", testStringValue);
         newItem =
@@ -1092,7 +1069,7 @@ public class ItemUpdateIT extends ItemTestBase {
         newItemXml = update(theItemId, newItemXml);
         Document updatedItem = EscidocAbstractTest.getDocument(newItemXml);
 
-        assertEquals(testStringValue, selectSingleNode(updatedItem, basePath + "valid-status/text()").getNodeValue());
+        assertEquals("invalid", selectSingleNode(updatedItem, basePath + "valid-status/text()").getNodeValue());
         assertEquals("institutional", selectSingleNode(updatedItem, basePath + "visibility/text()").getNodeValue());
         assertEquals(testStringValue, selectSingleNode(updatedItem, basePath + "content-category/text()")
             .getNodeValue());
@@ -1102,7 +1079,7 @@ public class ItemUpdateIT extends ItemTestBase {
         newItemXml = retrieve(theItemId);
         updatedItem = EscidocAbstractTest.getDocument(newItemXml);
 
-        assertEquals(testStringValue, selectSingleNode(updatedItem, basePath + "valid-status/text()").getNodeValue());
+        assertEquals("invalid", selectSingleNode(updatedItem, basePath + "valid-status/text()").getNodeValue());
         assertEquals("institutional", selectSingleNode(updatedItem, basePath + "visibility/text()").getNodeValue());
         assertEquals(testStringValue, selectSingleNode(updatedItem, basePath + "content-category/text()")
             .getNodeValue());
@@ -1127,8 +1104,8 @@ public class ItemUpdateIT extends ItemTestBase {
         componentXml = retrieveComponent(theItemId, componentId);
         componentDoc = getDocument(componentXml);
         componentXml = toString(componentDoc, true).replaceAll(componentId, "escidoc:ex6");
+        String updateItemXml = insertComponent(componentXml, newItem, theItemXml);
 
-        String updateItemXml = theItemXml.replaceFirst("(:components[^>]*>)", "$1" + componentXml);
         try {
             update(theItemId, updateItemXml);
             fail("Exception expected.");
@@ -1144,7 +1121,7 @@ public class ItemUpdateIT extends ItemTestBase {
         componentDoc = (Document) substitute(componentDoc, "/component/@href", "");
         componentXml = toString(componentDoc, true);
 
-        updateItemXml = theItemXml.replaceFirst("(:components[^>]*>)", "$1" + componentXml);
+        updateItemXml = insertComponent(componentXml, newItem, theItemXml);
         update(theItemId, updateItemXml);
 
         // now there are 3 components
@@ -1154,12 +1131,13 @@ public class ItemUpdateIT extends ItemTestBase {
         // without objid and type and title
         componentXml = retrieveComponent(theItemId, componentId);
         componentDoc = getDocument(componentXml);
-        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:href");
-        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:type");
-        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem("xlink:title");
+        String xlinkNsPrefix = determineXlinkNamespacePrefix(componentDoc);
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem(xlinkNsPrefix + ":href");
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem(xlinkNsPrefix + ":type");
+        selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem(xlinkNsPrefix + ":title");
         componentXml = toString(componentDoc, true);
 
-        updateItemXml = theItemXml.replaceFirst("(:components[^>]*>)", "$1" + componentXml);
+        updateItemXml = insertComponent(componentXml, getDocument(theItemXml, true), theItemXml);
         update(theItemId, updateItemXml);
 
         // now there are 4 components
@@ -1888,9 +1866,10 @@ public class ItemUpdateIT extends ItemTestBase {
         NodeList mdrecordsAfterUpdate = selectNodeList(updatedDocument, "/item/md-records/md-record");
         assertEquals((mdrecordsAfterCreate.getLength() - 1), mdrecordsAfterUpdate.getLength());
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(updatedDocument);
         Element mdRecord =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
-                "escidocMetadataRecords:md-record");
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = updatedDocument.createElement("bla");
@@ -1926,9 +1905,10 @@ public class ItemUpdateIT extends ItemTestBase {
         NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/item/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
         Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
-                "escidocMetadataRecords:md-record");
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
@@ -2034,9 +2014,10 @@ public class ItemUpdateIT extends ItemTestBase {
             selectNodeList(udatedDocument, "/item/components/component/md-records/md-record");
         assertEquals((mdrecordsAfterCreate.getLength() - 1), mdrecordsAfterUpdate.getLength());
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(udatedDocument);
         Element mdRecord =
-            udatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
-                "escidocMetadataRecords:md-record");
+            udatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "md1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = udatedDocument.createElement("bla");
@@ -2071,9 +2052,10 @@ public class ItemUpdateIT extends ItemTestBase {
         NodeList mdrecordsAfterCreate =
             selectNodeList(createdDocument, "/item/components/component/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
         Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4",
-                "escidocMetadataRecords:md-record");
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
@@ -2214,17 +2196,18 @@ public class ItemUpdateIT extends ItemTestBase {
         Document itemDoc2 = EscidocAbstractTest.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc2);
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(itemDoc2);
         Element mdRecord =
-            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = itemDoc2.createElement("bla");
         mdRecord.appendChild(mdRecordContent);
 
         Element mdRecords =
-            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-records");
+            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-records");
         mdRecords.appendChild(mdRecord);
         selectSingleNode(itemDoc2, "/item/components/component[1]").appendChild(mdRecords);
         String newXml = toString(itemDoc2, true);
@@ -2275,8 +2258,8 @@ public class ItemUpdateIT extends ItemTestBase {
 
         String itemDocString = toString(itemDoc, false);
         itemDocString =
-            itemDocString.replace("xmlns=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
-                "xmlns=\"http://just.for.test/namespace\"");
+            itemDocString.replace("xmlns:publication=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
+                "xmlns:publication=\"http://just.for.test/namespace\"");
 
         String updatedItem = update(this.theItemId, itemDocString);
 
@@ -2348,5 +2331,47 @@ public class ItemUpdateIT extends ItemTestBase {
         }
 
         return compIds;
+    }
+
+    /**
+     * Inserts component in itemXml.
+     * 
+     * @param componentXml componentXml
+     * @param itemDoc itemDoc
+     * @param itemXml itemXml
+     * @return itemXml with component.
+     */
+    private String insertComponent(final String componentXml, final Document itemDoc, final String itemXml)
+        throws Exception {
+        String returnItem = itemXml;
+        String internalComponent = componentXml;
+        String componentsNsPrefix = determineComponentsNamespacePrefix(itemDoc);
+        String mdRecordsNsPrefix = determineMdRecordNamespacePrefix(itemDoc);
+        String propertiesNsPrefix = determinePropertiesNamespacePrefix(itemDoc);
+        String xlinkNsPrefix = determineXlinkNamespacePrefix(itemDoc);
+        String componentComponentsNsPrefix = determineComponentsNamespacePrefix(getDocument(componentXml));
+        String componentMdRecordsNsPrefix = determineMdRecordNamespacePrefix(getDocument(componentXml));
+        String componentPropertiesNsPrefix = determinePropertiesNamespacePrefix(getDocument(componentXml));
+        String componentXlinkNsPrefix = determineXlinkNamespacePrefix(getDocument(componentXml));
+        internalComponent = internalComponent.replaceAll(componentComponentsNsPrefix + ":", componentsNsPrefix + ":");
+        internalComponent =
+            internalComponent.replaceAll("xmlns:" + componentComponentsNsPrefix, "xmlns:" + componentsNsPrefix);
+        internalComponent = internalComponent.replaceAll(componentMdRecordsNsPrefix + ":", mdRecordsNsPrefix + ":");
+        internalComponent =
+            internalComponent.replaceAll("xmlns:" + componentMdRecordsNsPrefix, "xmlns:" + mdRecordsNsPrefix);
+        internalComponent = internalComponent.replaceAll(componentPropertiesNsPrefix + ":", propertiesNsPrefix + ":");
+        internalComponent =
+            internalComponent.replaceAll("xmlns:" + componentPropertiesNsPrefix, "xmlns:" + propertiesNsPrefix);
+        internalComponent = internalComponent.replaceAll(componentXlinkNsPrefix + ":", xlinkNsPrefix + ":");
+        internalComponent = internalComponent.replaceAll("xmlns:" + componentXlinkNsPrefix, "xmlns:" + xlinkNsPrefix);
+        returnItem =
+            itemXml.replaceFirst("(?s)(<" + componentsNsPrefix + ":components[^>]*?)\\/\\s*?>", "$1>"
+                + internalComponent + "</" + componentsNsPrefix + ":components>");
+        if (returnItem.equals(itemXml)) {
+            returnItem =
+                itemXml.replaceFirst("(?s)(<" + componentsNsPrefix + ":components[^>]*?>)", "$1" + internalComponent);
+        }
+
+        return returnItem;
     }
 }

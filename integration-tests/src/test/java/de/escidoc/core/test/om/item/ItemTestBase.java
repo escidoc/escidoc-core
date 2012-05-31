@@ -31,24 +31,21 @@ package de.escidoc.core.test.om.item;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import de.escidoc.core.test.EntityUtil;
-import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
+import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -1051,7 +1048,85 @@ public class ItemTestBase extends OmTestBase {
             return determinePrefix(root);
         }
         else {
-            return "";
+            root = selectSingleNode(document, XPATH_COMPONENT_MD_RECORD);
+            if (root != null) {
+                return determinePrefix(root);
+            }
+            else {
+                throw new IOException("Component NS-Prefix not found");
+            }
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineComponentsNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ITEM_COMPONENTS);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            root = selectSingleNode(document, XPATH_COMPONENT);
+            if (root != null) {
+                return determinePrefix(root);
+            }
+            else {
+                throw new IOException("Component NS-Prefix not found");
+            }
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ITEM_PROPERTIES);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            root = selectSingleNode(document, XPATH_COMPONENT_PROPERTIES + "/mime-type");
+            if (root != null) {
+                return determinePrefix(root);
+            }
+            else {
+                throw new IOException("Component NS-Prefix not found");
+            }
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
+
+        Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
+        if (hrefAttr != null) {
+            return determinePrefix(hrefAttr);
+        }
+        else {
+            hrefAttr = selectSingleNode(document, XPATH_COMPONENT_MD_RECORD + "/" + PART_XLINK_TITLE);
+            if (hrefAttr != null) {
+                return determinePrefix(hrefAttr);
+            }
+            else {
+                throw new IOException("Component NS-Prefix not found");
+            }
         }
     }
 
