@@ -110,7 +110,7 @@ public class ComponentChecksumIT extends ItemTestBase {
             selectSingleNode(itemDoc,
                 "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String imageUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI + "/images/newlogo2.jpg";
+        String imageUrl = EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/testDocuments/images/1.jpeg";
 
         // change url to the one from creation of item
         substitute(itemDoc, "//components/component" + "[properties/mime-type = 'image/jpeg']/content/@href", imageUrl);
