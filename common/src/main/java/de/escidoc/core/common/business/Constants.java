@@ -360,7 +360,7 @@ public final class Constants {
     public static final String CONTAINER_REF_LIST_NAMESPACE =
         NS_URI_PREFIX + "containerreflist" + NS_URI_SCHEMA_VERSION_0_3;
 
-    public static final String WOV_NAMESPACE_URI = NS_URI_PREFIX + "versionhistory" + NS_URI_SCHEMA_VERSION_0_3;
+    public static final String WOV_NAMESPACE_URI = NS_URI_PREFIX + "versionhistory" + NS_URI_SCHEMA_VERSION_0_4;
 
     public static final String XLINK_URI = XLINK_NS_URI;
 

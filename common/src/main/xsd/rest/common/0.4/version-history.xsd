@@ -32,10 +32,10 @@
 		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 		xmlns:xlink="http://www.w3.org/1999/xlink" 
 		xmlns:premis="http://www.loc.gov/standards/premis/v1" 
-		xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.3" 
+		xmlns:escidocVersions="http://www.escidoc.de/schemas/versionhistory/0.4" 
 		xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4" 
 		xmlns:item="http://www.escidoc.de/schemas/item/0.3" 
-		targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.3" 
+		targetNamespace="http://www.escidoc.de/schemas/versionhistory/0.4" 
 		elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xlink.xsd"/>
 	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/rest/common/0.3/xml.xsd"/>

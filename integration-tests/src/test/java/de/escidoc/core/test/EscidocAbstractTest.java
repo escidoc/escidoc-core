@@ -934,7 +934,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public void assertXmlValidVersionHistory(final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03() + VERSION_HISTORY_XSD));
+        assertXmlValid(xmlData, new URL(getVersionHistorySchemaBase() + VERSION_HISTORY_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1165,6 +1165,16 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     protected String getUserGroupSchemaBase() {
 
         return getSchemaLocationBase() + "/user-group/0.6/";
+    }
+
+    /**
+     * Gets the base url for all schema locations related to user groups.
+     *
+     * @return Returns the base url for all schema locations related to user groups.
+     */
+    protected String getVersionHistorySchemaBase() {
+
+        return getSchemaLocationBase() + "/common/0.4/";
     }
 
     /**
