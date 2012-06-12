@@ -259,28 +259,27 @@ public class ItemComponentExternalContentIT extends ItemTestBase {
         String xmlData = toString(itemWithoutSecondComponent, false);
         theItemXml = create(xmlData);
         theItemId = getObjidValue(EscidocAbstractTest.getDocument(theItemXml));
-        assertXmlValidItem(xmlData);
+        assertXmlValidItem(theItemXml);
+        String itemXml = theItemXml;
 
-        // get new component from template
-        String templateComponentXml =
-            EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_198_for_create_2_Component_Md-Records.xml");
+        // get new component from item
         Node itemWithFirstComponentWithoutAttributeStorage =
-            deleteAttribute(EscidocAbstractTest.getDocument(templateComponentXml),
+            deleteAttribute(EscidocAbstractTest.getDocument(theItemXml),
                 "/item/components/component[1]/content/@storage");
+        itemWithFirstComponentWithoutAttributeStorage =
+            deleteAttribute(itemWithFirstComponentWithoutAttributeStorage,
+                "/item/components/component[1]/@href");
         Node newComponent =
             selectSingleNode(itemWithFirstComponentWithoutAttributeStorage, "/item/components/component[1]");
+        String componentStr = toString(newComponent, true);
+        componentStr = componentStr.replaceFirst("(<([^>]*?):content[^>]*?)/\\s*?>", "$1>hshdjhcjkckcl</$2:content>");
+        String componentsNamespacePrefix = determineComponentsNamespacePrefix(EscidocAbstractTest.getDocument(theItemXml));
+        itemXml =
+            itemXml.replaceFirst("</" + componentsNamespacePrefix + ":components>", toString(newComponent, true)
+                + "</" + componentsNamespacePrefix + ":components>");
 
-        // add new component to item
-        // string op start
-        String theItemXmlWith1AddComp = insertNamespacesInRootElement(theItemXml);
-        theItemXmlWith1AddComp =
-            theItemXmlWith1AddComp.replaceFirst("</escidocComponents:components>", toString(newComponent, true)
-                + "</escidocComponents:components>");
-
-        String newItemXml = theItemXmlWith1AddComp; // toString(curItem, false);
         try {
-            update(theItemId, newItemXml);
+            update(theItemId, itemXml);
             fail("No exception occurred on update item with a new component " + "without content attribute 'storage'");
         }
         catch (final Exception e) {

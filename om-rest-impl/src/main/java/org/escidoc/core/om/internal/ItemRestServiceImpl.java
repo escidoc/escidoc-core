@@ -25,7 +25,12 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.rmi.RemoteException;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.cxf.jaxrs.ext.MessageContext;
@@ -304,6 +309,13 @@ public class ItemRestServiceImpl implements ItemRestService {
         ContentStreamNotFoundException, RemoteException {
 
         return serviceUtility.fromXML(ContentStreamTO.class, this.itemHandler.retrieveContentStream(id, name));
+    }
+
+    @Override
+    public Response retrieveContentStreamContent(final String id, final String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, ItemNotFoundException,
+        SystemException, ContentStreamNotFoundException, RemoteException {
+        return serviceUtility.toResponse(this.itemHandler.retrieveContentStreamContent(id, name));
     }
 
     @Override

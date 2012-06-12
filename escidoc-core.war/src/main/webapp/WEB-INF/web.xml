@@ -139,19 +139,19 @@
     <init-param>
       <param-name>static-resources-list</param-name>
       <param-value>
-        (\S)+.html 
-        (\S)+.xml 
-        (\S)+.jpg 
-        (\S)+.png 
-        (\S)+.gif 
-        (\S)+.xsl 
-        (\S)+.xsd 
+        (\S)+\.html 
+        (\S)+\.xml 
+        (\S)+\.jpg 
+        (\S)+\.png 
+        (\S)+\.gif 
+        (\S)+\.xsl 
+        (\S)+\.xsd 
       </param-value>
     </init-param>
     <init-param>
       <param-name>redirects-list</param-name>
       <param-value>
-        (\S)+.jsp 
+        (\S)+\.jsp 
       </param-value>
     </init-param>
     <init-param>
@@ -167,13 +167,13 @@
     <init-param>
       <param-name>static-resources-list</param-name>
       <param-value>
-        (\S)+.html 
-        (\S)+.xml 
-        (\S)+.jpg 
-        (\S)+.png 
-        (\S)+.gif 
-        (\S)+.xsl 
-        (\S)+.xsd 
+        (\S)+\.html 
+        (\S)+\.xml 
+        (\S)+\.jpg 
+        (\S)+\.png 
+        (\S)+\.gif 
+        (\S)+\.xsl 
+        (\S)+\.xsd 
       </param-value>
     </init-param>
     <init-param>

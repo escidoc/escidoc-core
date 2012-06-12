@@ -139,7 +139,7 @@ public class ContentStreamsIT extends ItemTestBase {
                 Node hrefNode = nl.item(i);
                 String href = hrefNode.getNodeValue();
                 if (href.startsWith("/")) {
-                    href = getBaseUrl() + href;
+                    href = getBaseUrl() + getFrameworkContext() + href;
                 }
                 HttpGet get = new HttpGet(href);
                 get.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);
@@ -180,7 +180,8 @@ public class ContentStreamsIT extends ItemTestBase {
             origHrefContentStreams = selectSingleNode(itemDoc, "/item/content-streams/@href").getNodeValue();
             Node typeAttributeRemoveNode = selectSingleNodeAsserted(itemDoc, "/item/content-streams");
             NamedNodeMap attMap = typeAttributeRemoveNode.getAttributes();
-            attMap.removeNamedItem("xlink:type");
+            String xlinkNamespacePrefix = determineXlinkNamespacePrefix(itemDoc);
+            attMap.removeNamedItem(xlinkNamespacePrefix + ":type");
             substitute(itemDoc, "/item/content-streams/@title", "something");
             substitute(itemDoc, "/item/content-streams/@href", "something");
 
@@ -190,7 +191,7 @@ public class ContentStreamsIT extends ItemTestBase {
             typeAttributeRemoveNode =
                 selectSingleNodeAsserted(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']");
             attMap = typeAttributeRemoveNode.getAttributes();
-            attMap.removeNamedItem("xlink:type");
+            attMap.removeNamedItem(xlinkNamespacePrefix + ":type");
             String newTitle = "something";
             substitute(itemDoc, "/item/content-streams/content-stream[@storage = 'external-managed']/@title", newTitle);
             String newHref =
@@ -310,7 +311,7 @@ public class ContentStreamsIT extends ItemTestBase {
             // retrieve old version of content
 
             String tocHref =
-                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(), Constants.ITEM_BASE_URI,
+                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(), Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI,
                     new String[] { createdItemId + ":1", "/content-streams/content-stream/toc/content" });
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(tocHref);

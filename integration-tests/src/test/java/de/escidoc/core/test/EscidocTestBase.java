@@ -4154,6 +4154,8 @@ public abstract class EscidocTestBase {
         element.setAttribute("xmlns:prefix-member-ref-list", MEMBER_REF_LIST_NS_URI);
         element.setAttribute("xmlns:prefix-metadata", METADATA_NS_URI);
         element.setAttribute("xmlns:prefix-metadatarecords", METADATARECORDS_NS_URI);
+        element.setAttribute("xmlns:escidocMetadataRecords", METADATARECORDS_NS_URI);
+        element.setAttribute("xmlns:escidocComponents", COMPONENTS_NS_URI);
         element.setAttribute("xmlns:prefix-organizational-unit", ORGANIZATIONAL_UNIT_NS_URI);
         element.setAttribute("xmlns:prefix-properties", PROPERTIES_NS_URI);
         element.setAttribute("xmlns:prefix-schema", SCHEMA_NS_URI);

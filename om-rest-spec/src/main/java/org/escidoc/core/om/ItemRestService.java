@@ -257,6 +257,13 @@ public interface ItemRestService {
         SystemException, ContentStreamNotFoundException, RemoteException;
 
     @GET
+    @Path("{id}/content-streams/content-stream/{name}/content")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response retrieveContentStreamContent(@PathParam("id") String id, @PathParam("name") String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, ItemNotFoundException,
+        SystemException, ContentStreamNotFoundException, RemoteException;
+
+    @GET
     @Path("{id}/properties")
     @Produces(MediaType.TEXT_XML)
     ItemPropertiesTO retrieveProperties(@PathParam("id") String id) throws ItemNotFoundException,
