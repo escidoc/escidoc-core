@@ -50,6 +50,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -122,8 +124,13 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
                         + " is missing.");
                 }
-                this.predicate = data;
-                if (!ContentRelationsUtility.validPredicate(data)) {
+                try {
+                    this.predicate = URLDecoder.decode(data, XmlUtility.CHARACTER_ENCODING);
+                }
+                catch (UnsupportedEncodingException e) {
+                    throw new EncodingSystemException(e.getMessage(), e);
+                }
+                if (!ContentRelationsUtility.validPredicate(this.predicate)) {
                     throw new RelationPredicateNotFoundException("Predicate " + data + " is wrong. ");
                 }
             }

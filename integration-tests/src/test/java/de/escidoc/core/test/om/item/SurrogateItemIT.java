@@ -329,9 +329,10 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // Append a new md-record to distinguish between a released version
         // and the last pending version.
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
             releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+                mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -398,9 +399,10 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // Append a new md-record to distinguish between a released version
         // and the last pending version.
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
             releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+                mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -831,9 +833,10 @@ public class SurrogateItemIT extends ItemTestBase {
 
         // Append a new md-record to distinguish between a released version
         // and the last pending version.
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
             releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+                mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");

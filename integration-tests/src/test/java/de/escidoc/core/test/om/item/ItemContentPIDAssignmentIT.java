@@ -312,7 +312,8 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         itemDoc = EscidocAbstractTest.getDocument(retrieve(itemId));
 
         Element contentNode = (Element) selectSingleNode(itemDoc, componentXpath + "/content");
-        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
+        String xlinkNamespacePrefix = determineXlinkNamespacePrefix(itemDoc);
+        Attr attr = itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, xlinkNamespacePrefix + ":href");
         String imageUrl = getBaseUrl() + "/images/escidoc-logo.jpg";
 
         attr.setValue(imageUrl);

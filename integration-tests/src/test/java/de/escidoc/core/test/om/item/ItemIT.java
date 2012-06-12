@@ -140,15 +140,23 @@ public class ItemIT extends ItemTestBase {
             failException("No exception expected!", e);
         }
         assertXmlValidItem(item);
-        Node node = selectSingleNode(EscidocAbstractTest.getDocument(item), "/item/properties/content-model-specific");
+        Document itemDoc = EscidocAbstractTest.getDocument(item);
+        Node node = selectSingleNode(itemDoc, "/item/properties/content-model-specific");
         assertNull("No element content-model-specific expected.", node);
 
         // add c-m-s
-        item = item.replaceFirst("</escidocItem:properties", "<prop:content-model-specific/></escidocItem:properties");
+        String propertiesNamespacePrefix = determinePropertiesNamespacePrefix(itemDoc);
+        String itemNamespacePrefix = determineItemNamespacePrefix(itemDoc);
+        item =
+            item.replaceFirst("</" + itemNamespacePrefix + ":properties", "<" + propertiesNamespacePrefix
+                + ":content-model-specific/></" + itemNamespacePrefix + ":properties");
         item = update(itemId, item);
         selectSingleNodeAsserted(getDocument(item), "/item/properties/content-model-specific");
         // insert into c-m-s
-        item = item.replaceFirst("<prop:content-model-specific[^>]*>", "<prop:content-model-specific><nix></nix>");
+        item =
+            item.replaceFirst("<" + propertiesNamespacePrefix + ":content-model-specific[^>]*>", "<"
+                + propertiesNamespacePrefix + ":content-model-specific><nix></nix></"
+                + propertiesNamespacePrefix + ":content-model-specific>");
         item = update(itemId, item);
         selectSingleNodeAsserted(getDocument(item), "/item/properties/content-model-specific/nix");
         // remove content from c-m-s

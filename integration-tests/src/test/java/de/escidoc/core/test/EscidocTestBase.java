@@ -932,7 +932,7 @@ public abstract class EscidocTestBase {
     public static final String XPATH_REPORT_REPORT_DEFINITION = "/report/report-definition";
 
     public static final String ENTITY_REFERENCES =
-        "A &lt; &gt; &amp; &quot; &apos; &amp;lt; &amp;gt; &amp;amp; &amp;quot; &amp;apos; Z";
+        "A &lt; &gt; &amp; &amp;lt; &amp;gt; &amp;amp; &amp;quot; &amp;apos; Z";
 
     public static final String XLINK_TYPE_VALUE = "simple";
 

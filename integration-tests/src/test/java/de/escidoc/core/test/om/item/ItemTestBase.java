@@ -1083,6 +1083,24 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
+     * Determines the namespace prefix of the item used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the item element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineItemNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_ITEM);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Item NS-Prefix not found");
+        }
+    }
+
+    /**
      * Determines the namespace prefix of the md-record used in the document.
      *
      * @param document The document to look up the namespace in.
@@ -1091,7 +1109,7 @@ public class ItemTestBase extends OmTestBase {
      */
     protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
 
-        Node root = selectSingleNode(document, XPATH_ITEM_PROPERTIES);
+        Node root = selectSingleNode(document, XPATH_ITEM_PROPERTIES + "/creation-date");
         if (root != null) {
             return determinePrefix(root);
         }

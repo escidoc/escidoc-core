@@ -2347,7 +2347,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String internalComponent = componentXml;
         String componentsNsPrefix = determineComponentsNamespacePrefix(itemDoc);
         String mdRecordsNsPrefix = determineMdRecordNamespacePrefix(itemDoc);
-        String propertiesNsPrefix = determinePropertiesNamespacePrefix(itemDoc);
+        String itemNsPrefix = determineItemNamespacePrefix(itemDoc);
         String xlinkNsPrefix = determineXlinkNamespacePrefix(itemDoc);
         String componentComponentsNsPrefix = determineComponentsNamespacePrefix(getDocument(componentXml));
         String componentMdRecordsNsPrefix = determineMdRecordNamespacePrefix(getDocument(componentXml));
@@ -2359,9 +2359,9 @@ public class ItemUpdateIT extends ItemTestBase {
         internalComponent = internalComponent.replaceAll(componentMdRecordsNsPrefix + ":", mdRecordsNsPrefix + ":");
         internalComponent =
             internalComponent.replaceAll("xmlns:" + componentMdRecordsNsPrefix, "xmlns:" + mdRecordsNsPrefix);
-        internalComponent = internalComponent.replaceAll(componentPropertiesNsPrefix + ":", propertiesNsPrefix + ":");
+        internalComponent = internalComponent.replaceAll(componentPropertiesNsPrefix + ":", itemNsPrefix + ":");
         internalComponent =
-            internalComponent.replaceAll("xmlns:" + componentPropertiesNsPrefix, "xmlns:" + propertiesNsPrefix);
+            internalComponent.replaceAll("xmlns:" + componentPropertiesNsPrefix, "xmlns:" + itemNsPrefix);
         internalComponent = internalComponent.replaceAll(componentXlinkNsPrefix + ":", xlinkNsPrefix + ":");
         internalComponent = internalComponent.replaceAll("xmlns:" + componentXlinkNsPrefix, "xmlns:" + xlinkNsPrefix);
         returnItem =
