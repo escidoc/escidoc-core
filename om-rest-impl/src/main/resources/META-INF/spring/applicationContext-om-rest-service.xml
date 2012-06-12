@@ -72,4 +72,20 @@
     </jaxrs:features>
   </jaxrs:server>
 
+  <jaxrs:server id="ingestRestService" address="/ir/ingest">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="org.escidoc.core.om.internal.IngestRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+
 </beans>

@@ -13,6 +13,7 @@
   <bean id="service.ir.item-filter"           class="org.escidoc.core.om.internal.ItemsRestServiceImpl"/>
   <bean id="service.ir.container"             class="org.escidoc.core.om.internal.ContainerRestServiceImpl"/>
   <bean id="service.ir.container-filter"      class="org.escidoc.core.om.internal.ContainersRestServiceImpl"/>
+  <bean id="service.ir.ingest"                class="org.escidoc.core.om.internal.IngestRestServiceImpl"/>
   <bean id="service.ir.content-rel"           class="org.escidoc.core.content.relation.internal.ContentRelationRestServiceImpl"/>
   <bean id="service.ir.content-rel-filter"    class="org.escidoc.core.content.relation.internal.ContentRelationsRestServiceImpl"/>
   <bean id="service.ir.context"               class="org.escidoc.core.context.internal.ContextRestServiceImpl"/>
@@ -62,6 +63,7 @@
       <ref bean="service.ir.item-filter"/>
       <ref bean="service.ir.container"/>
       <ref bean="service.ir.container-filter"/>
+      <ref bean="service.ir.ingest"/>
       <ref bean="service.ir.content-rel"/>
       <ref bean="service.ir.content-rel-filter"/>
       <ref bean="service.ir.context"/>

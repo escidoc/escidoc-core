@@ -47,9 +47,9 @@ public class IngestIT extends IngestTestBase {
      * thrown as a result.
      * 
      * @throws Exception
-     *             the Exception, in this case InvalidResourceException
+     *             the Exception, in this case XmlCorruptedException
      */
-    @Test(expected = InvalidResourceException.class)
+    @Test(expected = XmlCorruptedException.class)
     public void testIngestXmlNotValid() throws Exception {
         String toBeCreatedXml = Constants.XML_HEADER + "<root><a/></root>";
         ingest(toBeCreatedXml);
@@ -59,7 +59,7 @@ public class IngestIT extends IngestTestBase {
      * Tests what happens if a not well formed xml fragment gets ingested. First the exception type gets checked, then
      * the content of the exception message gets checked. If either fail the test fails.
      */
-    @Test(expected = InvalidResourceException.class)
+    @Test(expected = XmlCorruptedException.class)
     public void testIngestXmlNotWellFormed() throws Exception {
 
         String toBeCreatedXml = Constants.XML_HEADER + "<roo><a/></root>";

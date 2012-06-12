@@ -29,9 +29,7 @@
 package de.escidoc.core.test.om.ingest;
 
 import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
