@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.aa.UserGroupsRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -48,7 +49,10 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class UserGroupsRestServiceImpl implements UserGroupsRestService {
 
     @Autowired
@@ -65,17 +69,17 @@ public class UserGroupsRestServiceImpl implements UserGroupsRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * @see de.escidoc.core.aa.UserGroupsRestService#retrieveUserGroups(org.escidoc.core.domain.sru.parameters
+     * .SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveUserGroups(
-            final SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
+    public JAXBElement<? extends ResponseTypeTO> retrieveUserGroups(final SruSearchRequestParametersBean parameters)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        InvalidSearchQueryException, SystemException {
 
         final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.userGroupHandler.retrieveUserGroups(map));
+            this.userGroupHandler.retrieveUserGroups(map));
     }
-
 }

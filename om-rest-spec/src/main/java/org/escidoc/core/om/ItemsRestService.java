@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.om;
 
 import javax.ws.rs.GET;
@@ -27,6 +26,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * 
  * @author SWA
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/ir/items")
 public interface ItemsRestService {
@@ -70,9 +70,7 @@ public interface ItemsRestService {
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveItems(
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
-        @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws SystemException;
 }

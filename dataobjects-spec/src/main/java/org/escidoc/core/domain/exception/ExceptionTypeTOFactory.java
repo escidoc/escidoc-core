@@ -6,67 +6,69 @@ import java.lang.reflect.Constructor;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * JAXB Converter to support Exceptions.
  *
  * @author <a href="mailto:michael.hoppe@fiz-karlsruhe.de">Michael Hoppe</a>
  */
-public final class ExceptionTOFactory {
+public final class ExceptionTypeTOFactory {
 
     private static final ObjectFactory FACTORY = new ObjectFactory();
 
     /**
      * private default Constructor to prevent instantiation.
      */
-    private ExceptionTOFactory() {
+    private ExceptionTypeTOFactory() {
     }
 
 
     /**
-     * Make ExceptionTO JAXB-Object out of Exception-Object.
+     * Make ExceptionTypeTO JAXB-Object out of Exception-Object.
      *
      * @param e Throwable
-     * @return ExceptionTO JAX-B Exception Object according to exception.xsd.
+     * @return ExceptionTypeTO JAX-B Exception Object according to exception.xsd.
      * @throws IOException e
      * @throws SystemException e
      */
-    public static ExceptionTO generateExceptionTO(final Throwable e) throws IOException, SystemException {
-        ExceptionTO exceptionTo = FACTORY.createExceptionTO();
+    public static JAXBElement<ExceptionTypeTO> generateExceptionTO(final Throwable e) throws IOException, SystemException {
+        ExceptionTypeTO exceptionTypeTO = FACTORY.createExceptionTypeTO();
 
         if (e.getCause() != null) {
-            CauseTO causeTo = FACTORY.createCauseTO();
-            causeTo.setException(generateExceptionTO(e.getCause()));
-            exceptionTo.setCause(causeTo);
+            CauseTypeTO causeTypeTO = FACTORY.createCauseTypeTO();
+            causeTypeTO.setException(generateExceptionTO(e.getCause()).getValue());
+            exceptionTypeTO.setCause(causeTypeTO);
         }
 
-        exceptionTo.setClazz(e.getClass().getName());
-        exceptionTo.setMessage(e.getMessage());
-        exceptionTo.setStackTrace(getStackTraceString(e));
+        exceptionTypeTO.setClazz(e.getClass().getName());
+        exceptionTypeTO.setMessage(e.getMessage());
+        exceptionTypeTO.setStackTrace(getStackTraceString(e));
 
         if (e instanceof EscidocException) {
-            exceptionTo.setTitle(String.valueOf(((EscidocException) e).getHttpStatusCode()) + " "
-                + ((EscidocException) e).getHttpStatusMsg());
+            exceptionTypeTO.setTitle(String.valueOf(((EscidocException) e).getHttpStatusCode()) + " "
+                                     + ((EscidocException) e).getHttpStatusMsg());
         }
         else {
-            exceptionTo.setTitle(e.getClass().getName());
+            exceptionTypeTO.setTitle(e.getClass().getName());
         }
 
-        return exceptionTo;
+        return FACTORY.createException(exceptionTypeTO);
     }
 
     /**
      * TODO: StackTrace
-     * @param exceptionTO the {@link ExceptionTO} to map to a {@link Throwable}
+     * @param ExceptionTypeTO the {@link ExceptionTypeTO} to map to a {@link Throwable}
      * @return
      * @throws Exception
      */
-    public static Throwable createThrowable(final ExceptionTO exceptionTO) throws Exception {
+    public static Throwable createThrowable(final ExceptionTypeTO ExceptionTypeTO) throws Exception {
         Throwable result;
         Class<? extends Throwable> throwableClass = null;
 
         // load class
         try {
-            Class<?> clazz = Class.forName(exceptionTO.getClazz());
+            Class<?> clazz = Class.forName(ExceptionTypeTO.getClazz());
             if (Throwable.class.isAssignableFrom(clazz)) {
                 throwableClass = (Class<? extends Throwable>) clazz;
             }
@@ -80,17 +82,17 @@ public final class ExceptionTOFactory {
         try {
             // we expect a constructor with parameters: String message & Throwable cause
             constructor = throwableClass.getDeclaredConstructor(String.class, Throwable.class);
-            if (exceptionTO.getCause() != null && exceptionTO.getCause().getException() != null) {
-                result = constructor.newInstance(exceptionTO.getMessage(),
-                        createThrowable(exceptionTO.getCause().getException()));
+            if (ExceptionTypeTO.getCause() != null && ExceptionTypeTO.getCause().getException() != null) {
+                result = constructor.newInstance(ExceptionTypeTO.getMessage(),
+                        createThrowable(ExceptionTypeTO.getCause().getException()));
             } else {
-                result = constructor.newInstance(exceptionTO.getMessage(), null);
+                result = constructor.newInstance(ExceptionTypeTO.getMessage(), null);
             }
         } catch (NoSuchMethodException e) {
             try {
                 // fallback to constructor with parameter: String message
                 constructor = throwableClass.getDeclaredConstructor(String.class);
-                result = constructor.newInstance(exceptionTO.getMessage());
+                result = constructor.newInstance(ExceptionTypeTO.getMessage());
             } catch (NoSuchMethodException e1) {
                 try {
                     // fallback to default constructor

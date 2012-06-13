@@ -27,7 +27,7 @@
  * All rights reserved.  Use is subject to license terms.
  */
 /**
- * 
+ *
  */
 package org.escidoc.core.aa;
 
@@ -50,18 +50,19 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/aa/roles")
 public interface RolesRestService {
 
     /**
      * Retrieves a filtered list of roles. <br/>
      * <p/>
-     * Default (and for now, the only) format is a list of full role representations. <br/>Access rights are not checked
+     * Default (and for now, the only) format is a list of full role representations. <br/>Access rights are not
+     * checked
      * per role instance, but it is checked, whether the user is allowed to retrieve a list of roles.<br/> <br/> NOTE:
-     * URI-Like Filters are deprecated and will be removed in the next version of the core-framework. Please use the new
+     * URI-Like Filters are deprecated and will be removed in the next version of the core-framework. Please use the
+     * new
      * PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier). For further information about
      * the filter-names, please see the explain-plan.<br/> <b>Additional filters valid for this method:</b><br/>
      * <p/>
@@ -73,8 +74,7 @@ public interface RolesRestService {
      * roles (value = false).</li> <li>granted<br/> retrieves all roles that have been granted to a user (value = true)
      * or all roles that have never been granted to a user (value = false).</li> </ul>
      *
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
+     * @param parameters The Standard SRU Get-Parameters as Object
      * @return The XML representation of the the filtered list of roles corresponding to SRW schema as JAXBElement.
      * @throws MissingMethodParameterException
      *                                     Thrown if no task parameter has been provided.
@@ -86,8 +86,8 @@ public interface RolesRestService {
      */
     @GET
     @Produces(MediaType.TEXT_XML)
-    JAXBElement<? extends ResponseTypeTO> retrieveRoles(@NotNull @QueryParam("") SruSearchRequestParametersBean parameters)
-            throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
-            InvalidSearchQueryException, SystemException;
-
+    JAXBElement<? extends ResponseTypeTO> retrieveRoles(
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        InvalidSearchQueryException, SystemException;
 }

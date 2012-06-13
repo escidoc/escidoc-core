@@ -267,16 +267,16 @@ public class ItemComponentExternalContentIT extends ItemTestBase {
             deleteAttribute(EscidocAbstractTest.getDocument(theItemXml),
                 "/item/components/component[1]/content/@storage");
         itemWithFirstComponentWithoutAttributeStorage =
-            deleteAttribute(itemWithFirstComponentWithoutAttributeStorage,
-                "/item/components/component[1]/@href");
+            deleteAttribute(itemWithFirstComponentWithoutAttributeStorage, "/item/components/component[1]/@href");
         Node newComponent =
             selectSingleNode(itemWithFirstComponentWithoutAttributeStorage, "/item/components/component[1]");
         String componentStr = toString(newComponent, true);
         componentStr = componentStr.replaceFirst("(<([^>]*?):content[^>]*?)/\\s*?>", "$1>hshdjhcjkckcl</$2:content>");
-        String componentsNamespacePrefix = determineComponentsNamespacePrefix(EscidocAbstractTest.getDocument(theItemXml));
+        String componentsNamespacePrefix =
+            determineComponentsNamespacePrefix(EscidocAbstractTest.getDocument(theItemXml));
         itemXml =
-            itemXml.replaceFirst("</" + componentsNamespacePrefix + ":components>", toString(newComponent, true)
-                + "</" + componentsNamespacePrefix + ":components>");
+            itemXml.replaceFirst("</" + componentsNamespacePrefix + ":components>", toString(newComponent, true) + "</"
+                + componentsNamespacePrefix + ":components>");
 
         try {
             update(theItemId, itemXml);

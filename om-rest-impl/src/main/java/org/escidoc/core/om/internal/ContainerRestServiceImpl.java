@@ -20,21 +20,21 @@
 package org.escidoc.core.om.internal;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.container.ContainerPropertiesTO;
-import org.escidoc.core.domain.container.ContainerResourcesTO;
-import org.escidoc.core.domain.container.ContainerTO;
-import org.escidoc.core.domain.container.structmap.StructMapTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.container.ContainerPropertiesTypeTO;
+import org.escidoc.core.domain.container.ContainerResourcesTypeTO;
+import org.escidoc.core.domain.container.ContainerTypeTO;
+import org.escidoc.core.domain.container.structmap.StructMapTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
+import org.escidoc.core.domain.parents.ParentsTypeTO;
+import org.escidoc.core.domain.relations.RelationsTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
@@ -43,7 +43,7 @@ import org.escidoc.core.domain.taskparam.members.MembersTaskParamTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 import org.escidoc.core.om.ContainerRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.IOUtils;
@@ -89,11 +89,13 @@ import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
 /**
  * REST Service Implementation for Container.
- * 
+ *
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContainerRestServiceImpl implements ContainerRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ContainerRestServiceImpl.class);
@@ -105,60 +107,58 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     protected ContainerRestServiceImpl() {
     }
 
     @Override
-    public ContainerTO create(final ContainerTO containerTO) throws ContextNotFoundException,
-        ContentModelNotFoundException, InvalidContentException, MissingMethodParameterException,
-        MissingAttributeValueException, MissingElementValueException, SystemException,
+    public JAXBElement<ContainerTypeTO> create(final ContainerTypeTO containerTO)
+        throws ContextNotFoundException, ContentModelNotFoundException, InvalidContentException,
+        MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException, SystemException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthenticationException,
         AuthorizationException, InvalidStatusException, MissingMdRecordException, XmlCorruptedException,
         XmlSchemaValidationException {
 
-        return serviceUtility.fromXML(ContainerTO.class,
-            this.containerHandler.create(serviceUtility.toXML(containerTO)));
+        return factoryProvider.getContainerFactory().createContainer(serviceUtility
+            .fromXML(ContainerTypeTO.class, this.containerHandler.create(serviceUtility.toXML(containerTO))));
     }
 
     @Override
-    public void delete(String id) throws ContainerNotFoundException, LockingException, InvalidStatusException,
-        SystemException, MissingMethodParameterException, AuthenticationException, AuthorizationException {
+    public void delete(final String id)
+        throws ContainerNotFoundException, LockingException, InvalidStatusException, SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException {
 
         this.containerHandler.delete(id);
     }
 
     @Override
-    public ContainerTO retrieve(String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContainerNotFoundException, SystemException {
+    public JAXBElement<ContainerTypeTO> retrieve(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContainerNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ContainerTO.class, this.containerHandler.retrieve(id));
+        return factoryProvider.getContainerFactory().createContainer(
+            serviceUtility.fromXML(ContainerTypeTO.class, this.containerHandler.retrieve(id)));
     }
 
     @Override
-    public ContainerTO update(String id, ContainerTO containerTO) throws ContainerNotFoundException, LockingException,
-        InvalidContentException, MissingMethodParameterException, InvalidXmlException, OptimisticLockingException,
-        InvalidStatusException, ReadonlyVersionException, SystemException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AuthenticationException, AuthorizationException,
-        MissingAttributeValueException, MissingMdRecordException {
+    public JAXBElement<ContainerTypeTO> update(final String id, final ContainerTypeTO containerTO)
+        throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
+        InvalidXmlException, OptimisticLockingException, InvalidStatusException, ReadonlyVersionException,
+        SystemException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        AuthenticationException, AuthorizationException, MissingAttributeValueException, MissingMdRecordException {
 
-        return serviceUtility.fromXML(ContainerTO.class,
-            this.containerHandler.update(id, serviceUtility.toXML(containerTO)));
+        return factoryProvider.getContainerFactory().createContainer(serviceUtility
+            .fromXML(ContainerTypeTO.class, this.containerHandler.update(id, serviceUtility.toXML(containerTO))));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContainerRestService#retrieveMembers(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean,
-     * java.util.String, java.util.String, java.util.String)
-     */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveMembers(
-        final String containerId, 
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId,
-        final String userId, 
-        final String omitHighlighting) throws InvalidSearchQueryException,
-        MissingMethodParameterException, ContainerNotFoundException, SystemException {
+    public JAXBElement<? extends ResponseTypeTO> retrieveMembers(final String containerId,
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting)
+        throws InvalidSearchQueryException, MissingMethodParameterException, ContainerNotFoundException,
+        SystemException {
 
         Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
@@ -167,23 +167,23 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     }
 
     @Override
-    public ResultTO addMembers(final String id, final MembersTaskParamTO membersTaskParamTO) throws ContainerNotFoundException,
-        LockingException, InvalidContentException, MissingMethodParameterException, SystemException,
-        InvalidContextException, AuthenticationException, AuthorizationException, OptimisticLockingException,
-        MissingAttributeValueException {
+    public JAXBElement<ResultTypeTO> addMembers(final String id, final MembersTaskParamTO membersTaskParamTO)
+        throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
+        SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
+        OptimisticLockingException, MissingAttributeValueException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.addMembers(id, serviceUtility.toXML(membersTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.addMembers(id, serviceUtility.toXML(membersTaskParamTO))));
     }
 
     @Override
-    public ResultTO removeMembers(String id, MembersTaskParamTO membersTaskParamTO) throws ContextNotFoundException,
-        LockingException, XmlSchemaValidationException, ItemNotFoundException, InvalidContextStatusException,
-        InvalidItemStatusException, AuthenticationException, AuthorizationException, SystemException,
-        ContainerNotFoundException, InvalidContentException {
+    public JAXBElement<ResultTypeTO> removeMembers(final String id, final MembersTaskParamTO membersTaskParamTO)
+        throws ContextNotFoundException, LockingException, XmlSchemaValidationException, ItemNotFoundException,
+        InvalidContextStatusException, InvalidItemStatusException, AuthenticationException, AuthorizationException,
+        SystemException, ContainerNotFoundException, InvalidContentException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.removeMembers(id, serviceUtility.toXML(membersTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.removeMembers(id, serviceUtility.toXML(membersTaskParamTO))));
     }
 
     // TODO not supported till version 1.4
@@ -192,24 +192,23 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     // AuthorizationException, SystemException;
 
     @Override
-    public MdRecordTO retrieveMdRecord(String id, String mdRecordId) throws ContainerNotFoundException,
-        MissingMethodParameterException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
-        SystemException {
+    public JAXBElement<MdRecordTypeTO> retrieveMdRecord(final String id, final String mdRecordId)
+        throws ContainerNotFoundException, MissingMethodParameterException, MdRecordNotFoundException,
+        AuthenticationException, AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(MdRecordTO.class, this.containerHandler.retrieveMdRecord(id, mdRecordId));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(
+            serviceUtility.fromXML(MdRecordTypeTO.class, this.containerHandler.retrieveMdRecord(id, mdRecordId)));
     }
 
     @Override
-    public Stream retrieveMdRecordContent(String id, String mdRecordId) throws ContainerNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public Stream retrieveMdRecordContent(final String id, final String mdRecordId)
+        throws ContainerNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
 
         Stream stream = new Stream();
         try {
-            Reader reader = new StringReader(this.containerHandler.retrieveMdRecordContent(id, mdRecordId));
-            IOUtils.copy(reader, stream);
-        }
-        catch (IOException e) {
+            IOUtils.copy(this.containerHandler.retrieveMdRecordContent(id, mdRecordId), stream);
+        } catch (IOException e) {
             LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
@@ -217,15 +216,14 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     }
 
     @Override
-    public Stream retrieveDcRecordContent(String id) throws ContainerNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException {
+    public Stream retrieveDcRecordContent(final String id)
+        throws ContainerNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
 
         Stream stream = new Stream();
         try {
-            Reader reader = new StringReader(this.containerHandler.retrieveDcRecordContent(id));
-            IOUtils.copy(reader, stream);
-        }
-        catch (IOException e) {
+            IOUtils.copy(this.containerHandler.retrieveDcRecordContent(id), stream);
+        } catch (IOException e) {
             LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
@@ -233,46 +231,49 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     }
 
     @Override
-    public MdRecordTO updateMetadataRecord(String id, String mdRecordId, MdRecordTO mdRecordTO)
+    public JAXBElement<MdRecordTypeTO> updateMetadataRecord(final String id, final String mdRecordId,
+        final MdRecordTypeTO mdRecordTO)
         throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidXmlException, InvalidStatusException, ReadonlyVersionException {
 
-        return serviceUtility.fromXML(MdRecordTO.class,
-            this.containerHandler.updateMetadataRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO)));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(serviceUtility.fromXML(MdRecordTypeTO.class,
+            this.containerHandler.updateMetadataRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO))));
     }
 
     @Override
-    public MdRecordsTO retrieveMdRecords(String id) throws ContainerNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<MdRecordsTypeTO> retrieveMdRecords(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(MdRecordsTO.class, this.containerHandler.retrieveMdRecords(id));
+        return factoryProvider.getMdRecordsFactory().createMdRecords(
+            serviceUtility.fromXML(MdRecordsTypeTO.class, this.containerHandler.retrieveMdRecords(id)));
     }
 
     @Override
-    public ContainerPropertiesTO retrieveProperties(String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<ContainerPropertiesTypeTO> retrieveProperties(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(ContainerPropertiesTO.class, this.containerHandler.retrieveProperties(id));
+        return factoryProvider.getContainerFactory().createProperties(
+            serviceUtility.fromXML(ContainerPropertiesTypeTO.class, this.containerHandler.retrieveProperties(id)));
     }
 
     @Override
-    public ContainerResourcesTO retrieveResources(String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<ContainerResourcesTypeTO> retrieveResources(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(ContainerResourcesTO.class, this.containerHandler.retrieveResources(id));
+        return factoryProvider.getContainerFactory().createResources(
+            serviceUtility.fromXML(ContainerResourcesTypeTO.class, this.containerHandler.retrieveResources(id)));
     }
 
     @Override
-    public Stream retrieveResource(
-        final String id, 
-        final String resourceName, 
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId, 
-        final String userId, 
-        final String omitHighlighting) throws SystemException,
-        ContainerNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        OperationNotFoundException {
+    public Stream retrieveResource(final String id, final String resourceName,
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting)
+        throws SystemException, ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, OperationNotFoundException {
 
         // prepare parameter list
         Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
@@ -281,8 +282,7 @@ public class ContainerRestServiceImpl implements ContainerRestService {
         Stream stream = new Stream();
         try {
             IOUtils.copy(content.getContent(), stream);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             String msg = "Failed to copy stream";
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -291,128 +291,140 @@ public class ContainerRestServiceImpl implements ContainerRestService {
     }
 
     @Override
-    public RelationsTO retrieveRelations(String id) throws ContainerNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<RelationsTypeTO> retrieveRelations(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(RelationsTO.class, this.containerHandler.retrieveRelations(id));
+        return factoryProvider.getRelationsFactory().createRelations(
+            serviceUtility.fromXML(RelationsTypeTO.class, this.containerHandler.retrieveRelations(id)));
     }
 
     @Override
-     public StructMapTO retrieveStructMap( String id) throws ContainerNotFoundException,
-     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        
-        return serviceUtility.fromXML(StructMapTO.class, this.containerHandler.retrieveStructMap(id));
+    public JAXBElement<StructMapTypeTO> retrieveStructMap(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+
+        return factoryProvider.getStructMapFactory().createStructMap(
+            serviceUtility.fromXML(StructMapTypeTO.class, this.containerHandler.retrieveStructMap(id)));
     }
 
     @Override
-    public VersionHistoryTO retrieveVersionHistory(String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(final String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(VersionHistoryTO.class, this.containerHandler.retrieveVersionHistory(id));
+        return factoryProvider.getVersionHistoryFactory().createVersionHistory(
+            serviceUtility.fromXML(VersionHistoryTypeTO.class, this.containerHandler.retrieveVersionHistory(id)));
     }
 
     @Override
-    public ParentsTO retrieveParents(String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContainerNotFoundException, SystemException {
+    public JAXBElement<ParentsTypeTO> retrieveParents(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContainerNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ParentsTO.class, this.containerHandler.retrieveParents(id));
+        return factoryProvider.getParentsFactory().createParents(
+            serviceUtility.fromXML(ParentsTypeTO.class, this.containerHandler.retrieveParents(id)));
     }
 
     @Override
-    public ResultTO release(String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
-        InvalidXmlException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO submit(String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
-        InvalidXmlException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO revise(String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, InvalidStatusException, SystemException,
-        OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO withdraw(String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, AlreadyWithdrawnException,
+    public JAXBElement<ResultTypeTO> release(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, InvalidXmlException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.containerHandler.release(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO lock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    public JAXBElement<ResultTypeTO> submit(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
+        ReadonlyVersionException, InvalidXmlException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.containerHandler.submit(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> revise(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, InvalidStatusException,
+        SystemException, OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.containerHandler.revise(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> withdraw(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
+        AlreadyWithdrawnException, ReadonlyVersionException, InvalidXmlException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.containerHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> lock(final String id,
+        final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO))));
     }
 
     @Override
-    public ResultTO unlock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    public JAXBElement<ResultTypeTO> unlock(final String id,
+        final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO))));
     }
 
     @Override
-    public ResultTO addContentRelations(String id, RelationTaskParamTO relationTaskParamTO) throws SystemException,
-        ContainerNotFoundException, OptimisticLockingException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AlreadyExistsException, InvalidStatusException, InvalidXmlException,
-        MissingElementValueException, LockingException, ReadonlyVersionException, InvalidContentException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException {
+    public JAXBElement<ResultTypeTO> addContentRelations(final String id, final RelationTaskParamTO relationTaskParamTO)
+        throws SystemException, ContainerNotFoundException, OptimisticLockingException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
+        InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
+        ReadonlyVersionException, InvalidContentException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO))));
     }
 
     @Override
-    public ResultTO removeContentRelations(String id, RelationTaskParamTO relationTaskParamTO) throws SystemException,
-        ContainerNotFoundException, OptimisticLockingException, InvalidStatusException, MissingElementValueException,
-        InvalidXmlException, ContentRelationNotFoundException, LockingException, ReadonlyVersionException,
-        AuthenticationException, AuthorizationException {
+    public JAXBElement<ResultTypeTO> removeContentRelations(final String id,
+        final RelationTaskParamTO relationTaskParamTO)
+        throws SystemException, ContainerNotFoundException, OptimisticLockingException, InvalidStatusException,
+        MissingElementValueException, InvalidXmlException, ContentRelationNotFoundException, LockingException,
+        ReadonlyVersionException, AuthenticationException, AuthorizationException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO))));
     }
 
     @Override
-    public ResultTO assignObjectPid(String id, AssignPidTaskParamTO assignPidTaskParamTO)
+    public JAXBElement<ResultTypeTO> assignObjectPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
         throws InvalidStatusException, ContainerNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, InvalidXmlException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO))));
     }
 
     @Override
-    public ResultTO assignVersionPid(String id, AssignPidTaskParamTO assignPidTaskParamTO)
+    public JAXBElement<ResultTypeTO> assignVersionPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.containerHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.containerHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO))));
     }
 }

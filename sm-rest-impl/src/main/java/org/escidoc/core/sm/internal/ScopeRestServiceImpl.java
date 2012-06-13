@@ -28,8 +28,10 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.scope.ScopeTO;
+import org.escidoc.core.domain.sm.scope.ScopeTypeTO;
 import org.escidoc.core.sm.ScopeRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,10 +45,14 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ScopeRestServiceImpl implements ScopeRestService {
 
     @Autowired
@@ -56,27 +62,35 @@ public class ScopeRestServiceImpl implements ScopeRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
-    public ScopeRestServiceImpl() {
+    protected ScopeRestServiceImpl() {
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.ScopeRestService#create(org.escidoc.core.domain.sm.ScopeTO)
      */
     @Override
-    public ScopeTO create(final ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
-        XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException, SystemException {
-        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.create(serviceUtility.toXML(scopeTO)));
+    public JAXBElement<ScopeTypeTO> create(final ScopeTypeTO scopeTO)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException {
+
+        return factoryProvider.getScopeFactory().createScope(
+            serviceUtility.fromXML(ScopeTypeTO.class, this.scopeHandler.create(serviceUtility.toXML(scopeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.ScopeRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
+    public void delete(final String id)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
+
         this.scopeHandler.delete(id);
     }
 
@@ -84,19 +98,23 @@ public class ScopeRestServiceImpl implements ScopeRestService {
      * @see de.escidoc.core.sm.ScopeRestService#retrieve(java.lang.String)
      */
     @Override
-    public ScopeTO retrieve(String id) throws AuthenticationException, AuthorizationException, ScopeNotFoundException,
-        MissingMethodParameterException, SystemException {
-        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.retrieve(id));
+    public JAXBElement<ScopeTypeTO> retrieve(final String id)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException, MissingMethodParameterException,
+        SystemException {
+
+        return factoryProvider.getScopeFactory().createScope(
+            serviceUtility.fromXML(ScopeTypeTO.class, this.scopeHandler.retrieve(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.ScopeRestService#update(java.lang.String, org.escidoc.core.domain.sm.ScopeTO)
      */
     @Override
-    public ScopeTO update(String id, ScopeTO scopeTO) throws AuthenticationException, AuthorizationException,
-        ScopeNotFoundException, MissingMethodParameterException, XmlSchemaValidationException, XmlCorruptedException,
-        SystemException {
-        return serviceUtility.fromXML(ScopeTO.class, this.scopeHandler.update(id, serviceUtility.toXML(scopeTO)));
-    }
+    public JAXBElement<ScopeTypeTO> update(final String id, final ScopeTypeTO scopeTO)
+        throws AuthenticationException, AuthorizationException, ScopeNotFoundException, MissingMethodParameterException,
+        XmlSchemaValidationException, XmlCorruptedException, SystemException {
 
+        return factoryProvider.getScopeFactory().createScope(
+            serviceUtility.fromXML(ScopeTypeTO.class, this.scopeHandler.update(id, serviceUtility.toXML(scopeTO))));
+    }
 }

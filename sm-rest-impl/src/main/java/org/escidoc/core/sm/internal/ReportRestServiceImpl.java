@@ -28,9 +28,11 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.report.ReportTO;
-import org.escidoc.core.domain.sm.report.parameter.ReportParametersTO;
+import org.escidoc.core.domain.sm.report.ReportTypeTO;
+import org.escidoc.core.domain.sm.report.parameter.ReportParametersTypeTO;
 import org.escidoc.core.sm.ReportRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,10 +47,14 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ReportRestServiceImpl implements ReportRestService {
 
     @Autowired
@@ -58,8 +64,11 @@ public class ReportRestServiceImpl implements ReportRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
     public ReportRestServiceImpl() {
     }
@@ -68,10 +77,11 @@ public class ReportRestServiceImpl implements ReportRestService {
      * @see de.escidoc.core.sm.ReportRestService#retrieve(org.escidoc.core.domain.sm.ReportParametersTO)
      */
     @Override
-    public ReportTO retrieve(final ReportParametersTO reportParametersTO) throws AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
-        MissingMethodParameterException, InvalidSqlException, SystemException {
-        return serviceUtility.fromXML(ReportTO.class, this.reportHandler.retrieve(serviceUtility.toXML(reportParametersTO)));
-    }
+    public JAXBElement<ReportTypeTO> retrieve(final ReportParametersTypeTO reportParametersTO)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, InvalidSqlException, SystemException {
 
+        return factoryProvider.getReportFactory().createReport(serviceUtility
+            .fromXML(ReportTypeTO.class, this.reportHandler.retrieve(serviceUtility.toXML(reportParametersTO))));
+    }
 }

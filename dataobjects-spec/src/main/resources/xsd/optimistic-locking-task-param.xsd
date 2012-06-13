@@ -18,17 +18,22 @@
   ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
   ~ terms.
   -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
- targetNamespace="http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1"
- elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="param">
-		<xs:annotation>
-			<xs:documentation>
-				Task parameter for optimistic locking purpose (e.g. un-/lock and de-/activation methods).
-			</xs:documentation>
-		</xs:annotation>		
-		<xs:complexType>
-			<xs:attribute name="last-modification-date" type="xs:dateTime" use="required" />
-		</xs:complexType>
-	</xs:element>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
+           xmlns:param="http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1"
+           targetNamespace="http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+
+  <xs:element name="param" type="param:paramType"/>
+
+  <xs:complexType name="paramType">
+    <xs:annotation>
+      <xs:documentation>
+        Task parameter for optimistic locking purpose (e.g. un-/lock and de-/activation methods).
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attributeGroup ref="common:lmdRequired"/>
+  </xs:complexType>
 </xs:schema>

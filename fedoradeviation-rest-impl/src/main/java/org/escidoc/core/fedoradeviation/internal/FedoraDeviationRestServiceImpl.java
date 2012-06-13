@@ -33,6 +33,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.fedoradeviation.FedoraDeviationRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
@@ -45,8 +46,10 @@ import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface
 
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestService {
 
     @Autowired
@@ -93,5 +96,4 @@ public class FedoraDeviationRestServiceImpl implements FedoraDeviationRestServic
         parameters.put("xml", new String[] {xml});
         return fedoraDescribeDeviationHandler.getFedoraDescription(parameters);
     }
-
 }

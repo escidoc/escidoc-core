@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.st;
 
 import javax.ws.rs.Consumes;
@@ -28,20 +27,21 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.st.StagingFileTO;
+import net.sf.oval.constraint.NotNull;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.domain.st.StagingFileTypeTO;
 import org.escidoc.core.utils.io.Stream;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/st/staging-file")
 public interface StagingRestService {
@@ -67,8 +67,8 @@ public interface StagingRestService {
      */
     @PUT
     @Produces(MediaType.TEXT_XML)
-    StagingFileTO create(final Stream stream) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<StagingFileTypeTO> create(@NotNull Stream stream)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve a StagingFile<br/>
@@ -92,7 +92,7 @@ public interface StagingRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    Response retrieve(@PathParam("id") String stagingFileId) throws StagingFileNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
-
+    Response retrieve(@NotNull @PathParam("id") String stagingFileId)
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 }

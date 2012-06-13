@@ -19,12 +19,12 @@
  */
 package org.escidoc.core.tme.internal;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.tme.RequestTO;
+import org.escidoc.core.domain.tme.RequestTypeTO;
 import org.escidoc.core.domain.tme.jhove.JhoveTO;
 import org.escidoc.core.tme.TmeRestService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -40,14 +40,14 @@ import de.escidoc.core.tme.service.JhoveHandler;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
- * 
+ *
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class TmeRestServiceImpl implements TmeRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(TmeRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.JhoveHandler")
@@ -56,14 +56,19 @@ public class TmeRestServiceImpl implements TmeRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     protected TmeRestServiceImpl() {
     }
 
-    public JhoveTO extract(RequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
-        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
-        TmeException {
+    /**
+     * {@inheritDoc}
+     */
+    public JhoveTO extract(RequestTypeTO tmeRequestTO)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, SystemException, TmeException {
 
         return serviceUtility.fromXML(JhoveTO.class, this.tmeHandler.extract(serviceUtility.toXML(tmeRequestTO)));
     }
-
 }

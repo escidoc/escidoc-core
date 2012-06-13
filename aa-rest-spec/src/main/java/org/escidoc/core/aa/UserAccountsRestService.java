@@ -38,6 +38,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -49,7 +50,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/aa/user-accounts")
 public interface UserAccountsRestService {
@@ -83,7 +84,7 @@ public interface UserAccountsRestService {
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveUserAccounts(
-            @QueryParam("") SruSearchRequestParametersBean parameters) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        InvalidSearchQueryException, SystemException;
 }

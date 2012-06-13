@@ -28,8 +28,10 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.ad.AggregationDefinitionTO;
+import org.escidoc.core.domain.sm.ad.AggregationDefinitionTypeTO;
 import org.escidoc.core.sm.AggregationDefinitionRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,42 +46,54 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class AggregationDefinitionRestServiceImpl implements AggregationDefinitionRestService {
 
     @Autowired
     @Qualifier("service.AggregationDefinitionHandler")
     private AggregationDefinitionHandlerInterface aggregationDefinitionHandler;
-    
+
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
-    public AggregationDefinitionRestServiceImpl() {
+    protected AggregationDefinitionRestServiceImpl() {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.AggregationDefinitionRestService#create(org.escidoc.core.domain.sm.AggregationDefinitionTO)
+     * @see de.escidoc.core.sm.AggregationDefinitionRestService#create(org.escidoc.core.domain.sm
+     * .AggregationDefinitionTO)
      */
     @Override
-    public AggregationDefinitionTO create(final AggregationDefinitionTO aggregationDefinitionTO)
+    public JAXBElement<AggregationDefinitionTypeTO> create(final AggregationDefinitionTypeTO aggregationDefinitionTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, ScopeNotFoundException, SystemException {
-        return serviceUtility.fromXML(AggregationDefinitionTO.class,
-                this.aggregationDefinitionHandler.create(serviceUtility.toXML(aggregationDefinitionTO)));
+
+        return factoryProvider.getAggregationDefinitionFactory().createAggregationDefinition(serviceUtility
+            .fromXML(AggregationDefinitionTypeTO.class,
+                this.aggregationDefinitionHandler.create(serviceUtility.toXML(aggregationDefinitionTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.AggregationDefinitionRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException, AuthorizationException,
-        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
+    public void delete(final String id)
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
+
         this.aggregationDefinitionHandler.delete(id);
     }
 
@@ -87,9 +101,11 @@ public class AggregationDefinitionRestServiceImpl implements AggregationDefiniti
      * @see de.escidoc.core.sm.AggregationDefinitionRestService#retrieve(java.lang.String)
      */
     @Override
-    public AggregationDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
-        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException {
-        return serviceUtility.fromXML(AggregationDefinitionTO.class, this.aggregationDefinitionHandler.retrieve(id));
-    }
+    public JAXBElement<AggregationDefinitionTypeTO> retrieve(final String id)
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
 
+        return factoryProvider.getAggregationDefinitionFactory().createAggregationDefinition(
+            serviceUtility.fromXML(AggregationDefinitionTypeTO.class, this.aggregationDefinitionHandler.retrieve(id)));
+    }
 }

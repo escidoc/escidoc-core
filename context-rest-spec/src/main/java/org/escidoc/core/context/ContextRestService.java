@@ -16,12 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
 import net.sf.oval.constraint.NotNull;
-import org.escidoc.core.domain.context.AdminDescriptorTO;
-import org.escidoc.core.domain.context.AdminDescriptorsTO;
-import org.escidoc.core.domain.context.ContextPropertiesTO;
-import org.escidoc.core.domain.context.ContextResourcesTO;
-import org.escidoc.core.domain.context.ContextTO;
-import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.context.*;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
@@ -52,7 +48,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import org.escidoc.core.utils.io.Stream;
 
 /**
- * @author Marko Voß
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/ir/context")
 public interface ContextRestService {
@@ -60,111 +56,105 @@ public interface ContextRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContextTO create(@NotNull ContextTO contextTO)
-            throws MissingMethodParameterException, ContextNameNotUniqueException,
-            AuthenticationException, AuthorizationException, SystemException, ContentModelNotFoundException,
-            ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
-            ReadonlyAttributeViolationException, InvalidContentException, OrganizationalUnitNotFoundException,
-            InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException;
+    JAXBElement<ContextTypeTO> create(@NotNull ContextTypeTO contextTO)
+        throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
+        AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException;
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    ContextTO retrieve(@NotNull @PathParam("id") String id)
-            throws ContextNotFoundException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<ContextTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContextTO update(@NotNull @PathParam("id") String id, @NotNull ContextTO contextTO)
-            throws ContextNotFoundException,
-            MissingMethodParameterException, InvalidContentException, InvalidStatusException, AuthenticationException,
-            AuthorizationException, ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-            OptimisticLockingException, ContextNameNotUniqueException, InvalidXmlException, MissingElementValueException,
-            SystemException;
+    JAXBElement<ContextTypeTO> update(@NotNull @PathParam("id") String id, @NotNull ContextTypeTO contextTO)
+        throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
+        InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
+        InvalidXmlException, MissingElementValueException, SystemException;
 
     @DELETE
     @Path("/{id}")
     void delete(@NotNull @PathParam("id") String id)
-            throws ContextNotFoundException, ContextNotEmptyException,
-            MissingMethodParameterException, InvalidStatusException, AuthenticationException, AuthorizationException,
-            SystemException;
+        throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
+        InvalidStatusException, AuthenticationException, AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/properties")
     @Produces(MediaType.TEXT_XML)
-    ContextPropertiesTO retrieveProperties(@NotNull @PathParam("id") String id)
-            throws ContextNotFoundException, SystemException;
+    JAXBElement<ContextPropertiesTypeTO> retrieveProperties(@NotNull @PathParam("id") String id)
+        throws ContextNotFoundException, SystemException;
 
     @GET
     @Path("/{id}/resources/{resourceName}")
     @Produces(MediaType.WILDCARD)
     Stream retrieveResource(@NotNull @PathParam("id") String id,
-                            @NotNull @PathParam("resourceName") String resourceName)
-            throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException;
+        @NotNull @PathParam("resourceName") String resourceName)
+        throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources")
     @Produces(MediaType.TEXT_XML)
-    ContextResourcesTO retrieveResources(@NotNull @PathParam("id") String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException;
+    JAXBElement<ContextResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/members")
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveMembers(@NotNull @PathParam("id") String id,
-                                                        @NotNull @QueryParam("") SruSearchRequestParametersBean queryParam,
-                                                        @QueryParam("x-info5-roleId") String roleId,
-                                                        @QueryParam("x-info5-userId") String userId,
-                                                        @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
-            throws ContextNotFoundException, MissingMethodParameterException, SystemException;
+        @NotNull @QueryParam("") SruSearchRequestParametersBean queryParam, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws ContextNotFoundException, MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/admin-descriptor/{name}")
     @Produces(MediaType.TEXT_XML)
-    AdminDescriptorTO retrieveAdminDescriptor(@NotNull @PathParam("id") String id,
-                                              @NotNull @PathParam("name") String name)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, AdminDescriptorNotFoundException;
+    JAXBElement<AdminDescriptorTypeTO> retrieveAdminDescriptor(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("name") String name)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, AdminDescriptorNotFoundException;
 
     @GET
     @Path("/{id}/admin-descriptors")
     @Produces(MediaType.TEXT_XML)
-    AdminDescriptorsTO retrieveAdminDescriptors(@NotNull @PathParam("id") String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException;
+    JAXBElement<AdminDescriptorsTypeTO> retrieveAdminDescriptors(@NotNull @PathParam("id") String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @POST
     @Path("/{id}/admin-descriptor/")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    AdminDescriptorTO updateAdminDescriptor(@NotNull @PathParam("id") String id,
-                                            @NotNull AdminDescriptorTO adminDescriptorTO)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
-            InvalidXmlException;
+    JAXBElement<AdminDescriptorTypeTO> updateAdminDescriptor(@NotNull @PathParam("id") String id,
+        @NotNull AdminDescriptorTypeTO adminDescriptorTO)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
+        InvalidXmlException;
 
     @POST
     @Path("/{id}/open")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO open(@NotNull @PathParam("id") String id,
-                  @NotNull StatusTaskParamTO statusTaskParam)
-            throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
-            AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
-            SystemException, LockingException, StreamNotFoundException;
+    JAXBElement<ResultTypeTO> open(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParam)
+        throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
+        AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
+        SystemException, LockingException, StreamNotFoundException;
 
     @POST
     @Path("/{id}/close")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO close(@NotNull @PathParam("id") String id,
-                   @NotNull StatusTaskParamTO statusTaskParam)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
-            InvalidStatusException, LockingException, StreamNotFoundException;
+    JAXBElement<ResultTypeTO> close(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParam)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidStatusException, LockingException, StreamNotFoundException;
 }

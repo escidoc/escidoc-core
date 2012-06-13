@@ -331,8 +331,8 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                mdRecordNsPrefix + ":md-record");
+            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -401,8 +401,8 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                mdRecordNsPrefix + ":md-record");
+            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -835,8 +835,8 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                mdRecordNsPrefix + ":md-record");
+            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");

@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.oai;
 
 import javax.ws.rs.GET;
@@ -27,6 +26,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -37,16 +37,14 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/oai/set-definitions")
 public interface OAIsRestService {
 
-     /**
-     * Retrieves a list of completes set-definitions applying filters.<br/> <br/> NOTE: URI-Like Filters are
-     deprecated
+    /**
+     * Retrieves a list of completes set-definitions applying filters.<br/> <br/> NOTE: URI-Like Filters are deprecated
      * and will be removed in the next version of the core-framework. Please use the new PATH-like filters (eg /id
      * instead of http://purl.org/dc/elements/1.1/identifier). For further information about the filter-names, please
      * see the explain-plan.<br/> <b>Tasks:</b><br/> <ul> <li>Check weather all filter names are valid.</li> <li>The
@@ -54,21 +52,20 @@ public interface OAIsRestService {
      * set-definitions corresponding to SRW schema is returned as output.</li> </ul> <br/> See chapter "Filters" for
      * detailed information about filter definitions.
      *
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
+     * @param parameters The Standard SRU Get-Parameters as Object
      * @return Returns the XML representation of found set-definitions as JAXBElement.
-     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided
-     * eSciDocUserHandle.
-     * @throws AuthorizationException Thrown if the authorization fails.
+     * @throws AuthenticationException     Thrown if the authentication fails due to an invalid provided
+     *                                     eSciDocUserHandle.
+     * @throws AuthorizationException      Thrown if the authorization fails.
      * @throws MissingMethodParameterException
-     * If the parameter filter is not given.
+     *                                     If the parameter filter is not given.
      * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a SQL query
-     * @throws SystemException If an error occurs.
+     * @throws SystemException             If an error occurs.
      */
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveSetDefinitions(
-        @QueryParam("") SruSearchRequestParametersBean parameters) throws AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        InvalidSearchQueryException, SystemException;
 }

@@ -2,7 +2,10 @@
 <!-- ZiNG SRU/SRW WSDL Specification                   -->
 <!-- Version 1.1                                       -->
 <!-- 20 July 2004                                       -->
-<xsd:schema targetNamespace="http://www.loc.gov/zing/srw/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xcql="http://www.loc.gov/zing/cql/xcql/" xmlns="http://www.loc.gov/zing/srw/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="http://www.loc.gov/zing/srw/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/"
+            xmlns:xcql="http://www.loc.gov/zing/cql/xcql/" xmlns="http://www.loc.gov/zing/srw/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
   <xsd:import namespace="http://www.loc.gov/zing/cql/xcql/" schemaLocation="xcql.xsd"/>
   <xsd:import namespace="http://www.loc.gov/zing/srw/diagnostic/" schemaLocation="diagnostics.xsd"/>
   <xsd:complexType name="requestType">

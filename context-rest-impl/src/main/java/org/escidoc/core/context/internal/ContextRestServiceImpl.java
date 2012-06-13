@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.context.internal;
 
@@ -12,12 +12,9 @@ import javax.xml.bind.JAXBElement;
 import net.sf.oval.guard.Guarded;
 
 import org.escidoc.core.context.ContextRestService;
-import org.escidoc.core.domain.context.AdminDescriptorTO;
-import org.escidoc.core.domain.context.AdminDescriptorsTO;
-import org.escidoc.core.domain.context.ContextPropertiesTO;
-import org.escidoc.core.domain.context.ContextResourcesTO;
-import org.escidoc.core.domain.context.ContextTO;
-import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.context.*;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
@@ -57,10 +54,10 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
 /**
- * @author Marko Voß
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContextRestServiceImpl implements ContextRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ContextRestServiceImpl.class);
@@ -75,8 +72,11 @@ public class ContextRestServiceImpl implements ContextRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
     protected ContextRestServiceImpl() {
 
@@ -86,37 +86,41 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextTO create(final ContextTO contextTO)
-            throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
-            AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
-            MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
-            InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
-            XmlSchemaValidationException {
+    public JAXBElement<ContextTypeTO> create(final ContextTypeTO contextTO)
+        throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
+        AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+        MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+        InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException {
 
-        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.create(serviceUtility.toXML(contextTO)));
+        return factoryProvider.getContextFactory().createContext(
+            serviceUtility.fromXML(ContextTypeTO.class, this.contextHandler.create(serviceUtility.toXML(contextTO))));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ContextTO retrieve(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.retrieve(id));
+    public JAXBElement<ContextTypeTO> retrieve(final String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+
+        return factoryProvider.getContextFactory().createContext(
+            serviceUtility.fromXML(ContextTypeTO.class, this.contextHandler.retrieve(id)));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ContextTO update(final String id, final ContextTO contextTO)
-            throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
-            InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
-            ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
-            InvalidXmlException, MissingElementValueException, SystemException {
+    public JAXBElement<ContextTypeTO> update(final String id, final ContextTypeTO contextTO)
+        throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
+        InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
+        ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
+        InvalidXmlException, MissingElementValueException, SystemException {
 
-        return serviceUtility.fromXML(ContextTO.class, this.contextHandler.update(id, serviceUtility.toXML(contextTO)));
+        return factoryProvider.getContextFactory().createContext(serviceUtility
+            .fromXML(ContextTypeTO.class, this.contextHandler.update(id, serviceUtility.toXML(contextTO))));
     }
 
     /**
@@ -124,8 +128,8 @@ public class ContextRestServiceImpl implements ContextRestService {
      */
     @Override
     public void delete(final String id)
-            throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
-            InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
+        throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
+        InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
         this.contextHandler.delete(id);
     }
 
@@ -133,9 +137,10 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextPropertiesTO retrieveProperties(final String id)
-            throws ContextNotFoundException, SystemException {
-        return serviceUtility.fromXML(ContextPropertiesTO.class, this.contextHandler.retrieveProperties(id));
+    public JAXBElement<ContextPropertiesTypeTO> retrieveProperties(final String id)
+        throws ContextNotFoundException, SystemException {
+        return factoryProvider.getContextFactory().createProperties(
+            serviceUtility.fromXML(ContextPropertiesTypeTO.class, this.contextHandler.retrieveProperties(id)));
     }
 
     /**
@@ -152,8 +157,7 @@ public class ContextRestServiceImpl implements ContextRestService {
         Stream stream = new Stream();
         try {
             IOUtils.copy(content.getContent(), stream);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             String msg = "Failed to copy stream";
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -165,11 +169,12 @@ public class ContextRestServiceImpl implements ContextRestService {
      * {@inheritDoc}
      */
     @Override
-    public ContextResourcesTO retrieveResources(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        
-        return serviceUtility.fromXML(ContextResourcesTO.class, this.contextHandler.retrieveResources(id));
+    public JAXBElement<ContextResourcesTypeTO> retrieveResources(final String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+
+        return factoryProvider.getContextFactory().createResources(
+            serviceUtility.fromXML(ContextResourcesTypeTO.class, this.contextHandler.retrieveResources(id)));
     }
 
     /**
@@ -177,77 +182,78 @@ public class ContextRestServiceImpl implements ContextRestService {
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveMembers(final String id,
-                                                                 final SruSearchRequestParametersBean queryParam,
-                                                                 final String roleId, final String userId,
-                                                                 final String omitHighlighting)
-            throws ContextNotFoundException, MissingMethodParameterException, SystemException {
+        final SruSearchRequestParametersBean queryParam, final String roleId, final String userId,
+        final String omitHighlighting)
+        throws ContextNotFoundException, MissingMethodParameterException, SystemException {
 
         Map<String, String[]> map = serviceUtility.handleSruRequest(queryParam, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.contextHandler.retrieveMembers(id, map));
+            this.contextHandler.retrieveMembers(id, map));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorTO retrieveAdminDescriptor(final String id, final String name)
+    public JAXBElement<AdminDescriptorTypeTO> retrieveAdminDescriptor(final String id, final String name)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, AdminDescriptorNotFoundException {
 
-        return serviceUtility.fromXML(AdminDescriptorTO.class,
-                this.contextHandler.retrieveAdminDescriptor(id, name));
+        return factoryProvider.getContextFactory().createAdminDescriptor(
+            serviceUtility.fromXML(AdminDescriptorTypeTO.class, this.contextHandler.retrieveAdminDescriptor(id, name)));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorsTO retrieveAdminDescriptors(final String id)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+    public JAXBElement<AdminDescriptorsTypeTO> retrieveAdminDescriptors(final String id)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
 
-        return serviceUtility.fromXML(AdminDescriptorsTO.class, this.contextHandler.retrieveAdminDescriptors(id));
+        return factoryProvider.getContextFactory().createAdminDescriptors(
+            serviceUtility.fromXML(AdminDescriptorsTypeTO.class, this.contextHandler.retrieveAdminDescriptors(id)));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AdminDescriptorTO updateAdminDescriptor(final String id,
-                                                   final AdminDescriptorTO adminDescriptorTO)
+    public JAXBElement<AdminDescriptorTypeTO> updateAdminDescriptor(final String id,
+        final AdminDescriptorTypeTO adminDescriptorTO)
         throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
         InvalidXmlException {
 
-        return serviceUtility.fromXML(AdminDescriptorTO.class,
-                this.contextHandler.updateAdminDescriptor(id, serviceUtility.toXML(adminDescriptorTO)));
+        return factoryProvider.getContextFactory().createAdminDescriptor(serviceUtility
+            .fromXML(AdminDescriptorTypeTO.class,
+                this.contextHandler.updateAdminDescriptor(id, serviceUtility.toXML(adminDescriptorTO))));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ResultTO open(final String id, final StatusTaskParamTO statusTaskParamTO)
-            throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
-            AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
-            SystemException, LockingException, StreamNotFoundException {
+    public JAXBElement<ResultTypeTO> open(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
+        AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
+        SystemException, LockingException, StreamNotFoundException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-                this.contextHandler.open(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.contextHandler.open(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ResultTO close(final String id, final StatusTaskParamTO statusTaskParamTO)
-            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
-            InvalidStatusException, LockingException, StreamNotFoundException {
+    public JAXBElement<ResultTypeTO> close(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
+        InvalidStatusException, LockingException, StreamNotFoundException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-                this.contextHandler.close(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.contextHandler.close(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 }

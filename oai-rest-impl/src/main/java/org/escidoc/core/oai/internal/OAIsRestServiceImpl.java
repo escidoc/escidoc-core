@@ -23,12 +23,11 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.oai.OAIsRestService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -44,11 +43,12 @@ import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
  * REST Service Implementation for OAI Set Definition Service.
  *
  * @author SWA
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class OAIsRestServiceImpl implements OAIsRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(OAIsRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.SetDefinitionHandler")
@@ -63,18 +63,17 @@ public class OAIsRestServiceImpl implements OAIsRestService {
     /*
      * (non-Javadoc)
      *
-     * @see de.escidoc.core.oai.OAIsRestService#retrieveSetDefinitions(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * @see de.escidoc.core.oai.OAIsRestService#retrieveSetDefinitions(org.escidoc.core.domain.sru.parameters
+     * .SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveSetDefinitions(
-            final SruSearchRequestParametersBean parameters)
-            throws AuthenticationException,
-            AuthorizationException, MissingMethodParameterException, InvalidSearchQueryException, SystemException {
+    public JAXBElement<? extends ResponseTypeTO> retrieveSetDefinitions(final SruSearchRequestParametersBean parameters)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        InvalidSearchQueryException, SystemException {
 
         final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.oaiHandler.retrieveSetDefinitions(map));
+            this.oaiHandler.retrieveSetDefinitions(map));
     }
-
 }

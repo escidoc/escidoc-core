@@ -24,19 +24,22 @@ import java.io.InputStream;
 
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTO;
-import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTO;
-import org.escidoc.core.domain.ou.OrganizationalUnitTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.ou.path.list.OrganizationalUnitPathListTO;
-import org.escidoc.core.domain.ou.successors.SuccessorsTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTypeTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTypeTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitTypeTO;
+import org.escidoc.core.domain.ou.ParentsTypeTO;
+import org.escidoc.core.domain.ou.path.list.OrganizationalUnitPathListTypeTO;
+import org.escidoc.core.domain.ou.successors.SuccessorsTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.escidoc.core.oum.OrganizationalUnitRestService;
+import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,11 +68,13 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 
 /**
  * REST Service Implementation for Organizational Unit.
- * 
+ *
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(OrganizationalUnitRestServiceImpl.class);
@@ -81,70 +86,81 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     @Autowired
     private ServiceUtility serviceUtility;
 
-    protected OrganizationalUnitRestServiceImpl() {}
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
 
-    @Override
-    public OrganizationalUnitTO create(final OrganizationalUnitTO organizationalUnitTO) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, MissingAttributeValueException,
-        MissingElementValueException, OrganizationalUnitNotFoundException, InvalidStatusException,
-        XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
-
-        return serviceUtility.fromXML(OrganizationalUnitTO.class,
-            this.organizationalUnitHandler.create((serviceUtility.toXML(organizationalUnitTO))));
-
+    protected OrganizationalUnitRestServiceImpl() {
     }
 
     @Override
-    public OrganizationalUnitTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public JAXBElement<OrganizationalUnitTypeTO> create(final OrganizationalUnitTypeTO organizationalUnitTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException, MissingMdRecordException {
 
-        return serviceUtility.fromXML(OrganizationalUnitTO.class, this.organizationalUnitHandler.retrieve(id));
+        return factoryProvider.getOuFactory().createOrganizationalUnit(serviceUtility
+            .fromXML(OrganizationalUnitTypeTO.class,
+                this.organizationalUnitHandler.create((serviceUtility.toXML(organizationalUnitTO)))));
     }
 
     @Override
-    public OrganizationalUnitTO update(final String id, final OrganizationalUnitTO organizationalUnitTO)
+    public JAXBElement<OrganizationalUnitTypeTO> retrieve(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
+
+        return factoryProvider.getOuFactory().createOrganizationalUnit(
+            serviceUtility.fromXML(OrganizationalUnitTypeTO.class, this.organizationalUnitHandler.retrieve(id)));
+    }
+
+    @Override
+    public JAXBElement<OrganizationalUnitTypeTO> update(final String id,
+        final OrganizationalUnitTypeTO organizationalUnitTO)
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidXmlException, MissingElementValueException,
         InvalidStatusException {
 
-        return serviceUtility.fromXML(OrganizationalUnitTO.class,
-            this.organizationalUnitHandler.update(id, serviceUtility.toXML(organizationalUnitTO)));
+        return factoryProvider.getOuFactory().createOrganizationalUnit(serviceUtility
+            .fromXML(OrganizationalUnitTypeTO.class,
+                this.organizationalUnitHandler.update(id, serviceUtility.toXML(organizationalUnitTO))));
     }
 
     @Override
-    public void delete(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, InvalidStatusException,
-        OrganizationalUnitHasChildrenException, SystemException {
+    public void delete(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, OrganizationalUnitHasChildrenException,
+        SystemException {
 
         this.organizationalUnitHandler.delete(id);
     }
 
     @Override
-    public MdRecordsTO updateMdRecords(final String id, final MdRecordsTO mdRecordsTO) throws AuthenticationException,
-        AuthorizationException, InvalidXmlException, InvalidStatusException, MissingMethodParameterException,
-        OptimisticLockingException, OrganizationalUnitNotFoundException, MissingElementValueException, SystemException {
+    public JAXBElement<MdRecordsTypeTO> updateMdRecords(final String id, final MdRecordsTypeTO mdRecordsTO)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, InvalidStatusException,
+        MissingMethodParameterException, OptimisticLockingException, OrganizationalUnitNotFoundException,
+        MissingElementValueException, SystemException {
 
-        return serviceUtility.fromXML(MdRecordsTO.class,
-            this.organizationalUnitHandler.updateMdRecords(id, serviceUtility.toXML(mdRecordsTO)));
+        return factoryProvider.getMdRecordsFactory().createMdRecords(serviceUtility.fromXML(MdRecordsTypeTO.class,
+            this.organizationalUnitHandler.updateMdRecords(id, serviceUtility.toXML(mdRecordsTO))));
     }
 
     @Override
-    public ParentsTO updateParents(final String id, final ParentsTO parentsTO) throws AuthenticationException,
-        AuthorizationException, InvalidXmlException, MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
+    public JAXBElement<ParentsTypeTO> updateParents(final String id, final ParentsTypeTO parentsTO)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,
+        OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException, InvalidStatusException {
 
-        return serviceUtility.fromXML(ParentsTO.class,
-            this.organizationalUnitHandler.updateParents(id, serviceUtility.toXML(parentsTO)));
+        return factoryProvider.getOuFactory().createParents(serviceUtility.fromXML(ParentsTypeTO.class,
+            this.organizationalUnitHandler.updateParents(id, serviceUtility.toXML(parentsTO))));
     }
 
     @Override
-    public OrganizationalUnitPropertiesTO retrieveProperties(final String id) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public JAXBElement<OrganizationalUnitPropertiesTypeTO> retrieveProperties(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(OrganizationalUnitPropertiesTO.class,
-            this.organizationalUnitHandler.retrieveProperties(id));
+        return factoryProvider.getOuFactory().createProperties(serviceUtility
+            .fromXML(OrganizationalUnitPropertiesTypeTO.class, this.organizationalUnitHandler.retrieveProperties(id)));
     }
 
     @Override
@@ -153,13 +169,9 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         MissingMethodParameterException, OperationNotFoundException, SystemException {
 
         Stream stream = new Stream();
-        byte[] buffer = new byte[1024];
         try {
             InputStream ins = this.organizationalUnitHandler.retrieveResource(id, resourceName).getContent();
-        int len;
-        while ((len = ins.read(buffer)) > 0) {
-            stream.write(buffer, 0, len);
-        }
+            IOUtils.copyAndCloseInput(ins, stream);
         } catch (IOException e) {
             LOG.error("Stream copy error", e);
             throw new SystemException(e);
@@ -169,81 +181,94 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
     }
 
     @Override
-    public OrganizationalUnitResourcesTO retrieveResources(final String id) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-
-        return serviceUtility.fromXML(OrganizationalUnitResourcesTO.class,
-            this.organizationalUnitHandler.retrieveResources(id));
-    }
-
-    @Override
-    public MdRecordsTO retrieveMdRecords(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
-
-        return serviceUtility.fromXML(MdRecordsTO.class, this.organizationalUnitHandler.retrieveMdRecords(id));
-    }
-
-    @Override
-    public MdRecordTO retrieveMdRecord(final String id, final String name) throws AuthenticationException,
-        AuthorizationException, MdRecordNotFoundException, MissingMethodParameterException,
+    public JAXBElement<OrganizationalUnitResourcesTypeTO> retrieveResources(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(MdRecordTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name));
+        return factoryProvider.getOuFactory().createResources(serviceUtility.fromXML(
+            OrganizationalUnitResourcesTypeTO.class, this.organizationalUnitHandler.retrieveResources(id)));
     }
 
     @Override
-    public ParentsTO retrieveParents(final String id) throws AuthenticationException, AuthorizationException,
+    public JAXBElement<MdRecordsTypeTO> retrieveMdRecords(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
+
+        return factoryProvider.getMdRecordsFactory().createMdRecords(
+            serviceUtility.fromXML(MdRecordsTypeTO.class, this.organizationalUnitHandler.retrieveMdRecords(id)));
+    }
+
+    @Override
+    public JAXBElement<MdRecordTypeTO> retrieveMdRecord(final String id, final String name)
+        throws AuthenticationException, AuthorizationException, MdRecordNotFoundException,
         MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ParentsTO.class, this.organizationalUnitHandler.retrieveParents(id));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(
+            serviceUtility.fromXML(MdRecordTypeTO.class, this.organizationalUnitHandler.retrieveMdRecord(id, name)));
     }
 
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveParentObjects(final String id) throws AuthenticationException,
+    public JAXBElement<ParentsTypeTO> retrieveParents(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
+
+        return factoryProvider.getOuFactory().createParents(
+            serviceUtility.fromXML(ParentsTypeTO.class, this.organizationalUnitHandler.retrieveParents(id)));
+    }
+
+    @Override
+    public JAXBElement<? extends ResponseTypeTO> retrieveParentObjects(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
+
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility
+            .fromXML(this.organizationalUnitHandler.retrieveParentObjects(id));
+    }
+
+    @Override
+    public JAXBElement<SuccessorsTypeTO> retrieveSuccessors(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, SystemException {
+
+        return factoryProvider.getOuSuccessorsFactory().createSuccessors(
+            serviceUtility.fromXML(SuccessorsTypeTO.class, this.organizationalUnitHandler.retrieveSuccessors(id)));
+    }
+
+    @Override
+    public JAXBElement<? extends ResponseTypeTO> retrieveChildObjects(final String id)
+        throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
 
-        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-            this.organizationalUnitHandler.retrieveParentObjects(id));
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility
+            .fromXML(this.organizationalUnitHandler.retrieveChildObjects(id));
     }
 
     @Override
-    public SuccessorsTO retrieveSuccessors(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public JAXBElement<OrganizationalUnitPathListTypeTO> retrievePathList(final String id)
+        throws AuthenticationException, AuthorizationException, OrganizationalUnitNotFoundException, SystemException,
+        MissingMethodParameterException {
 
-        return serviceUtility.fromXML(SuccessorsTO.class, this.organizationalUnitHandler.retrieveSuccessors(id));
+        return factoryProvider.getOuPathListFactory().createOrganizationalUnitPathList(serviceUtility.fromXML(
+            OrganizationalUnitPathListTypeTO.class, this.organizationalUnitHandler.retrievePathList(id)));
     }
 
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveChildObjects(final String id) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException, SystemException {
+    public JAXBElement<ResultTypeTO> close(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
 
-        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-            this.organizationalUnitHandler.retrieveChildObjects(id));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.organizationalUnitHandler.close(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public OrganizationalUnitPathListTO retrievePathList(final String id) throws AuthenticationException, AuthorizationException,
-        OrganizationalUnitNotFoundException, SystemException, MissingMethodParameterException {
+    public JAXBElement<ResultTypeTO> open(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        OrganizationalUnitNotFoundException, InvalidStatusException, SystemException, OptimisticLockingException,
+        InvalidXmlException {
 
-        return serviceUtility.fromXML(OrganizationalUnitPathListTO.class, this.organizationalUnitHandler.retrievePathList(id));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.organizationalUnitHandler.open(id, serviceUtility.toXML(statusTaskParamTO))));
     }
-
-    @Override
-    public ResultTO close(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.organizationalUnitHandler.close(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO open(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, OrganizationalUnitNotFoundException,
-        InvalidStatusException, SystemException, OptimisticLockingException, InvalidXmlException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.organizationalUnitHandler.open(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
 }

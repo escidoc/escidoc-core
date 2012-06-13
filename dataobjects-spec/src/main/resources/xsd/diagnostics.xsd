@@ -3,7 +3,9 @@
 <!-- ZiNG SRU/SRW WSDL Specification                   -->
 <!-- Version 1.1                                       -->
 <!--                                                   -->
-<xsd:schema targetNamespace="http://www.loc.gov/zing/srw/diagnostic/" xmlns="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="http://www.loc.gov/zing/srw/diagnostic/" xmlns="http://www.loc.gov/zing/srw/diagnostic/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
   <xsd:element name="diagnostic" type="diagnosticType" nillable="false"/>
   <xsd:complexType name="diagnosticType">
     <xsd:all>

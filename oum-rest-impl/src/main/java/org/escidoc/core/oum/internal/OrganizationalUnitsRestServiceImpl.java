@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
@@ -43,12 +44,12 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
  * REST Service Implementation for Organizational Units.
  * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class OrganizationalUnitsRestServiceImpl implements OrganizationalUnitsRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(OrganizationalUnitsRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.OrganizationalUnitHandler")
@@ -67,16 +68,13 @@ public class OrganizationalUnitsRestServiceImpl implements OrganizationalUnitsRe
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveOrganizationalUnits(
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId,
-        final String userId,
-        final String omitHighlighting) throws InvalidSearchQueryException,
-        InvalidXmlException, MissingMethodParameterException, SystemException {
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting)
+        throws InvalidSearchQueryException, InvalidXmlException, MissingMethodParameterException, SystemException {
 
         Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.organizationalUnitHandler.retrieveOrganizationalUnits(map));
     }
-
 }

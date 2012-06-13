@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.content.relation;
 
 import javax.ws.rs.GET;
@@ -33,36 +32,32 @@ import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+/**
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ */
 @Path("/ir/content-relations")
 public interface ContentRelationsRestService {
-	
+
     /**
      * The list of all content-relations matching the given filter criteria will be created.
      * <p/>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
-     * @param userId
-     *            The custom SRU Get Parameter x-info5-userId
-     * @param roleId
-     *            The custom SRU Get Parameter x-info5-roleId
-     * @param omitHighlighting
-     *            The custom SRU Get Parameter x-info5-omitHighlighting
-     * @return The XML representation of the the filtered list of content-relations corresponding to SRW schema as JAXBElement.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into a CQL query
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
+     * <br/> See chapter "Filters" for detailed information about filter definitions.
+     *
+     * @param parameters       The Standard SRU Get-Parameters as Object
+     * @param userId           The custom SRU Get Parameter x-info5-userId
+     * @param roleId           The custom SRU Get Parameter x-info5-roleId
+     * @param omitHighlighting The custom SRU Get Parameter x-info5-omitHighlighting
+     * @return The XML representation of the the filtered list of content-relations corresponding to SRW schema as
+     *         JAXBElement.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a CQL query
+     * @throws SystemException             Thrown if a framework internal error occurs.
      */
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveContentRelations(
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
+        @QueryParam("") SruSearchRequestParametersBean parameters,
         @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
-            SystemException;
-
+        @QueryParam("x-info5-userId") String userId,
+        @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws InvalidSearchQueryException, SystemException;
 }

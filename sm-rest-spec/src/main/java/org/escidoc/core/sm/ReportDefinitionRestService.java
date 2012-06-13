@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.sm;
 
@@ -11,8 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.escidoc.core.domain.sm.rd.ReportDefinitionTO;
+import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -24,12 +23,13 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.sm.rd.ReportDefinitionTypeTO;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/statistic/report-definition")
 public interface ReportDefinitionRestService {
 
@@ -42,8 +42,8 @@ public interface ReportDefinitionRestService {
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The Report Definition is created. </li> <li>The XML data is returned.</li> </ul>
      *
-     * @param reportDefinitionTO The XML representation of the Report Definition to be created corresponding to XML-schema
-     *                "report-definition.xsd" as TO.
+     * @param reportDefinitionTO The XML representation of the Report Definition to be created corresponding to
+     *                           XML-schema "report-definition.xsd" as TO.
      * @return The XML representation of the created Report Definition corresponding to XML-schema
      *         "report-definition.xsd" as TO.
      * @throws AuthenticationException        Thrown in case of failed authentication.
@@ -60,10 +60,10 @@ public interface ReportDefinitionRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ReportDefinitionTO create(ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
-            AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
-            MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException,
-            ScopeContextViolationException, SystemException;
+    JAXBElement<ReportDefinitionTypeTO> create(@NotNull ReportDefinitionTypeTO reportDefinitionTO)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException, ScopeContextViolationException,
+        SystemException;
 
     /**
      * Delete the specified Report Definition.<br/>
@@ -86,8 +86,9 @@ public interface ReportDefinitionRestService {
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve the Report Definition with the given id.<br/>
@@ -113,8 +114,9 @@ public interface ReportDefinitionRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    ReportDefinitionTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException;
+    JAXBElement<ReportDefinitionTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     /**
      * Update the Report Definition.<br/>
@@ -125,10 +127,11 @@ public interface ReportDefinitionRestService {
      * <p/>
      * The Report Definition must exist<br/>
      * <p/>
-     * <b>Tasks:</b><br/> <ul> <li>the Report Definition is updated. </li> <li>The XML data is returned as TO.</li> </ul>
+     * <b>Tasks:</b><br/> <ul> <li>the Report Definition is updated. </li> <li>The XML data is returned as TO.</li>
+     * </ul>
      *
-     * @param id The Report Definition ID.
-     * @param reportDefinitionTO            The XML representation of the Report Definition to be created corresponding to
+     * @param id                 The Report Definition ID.
+     * @param reportDefinitionTO The XML representation of the Report Definition to be created corresponding to
      *                           XML-schema "report-definition.xsd" as TO.
      * @return The XML representation of the updated Report Definition corresponding to XML-schema
      *         "report-definition.xsd" as TO.
@@ -149,9 +152,9 @@ public interface ReportDefinitionRestService {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ReportDefinitionTO update(@PathParam("id") String id, ReportDefinitionTO reportDefinitionTO)
+    JAXBElement<ReportDefinitionTypeTO> update(@NotNull @PathParam("id") String id,
+        @NotNull ReportDefinitionTypeTO reportDefinitionTO)
         throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException;
-
 }

@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.content.relation.internal;
 
 import java.util.Map;
@@ -36,9 +35,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 
 /**
- * 
- * @author ?, SWA
- * 
+ * @author SWA
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 public class ContentRelationsRestServiceImpl implements ContentRelationsRestService {
 
@@ -50,7 +48,7 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
     private ServiceUtility serviceUtility;
 
     /**
-     * 
+     *
      */
     protected ContentRelationsRestServiceImpl() {
     }
@@ -58,20 +56,18 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.content.relation.ContentRelationsRestService#retrieveContentRelations(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.content.relation.ContentRelationsRestService#retrieveContentRelations(org.escidoc.core
+     * .domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveContentRelations(
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId, 
-        final String userId,
-        final String omitHighlighting) throws InvalidSearchQueryException,
-        SystemException {
+        final SruSearchRequestParametersBean parameters, final String roleId, final String userId,
+        final String omitHighlighting)
+        throws InvalidSearchQueryException, SystemException {
 
         Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
-        
-        return (JAXBElement<? extends ResponseTypeTO>)serviceUtility.fromXML(
-                this.contentRelationHandler.retrieveContentRelations(map));
-    }
 
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
+            this.contentRelationHandler.retrieveContentRelations(map));
+    }
 }

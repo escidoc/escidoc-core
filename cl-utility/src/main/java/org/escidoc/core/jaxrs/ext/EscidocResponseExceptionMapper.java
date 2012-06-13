@@ -2,8 +2,8 @@ package org.escidoc.core.jaxrs.ext;
 
 import org.apache.cxf.jaxrs.client.ClientWebApplicationException;
 import org.apache.cxf.jaxrs.client.ResponseExceptionMapper;
-import org.escidoc.core.domain.exception.ExceptionTO;
-import org.escidoc.core.domain.exception.ExceptionTOFactory;
+import org.escidoc.core.domain.exception.ExceptionTypeTO;
+import org.escidoc.core.domain.exception.ExceptionTypeTOFactory;
 
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
@@ -32,9 +32,10 @@ public class EscidocResponseExceptionMapper implements ResponseExceptionMapper<T
         Throwable t;
 
         try {
-            final JAXBContext context = JAXBContext.newInstance(ExceptionTO.class);
-            final ExceptionTO exceptionTO = context.createUnmarshaller().unmarshal(source, ExceptionTO.class).getValue();
-            t = ExceptionTOFactory.createThrowable(exceptionTO);
+            final JAXBContext context = JAXBContext.newInstance(ExceptionTypeTO.class);
+            final ExceptionTypeTO exceptionTO = context.createUnmarshaller().unmarshal(
+                source, ExceptionTypeTO.class).getValue();
+            t = ExceptionTypeTOFactory.createThrowable(exceptionTO);
         } catch (Exception e) {
             throw new ClientWebApplicationException(e.getMessage(), e, response);
         }

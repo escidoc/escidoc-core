@@ -32,16 +32,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.aa.UserAccountRestService;
-import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.grants.GrantTO;
-import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
-import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
-import org.escidoc.core.domain.result.ResultTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTypeTO;
+import org.escidoc.core.domain.aa.grants.GrantTypeTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTypeTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountTypeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTypeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTypeTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTypeTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
@@ -75,10 +77,14 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class UserAccountRestServiceImpl implements UserAccountRestService {
 
     @Autowired
@@ -88,8 +94,11 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
     protected UserAccountRestServiceImpl() {
     }
@@ -98,42 +107,45 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#create(org.escidoc.core.domain.aa.UserAccountTO)
      */
     @Override
-    public UserAccountTO create(final UserAccountTO userAccountTO) throws UniqueConstraintViolationException,
-        InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException,
-        OrganizationalUnitNotFoundException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountTO.class,
-                this.userAccountHandler.create(serviceUtility.toXML(userAccountTO)));
+    public JAXBElement<UserAccountTypeTO> create(final UserAccountTypeTO userAccountTO)
+        throws UniqueConstraintViolationException, InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException, OrganizationalUnitNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getUserAccountFactory().createUserAccount(serviceUtility
+            .fromXML(UserAccountTypeTO.class, this.userAccountHandler.create(serviceUtility.toXML(userAccountTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieve(java.lang.String)
      */
     @Override
-    public UserAccountTO retrieve(final String id) throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieve(id));
+    public JAXBElement<UserAccountTypeTO> retrieve(final String id)
+        throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return factoryProvider.getUserAccountFactory().createUserAccount(
+            serviceUtility.fromXML(UserAccountTypeTO.class, this.userAccountHandler.retrieve(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#update(java.lang.String, org.escidoc.core.domain.aa.UserAccountTO)
      */
     @Override
-    public UserAccountTO update(final String id, final UserAccountTO userAccountTO) throws UserAccountNotFoundException,
-        UniqueConstraintViolationException, InvalidStatusException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException,
+    public JAXBElement<UserAccountTypeTO> update(final String id, final UserAccountTypeTO userAccountTO)
+        throws UserAccountNotFoundException, UniqueConstraintViolationException, InvalidStatusException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         OrganizationalUnitNotFoundException, SystemException {
-        return serviceUtility.fromXML(UserAccountTO.class,
-                this.userAccountHandler.update(id, serviceUtility.toXML(userAccountTO)));
+        return factoryProvider.getUserAccountFactory().createUserAccount(serviceUtility.fromXML(UserAccountTypeTO.class,
+            this.userAccountHandler.update(id, serviceUtility.toXML(userAccountTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void delete(final String id)
+        throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         this.userAccountHandler.delete(id);
     }
 
@@ -141,41 +153,47 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveCurrentUser()
      */
     @Override
-    public UserAccountTO retrieveCurrentUser() throws UserAccountNotFoundException, AuthenticationException,
+    public JAXBElement<UserAccountTypeTO> retrieveCurrentUser()
+        throws UserAccountNotFoundException, AuthenticationException,
         AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountTO.class, this.userAccountHandler.retrieveCurrentUser());
+        return factoryProvider.getUserAccountFactory().createUserAccount(
+            serviceUtility.fromXML(UserAccountTypeTO.class, this.userAccountHandler.retrieveCurrentUser()));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#updatePassword(java.lang.String, java.lang.String)
      */
     @Override
-    public void updatePassword(final String id, final UpdatePasswordTaskParamTO taskParam) throws UserAccountNotFoundException,
-        InvalidStatusException, XmlCorruptedException, MissingMethodParameterException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void updatePassword(final String id, final UpdatePasswordTaskParamTO taskParam)
+        throws UserAccountNotFoundException, InvalidStatusException, XmlCorruptedException,
+        MissingMethodParameterException, OptimisticLockingException, AuthenticationException, AuthorizationException,
+        SystemException {
         this.userAccountHandler.updatePassword(id, serviceUtility.toXML(taskParam));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#updatePreferences(java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceListTO)
+     * @see de.escidoc.core.aa.UserAccountRestService#updatePreferences(java.lang.String,
+     * org.escidoc.core.domain.aa.UserAccountPreferenceListTO)
      */
     @Override
-    public PreferencesTO updatePreferences(final String id, final PreferencesTO userAccountPrefrencesTO)
+    public JAXBElement<PreferencesTypeTO> updatePreferences(final String id, final PreferencesTypeTO preferencesTypeTO)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, SystemException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, MissingAttributeValueException {
-        return serviceUtility.fromXML(PreferencesTO.class,
-                this.userAccountHandler.updatePreferences(id, serviceUtility.toXML(userAccountPrefrencesTO)));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreferences(
+            serviceUtility.fromXML(PreferencesTypeTO.class, this.userAccountHandler.updatePreferences(id,
+                serviceUtility.toXML(preferencesTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException,
-            UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
-            MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
-            SystemException {
+    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyActiveException,
+        UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
+        MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
+        SystemException {
         this.userAccountHandler.activate(id, serviceUtility.toXML(taskParam));
     }
 
@@ -183,7 +201,8 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#deactivate(java.lang.String, java.lang.String)
      */
     @Override
-    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserAccountNotFoundException,
+    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
         OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
         this.userAccountHandler.deactivate(id, serviceUtility.toXML(taskParam));
@@ -193,38 +212,46 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveResources(java.lang.String)
      */
     @Override
-    public UserAccountResourcesTO retrieveResources(final String id) throws UserAccountNotFoundException,
+    public JAXBElement<UserAccountResourcesTypeTO> retrieveResources(final String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserAccountResourcesTO.class, this.userAccountHandler.retrieveResources(id));
+        return factoryProvider.getUserAccountFactory().createResources(
+            serviceUtility.fromXML(UserAccountResourcesTypeTO.class, this.userAccountHandler.retrieveResources(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public CurrentGrantsTO retrieveCurrentGrants(final String id) throws UserAccountNotFoundException,
+    public JAXBElement<CurrentGrantsTypeTO> retrieveCurrentGrants(final String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(CurrentGrantsTO.class, this.userAccountHandler.retrieveCurrentGrants(id));
+        return factoryProvider.getGrantFactory().createCurrentGrants(
+            serviceUtility.fromXML(CurrentGrantsTypeTO.class, this.userAccountHandler.retrieveCurrentGrants(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#createGrant(org.escidoc.core.domain.aa.GrantTO)
      */
     @Override
-    public GrantTO createGrant(final String id, final GrantTO grantTo) throws AlreadyExistsException, UserAccountNotFoundException,
+    public JAXBElement<GrantTypeTO> createGrant(final String id, final GrantTypeTO grantTypeTO)
+        throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(GrantTO.class, this.userAccountHandler.createGrant(id, serviceUtility.toXML(grantTo)));
+        return factoryProvider.getGrantFactory().createGrant(serviceUtility
+            .fromXML(GrantTypeTO.class, this.userAccountHandler.createGrant(id, serviceUtility.toXML(grantTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public GrantTO retrieveGrant(final String id, final String grantId) throws UserAccountNotFoundException,
+    public JAXBElement<GrantTypeTO> retrieveGrant(final String id, final String grantId)
+        throws UserAccountNotFoundException,
         GrantNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return serviceUtility.fromXML(GrantTO.class, this.userAccountHandler.retrieveGrant(id, grantId));
+        return factoryProvider.getGrantFactory().createGrant(
+            serviceUtility.fromXML(GrantTypeTO.class, this.userAccountHandler.retrieveGrant(id, grantId)));
     }
 
     /* (non-Javadoc)
@@ -232,9 +259,9 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      */
     @Override
     public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam)
-            throws UserAccountNotFoundException, GrantNotFoundException,
-            AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        throws UserAccountNotFoundException, GrantNotFoundException,
+        AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         this.userAccountHandler.revokeGrant(id, grantId, serviceUtility.toXML(taskParam));
     }
 
@@ -243,9 +270,9 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      */
     @Override
     public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam)
-            throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
-            MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException {
+        throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         this.userAccountHandler.revokeGrants(id, serviceUtility.toXML(taskParam));
     }
 
@@ -253,124 +280,144 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrievePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public PreferenceTO retrievePreference(final String id, final String name) throws UserAccountNotFoundException,
+    public JAXBElement<PreferencesTypeTO> retrievePreference(final String id, final String name)
+        throws UserAccountNotFoundException,
         PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return serviceUtility.fromXML(PreferenceTO.class, this.userAccountHandler.retrievePreference(id, name));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreferences(
+            serviceUtility.fromXML(PreferencesTypeTO.class, this.userAccountHandler.retrievePreference(id, name)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrievePreferences(java.lang.String)
      */
     @Override
-    public PreferencesTO retrievePreferences(final String id) throws UserAccountNotFoundException,
+    public JAXBElement<PreferencesTypeTO> retrievePreferences(final String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(PreferencesTO.class, this.userAccountHandler.retrievePreferences(id));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreferences(
+            serviceUtility.fromXML(PreferencesTypeTO.class, this.userAccountHandler.retrievePreferences(id)));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#createPreference(java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceTO)
+     * @see de.escidoc.core.aa.UserAccountRestService#createPreference(java.lang.String,
+     * org.escidoc.core.domain.aa.UserAccountPreferenceTO)
      */
     @Override
-    public PreferenceTO createPreference(final String id, final PreferenceTO userAccountPreferenceTO)
+    public JAXBElement<PreferenceTypeTO> createPreference(final String id, final PreferenceTypeTO preferenceTypeTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException {
-        return serviceUtility.fromXML(PreferenceTO.class,
-                this.userAccountHandler.createPreference(id, serviceUtility.toXML(userAccountPreferenceTO)));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreference(serviceUtility
+            .fromXML(PreferenceTypeTO.class,
+                this.userAccountHandler.createPreference(id, serviceUtility.toXML(preferenceTypeTO))));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#updatePreference(java.lang.String, java.lang.String, org.escidoc.core.domain.aa.UserAccountPreferenceTO)
+     * @see de.escidoc.core.aa.UserAccountRestService#updatePreference(java.lang.String, java.lang.String,
+     * org.escidoc.core.domain.aa.UserAccountPreferenceTO)
      */
     @Override
-    public PreferenceTO updatePreference(
-        final String id, final String preferenceName, final PreferenceTO userAccountPreferenceTO)
+    public JAXBElement<PreferenceTypeTO> updatePreference(final String id, final String preferenceName,
+                                                          final PreferenceTypeTO preferenceTypeTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException {
-        return serviceUtility.fromXML(PreferenceTO.class,
-                this.userAccountHandler.updatePreference(id, preferenceName, serviceUtility.toXML(userAccountPreferenceTO)));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreference(serviceUtility
+            .fromXML(PreferenceTypeTO.class,
+                this.userAccountHandler.updatePreference(id, preferenceName, serviceUtility.toXML(preferenceTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#deletePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public void deletePreference(final String id, final String preferenceName) throws UserAccountNotFoundException,
-        PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException {
+    public void deletePreference(final String id, final String preferenceName)
+        throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
         this.userAccountHandler.deletePreference(id, preferenceName);
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#createAttribute(java.lang.String, org.escidoc.core.domain.aa.UserAccountAttributeTO)
+     * @see de.escidoc.core.aa.UserAccountRestService#createAttribute(java.lang.String,
+     * org.escidoc.core.domain.aa.UserAccountAttributeTO)
      */
     @Override
-    public AttributeTO createAttribute(final String id, final AttributeTO userAccountAttributeTO)
+    public JAXBElement<AttributeTypeTO> createAttribute(final String id, final AttributeTypeTO attributeTypeTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return serviceUtility.fromXML(AttributeTO.class,
-                this.userAccountHandler.createAttribute(id, serviceUtility.toXML(userAccountAttributeTO)));
+        return factoryProvider.getUserAccountAttributesFactory().createAttribute(serviceUtility
+            .fromXML(AttributeTypeTO.class,
+                this.userAccountHandler.createAttribute(id, serviceUtility.toXML(attributeTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveAttributes(java.lang.String)
      */
     @Override
-    public AttributesTO retrieveAttributes(final String id) throws UserAccountNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(AttributesTO.class, this.userAccountHandler.retrieveAttributes(id));
+    public JAXBElement<AttributesTypeTO> retrieveAttributes(final String id)
+        throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return factoryProvider.getUserAccountAttributesFactory().createAttributes(
+            serviceUtility.fromXML(AttributesTypeTO.class, this.userAccountHandler.retrieveAttributes(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveNamedAttributes(java.lang.String, java.lang.String)
      */
     @Override
-    public AttributesTO retrieveNamedAttributes(final String id, final String name)
+    public JAXBElement<AttributesTypeTO> retrieveNamedAttributes(final String id, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(AttributesTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name));
+        return factoryProvider.getUserAccountAttributesFactory().createAttributes(
+            serviceUtility.fromXML(AttributesTypeTO.class, this.userAccountHandler.retrieveNamedAttributes(id, name)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#retrieveAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public AttributeTO retrieveAttribute(final String id, final String attId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
-        return serviceUtility.fromXML(AttributeTO.class, this.userAccountHandler.retrieveAttribute(id, attId));
+    public JAXBElement<AttributeTypeTO> retrieveAttribute(final String id, final String attId)
+        throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getUserAccountAttributesFactory().createAttribute(
+            serviceUtility.fromXML(AttributeTypeTO.class, this.userAccountHandler.retrieveAttribute(id, attId)));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#updateAttribute(java.lang.String, java.lang.String, org.escidoc.core.domain.aa.UserAccountAttributeTO)
+     * @see de.escidoc.core.aa.UserAccountRestService#updateAttribute(java.lang.String, java.lang.String,
+     * org.escidoc.core.domain.aa.UserAccountAttributeTO)
      */
     @Override
-    public AttributeTO updateAttribute(final String id, final String attId, final AttributeTO userAccountAttributeTO)
+    public JAXBElement<AttributeTypeTO> updateAttribute(final String id, final String attId,
+                                                        final AttributeTypeTO attributeTypeTO)
         throws UserAccountNotFoundException, OptimisticLockingException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(AttributeTO.class,
-                this.userAccountHandler.updateAttribute(id, attId, serviceUtility.toXML(userAccountAttributeTO)));
+        return factoryProvider.getUserAccountAttributesFactory().createAttribute(serviceUtility
+            .fromXML(AttributeTypeTO.class,
+                this.userAccountHandler.updateAttribute(id, attId, serviceUtility.toXML(attributeTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserAccountRestService#deleteAttribute(java.lang.String, java.lang.String)
      */
     @Override
-    public void deleteAttribute(final String id, final String attId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, ReadonlyElementViolationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public void deleteAttribute(final String id, final String attId)
+        throws UserAccountNotFoundException, UserAttributeNotFoundException, ReadonlyElementViolationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         this.userAccountHandler.deleteAttribute(id, attId);
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.List, java.util.List, java.util.List)
+     * @see de.escidoc.core.aa.UserAccountRestService#retrievePermissionFilterQuery(java.util.List, java.util.List,
+     * java.util.List)
      */
     @Override
-    public ResultTO retrievePermissionFilterQuery(final List<String> index, final List<String> user, final List<String> role) throws SystemException,
+    public JAXBElement<ResultTypeTO> retrievePermissionFilterQuery(final List<String> index, final List<String> user,
+                                                                   final List<String> role)
+        throws SystemException,
         InvalidSearchQueryException, AuthenticationException, AuthorizationException {
         Map<String, String[]> parameters = new HashMap<String, String[]>();
         if (index != null && index.size() > 0) {
@@ -382,7 +429,7 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
         if (role != null && role.size() > 0) {
             parameters.put("role", role.toArray(new String[role.size()]));
         }
-        return serviceUtility.fromXML(ResultTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.userAccountHandler.retrievePermissionFilterQuery(parameters)));
     }
-
 }

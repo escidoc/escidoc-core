@@ -28,12 +28,13 @@
  */
 package org.escidoc.core.aa.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.aa.UserGroupRestService;
-import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.grants.GrantTO;
-import org.escidoc.core.domain.aa.usergroup.SelectorsTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTypeTO;
+import org.escidoc.core.domain.aa.grants.GrantTypeTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTypeTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
@@ -66,10 +67,14 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class UserGroupRestServiceImpl implements UserGroupRestService {
 
     @Autowired
@@ -79,8 +84,11 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
     protected UserGroupRestServiceImpl() {
     }
@@ -89,17 +97,19 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#create(org.escidoc.core.domain.aa.UserGroupTO)
      */
     @Override
-    public UserGroupTO create(final UserGroupTO userGroupTO) throws UniqueConstraintViolationException,
-        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.create(serviceUtility.toXML(userGroupTO)));
+    public JAXBElement<UserGroupTypeTO> create(final UserGroupTypeTO userGroupTO)
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getUserGroupFactory().createUserGroup(serviceUtility
+            .fromXML(UserGroupTypeTO.class, this.userGroupHandler.create(serviceUtility.toXML(userGroupTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws UserGroupNotFoundException, MissingMethodParameterException,
+    public void delete(final String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         this.userGroupHandler.delete(id);
     }
@@ -108,29 +118,33 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#retrieve(java.lang.String)
      */
     @Override
-    public UserGroupTO retrieve(final String id) throws UserGroupNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.retrieve(id));
+    public JAXBElement<UserGroupTypeTO> retrieve(final String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return factoryProvider.getUserGroupFactory().createUserGroup(
+            serviceUtility.fromXML(UserGroupTypeTO.class, this.userGroupHandler.retrieve(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#update(java.lang.String, org.escidoc.core.domain.aa.UserGroupTO)
      */
     @Override
-    public UserGroupTO update(final String id, final UserGroupTO userGroupTO) throws UserGroupNotFoundException,
-        UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.update(id, serviceUtility.toXML(userGroupTO)));
+    public JAXBElement<UserGroupTypeTO> update(final String id, final UserGroupTypeTO userGroupTO)
+        throws UserGroupNotFoundException, UniqueConstraintViolationException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
+        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getUserGroupFactory().createUserGroup(serviceUtility
+            .fromXML(UserGroupTypeTO.class, this.userGroupHandler.update(id, serviceUtility.toXML(userGroupTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#activate(java.lang.String, java.lang.String)
      */
     @Override
-    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException, UserGroupNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
+    public void activate(final String id, final OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyActiveException, UserGroupNotFoundException, XmlCorruptedException,
+        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException {
         this.userGroupHandler.activate(id, serviceUtility.toXML(taskParam));
     }
 
@@ -138,9 +152,10 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#deactivate(java.lang.String, java.lang.String)
      */
     @Override
-    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException, UserGroupNotFoundException,
-        XmlCorruptedException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException {
+    public void deactivate(final String id, final OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyDeactiveException, UserGroupNotFoundException, XmlCorruptedException,
+        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
+        AuthenticationException, AuthorizationException, SystemException {
         this.userGroupHandler.deactivate(id, serviceUtility.toXML(taskParam));
     }
 
@@ -148,37 +163,44 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#retrieveGrant(java.lang.String, java.lang.String)
      */
     @Override
-    public GrantTO retrieveGrant(final String id, final String grantId) throws UserGroupNotFoundException, GrantNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(GrantTO.class, this.userGroupHandler.retrieveGrant(id, grantId));
+    public JAXBElement<GrantTypeTO> retrieveGrant(final String id, final String grantId)
+        throws UserGroupNotFoundException, GrantNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getGrantFactory().createGrant(
+            serviceUtility.fromXML(GrantTypeTO.class, this.userGroupHandler.retrieveGrant(id, grantId)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#retrieveCurrentGrants(java.lang.String)
      */
     @Override
-    public CurrentGrantsTO retrieveCurrentGrants(final String id) throws UserGroupNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(CurrentGrantsTO.class, this.userGroupHandler.retrieveCurrentGrants(id));
+    public JAXBElement<CurrentGrantsTypeTO> retrieveCurrentGrants(final String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return factoryProvider.getGrantFactory().createCurrentGrants(
+            serviceUtility.fromXML(CurrentGrantsTypeTO.class, this.userGroupHandler.retrieveCurrentGrants(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#createGrant(java.lang.String, org.escidoc.core.domain.aa.GrantTO)
      */
     @Override
-    public GrantTO createGrant(final String id, final GrantTO grantTo) throws AlreadyExistsException, UserGroupNotFoundException,
-        InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(GrantTO.class, this.userGroupHandler.createGrant(id, serviceUtility.toXML(grantTo)));
+    public JAXBElement<GrantTypeTO> createGrant(final String id, final GrantTypeTO grantTypeTO)
+        throws AlreadyExistsException, UserGroupNotFoundException, InvalidScopeException, RoleNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
+        return factoryProvider.getGrantFactory().createGrant(serviceUtility
+            .fromXML(GrantTypeTO.class, this.userGroupHandler.createGrant(id, serviceUtility.toXML(grantTypeTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam) throws UserGroupNotFoundException,
-        GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public void revokeGrant(final String id, final String grantId, final RevokeGrantTaskParamTO taskParam)
+        throws UserGroupNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
+        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException {
         this.userGroupHandler.revokeGrant(id, grantId, serviceUtility.toXML(taskParam));
     }
 
@@ -186,7 +208,8 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
-    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam) throws UserGroupNotFoundException, GrantNotFoundException,
+    public void revokeGrants(final String id, final RevokeGrantsTaskParamTO taskParam)
+        throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
         this.userGroupHandler.revokeGrants(id, serviceUtility.toXML(taskParam));
@@ -196,31 +219,35 @@ public class UserGroupRestServiceImpl implements UserGroupRestService {
      * @see de.escidoc.core.aa.UserGroupRestService#retrieveResources(java.lang.String)
      */
     @Override
-    public UserGroupResourcesTO retrieveResources(final String id) throws UserGroupNotFoundException, SystemException {
-        return serviceUtility.fromXML(UserGroupResourcesTO.class, this.userGroupHandler.retrieveResources(id));
+    public JAXBElement<UserGroupResourcesTypeTO> retrieveResources(final String id)
+        throws UserGroupNotFoundException, SystemException {
+        return factoryProvider.getUserGroupFactory().createResources(
+            serviceUtility.fromXML(UserGroupResourcesTypeTO.class, this.userGroupHandler.retrieveResources(id)));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#addSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupTO addSelectors(final String id, final AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
-        UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
-        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
-        OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
+    public JAXBElement<UserGroupTypeTO> addSelectors(final String id, final AddSelectorsTaskParamTO taskParam)
+        throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
+        InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException, OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException {
-        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam)));
+        return factoryProvider.getUserGroupFactory().createUserGroup(serviceUtility
+            .fromXML(UserGroupTypeTO.class, this.userGroupHandler.addSelectors(id, serviceUtility.toXML(taskParam))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.UserGroupRestService#removeSelectors(java.lang.String, java.lang.String)
      */
     @Override
-    public UserGroupTO removeSelectors(final String id, final RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
-        XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
-        UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
+    public JAXBElement<UserGroupTypeTO> removeSelectors(final String id, final RemoveSelectorsTaskParamTO taskParam)
+        throws XmlCorruptedException, XmlSchemaValidationException, AuthenticationException, AuthorizationException,
+        SystemException, UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException {
-        return serviceUtility.fromXML(UserGroupTO.class, this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam)));
+        return factoryProvider.getUserGroupFactory().createUserGroup(serviceUtility
+            .fromXML(UserGroupTypeTO.class,
+                this.userGroupHandler.removeSelectors(id, serviceUtility.toXML(taskParam))));
     }
-
 }

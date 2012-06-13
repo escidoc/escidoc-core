@@ -15,14 +15,10 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:import namespace="http://escidoc.de/core/01/properties/version/"
-             schemaLocation="version.xsd"/>
-  <xs:import namespace="http://escidoc.de/core/01/properties/release/"
-             schemaLocation="release.xsd"/>
-  <xs:import namespace="http://escidoc.de/core/01/structural-relations/"
-             schemaLocation="structural-relations.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
-             schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/version/" schemaLocation="version.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/release/" schemaLocation="release.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
 
   <xs:element name="locator-url" type="xs:string">
     <xs:annotation>
@@ -154,25 +150,12 @@
       </xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="checksum-algorithm">
+  <xs:element name="checksum-algorithm" type="prop:checksumAlgorithmType">
     <xs:annotation>
       <xs:documentation>The algorithm used to calculate the checksum of the file associated
         with the resource.
       </xs:documentation>
     </xs:annotation>
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="MD5"/>
-        <xs:enumeration value="SHA-1"/>
-        <xs:enumeration value="SHA-256"/>
-        <xs:enumeration value="SHA-384"/>
-        <xs:enumeration value="SHA-512"/>
-        <xs:enumeration value="HAVAL"/>
-        <xs:enumeration value="TIGER"/>
-        <xs:enumeration value="WHIRLPOOL"/>
-        <xs:enumeration value="DISABLED"/>
-      </xs:restriction>
-    </xs:simpleType>
   </xs:element>
   <!-- PID -->
   <xs:element name="pid" type="xs:string">
@@ -182,141 +165,32 @@
     </xs:annotation>
   </xs:element>
   <!-- content domain specific properties; may be defined by solution -->
-  <xs:element name="content-model-specific">
+  <xs:element name="content-model-specific" type="prop:cmsType">
     <xs:annotation>
-      <xs:documentation>Container for properties defined in a content model description.
-      </xs:documentation>
+      <xs:documentation>Container for properties defined in a content model description.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-          <xs:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
-      </xs:sequence>
-    </xs:complexType>
   </xs:element>
   <!-- versions -->
-  <xs:element name="version">
+  <xs:element name="version" type="prop:versionType">
     <xs:annotation>
       <xs:documentation>Refers to an abstract resource that describe a resources
         version.
       </xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="version:number" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="version:date" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="version:status" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="srel:modified-by" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="version:comment" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="version:pid" minOccurs="0">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="latest-version">
+  <xs:element name="latest-version" type="prop:latestVersionType">
     <xs:annotation>
       <xs:documentation>Refers to an abstract resource that describes the latest version of a
         resource.
       </xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="version:number" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="version:date" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
-    </xs:complexType>
   </xs:element>
-  <xs:element name="latest-release">
+  <xs:element name="latest-release" type="prop:latestReleaseType">
     <xs:annotation>
       <xs:documentation>Refers to an abstract resource that describe a resources latest
         release.
       </xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="release:number" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="release:date" minOccurs="1">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element ref="release:pid" minOccurs="0">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
-    </xs:complexType>
   </xs:element>
   <!-- external names -->
   <xs:element name="context-title" type="xs:string">
@@ -365,41 +239,10 @@
       <xs:documentation>The revocation date of a grant.</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="external-ids">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="external-id" minOccurs="0" maxOccurs="unbounded" type="xs:string">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-              <comment>An external Identifier of the resource.</comment>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="organizational-units">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="srel:organizational-unit">
-          <xs:annotation>
-            <xs:documentation>
-              <create>required</create>
-              <update>required</update>
-              <comment>At least one organizational-unit element must exist if the
-                parent element organizational-units exist. To remove all
-                organizational unit during update, the parent element
-                organizational-units has to be removed.
-              </comment>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="affiliations">
+  <xs:element name="external-ids" type="prop:externalIdsType"/>
+  <xs:element name="external-id" type="xs:string"/>
+  <xs:element name="organizational-units" type="prop:organizationalUnitsType"/>
+  <xs:element name="affiliations" type="prop:affiliationsType">
     <xs:annotation>
       <xs:documentation>List of affiliations related to a user account.
         <create>optional</create>
@@ -409,22 +252,205 @@
         </comment>
       </xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="srel:affiliation">
-          <xs:annotation>
-            <xs:documentation>
-              <create>required</create>
-              <update>required</update>
-              <comment>At least one affiliation element must exist if the parent
-                element affiliations exist. To remove all affiliations during
-                update, the parent element affiliations has to be removed. One
-                affiliation must be marked as the primary affiliation of the user.
-              </comment>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
   </xs:element>
+
+  <xs:simpleType name="checksumAlgorithmType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MD5"/>
+      <xs:enumeration value="SHA-1"/>
+      <xs:enumeration value="SHA-256"/>
+      <xs:enumeration value="SHA-384"/>
+      <xs:enumeration value="SHA-512"/>
+      <xs:enumeration value="HAVAL"/>
+      <xs:enumeration value="TIGER"/>
+      <xs:enumeration value="WHIRLPOOL"/>
+      <xs:enumeration value="DISABLED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="cmsType">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="versionType">
+    <xs:sequence>
+      <xs:element ref="version:number" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="version:date" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="version:status" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:modified-by" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="version:comment" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="version:pid" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="latestVersionType">
+    <xs:sequence>
+      <xs:element ref="version:number" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="version:date" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="latestReleaseType">
+    <xs:sequence>
+      <xs:element ref="release:number" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="release:date" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="release:pid" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="externalIdsType">
+    <xs:sequence>
+      <xs:element ref="prop:external-id" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+            <comment>An external Identifier of the resource.</comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="organizationalUnitsType">
+    <xs:sequence>
+      <xs:element ref="srel:organizational-unit" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+            <comment>At least one organizational-unit element must exist if the
+              parent element organizational-units exist. To remove all
+              organizational unit during update, the parent element
+              organizational-units has to be removed.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="affiliationsType">
+    <xs:sequence>
+      <xs:element ref="srel:affiliation" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+            <comment>At least one affiliation element must exist if the parent
+              element affiliations exist. To remove all affiliations during
+              update, the parent element affiliations has to be removed. One
+              affiliation must be marked as the primary affiliation of the user.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="commonPropertiesType">
+    <xs:annotation>
+      <xs:documentation>Common properties elements.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="prop:creation-date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:created-by" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

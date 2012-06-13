@@ -4,31 +4,31 @@
            targetNamespace="http://escidoc.de/core/01/properties/release/"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:annotation>
-        <xs:documentation>
-            Elements in this schema state values of releases (released
-            versions). See
-            {http://escidoc.de/core/01/properties/}latest-release.
-        </xs:documentation>
-    </xs:annotation>
+  <xs:annotation>
+    <xs:documentation>
+      Elements in this schema state values of releases (released
+      versions). See
+      {http://escidoc.de/core/01/properties/}latest-release.
+    </xs:documentation>
+  </xs:annotation>
 
-    <xs:element name="number" type="xs:int">
-        <xs:annotation>
-            <xs:documentation>
-                The number of the release that belongs to this version.
-                The version that belongs to this version is the latest
-                release before this version.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="date" type="xs:dateTime">
-        <xs:annotation>
-            <xs:documentation>
-                The date of the release that belongs to this version.
-                The version that belongs to this version is the latest
-                release before this version.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="pid" type="xs:token"/>
+  <xs:element name="number" type="xs:int">
+    <xs:annotation>
+      <xs:documentation>
+        The number of the release that belongs to this version.
+        The version that belongs to this version is the latest
+        release before this version.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="date" type="xs:dateTime">
+    <xs:annotation>
+      <xs:documentation>
+        The date of the release that belongs to this version.
+        The version that belongs to this version is the latest
+        release before this version.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="pid" type="xs:token"/>
 </xs:schema>

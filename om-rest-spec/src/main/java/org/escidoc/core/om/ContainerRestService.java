@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.om;
 
 import javax.ws.rs.Consumes;
@@ -32,15 +31,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.container.ContainerPropertiesTO;
-import org.escidoc.core.domain.container.ContainerResourcesTO;
-import org.escidoc.core.domain.container.ContainerTO;
-import org.escidoc.core.domain.container.structmap.StructMapTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.container.ContainerPropertiesTypeTO;
+import org.escidoc.core.domain.container.ContainerResourcesTypeTO;
+import org.escidoc.core.domain.container.ContainerTypeTO;
+import org.escidoc.core.domain.container.structmap.StructMapTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
+import org.escidoc.core.domain.parents.ParentsTypeTO;
+import org.escidoc.core.domain.relations.RelationsTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
@@ -48,7 +48,7 @@ import org.escidoc.core.domain.taskparam.members.MembersTaskParamTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 import org.escidoc.core.utils.io.Stream;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -84,9 +84,8 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/ir/container")
 public interface ContainerRestService {
@@ -94,49 +93,51 @@ public interface ContainerRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContainerTO create(final ContainerTO containerTO) throws ContextNotFoundException, ContentModelNotFoundException,
-        InvalidContentException, MissingMethodParameterException, MissingAttributeValueException,
-        MissingElementValueException, SystemException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
-        MissingMdRecordException, XmlCorruptedException, XmlSchemaValidationException;
+    JAXBElement<ContainerTypeTO> create(@NotNull ContainerTypeTO containerTO)
+        throws ContextNotFoundException, ContentModelNotFoundException, InvalidContentException,
+        MissingMethodParameterException, MissingAttributeValueException, MissingElementValueException, SystemException,
+        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, MissingMdRecordException, XmlCorruptedException,
+        XmlSchemaValidationException;
 
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws ContainerNotFoundException, LockingException,
-        InvalidStatusException, SystemException, MissingMethodParameterException, AuthenticationException,
-        AuthorizationException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, LockingException, InvalidStatusException, SystemException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException;
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    ContainerTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContainerNotFoundException, SystemException;
+    JAXBElement<ContainerTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContainerNotFoundException, SystemException;
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContainerTO update(@PathParam("id") String id, ContainerTO containerTO) throws ContainerNotFoundException,
-        LockingException, InvalidContentException, MissingMethodParameterException, InvalidXmlException,
-        OptimisticLockingException, InvalidStatusException, ReadonlyVersionException, SystemException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AuthenticationException,
-        AuthorizationException, MissingAttributeValueException, MissingMdRecordException;
+    JAXBElement<ContainerTypeTO> update(@NotNull @PathParam("id") String id, @NotNull ContainerTypeTO containerTO)
+        throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
+        InvalidXmlException, OptimisticLockingException, InvalidStatusException, ReadonlyVersionException,
+        SystemException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        AuthenticationException, AuthorizationException, MissingAttributeValueException, MissingMdRecordException;
 
     @GET
     @Path("/{id}/resources/members")
     @Produces(MediaType.TEXT_XML)
-    JAXBElement<? extends ResponseTypeTO> retrieveMembers(@PathParam("id") String id,
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
-        @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
-            MissingMethodParameterException, ContainerNotFoundException, SystemException;
+    JAXBElement<? extends ResponseTypeTO> retrieveMembers(@NotNull @PathParam("id") String id,
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws InvalidSearchQueryException, MissingMethodParameterException, ContainerNotFoundException,
+        SystemException;
 
     @POST
     @Path("/{id}/members/add")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO addMembers(@PathParam("id") String id, MembersTaskParamTO membersTaskParamTO)
+    JAXBElement<ResultTypeTO> addMembers(@NotNull @PathParam("id") String id,
+        @NotNull MembersTaskParamTO membersTaskParamTO)
         throws ContainerNotFoundException, LockingException, InvalidContentException, MissingMethodParameterException,
         SystemException, InvalidContextException, AuthenticationException, AuthorizationException,
         OptimisticLockingException, MissingAttributeValueException;
@@ -145,7 +146,8 @@ public interface ContainerRestService {
     @Path("/{id}/members/remove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO removeMembers(@PathParam("id") String id, MembersTaskParamTO membersTaskParamTO)
+    JAXBElement<ResultTypeTO> removeMembers(@NotNull @PathParam("id") String id,
+        @NotNull MembersTaskParamTO membersTaskParamTO)
         throws ContextNotFoundException, LockingException, XmlSchemaValidationException, ItemNotFoundException,
         InvalidContextStatusException, InvalidItemStatusException, AuthenticationException, AuthorizationException,
         SystemException, ContainerNotFoundException, InvalidContentException;
@@ -160,29 +162,32 @@ public interface ContainerRestService {
     @GET
     @Path("/{id}/md-records/md-record/{mdRecordId}")
     @Produces(MediaType.TEXT_XML)
-    MdRecordTO retrieveMdRecord(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId)
+    JAXBElement<MdRecordTypeTO> retrieveMdRecord(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("mdRecordId") String mdRecordId)
         throws ContainerNotFoundException, MissingMethodParameterException, MdRecordNotFoundException,
         AuthenticationException, AuthorizationException, SystemException;
 
-     @GET
-     @Path("/{id}/md-records/md-record/{mdRecordId}/content")
-     @Produces(MediaType.TEXT_XML)
-     Stream retrieveMdRecordContent(@PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId)
-         throws ContainerNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
-         MissingMethodParameterException, SystemException;
+    @GET
+    @Path("/{id}/md-records/md-record/{mdRecordId}/content")
+    @Produces(MediaType.TEXT_XML)
+    Stream retrieveMdRecordContent(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("mdRecordId") String mdRecordId)
+        throws ContainerNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 
-     @GET
-     @Path("/{id}/resources/dc/content")
-     @Produces(MediaType.TEXT_XML)
-     Stream retrieveDcRecordContent(@PathParam("id") String id) throws ContainerNotFoundException,
-     AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+    @GET
+    @Path("/{id}/resources/dc/content")
+    @Produces(MediaType.TEXT_XML)
+    Stream retrieveDcRecordContent(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 
     @POST
     @Path("/{id}/md-records/md-record/{mdRecordId}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    MdRecordTO updateMetadataRecord(
-        @PathParam("id") String id, @PathParam("mdRecordId") String mdRecordId, MdRecordTO mdRecordTO)
+    JAXBElement<MdRecordTypeTO> updateMetadataRecord(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("mdRecordId") String mdRecordId, @NotNull MdRecordTypeTO mdRecordTO)
         throws ContainerNotFoundException, LockingException, XmlSchemaNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
         InvalidXmlException, InvalidStatusException, ReadonlyVersionException;
@@ -190,61 +195,66 @@ public interface ContainerRestService {
     @GET
     @Path("/{id}/md-records")
     @Produces(MediaType.TEXT_XML)
-    MdRecordsTO retrieveMdRecords(@PathParam("id") String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<MdRecordsTypeTO> retrieveMdRecords(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/properties")
     @Produces(MediaType.TEXT_XML)
-    ContainerPropertiesTO retrieveProperties(@PathParam("id") String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<ContainerPropertiesTypeTO> retrieveProperties(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
-     @GET
-     @Path("/{id}/resources")
-     @Produces(MediaType.TEXT_XML)
-     ContainerResourcesTO retrieveResources(@PathParam("id") String id) throws ContainerNotFoundException,
-     MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    @GET
+    @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<ContainerResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/{name}")
     @Produces(MediaType.TEXT_XML)
-    Stream retrieveResource(@PathParam("id") String id, @PathParam("name") String resourceName,
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
-        @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+    Stream retrieveResource(@NotNull @PathParam("id") String id, @NotNull @PathParam("name") String resourceName,
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
         throws SystemException, ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, OperationNotFoundException;
 
     @GET
     @Path("/{id}/relations")
     @Produces(MediaType.TEXT_XML)
-    RelationsTO retrieveRelations(@PathParam("id") String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<RelationsTypeTO> retrieveRelations(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/struct-map")
     @Produces(MediaType.TEXT_XML)
-    StructMapTO retrieveStructMap(@PathParam("id") String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<StructMapTypeTO> retrieveStructMap(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/version-history")
     @Produces(MediaType.TEXT_XML)
-    VersionHistoryTO retrieveVersionHistory(@PathParam("id") String id) throws ContainerNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(@NotNull @PathParam("id") String id)
+        throws ContainerNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     @GET
     @Path("/{id}/resources/parents")
     @Produces(MediaType.TEXT_XML)
-    ParentsTO retrieveParents(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, ContainerNotFoundException, SystemException;
+    JAXBElement<ParentsTypeTO> retrieveParents(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContainerNotFoundException, SystemException;
 
     @POST
     @Path("/{id}/release")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO release(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO)
+    JAXBElement<ResultTypeTO> release(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
         ReadonlyVersionException, InvalidXmlException;
@@ -253,24 +263,25 @@ public interface ContainerRestService {
     @Path("/{id}/submit")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO submit(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        InvalidStatusException, SystemException, OptimisticLockingException, ReadonlyVersionException,
-        InvalidXmlException;
+    JAXBElement<ResultTypeTO> submit(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
+        ReadonlyVersionException, InvalidXmlException;
 
     @POST
     @Path("/{id}/revise")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO revise(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO) throws ContainerNotFoundException,
-        LockingException, MissingMethodParameterException, InvalidStatusException, SystemException,
-        OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException;
+    JAXBElement<ResultTypeTO> revise(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParamTO)
+        throws ContainerNotFoundException, LockingException, MissingMethodParameterException, InvalidStatusException,
+        SystemException, OptimisticLockingException, ReadonlyVersionException, XmlCorruptedException;
 
     @POST
     @Path("/{id}/withdraw")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO withdraw(@PathParam("id") String id, StatusTaskParamTO statusTaskParamTO)
+    JAXBElement<ResultTypeTO> withdraw(@NotNull @PathParam("id") String id,
+        @NotNull StatusTaskParamTO statusTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, InvalidStatusException, SystemException, OptimisticLockingException,
         AlreadyWithdrawnException, ReadonlyVersionException, InvalidXmlException;
@@ -279,7 +290,8 @@ public interface ContainerRestService {
     @Path("/{id}/lock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO lock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    JAXBElement<ResultTypeTO> lock(@NotNull @PathParam("id") String id,
+        @NotNull OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException;
@@ -288,7 +300,8 @@ public interface ContainerRestService {
     @Path("/{id}/unlock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO unlock(@PathParam("id") String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    JAXBElement<ResultTypeTO> unlock(@NotNull @PathParam("id") String id,
+        @NotNull OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, OptimisticLockingException, InvalidStatusException,
         InvalidXmlException;
@@ -297,7 +310,8 @@ public interface ContainerRestService {
     @Path("/{id}/content-relations/add")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO addContentRelations(@PathParam("id") String id, RelationTaskParamTO relationTaskParamTO)
+    JAXBElement<ResultTypeTO> addContentRelations(@NotNull @PathParam("id") String id,
+        @NotNull RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ContainerNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
         InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
@@ -308,7 +322,8 @@ public interface ContainerRestService {
     @Path("/{id}/content-relations/remove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO removeContentRelations(@PathParam("id") String id, RelationTaskParamTO relationTaskParamTO)
+    JAXBElement<ResultTypeTO> removeContentRelations(@NotNull @PathParam("id") String id,
+        @NotNull RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ContainerNotFoundException, OptimisticLockingException, InvalidStatusException,
         MissingElementValueException, InvalidXmlException, ContentRelationNotFoundException, LockingException,
         ReadonlyVersionException, AuthenticationException, AuthorizationException;
@@ -317,7 +332,8 @@ public interface ContainerRestService {
     @Path("/{id}/assign-object-pid")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO assignObjectPid(@PathParam("id") String id, AssignPidTaskParamTO assignPidTaskParamTO)
+    JAXBElement<ResultTypeTO> assignObjectPid(@NotNull @PathParam("id") String id,
+        @NotNull AssignPidTaskParamTO assignPidTaskParamTO)
         throws InvalidStatusException, ContainerNotFoundException, LockingException, MissingMethodParameterException,
         OptimisticLockingException, SystemException, InvalidXmlException;
 
@@ -325,8 +341,8 @@ public interface ContainerRestService {
     @Path("/{id}/assign-version-pid")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO assignVersionPid(@PathParam("id") String id, AssignPidTaskParamTO assignPidTaskParamTO)
+    JAXBElement<ResultTypeTO> assignVersionPid(@NotNull @PathParam("id") String id,
+        @NotNull AssignPidTaskParamTO assignPidTaskParamTO)
         throws ContainerNotFoundException, LockingException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException, XmlCorruptedException, ReadonlyVersionException;
-
 }

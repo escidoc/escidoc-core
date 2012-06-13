@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.tme;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
@@ -28,8 +27,9 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import org.escidoc.core.domain.tme.RequestTO;
+import net.sf.oval.constraint.NotNull;
 
+import org.escidoc.core.domain.tme.RequestTypeTO;
 import org.escidoc.core.domain.tme.jhove.JhoveTO;
 
 import javax.ws.rs.Consumes;
@@ -39,9 +39,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/tme/jhove")
 public interface TmeRestService {
@@ -50,8 +49,7 @@ public interface TmeRestService {
     @Path("/jhove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    JhoveTO extract(RequestTO tmeRequestTO) throws AuthenticationException, AuthorizationException,
-        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, SystemException,
-        TmeException;
-
+    JhoveTO extract(@NotNull RequestTypeTO tmeRequestTO)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, SystemException, TmeException;
 }

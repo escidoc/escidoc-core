@@ -17,15 +17,16 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.cmm.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.cmm.ContentModelRestService;
-import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
-import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
-import org.escidoc.core.domain.content.model.ContentModelTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.content.model.ContentModelPropertiesTypeTO;
+import org.escidoc.core.domain.content.model.ContentModelResourcesTypeTO;
+import org.escidoc.core.domain.content.model.ContentModelTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -46,81 +47,90 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContentModelRestServiceImpl implements ContentModelRestService {
 
     @Autowired
     @Qualifier("service.ContentModelHandler")
     private ContentModelHandlerInterface contentModelHandler;
-    
+
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
     protected ContentModelRestServiceImpl() {
 
     }
 
-    public ContentModelTO create(ContentModelTO contentModelTO) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
-        XmlCorruptedException, XmlSchemaValidationException {
+    public JAXBElement<ContentModelTypeTO> create(ContentModelTypeTO contentModelTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, InvalidContentException, XmlCorruptedException, XmlSchemaValidationException {
 
-        return serviceUtility.fromXML(ContentModelTO.class,
-            this.contentModelHandler.create(serviceUtility.toXML(contentModelTO)));
-
+        return factoryProvider.getContentModelFactory().createContentModel(serviceUtility
+            .fromXML(ContentModelTypeTO.class, this.contentModelHandler.create(serviceUtility.toXML(contentModelTO))));
     }
 
-    public void delete(String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException, LockingException,
-        InvalidStatusException, ResourceInUseException {
+    public void delete(String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException, LockingException, InvalidStatusException,
+        ResourceInUseException {
 
         this.contentModelHandler.delete(id);
     }
 
-    public ContentModelTO retrieve(String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+    public JAXBElement<ContentModelTypeTO> retrieve(String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException {
 
-        return serviceUtility.fromXML(ContentModelTO.class, this.contentModelHandler.retrieve(id));
-
+        return factoryProvider.getContentModelFactory().createContentModel(
+            serviceUtility.fromXML(ContentModelTypeTO.class, this.contentModelHandler.retrieve(id)));
     }
 
-    public ContentModelPropertiesTO retrieveProperties(String id) throws ContentModelNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+    public JAXBElement<ContentModelPropertiesTypeTO> retrieveProperties(String id)
+        throws ContentModelNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
 
-        return serviceUtility.fromXML(ContentModelPropertiesTO.class,
-            this.contentModelHandler.retrieveProperties(id));
-
+        return factoryProvider.getContentModelFactory().createProperties(
+            serviceUtility
+                .fromXML(ContentModelPropertiesTypeTO.class, this.contentModelHandler.retrieveProperties(id)));
     }
 
-    public ContentModelResourcesTO retrieveResources(String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+    public JAXBElement<ContentModelResourcesTypeTO> retrieveResources(String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException {
 
-        return serviceUtility.fromXML(ContentModelResourcesTO.class,
-            this.contentModelHandler.retrieveResources(id));
-
+        return factoryProvider.getContentModelFactory().createResources(
+            serviceUtility.fromXML(ContentModelResourcesTypeTO.class, this.contentModelHandler.retrieveResources(id)));
     }
 
-    public VersionHistoryTO retrieveVersionHistory(String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+    public JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException {
 
-        return serviceUtility.fromXML(VersionHistoryTO.class, this.contentModelHandler.retrieveVersionHistory(id));
-
+        return factoryProvider.getVersionHistoryFactory().createVersionHistory(
+            serviceUtility.fromXML(VersionHistoryTypeTO.class, this.contentModelHandler.retrieveVersionHistory(id)));
     }
 
-    public ContentModelTO update(String id, ContentModelTO contentModelTO) throws AuthenticationException,
-        AuthorizationException, ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,
-        OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
-        InvalidContentException {
+    public JAXBElement<ContentModelTypeTO> update(String id, ContentModelTypeTO contentModelTO)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException, InvalidXmlException,
+        MissingMethodParameterException, OptimisticLockingException, SystemException, ReadonlyVersionException,
+        MissingAttributeValueException, InvalidContentException {
 
-        return serviceUtility.fromXML(ContentModelTO.class,
-            this.contentModelHandler.update(id, serviceUtility.toXML(contentModelTO)));
-
+        return factoryProvider.getContentModelFactory().createContentModel(serviceUtility
+            .fromXML(ContentModelTypeTO.class,
+                this.contentModelHandler.update(id, serviceUtility.toXML(contentModelTO))));
     }
 
     // FIXME

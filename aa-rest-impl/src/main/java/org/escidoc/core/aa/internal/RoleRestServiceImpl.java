@@ -29,14 +29,14 @@
 package org.escidoc.core.aa.internal;
 
 import net.sf.oval.guard.Guarded;
-
-import org.escidoc.core.aa.RoleRestService;
-import org.escidoc.core.domain.aa.role.RoleResourcesTO;
-import org.escidoc.core.domain.aa.role.RoleTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.aa.role.RoleResourcesTypeTO;
+import org.escidoc.core.domain.aa.role.RoleTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import org.escidoc.core.aa.RoleRestService;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -50,11 +50,15 @@ import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolation
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  *
  */
-@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class RoleRestServiceImpl implements RoleRestService {
 
     @Autowired
@@ -64,6 +68,9 @@ public class RoleRestServiceImpl implements RoleRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
      * 
      */
@@ -71,21 +78,23 @@ public class RoleRestServiceImpl implements RoleRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.RoleRestService#create(org.escidoc.core.domain.aa.RoleTO)
+     * @see de.escidoc.core.aa.RoleRestService#create(org.escidoc.core.domain.aa.JAXBElement<RoleTypeTO>)
      */
     @Override
-    public RoleTO create(final RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException {
-        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.create(serviceUtility.toXML(roleTo)));
+    public JAXBElement<RoleTypeTO> create(final RoleTypeTO roleTo)
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getRoleFactory().createRole(serviceUtility.fromXML(
+            RoleTypeTO.class, this.roleHandler.create(serviceUtility.toXML(roleTo))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.RoleRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, RoleNotFoundException, RoleInUseViolationException, SystemException {
+    public void delete(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        RoleInUseViolationException, SystemException {
         this.roleHandler.delete(id);
     }
 
@@ -93,29 +102,34 @@ public class RoleRestServiceImpl implements RoleRestService {
      * @see de.escidoc.core.aa.RoleRestService#retrieve(java.lang.String)
      */
     @Override
-    public RoleTO retrieve(final String id) throws RoleNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.retrieve(id));
+    public JAXBElement<RoleTypeTO> retrieve(final String id)
+        throws RoleNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
+        return factoryProvider.getRoleFactory().createRole(serviceUtility.fromXML(
+            RoleTypeTO.class, this.roleHandler.retrieve(id)));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.aa.RoleRestService#update(java.lang.String, org.escidoc.core.domain.aa.RoleTO)
+     * @see de.escidoc.core.aa.RoleRestService#update(java.lang.String, org.escidoc.core.domain.aa.JAXBElement<RoleTypeTO>)
      */
     @Override
-    public RoleTO update(final String id, final RoleTO roleTo) throws RoleNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
-        OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException {
-        return serviceUtility.fromXML(RoleTO.class, this.roleHandler.update(id, serviceUtility.toXML(roleTo)));
+    public JAXBElement<RoleTypeTO> update(final String id, final RoleTypeTO roleTo)
+        throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getRoleFactory().createRole(serviceUtility.fromXML(
+            RoleTypeTO.class, this.roleHandler.update(id, serviceUtility.toXML(roleTo))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.aa.RoleRestService#retrieveResources(java.lang.String)
      */
     @Override
-    public RoleResourcesTO retrieveResources(final String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, RoleNotFoundException, SystemException {
-        return serviceUtility.fromXML(RoleResourcesTO.class, this.roleHandler.retrieveResources(id));
+    public JAXBElement<RoleResourcesTypeTO> retrieveResources(final String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        SystemException {
+        return factoryProvider.getRoleFactory().createResources(serviceUtility.fromXML(
+            RoleResourcesTypeTO.class, this.roleHandler.retrieveResources(id)));
     }
 
 }

@@ -155,8 +155,8 @@ public class ItemIT extends ItemTestBase {
         // insert into c-m-s
         item =
             item.replaceFirst("<" + propertiesNamespacePrefix + ":content-model-specific[^>]*>", "<"
-                + propertiesNamespacePrefix + ":content-model-specific><nix></nix></"
-                + propertiesNamespacePrefix + ":content-model-specific>");
+                + propertiesNamespacePrefix + ":content-model-specific><nix></nix></" + propertiesNamespacePrefix
+                + ":content-model-specific>");
         item = update(itemId, item);
         selectSingleNodeAsserted(getDocument(item), "/item/properties/content-model-specific/nix");
         // remove content from c-m-s

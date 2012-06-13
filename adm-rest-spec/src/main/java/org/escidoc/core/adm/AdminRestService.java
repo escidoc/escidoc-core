@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.adm;
 
@@ -11,20 +11,21 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.escidoc.core.domain.properties.java.JavaUtilPropertiesTO;
-import org.escidoc.core.domain.result.ResultTO;
-import org.escidoc.core.domain.sb.IndexConfigurationTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.properties.java.PropertiesTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
+import org.escidoc.core.domain.sb.IndexConfigurationTypeTO;
 import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/adm/admin")
 public interface AdminRestService {
 
@@ -40,7 +41,8 @@ public interface AdminRestService {
     @GET
     @Path("/deleteobjects")
     @Produces(MediaType.TEXT_XML)
-    ResultTO getPurgeStatus() throws AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<ResultTypeTO> getPurgeStatus()
+        throws AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Delete a list of objects given by their object ids from Fedora. In case of Items this method will also delete all
@@ -71,8 +73,8 @@ public interface AdminRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param ids The XML representation of task parameters conforming to members-task-param.xsd as TO.
-     * Including a id list of the objects to be deleted from Fedora. (example above)
+     * @param ids The XML representation of task parameters conforming to members-task-param.xsd as TO. Including a id
+     *            list of the objects to be deleted from Fedora. (example above)
      * @return total number of objects deleted, ...
      * @throws InvalidXmlException     Thrown if the taskParam has an invalid structure
      * @throws SystemException         Thrown in case of an internal error.
@@ -84,8 +86,8 @@ public interface AdminRestService {
     @Path("/deleteobjects")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO deleteObjects(DeleteObjectsTaskParamTO ids) throws AuthenticationException, AuthorizationException,
-    InvalidXmlException, SystemException;
+    JAXBElement<ResultTypeTO> deleteObjects(@NotNull DeleteObjectsTaskParamTO ids)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
      * Get the current status of the running/finished reindexing process.
@@ -99,7 +101,8 @@ public interface AdminRestService {
     @GET
     @Path("/reindex")
     @Produces(MediaType.TEXT_XML)
-    ResultTO getReindexStatus() throws AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<ResultTypeTO> getReindexStatus()
+        throws AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Reinitialize the search index. The initialization runs asynchronously and returns some useful information to the
@@ -129,24 +132,25 @@ public interface AdminRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     *
      * @param taskParam The XML representation of task parameters conforming to reindex-task-param.xsd as TO.
      * @return total number of objects found, ... as TO
-     * @throws InvalidXmlException Thrown if the given XML is invalid.
-     * @throws SystemException             Thrown in case of an internal error.
-     * @throws AuthenticationException     Thrown if the authentication failed due to an invalid provided eSciDoc user
-     *                                     handle.
-     * @throws AuthorizationException      Thrown if the authorization failed.
+     * @throws InvalidXmlException     Thrown if the given XML is invalid.
+     * @throws SystemException         Thrown in case of an internal error.
+     * @throws AuthenticationException Thrown if the authentication failed due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if the authorization failed.
      */
     @POST
     @Path("/reindex")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO reindex(ReindexTaskParamTO taskParam)
+    JAXBElement<ResultTypeTO> reindex(@NotNull ReindexTaskParamTO taskParam)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
-     * Decrease the type of the current status of the running reindexing process by 1.
+     * Decrease the type of the current status of the running re-indexing process by 1.
+     *
+     * FIXME: use type or query/path-param instead if String in body!
      *
      * @param objectType object type to decrease
      * @throws InvalidXmlException     Thrown if the given XML is invalid.
@@ -158,7 +162,7 @@ public interface AdminRestService {
     @POST
     @Path("/decrease-reindex-status")
     @Consumes(MediaType.TEXT_PLAIN)
-    void decreaseReindexStatus(String objectType)
+    void decreaseReindexStatus(@NotNull String objectType)
         throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
@@ -174,7 +178,7 @@ public interface AdminRestService {
     @GET
     @Path("/get-repository-info")
     @Produces(MediaType.TEXT_XML)
-    JavaUtilPropertiesTO getRepositoryInfo()
+    JAXBElement<PropertiesTypeTO> getRepositoryInfo()
         throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, SystemException;
 
@@ -190,7 +194,7 @@ public interface AdminRestService {
     @GET
     @Path("/get-index-configuration")
     @Produces(MediaType.TEXT_XML)
-    IndexConfigurationTO getIndexConfiguration()
+    JAXBElement<IndexConfigurationTypeTO> getIndexConfiguration()
         throws AuthenticationException, AuthorizationException, WebserverSystemException, SystemException;
 
     /**
@@ -207,7 +211,6 @@ public interface AdminRestService {
     @GET
     @Path("/load-examples/{type}")
     @Produces(MediaType.TEXT_XML)
-    ResultTO loadExamples(@PathParam("type") String type)
+    JAXBElement<ResultTypeTO> loadExamples(@NotNull @PathParam("type") String type)
         throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException;
-
 }

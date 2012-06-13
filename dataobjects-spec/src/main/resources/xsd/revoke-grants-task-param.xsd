@@ -19,21 +19,26 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.escidoc.org/schemas/revoke-grants-task-param/0.1"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="param">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="filter" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="id" minOccurs="0" maxOccurs="unbounded" />
-						</xs:sequence>
-						<xs:attribute name="name" type="xs:anyURI" use="required" />
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="revocation-remark" type="xs:string" minOccurs="0"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+           xmlns:param="http://www.escidoc.org/schemas/revoke-grants-task-param/0.1"
+           targetNamespace="http://www.escidoc.org/schemas/revoke-grants-task-param/0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:element name="param" type="param:paramType"/>
+  <xs:element name="filter" type="param:filterType"/>
+  <xs:element name="revocation-remark" type="xs:string"/>
+  <xs:element name="id" type="xs:token"/>
+
+  <xs:complexType name="paramType">
+    <xs:sequence>
+      <xs:element ref="param:filter" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="param:revocation-remark" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="filterType">
+    <xs:sequence>
+      <xs:element ref="param:id" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:anyURI" use="required"/>
+  </xs:complexType>
 </xs:schema>

@@ -29,14 +29,14 @@
 package org.escidoc.core.aa.internal;
 
 import net.sf.oval.guard.Guarded;
-
-import org.escidoc.core.aa.PolicyDecisionPointRestService;
-import org.escidoc.core.domain.aa.pdp.request.RequestsTO;
-import org.escidoc.core.domain.aa.pdp.result.ResultsTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.aa.pdp.request.RequestsTypeTO;
+import org.escidoc.core.domain.aa.pdp.result.ResultsTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import org.escidoc.core.aa.PolicyDecisionPointRestService;
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -46,11 +46,15 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  *
  */
-@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRestService {
 
     @Autowired
@@ -59,6 +63,9 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
 
     @Autowired
     private ServiceUtility serviceUtility;
+
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
 
     /**
      * 
@@ -70,11 +77,10 @@ public class PolicyDecisionPointRestServiceImpl implements PolicyDecisionPointRe
      * @see de.escidoc.core.aa.PolicyDecisionPointRestService#evaluate(org.escidoc.core.domain.aa.PdpRequestsTO)
      */
     @Override
-    public ResultsTO evaluate(final RequestsTO pdpRequestsTO) throws ResourceNotFoundException,
-            XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(ResultsTO.class,
-                this.policyDecisionPoint.evaluate(serviceUtility.toXML(pdpRequestsTO)));
+    public JAXBElement<ResultsTypeTO> evaluate(final RequestsTypeTO pdpRequestsTO)
+        throws ResourceNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getPDPFactory().createResults(serviceUtility.fromXML(ResultsTypeTO.class,
+                this.policyDecisionPoint.evaluate(serviceUtility.toXML(pdpRequestsTO))));
     }
-
 }

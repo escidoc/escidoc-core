@@ -311,8 +311,9 @@ public class ContentStreamsIT extends ItemTestBase {
             // retrieve old version of content
 
             String tocHref =
-                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(), Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI,
-                    new String[] { createdItemId + ":1", "/content-streams/content-stream/toc/content" });
+                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(),
+                    Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { createdItemId + ":1",
+                        "/content-streams/content-stream/toc/content" });
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(tocHref);
             httpGet.setHeader("Cookie", "escidocCookie=" + PWCallback.DEFAULT_HANDLE);

@@ -39,9 +39,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.aa.role.RoleResourcesTO;
-import org.escidoc.core.domain.aa.role.RoleTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.aa.role.RoleResourcesTypeTO;
+import org.escidoc.core.domain.aa.role.RoleTypeTO;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -57,7 +59,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/aa/role")
 public interface RoleRestService {
@@ -99,9 +101,9 @@ public interface RoleRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    RoleTO create(RoleTO roleTo) throws UniqueConstraintViolationException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException;
+    JAXBElement<RoleTypeTO> create(@NotNull RoleTypeTO roleTo)
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Delete the specified role.<br/>
@@ -127,8 +129,9 @@ public interface RoleRestService {
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        RoleNotFoundException, RoleInUseViolationException, SystemException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        RoleInUseViolationException, SystemException;
 
     /**
      * Retrieve the specified role.<br/>
@@ -153,8 +156,9 @@ public interface RoleRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    RoleTO retrieve(@PathParam("id") String id) throws RoleNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<RoleTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws RoleNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException;
 
     /**
      * Updated the specified role.<br/>
@@ -198,10 +202,10 @@ public interface RoleRestService {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    RoleTO update(@PathParam("id") String id, RoleTO roleTo) throws RoleNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingAttributeValueException, UniqueConstraintViolationException,
-        OptimisticLockingException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException;
+    JAXBElement<RoleTypeTO> update(@NotNull @PathParam("id") String id, @NotNull RoleTypeTO roleTo)
+        throws RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingAttributeValueException, UniqueConstraintViolationException, OptimisticLockingException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve the list of virtual resources of a role<br/>
@@ -229,7 +233,8 @@ public interface RoleRestService {
     @GET
     @Path("/{id}/resources")
     @Produces(MediaType.TEXT_XML)
-    RoleResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, RoleNotFoundException, SystemException;
+    JAXBElement<RoleResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, RoleNotFoundException,
+        SystemException;
 
 }

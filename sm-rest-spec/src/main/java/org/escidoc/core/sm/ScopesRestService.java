@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.sm;
 
@@ -10,6 +10,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -21,9 +22,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/statistic/scopes")
 public interface ScopesRestService {
 
@@ -37,8 +37,7 @@ public interface ScopesRestService {
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>All Scopes are accessed.</li> <li>The XML data is returned as TO.</li> </ul>
      *
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
+     * @param parameters The Standard SRU Get-Parameters as Object
      * @return The XML representation of the Scopes corresponding to SRW schema. The list only contains these Scopes the
      *         user is allowed to see as TO.
      * @throws MissingMethodParameterException
@@ -51,7 +50,7 @@ public interface ScopesRestService {
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveScopes(
-        @QueryParam("") SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 }

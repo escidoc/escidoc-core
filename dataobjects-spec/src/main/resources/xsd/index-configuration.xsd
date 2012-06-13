@@ -4,121 +4,124 @@
       
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:index-configuration="http://www.escidoc.de/schemas/index-configuration/0.1"
-    targetNamespace="http://www.escidoc.de/schemas/index-configuration/0.1"
-    elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:element name="index-configuration">
-        <xs:annotation>
-            <xs:documentation>
-                <comment>
-                    Information about the Index-Configuration.
-                </comment>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="index-configuration:resource" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+           xmlns:index-configuration="http://www.escidoc.de/schemas/index-configuration/0.2"
+           targetNamespace="http://www.escidoc.de/schemas/index-configuration/0.2"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-    <xs:element name="resource">
-        <xs:annotation>
-            <xs:documentation>
-                <comment>
-                    Information about the resource 
-                    and the indexes that are written for this resource 
-                    and when the indexes are written/updated.
-                </comment>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="resource-name" type="xs:string">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <comment>
-                                Name of the resource.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element ref="index-configuration:index" minOccurs="0"
-                    maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+  <xs:element name="index-configuration" type="index-configuration:indexConfigurationType"/>
+  <xs:element name="resource" type="index-configuration:resourceType"/>
+  <xs:element name="resource-name" type="xs:string"/>
+  <xs:element name="index" type="index-configuration:indexType"/>
+  <xs:element name="index-name" type="xs:string"/>
+  <xs:element name="prerequisites" type="index-configuration:prerequisitesType"/>
+  <xs:element name="indexing-xpath" type="xs:string"/>
+  <xs:element name="delete-xpath" type="xs:string"/>
+  <xs:element name="index-asynchronous" type="xs:boolean"/>
+  <xs:element name="index-released-version" type="xs:boolean"/>
 
-    <xs:element name="index">
-        <xs:annotation>
-            <xs:documentation>
-                <comment>
-                    Holds parameters about an index that is written for this resource.
-                </comment>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="index-name" type="xs:string">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <comment>
-                                Name of the index.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element name="prerequisites" minOccurs="0">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <comment>
-                                Prerequisites.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="indexing-xpath" type="xs:string" minOccurs="0">
-                                <xs:annotation>
-                                    <xs:documentation>
-                                        <comment>
-                                            Xpath to resolve to decide if object gets indexed.
-                                        </comment>
-                                    </xs:documentation>
-                                </xs:annotation>
-                            </xs:element>
-                            <xs:element name="delete-xpath" type="xs:string" minOccurs="0">
-                                <xs:annotation>
-                                    <xs:documentation>
-                                        <comment>
-                                            Xpath to resolve to decide if object gets deleted from index.
-                                        </comment>
-                                    </xs:documentation>
-                                </xs:annotation>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="index-asynchronous" type="xs:string" minOccurs="0">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <comment>
-                                If true, index asynchronous.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-                <xs:element name="index-released-version" type="xs:string" minOccurs="0">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <comment>
-                                If true, always last released version is indexed.
-                            </comment>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+  <xs:complexType name="indexConfigurationType">
+    <xs:annotation>
+      <xs:documentation>
+        <comment>
+          Information about the Index-Configuration.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="index-configuration:resource" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
+  <xs:complexType name="resourceType">
+    <xs:annotation>
+      <xs:documentation>
+        <comment>
+          Information about the resource and the indexes that are written for this resource and when the indexes are
+          written/updated.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="index-configuration:resource-name">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              Name of the resource.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="index-configuration:index" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="indexType">
+    <xs:annotation>
+      <xs:documentation>
+        <comment>
+          Holds parameters about an index that is written for this resource.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="index-configuration:index-name">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              Name of the index.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="index-configuration:prerequisites" minOccurs="0"/>
+      <xs:element ref="index-configuration:index-asynchronous" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              If true, index asynchronous.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="index-configuration:index-released-version" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              If true, always last released version is indexed.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="prerequisitesType">
+    <xs:annotation>
+      <xs:documentation>
+        <comment>
+          Prerequisites.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="index-configuration:indexing-xpath" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              Xpath to resolve to decide if object gets indexed.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="index-configuration:delete-xpath" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <comment>
+              Xpath to resolve to decide if object gets deleted from index.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

@@ -10,4 +10,6 @@
     </property>
   </bean>
 
+  <bean name="ObjectFactoryProvider" class="org.escidoc.core.domain.ObjectFactoryProvider"/>
+
 </beans>

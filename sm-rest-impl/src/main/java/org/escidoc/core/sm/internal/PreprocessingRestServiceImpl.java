@@ -28,8 +28,9 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.pi.PreprocessingInformationTO;
+import org.escidoc.core.domain.sm.pi.PreprocessingInformationTypeTO;
 import org.escidoc.core.sm.PreprocessingRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,6 +47,8 @@ import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
  * @author Michael Hoppe
  *
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class PreprocessingRestServiceImpl implements PreprocessingRestService {
 
     @Autowired
@@ -58,17 +61,17 @@ public class PreprocessingRestServiceImpl implements PreprocessingRestService {
     /**
      * 
      */
-    public PreprocessingRestServiceImpl() {
+    protected PreprocessingRestServiceImpl() {
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.PreprocessingRestService#preprocess(java.lang.String, org.escidoc.core.domain.sm.PreprocessingInformationTO)
      */
     @Override
-    public void preprocess(final String id, final PreprocessingInformationTO preprocessingInformationTO)
+    public void preprocess(final String id, final PreprocessingInformationTypeTO preprocessingInformationTO)
         throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
         MissingMethodParameterException, SystemException {
+
         this.preprocessingHandler.preprocess(id, serviceUtility.toXML(preprocessingInformationTO));
     }
-
 }

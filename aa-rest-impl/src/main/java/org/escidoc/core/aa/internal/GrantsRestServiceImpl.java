@@ -50,9 +50,10 @@ import java.util.Map;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false, assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class GrantsRestServiceImpl implements GrantsRestService {
 
     @Autowired
@@ -63,15 +64,15 @@ public class GrantsRestServiceImpl implements GrantsRestService {
     private ServiceUtility serviceUtility;
 
     /**
-     * 
+     *
      */
     protected GrantsRestServiceImpl() {
     }
 
     /*
-     * (non-Javadoc) /* (non-Javadoc)
-     * 
-     * @see de.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * (non-Javadoc)
+     *
+     * @see org.escidoc.core.aa.GrantsRestService#retrieveGrants(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveGrants(final SruSearchRequestParametersBean queryParam)
@@ -83,5 +84,4 @@ public class GrantsRestServiceImpl implements GrantsRestService {
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
             this.userAccountHandler.retrieveGrants(map));
     }
-
 }

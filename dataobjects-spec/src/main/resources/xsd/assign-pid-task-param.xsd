@@ -19,17 +19,24 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.escidoc.org/schemas/assign-pid-task-param/0.1"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="param">
-		<xs:complexType>
-			<xs:all>
-				<xs:element name="url" type="xs:anyURI" minOccurs="0" />
-				<xs:element name="id" type="xs:token" minOccurs="0" />
-				<xs:element name="pid" type="xs:token" minOccurs="0" />
-			</xs:all>
-			<xs:attribute name="last-modification-date" type="xs:dateTime"
-				use="required" />
-		</xs:complexType>
-	</xs:element>
+           xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
+           xmlns:param="http://www.escidoc.org/schemas/assign-pid-task-param/0.1"
+           targetNamespace="http://www.escidoc.org/schemas/assign-pid-task-param/0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+
+  <xs:element name="param" type="param:paramType"/>
+  <xs:element name="url" type="xs:anyURI"/>
+  <xs:element name="id" type="xs:token"/>
+  <xs:element name="pid" type="xs:token"/>
+
+  <xs:complexType name="paramType">
+    <xs:all>
+      <xs:element ref="param:url" minOccurs="0"/>
+      <xs:element ref="param:id" minOccurs="0"/>
+      <xs:element ref="param:pid" minOccurs="0"/>
+    </xs:all>
+    <xs:attributeGroup ref="common:lmdRequired"/>
+  </xs:complexType>
 </xs:schema>

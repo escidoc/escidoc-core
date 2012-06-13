@@ -5,16 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.NotNull;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Guarded(applyFieldConstraintsToConstructors = true, applyFieldConstraintsToSetters = true,
         assertParametersNotNull = false, checkInvariants = true, inspectInterfaces = true)
@@ -67,6 +62,14 @@ public final class IOUtils {
             n = input.read(buffer);
         }
         return total;
+    }
+
+    public static int copy(final String input, final OutputStream output) throws IOException {
+        return copy(new StringReader(input), output, DEFAULT_BUFFER_SIZE);
+    }
+
+    public static int copy(final String input, final OutputStream output, int bufferSize) throws IOException {
+        return copy(new StringReader(input), output, bufferSize);
     }
 
     public static int copy(final Reader input, final OutputStream output) throws IOException {

@@ -25,15 +25,17 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.escidoc.core.domain.result.ResultTO;
+import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.common.exceptions.EscidocException;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.result.ResultTypeTO;
+import org.escidoc.core.utils.io.Stream;
 
 /**
  * 
  * @author MIH
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/ir/ingest")
 public interface IngestRestService {
@@ -41,6 +43,5 @@ public interface IngestRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultTO ingest(final String xml) throws EscidocException;
-
+    JAXBElement<ResultTypeTO> ingest(@NotNull Stream xmlStream) throws EscidocException;
 }

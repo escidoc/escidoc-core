@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.oum;
 
 import javax.ws.rs.GET;
@@ -27,6 +26,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -35,6 +35,9 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+/**
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ */
 @Path("/oum/organizational-units")
 public interface OrganizationalUnitsRestService {
 
@@ -49,9 +52,9 @@ public interface OrganizationalUnitsRestService {
      * If this filter is defined only Organizational Unit objects that have no associated parent are returned.</li>
      * </ul>
      *
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
-     * @return The XML representation of the created list of Organizational Units corresponding to the SRW schema as JAXBElement.
+     * @param parameters The Standard SRU Get-Parameters as Object
+     * @return The XML representation of the created list of Organizational Units corresponding to the SRW schema as
+     *         JAXBElement.
      * @throws InvalidSearchQueryException Thrown if the given search query could not be translated into a SQL query.
      * @throws InvalidXmlException         Thrown if the schema validation fails.
      * @throws MissingMethodParameterException
@@ -61,10 +64,7 @@ public interface OrganizationalUnitsRestService {
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveOrganizationalUnits(
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
-        @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
-            InvalidXmlException, MissingMethodParameterException, SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters, @QueryParam("x-info5-roleId") String roleId,
+        @QueryParam("x-info5-userId") String userId, @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws InvalidSearchQueryException, InvalidXmlException, MissingMethodParameterException, SystemException;
 }

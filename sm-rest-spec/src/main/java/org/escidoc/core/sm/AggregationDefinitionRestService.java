@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.sm;
 
@@ -11,8 +11,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sm.ad.AggregationDefinitionTO;
+import net.sf.oval.constraint.NotNull;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -22,12 +23,12 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.domain.sm.ad.AggregationDefinitionTypeTO;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/statistic/aggregation-definition")
 public interface AggregationDefinitionRestService {
 
@@ -39,8 +40,8 @@ public interface AggregationDefinitionRestService {
      * <b>Tasks:</b><br/> <ul> <li>Validation of the delivered XML-data</li> <li>Create the Aggregation Definition</li>
      * <li>Create associated Aggregation Tables in database.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param aggregationDefinitionTO The XML representation of the Aggregation Definition to be created corresponding to XML-schema
-     *                "aggregation-definition.xsd" as TO.
+     * @param aggregationDefinitionTO The XML representation of the Aggregation Definition to be created corresponding
+     *                                to XML-schema "aggregation-definition.xsd" as TO.
      * @return The XML representation of the created Aggregation Definition corresponding to XML-schema
      *         "aggregation-definition.xsd" as TO.
      * @throws AuthenticationException      Thrown in case of failed authentication.
@@ -55,9 +56,9 @@ public interface AggregationDefinitionRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    AggregationDefinitionTO create(AggregationDefinitionTO aggregationDefinitionTO) throws AuthenticationException,
-            AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
-            MissingMethodParameterException, ScopeNotFoundException, SystemException;
+    JAXBElement<AggregationDefinitionTypeTO> create(@NotNull AggregationDefinitionTypeTO aggregationDefinitionTO)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, ScopeNotFoundException, SystemException;
 
     /**
      * Delete Aggregation Definition.<br/>
@@ -81,8 +82,9 @@ public interface AggregationDefinitionRestService {
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     /**
      * Retrieve a specified Aggregation Definition.<br/>
@@ -108,7 +110,7 @@ public interface AggregationDefinitionRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    AggregationDefinitionTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        AggregationDefinitionNotFoundException, MissingMethodParameterException, SystemException;
-
+    JAXBElement<AggregationDefinitionTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, AggregationDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException;
 }

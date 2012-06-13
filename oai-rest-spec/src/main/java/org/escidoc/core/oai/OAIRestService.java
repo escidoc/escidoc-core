@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.oai;
 
 import javax.ws.rs.Consumes;
@@ -28,8 +27,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.oai.SetDefinitionTO;
+import net.sf.oval.constraint.NotNull;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -39,11 +39,11 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.domain.oai.SetDefinitionTypeTO;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/oai/set-definition")
 public interface OAIRestService {
@@ -51,137 +51,101 @@ public interface OAIRestService {
     /**
      * Create a set definition resource.<br/>
      * <p/>
-     * <b>Prerequisites:</b><br/>
-     * See chapter 4 for detailed information about input and output data elements<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The XML data is validated against the XML-Schema of a set-definition.</li>
-     * <li>It's checked weather the set specification is unique within the system.</li>
-     * <li>Some new data is added to the input xml(see Chapter 4)</li>
-     * <li>The XML representation of the set-definition corresponding to XML-schema is returned as output.</li>
-     * </ul>
-     * 
-     * @param setDefinitionTO
-     *            The data of the resource.
+     * <b>Prerequisites:</b><br/> See chapter 4 for detailed information about input and output data elements<br/>
+     * <b>Tasks:</b><br/> <ul> <li>The XML data is validated against the XML-Schema of a set-definition.</li> <li>It's
+     * checked weather the set specification is unique within the system.</li> <li>Some new data is added to the input
+     * xml(see Chapter 4)</li> <li>The XML representation of the set-definition corresponding to XML-schema is returned
+     * as output.</li> </ul>
+     *
+     * @param setDefinitionTO The data of the resource.
      * @return The XML representation of the created set-definition corresponding to XML-schema "set-definition.xsd".
      * @throws UniqueConstraintViolationException
-     *             If the specification of the created set-definition is not unique within the system.
-     * @throws InvalidXmlException
-     *             If the provided data is not valid XML.
+     *                                 If the specification of the created set-definition is not unique within the
+     *                                 system.
+     * @throws InvalidXmlException     If the provided data is not valid XML.
      * @throws MissingMethodParameterException
-     *             If a set-definition data is missing.
-     * @throws SystemException
-     *             If an error occurs
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                 If a set-definition data is missing.
+     * @throws SystemException         If an error occurs
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
+     * @throws AuthorizationException  Thrown if the authorization fails.
      */
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    SetDefinitionTO create(SetDefinitionTO setDefinitionTO) throws UniqueConstraintViolationException,
-        InvalidXmlException, MissingMethodParameterException, SystemException, AuthenticationException,
-        AuthorizationException;
+    JAXBElement<SetDefinitionTypeTO> create(@NotNull SetDefinitionTypeTO setDefinitionTO)
+        throws UniqueConstraintViolationException, InvalidXmlException, MissingMethodParameterException,
+        SystemException, AuthenticationException, AuthorizationException;
 
     /**
      * Retrieve a set definition.<br/>
      * <p/>
-     * <b>Prerequisites:</b><br/>
-     * The set-definition must exist<br/>
+     * <b>Prerequisites:</b><br/> The set-definition must exist<br/>
      * <p/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The set-definition is accessed using the provided reference.</li>
-     * <li>The XML representation of the set-definition corresponding to XML-schema is returned as output.</li>
-     * </ul>
-     * 
-     * @param id
-     *            The id of the set-definition to be retrieved.
+     * <b>Tasks:</b><br/> <ul> <li>The set-definition is accessed using the provided reference.</li> <li>The XML
+     * representation of the set-definition corresponding to XML-schema is returned as output.</li> </ul>
+     *
+     * @param id The id of the set-definition to be retrieved.
      * @return The XML representation of the retrieved set-definition corresponding to XML-schema "set-definition.xsd".
-     * @throws ResourceNotFoundException
-     *             Thrown if a set-definition with the specified id cannot be found.
+     * @throws ResourceNotFoundException Thrown if a set-definition with the specified id cannot be found.
      * @throws MissingMethodParameterException
-     *             If a set-definition id is missing.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                   If a set-definition id is missing.
+     * @throws SystemException           If an error occurs.
+     * @throws AuthenticationException   Thrown if the authentication fails due to an invalid provided
+     *                                   eSciDocUserHandle.
+     * @throws AuthorizationException    Thrown if the authorization fails.
      */
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    SetDefinitionTO retrieve(@PathParam("id") String id) throws ResourceNotFoundException,
-        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException;
+    JAXBElement<SetDefinitionTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException;
 
     /**
-     * Update an set-definition<br/>
-     * <b>Prerequisites:</b> <br/>
-     * The set-definition must exist.<br/>
-     * See chapter 4 for detailed information about input and output data elements<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The XML data is validated against the XML-Schema of a set-definition.</li>
-     * <li>Optimistic Locking criteria is checked.</li>
-     * <li>If changed, a description and a name are updated.</li>
-     * <li>The XML input data is updated.(see Chapter 4)</li>
-     * <li>The XML representation of the set-definition corresponding to XML-schema is returned as output.</li>
-     * </ul>
-     * 
-     * @param id
-     *            The id of the set-definition to be updated.
-     * @param setDefinitionTO
-     *            The XML representation of the set-definition to be updated corresponding to XML-schema
-     *            "set-definition.xsd".
+     * Update an set-definition<br/> <b>Prerequisites:</b> <br/> The set-definition must exist.<br/> See chapter 4 for
+     * detailed information about input and output data elements<br/> <b>Tasks:</b><br/> <ul> <li>The XML data is
+     * validated against the XML-Schema of a set-definition.</li> <li>Optimistic Locking criteria is checked.</li>
+     * <li>If changed, a description and a name are updated.</li> <li>The XML input data is updated.(see Chapter 4)</li>
+     * <li>The XML representation of the set-definition corresponding to XML-schema is returned as output.</li> </ul>
+     *
+     * @param id              The id of the set-definition to be updated.
+     * @param setDefinitionTO The XML representation of the set-definition to be updated corresponding to XML-schema
+     *                        "set-definition.xsd".
      * @return The XML representation of the updated set-definition corresponding to XML-schema "set-definition.xsd".
-     * @throws ResourceNotFoundException
-     *             Thrown if an set-definition with the specified id cannot be found.
-     * @throws OptimisticLockingException
-     *             If the provided latest-modification-date does not match.
+     * @throws ResourceNotFoundException  Thrown if an set-definition with the specified id cannot be found.
+     * @throws OptimisticLockingException If the provided latest-modification-date does not match.
      * @throws MissingMethodParameterException
-     *             if some of data is not provided.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                    if some of data is not provided.
+     * @throws SystemException            If an error occurs.
+     * @throws AuthenticationException    Thrown if the authentication fails due to an invalid provided
+     *                                    eSciDocUserHandle.
+     * @throws AuthorizationException     Thrown if the authorization fails.
      */
     @PUT
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    SetDefinitionTO update(@PathParam("id") String id, SetDefinitionTO setDefinitionTO)
+    JAXBElement<SetDefinitionTypeTO> update(@NotNull @PathParam("id") String id,
+        @NotNull SetDefinitionTypeTO setDefinitionTO)
         throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
         AuthenticationException, AuthorizationException;
 
     /**
-     * Delete a set-definition.<br/>
-     * <b>Prerequisites:</b><br/>
-     * The set-definition must exist<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The set-definition will be deleted from the system.</li>
-     * </ul>
-     * 
-     * @param id
-     *            The id of the set-definition to be deleted
-     * @throws ResourceNotFoundException
-     *             Thrown if a set-definition with the specified id cannot be found.
+     * Delete a set-definition.<br/> <b>Prerequisites:</b><br/> The set-definition must exist<br/> <b>Tasks:</b><br/>
+     * <ul> <li>The set-definition will be deleted from the system.</li> </ul>
+     *
+     * @param id The id of the set-definition to be deleted
+     * @throws ResourceNotFoundException Thrown if a set-definition with the specified id cannot be found.
      * @throws MissingMethodParameterException
-     *             If a set-definition id is missing.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
+     *                                   If a set-definition id is missing.
+     * @throws SystemException           If an error occurs.
+     * @throws AuthenticationException   Thrown if the authentication fails due to an invalid provided
+     *                                   eSciDocUserHandle.
+     * @throws AuthorizationException    Thrown if the authorization fails.
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws ResourceNotFoundException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException;
-
+    void delete(@NotNull @PathParam("id") String id)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException;
 }

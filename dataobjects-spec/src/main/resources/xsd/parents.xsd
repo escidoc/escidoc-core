@@ -17,22 +17,31 @@
   ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
   ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
   ~ terms.
+  -->
+
+<!-- edited with XMLSpy v2005 sp1 U (http://www.xmlspy.com) by JKR (FIZ Karlsruhe) -->
+<!--
+	Changes applied to this schema (since Version 09, May, 2010):
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://www.escidoc.org/schemas/predicate-list/0.1"
-           xmlns:predicates="http://www.escidoc.org/schemas/predicate-list/0.1"
-           xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
-           elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema targetNamespace="http://www.escidoc.de/schemas/parents/0.9"
+  xmlns:parents="http://www.escidoc.de/schemas/parents/0.9"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+  xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
 
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
 
-  <xs:element name="predicates" type="predicates:predicatesType"/>
-  <xs:element name="predicate" type="xs:anyURI"/>
+  <xs:element name="parents" type="parents:parentsType"/>
 
-  <xs:complexType name="predicatesType">
+  <xs:complexType name="parentsType">
     <xs:sequence>
-      <xs:element ref="predicates:predicate" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="srel:parent" minOccurs="0" maxOccurs="unbounded">
+      </xs:element>
     </xs:sequence>
-    <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
   </xs:complexType>
 </xs:schema>

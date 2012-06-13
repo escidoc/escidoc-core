@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.aa.RolesRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -48,7 +49,10 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class RolesRestServiceImpl implements RolesRestService {
 
     @Autowired

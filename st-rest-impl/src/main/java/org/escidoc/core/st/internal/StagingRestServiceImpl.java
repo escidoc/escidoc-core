@@ -22,9 +22,12 @@ package org.escidoc.core.st.internal;
 import java.io.IOException;
 
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.st.StagingFileTO;
+import org.escidoc.core.domain.st.StagingFileTypeTO;
 import org.escidoc.core.st.StagingRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
@@ -43,14 +46,14 @@ import de.escidoc.core.st.service.StagingFileHandler;
 
 /**
  * REST Service Implementation for Technical Metadata Extractor.
- * 
+ *
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class StagingRestServiceImpl implements StagingRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(StagingRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.StagingFileHandler")
@@ -59,12 +62,18 @@ public class StagingRestServiceImpl implements StagingRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     protected StagingRestServiceImpl() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public StagingFileTO create(final Stream stream) throws MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<StagingFileTypeTO> create(final Stream stream)
+        throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
         try {
@@ -72,14 +81,18 @@ public class StagingRestServiceImpl implements StagingRestService {
         } catch (IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
-        return serviceUtility.fromXML(StagingFileTO.class, this.stagingHandler.create(content));
+        return factoryProvider.getStagingFactory().createStagingFile(
+            serviceUtility.fromXML(StagingFileTypeTO.class, this.stagingHandler.create(content)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Response retrieve(final String stagingFileId) throws StagingFileNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+    public Response retrieve(final String stagingFileId)
+        throws StagingFileNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
 
         return serviceUtility.toResponse(this.stagingHandler.retrieve(stagingFileId));
     }
-
 }

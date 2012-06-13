@@ -19,9 +19,12 @@
  */
 package org.escidoc.core.om.internal;
 
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.om.IngestRestService;
+import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +36,17 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * REST Service Implementation for Ingest.
- * 
+ *
  * @author MIH
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class IngestRestServiceImpl implements IngestRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(IngestRestServiceImpl.class);
@@ -51,20 +58,22 @@ public class IngestRestServiceImpl implements IngestRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     protected IngestRestServiceImpl() {
     }
 
     @Override
-    public ResultTO ingest(final String xml) throws EscidocException {
-        Object to = null;
+    public JAXBElement<ResultTypeTO> ingest(final Stream xmlStream)
+        throws EscidocException {
+        Object to;
         try {
-            to = serviceUtility.fromXML(xml);
-        }
-        catch (SystemException e) {
+            to = serviceUtility.fromXML(xmlStream);
+        } catch (SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
-        return serviceUtility.fromXML(ResultTO.class,
-            this.ingestHandler.ingest(serviceUtility.toXML(to)));
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.ingestHandler.ingest(serviceUtility.toXML(to))));
     }
-
 }

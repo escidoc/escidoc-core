@@ -26,7 +26,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 @Produces({"application/xml", "application/*+xml", "text/xml"})
 @Consumes({"application/xml", "application/*+xml", "text/xml"})
 @Provider
-public class EsciDocJAXBElementProvider extends JAXBElementProvider {
+public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
 
     private final String XML_HEADERS_PATH = "com.sun.xml.bind.xmlHeaders";
 
@@ -54,7 +54,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider {
         this.jaxbContextProvider = jaxbContextProvider;
     }
 
-    protected JAXBContext getJAXBContext(Class<?> type, Type genericType) throws JAXBException {
+    public JAXBContext getJAXBContext(Class<?> type, Type genericType) throws JAXBException {
         if (this.jaxbContextProvider != null) {
             return this.jaxbContextProvider.getJAXBContext();
         } else {
@@ -63,7 +63,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider {
     }
 
     protected Unmarshaller createUnmarshaller(Class<?> cls, Type genericType, boolean isCollection) 
-    throws JAXBException {
+        throws JAXBException {
         if (super.getSchema() == null) {
             super.setSchema(getSchema());
         }
@@ -71,7 +71,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider {
     }
     
     protected void validateObjectIfNeeded(Marshaller marshaller, Object obj) 
-    throws JAXBException {
+        throws JAXBException {
         if (super.getSchema() == null) {
             super.setSchema(getSchema());
         }

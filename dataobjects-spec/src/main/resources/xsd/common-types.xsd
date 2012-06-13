@@ -13,11 +13,11 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
-           targetNamespace="http://www.escidoc.de/schemas/commontypes/0.4">
-  <xs:import namespace="http://www.w3.org/1999/xlink"
-             schemaLocation="xlink.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace"
-             schemaLocation="xml.xsd"/>
+           targetNamespace="http://www.escidoc.de/schemas/commontypes/0.4"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 
   <xs:complexType name="linkRequired">
     <xs:attribute ref="xlink:type" fixed="simple">
@@ -49,6 +49,7 @@
   <xs:complexType name="link">
     <xs:attributeGroup ref="common:eSciDocResourceLinkAttributes"/>
   </xs:complexType>
+
   <xs:complexType name="linkForCreate">
     <xs:attribute ref="xlink:type" fixed="simple">
       <xs:annotation>
@@ -75,22 +76,22 @@
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>
+
   <xs:complexType name="readOnlyLink">
-    <xs:attributeGroup
-        ref="common:readOnlyESciDocResourceLinkAttributes"/>
+    <xs:attributeGroup ref="common:readOnlyESciDocResourceLinkAttributes"/>
   </xs:complexType>
 
   <xs:complexType name="laxLinkContainer">
-    <xs:attributeGroup
-        ref="common:laxESciDocResourceLinkAttributesContainer"/>
+    <xs:attributeGroup ref="common:laxESciDocResourceLinkAttributesContainer"/>
   </xs:complexType>
+
   <xs:complexType name="linkWithoutObjid">
     <xs:attributeGroup ref="common:eSciDocResourceLinkAttributes"/>
   </xs:complexType>
 
   <!--
       Use eSciDocResourceLinkAttributes for elements which refer to a not-included
-      resource as there are elements refering to a base-resource, to a virtual
+      resource as there are elements referring to a base-resource, to a virtual
       resource. One indication for such resources is if the href includes
       the objid of the current (the link element is stated in) resource.
       (see eSciDocResourceIdentityAttributes below)
@@ -148,8 +149,8 @@
       </xs:annotation>
     </xs:attribute>
   </xs:attributeGroup>
-  <xs:attributeGroup
-      name="laxESciDocResourceLinkAttributesContainer">
+
+  <xs:attributeGroup name="laxESciDocResourceLinkAttributesContainer">
     <xs:attribute ref="xlink:type">
       <xs:annotation>
         <xs:documentation>
@@ -267,8 +268,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:attributeGroup
-      name="laxESciDocResourceLocationAttributesContainer">
+  <xs:attributeGroup name="laxESciDocResourceLocationAttributesContainer">
     <xs:attribute ref="xlink:type">
       <xs:annotation>
         <xs:documentation>
@@ -312,6 +312,7 @@
       </xs:annotation>
     </xs:attribute>
   </xs:attributeGroup>
+
   <xs:attributeGroup name="laxESciDocResourceLocationAttributes">
     <xs:attribute ref="xlink:type">
       <xs:annotation>
@@ -356,17 +357,17 @@
       </xs:annotation>
     </xs:attribute>
   </xs:attributeGroup>
+
   <xs:attributeGroup name="eSciDocRootElementAttributes">
-    <xs:attribute ref="xml:base">
+    <xs:attributeGroup ref="common:eSciDocRootElementReadOnlyAttributes">
       <xs:annotation>
         <xs:documentation>
           <create>discarded</create>
           <update>discarded</update>
         </xs:documentation>
       </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="last-modification-date"
-                  type="xs:dateTime">
+    </xs:attributeGroup>
+    <xs:attributeGroup ref="common:lmdOptional">
       <xs:annotation>
         <xs:documentation>
           <create>discarded</create>
@@ -374,8 +375,9 @@
           <comment>required only in root element on update</comment>
         </xs:documentation>
       </xs:annotation>
-    </xs:attribute>
+    </xs:attributeGroup>
   </xs:attributeGroup>
+
   <xs:attributeGroup name="eSciDocRootElementReadOnlyAttributes">
     <xs:attribute ref="xml:base">
       <xs:annotation>
@@ -397,6 +399,9 @@
       <xs:enumeration value="in-revision"/>
       <xs:enumeration value="released"/>
       <xs:enumeration value="withdrawn"/>
+      <xs:enumeration value="created"/>
+      <xs:enumeration value="opened"/>
+      <xs:enumeration value="closed"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -411,6 +416,59 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="locked"/>
       <xs:enumeration value="unlocked"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- NEW: -->
+
+  <xs:attributeGroup name="lmdRequired">
+    <xs:attribute name="last-modification-date" type="xs:dateTime" use="required"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="lmdOptional">
+    <xs:attribute name="last-modification-date" type="xs:dateTime" use="optional"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="listAttributes">
+    <xs:attribute name="number-of-records" type="xs:nonNegativeInteger" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The total number of records found.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="offset" type="xs:nonNegativeInteger" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The start-record.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="limit" type="xs:nonNegativeInteger" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          The maximum number of records returned.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:simpleType name="storageType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="internal-managed"/>
+      <xs:enumeration value="external-url"/>
+      <xs:enumeration value="external-managed"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="NCName64">
+    <xs:annotation>
+      <xs:documentation>
+        The NCName type limited to 64 characters.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:NCName">
+      <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

@@ -28,8 +28,9 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.sd.StatisticRecordTO;
+import org.escidoc.core.domain.sm.sd.StatisticRecordTypeTO;
 import org.escidoc.core.sm.StatisticDataRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,8 +43,10 @@ import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
 
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class StatisticDataRestServiceImpl implements StatisticDataRestService {
 
     @Autowired
@@ -54,18 +57,18 @@ public class StatisticDataRestServiceImpl implements StatisticDataRestService {
     private ServiceUtility serviceUtility;
 
     /**
-     * 
+     *
      */
-    public StatisticDataRestServiceImpl() {
+    protected StatisticDataRestServiceImpl() {
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.StatisticDataRestService#create(org.escidoc.core.domain.sm.StatisticDataTO)
      */
     @Override
-    public void create(final StatisticRecordTO statisticRecordTO) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException {
+    public void create(final StatisticRecordTypeTO statisticRecordTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException {
+
         this.statisticDataHandler.create(serviceUtility.toXML(statisticRecordTO));
     }
-
 }

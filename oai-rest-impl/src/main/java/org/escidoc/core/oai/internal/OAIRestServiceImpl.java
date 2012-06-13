@@ -19,7 +19,9 @@
  */
 package org.escidoc.core.oai.internal;
 
-import org.escidoc.core.domain.oai.SetDefinitionTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.oai.SetDefinitionTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.oai.OAIRestService;
 import org.slf4j.Logger;
@@ -38,16 +40,18 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * REST Service Implementation for OAI Set Definition Service.
- * 
+ *
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class OAIRestServiceImpl implements OAIRestService {
-
-    private final static Logger LOG = LoggerFactory.getLogger(OAIRestServiceImpl.class);
 
     @Autowired
     @Qualifier("service.SetDefinitionHandler")
@@ -56,32 +60,51 @@ public class OAIRestServiceImpl implements OAIRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
-    protected OAIRestServiceImpl() {}
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
 
-    public SetDefinitionTO create(final SetDefinitionTO setDefinitionTO) throws UniqueConstraintViolationException,
-        InvalidXmlException, MissingMethodParameterException, SystemException, AuthenticationException,
-        AuthorizationException {
-
-        return serviceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.create(serviceUtility.toXML(setDefinitionTO)));
+    protected OAIRestServiceImpl() {
     }
 
-    public SetDefinitionTO retrieve(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
+    /**
+     * {@inheritDoc}
+     */
+    public JAXBElement<SetDefinitionTypeTO> create(final SetDefinitionTypeTO setDefinitionTO)
+        throws UniqueConstraintViolationException, InvalidXmlException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
 
-        return serviceUtility.fromXML(SetDefinitionTO.class, this.oaiHandler.retrieve(id));
+        return factoryProvider.getOaiFactory().createSetDefinition(serviceUtility
+            .fromXML(SetDefinitionTypeTO.class, this.oaiHandler.create(serviceUtility.toXML(setDefinitionTO))));
     }
 
-    public SetDefinitionTO update(final String id, final SetDefinitionTO setDefinitionTO)
+    /**
+     * {@inheritDoc}
+     */
+    public JAXBElement<SetDefinitionTypeTO> retrieve(final String id)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
+
+        return factoryProvider.getOaiFactory().createSetDefinition(
+            serviceUtility.fromXML(SetDefinitionTypeTO.class, this.oaiHandler.retrieve(id)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public JAXBElement<SetDefinitionTypeTO> update(final String id, final SetDefinitionTypeTO setDefinitionTO)
         throws ResourceNotFoundException, OptimisticLockingException, MissingMethodParameterException, SystemException,
         AuthenticationException, AuthorizationException {
 
-        return serviceUtility.fromXML(SetDefinitionTO.class,
-            this.oaiHandler.update(id, serviceUtility.toXML(setDefinitionTO)));
+        return factoryProvider.getOaiFactory().createSetDefinition(serviceUtility
+            .fromXML(SetDefinitionTypeTO.class, this.oaiHandler.update(id, serviceUtility.toXML(setDefinitionTO))));
     }
 
-    public void delete(final String id) throws ResourceNotFoundException, MissingMethodParameterException,
-        SystemException, AuthenticationException, AuthorizationException {
+    /**
+     * {@inheritDoc}
+     */
+    public void delete(final String id)
+        throws ResourceNotFoundException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException {
         this.oaiHandler.delete(id);
     }
 }

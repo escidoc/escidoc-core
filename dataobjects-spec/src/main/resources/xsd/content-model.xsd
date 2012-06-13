@@ -9,65 +9,68 @@
   - create version 0.2 (remove pid, lock, latest-released, and status change from schema) 
 -->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-  targetNamespace="http://www.escidoc.de/schemas/contentmodel/0.2" 
-    xmlns:content-model="http://www.escidoc.de/schemas/contentmodel/0.2"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7"
-  xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4" xmlns:prop="http://escidoc.de/core/01/properties/"
-  xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:xml="http://www.w3.org/XML/1998/namespace"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+           targetNamespace="http://www.escidoc.de/schemas/contentmodel/0.3"
+           xmlns:content-model="http://www.escidoc.de/schemas/contentmodel/0.3"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.8"
+           xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+           xmlns:prop="http://escidoc.de/core/01/properties/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+           xmlns:xlink="http://www.w3.org/1999/xlink">
 
-  <xs:import namespace="http://www.escidoc.de/schemas/contentstreams/0.7" schemaLocation="content-streams.xsd" />
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd" />
-  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd" />
-  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd" />
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd" />
-  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd" />
+  <xs:import namespace="http://www.escidoc.de/schemas/contentstreams/0.8" schemaLocation="content-streams.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
 
-  <xs:element name="content-model">
+  <xs:element name="content-model" type="content-model:contentModelType"/>
+  <xs:element name="md-record-definitions" type="content-model:mdRecordDefinitionsType"/>
+  <xs:element name="md-record-definition" type="content-model:mdRecordDefinitionType"/>
+  <xs:element name="resource-definitions" type="content-model:resourceDefinitionsType"/>
+  <xs:element name="resource-definition" type="content-model:resourceDefinitionType"/>
+  <xs:element name="schema" type="content-model:xLinkType"/>
+  <xs:element name="xslt" type="content-model:xLinkType"/>
+  <xs:element name="md-record-name" type="common-types:NCName64"/>
+  <xs:element name="properties" type="content-model:contentModelPropertiesType"/>
+  <xs:element name="resources" type="content-model:contentModelResourcesType"/>
+  <xs:element name="version-history" type="common-types:readOnlyLink"/>
+
+  <xs:complexType name="contentModelType">
     <xs:annotation>
       <xs:documentation>
         <para>
           EXPERIMENTAL
         </para>
         <para>
-          Both the XML representation and parts of the implementation
-          of Content Model must be considered as experimental.
+          Both the XML representation and parts of the implementation of Content Model must be considered as
+          experimental.
         </para>
         <para>
-          Following you will find information which elements
-          and attributes are "required", "optional",
-          "not-allowed" or will be "discarded" in the input
-          XML-stream when creating or updating such an object.
+          Following you will find information which elements and attributes are "required", "optional", "not-allowed"
+          or will be "discarded" in the input XML-stream when creating or updating such an object.
         </para>
         <para>
-          In "create" the rule for creating a new object is
-          defined.
+          In "create" the rule for creating a new object is defined.
         </para>
         <para>
-          In "update" the rule for updating an object is
-          defined.
+          In "update" the rule for updating an object is defined.
         </para>
         <para>
-          Possible values are: required | optional |
-          not-allowed | discarded
+          Possible values are: required | optional | not-allowed | discarded
         </para>
         <para>
-          required: this element or attribute has to be
-          delivered
+          required: this element or attribute has to be delivered
         </para>
         <para>
-          optional: this element or attribute can be delivered
-          and will be kept
+          optional: this element or attribute can be delivered and will be kept
         </para>
         <para>
-          not-allowed: this element or attribute is not
-          allowed in delivery and will cause an exception
+          not-allowed: this element or attribute is not allowed in delivery and will cause an exception
         </para>
         <para>
-          discarded: this element or attribute can be
-          delivered but will not be used; the system will
-          generate a value which is delivered in this element
-          or attribute when retrieved
+          discarded: this element or attribute can be delivered but will not be used; the system will generate a value
+          which is delivered in this element or attribute when retrieved
         </para>
       </xs:documentation>
       <xs:documentation>
@@ -75,254 +78,216 @@
         <update>required</update>
       </xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="content-model:properties" />
-        <!-- inline, in order not to imply listbehavior that must be removed later -->
-        <xs:element name="md-record-definitions" minOccurs="0">
-          <xs:annotation>
-            <xs:documentation>
-              <create>optional</create>
-              <update>optional</update>
-            </xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="md-record-definition" maxOccurs="unbounded">
-                <xs:annotation>
-                  <xs:documentation>
-                    <create>optional</create>
-                    <update>optional</update>
-                  </xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="schema" minOccurs="0">
-                      <xs:annotation>
-                        <xs:documentation>
-                          <create>required</create>
-                          <update>required</update>
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:attribute ref="xlink:type" fixed="simple">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>discarded</create>
-                              <update>discarded</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute ref="xlink:title">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>discarded</create>
-                              <update>discarded</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute ref="xlink:href">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>optional</create>
-                              <update>optional</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute name="name">
-                    <xs:annotation>
-                      <xs:documentation>
-                        <create>required</create>
-                        <update>required</update>
-                      </xs:documentation>
-                    </xs:annotation>
-                    <xs:simpleType>
-                      <xs:restriction base="xs:NCName">
-                        <xs:maxLength value="64" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="resource-definitions" minOccurs="0">
-          <xs:annotation>
-            <xs:documentation>
-              <create>optional</create>
-              <update>optional</update>
-            </xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="resource-definition" maxOccurs="unbounded">
-                <xs:annotation>
-                  <xs:documentation>
-                    <create>optional</create>
-                    <update>optional</update>
-                  </xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="xslt">
-                      <xs:annotation>
-                        <xs:documentation>
-                          <create>required</create>
-                          <update>required</update>
-                        </xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:attribute ref="xlink:type" fixed="simple">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>discarded</create>
-                              <update>discarded</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute ref="xlink:title">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>discarded</create>
-                              <update>discarded</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute ref="xlink:href">
-                          <xs:annotation>
-                            <xs:documentation>
-                              <create>optional</create>
-                              <update>optional</update>
-                            </xs:documentation>
-                          </xs:annotation>
-                        </xs:attribute>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="md-record-name">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:NCName">
-                          <xs:maxLength value="64" />
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                  </xs:sequence>
-                  <xs:attribute name="name">
-                    <xs:annotation>
-                      <xs:documentation>
-                        <create>required</create>
-                        <update>required</update>
-                      </xs:documentation>
-                    </xs:annotation>
-                    <xs:simpleType>
-                      <xs:restriction base="xs:NCName">
-                        <xs:maxLength value="64" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:attribute>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element ref="content-streams:content-streams" minOccurs="0" />
-        <xs:element ref="content-model:resources" minOccurs="0" />
-      </xs:sequence>
-      <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes" />
-      <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes" />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="properties">
-    <xs:annotation>
-      <xs:documentation>
-        <create>required</create>
-        <update>required</update>
-      </xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="prop:name">
-          <xs:annotation>
-            <xs:documentation>
-              <create>required</create>
-              <update>required</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element minOccurs="0" ref="prop:description">
-          <xs:annotation>
-            <xs:documentation>
-              <create>required</create>
-              <update>required</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element minOccurs="0" ref="prop:creation-date">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element minOccurs="0" ref="srel:created-by">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element minOccurs="0" ref="prop:version">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-        <xs:element minOccurs="0" ref="prop:latest-version">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes" />
-      <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes" />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="resources">
-    <xs:annotation>
-      <xs:documentation>
-        <create>discarded</create>
-        <update>discarded</update>
-      </xs:documentation>
-    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="content-model:properties">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="content-model:md-record-definitions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional</create>
+            <update>optional</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="content-model:resource-definitions" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional</create>
+            <update>optional</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="content-streams:content-streams" minOccurs="0"/>
+      <xs:element ref="content-model:resources" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
 
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="version-history" minOccurs="0">
-          <xs:annotation>
-            <xs:documentation>
-              <create>discarded</create>
-              <update>discarded</update>
-            </xs:documentation>
-          </xs:annotation>
+  <xs:complexType name="mdRecordDefinitionsType">
+    <xs:sequence>
+      <xs:element ref="content-model:md-record-definition" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional</create>
+            <update>optional</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
-          <xs:complexType>
-            <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes"></xs:attributeGroup>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
+  <xs:complexType name="mdRecordDefinitionType">
+    <xs:sequence>
+      <xs:element ref="content-model:schema" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="common-types:NCName64">
+      <xs:annotation>
+        <xs:documentation>
+          <create>required</create>
+          <update>required</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
 
-      <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes" />
-      <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes" />
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="resourceDefinitionsType">
+    <xs:sequence>
+      <xs:element ref="content-model:resource-definition" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional</create>
+            <update>optional</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="resourceDefinitionType">
+    <xs:sequence>
+      <xs:element ref="content-model:xslt">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="content-model:md-record-name">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="common-types:NCName64">
+      <xs:annotation>
+        <xs:documentation>
+          <create>required</create>
+          <update>required</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- TODO: Reuse a more general attribute-group here. -->
+  <xs:complexType name="xLinkType">
+    <xs:attribute ref="xlink:type" fixed="simple">
+      <xs:annotation>
+        <xs:documentation>
+          <create>discarded</create>
+          <update>discarded</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute ref="xlink:title">
+      <xs:annotation>
+        <xs:documentation>
+          <create>discarded</create>
+          <update>discarded</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute ref="xlink:href">
+      <xs:annotation>
+        <xs:documentation>
+          <create>optional</create>
+          <update>optional</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="contentModelPropertiesType">
+    <xs:sequence>
+      <xs:element ref="prop:name">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:description" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:creation-date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:created-by" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:version" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:latest-version" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="contentModelResourcesType">
+    <xs:sequence>
+      <xs:element ref="content-model:version-history" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
 </xs:schema>

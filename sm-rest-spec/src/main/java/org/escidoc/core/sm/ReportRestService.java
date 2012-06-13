@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.escidoc.core.sm;
 
@@ -8,9 +8,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.sm.report.ReportTO;
-import org.escidoc.core.domain.sm.report.parameter.ReportParametersTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.sm.report.ReportTypeTO;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -20,12 +21,12 @@ import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNo
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.domain.sm.report.parameter.ReportParametersTypeTO;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/statistic/report")
 public interface ReportRestService {
 
@@ -62,8 +63,7 @@ public interface ReportRestService {
     @POST
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ReportTO retrieve(ReportParametersTO reportParametersTO) throws AuthenticationException, AuthorizationException,
-            XmlCorruptedException, XmlSchemaValidationException, ReportDefinitionNotFoundException,
-            MissingMethodParameterException, InvalidSqlException, SystemException;
-
+    JAXBElement<ReportTypeTO> retrieve(@NotNull ReportParametersTypeTO reportParametersTO)
+        throws AuthenticationException, AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
+        ReportDefinitionNotFoundException, MissingMethodParameterException, InvalidSqlException, SystemException;
 }

@@ -17,7 +17,6 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.om;
 
 import javax.ws.rs.GET;
@@ -27,6 +26,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -36,9 +36,8 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * 
  * @author MIH
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Path("/ir/containers")
 public interface ContainersRestService {
@@ -46,34 +45,26 @@ public interface ContainersRestService {
     /**
      * The list of all containers matching the given filter criteria will be created.
      * <p/>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param parameters
-     *            The Standard SRU Get-Parameters as Object
-     * @param userId
-     *            The custom SRU Get Parameter x-info5-userId
-     * @param roleId
-     *            The custom SRU Get Parameter x-info5-roleId
-     * @param omitHighlighting
-     *            The custom SRU Get Parameter x-info5-omitHighlighting
-     * @return The XML representation of the the filtered list of containers corresponding to SRW schema as JAXBElement.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into a CQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
+     * <br/> See chapter "Filters" for detailed information about filter definitions.
+     *
+     * @param parameters       The Standard SRU Get-Parameters as Object
+     * @param userId           The custom SRU Get Parameter x-info5-userId
+     * @param roleId           The custom SRU Get Parameter x-info5-roleId
+     * @param omitHighlighting The custom SRU Get Parameter x-info5-omitHighlighting
+     * @return The XML representation of the the filtered list of containers corresponding to SRW schema as
+     *         JAXBElement.
+     * @throws InvalidSearchQueryException thrown if the given search query could not be translated into a CQL query
+     * @throws InvalidXmlException         If the given xml is not valid.
      * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
+     *                                     If the parameter filter is not given.
+     * @throws SystemException             Thrown if a framework internal error occurs.
      */
     @GET
     @Produces(MediaType.TEXT_XML)
     JAXBElement<? extends ResponseTypeTO> retrieveContainers(
-        @QueryParam("") SruSearchRequestParametersBean parameters, 
-        @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId, 
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws MissingMethodParameterException,
-            InvalidSearchQueryException, InvalidXmlException, SystemException;
-
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters,
+        @QueryParam("x-info5-roleId") String roleId, @QueryParam("x-info5-userId") String userId,
+        @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
+        throws MissingMethodParameterException,
+        InvalidSearchQueryException, InvalidXmlException, SystemException;
 }

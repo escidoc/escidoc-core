@@ -19,15 +19,20 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.escidoc.org/schemas/reindex-task-param/0.1"
-	elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:element name="param">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="index-name" type="xs:string" minOccurs="0" />
-				<xs:element name="clear-index" type="xs:boolean"/>
-				<xs:element name="commit-writes" type="xs:boolean"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+           xmlns:param="http://www.escidoc.org/schemas/reindex-task-param/0.1"
+           targetNamespace="http://www.escidoc.org/schemas/reindex-task-param/0.1"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:element name="param" type="param:paramType"/>
+  <xs:element name="index-name" type="xs:string"/>
+  <xs:element name="clear-index" type="xs:boolean"/>
+  <xs:element name="commit-writes" type="xs:boolean"/>
+
+  <xs:complexType name="paramType">
+    <xs:sequence>
+      <xs:element ref="param:index-name" minOccurs="0"/>
+      <xs:element ref="param:clear-index"/>
+      <xs:element ref="param:commit-writes"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

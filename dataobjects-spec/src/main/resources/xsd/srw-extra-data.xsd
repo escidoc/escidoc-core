@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema 
-    targetNamespace="http://oclc.org/srw/extraData/" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns="http://oclc.org/srw/extraData/" 
-    elementFormDefault="qualified" 
-    attributeFormDefault="unqualified">
+<xsd:schema targetNamespace="http://oclc.org/srw/extraData/"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://oclc.org/srw/extraData/"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
   <xsd:element name="extraData">
     <xsd:complexType>
       <xsd:sequence>

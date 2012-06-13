@@ -27,7 +27,7 @@
  * All rights reserved.  Use is subject to license terms.
  */
 /**
- * 
+ *
  */
 package org.escidoc.core.aa;
 
@@ -43,16 +43,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.grants.GrantTO;
-import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTO;
-import org.escidoc.core.domain.aa.useraccount.UserAccountTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTO;
-import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTO;
-import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTypeTO;
+import org.escidoc.core.domain.aa.grants.GrantTypeTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountResourcesTypeTO;
+import org.escidoc.core.domain.aa.useraccount.UserAccountTypeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributeTypeTO;
+import org.escidoc.core.domain.aa.useraccount.attributes.AttributesTypeTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferenceTypeTO;
+import org.escidoc.core.domain.aa.useraccount.preferences.PreferencesTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
@@ -84,9 +86,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voß (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/aa/user-account")
 public interface UserAccountRestService {
 
@@ -110,7 +111,7 @@ public interface UserAccountRestService {
      * XML representation for the stored User Account is created.</li> <li>The XML data is returned.</li> </ul>
      *
      * @param userAccountTO The XML representation of the User Account to be created corresponding to XML-schema
-     *                "user-account.xsd" as TO.
+     *                      "user-account.xsd" as TO.
      * @return The XML representation of the created User Account corresponding to XML-schema "user-account.xsd" as TO,
      *         including the generated user id, the created-by, creation-date, modified-by, and last-modification-date.
      *         In case of REST, the XML representation contains the list of virtual subresources, too.
@@ -133,7 +134,8 @@ public interface UserAccountRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserAccountTO create(UserAccountTO userAccountTO) throws UniqueConstraintViolationException, InvalidStatusException,
+    JAXBElement<UserAccountTypeTO> create(@NotNull UserAccountTypeTO userAccountTO)
+        throws UniqueConstraintViolationException, InvalidStatusException,
         XmlCorruptedException, XmlSchemaValidationException, OrganizationalUnitNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
@@ -149,7 +151,7 @@ public interface UserAccountRestService {
      * that User Account is created.</li> <li>The XML data is returned.</li> </ul>
      *
      * @param id An unique identifier of the User Account. This can either be the internal id, the login name, the
-     *               email, or the eSciDocUserHandle which is generated when the user logs in to Escidoc.
+     *           email, or the eSciDocUserHandle which is generated when the user logs in to Escidoc.
      * @return The XML representation of the User Account corresponding to XML-schema "user-account.xsd" as TO.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
      * @throws MissingMethodParameterException
@@ -162,7 +164,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    UserAccountTO retrieve(@PathParam("id") String id) throws UserAccountNotFoundException,
+    JAXBElement<UserAccountTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -178,16 +181,16 @@ public interface UserAccountRestService {
      * <p/>
      * <b>Tasks:</b><br/> <ul> <li>The User Account is accessed using the provided reference.</li> <li>Optimistic
      * Locking criteria is checked.</li> <li>The XML data is validated against the XML-Schema of an UserAccount.</li>
-     * <li>The provided last-modification-date must match the last-modification-date currently saved in the system.</li>
-     * <li>It is checked if the chosen login name is unique.</li> <li>It is checked that one of the provided
+     * <li>The provided last-modification-date must match the last-modification-date currently saved in the system
+     * .</li> <li>It is checked if the chosen login name is unique.</li> <li>It is checked that one of the provided
      * organizational-units of the user is marked as the primary one.</li> <li>The UserAccount is updated from the
      * provided data including updated modified-by and last-modification-date.</li> <li>The updated UserAccount is
      * stored.</li> <li>The XML data for the updated UserAccount is created.</li> <li>The XML data is returned.</li>
      * </ul>
      *
-     * @param id  The User Account ID.
+     * @param id            The User Account ID.
      * @param userAccountTO The XML representation of the User Account to be updated corresponding to XML-schema
-     *                "user-account.xsd" as TO.
+     *                      "user-account.xsd" as TO.
      * @return The XML representation of the updated User Account corresponding to XML-schema "user-account.xsd" as TO.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided is exists.
      * @throws UniqueConstraintViolationException
@@ -197,8 +200,8 @@ public interface UserAccountRestService {
      * @throws XmlCorruptedException          Thrown in case of invalid Xml.
      * @throws XmlSchemaValidationException   Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
-     *                                        Thrown if either no userId or no xml data is provided, i.e. it is
-     *                                        {@code null.}
+     *                                        Thrown if either no userId or no xml data is provided, i.e. it is {@code
+     *                                        null.}
      * @throws MissingAttributeValueException Thrown if a mandatory attribute is not provided within the xml data.
      * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
@@ -213,10 +216,10 @@ public interface UserAccountRestService {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserAccountTO update(@PathParam("id") String id, UserAccountTO userAccountTO) throws UserAccountNotFoundException,
-        UniqueConstraintViolationException, InvalidStatusException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
-        OptimisticLockingException, AuthenticationException, AuthorizationException,
+    JAXBElement<UserAccountTypeTO> update(@NotNull @PathParam("id") String id, @NotNull UserAccountTypeTO userAccountTO)
+        throws UserAccountNotFoundException, UniqueConstraintViolationException, InvalidStatusException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
+        MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         OrganizationalUnitNotFoundException, SystemException;
 
     /**
@@ -236,8 +239,9 @@ public interface UserAccountRestService {
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws UserAccountNotFoundException, MissingMethodParameterException,
-    AuthenticationException, AuthorizationException, SystemException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve the XML representation of the User Account of the current user as TO.<br/>
@@ -255,7 +259,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/current")
     @Produces(MediaType.TEXT_XML)
-    UserAccountTO retrieveCurrentUser() throws UserAccountNotFoundException, AuthenticationException,
+    JAXBElement<UserAccountTypeTO> retrieveCurrentUser()
+        throws UserAccountNotFoundException, AuthenticationException,
         AuthorizationException, SystemException;
 
     /**
@@ -283,8 +288,8 @@ public interface UserAccountRestService {
      * &lt; /param&gt;
      * </pre>
      *
-     * @param id    The User Account ID.
-     * @param taskParam The XML representation according to update-password-task-param.xsd of task parameters including 
+     * @param id        The User Account ID.
+     * @param taskParam The XML representation according to update-password-task-param.xsd of task parameters including
      *                  the last modification date attribute and the new password as TO. (see above)
      * @throws InvalidStatusException       Thrown if the addressed User Account is not active.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
@@ -301,7 +306,7 @@ public interface UserAccountRestService {
     @POST
     @Path("/{id}/update-password")
     @Consumes(MediaType.TEXT_XML)
-    void updatePassword(@PathParam("id") String id, UpdatePasswordTaskParamTO taskParam)
+    void updatePassword(@NotNull @PathParam("id") String id, @NotNull UpdatePasswordTaskParamTO taskParam)
         throws UserAccountNotFoundException, InvalidStatusException, XmlCorruptedException,
         MissingMethodParameterException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -310,8 +315,8 @@ public interface UserAccountRestService {
      * Update the set of preferences associated with a User Account. The name of a preference must be unique for the
      * user.
      *
-     * @param id         The User Account ID.
-     * @param userAccountPreferencesTO The XML representation of the set of preferences as TO.
+     * @param id                The User Account ID.
+     * @param preferencesTypeTO The XML representation of the set of preferences as TO.
      * @return The XML representation of the updated set of preferences as TO.
      * @throws UserAccountNotFoundException   If an User Account with the specified userId does not exist.
      * @throws XmlCorruptedException          If the XML representation is invalid.
@@ -329,7 +334,8 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/preferences")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    PreferencesTO updatePreferences(@PathParam("id") String id, PreferencesTO userAccountPreferencesTO)
+    JAXBElement<PreferencesTypeTO> updatePreferences(@NotNull @PathParam("id") String id,
+        @NotNull PreferencesTypeTO preferencesTypeTO)
         throws UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
         OptimisticLockingException, SystemException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, MissingAttributeValueException;
@@ -351,10 +357,11 @@ public interface UserAccountRestService {
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
-     * @param id    The User Account ID to be acivated.
-     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO. 
-     * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
-     * The last-modification-date is necessary for optimistic locking purpose. (example above)
+     * @param id        The User Account ID to be acivated.
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification of the Account (attribute
+     *                  'last-modification-date', required). The last-modification-date is necessary for optimistic
+     *                  locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Account is active.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException          Thrown if the provided XML representation of task parameters are invalid.
@@ -364,14 +371,15 @@ public interface UserAccountRestService {
      *                                        modification date.
      * @throws OptimisticLockingException     Thrown in case of an optimistic locking error.
      * @throws AuthenticationException        Thrown if the authentication fails due to an invalid provided
-     *                                 eSciDocUserHandle.
+     *                                        eSciDocUserHandle.
      * @throws AuthorizationException         Thrown if the authorization fails.
      * @throws SystemException                Thrown in case of an internal system error.
      */
     @POST
     @Path("/{id}/activate")
     @Consumes(MediaType.TEXT_XML)
-    void activate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam) throws AlreadyActiveException,
+    void activate(@NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyActiveException,
         UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
         MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -393,10 +401,11 @@ public interface UserAccountRestService {
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
-     * @param id    The User Account ID to be deacivated.
-     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO. 
-     * Including the timestamp of the last modification of the Account (attribute 'last-modification-date', required). 
-     * The last-modification-date is necessary for optimistical locking purpose. (example above)
+     * @param id        The User Account ID to be deacivated.
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification of the Account (attribute
+     *                  'last-modification-date', required). The last-modification-date is necessary for optimistical
+     *                  locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Account is deactive.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws XmlCorruptedException          Thrown in case of invalid xml data (corrupt data, schema validation failed
@@ -414,7 +423,8 @@ public interface UserAccountRestService {
     @POST
     @Path("/{id}/deactivate")
     @Consumes(MediaType.TEXT_XML)
-    void deactivate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam) throws AlreadyDeactiveException,
+    void deactivate(@NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO taskParam)
+        throws AlreadyDeactiveException,
         UserAccountNotFoundException, XmlCorruptedException, MissingMethodParameterException,
         MissingAttributeValueException, OptimisticLockingException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -434,8 +444,8 @@ public interface UserAccountRestService {
      * returned.</li> </ul>
      *
      * @param id The User Account ID.
-     * @return The XML representation of the resources of that User Account corresponding to XML-schema
-     *         "resources.xsd" as TO.
+     * @return The XML representation of the resources of that User Account corresponding to XML-schema "resources.xsd"
+     *         as TO.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
      * @throws MissingMethodParameterException
      *                                      Thrown if no user id is provided.
@@ -447,7 +457,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources")
     @Produces(MediaType.TEXT_XML)
-    UserAccountResourcesTO retrieveResources(@PathParam("id") String id) throws UserAccountNotFoundException,
+    JAXBElement<UserAccountResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -481,7 +492,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/current-grants")
     @Produces(MediaType.TEXT_XML)
-    CurrentGrantsTO retrieveCurrentGrants(@PathParam("id") String id) throws UserAccountNotFoundException,
+    JAXBElement<CurrentGrantsTypeTO> retrieveCurrentGrants(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -507,7 +519,7 @@ public interface UserAccountRestService {
      * stored.</li> <li>The XML representation of the new Grant is created.</li> <li>The XML data is returned.</li>
      * </ul>
      *
-     * @param id   The User Account ID.
+     * @param id      The User Account ID.
      * @param grantTo The XML representation of the Grant to be created corresponding to XML-schema "grant.xsd" as TO.
      * @return The XML representation of the created Grant corresponding to XML-schema "grant.xsd" as TO.
      * @throws AlreadyExistsException       Thrown if the defined grant already exists for the User Account.
@@ -527,7 +539,8 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/grants/grant")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    GrantTO createGrant(@PathParam("id") String id, GrantTO grantTo) throws AlreadyExistsException,
+    JAXBElement<GrantTypeTO> createGrant(@NotNull @PathParam("id") String id, @NotNull GrantTypeTO grantTo)
+        throws AlreadyExistsException,
         UserAccountNotFoundException, InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException;
@@ -547,7 +560,7 @@ public interface UserAccountRestService {
      * identified using the provided Grant ID.</li> <li>The Grant is identified using the provided Grant ID.</li>
      * <li>The XML data for the Grant is created from the stored data.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id  The User Account ID.
+     * @param id      The User Account ID.
      * @param grantId The Grant ID that shall be retrieved.
      * @return The XML representation of the Grant corresponding to XML-schema "grant.xsd" as TO.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
@@ -562,7 +575,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/grants/grant/{grant-id}")
     @Produces(MediaType.TEXT_XML)
-    GrantTO retrieveGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId)
+    JAXBElement<GrantTypeTO> retrieveGrant(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("grant-id") String grantId)
         throws UserAccountNotFoundException, GrantNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -599,11 +613,11 @@ public interface UserAccountRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id    The User Account ID for that a grant shall be revoked.
+     * @param id        The User Account ID for that a grant shall be revoked.
      * @param grantId   The Grant ID that shall be revoked.
-     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd as TO. 
-     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
-     * and a revocation-remark. (see example above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification (attribute 'last-modification-date', required,
+     *                  necessary for optimistic locking purpose) and a revocation-remark. (see example above)
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided id exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Account cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -621,9 +635,11 @@ public interface UserAccountRestService {
     @POST
     @Path("/{id}/resources/grants/grant/{grant-id}/revoke-grant")
     @Consumes(MediaType.TEXT_XML)
-    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam)
+    void revokeGrant(@NotNull @PathParam("id") String id, @NotNull @PathParam("grant-id") String grantId,
+        @NotNull RevokeGrantTaskParamTO taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
-        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException,
         SystemException;
 
     /**
@@ -671,10 +687,10 @@ public interface UserAccountRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id    The User Account ID for that a grant shall be revoked.
-     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd as TO. 
-     * Containing the filter for grants to revoke and a revocation-remark.
-     * The filter consists of an id and name (url), see example above.
+     * @param id        The User Account ID for that a grant shall be revoked.
+     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd as TO.
+     *                  Containing the filter for grants to revoke and a revocation-remark. The filter consists of an id
+     *                  and name (url), see example above.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Account cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -692,15 +708,16 @@ public interface UserAccountRestService {
     @POST
     @Path("/{id}/resources/grants/revoke-grants")
     @Consumes(MediaType.TEXT_XML)
-    void revokeGrants(@PathParam("id") String id, RevokeGrantsTaskParamTO taskParam) throws UserAccountNotFoundException,
+    void revokeGrants(@NotNull @PathParam("id") String id, @NotNull RevokeGrantsTaskParamTO taskParam)
+        throws UserAccountNotFoundException,
         GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves the user preference identified by given name associated to the User Account identified by the
-     * provided eSciDoc User Handle.
+     * Retrieves the user preference identified by given name associated to the User Account identified by the provided
+     * eSciDoc User Handle.
      *
-     * @param id         The User Account ID.
+     * @param id   The User Account ID.
      * @param name The User Preference Name.
      * @return Returns user preference TO-object.
      * @throws MissingMethodParameterException
@@ -715,13 +732,13 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/preferences/preference/{name}")
     @Produces(MediaType.TEXT_XML)
-    PreferenceTO retrievePreference(@PathParam("id") String id, @PathParam("name") String name)
+    JAXBElement<PreferencesTypeTO> retrievePreference(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("name") String name)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves user preference object associated to the User Account identified by the provided eSciDoc user
-     * handle.
+     * Retrieves user preference object associated to the User Account identified by the provided eSciDoc user handle.
      *
      * @param id The User Account ID.
      * @return Returns user preference TO object.
@@ -736,7 +753,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/preferences")
     @Produces(MediaType.TEXT_XML)
-    PreferencesTO retrievePreferences(@PathParam("id") String id) throws UserAccountNotFoundException,
+    JAXBElement<PreferencesTypeTO> retrievePreferences(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
@@ -755,10 +773,11 @@ public interface UserAccountRestService {
      * and associated with the User Account.</li> <li>The new User Preference is stored.</li> <li>The XML representation
      * of the new User Preference is created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id        The User Account ID.
-     * @param userAccountPreferenceTO The XML representation of the User Preference to be created corresponding to XML-schema
-     *                      "preferences.xsd" as TO.
-     * @return The XML representation of the created User Preference corresponding to XML-schema "preferences.xsd" as TO.
+     * @param id               The User Account ID.
+     * @param preferenceTypeTO The XML representation of the User Preference to be created corresponding to XML-schema
+     *                         "preferences.xsd" as TO.
+     * @return The XML representation of the created User Preference corresponding to XML-schema "preferences.xsd" as
+     *         TO.
      * @throws AlreadyExistsException       Thrown if the defined User Preference already exists for the User Account.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided id exists.
      * @throws PreferenceNotFoundException  Thrown if the User Preference does not exist.
@@ -776,7 +795,8 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/preferences/preference")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    PreferenceTO createPreference(@PathParam("id") String id, PreferenceTO userAccountPreferenceTO)
+    JAXBElement<PreferenceTypeTO> createPreference(@NotNull @PathParam("id") String id,
+        @NotNull PreferenceTypeTO preferenceTypeTO)
         throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException, PreferenceNotFoundException;
@@ -797,11 +817,12 @@ public interface UserAccountRestService {
      * accessed and updated.</li> <li>The User Preference is stored.</li> <li>The XML representation of the changed User
      * Preference is created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id         The User Account ID.
-     * @param preferenceName The User Preference Name.
-     * @param userAccountPreferenceTO  The XML representation of the User Preference to be created corresponding to XML-schema
-     *                       "preferences.xsd" as TO.
-     * @return The XML representation of the created User Preference corresponding to XML-schema "preferences.xsd" as TO.
+     * @param id               The User Account ID.
+     * @param preferenceName   The User Preference Name.
+     * @param preferenceTypeTO The XML representation of the User Preference to be created corresponding to XML-schema
+     *                         "preferences.xsd" as TO.
+     * @return The XML representation of the created User Preference corresponding to XML-schema "preferences.xsd" as
+     *         TO.
      * @throws AlreadyExistsException         Thrown if the defined User Preference already exists for the User
      *                                        Account.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided User Account ID exists.
@@ -822,11 +843,11 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/preferences/preference/{name}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    PreferenceTO updatePreference(@PathParam("id") String id, @PathParam("name") String preferenceName,
-                                  PreferenceTO userAccountPreferenceTO)
-        throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException,
-        PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException;
+    JAXBElement<PreferenceTypeTO> updatePreference(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("name") String preferenceName, @NotNull PreferenceTypeTO preferenceTypeTO)
+        throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException, PreferenceNotFoundException, OptimisticLockingException, MissingAttributeValueException;
 
     /**
      * Remove a User Preference from the User Account.<br> The User Preference is identified by its name within the User
@@ -839,7 +860,7 @@ public interface UserAccountRestService {
      * <b>Tasks:</b><br/> <ul> <li>The User Account is accessed using the provided reference.</li> <li>The User
      * Preference is accessed and removed.</li> </ul>
      *
-     * @param id         The User Account ID.
+     * @param id             The User Account ID.
      * @param preferenceName The User Preference Name.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided User Account ID exists.
      * @throws PreferenceNotFoundException  Thrown if the User Preference does not exist.
@@ -852,7 +873,7 @@ public interface UserAccountRestService {
      */
     @DELETE
     @Path("/{id}/resources/preferences/preference/{name}")
-    void deletePreference(@PathParam("id") String id, @PathParam("name") String preferenceName)
+    void deletePreference(@NotNull @PathParam("id") String id, @NotNull @PathParam("name") String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -872,10 +893,11 @@ public interface UserAccountRestService {
      * created and associated with the User Account.</li> <li>The new User Attribute is stored.</li> <li>The XML
      * representation of the new User Attribute is created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id       The User Account ID.
-     * @param userAccountAttributeTO The XML representation of the User Attribute to be created corresponding to XML-schema
-     *                     "user-attributes.xsd" as TO.
-     * @return The XML representation of the created User Attribute corresponding to XML-schema "user-attributes.xsd" as TO.
+     * @param id              The User Account ID.
+     * @param attributeTypeTO The XML representation of the User Attribute to be created corresponding to XML-schema
+     *                        "user-attributes.xsd" as TO.
+     * @return The XML representation of the created User Attribute corresponding to XML-schema "user-attributes.xsd" as
+     *         TO.
      * @throws AlreadyExistsException       Thrown if the defined User Attribute already exists for the User Account.
      * @throws UserAccountNotFoundException Thrown if no User Account with the provided User Account ID exists.
      * @throws XmlCorruptedException        Thrown if the provided xml data is invalid.
@@ -892,13 +914,14 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/attributes/attribute")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    AttributeTO createAttribute(@PathParam("id") String id, AttributeTO userAccountAttributeTO)
-        throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<AttributeTypeTO> createAttribute(@NotNull @PathParam("id") String id,
+        @NotNull AttributeTypeTO attributeTypeTO)
+        throws AlreadyExistsException, UserAccountNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException;
 
     /**
-     * Retrieves user attribute objects associated to the User Account identified by the provided User Account
-     * ID.
+     * Retrieves user attribute objects associated to the User Account identified by the provided User Account ID.
      *
      * @param id The User Account ID.
      * @return Returns user attribute TO objects.
@@ -914,15 +937,16 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/attributes")
     @Produces(MediaType.TEXT_XML)
-    AttributesTO retrieveAttributes(@PathParam("id") String id) throws UserAccountNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<AttributesTypeTO> retrieveAttributes(@NotNull @PathParam("id") String id)
+        throws UserAccountNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
-     * Retrieves user attribute objects associated to the User Account identified by the provided User Account ID
-     * and the provided User Attribute Name.
+     * Retrieves user attribute objects associated to the User Account identified by the provided User Account ID and
+     * the provided User Attribute Name.
      *
-     * @param id The User Account ID.
-     * @param name   The User Attribute Name to be retrieved.
+     * @param id   The User Account ID.
+     * @param name The User Attribute Name to be retrieved.
      * @return Returns user attribute TO objects.
      * @throws MissingMethodParameterException
      *                                        Thrown if no User Account ID or User Attribute Name is provided.
@@ -937,15 +961,16 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/attributes/{name}")
     @Produces(MediaType.TEXT_XML)
-    AttributesTO retrieveNamedAttributes(@PathParam("id") String id, @PathParam("name") String name)
+    JAXBElement<AttributesTypeTO> retrieveNamedAttributes(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("name") String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieves the user attribute TO object associated to the User Account identified by the provided User Account
-     * ID and the provided User Attribute ID.
+     * Retrieves the user attribute TO object associated to the User Account identified by the provided User Account ID
+     * and the provided User Attribute ID.
      *
-     * @param id      The User Account ID.
+     * @param id    The User Account ID.
      * @param attId The User Attribute ID to be retrieved.
      * @return Returns the user attribute TO object.
      * @throws MissingMethodParameterException
@@ -961,7 +986,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/attributes/attribute/{att-id}")
     @Produces(MediaType.TEXT_XML)
-    AttributeTO retrieveAttribute(@PathParam("id") String id, @PathParam("att-id") String attId)
+    JAXBElement<AttributeTypeTO> retrieveAttribute(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("att-id") String attId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -981,11 +1007,12 @@ public interface UserAccountRestService {
      * updated.</li> <li>The modified User Attribute is stored.</li> <li>The XML representation of the User Attribute is
      * created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id       The User Account ID.
-     * @param attId  The User Attribute ID to be updated.
-     * @param userAccountAttributeTO The XML representation of the User Attribute to be updated corresponding to XML-schema
-     *                     "user-attributes.xsd" as TO.
-     * @return The XML representation of the updated User Attribute corresponding to XML-schema "user-attributes.xsd" as TO.
+     * @param id                     The User Account ID.
+     * @param attId                  The User Attribute ID to be updated.
+     * @param userAccountAttributeTO The XML representation of the User Attribute to be updated corresponding to
+     *                               XML-schema "user-attributes.xsd" as TO.
+     * @return The XML representation of the updated User Attribute corresponding to XML-schema "user-attributes.xsd" as
+     *         TO.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided User Account ID exists.
      * @throws XmlCorruptedException          Thrown if the provided xml data is invalid.
      * @throws XmlSchemaValidationException   Thrown if the provided xml data is not schema conform
@@ -1005,8 +1032,9 @@ public interface UserAccountRestService {
     @Path("/{id}/resources/attributes/attribute/{att-id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    AttributeTO updateAttribute(@PathParam("id") String id, @PathParam("att-id") String attId,
-                                AttributeTO userAccountAttributeTO)
+    JAXBElement<AttributeTypeTO> updateAttribute(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("att-id") String attId,
+        @NotNull AttributeTypeTO userAccountAttributeTO)
         throws UserAccountNotFoundException, OptimisticLockingException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -1022,7 +1050,7 @@ public interface UserAccountRestService {
      * <b>Tasks:</b><br/> <ul> <li>The User Account is accessed using the provided reference.</li> <li>The User
      * Attribute is accessed and removed.</li> </ul>
      *
-     * @param id      The User Account ID.
+     * @param id    The User Account ID.
      * @param attId The User Attribute ID to be updated.
      * @throws UserAccountNotFoundException   Thrown if no User Account with the provided ID exists.
      * @throws UserAttributeNotFoundException Thrown if the User Attribute does not exist.
@@ -1037,17 +1065,17 @@ public interface UserAccountRestService {
      */
     @DELETE
     @Path("/{id}/resources/attributes/attribute/{att-id}")
-    void deleteAttribute(@PathParam("id") String id, @PathParam("att-id") String attId) throws UserAccountNotFoundException,
-        UserAttributeNotFoundException, ReadonlyElementViolationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    void deleteAttribute(@NotNull @PathParam("id") String id, @NotNull @PathParam("att-id") String attId)
+        throws UserAccountNotFoundException, UserAttributeNotFoundException, ReadonlyElementViolationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieves a filter statement which contains the permission rules which later can be added to a user given filter
      * statement to ensure only those resources are visible for which the user has the necessary access rights.
      *
      * @param index GET-Parameter index
-     * @param user GET-Parameter index
-     * @param role GET-Parameter index
+     * @param user  GET-Parameter index
+     * @param role  GET-Parameter index
      * @return filter sub query with permission rules as TO
      * @throws SystemException             Thrown in case of an internal system error.
      * @throws InvalidSearchQueryException Thrown if the given search query could not be translated into a SQL query.
@@ -1058,10 +1086,8 @@ public interface UserAccountRestService {
     @GET
     @Path("/retrievePermissionFilterQuery")
     @Produces(MediaType.TEXT_XML)
-    ResultTO retrievePermissionFilterQuery(
-                        @QueryParam("index") List<String> index, 
-                        @QueryParam("user") List<String> user,
-                        @QueryParam("role") List<String> role) throws SystemException,
-            InvalidSearchQueryException, AuthenticationException, AuthorizationException;
+    JAXBElement<ResultTypeTO> retrievePermissionFilterQuery(@QueryParam("index") List<String> index,
+        @QueryParam("user") List<String> user, @QueryParam("role") List<String> role)
+        throws SystemException, InvalidSearchQueryException, AuthenticationException, AuthorizationException;
 
 }

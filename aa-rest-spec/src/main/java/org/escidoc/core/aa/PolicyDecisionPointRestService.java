@@ -33,10 +33,11 @@ package org.escidoc.core.aa;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
 import net.sf.oval.constraint.NotNull;
-import org.escidoc.core.domain.aa.pdp.request.RequestsTO;
-import org.escidoc.core.domain.aa.pdp.result.ResultsTO;
+import org.escidoc.core.domain.aa.pdp.request.RequestsTypeTO;
+import org.escidoc.core.domain.aa.pdp.result.ResultsTypeTO;
 
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -526,8 +527,7 @@ public interface PolicyDecisionPointRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ResultsTO evaluate(@NotNull RequestsTO pdpRequestsTO) throws ResourceNotFoundException, XmlCorruptedException,
-            XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
-            AuthorizationException, SystemException;
-
+    JAXBElement<ResultsTypeTO> evaluate(@NotNull RequestsTypeTO pdpRequestsTO)
+        throws ResourceNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 }

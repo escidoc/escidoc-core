@@ -17,20 +17,18 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.content.relation.internal;
 
-import org.escidoc.core.content.relation.ContentRelationRestService;
-import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTO;
-import org.escidoc.core.domain.content.relation.ContentRelationResourcesTO;
-import org.escidoc.core.domain.content.relation.ContentRelationTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.predicate.list.PredicatesTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.content.relation.ContentRelationPropertiesTypeTO;
+import org.escidoc.core.domain.content.relation.ContentRelationResourcesTypeTO;
+import org.escidoc.core.domain.content.relation.ContentRelationTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
+import org.escidoc.core.domain.predicate.list.PredicatesTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
-import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,13 +49,17 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.escidoc.core.content.relation.ContentRelationRestService;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
- * 
- * @author ?, SWA
- * 
+ * @author SWA
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContentRelationRestServiceImpl implements ContentRelationRestService {
 
     @Autowired
@@ -67,142 +69,152 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
      * 
      */
-    protected ContentRelationRestServiceImpl() {
+    protected ContentRelationRestServiceImpl() {}
 
+    @Override
+    public JAXBElement<ContentRelationTypeTO> create(final ContentRelationTypeTO contentRelationTO)
+        throws SystemException, InvalidContentException, MissingAttributeValueException,
+        RelationPredicateNotFoundException, AuthorizationException, AuthenticationException, InvalidXmlException,
+        ReferencedResourceNotFoundException, MissingMethodParameterException {
+
+        return factoryProvider.getContentRelationFactory().createContentRelation(serviceUtility.fromXML(
+            ContentRelationTypeTO.class, this.contentRelationHandler.create(serviceUtility.toXML(contentRelationTO))));
     }
 
     @Override
-    public ContentRelationTO create(final ContentRelationTO contentRelationTO) throws SystemException,
-        InvalidContentException, MissingAttributeValueException, RelationPredicateNotFoundException,
-        AuthorizationException, AuthenticationException, InvalidXmlException, ReferencedResourceNotFoundException,
-        MissingMethodParameterException {
+    public JAXBElement<ContentRelationTypeTO> retrieve(final String id)
+        throws SystemException, AuthorizationException, AuthenticationException, ContentRelationNotFoundException {
 
-        return serviceUtility.fromXML(ContentRelationTO.class,
-            this.contentRelationHandler.create(serviceUtility.toXML(contentRelationTO)));
-
+        return factoryProvider.getContentRelationFactory().createContentRelation(serviceUtility.fromXML(
+            ContentRelationTypeTO.class, this.contentRelationHandler.retrieve(id)));
     }
 
     @Override
-    public ContentRelationTO retrieve(final String id) throws SystemException, AuthorizationException,
-        AuthenticationException, ContentRelationNotFoundException {
-
-        return serviceUtility.fromXML(ContentRelationTO.class, this.contentRelationHandler.retrieve(id));
-    }
-
-    @Override
-    public ContentRelationTO update(final String id, final ContentRelationTO contentRelationTO) throws SystemException,
-        InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
+    public JAXBElement<ContentRelationTypeTO> update(final String id, final ContentRelationTypeTO contentRelationTO)
+        throws SystemException, InvalidContentException, OptimisticLockingException, MissingAttributeValueException,
         RelationPredicateNotFoundException, AuthorizationException, InvalidStatusException, AuthenticationException,
         ContentRelationNotFoundException, InvalidXmlException, ReferencedResourceNotFoundException, LockingException,
         MissingMethodParameterException {
 
-        return serviceUtility.fromXML(ContentRelationTO.class,
-            this.contentRelationHandler.update(id, serviceUtility.toXML(contentRelationTO)));
+        return factoryProvider.getContentRelationFactory().createContentRelation(
+            serviceUtility.fromXML(ContentRelationTypeTO.class, this.contentRelationHandler.update(
+                id, serviceUtility.toXML(contentRelationTO))));
     }
 
     @Override
-    public void delete(final String id) throws SystemException, AuthorizationException, AuthenticationException,
-        ContentRelationNotFoundException, LockingException {
+    public void delete(final String id)
+        throws SystemException, AuthorizationException, AuthenticationException, ContentRelationNotFoundException,
+        LockingException {
 
         this.contentRelationHandler.delete(id);
     }
 
     @Override
-    public ContentRelationPropertiesTO retrieveProperties(String id) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, SystemException {
+    public JAXBElement<ContentRelationPropertiesTypeTO> retrieveProperties(String id)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ContentRelationPropertiesTO.class,
-            this.contentRelationHandler.retrieveProperties(id));
+        return factoryProvider.getContentRelationFactory().createProperties(serviceUtility.fromXML(
+            ContentRelationPropertiesTypeTO.class, this.contentRelationHandler.retrieveProperties(id)));
     }
 
     @Override
-    public ResultTO lock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidContentException,
+    public JAXBElement<ResultTypeTO> lock(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
+        InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidStatusException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.lock(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> unlock(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidStatusException {
+        InvalidContentException, InvalidStatusException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.unlock(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO unlock(String id, OptimisticLockingTaskParamTO optimisticLockingTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, InvalidXmlException, InvalidContentException,
-        InvalidStatusException {
+    public JAXBElement<ResultTypeTO> submit(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidContentException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.submit(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO submit(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException {
+    public JAXBElement<ResultTypeTO> revise(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        XmlCorruptedException, InvalidContentException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.revise(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO revise(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, XmlCorruptedException,
-        InvalidContentException {
+    public JAXBElement<ResultTypeTO> release(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
+        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
+        InvalidXmlException, InvalidContentException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.release(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO release(String id, StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, InvalidStatusException,
-        MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
-        InvalidContentException {
+    public JAXBElement<ResultTypeTO> assignObjectPid(String id, StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
+        MissingMethodParameterException, OptimisticLockingException, InvalidXmlException, SystemException,
+        PidAlreadyAssignedException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.contentRelationHandler.assignObjectPid(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO assignObjectPid(String id, AssignPidTaskParamTO assignPidTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, LockingException, MissingMethodParameterException,
-        OptimisticLockingException, InvalidXmlException, SystemException, PidAlreadyAssignedException {
+    public JAXBElement<MdRecordsTypeTO> retrieveMdRecords(String id)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, SystemException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.contentRelationHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getMdRecordsFactory().createMdRecords(serviceUtility.fromXML(
+            MdRecordsTypeTO.class, this.contentRelationHandler.retrieveMdRecords(id)));
     }
 
     @Override
-    public MdRecordsTO retrieveMdRecords(String id) throws AuthenticationException, AuthorizationException,
-        ContentRelationNotFoundException, SystemException {
-
-        return serviceUtility.fromXML(MdRecordsTO.class, this.contentRelationHandler.retrieveMdRecords(id));
-    }
-
-    @Override
-    public MdRecordTO retrieveMdRecord(String id, String name) throws AuthenticationException, AuthorizationException,
-        ContentRelationNotFoundException, MdRecordNotFoundException, SystemException {
-
-        return serviceUtility.fromXML(MdRecordTO.class, this.contentRelationHandler.retrieveMdRecord(id, name));
-    }
-
-    @Override
-    public PredicatesTO retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException,
+    public JAXBElement<MdRecordTypeTO> retrieveMdRecord(String id, String name)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
+        MdRecordNotFoundException,
         SystemException {
 
-        return serviceUtility.fromXML(PredicatesTO.class,
-            this.contentRelationHandler.retrieveRegisteredPredicates());
+        return factoryProvider.getMdRecordsFactory().createMdRecord(serviceUtility.fromXML(
+            MdRecordTypeTO.class, this.contentRelationHandler.retrieveMdRecord(id, name)));
     }
 
     @Override
-    public ContentRelationResourcesTO retrieveResources(String id) throws AuthenticationException,
-        AuthorizationException, ContentRelationNotFoundException, MissingMethodParameterException, SystemException {
-        return serviceUtility.fromXML(ContentRelationResourcesTO.class, this.contentRelationHandler.retrieveResources(id));
+    public JAXBElement<PredicatesTypeTO> retrieveRegisteredPredicates()
+        throws InvalidContentException, InvalidXmlException, SystemException {
+
+        return factoryProvider.getPredicatesFactory().createPredicates(
+            serviceUtility.fromXML(PredicatesTypeTO.class, this.contentRelationHandler.retrieveRegisteredPredicates()));
     }
 
+    @Override
+    public JAXBElement<ContentRelationResourcesTypeTO> retrieveResources(String id)
+        throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
+        MissingMethodParameterException, SystemException {
+
+        return factoryProvider.getContentRelationFactory().createResources(serviceUtility.fromXML(
+            ContentRelationResourcesTypeTO.class, this.contentRelationHandler.retrieveResources(id)));
+    }
 }

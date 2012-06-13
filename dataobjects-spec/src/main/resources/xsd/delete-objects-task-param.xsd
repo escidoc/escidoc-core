@@ -20,17 +20,20 @@
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://www.escidoc.org/schemas/delete-objects-task-param/0.1"
+           xmlns:param="http://www.escidoc.org/schemas/delete-objects-task-param/0.1"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:element name="param">
+  <xs:element name="param" type="param:paramType"/>
+  <xs:element name="id" type="xs:token"/>
+  <xs:element name="sync" type="xs:boolean"/>
+
+  <xs:complexType name="paramType">
     <xs:annotation>
       <xs:documentation>Task parameter for delete objects oriented tasks.</xs:documentation>
     </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="id" type="xs:token" maxOccurs="unbounded"/>
-        <xs:element name="sync" type="xs:boolean" minOccurs="0"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+    <xs:sequence>
+      <xs:element ref="param:id" maxOccurs="unbounded"/>
+      <xs:element ref="param:sync" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

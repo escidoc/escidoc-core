@@ -13,7 +13,7 @@ import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.axis.types.PositiveInteger;
-import org.escidoc.core.domain.properties.java.EntryTO;
+import org.escidoc.core.domain.properties.java.EntryTypeTO;
 import org.escidoc.core.domain.sru.*;
 
 import org.escidoc.core.domain.sru.ObjectFactory;
@@ -253,15 +253,15 @@ public class SruRequestTypeFactory {
         if (additionalParams == null || additionalParams.size() == 0)
             return null;
 
-        final JAXBContext context = JAXBContext.newInstance(EntryTO.class.getPackage().getName());
+        final JAXBContext context = JAXBContext.newInstance(EntryTypeTO.class.getPackage().getName());
         final ExtraDataTypeTO extra = FACTORY.createExtraDataTypeTO();
 
         for (Map.Entry<String, String> entry : additionalParams) {
-            final EntryTO entryTO = new EntryTO();
-            entryTO.setKey(entry.getKey());
-            entryTO.setContent(entry.getValue());
+            final EntryTypeTO entryTypeTO = new EntryTypeTO();
+            entryTypeTO.setKey(entry.getKey());
+            entryTypeTO.setContent(entry.getValue());
             final Stream stream = new Stream();
-            context.createMarshaller().marshal(entryTO, stream);
+            context.createMarshaller().marshal(entryTypeTO, stream);
             try {
                 stream.close();
             } catch (IOException e) {

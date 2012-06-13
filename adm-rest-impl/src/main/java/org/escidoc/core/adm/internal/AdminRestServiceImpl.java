@@ -28,12 +28,14 @@
  */
 package org.escidoc.core.adm.internal;
 
-import javax.ws.rs.PathParam;
+import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.adm.AdminRestService;
-import org.escidoc.core.domain.properties.java.JavaUtilPropertiesTO;
-import org.escidoc.core.domain.result.ResultTO;
-import org.escidoc.core.domain.sb.IndexConfigurationTO;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.properties.java.PropertiesTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
+import org.escidoc.core.domain.sb.IndexConfigurationTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.deleteobjects.DeleteObjectsTaskParamTO;
 import org.escidoc.core.domain.taskparam.reindex.ReindexTaskParamTO;
@@ -49,61 +51,75 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class AdminRestServiceImpl implements AdminRestService {
 
     @Autowired
     @Qualifier("service.AdminHandler")
     private AdminHandlerInterface adminHandler;
-    
+
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
-    public AdminRestServiceImpl() {
+    protected AdminRestServiceImpl() {
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#getPurgeStatus()
      */
     @Override
-    public ResultTO getPurgeStatus() throws AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.getPurgeStatus());
+    public JAXBElement<ResultTypeTO> getPurgeStatus()
+        throws AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.adminHandler.getPurgeStatus()));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#deleteObjects(org.escidoc.core.domain.taskparam.IdSetTaskParamTO)
      */
     @Override
-    public ResultTO deleteObjects(DeleteObjectsTaskParamTO ids) throws AuthenticationException, AuthorizationException,
+    public JAXBElement<ResultTypeTO> deleteObjects(DeleteObjectsTaskParamTO ids)
+        throws AuthenticationException, AuthorizationException,
         InvalidXmlException, SystemException {
-        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.deleteObjects(serviceUtility.toXML(ids)));
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.adminHandler.deleteObjects(serviceUtility.toXML(ids))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#getReindexStatus()
      */
     @Override
-    public ResultTO getReindexStatus() throws AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.getReindexStatus());
+    public JAXBElement<ResultTypeTO> getReindexStatus()
+        throws AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.adminHandler.getReindexStatus()));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#reindex(org.escidoc.core.domain.taskparam.ReindexTaskParamTO)
      */
     @Override
-    public ResultTO reindex(ReindexTaskParamTO taskParam) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {
-        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.reindex(serviceUtility.toXML(taskParam)));
+    public JAXBElement<ResultTypeTO> reindex(ReindexTaskParamTO taskParam)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.adminHandler.reindex(serviceUtility.toXML(taskParam))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#decreaseReindexStatus(java.util.String)
      */
     @Override
-    public void decreaseReindexStatus(String objectType) throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {
+    public void decreaseReindexStatus(String objectType)
+        throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException {
         this.adminHandler.decreaseReindexStatus(objectType);
     }
 
@@ -111,27 +127,33 @@ public class AdminRestServiceImpl implements AdminRestService {
      * @see de.escidoc.core.adm.AdminRestService#getRepositoryInfo()
      */
     @Override
-    public JavaUtilPropertiesTO getRepositoryInfo() throws AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<PropertiesTypeTO> getRepositoryInfo()
+        throws AuthenticationException, AuthorizationException, SystemException {
         String xml = this.adminHandler.getRepositoryInfo();
-        xml = xml.replaceFirst("<\\!.*?>", "");
-        xml = xml.replaceFirst("(<[^\\?\\!]*?)([\\/\\s>])", "$1 xmlns=\"http://java.sun.com/dtd/properties.dtd\"$2");
-        return serviceUtility.fromXML(JavaUtilPropertiesTO.class, xml);
+        // TODO: remove this code after rebuild of business logic:
+        xml = xml.replaceFirst("<!.*?>", "");
+        xml = xml.replaceFirst("(<[^\\?!]*?)([/\\s>])", "$1 xmlns=\"http://java.sun.com/dtd/properties.dtd\"$2");
+        return factoryProvider.getJavaPropertiesFactory().createProperties(
+            serviceUtility.fromXML(PropertiesTypeTO.class, xml));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#getIndexConfiguration()
      */
     @Override
-    public IndexConfigurationTO getIndexConfiguration() throws AuthenticationException, AuthorizationException, SystemException {
-        return serviceUtility.fromXML(IndexConfigurationTO.class, this.adminHandler.getIndexConfiguration());
+    public JAXBElement<IndexConfigurationTypeTO> getIndexConfiguration()
+        throws AuthenticationException, AuthorizationException, SystemException {
+        return factoryProvider.getIndexConfigFactory().createIndexConfiguration(
+            serviceUtility.fromXML(IndexConfigurationTypeTO.class, this.adminHandler.getIndexConfiguration()));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#loadExamples(java.util.String)
      */
     @Override
-    public ResultTO loadExamples(String type) throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
-        return serviceUtility.fromXML(ResultTO.class, this.adminHandler.loadExamples(type));
+    public JAXBElement<ResultTypeTO> loadExamples(String type)
+        throws AuthenticationException, AuthorizationException, InvalidSearchQueryException, SystemException {
+        return factoryProvider.getResultFactory().createResult(
+            serviceUtility.fromXML(ResultTypeTO.class, this.adminHandler.loadExamples(type)));
     }
-
 }

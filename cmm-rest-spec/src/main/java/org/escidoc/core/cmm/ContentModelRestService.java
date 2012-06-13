@@ -27,11 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.escidoc.core.domain.content.model.ContentModelResourcesTO;
-import org.escidoc.core.domain.content.model.ContentModelPropertiesTO;
-import org.escidoc.core.domain.content.model.ContentModelTO;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -48,55 +44,68 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.content.model.ContentModelPropertiesTypeTO;
+import org.escidoc.core.domain.content.model.ContentModelResourcesTypeTO;
+import org.escidoc.core.domain.content.model.ContentModelTypeTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 
+/**
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ */
 @Path("/cmm/content-model")
 public interface ContentModelRestService {
 
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContentModelTO create(ContentModelTO contentModelTO) throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, MissingAttributeValueException, InvalidContentException,
-        XmlCorruptedException, XmlSchemaValidationException;
+    JAXBElement<ContentModelTypeTO> create(@NotNull ContentModelTypeTO contentModelTypeTO)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        MissingAttributeValueException, InvalidContentException, XmlCorruptedException, XmlSchemaValidationException;
 
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException, LockingException,
-        InvalidStatusException, ResourceInUseException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException, LockingException, InvalidStatusException,
+        ResourceInUseException;
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    ContentModelTO retrieve(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+    JAXBElement<ContentModelTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/properties")
     @Produces(MediaType.TEXT_XML)
-    ContentModelPropertiesTO retrieveProperties(@PathParam("id") String id) throws ContentModelNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException;
+    JAXBElement<ContentModelPropertiesTypeTO> retrieveProperties(@NotNull @PathParam("id") String id)
+        throws ContentModelNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException;
 
-     @GET
-     @Path("/{id}/resources")
-     @Produces(MediaType.TEXT_XML)
-     ContentModelResourcesTO retrieveResources(@PathParam("id") String id) throws AuthenticationException, AuthorizationException,
-        ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+    @GET
+    @Path("/{id}/resources")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<ContentModelResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     @GET
     @Path("/{id}/resources/version-history")
     @Produces(MediaType.TEXT_XML)
-    VersionHistoryTO retrieveVersionHistory(@PathParam("id") String id) throws AuthenticationException,
-        AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException;
+    JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException;
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    ContentModelTO update(@PathParam("id") String id, ContentModelTO contentModelTO) throws AuthenticationException,
-        AuthorizationException, ContentModelNotFoundException, InvalidXmlException, MissingMethodParameterException,
-        OptimisticLockingException, SystemException, ReadonlyVersionException, MissingAttributeValueException,
-        InvalidContentException;
+    JAXBElement<ContentModelTypeTO> update(@NotNull @PathParam("id") String id, @NotNull ContentModelTypeTO contentModelTypeTO)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException, InvalidXmlException,
+        MissingMethodParameterException, OptimisticLockingException, SystemException, ReadonlyVersionException,
+        MissingAttributeValueException, InvalidContentException;
 
     // FIXME
     // @GET
@@ -111,5 +120,4 @@ public interface ContentModelRestService {
     // EscidocBinaryContent retrieveResourceDefinitionXsltContent(@PathParam("id") String id, String name) throws
     // AuthenticationException,
     // AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException;
-
 }

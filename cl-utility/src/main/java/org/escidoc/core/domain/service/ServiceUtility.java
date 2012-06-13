@@ -5,6 +5,8 @@ package org.escidoc.core.domain.service;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import javax.xml.transform.stream.StreamSource;
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
-import org.escidoc.core.domain.properties.java.EntryTO;
+import org.escidoc.core.domain.properties.java.EntryTypeTO;
 import org.escidoc.core.domain.sru.*;
 import org.escidoc.core.domain.sru.parameters.SruConstants;
 import org.escidoc.core.domain.sru.parameters.SruRequestTypeFactory;
@@ -78,6 +80,30 @@ public class ServiceUtility {
     }
 
     /**
+     * In order to prevent the need of using JAXBElement<ComplexTypeTO> in the JAX-RS interfaces for the
+     * method parameters, the service utility will try to resolve the marshallable object on its own.
+     *
+     * @param objectTO
+     * @return
+     */
+    private Object tryToResolveMarshallableObject(@NotNull Object objectTO) {
+        try {
+            Class<?> factoryClass = Class.forName(objectTO.getClass().getPackage().getName() + ".ObjectFactory");
+            Object factory = factoryClass.getConstructor().newInstance();
+            for (Method method : factoryClass.getMethods()) {
+                if (method.getParameterTypes().length == 1 &&
+                    method.getParameterTypes()[0].equals(objectTO.getClass()) &&
+                    method.getReturnType().equals(JAXBElement.class)) {
+                    return method.invoke(factory, objectTO);
+                }
+            }
+        } catch (Exception e) {
+            // ignore
+        }
+        return objectTO;
+    }
+
+    /**
      * Creates a new {@link Marshaller} using a new instance of the JAXBContext with the package of the specified object
      * as the <tt>contextPath</tt> for the JAXBContext in order to avoid redundant namespaces to appear in the resulting
      * XML.
@@ -87,6 +113,9 @@ public class ServiceUtility {
      * @throws JAXBException if an exception occurs while trying to create the marshaller
      */
     private Marshaller getMarshaller(@NotNull Object object) throws JAXBException {
+        if (object instanceof JAXBElement<?>) {
+            return JAXBContext.newInstance(((JAXBElement)object).getValue().getClass().getPackage().getName()).createMarshaller();
+        }
         return JAXBContext.newInstance(object.getClass().getPackage().getName()).createMarshaller();
     }
 
@@ -135,8 +164,9 @@ public class ServiceUtility {
      */
     private Stream marshal(@NotNull Object objectTO) throws Exception {
         final Stream stream = new Stream();
-        final Marshaller marshaller = getMarshaller(objectTO);
-        marshaller.marshal(objectTO, stream);
+        final Object obj = tryToResolveMarshallableObject(objectTO);
+        final Marshaller marshaller = getMarshaller(obj);
+        marshaller.marshal(obj, stream);
         stream.lock();
         return stream;
     }
@@ -172,6 +202,24 @@ public class ServiceUtility {
     public final Object fromXML(@NotNull @NotEmpty final String xmlString) throws SystemException {
         try {
             return unmarshal(new StreamSource(new StringReader(xmlString)));
+        }
+        catch (Exception e) {
+            throw new SystemException("Error on unmarshalling XML.", e);
+        }
+    }
+
+    public final <T> T fromXML(@NotNull final Class<T> classTO, @NotNull final Stream xmlStream) throws SystemException {
+        try {
+            return unmarshal(new StreamSource(xmlStream.getInputStream()), classTO);
+        }
+        catch (Exception e) {
+            throw new SystemException("Error on unmarshalling XML.", e);
+        }
+    }
+
+    public final Object fromXML(@NotNull final Stream xmlStream) throws SystemException {
+        try {
+            return unmarshal(new StreamSource(xmlStream.getInputStream()));
         }
         catch (Exception e) {
             throw new SystemException("Error on unmarshalling XML.", e);
@@ -344,10 +392,10 @@ public class ServiceUtility {
 
         if (extraDataTypeTO != null && extraDataTypeTO.getAny() != null && !extraDataTypeTO.getAny().isEmpty()) {
             // we expect org.escidoc.core.domain.properties.java.EntryTO to be the content
-            JAXBContext context = JAXBContext.newInstance(EntryTO.class.getPackage().getName());
+            JAXBContext context = JAXBContext.newInstance(EntryTypeTO.class.getPackage().getName());
             for (StreamElement element : extraDataTypeTO.getAny()) {
-                EntryTO entryTO = context.createUnmarshaller().unmarshal(
-                        new StreamSource(element.getStream().getInputStream()), EntryTO.class).getValue();
+                EntryTypeTO entryTO = context.createUnmarshaller().unmarshal(
+                        new StreamSource(element.getStream().getInputStream()), EntryTypeTO.class).getValue();
                 result.put(entryTO.getKey(), new String[] { entryTO.getContent() });
             }
         }

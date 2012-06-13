@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
@@ -48,7 +49,10 @@ import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 
 /**
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ScopesRestServiceImpl implements ScopesRestService {
 
     @Autowired
@@ -65,17 +69,16 @@ public class ScopesRestServiceImpl implements ScopesRestService {
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean)
+     * @see de.escidoc.core.sm.ScopesRestService#retrieveScopes(org.escidoc.core.domain.sru.parameters
+     * .SruSearchRequestParametersBean)
      */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveScopes(
-            final SruSearchRequestParametersBean parameters) throws InvalidSearchQueryException,
-            MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<? extends ResponseTypeTO> retrieveScopes(final SruSearchRequestParametersBean parameters)
+        throws InvalidSearchQueryException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
         final Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, null, null, null);
 
-        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.scopeHandler.retrieveScopes(map));
+        return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(this.scopeHandler.retrieveScopes(map));
     }
-
 }

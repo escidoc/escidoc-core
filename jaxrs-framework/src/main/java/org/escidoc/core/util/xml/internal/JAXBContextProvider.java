@@ -6,6 +6,7 @@ import net.sf.oval.guard.Guarded;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.ext.Provider;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.*;
@@ -14,6 +15,7 @@ import java.io.*;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Guarded
+@Provider
 public class JAXBContextProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(JAXBContextProvider.class);

@@ -27,7 +27,7 @@
  * All rights reserved.  Use is subject to license terms.
  */
 /**
- * 
+ *
  */
 package org.escidoc.core.aa;
 
@@ -40,12 +40,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
-import org.escidoc.core.domain.aa.grants.CurrentGrantsTO;
-import org.escidoc.core.domain.aa.grants.GrantTO;
-import org.escidoc.core.domain.aa.usergroup.SelectorsTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTO;
-import org.escidoc.core.domain.aa.usergroup.UserGroupTO;
+import net.sf.oval.constraint.NotNull;
+import org.escidoc.core.domain.aa.grants.CurrentGrantsTypeTO;
+import org.escidoc.core.domain.aa.grants.GrantTypeTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupResourcesTypeTO;
+import org.escidoc.core.domain.aa.usergroup.UserGroupTypeTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrant.RevokeGrantTaskParamTO;
 import org.escidoc.core.domain.taskparam.revokegrants.RevokeGrantsTaskParamTO;
@@ -76,9 +77,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * @author Michael Hoppe
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-
 @Path("/aa/user-group")
 public interface UserGroupRestService {
 
@@ -99,10 +99,11 @@ public interface UserGroupRestService {
      * <li>The XML data is returned.</li> </ul>
      *
      * @param userGroupTO The XML representation of the User Group to be created corresponding to XML schema
-     *                "user-group.xsd" as TO.
-     * @return The XML representation of the created User Group corresponding to XML schema "user-group.xsd" as TO, including
-     *         the generated User Group ID, the created-by, creation-date, modified-by, and last-modification-date. In
-     *         case of REST, the XML representation contains the list of virtual subresources, too.
+     *                    "user-group.xsd" as TO.
+     * @return The XML representation of the created User Group corresponding to XML schema "user-group.xsd" as TO,
+     *         including the generated User Group ID, the created-by, creation-date, modified-by, and
+     *         last-modification-date. In case of REST, the XML representation contains the list of virtual
+     *         subresources, too.
      * @throws UniqueConstraintViolationException
      *                                      Thrown if the provided label of the User Group is not unique.
      * @throws XmlCorruptedException        Thrown if the provided XML data is invalid
@@ -117,9 +118,9 @@ public interface UserGroupRestService {
     @PUT
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserGroupTO create(UserGroupTO userGroupTO) throws UniqueConstraintViolationException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
-        SystemException;
+    JAXBElement<UserGroupTypeTO> create(@NotNull UserGroupTypeTO userGroupTO)
+        throws UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Delete the specified User Group.
@@ -135,8 +136,9 @@ public interface UserGroupRestService {
      */
     @DELETE
     @Path("/{id}")
-    void delete(@PathParam("id") String id) throws UserGroupNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    void delete(@NotNull @PathParam("id") String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Retrieve the XML representation of a User Group object representing an eSciDoc User Group as TO.<br/>
@@ -161,8 +163,9 @@ public interface UserGroupRestService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
-    UserGroupTO retrieve(@PathParam("id") String id) throws UserGroupNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<UserGroupTypeTO> retrieve(@NotNull @PathParam("id") String id)
+        throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Update the data of a User Group.<br/>
@@ -182,9 +185,9 @@ public interface UserGroupRestService {
      * updated modified-by and last-modification-date.</li> <li>The updated User Group is stored.</li> <li>The XML data
      * for the updated User Group is created.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id The User Group ID.
+     * @param id          The User Group ID.
      * @param userGroupTO The XML representation of the User Group to be updated corresponding to XML schema
-     *                "user-group.xsd" as TO.
+     *                    "user-group.xsd" as TO.
      * @return The XML representation of the updated User Group corresponding to XML schema "user-group.xsd" as TO.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided ID exists.
      * @throws UniqueConstraintViolationException
@@ -205,10 +208,10 @@ public interface UserGroupRestService {
     @Path("/{id}")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserGroupTO update(@PathParam("id") String id, UserGroupTO userGroupTO) throws UserGroupNotFoundException,
-        UniqueConstraintViolationException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<UserGroupTypeTO> update(@NotNull @PathParam("id") String id, @NotNull UserGroupTypeTO userGroupTO)
+        throws UserGroupNotFoundException, UniqueConstraintViolationException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, MissingAttributeValueException,
+        OptimisticLockingException, AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Activate a User Group.<br/>
@@ -227,10 +230,11 @@ public interface UserGroupRestService {
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
-     * @param id   The User Group ID to be activated.
-     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO. 
-     * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
-     * The last-modification-date is necessary for optimistical locking purpose. (example above)
+     * @param id        The User Group ID to be activated.
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification of the Group (attribute
+     *                  'last-modification-date', required). The last-modification-date is necessary for optimistical
+     *                  locking purpose. (example above)
      * @throws AlreadyActiveException         Thrown if the addressed User Group is active.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided id exists.
      * @throws XmlCorruptedException          Thrown if the provided XML representation of task parameters are invalid.
@@ -247,7 +251,7 @@ public interface UserGroupRestService {
     @POST
     @Path("/{id}/activate")
     @Consumes(MediaType.TEXT_XML)
-    void activate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam)
+    void activate(@NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO taskParam)
         throws AlreadyActiveException, UserGroupNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException;
@@ -269,10 +273,11 @@ public interface UserGroupRestService {
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
      *
-     * @param id   The User Group ID to be deacivated.
-     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO. 
-     * Including the timestamp of the last modification of the Group (attribute 'last-modification-date', required). 
-     * The last-modification-date is necessary for optimistical locking purpose. (example above)
+     * @param id        The User Group ID to be deacivated.
+     * @param taskParam The XML representation of task parameters conforming to optimistic-locking-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification of the Group (attribute
+     *                  'last-modification-date', required). The last-modification-date is necessary for optimistical
+     *                  locking purpose. (example above)
      * @throws AlreadyDeactiveException       Thrown if the addressed User Group is deactive.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided id exists.
      * @throws XmlCorruptedException          Thrown in case of invalid XML data (corrupt data, schema validation failed
@@ -290,7 +295,7 @@ public interface UserGroupRestService {
     @POST
     @Path("/{id}/deactivate")
     @Consumes(MediaType.TEXT_XML)
-    void deactivate(@PathParam("id") String id, OptimisticLockingTaskParamTO taskParam)
+    void deactivate(@NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO taskParam)
         throws AlreadyDeactiveException, UserGroupNotFoundException, XmlCorruptedException,
         MissingMethodParameterException, MissingAttributeValueException, OptimisticLockingException,
         AuthenticationException, AuthorizationException, SystemException;
@@ -310,7 +315,7 @@ public interface UserGroupRestService {
      * identified using the provided Grant id.</li> <li>The Grant is identified using the provided Grant id.</li>
      * <li>The XML data for the Grant is created from the stored data.</li> <li>The XML data is returned.</li> </ul>
      *
-     * @param id The User Group ID.
+     * @param id      The User Group ID.
      * @param grantId The Grant ID that shall be retrieved.
      * @return The XML representation of the Grant corresponding to XML-schema "grant.xsd" as TO.
      * @throws UserGroupNotFoundException Thrown if no User Group with the provided id exists.
@@ -325,7 +330,8 @@ public interface UserGroupRestService {
     @GET
     @Path("/{id}/resources/grants/grant/{grant-id}")
     @Produces(MediaType.TEXT_XML)
-    GrantTO retrieveGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId)
+    JAXBElement<GrantTypeTO> retrieveGrant(@NotNull @PathParam("id") String id,
+        @NotNull @PathParam("grant-id") String grantId)
         throws UserGroupNotFoundException, GrantNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;
 
@@ -358,7 +364,7 @@ public interface UserGroupRestService {
     @GET
     @Path("/{id}/resources/current-grants")
     @Produces(MediaType.TEXT_XML)
-    CurrentGrantsTO retrieveCurrentGrants(@PathParam("id") String id)
+    JAXBElement<CurrentGrantsTypeTO> retrieveCurrentGrants(@NotNull @PathParam("id") String id)
         throws UserGroupNotFoundException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException;
 
@@ -387,7 +393,7 @@ public interface UserGroupRestService {
      * stored.</li> <li>The XML representation of the new Grant is created.</li> <li>The XML data is returned.</li>
      * </ul>
      *
-     * @param id  The User Group ID.
+     * @param id      The User Group ID.
      * @param grantTo The XML representation of the Grant to be created corresponding to XML schema "grant.xsd" as TO.
      * @return The XML representation of the created Grant corresponding to XML schema "grant.xsd" as TO.
      * @throws AlreadyExistsException       Thrown if the defined grant already exists for the User Group.
@@ -407,9 +413,10 @@ public interface UserGroupRestService {
     @Path("/{id}/resources/grants/grant")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    GrantTO createGrant(@PathParam("id") String id, GrantTO grantTo) throws AlreadyExistsException, UserGroupNotFoundException,
-        InvalidScopeException, RoleNotFoundException, XmlCorruptedException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
+    JAXBElement<GrantTypeTO> createGrant(@NotNull @PathParam("id") String id, @NotNull GrantTypeTO grantTo)
+        throws AlreadyExistsException, UserGroupNotFoundException, InvalidScopeException, RoleNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Revoke a Grant<br/>
@@ -444,11 +451,11 @@ public interface UserGroupRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id   The User Group ID for that a Grant shall be revoked.
+     * @param id        The User Group ID for that a Grant shall be revoked.
      * @param grantId   The Grant ID that shall be revoked.
-     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd as TO. 
-     * Including the timestamp of the last modification (attribute 'last-modification-date', required, necessary for optimistical locking purpose)
-     * and a revocation-remark. (see example above)
+     * @param taskParam The XML representation of task parameters conforming to revoke-grant-task-param.xsd as TO.
+     *                  Including the timestamp of the last modification (attribute 'last-modification-date', required,
+     *                  necessary for optimistical locking purpose) and a revocation-remark. (see example above)
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Group cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -466,7 +473,8 @@ public interface UserGroupRestService {
     @POST
     @Path("/{id}/resources/grants/grant/{grant-id}/revoke-grant")
     @Consumes(MediaType.TEXT_XML)
-    void revokeGrant(@PathParam("id") String id, @PathParam("grant-id") String grantId, RevokeGrantTaskParamTO taskParam)
+    void revokeGrant(@NotNull @PathParam("id") String id, @NotNull @PathParam("grant-id") String grantId,
+        @NotNull RevokeGrantTaskParamTO taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException, AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException;
@@ -516,10 +524,10 @@ public interface UserGroupRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id   The User Group ID for that a grant shall be revoked.
-     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd as TO. 
-     * Containing the filter for grants to revoke and a revocation-remark.
-     * The filter consists of an id and name (url), see example above.
+     * @param id        The User Group ID for that a grant shall be revoked.
+     * @param taskParam The XML representation of task parameters conforming to revoke-grants-task-param.xsd as TO.
+     *                  Containing the filter for grants to revoke and a revocation-remark. The filter consists of an id
+     *                  and name (url), see example above.
      * @throws UserGroupNotFoundException     Thrown if no User Group with the provided ID exists.
      * @throws GrantNotFoundException         Thrown if the specified Grant of the User Group cannot be found.
      * @throws AlreadyRevokedException        Thrown if the addressed Grant is revoked.
@@ -537,7 +545,7 @@ public interface UserGroupRestService {
     @POST
     @Path("/{id}/resources/grants/revoke-grants")
     @Consumes(MediaType.TEXT_XML)
-    void revokeGrants(@PathParam("id") String id, RevokeGrantsTaskParamTO taskParam)
+    void revokeGrants(@NotNull @PathParam("id") String id, @NotNull RevokeGrantsTaskParamTO taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException, MissingAttributeValueException,
         MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
@@ -553,7 +561,8 @@ public interface UserGroupRestService {
     @GET
     @Path("/{id}/resources")
     @Produces(MediaType.TEXT_XML)
-    UserGroupResourcesTO retrieveResources(@PathParam("id") String id) throws UserGroupNotFoundException, SystemException;
+    JAXBElement<UserGroupResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)
+        throws UserGroupNotFoundException, SystemException;
 
     /**
      * Add one or more Selectors to a User Group.<br/>
@@ -589,7 +598,7 @@ public interface UserGroupRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id   The User Group ID.
+     * @param id        The User Group ID.
      * @param taskParam The list of selectors to add to the User Group as TO. (See example above.)
      * @return UserGroup as XML (user-group.xsd) as TO
      * @throws OrganizationalUnitNotFoundException
@@ -617,10 +626,11 @@ public interface UserGroupRestService {
     @Path("/{id}/selectors/add")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserGroupTO addSelectors(@PathParam("id") String id, AddSelectorsTaskParamTO taskParam) throws OrganizationalUnitNotFoundException,
-        UserAccountNotFoundException, UserGroupNotFoundException, InvalidContentException,
-        MissingMethodParameterException, SystemException, AuthenticationException, AuthorizationException,
-        OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
+    JAXBElement<UserGroupTypeTO> addSelectors(@NotNull @PathParam("id") String id,
+        @NotNull AddSelectorsTaskParamTO taskParam)
+        throws OrganizationalUnitNotFoundException, UserAccountNotFoundException, UserGroupNotFoundException,
+        InvalidContentException, MissingMethodParameterException, SystemException, AuthenticationException,
+        AuthorizationException, OptimisticLockingException, XmlCorruptedException, XmlSchemaValidationException,
         UserGroupHierarchyViolationException;
 
     /**
@@ -657,7 +667,7 @@ public interface UserGroupRestService {
      * &lt;/param&gt;
      * </pre>
      *
-     * @param id   The User Group ID.
+     * @param id        The User Group ID.
      * @param taskParam The list of Selectors to remove from the User Group as TO. (See example above.)
      * @return UserGroup as XML (user-group.xsd) as TO
      * @throws UserGroupNotFoundException   Thrown if a User Group with the provided id does not exist in the
@@ -682,8 +692,9 @@ public interface UserGroupRestService {
     @Path("/{id}/selectors/remove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    UserGroupTO removeSelectors(@PathParam("id") String id, RemoveSelectorsTaskParamTO taskParam) throws XmlCorruptedException,
-        XmlSchemaValidationException, AuthenticationException, AuthorizationException, SystemException,
-        UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
+    JAXBElement<UserGroupTypeTO> removeSelectors(@NotNull @PathParam("id") String id,
+        @NotNull RemoveSelectorsTaskParamTO taskParam)
+        throws XmlCorruptedException, XmlSchemaValidationException, AuthenticationException, AuthorizationException,
+        SystemException, UserGroupNotFoundException, OptimisticLockingException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, UserAccountNotFoundException;
 }

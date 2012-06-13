@@ -28,8 +28,10 @@
  */
 package org.escidoc.core.sm.internal;
 
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
-import org.escidoc.core.domain.sm.rd.ReportDefinitionTO;
+import org.escidoc.core.domain.sm.rd.ReportDefinitionTypeTO;
 import org.escidoc.core.sm.ReportDefinitionRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,10 +48,14 @@ import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolat
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 
+import javax.xml.bind.JAXBElement;
+
 /**
  * @author Michael Hoppe
- *
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestService {
 
     @Autowired
@@ -59,29 +65,37 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
     @Autowired
     private ServiceUtility serviceUtility;
 
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
+
     /**
-     * 
+     *
      */
-    public ReportDefinitionRestServiceImpl() {
+    protected ReportDefinitionRestServiceImpl() {
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.ReportDefinitionRestService#create(org.escidoc.core.domain.sm.ReportDefinitionTO)
      */
     @Override
-    public ReportDefinitionTO create(final ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
-        AuthorizationException, XmlSchemaValidationException, XmlCorruptedException, MissingMethodParameterException,
-        InvalidSqlException, ScopeNotFoundException, ScopeContextViolationException, SystemException {
-        return serviceUtility.fromXML(ReportDefinitionTO.class,
-                this.reportDefinitionHandler.create(serviceUtility.toXML(reportDefinitionTO)));
+    public JAXBElement<ReportDefinitionTypeTO> create(final ReportDefinitionTypeTO reportDefinitionTO)
+        throws AuthenticationException, AuthorizationException, XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, InvalidSqlException, ScopeNotFoundException, ScopeContextViolationException,
+        SystemException {
+
+        return factoryProvider.getReportDefinitionFactory().createReportDefinition(serviceUtility
+            .fromXML(ReportDefinitionTypeTO.class,
+                this.reportDefinitionHandler.create(serviceUtility.toXML(reportDefinitionTO))));
     }
 
     /* (non-Javadoc)
      * @see de.escidoc.core.sm.ReportDefinitionRestService#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws AuthenticationException, AuthorizationException,
+    public void delete(final String id)
+        throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
+
         this.reportDefinitionHandler.delete(id);
     }
 
@@ -89,21 +103,26 @@ public class ReportDefinitionRestServiceImpl implements ReportDefinitionRestServ
      * @see de.escidoc.core.sm.ReportDefinitionRestService#retrieve(java.lang.String)
      */
     @Override
-    public ReportDefinitionTO retrieve(final String id) throws AuthenticationException, AuthorizationException,
-        ReportDefinitionNotFoundException, MissingMethodParameterException, SystemException {
-        return serviceUtility.fromXML(ReportDefinitionTO.class, this.reportDefinitionHandler.retrieve(id));
+    public JAXBElement<ReportDefinitionTypeTO> retrieve(final String id)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, SystemException {
+
+        return factoryProvider.getReportDefinitionFactory().createReportDefinition(
+            serviceUtility.fromXML(ReportDefinitionTypeTO.class, this.reportDefinitionHandler.retrieve(id)));
     }
 
     /* (non-Javadoc)
-     * @see de.escidoc.core.sm.ReportDefinitionRestService#update(java.lang.String, org.escidoc.core.domain.sm.ReportDefinitionTO)
+     * @see de.escidoc.core.sm.ReportDefinitionRestService#update(java.lang.String,
+     * org.escidoc.core.domain.sm.ReportDefinitionTO)
      */
     @Override
-    public ReportDefinitionTO update(final String id, final ReportDefinitionTO reportDefinitionTO) throws AuthenticationException,
-        AuthorizationException, ReportDefinitionNotFoundException, MissingMethodParameterException,
-        ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException {
-        return serviceUtility.fromXML(ReportDefinitionTO.class,
-                this.reportDefinitionHandler.update(id, serviceUtility.toXML(reportDefinitionTO)));
-    }
+    public JAXBElement<ReportDefinitionTypeTO> update(final String id, final ReportDefinitionTypeTO reportDefinitionTO)
+        throws AuthenticationException, AuthorizationException, ReportDefinitionNotFoundException,
+        MissingMethodParameterException, ScopeNotFoundException, InvalidSqlException, ScopeContextViolationException,
+        XmlSchemaValidationException, XmlCorruptedException, SystemException {
 
+        return factoryProvider.getReportDefinitionFactory().createReportDefinition(serviceUtility
+            .fromXML(ReportDefinitionTypeTO.class,
+                this.reportDefinitionHandler.update(id, serviceUtility.toXML(reportDefinitionTO))));
+    }
 }

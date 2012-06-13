@@ -17,13 +17,13 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-
 package org.escidoc.core.cmm.internal;
 
 import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.cmm.ContentModelsRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -36,10 +36,11 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * 
  * @author SWA
- * 
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContentModelsRestServiceImpl implements ContentModelsRestService {
 
     @Autowired
@@ -50,7 +51,7 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
     private ServiceUtility serviceUtility;
 
     /**
-     * 
+     *
      */
     protected ContentModelsRestServiceImpl() {
     }
@@ -58,20 +59,17 @@ public class ContentModelsRestServiceImpl implements ContentModelsRestService {
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.cmm.ContentModelsRestService#retrieveContentModels(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+     * @see de.escidoc.core.cmm.ContentModelsRestService#retrieveContentModels(org.escidoc.core.domain.sru.parameters
+     * .SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
      */
     @Override
-    public JAXBElement<? extends ResponseTypeTO> retrieveContentModels(
-        final SruSearchRequestParametersBean parameters, 
-        final String roleId, 
-        final String userId,
-        final String omitHighlighting) throws InvalidSearchQueryException,
-        SystemException {
+    public JAXBElement<? extends ResponseTypeTO> retrieveContentModels(final SruSearchRequestParametersBean parameters,
+        final String roleId, final String userId, final String omitHighlighting)
+        throws InvalidSearchQueryException, SystemException {
 
         Map<String, String[]> map = serviceUtility.handleSruRequest(parameters, roleId, userId, omitHighlighting);
 
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
-                this.contentModelHandler.retrieveContentModels(map));
+            this.contentModelHandler.retrieveContentModels(map));
     }
-
 }

@@ -21,38 +21,32 @@ package org.escidoc.core.om.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 import java.rmi.RemoteException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBElement;
 
-import org.apache.cxf.jaxrs.ext.MessageContext;
-import org.escidoc.core.domain.components.ComponentPropertiesTO;
-import org.escidoc.core.domain.components.ComponentTO;
-import org.escidoc.core.domain.components.ComponentsTO;
-import org.escidoc.core.domain.content.stream.ContentStreamTO;
-import org.escidoc.core.domain.content.stream.ContentStreamsTO;
-import org.escidoc.core.domain.item.ItemPropertiesTO;
-import org.escidoc.core.domain.item.ItemResourcesTO;
-import org.escidoc.core.domain.item.ItemTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordTO;
-import org.escidoc.core.domain.metadatarecords.MdRecordsTO;
-import org.escidoc.core.domain.ou.ParentsTO;
-import org.escidoc.core.domain.relations.RelationsTO;
-import org.escidoc.core.domain.result.ResultTO;
+import net.sf.oval.guard.Guarded;
+import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.components.ComponentPropertiesTypeTO;
+import org.escidoc.core.domain.components.ComponentTypeTO;
+import org.escidoc.core.domain.components.ComponentsTypeTO;
+import org.escidoc.core.domain.content.stream.ContentStreamTypeTO;
+import org.escidoc.core.domain.content.stream.ContentStreamsTypeTO;
+import org.escidoc.core.domain.item.ItemPropertiesTypeTO;
+import org.escidoc.core.domain.item.ItemResourcesTypeTO;
+import org.escidoc.core.domain.item.ItemTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
+import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
+import org.escidoc.core.domain.parents.ParentsTypeTO;
+import org.escidoc.core.domain.relations.RelationsTypeTO;
+import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
 import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.relation.RelationTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
-import org.escidoc.core.domain.version.history.VersionHistoryTO;
+import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 import org.escidoc.core.om.ItemRestService;
 import org.escidoc.core.utils.io.IOUtils;
 import org.escidoc.core.utils.io.Stream;
@@ -105,11 +99,12 @@ import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 
 /**
  * REST Service Implementation for Item.
- * 
+ *
  * @author SWA
- * 
  */
 @Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ItemRestServiceImpl implements ItemRestService {
 
     private final static Logger LOG = LoggerFactory.getLogger(ItemRestServiceImpl.class);
@@ -121,111 +116,125 @@ public class ItemRestServiceImpl implements ItemRestService {
     @Autowired
     private ServiceUtility serviceUtility;
 
-    @Context
-    private MessageContext messageContext;
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
 
-    protected ItemRestServiceImpl() {}
-
-    @Override
-    public ItemTO create(final ItemTO itemTO) throws MissingContentException, ContextNotFoundException,
-        ContentModelNotFoundException, ReadonlyElementViolationException, MissingAttributeValueException,
-        MissingElementValueException, ReadonlyAttributeViolationException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, XmlSchemaValidationException, MissingMethodParameterException,
-        FileNotFoundException, SystemException, InvalidContentException, ReferencedResourceNotFoundException,
-        RelationPredicateNotFoundException, MissingMdRecordException, InvalidStatusException, RemoteException {
-
-        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.create(serviceUtility.toXML(itemTO)));
+    protected ItemRestServiceImpl() {
     }
 
     @Override
-    public void delete(final String id) throws ItemNotFoundException, AlreadyPublishedException, LockingException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, RemoteException {
+    public JAXBElement<ItemTypeTO> create(final ItemTypeTO itemTO)
+        throws MissingContentException, ContextNotFoundException, ContentModelNotFoundException,
+        ReadonlyElementViolationException, MissingAttributeValueException, MissingElementValueException,
+        ReadonlyAttributeViolationException, AuthenticationException, AuthorizationException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMethodParameterException, FileNotFoundException, SystemException,
+        InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
+        MissingMdRecordException, InvalidStatusException, RemoteException {
+
+        return factoryProvider.getItemFactory().createItem(
+            serviceUtility.fromXML(ItemTypeTO.class, this.itemHandler.create(serviceUtility.toXML(itemTO))));
+    }
+
+    @Override
+    public void delete(final String id)
+        throws ItemNotFoundException, AlreadyPublishedException, LockingException, AuthenticationException,
+        AuthorizationException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        RemoteException {
         this.itemHandler.delete(id);
     }
 
     @Override
-    public ItemTO retrieve(final String id) throws ItemNotFoundException,
+    public JAXBElement<ItemTypeTO> retrieve(final String id)
+        throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, RemoteException {
+        return factoryProvider.getItemFactory().createItem(
+            serviceUtility.fromXML(ItemTypeTO.class, this.itemHandler.retrieve(id)));
+    }
+
+    @Override
+    public JAXBElement<ItemTypeTO> update(final String id, final ItemTypeTO itemTO)
+        throws ItemNotFoundException, FileNotFoundException, InvalidContextException, InvalidStatusException,
+        LockingException, NotPublishedException, MissingLicenceException, ComponentNotFoundException,
+        MissingContentException, AuthenticationException, AuthorizationException, InvalidXmlException,
+        MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,
+        AlreadyExistsException, ReadonlyViolationException, ReferencedResourceNotFoundException,
+        RelationPredicateNotFoundException, ReadonlyVersionException, MissingAttributeValueException,
+        MissingMdRecordException, RemoteException {
+
+        return factoryProvider.getItemFactory().createItem(
+            serviceUtility.fromXML(ItemTypeTO.class, this.itemHandler.update(id, serviceUtility.toXML(itemTO))));
+    }
+
+    @Override
+    public JAXBElement<ComponentTypeTO> createComponent(final String id, final ComponentTypeTO componentTO)
+        throws MissingContentException, ItemNotFoundException, ComponentNotFoundException, LockingException,
+        MissingElementValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
+        MissingMethodParameterException, FileNotFoundException, InvalidXmlException, InvalidContentException,
+        SystemException, ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException,
+        RemoteException {
+
+        return factoryProvider.getComponentFactory().createComponent(serviceUtility
+            .fromXML(ComponentTypeTO.class, this.itemHandler.createComponent(id, serviceUtility.toXML(componentTO))));
+    }
+
+    @Override
+    public JAXBElement<ComponentTypeTO> retrieveComponent(final String id, final String componentId)
+        throws ItemNotFoundException,
         ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
         SystemException, RemoteException {
-        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.retrieve(id));
+
+        return factoryProvider.getComponentFactory().createComponent(
+            serviceUtility.fromXML(ComponentTypeTO.class, this.itemHandler.retrieveComponent(id, componentId)));
     }
 
     @Override
-    public ItemTO update(final String id, final ItemTO itemTO) throws ItemNotFoundException, FileNotFoundException,
-        InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
-        MissingLicenceException, ComponentNotFoundException, MissingContentException, AuthenticationException,
-        AuthorizationException, InvalidXmlException, MissingMethodParameterException, InvalidContentException,
-        SystemException, OptimisticLockingException, AlreadyExistsException, ReadonlyViolationException,
-        ReferencedResourceNotFoundException, RelationPredicateNotFoundException, ReadonlyVersionException,
-        MissingAttributeValueException, MissingMdRecordException, RemoteException {
-
-        return serviceUtility.fromXML(ItemTO.class, this.itemHandler.update(id, serviceUtility.toXML(itemTO)));
-    }
-
-    @Override
-    public ComponentTO createComponent(final String id, final ComponentTO componentTO) throws MissingContentException,
-        ItemNotFoundException, ComponentNotFoundException, LockingException, MissingElementValueException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        FileNotFoundException, InvalidXmlException, InvalidContentException, SystemException,
-        ReadonlyViolationException, OptimisticLockingException, MissingAttributeValueException, RemoteException {
-
-        return serviceUtility.fromXML(ComponentTO.class,
-            this.itemHandler.createComponent(id, serviceUtility.toXML(componentTO)));
-    }
-
-    @Override
-    public ComponentTO retrieveComponent(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException, RemoteException {
-
-        return serviceUtility.fromXML(ComponentTO.class, this.itemHandler.retrieveComponent(id, componentId));
-    }
-
-    @Override
-    public MdRecordsTO retrieveComponentMdRecords(final String id, final String componentId)
+    public JAXBElement<MdRecordsTypeTO> retrieveComponentMdRecords(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException {
 
-        return serviceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveComponentMdRecords(id, componentId));
+        return factoryProvider.getMdRecordsFactory().createMdRecords(serviceUtility
+            .fromXML(MdRecordsTypeTO.class, this.itemHandler.retrieveComponentMdRecords(id, componentId)));
     }
 
     @Override
-    public MdRecordTO retrieveComponentMdRecord(final String id, final String componentId, String mdRecordId)
+    public JAXBElement<MdRecordTypeTO> retrieveComponentMdRecord(final String id, final String componentId,
+        String mdRecordId)
         throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException, SystemException, RemoteException {
 
-        return serviceUtility.fromXML(MdRecordTO.class,
-            this.itemHandler.retrieveComponentMdRecord(id, componentId, mdRecordId));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(serviceUtility
+            .fromXML(MdRecordTypeTO.class, this.itemHandler.retrieveComponentMdRecord(id, componentId, mdRecordId)));
     }
 
     @Override
-    public ComponentTO updateComponent(final String id, final String componentId, ComponentTO componentTO)
+    public JAXBElement<ComponentTypeTO> updateComponent(final String id, final String componentId,
+        ComponentTypeTO componentTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, FileNotFoundException,
         MissingAttributeValueException, AuthenticationException, AuthorizationException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         ReadonlyViolationException, MissingContentException, InvalidContentException, ReadonlyVersionException,
         RemoteException {
 
-        return serviceUtility.fromXML(ComponentTO.class,
-            this.itemHandler.updateComponent(id, componentId, serviceUtility.toXML(componentTO)));
+        return factoryProvider.getComponentFactory().createComponent(serviceUtility.fromXML(ComponentTypeTO.class,
+            this.itemHandler.updateComponent(id, componentId, serviceUtility.toXML(componentTO))));
     }
 
     @Override
-    public ComponentsTO retrieveComponents(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, ComponentNotFoundException, MissingMethodParameterException, SystemException,
-        RemoteException {
+    public JAXBElement<ComponentsTypeTO> retrieveComponents(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, ComponentNotFoundException,
+        MissingMethodParameterException, SystemException, RemoteException {
 
-        return serviceUtility.fromXML(ComponentsTO.class, this.itemHandler.retrieveComponents(id));
+        return factoryProvider.getComponentFactory().createComponents(
+            serviceUtility.fromXML(ComponentsTypeTO.class, this.itemHandler.retrieveComponents(id)));
     }
 
     @Override
-    public ComponentPropertiesTO retrieveComponentProperties(final String id, final String componentId)
+    public JAXBElement<ComponentPropertiesTypeTO> retrieveComponentProperties(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, RemoteException {
 
-        return serviceUtility.fromXML(ComponentPropertiesTO.class,
-            this.itemHandler.retrieveComponentProperties(id, componentId));
+        return factoryProvider.getComponentFactory().createProperties(serviceUtility.fromXML(
+            ComponentPropertiesTypeTO.class, this.itemHandler.retrieveComponentProperties(id, componentId)));
     }
 
     // TODO not supported till version 1.4
@@ -236,24 +245,23 @@ public class ItemRestServiceImpl implements ItemRestService {
     // RemoteException;
 
     @Override
-    public MdRecordTO retrieveMdRecord(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException, RemoteException {
+    public JAXBElement<MdRecordTypeTO> retrieveMdRecord(final String id, final String mdRecordId)
+        throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException, RemoteException {
 
-        return serviceUtility.fromXML(MdRecordTO.class, this.itemHandler.retrieveMdRecord(id, mdRecordId));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(
+            serviceUtility.fromXML(MdRecordTypeTO.class, this.itemHandler.retrieveMdRecord(id, mdRecordId)));
     }
 
     @Override
-    public Stream retrieveMdRecordContent(final String id, final String mdRecordId) throws ItemNotFoundException,
-        MdRecordNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
-        SystemException {
+    public Stream retrieveMdRecordContent(final String id, final String mdRecordId)
+        throws ItemNotFoundException, MdRecordNotFoundException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, SystemException {
 
         Stream stream = new Stream();
         try {
-            Reader reader = new StringReader(this.itemHandler.retrieveMdRecordContent(id, mdRecordId));
-            IOUtils.copy(reader, stream);
-        }
-        catch (IOException e) {
+            IOUtils.copy(this.itemHandler.retrieveMdRecordContent(id, mdRecordId), stream);
+        } catch (IOException e) {
             LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
@@ -261,16 +269,14 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public Stream retrieveDcRecordContent(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, MdRecordNotFoundException,
-        SystemException {
+    public Stream retrieveDcRecordContent(final String id)
+        throws ItemNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        MdRecordNotFoundException, SystemException {
 
         Stream stream = new Stream();
         try {
-            Reader reader = new StringReader(this.itemHandler.retrieveDcRecordContent(id));
-            IOUtils.copy(reader, stream);
-        }
-        catch (IOException e) {
+            IOUtils.copy(this.itemHandler.retrieveDcRecordContent(id), stream);
+        } catch (IOException e) {
             LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
@@ -278,37 +284,42 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public MdRecordTO updateMdRecord(final String id, final String mdRecordId, MdRecordTO mdRecordTO)
+    public JAXBElement<MdRecordTypeTO> updateMdRecord(final String id, final String mdRecordId,
+        final MdRecordTypeTO mdRecordTO)
         throws ItemNotFoundException, XmlSchemaNotFoundException, LockingException, InvalidContentException,
         MdRecordNotFoundException, AuthenticationException, AuthorizationException, InvalidStatusException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         ReadonlyViolationException, ReadonlyVersionException, RemoteException {
 
-        return serviceUtility.fromXML(MdRecordTO.class,
-            this.itemHandler.updateMdRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO)));
+        return factoryProvider.getMdRecordsFactory().createMdRecord(serviceUtility.fromXML(MdRecordTypeTO.class,
+            this.itemHandler.updateMdRecord(id, mdRecordId, serviceUtility.toXML(mdRecordTO))));
     }
 
     @Override
-    public MdRecordsTO retrieveMdRecords(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
+    public JAXBElement<MdRecordsTypeTO> retrieveMdRecords(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(MdRecordsTO.class, this.itemHandler.retrieveMdRecords(id));
+        return factoryProvider.getMdRecordsFactory().createMdRecords(
+            serviceUtility.fromXML(MdRecordsTypeTO.class, this.itemHandler.retrieveMdRecords(id)));
     }
 
     @Override
-    public ContentStreamsTO retrieveContentStreams(final String id) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        RemoteException {
+    public JAXBElement<ContentStreamsTypeTO> retrieveContentStreams(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(ContentStreamsTO.class, this.itemHandler.retrieveContentStreams(id));
+        return factoryProvider.getContentStreamFactory().createContentStreams(
+            serviceUtility.fromXML(ContentStreamsTypeTO.class, this.itemHandler.retrieveContentStreams(id)));
     }
 
     @Override
-    public ContentStreamTO retrieveContentStream(final String id, final String name) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        ContentStreamNotFoundException, RemoteException {
+    public JAXBElement<ContentStreamTypeTO> retrieveContentStream(final String id, final String name)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, ContentStreamNotFoundException, RemoteException {
 
-        return serviceUtility.fromXML(ContentStreamTO.class, this.itemHandler.retrieveContentStream(id, name));
+        return factoryProvider.getContentStreamFactory().createContentStream(
+            serviceUtility.fromXML(ContentStreamTypeTO.class, this.itemHandler.retrieveContentStream(id, name)));
     }
 
     @Override
@@ -319,52 +330,60 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public ItemPropertiesTO retrieveProperties(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
+    public JAXBElement<ItemPropertiesTypeTO> retrieveProperties(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(ItemPropertiesTO.class, this.itemHandler.retrieveProperties(id));
+        return factoryProvider.getItemFactory().createProperties(
+            serviceUtility.fromXML(ItemPropertiesTypeTO.class, this.itemHandler.retrieveProperties(id)));
     }
 
     @Override
-    public VersionHistoryTO retrieveVersionHistory(final String id) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        RemoteException {
+    public JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(VersionHistoryTO.class, this.itemHandler.retrieveVersionHistory(id));
+        return factoryProvider.getVersionHistoryFactory().createVersionHistory(
+            serviceUtility.fromXML(VersionHistoryTypeTO.class, this.itemHandler.retrieveVersionHistory(id)));
     }
 
     @Override
-    public ParentsTO retrieveParents(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException, RemoteException {
+    public JAXBElement<ParentsTypeTO> retrieveParents(final String id)
+        throws ItemNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(ParentsTO.class, this.itemHandler.retrieveParents(id));
+        return factoryProvider.getParentsFactory().createParents(
+            serviceUtility.fromXML(ParentsTypeTO.class, this.itemHandler.retrieveParents(id)));
     }
 
     @Override
-    public RelationsTO retrieveRelations(final String id) throws ItemNotFoundException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, RemoteException {
+    public JAXBElement<RelationsTypeTO> retrieveRelations(final String id)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, RemoteException {
 
-        return serviceUtility.fromXML(RelationsTO.class, this.itemHandler.retrieveRelations(id));
+        return factoryProvider.getRelationsFactory().createRelations(
+            serviceUtility.fromXML(RelationsTypeTO.class, this.itemHandler.retrieveRelations(id)));
     }
 
     @Override
-    public ItemResourcesTO retrieveResources(final String id) throws ItemNotFoundException,
-        MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
+    public JAXBElement<ItemResourcesTypeTO> retrieveResources(final String id)
+        throws ItemNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
+        SystemException {
 
-        return serviceUtility.fromXML(ItemResourcesTO.class, this.itemHandler.retrieveResources(id));
+        return factoryProvider.getItemFactory().createResources(
+            serviceUtility.fromXML(ItemResourcesTypeTO.class, this.itemHandler.retrieveResources(id)));
     }
 
     @Override
-    public Stream retrieveResource(final String id, final String resourceName) throws ItemNotFoundException,
-        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
-        OperationNotFoundException {
+    public Stream retrieveResource(final String id, final String resourceName)
+        throws ItemNotFoundException, AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        SystemException, OperationNotFoundException {
 
         Stream stream = new Stream();
         try {
             InputStream inputStream = this.itemHandler.retrieveResource(id, resourceName).getContent();
             IOUtils.copy(inputStream, stream);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOG.error("Failed to copy stream", e);
             throw new SystemException(e);
         }
@@ -372,132 +391,142 @@ public class ItemRestServiceImpl implements ItemRestService {
     }
 
     @Override
-    public ResultTO release(final String id, final StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException, RemoteException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.release(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO submit(final String id, final StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, InvalidStatusException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException, RemoteException {
-
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.submit(id, serviceUtility.toXML(statusTaskParamTO)));
-    }
-
-    @Override
-    public ResultTO revise(final String id, final StatusTaskParamTO statusTaskParamTO) throws AuthenticationException,
-        AuthorizationException, ItemNotFoundException, ComponentNotFoundException, LockingException,
-        InvalidStatusException, MissingMethodParameterException, SystemException, OptimisticLockingException,
-        ReadonlyViolationException, ReadonlyVersionException, InvalidContentException, XmlCorruptedException,
+    public JAXBElement<ResultTypeTO> release(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException,
         RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.revise(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.itemHandler.release(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO withdraw(final String id, final StatusTaskParamTO statusTaskParamTO) throws ItemNotFoundException,
-        ComponentNotFoundException, NotPublishedException, LockingException, AlreadyWithdrawnException,
-        AuthenticationException, AuthorizationException, InvalidStatusException, MissingMethodParameterException,
-        SystemException, OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException,
-        InvalidXmlException, RemoteException {
+    public JAXBElement<ResultTypeTO> submit(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidStatusException,
+        AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidXmlException,
+        RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.itemHandler.submit(id, serviceUtility.toXML(statusTaskParamTO))));
     }
 
     @Override
-    public ResultTO lock(final String id, final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    public JAXBElement<ResultTypeTO> revise(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws AuthenticationException, AuthorizationException, ItemNotFoundException, ComponentNotFoundException,
+        LockingException, InvalidStatusException, MissingMethodParameterException, SystemException,
+        OptimisticLockingException, ReadonlyViolationException, ReadonlyVersionException, InvalidContentException,
+        XmlCorruptedException, RemoteException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.itemHandler.revise(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> withdraw(final String id, final StatusTaskParamTO statusTaskParamTO)
+        throws ItemNotFoundException, ComponentNotFoundException, NotPublishedException, LockingException,
+        AlreadyWithdrawnException, AuthenticationException, AuthorizationException, InvalidStatusException,
+        MissingMethodParameterException, SystemException, OptimisticLockingException, ReadonlyViolationException,
+        ReadonlyVersionException, InvalidXmlException, RemoteException {
+
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class, this.itemHandler.withdraw(id, serviceUtility.toXML(statusTaskParamTO))));
+    }
+
+    @Override
+    public JAXBElement<ResultTypeTO> lock(final String id,
+        final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, InvalidContentException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidXmlException, InvalidStatusException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility
+            .fromXML(ResultTypeTO.class,
+                this.itemHandler.lock(id, serviceUtility.toXML(optimisticLockingTaskParamTO))));
     }
 
     @Override
-    public ResultTO unlock(final String id, final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
+    public JAXBElement<ResultTypeTO> unlock(final String id,
+        final OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.unlock(id, serviceUtility.toXML(optimisticLockingTaskParamTO))));
     }
 
     @Override
-    public void deleteComponent(final String id, final String componentId) throws ItemNotFoundException,
-        ComponentNotFoundException, LockingException, AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, SystemException, InvalidStatusException, RemoteException {
+    public void deleteComponent(final String id, final String componentId)
+        throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
+        RemoteException {
 
         this.itemHandler.deleteComponent(id, componentId);
     }
 
     @Override
-    public ResultTO assignVersionPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
+    public JAXBElement<ResultTypeTO> assignVersionPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, ReadonlyVersionException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.assignVersionPid(id, serviceUtility.toXML(assignPidTaskParamTO))));
     }
 
     @Override
-    public ResultTO assignObjectPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
+    public JAXBElement<ResultTypeTO> assignObjectPid(final String id, final AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, ComponentNotFoundException, LockingException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidStatusException, XmlCorruptedException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.assignObjectPid(id, serviceUtility.toXML(assignPidTaskParamTO))));
     }
 
     @Override
-    public ResultTO assignContentPid(
-        final String id, final String componentId, AssignPidTaskParamTO assignPidTaskParamTO)
+    public JAXBElement<ResultTypeTO> assignContentPid(final String id, final String componentId,
+        AssignPidTaskParamTO assignPidTaskParamTO)
         throws ItemNotFoundException, LockingException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidStatusException,
         ComponentNotFoundException, XmlCorruptedException, ReadonlyVersionException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class,
-            this.itemHandler.assignContentPid(id, componentId, serviceUtility.toXML(assignPidTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.assignContentPid(id, componentId, serviceUtility.toXML(assignPidTaskParamTO))));
     }
 
     @Override
-    public ResultTO addContentRelations(final String id, final RelationTaskParamTO relationTaskParamTO)
+    public JAXBElement<ResultTypeTO> addContentRelations(final String id, final RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException, AlreadyExistsException,
         InvalidStatusException, InvalidXmlException, MissingElementValueException, LockingException,
         ReadonlyViolationException, InvalidContentException, AuthenticationException, AuthorizationException,
         MissingMethodParameterException, ReadonlyVersionException, RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.addContentRelations(id, serviceUtility.toXML(relationTaskParamTO))));
     }
 
     @Override
-    public ResultTO removeContentRelations(final String id, final RelationTaskParamTO relationTaskParamTO)
+    public JAXBElement<ResultTypeTO> removeContentRelations(final String id,
+        final RelationTaskParamTO relationTaskParamTO)
         throws SystemException, ItemNotFoundException, ComponentNotFoundException, OptimisticLockingException,
         InvalidStatusException, MissingElementValueException, InvalidContentException, InvalidXmlException,
         ContentRelationNotFoundException, AlreadyDeletedException, LockingException, ReadonlyViolationException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException, ReadonlyVersionException,
         RemoteException {
 
-        return serviceUtility.fromXML(ResultTO.class, this.itemHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO)));
+        return factoryProvider.getResultFactory().createResult(serviceUtility.fromXML(ResultTypeTO.class,
+            this.itemHandler.removeContentRelations(id, serviceUtility.toXML(relationTaskParamTO))));
     }
 
     @Override
-    public Response retrieveContent(final String id, final String componentId) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException, SystemException, InvalidStatusException,
-        ResourceNotFoundException {
+    public Response retrieveContent(final String id, final String componentId)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        InvalidStatusException, ResourceNotFoundException {
+
         return serviceUtility.toResponse(this.itemHandler.retrieveContent(id, componentId));
     }
 }

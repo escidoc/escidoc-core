@@ -44,7 +44,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.aopalliance.aop.AspectException;
-import org.escidoc.core.domain.exception.ExceptionTOFactory;
+import org.escidoc.core.domain.exception.ExceptionTypeTOFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXParseException;
@@ -220,7 +220,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
         if (exception.getClass().getName() != null) {
             responseBuilder.header(HEADER_ESCIDOC_EXCEPTION, exception.getClass().getName());
         }
-        responseBuilder.entity(ExceptionTOFactory.generateExceptionTO(exception));
+        responseBuilder.entity(ExceptionTypeTOFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
@@ -242,7 +242,7 @@ public class EscidocExceptionMapper implements ExceptionMapper<Throwable> {
                 responseBuilder.header(HttpHeaders.LOCATION, ((SecurityException) exception).getRedirectLocation());
             }
         }
-        responseBuilder.entity(ExceptionTOFactory.generateExceptionTO(exception));
+        responseBuilder.entity(ExceptionTypeTOFactory.generateExceptionTO(exception));
         return responseBuilder;
     }
 
