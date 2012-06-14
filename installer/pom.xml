@@ -149,6 +149,26 @@
           </dependency>
         </dependencies>
         <executions>
+        <execution>
+            <id>prepare-lucene-directoies</id>
+            <phase>prepare-package</phase>
+            <configuration>
+                <tasks>
+                  <echo message="Preparing Lucene Index Directories" />
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/content_model_admin"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/content_relation_admin"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/context_admin"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/escidoc_all"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/escidocoaipmh_all"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/escidocou_all"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/item_container_admin"/>
+                  <mkdir dir="${staging.dir}/config/escidoc/data/index/lucene/ou_admin"/>
+                </tasks>
+            </configuration>
+            <goals>
+                <goal>run</goal>
+            </goals>
+        </execution>
           <execution>
             <id>prepare-fedora-configs</id>
             <phase>prepare-package</phase>
