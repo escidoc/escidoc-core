@@ -24,7 +24,9 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * The interface for access to the administration tool.
@@ -188,6 +190,16 @@ public interface AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
     String getRepositoryInfo() throws SystemException, AuthenticationException, AuthorizationException;
+
+    /**
+     * Provides a xml structure containing information about database-consistency.
+     *
+     * @return xml structure with database consistency properties
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
+     */
+    String checkDatabaseConsistency() throws SystemException, AuthenticationException, AuthorizationException;
 
     /**
      * Loads a set of example objects into the framework.

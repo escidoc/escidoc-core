@@ -207,6 +207,20 @@ public class AdminHandler implements AdminHandlerInterface {
     }
 
     /**
+     * Provides a xml structure containing information about database-consistency.
+     *
+     * @return xml structure with database consistency properties
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
+     */
+    @Override
+    public String checkDatabaseConsistency() throws AuthenticationException, AuthorizationException,
+        WebserverSystemException, EncodingSystemException {
+        return this.business.checkDatabaseConsistency();
+    }
+
+    /**
      * Loads an set of examples objects into the framework.
      *
      * @param type Specifies the type of example set which is to load.

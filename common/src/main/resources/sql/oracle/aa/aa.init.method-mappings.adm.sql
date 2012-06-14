@@ -69,6 +69,17 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
   VALUES ('escidoc-im-adm-get-repository-info', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, 0, 'none', 'escidoc:mm-adm-get-repository-info');
 
+        /**
+         * checkDatabaseConsistency
+         */
+INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
+  VALUES ('escidoc:mm-adm-check-database-consistency', 'de.escidoc.core.adm.service.interfaces.AdminHandlerInterface', 'checkDatabaseConsistency', 'info:escidoc/names:aa:1.0:action:get-repository-info',
+  1, 1);                  
+
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-adm-check-database-consistency', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, 0, 'none', 'escidoc:mm-adm-check-database-consistency');
+
  
         /**
          * getIndexConfiguration

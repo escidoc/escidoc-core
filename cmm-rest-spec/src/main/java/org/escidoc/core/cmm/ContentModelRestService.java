@@ -27,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -37,6 +38,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
@@ -107,17 +109,18 @@ public interface ContentModelRestService {
         MissingMethodParameterException, OptimisticLockingException, SystemException, ReadonlyVersionException,
         MissingAttributeValueException, InvalidContentException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(@PathParam("id") String id, String name)
-    // throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
-    // ContentModelNotFoundException, SystemException;
+    @GET
+    @Path("/{id}/md-record-definitions/md-record-definition/{name}/schema/content")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response retrieveMdRecordDefinitionSchemaContent(@PathParam("id") String id, @PathParam("name") String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
+        ContentModelNotFoundException, SystemException;
 
-    // FIXME
-    // @GET
-    // @Path("/{id}")
-    // EscidocBinaryContent retrieveResourceDefinitionXsltContent(@PathParam("id") String id, String name) throws
-    // AuthenticationException,
-    // AuthorizationException, MissingMethodParameterException, SystemException, ResourceNotFoundException;
+    @GET
+    @Path("/{id}/resource-definitions/resource-definition/{name}/xslt/content")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    Response retrieveResourceDefinitionXsltContent(@PathParam("id") String id, @PathParam("name") String name)
+        throws AuthenticationException, AuthorizationException, MissingMethodParameterException, SystemException,
+        ResourceNotFoundException;
+
 }

@@ -4,7 +4,10 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
 import org.springframework.security.core.context.SecurityContext;
 
 import java.rmi.Remote;
@@ -63,6 +66,12 @@ public interface AdminHandlerService extends Remote {
 
     String getRepositoryInfo(String authHandle, Boolean restAccess) throws SystemException, AuthenticationException,
         AuthorizationException, RemoteException;
+
+    String checkDatabaseConsistency(SecurityContext securityContext) throws SystemException, AuthenticationException,
+        AuthorizationException, RemoteException;
+
+    String checkDatabaseConsistency(String authHandle, Boolean restAccess) throws SystemException,
+        AuthenticationException, AuthorizationException, RemoteException;
 
     String loadExamples(String type, SecurityContext securityContext) throws InvalidSearchQueryException,
         SystemException, AuthenticationException, AuthorizationException, RemoteException;

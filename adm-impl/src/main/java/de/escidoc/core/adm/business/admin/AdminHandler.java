@@ -306,14 +306,6 @@ public class AdminHandler {
             properties.setProperty("escidoc-core.earliest-date", "n/o");
         }
 
-        properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
-        try {
-            properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
-        }
-
         // add namespace of important schemas
         properties.putAll(schemaNamespaces());
 
@@ -322,6 +314,41 @@ public class AdminHandler {
             properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, checksumAlgorithm);
         }
 
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            properties.storeToXML(os, null);
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        final String propertiesXml;
+        try {
+            propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
+        }
+        catch (final UnsupportedEncodingException e) {
+            throw new EncodingSystemException(e);
+        }
+        return propertiesXml;
+    }
+
+    /**
+     * Provides a xml structure containing information about database-consistency.
+     * 
+     * @return xml structure with database consistency properties
+     * @throws WebserverSystemException
+     *             if anything go wrong.
+     * @throws EncodingSystemException
+     *             if anything go wrong.
+     */
+    public String checkDatabaseConsistency() throws WebserverSystemException, EncodingSystemException {
+        final Properties properties = new Properties();
+        properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
+        try {
+            properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
+        }
+        catch (final Exception e) {
+            throw new WebserverSystemException(e);
+        }
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             properties.storeToXML(os, null);

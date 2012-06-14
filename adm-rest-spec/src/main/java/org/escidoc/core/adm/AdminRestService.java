@@ -183,6 +183,22 @@ public interface AdminRestService {
         EncodingSystemException, SystemException;
 
     /**
+     * Provides a xml structure containing information about database-consistency.
+     *
+     * @return xml structure with database consistency properties as TO
+     * @throws SystemException         Thrown in case of an internal error.
+     * @throws AuthenticationException Thrown if the authentication failed due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if the authorization failed.
+     */
+    @GET
+    @Path("/check-database-consistency")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<PropertiesTypeTO> checkDatabaseConsistency()
+        throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException, SystemException;
+
+    /**
      * Provides a xml structure containing the index-configuration as TO.
      *
      * @return xml structure with index configuration as TO
