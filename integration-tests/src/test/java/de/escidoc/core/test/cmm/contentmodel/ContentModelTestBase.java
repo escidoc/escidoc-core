@@ -38,8 +38,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.springframework.http.MediaType;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -445,4 +447,41 @@ public class ContentModelTestBase extends CmmTestBase {
         assertObjid(refObjid);
 
     }
+
+    /**
+     * Determines the namespace prefix of the content-model used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the content-model element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineContentModelNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTENT_MODEL);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Content-Model NS-Prefix for md-record-definition not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the xlink used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the xlink element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
+
+        Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
+        if (hrefAttr != null) {
+            return determinePrefix(hrefAttr);
+        }
+        else {
+            throw new IOException("Content-Model NS-Prefix for xlink not found");
+        }
+    }
+
 }
