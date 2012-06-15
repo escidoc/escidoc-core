@@ -250,7 +250,7 @@ public class StagingFileIT extends StagingFileTestBase {
         Document document = EscidocAbstractTest.getDocument(stagingFileXml);
         String stagingFileHref =
             Constants.PROTOCOL + "://" + EscidocTestBase.getBaseHost() + ":" + EscidocTestBase.getBasePort()
-                + selectSingleNode(document, "/staging-file/@href").getTextContent();
+                + Constants.ESCIDOC_BASE_URI + selectSingleNode(document, "/staging-file/@href").getTextContent();
 
         Document itemDoc =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ST_ITEM_PATH, "escidoc_item_for_staging.xml");
