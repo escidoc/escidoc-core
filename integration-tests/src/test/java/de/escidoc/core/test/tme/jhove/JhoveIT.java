@@ -81,7 +81,7 @@ public class JhoveIT extends JhoveTestBase {
      * 
      * @throws Exception
      */
-    @Test(expected = XmlCorruptedException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testJhoveEtm2b() throws Exception {
 
         extract("<request xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
@@ -91,7 +91,7 @@ public class JhoveIT extends JhoveTestBase {
      * 
      * @throws Exception
      */
-    @Test(expected = XmlCorruptedException.class)
+    @Test(expected = XmlSchemaValidationException.class)
     public void testJhoveEtm2c() throws Exception {
 
         extract("<requests />");
