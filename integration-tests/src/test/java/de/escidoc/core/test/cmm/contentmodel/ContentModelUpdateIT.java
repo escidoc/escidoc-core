@@ -33,6 +33,8 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -131,25 +133,6 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             update(CONTEXT_ID, cmXml);
-            EscidocAbstractTest.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(ec, e);
-        }
-    }
-
-    /**
-     * Test updating an ContentModel without id.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testCtmUCt3() throws Exception {
-
-        String cmXml = getExampleTemplate("content-model-minimal-for-create.xml");
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            update(null, cmXml);
             EscidocAbstractTest.failMissingException(ec);
         }
         catch (final Exception e) {
@@ -289,17 +272,19 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
         String objid = getObjidValue(cmV1E1);
 
         // create MdRecordDefinition
+        String contentModelNsPrefix = determineContentModelNamespacePrefix(cmDocV1E1);
+        String xlinkNsPrefix = determineXlinkNamespacePrefix(cmDocV1E1);
         Element mdRecord =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-definition");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":md-record-definition");
         mdRecord.setAttribute("name", testDefinitionName);
-        Element mdRecordContent = cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:schema");
-        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", getBaseUrl()
-            + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
+        Element mdRecordContent = cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":schema");
+        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", xlinkNsPrefix + ":href", getBaseUrl()
+            + Constants.ESCIDOC_BASE_URI + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 
         // create MdRecordDefinitions
         Element mdRecords =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-definitions");
+            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":md-record-definitions");
         mdRecords.appendChild(mdRecord);
 
         Node resources = selectSingleNode(cmDocV1E1, "/content-model/resources");

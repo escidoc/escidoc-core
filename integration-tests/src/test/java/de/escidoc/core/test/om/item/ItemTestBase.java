@@ -1021,20 +1021,6 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
-     * Determines the namespace prefix of the provided node.
-     *
-     * @param node The <code>Node</code> to get the namespace prefix from.
-     * @return Returns the namespace prefix of the provided <code>Node</code>.
-     */
-    protected String determinePrefix(final Node node) {
-        String prefix = node.getPrefix();
-        if (prefix == null) {
-            prefix = node.getNodeName().replaceAll(":.*", "");
-        }
-        return prefix;
-    }
-
-    /**
      * Determines the namespace prefix of the md-record used in the document.
      *
      * @param document The document to look up the namespace in.
@@ -1053,16 +1039,16 @@ public class ItemTestBase extends OmTestBase {
                 return determinePrefix(root);
             }
             else {
-                throw new IOException("Component NS-Prefix not found");
+                throw new IOException("MD-Record NS-Prefix not found");
             }
         }
     }
 
     /**
-     * Determines the namespace prefix of the md-record used in the document.
+     * Determines the namespace prefix of the components used in the document.
      *
      * @param document The document to look up the namespace in.
-     * @return Returns the namespace prefix of the md-record element of the document
+     * @return Returns the namespace prefix of the components element of the document
      * @throws Exception If anything fails.
      */
     protected String determineComponentsNamespacePrefix(final Document document) throws Exception {
@@ -1101,10 +1087,10 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
-     * Determines the namespace prefix of the md-record used in the document.
+     * Determines the namespace prefix of the properties used in the document.
      *
      * @param document The document to look up the namespace in.
-     * @return Returns the namespace prefix of the md-record element of the document
+     * @return Returns the namespace prefix of the properties element of the document
      * @throws Exception If anything fails.
      */
     protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
@@ -1119,16 +1105,16 @@ public class ItemTestBase extends OmTestBase {
                 return determinePrefix(root);
             }
             else {
-                throw new IOException("Component NS-Prefix not found");
+                throw new IOException("Properties NS-Prefix not found");
             }
         }
     }
 
     /**
-     * Determines the namespace prefix of the md-record used in the document.
+     * Determines the namespace prefix of the xlink used in the document.
      *
      * @param document The document to look up the namespace in.
-     * @return Returns the namespace prefix of the md-record element of the document
+     * @return Returns the namespace prefix of the xlink element of the document
      * @throws Exception If anything fails.
      */
     protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
@@ -1143,7 +1129,7 @@ public class ItemTestBase extends OmTestBase {
                 return determinePrefix(hrefAttr);
             }
             else {
-                throw new IOException("Component NS-Prefix not found");
+                throw new IOException("XLINK NS-Prefix not found");
             }
         }
     }

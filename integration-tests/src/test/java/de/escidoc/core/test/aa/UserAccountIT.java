@@ -851,26 +851,6 @@ public class UserAccountIT extends UserAccountTestBase {
     }
 
     /**
-     * Test declining update of UserAccount without providing an id.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAAUua4() throws Exception {
-
-        final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
-
-        try {
-            update(null, toString(createdDocument, false));
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test declining updating of UserAccount in case of an optimistic locking error.
      * 
      * @throws Exception
@@ -2174,7 +2154,7 @@ public class UserAccountIT extends UserAccountTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
 
         String result = null;
 
@@ -2559,7 +2539,7 @@ public class UserAccountIT extends UserAccountTestBase {
         Node resourcesNode = selectSingleNode(resourcesDocument, XPATH_RESOURCES);
         final NodeList childNodes = resourcesNode.getChildNodes();
         // expected nodes = 3: text: current-grants, preferences, attributes
-        assertEquals("Unexpected number of children of resources, ", 4, childNodes.getLength());
+        assertEquals("Unexpected number of children of resources, ", 3, childNodes.getLength());
     }
 
     /**

@@ -1039,26 +1039,6 @@ public class RoleIT extends AaTestBase {
     }
 
     /**
-     * Test declining updating a Role without providing role id.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testAAUro4() throws Exception {
-
-        Document createdDocument = createSuccessfully("role_for_create.xml");
-        Document toBeUpdatedDocument = createdDocument;
-
-        try {
-            update(null, toString(toBeUpdatedDocument, false));
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test declining updating a Role without providing XML data.
      *
      * @throws Exception If anything fails.
@@ -1929,7 +1909,7 @@ public class RoleIT extends AaTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
 
         String result = null;
 

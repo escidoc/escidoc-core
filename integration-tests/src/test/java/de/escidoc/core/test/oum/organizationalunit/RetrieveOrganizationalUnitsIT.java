@@ -440,7 +440,7 @@ public class RetrieveOrganizationalUnitsIT extends OrganizationalUnitTestBase {
     public void testExplainRetrieveOrganizationalUnits() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
 
         String result = null;
 

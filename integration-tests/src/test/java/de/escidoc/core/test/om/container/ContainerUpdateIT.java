@@ -951,17 +951,6 @@ public class ContainerUpdateIT extends ContainerTestBase {
     }
 
     /**
-     * Update without container ID.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test(expected = MissingMethodParameterException.class)
-    public void testOM_UCO_4_1() throws Exception {
-
-        update(null, retrieve(theContainerId));
-    }
-
-    /**
      * Update without xml representation.
      *
      * @throws Exception If anything fails.
@@ -1524,9 +1513,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
         NodeList mdrecordsAfterUpdate = selectNodeList(updatedDocument, "/container/md-records/md-record");
         assertEquals(mdrecordsAfterUpdate.getLength() + 1, mdrecordsAfterCreate.getLength());
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(updatedDocument);
         Element mdRecord =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
-                "escidocMetadataRecords:md-record");
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = updatedDocument.createElement("bla");
@@ -1565,9 +1555,10 @@ public class ContainerUpdateIT extends ContainerTestBase {
         NodeList mdrecordsAfterCreate = selectNodeList(createdDocument, "/container/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
         Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3",
-                "escidocMetadataRecords:md-record");
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");

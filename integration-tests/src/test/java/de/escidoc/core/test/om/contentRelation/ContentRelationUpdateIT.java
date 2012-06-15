@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -111,12 +112,14 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         assertNull("Escidoc md-record must be deleted", notExistedMdRecord);
 
         // add new md-record element
+        String mdRecordNsPrefix =
+            updatedXml.replaceFirst("(?s).*xmlns:(.*?)=\"http://www.escidoc.de/schemas/metadatarecords.*", "$1");
         Element mdRecordsNew =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-records");
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-records");
         Element mdRecord =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecordsNew.appendChild(mdRecord);
         mdRecord.setAttribute("name", "md2");
         mdRecord.setAttribute("schema", "bla");
@@ -151,9 +154,10 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
         Document relationCreated = getDocument(relationXml);
         NodeList mdRecordsCreated = selectNodeList(relationCreated, "/content-relation/md-records/md-record");
         int numberMdRecordsCreated = mdRecordsCreated.getLength();
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(relationCreated);
         Element mdRecord =
-            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "md2");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = relationCreated.createElement("md");
@@ -184,9 +188,10 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
     public void testAddSecondEscidocMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
 
+        String mdRecordNsPrefix = determineMdRecordNamespacePrefix(relationCreated);
         Element mdRecord =
-            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+            relationCreated.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
+                + ":md-record");
         mdRecord.setAttribute("name", "escidoc");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = relationCreated.createElement("md");

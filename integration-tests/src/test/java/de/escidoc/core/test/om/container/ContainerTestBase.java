@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.container;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -812,6 +813,78 @@ public class ContainerTestBase extends OmTestBase {
     public void assertListContains(final String msg, final List<String> arg0, final String arg1) {
         if (!arg0.contains(arg1)) {
             fail(msg);
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineMdRecordNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTAINER_MD_RECORD);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("MD-Record NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the container used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the item element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineContainerNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTAINER);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Container NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTAINER_PROPERTIES + "/creation-date");
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Properties NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the xlink used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the xlink element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
+
+        Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
+        if (hrefAttr != null) {
+            return determinePrefix(hrefAttr);
+        }
+        else {
+            throw new IOException("XLINK NS-Prefix not found");
         }
     }
 

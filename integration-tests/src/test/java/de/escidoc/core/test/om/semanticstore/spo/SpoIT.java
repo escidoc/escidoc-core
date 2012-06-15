@@ -36,6 +36,7 @@ import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -84,6 +85,7 @@ public class SpoIT extends SpoTestBase {
      * Tests successfully request of the triple store. Query for all entries of a subject. Result is filtered to
      * relation entries only.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestNTriples() throws Exception {
         String sourceId = createItemHelper();
@@ -109,6 +111,7 @@ public class SpoIT extends SpoTestBase {
      * Tests successfully request of the triple store. Query for all entrie of a subject. Result is filtered to relation
      * entries only.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestRdfXml() throws Exception {
         String sourceId = createItemHelper();
@@ -131,6 +134,7 @@ public class SpoIT extends SpoTestBase {
     /**
      * Tests unsuccessfully request of the triple store with invalid predicate.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestForbiddenPredicate1() throws Exception {
         String sourceId = createItemHelper();
@@ -156,6 +160,7 @@ public class SpoIT extends SpoTestBase {
     /**
      * Tests unsuccessfully request of the triple store with invalid predicate.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestForbiddenPredicate2() throws Exception {
         String sourceId = createItemHelper();
@@ -181,6 +186,7 @@ public class SpoIT extends SpoTestBase {
     /**
      * Tests successfully request of the triple store. Query for a specific (single) relation entry.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestAllowedPredicate() throws Exception {
         String sourceId = createItemHelper();
@@ -203,6 +209,7 @@ public class SpoIT extends SpoTestBase {
     /**
      * Tests declining wrong request of the triple store containing a wrong query.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestWithWrongQuery() throws Exception {
         String id = createItemHelper();
@@ -221,6 +228,7 @@ public class SpoIT extends SpoTestBase {
     /**
      * Tests declining wrong request of the triple store containing a wrong output format.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testSpoRequestWithWrongOutputFormat() throws Exception {
         String id = createItemHelper();
@@ -242,6 +250,7 @@ public class SpoIT extends SpoTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testOM_Spo_1() throws Exception {
 

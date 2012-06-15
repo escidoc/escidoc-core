@@ -105,7 +105,7 @@ public class DeviationClient extends ClientBase {
         com.yourmediashelf.fedora.client.FedoraClient restClient =
             new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(EscidocTestBase
                 .getBaseUrl()
-                + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
+                + Constants.ESCIDOC_BASE_URI + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
         return restClient;
     }
 

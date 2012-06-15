@@ -30,10 +30,12 @@ package de.escidoc.core.test.om.context;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
@@ -432,6 +434,60 @@ public class ContextTestBase extends OmTestBase {
             return "";
         }
         return param;
+    }
+
+    /**
+     * Determines the namespace prefix of the content-relation used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the item element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineContextNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTEXT);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Context NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the properties used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the properties element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTEXT_PROPERTIES + "/creation-date");
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Properties NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the xlink used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the xlink element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
+
+        Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
+        if (hrefAttr != null) {
+            return determinePrefix(hrefAttr);
+        }
+        else {
+            throw new IOException("XLINK NS-Prefix not found");
+        }
     }
 
 }

@@ -38,6 +38,8 @@ import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
  */
 public class CmmTestBase extends EscidocAbstractTest {
 
+    public static final String XPATH_CONTENT_MODEL = "/content-model";
+
     private ContentModelClient cmClient = null;
 
     public CmmTestBase() {

@@ -42,6 +42,7 @@ import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -943,6 +944,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
      *
      * @throws Exception Thrown if anything fails.
      */
+    @Ignore("SPO-Interface is deprecated")
     @Test
     public void testAaDef2() throws Exception {
 

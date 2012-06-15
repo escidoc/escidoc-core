@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.RequestAddCookies;
@@ -237,7 +238,7 @@ public class ContainerReferenceIT extends ContainerTestBase {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        String httpUrl = getBaseUrl() + href;
+        String httpUrl = getBaseUrl() + Constants.ESCIDOC_BASE_URI + href;
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 

@@ -687,25 +687,6 @@ public class UserGroupIT extends UserGroupTestBase {
     }
 
     /**
-     * Test declining update of UserGroup without providing an id.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void testAAUug4() throws Exception {
-
-        final Document createdDocument = createSuccessfully("escidoc_usergroup_for_create.xml");
-
-        try {
-            update(null, toString(createdDocument, false));
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test declining updating of UserGroup in case of an optimistic locking error.
      *
      * @throws Exception If anything fails.
@@ -1917,7 +1898,7 @@ public class UserGroupIT extends UserGroupTestBase {
     public void explainTest() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
 
         String result = null;
 

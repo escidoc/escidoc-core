@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.contentRelation;
 
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,9 @@ import de.escidoc.core.test.om.OmTestBase;
 public class ContentRelationTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTENT_RELATION = "/content-relation";
+
+    protected static final String XPATH_CONTENT_RELATION_MD_RECORD =
+        XPATH_CONTENT_RELATION + "/md-records/md-record[1]";
 
     protected static final String XPATH_CONTENT_RELATION_XLINK_HREF = XPATH_CONTENT_RELATION + PART_XLINK_HREF;
 
@@ -527,6 +531,78 @@ public class ContentRelationTestBase extends OmTestBase {
         loginNameNode.setTextContent(loginname);
 
         return loginname;
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineMdRecordNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTENT_RELATION_MD_RECORD);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("MD-Record NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the content-relation used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the item element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineContainerNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTENT_RELATION);
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Content-Relation NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the md-record used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the md-record element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determinePropertiesNamespacePrefix(final Document document) throws Exception {
+
+        Node root = selectSingleNode(document, XPATH_CONTENT_RELATION_PROPERTIES + "/creation-date");
+        if (root != null) {
+            return determinePrefix(root);
+        }
+        else {
+            throw new IOException("Properties NS-Prefix not found");
+        }
+    }
+
+    /**
+     * Determines the namespace prefix of the xlink used in the document.
+     *
+     * @param document The document to look up the namespace in.
+     * @return Returns the namespace prefix of the xlink element of the document
+     * @throws Exception If anything fails.
+     */
+    protected String determineXlinkNamespacePrefix(final Document document) throws Exception {
+
+        Node hrefAttr = selectSingleNode(document, "/" + PART_XLINK_HREF);
+        if (hrefAttr != null) {
+            return determinePrefix(hrefAttr);
+        }
+        else {
+            throw new IOException("XLINK NS-Prefix not found");
+        }
     }
 
 }

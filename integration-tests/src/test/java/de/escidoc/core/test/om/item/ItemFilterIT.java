@@ -483,7 +483,7 @@ public class ItemFilterIT extends ItemTestBase {
     public void testExplainRetrieveItems() throws Exception {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
+        filterParams.put(FILTER_PARAMETER_OPERATION, new String[] { FILTER_PARAMETER_EXPLAIN });
 
         String result = null;
 

@@ -106,18 +106,18 @@ public class UserAttributeIT extends UserAttributeTestBase {
         try {
             createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
                 + "\">" + value + "</attribute>");
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            assertExceptionType(XmlCorruptedException.class, e);
+            assertExceptionType(XmlSchemaValidationException.class, e);
         }
         try {
             createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
                 + "\">");
-            EscidocAbstractTest.failMissingException(XmlCorruptedException.class);
+            EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            assertExceptionType(XmlCorruptedException.class, e);
+            assertExceptionType(XmlSchemaValidationException.class, e);
         }
 
         try {
@@ -268,22 +268,6 @@ public class UserAttributeIT extends UserAttributeTestBase {
     }
 
     /**
-     * Test declining retrieving named User-Attributes for null attributeName.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void retrieveUserNamedAttributesNullAttribute() throws Exception {
-        try {
-            retrieveNamedAttributes(USER_TEST, null);
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test retrieving User-Attribute with id for userId.
      *
      * @throws Exception If anything fails.
@@ -341,22 +325,6 @@ public class UserAttributeIT extends UserAttributeTestBase {
     public void retrieveUserAttributeNullUser() throws Exception {
         try {
             retrieveAttribute(null, "attribute");
-            EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
-     * Test declining retrieving User-Attribute for null attributeId.
-     *
-     * @throws Exception If anything fails.
-     */
-    @Test
-    public void retrieveUserAttributeNullAttribute() throws Exception {
-        try {
-            retrieveAttribute(USER_TEST, null);
             EscidocAbstractTest.failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {

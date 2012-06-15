@@ -90,8 +90,10 @@ public class ItemThreadIT extends SearchTestBase {
      */
     @Test
     public void testServlet() throws Exception {
-        HttpRequester requester = new HttpRequester(getBaseUrl() + "/fedoradeviation/describe", "mih:mih");
-        String response = requester.doGet("");
+        HttpRequester requester =
+            new HttpRequester(getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.ESCIDOC_BASE_URI
+                + "/fedoradeviation/describe", "mih:mih");
+        requester.doGet("");
     }
 
 }

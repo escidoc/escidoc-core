@@ -2657,6 +2657,20 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     /**
+     * Determines the namespace prefix of the provided node.
+     *
+     * @param node The <code>Node</code> to get the namespace prefix from.
+     * @return Returns the namespace prefix of the provided <code>Node</code>.
+     */
+    protected String determinePrefix(final Node node) {
+        String prefix = node.getPrefix();
+        if (prefix == null) {
+            prefix = node.getNodeName().replaceAll(":.*", "");
+        }
+        return prefix;
+    }
+
+    /**
      * Test logging in an user.
      * 
      * @param loginName

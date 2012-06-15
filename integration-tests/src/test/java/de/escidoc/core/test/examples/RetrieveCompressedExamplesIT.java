@@ -63,7 +63,9 @@ public class RetrieveCompressedExamplesIT extends EscidocAbstractTest {
 
             String response = null;
 
-            String url = "http://localhost:8080" + Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + EXAMPLE_OU_IDS[i];
+            String url =
+                getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+                    + EXAMPLE_OU_IDS[i];
 
             HttpClient client = new HttpClient();
 

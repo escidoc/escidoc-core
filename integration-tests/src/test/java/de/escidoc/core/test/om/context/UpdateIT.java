@@ -353,8 +353,10 @@ public class UpdateIT extends ContextTestBase {
         description = selectSingleNode(resultDocument, "/context/properties/description");
         assertNull(description);
         Node type = selectSingleNode(resultDocument, "/context/properties/type");
+        String propertiesNsPrefix = determinePropertiesNamespacePrefix(resultDocument);
         Element newDescription =
-            resultDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", "prop:description");
+            resultDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", propertiesNsPrefix
+                + ":description");
         newDescription.setTextContent("new Description");
         selectSingleNode(resultDocument, "/context/properties").insertBefore(newDescription, type);
         String doubleModified = toString(resultDocument, false);
@@ -750,8 +752,10 @@ public class UpdateIT extends ContextTestBase {
             selectNodeList(createdDocument, "/context/admin-descriptors/admin-descriptor");
         assertEquals(adminDescriptors.getLength(), adminDescriptorsAfterCreate.getLength());
 
+        String contextNsPrefix = determineContextNamespacePrefix(createdDocument);
         Element adminDescriptor =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", "context:admin-descriptor");
+            createdDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", contextNsPrefix
+                + ":admin-descriptor");
         adminDescriptor.setAttribute("name", "name1");
 
         Element adminDescriptorContent = createdDocument.createElement("bla");
