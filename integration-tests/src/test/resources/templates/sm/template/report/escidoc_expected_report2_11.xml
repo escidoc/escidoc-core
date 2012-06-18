@@ -4,7 +4,7 @@
     <report:report-definition xlink:type="simple" xlink:title="Report Definition for Report Test" xlink:href="/statistic/report-definition/escidoc:repdef3" />
     <report:report-record>
         <report:parameter name="date_field">
-            <report:datevalue>1980-01-28T11:00:00.000Z</report:datevalue>
+            <report:datevalue>1980-01-28T11:00:00Z</report:datevalue>
         </report:parameter>
         <report:parameter name="year">
             <report:decimalvalue>1</report:decimalvalue>
