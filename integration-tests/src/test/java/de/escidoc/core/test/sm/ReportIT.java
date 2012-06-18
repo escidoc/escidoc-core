@@ -33,9 +33,14 @@ import static org.junit.Assert.fail;
 
 import java.util.Locale;
 
+import javax.xml.transform.TransformerException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -62,6 +67,10 @@ public class ReportIT extends ReportTestBase {
     private static String[] aggregationDefinitionIds = new String[aggregationDefinitionsCount];
 
     private static int methodCounter = 0;
+    
+    private static final String PARAMETER_NAME_XPATH= "/report/report-record/parameter/@name";
+
+    private static final String PARAMETER_VALUE_XPATH= "/report/report-record/parameter/*";
 
     /**
      * Set up servlet test.
@@ -300,7 +309,8 @@ public class ReportIT extends ReportTestBase {
         String xml1 =
             replaceElementPrimKey(xml, "report-definition", reportDefinitionIds[aggDefIndex][repDefIndex].toString());
         String result = retrieve(xml1);
-
+        result = result.replaceAll("\\s+", " ").toLowerCase(Locale.ENGLISH);
+        Document retrievedDoc = getDocument(result);
         String expected =
             getTemplateAsFixedReportString(TEMPLATE_REPORT_PATH, "escidoc_expected_report" + aggDefIndex + "_"
                 + expectedIndex + ".xml");
@@ -308,17 +318,43 @@ public class ReportIT extends ReportTestBase {
             return "WRONG";
         }
         expected = replaceYear(expected, "2009");
-
-        result = result.replaceAll("\\s+", "").toLowerCase(Locale.ENGLISH);
-        result = result.replaceFirst(".*?<report:report-record.*?>", "");
-        expected = expected.replaceAll("\\s+", "").toLowerCase(Locale.ENGLISH);
-        expected = expected.replaceFirst(".*?<report:report-record.*?>", "");
-        if (expected.equals(result)) {
-            return "OK";
-        }
-        else {
+        expected = expected.replaceAll("\\s+", " ").toLowerCase(Locale.ENGLISH);
+        Document expectedDoc = getDocument(expected);
+        if (!isEquals(retrievedDoc, expectedDoc)) {
             return "WRONG";
         }
-
+        else {
+            return "OK";
+        }
+    }
+    
+    /**
+     * compare values of elements of two different xmls.
+     *
+     * @param retrieved   retrieved xml
+     * @param expected expected xml
+     * @return boolean true or false
+     * @throws TransformerException If anything fails.
+     */
+    private boolean isEquals(Node retrieved, Node expected) throws TransformerException {
+        NodeList retrievedChilds = selectNodeList(retrieved, PARAMETER_NAME_XPATH);
+        NodeList expectedChilds = selectNodeList(expected, PARAMETER_NAME_XPATH);
+        for (int i = 0; i < retrievedChilds.getLength(); i++) {
+            Node retrievedChild = retrievedChilds.item(i);
+            Node expectedChild = expectedChilds.item(i);
+            if (!retrievedChild.getTextContent().equals(expectedChild.getTextContent())) {
+                return false;
+            }
+        }
+        retrievedChilds = selectNodeList(retrieved, PARAMETER_VALUE_XPATH);
+        expectedChilds = selectNodeList(expected, PARAMETER_VALUE_XPATH);
+        for (int i = 0; i < retrievedChilds.getLength(); i++) {
+            Node retrievedChild = retrievedChilds.item(i);
+            Node expectedChild = expectedChilds.item(i);
+            if (!retrievedChild.getTextContent().equals(expectedChild.getTextContent())) {
+                return false;
+            }
+        }
+        return true;
     }
 }
