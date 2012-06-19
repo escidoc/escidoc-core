@@ -100,6 +100,33 @@
       </plugin>
 
       <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+              <execution>
+                <id>prepare-lucene-directoies</id>
+                <phase>prepare-package</phase>
+                <configuration>
+                    <tasks>
+                      <echo message="Preparing Lucene Index Directories" />
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/content_model_admin"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/content_relation_admin"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/context_admin"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/escidoc_all"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/escidocoaipmh_all"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/escidocou_all"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/item_container_admin"/>
+                      <mkdir dir="${project.build.directory}/data/jboss/server/default/data/index/lucene/ou_admin"/>
+                    </tasks>
+                </configuration>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+              </execution>
+          </executions>
+       </plugin>
+
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
           <execution>
