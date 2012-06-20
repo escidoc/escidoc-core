@@ -130,13 +130,13 @@ public class ContentModelHandler implements de.escidoc.core.cmm.service.interfac
     @Override
     public String retrieveProperties(final String id) throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException {
-        return business.retrieveResources(id);
+        return business.retrieveProperties(id);
     }
 
     @Override
     public String retrieveResources(final String id) throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException, MissingMethodParameterException {
-        return business.retrieveProperties(id);
+        return business.retrieveResources(id);
     }
 
     @Override
