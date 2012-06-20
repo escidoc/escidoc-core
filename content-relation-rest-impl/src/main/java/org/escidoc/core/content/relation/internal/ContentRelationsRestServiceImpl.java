@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.content.relation.ContentRelationsRestService;
+import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.predicate.list.PredicatesTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -49,6 +50,9 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
 
     @Autowired
     private ServiceUtility serviceUtility;
+
+    @Autowired
+    private ObjectFactoryProvider factoryProvider;
 
     /**
      *
