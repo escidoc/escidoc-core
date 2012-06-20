@@ -176,7 +176,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
     protected void marshal(
         Object obj, Class<?> cls, Type genericType, String enc, OutputStream os, MediaType mt, Marshaller ms)
         throws Exception {
-        if (obj instanceof PropertiesTypeTO) {
+        if (obj instanceof JAXBElement<?> && ((JAXBElement<?>)obj).getValue() instanceof PropertiesTypeTO) {
             try {
                 super.setMarshallerProperties(maPropertiesWithDoctype);
                 super.marshal(obj, cls, genericType, enc, os, mt, ms);
