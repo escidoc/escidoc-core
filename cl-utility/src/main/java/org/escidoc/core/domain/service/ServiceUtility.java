@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.xml.bind.*;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
 
 import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
@@ -144,6 +145,18 @@ public class ServiceUtility {
     }
 
     /**
+    *
+    * @param source the source to unmarshal from
+    * @return the unmarshalled object
+    * @throws JAXBException if an exception occurs while trying to unmarshal the source
+    */
+   private Object unmarshal(@NotNull Source source, @NotNull Schema schema) throws JAXBException {
+       final Unmarshaller unmarshaller = jaxbContextProvider.getJAXBContext().createUnmarshaller();
+       unmarshaller.setSchema(schema);
+       return unmarshaller.unmarshal(source);
+   }
+
+    /**
      *
      * @param source the source to unmarshal from
      * @param clazz the class of the type of the return value
@@ -220,6 +233,15 @@ public class ServiceUtility {
     public final Object fromXML(@NotNull final Stream xmlStream) throws SystemException {
         try {
             return unmarshal(new StreamSource(xmlStream.getInputStream()));
+        }
+        catch (Exception e) {
+            throw new SystemException("Error on unmarshalling XML.", e);
+        }
+    }
+
+    public final Object fromXML(@NotNull final Stream xmlStream, @NotNull final Schema schema) throws SystemException {
+        try {
+            return unmarshal(new StreamSource(xmlStream.getInputStream()), schema);
         }
         catch (Exception e) {
             throw new SystemException("Error on unmarshalling XML.", e);

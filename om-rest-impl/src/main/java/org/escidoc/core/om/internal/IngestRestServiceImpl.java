@@ -24,6 +24,7 @@ import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.om.IngestRestService;
+import org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider;
 import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,9 @@ public class IngestRestServiceImpl implements IngestRestService {
     @Autowired
     private ObjectFactoryProvider factoryProvider;
 
+    @Autowired
+    private EsciDocJAXBElementProvider escidocJaxbProvider;
+
     protected IngestRestServiceImpl() {
     }
 
@@ -69,7 +73,7 @@ public class IngestRestServiceImpl implements IngestRestService {
         throws EscidocException {
         Object to;
         try {
-            to = serviceUtility.fromXML(xmlStream);
+            to = serviceUtility.fromXML(xmlStream, escidocJaxbProvider.getSchema());
         } catch (SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
