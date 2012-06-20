@@ -2,8 +2,10 @@ package org.escidoc.core.util.xml.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -13,7 +15,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.validation.Schema;
 
@@ -22,10 +28,11 @@ import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 import org.apache.cxf.jaxrs.utils.InjectionUtils;
 import org.apache.cxf.jaxrs.utils.schemas.SchemaHandler;
-
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.apache.cxf.staxutils.DepthExceededStaxException;
 import org.apache.cxf.staxutils.transform.TransformUtils;
+import org.escidoc.core.domain.properties.java.PropertiesTypeTO;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * eSciDoc specific implementation of {@link JAXBElementProvider}. Generates stylesheet-header with given
@@ -169,7 +176,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
     protected void marshal(
         Object obj, Class<?> cls, Type genericType, String enc, OutputStream os, MediaType mt, Marshaller ms)
         throws Exception {
-        if (obj instanceof JavaUtilPropertiesTO) {
+        if (obj instanceof PropertiesTypeTO) {
             try {
                 super.setMarshallerProperties(maPropertiesWithDoctype);
                 super.marshal(obj, cls, genericType, enc, os, mt, ms);
