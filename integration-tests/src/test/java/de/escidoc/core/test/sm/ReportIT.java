@@ -67,10 +67,10 @@ public class ReportIT extends ReportTestBase {
     private static String[] aggregationDefinitionIds = new String[aggregationDefinitionsCount];
 
     private static int methodCounter = 0;
-    
-    private static final String PARAMETER_NAME_XPATH= "/report/report-record/parameter/@name";
 
-    private static final String PARAMETER_VALUE_XPATH= "/report/report-record/parameter/*";
+    private static final String PARAMETER_NAME_XPATH = "/report/report-record/parameter/@name";
+
+    private static final String PARAMETER_VALUE_XPATH = "/report/report-record/parameter/*";
 
     /**
      * Set up servlet test.
@@ -327,7 +327,7 @@ public class ReportIT extends ReportTestBase {
             return "OK";
         }
     }
-    
+
     /**
      * compare values of elements of two different xmls.
      *

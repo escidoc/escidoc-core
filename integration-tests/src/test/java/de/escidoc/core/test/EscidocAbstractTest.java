@@ -2263,7 +2263,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
         if (EscidocTestBase.stagingFileSchema == null) {
             EscidocTestBase.stagingFileSchema =
-                EscidocTestBase.getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/staging-file/0.3/staging-file.xsd");
+                EscidocTestBase.getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI
+                    + "/xsd/rest/staging-file/0.3/staging-file.xsd");
         }
         EscidocTestBase.assertXmlValid(toBeAsserted, EscidocTestBase.stagingFileSchema);
     }
