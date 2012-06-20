@@ -83,7 +83,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
     }
 
     @Override
-    protected Schema getSchema() {
+    public Schema getSchema() {
         return schemaHandler.getSchema();
     }
 
