@@ -202,14 +202,6 @@ public class ContentRelationRestServiceImpl implements ContentRelationRestServic
     }
 
     @Override
-    public JAXBElement<PredicatesTypeTO> retrieveRegisteredPredicates()
-        throws InvalidContentException, InvalidXmlException, SystemException {
-
-        return factoryProvider.getPredicatesFactory().createPredicates(
-            serviceUtility.fromXML(PredicatesTypeTO.class, this.contentRelationHandler.retrieveRegisteredPredicates()));
-    }
-
-    @Override
     public JAXBElement<ContentRelationResourcesTypeTO> retrieveResources(String id)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException,
         MissingMethodParameterException, SystemException {

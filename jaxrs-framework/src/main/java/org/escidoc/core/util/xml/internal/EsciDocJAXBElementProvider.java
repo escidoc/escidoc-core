@@ -40,14 +40,34 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
 
     private final String XML_HEADERS_PATH = "com.sun.xml.bind.xmlHeaders";
 
+    private final String PROPERTIES_DOCTYPE =
+        "<!DOCTYPE properties SYSTEM \"http://java.sun.com/dtd/properties.dtd\">\n";
+
     private JAXBContextProvider jaxbContextProvider;
 
     private SchemaHandler schemaHandler;
 
+    private Map<String, Object> maProperties;
+
+    private Map<String, Object> maPropertiesWithDoctype;
+
     @Override
+    /**
+     * Save 2 properties-sets.
+     * One without DOCTYPE-element and one With DOCTYPE-element for JavaUtilPropertiesTO.
+     */
     public void setMarshallerProperties(Map<String, Object> marshallProperties) {
         overrideXmlHeadersProperty(marshallProperties);
         super.setMarshallerProperties(marshallProperties);
+        maProperties = marshallProperties;
+        maPropertiesWithDoctype = new HashMap<String, Object>(marshallProperties);
+        if (maPropertiesWithDoctype.get(XML_HEADERS_PATH) != null) {
+            maPropertiesWithDoctype.put(XML_HEADERS_PATH, maPropertiesWithDoctype.get(XML_HEADERS_PATH)
+                + PROPERTIES_DOCTYPE);
+        }
+        else {
+            maPropertiesWithDoctype.put(XML_HEADERS_PATH, PROPERTIES_DOCTYPE);
+        }
     }
 
     @Override
@@ -139,6 +159,28 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
             super.setSchema(getSchema());
         }
         return super.createUnmarshaller(cls, genericType, isCollection);
+    }
+
+    @Override
+    /**
+     * set DOCTYPE-element in xml if xml has schema java.util.properties
+     *
+     */
+    protected void marshal(
+        Object obj, Class<?> cls, Type genericType, String enc, OutputStream os, MediaType mt, Marshaller ms)
+        throws Exception {
+        if (obj instanceof JavaUtilPropertiesTO) {
+            try {
+                super.setMarshallerProperties(maPropertiesWithDoctype);
+                super.marshal(obj, cls, genericType, enc, os, mt, ms);
+            }
+            finally {
+                super.setMarshallerProperties(maProperties);
+            }
+        }
+        else {
+            super.marshal(obj, cls, genericType, enc, os, mt, ms);
+        }
     }
 
     protected void validateObjectIfNeeded(Marshaller marshaller, Object obj)

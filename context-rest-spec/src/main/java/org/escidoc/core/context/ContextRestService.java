@@ -116,7 +116,7 @@ public interface ContextRestService {
         throws ContextNotFoundException, MissingMethodParameterException, SystemException;
 
     @GET
-    @Path("/{id}/admin-descriptor/{name}")
+    @Path("/{id}/admin-descriptors/admin-descriptor/{name}")
     @Produces(MediaType.TEXT_XML)
     JAXBElement<AdminDescriptorTypeTO> retrieveAdminDescriptor(@NotNull @PathParam("id") String id,
         @NotNull @PathParam("name") String name)
@@ -131,7 +131,7 @@ public interface ContextRestService {
         AuthorizationException, SystemException;
 
     @POST
-    @Path("/{id}/admin-descriptor/")
+    @Path("/{id}/admin-descriptors/admin-descriptor/")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
     JAXBElement<AdminDescriptorTypeTO> updateAdminDescriptor(@NotNull @PathParam("id") String id,

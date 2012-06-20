@@ -24,13 +24,16 @@ import java.util.Map;
 import javax.xml.bind.JAXBElement;
 
 import org.escidoc.core.content.relation.ContentRelationsRestService;
+import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 
@@ -70,4 +73,14 @@ public class ContentRelationsRestServiceImpl implements ContentRelationsRestServ
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
             this.contentRelationHandler.retrieveContentRelations(map));
     }
+
+    @Override
+    public JAXBElement<PredicatesTypeTO> retrieveRegisteredPredicates()
+        throws InvalidContentException, InvalidXmlException, SystemException {
+
+        return factoryProvider.getPredicatesFactory().createPredicates(
+            serviceUtility.fromXML(PredicatesTypeTO.class, this.contentRelationHandler.retrieveRegisteredPredicates()));
+    }
+
+
 }

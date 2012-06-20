@@ -171,12 +171,6 @@ public interface ContentRelationRestService {
         MdRecordNotFoundException, SystemException;
 
     @GET
-    @Path("/content-relations/retrieve-registered-predicates")
-    @Produces(MediaType.TEXT_XML)
-    JAXBElement<PredicatesTypeTO> retrieveRegisteredPredicates()
-        throws InvalidContentException, InvalidXmlException, SystemException;
-
-    @GET
     @Path("/{id}/resources")
     @Produces(MediaType.TEXT_XML)
     JAXBElement<ContentRelationResourcesTypeTO> retrieveResources(@NotNull @PathParam("id") String id)

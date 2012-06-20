@@ -46,7 +46,6 @@ import javax.ws.rs.core.MediaType;
 public interface TmeRestService {
 
     @POST
-    @Path("/jhove")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
     JhoveTO extract(@NotNull RequestTypeTO tmeRequestTO)

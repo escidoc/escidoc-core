@@ -26,10 +26,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import org.escidoc.core.domain.predicate.list.PredicatesTO;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
@@ -57,7 +60,13 @@ public interface ContentRelationsRestService {
     JAXBElement<? extends ResponseTypeTO> retrieveContentRelations(
         @QueryParam("") SruSearchRequestParametersBean parameters,
         @QueryParam("x-info5-roleId") String roleId,
-        @QueryParam("x-info5-userId") String userId,
-        @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
-        throws InvalidSearchQueryException, SystemException;
+        @QueryParam("x-info5-userId") String userId, 
+        @QueryParam("x-info5-omitHighlighting") String omitHighlighting) throws InvalidSearchQueryException,
+            SystemException;
+
+    @GET
+    @Path("/retrieve-registered-predicates")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<PredicatesTypeTO> retrieveRegisteredPredicates() throws InvalidContentException, InvalidXmlException, SystemException;
+
 }

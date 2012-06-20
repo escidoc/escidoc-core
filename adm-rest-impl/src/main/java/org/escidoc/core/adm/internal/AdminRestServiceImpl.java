@@ -131,7 +131,7 @@ public class AdminRestServiceImpl implements AdminRestService {
         throws AuthenticationException, AuthorizationException, SystemException {
         String xml = this.adminHandler.getRepositoryInfo();
         // TODO: remove this code after rebuild of business logic:
-        xml = xml.replaceFirst("<!.*?>", "");
+        //xml = xml.replaceFirst("<!.*?>", "");
         xml = xml.replaceFirst("(<[^\\?!]*?)([/\\s>])", "$1 xmlns=\"http://java.sun.com/dtd/properties.dtd\"$2");
         return factoryProvider.getJavaPropertiesFactory().createProperties(
             serviceUtility.fromXML(PropertiesTypeTO.class, xml));
@@ -143,7 +143,7 @@ public class AdminRestServiceImpl implements AdminRestService {
     @Override
     public JAXBElement<PropertiesTypeTO> checkDatabaseConsistency() throws AuthenticationException, AuthorizationException, SystemException {
         String xml = this.adminHandler.checkDatabaseConsistency();
-        xml = xml.replaceFirst("<\\!.*?>", "");
+//        xml = xml.replaceFirst("<\\!.*?>", "");
         xml = xml.replaceFirst("(<[^\\?\\!]*?)([\\/\\s>])", "$1 xmlns=\"http://java.sun.com/dtd/properties.dtd\"$2");
         return factoryProvider.getJavaPropertiesFactory().createProperties(
             serviceUtility.fromXML(PropertiesTypeTO.class, xml));
