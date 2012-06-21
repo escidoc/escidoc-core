@@ -5,6 +5,7 @@
 		<var name="CLEAR-INDEX" regexp="/([^/?]*)" />
                 <var name="INDEX-NAME" regexp="/([^/?]*)" />
 		<var name="TYPE" regexp="/([^/?]*)" />
+    <var name="KEY" regexp="/([^/?]*)" />
 	</define>
 
 	<resource name="Admin" base-uri="/adm/admin/">
@@ -41,11 +42,16 @@
 				<documentation />
 			</invoke>
 		</descriptor>
-		<descriptor uri="/adm/admin/get-repository-info">
-			<invoke http="GET" method="getRepositoryInfo">
+		<descriptor uri="/adm/admin/get-repository-info/${KEY}">
+			<invoke http="GET" method="getRepositoryInfo" param1="${KEY}">
 				<documentation />
 			</invoke>
 		</descriptor>
+    <descriptor uri="/adm/admin/get-repository-info">
+      <invoke http="GET" method="getRepositoryInfo">
+        <documentation />
+      </invoke>
+    </descriptor>
         <descriptor uri="/adm/admin/get-index-configuration">
             <invoke http="GET" method="getIndexConfiguration">
                 <documentation />

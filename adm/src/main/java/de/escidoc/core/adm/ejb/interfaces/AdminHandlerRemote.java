@@ -58,6 +58,12 @@ public interface AdminHandlerRemote extends EJBObject {
     String getRepositoryInfo(String authHandle, Boolean restAccess) throws SystemException, AuthenticationException,
         AuthorizationException, RemoteException;
 
+    String getRepositoryInfo(final String key, SecurityContext securityContext) throws SystemException,
+        AuthenticationException, AuthorizationException, RemoteException;
+
+    String getRepositoryInfo(final String key, String authHandle, Boolean restAccess) throws SystemException,
+        AuthenticationException, AuthorizationException, RemoteException;
+
     String loadExamples(String type, SecurityContext securityContext) throws InvalidSearchQueryException,
         SystemException, AuthenticationException, AuthorizationException, RemoteException;
 

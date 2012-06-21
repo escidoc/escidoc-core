@@ -469,6 +469,51 @@
          <description><![CDATA[]]></description>
          <ejb-name>AdminHandler</ejb-name>
          <method-intf>Local</method-intf>
+         <method-name>getRepositoryInfo</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.Boolean</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+      <unchecked/>
+      <method >
+         <description><![CDATA[]]></description>
+         <ejb-name>AdminHandler</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getRepositoryInfo</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.Boolean</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+      <unchecked/>
+      <method >
+         <description><![CDATA[]]></description>
+         <ejb-name>AdminHandler</ejb-name>
+         <method-intf>ServiceEndpoint</method-intf>
+         <method-name>getRepositoryInfo</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.Boolean</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+      <unchecked/>
+      <method >
+         <description><![CDATA[]]></description>
+         <ejb-name>AdminHandler</ejb-name>
+         <method-intf>Local</method-intf>
          <method-name>loadExamples</method-name>
          <method-params>
             <method-param>java.lang.String</method-param>

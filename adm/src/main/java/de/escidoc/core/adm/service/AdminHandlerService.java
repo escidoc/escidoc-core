@@ -58,6 +58,12 @@ public interface AdminHandlerService extends Remote {
     String getRepositoryInfo(String authHandle, Boolean restAccess) throws SystemException, AuthenticationException,
         AuthorizationException, RemoteException;
 
+    String getRepositoryInfo(String key, SecurityContext securityContext) throws SystemException,
+        AuthenticationException, AuthorizationException, RemoteException;
+
+    String getRepositoryInfo(String key, String authHandle, Boolean restAccess) throws SystemException,
+        AuthenticationException, AuthorizationException, RemoteException;
+
     String loadExamples(String type, SecurityContext securityContext) throws InvalidSearchQueryException,
         SystemException, AuthenticationException, AuthorizationException, RemoteException;
 

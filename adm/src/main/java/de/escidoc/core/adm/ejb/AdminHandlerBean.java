@@ -223,6 +223,29 @@ public class AdminHandlerBean implements SessionBean {
         return service.getRepositoryInfo();
     }
 
+    public final String getRepositoryInfo(final String key, final SecurityContext securityContext)
+        throws SystemException, AuthenticationException, AuthorizationException {
+        try {
+            UserContext.setUserContext(securityContext);
+        }
+        catch (Exception e) {
+            throw new SystemException("Initialization of security context failed.", e);
+        }
+        return service.getRepositoryInfo(key);
+    }
+
+    public final String getRepositoryInfo(final String key, final String authHandle, final Boolean restAccess)
+        throws SystemException, AuthenticationException, AuthorizationException {
+        try {
+            UserContext.setUserContext(authHandle);
+            UserContext.setRestAccess(restAccess);
+        }
+        catch (Exception e) {
+            throw new SystemException("Initialization of security context failed.", e);
+        }
+        return service.getRepositoryInfo(key);
+    }
+
     public final String loadExamples(final String type, final SecurityContext securityContext)
         throws InvalidSearchQueryException, SystemException, AuthenticationException, AuthorizationException {
         try {

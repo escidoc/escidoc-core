@@ -56,6 +56,12 @@ public interface AdminHandlerLocal extends EJBLocalObject {
     String getRepositoryInfo(String authHandle, Boolean restAccess) throws SystemException, AuthenticationException,
         AuthorizationException;
 
+    String getRepositoryInfo(final String key, SecurityContext securityContext) throws SystemException,
+        AuthenticationException, AuthorizationException;
+
+    String getRepositoryInfo(final String key, String authHandle, Boolean restAccess) throws SystemException,
+        AuthenticationException, AuthorizationException;
+
     String loadExamples(String type, SecurityContext securityContext) throws InvalidSearchQueryException,
         SystemException, AuthenticationException, AuthorizationException;
 

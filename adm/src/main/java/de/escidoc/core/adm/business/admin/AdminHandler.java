@@ -216,7 +216,7 @@ public class AdminHandler {
     /**
      * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
      * creation date of Escidoc repository objects.
-     *
+     * 
      * @return xml structure with escidoc configuration properties
      * @throws WebserverSystemException   if anything go wrong.
      * @throws TripleStoreSystemException if anything go wrong.
@@ -224,8 +224,33 @@ public class AdminHandler {
      */
     public String getRepositoryInfo() throws WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException {
+        return getRepositoryInfo(null);
+    }
 
-        final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
+    /**
+     * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
+     * creation date of Escidoc repository objects.
+     * If parameter "key" is provided, only property with given key is returned.
+     * Supported keys are:
+     * gsearch.url
+     * escidoc-core.build
+     * escidoc-core.baseurl
+     * escidoc-core.repository-name
+     * escidoc-core.admin-email
+     * escidoc-core.earliest-date
+     * escidoc-core.database.version
+     * escidoc-core.database.consistent
+     * escidoc-core.om.content.checksum-algorithm
+     * 
+     * @param key property-key
+     * @return xml structure with escidoc configuration properties
+     * @throws WebserverSystemException   if anything go wrong.
+     * @throws TripleStoreSystemException if anything go wrong.
+     * @throws EncodingSystemException    if anything go wrong.
+     */
+    public String getRepositoryInfo(final String key) throws WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException {
+
         final EscidocConfiguration config;
         try {
             config = EscidocConfiguration.getInstance();
@@ -235,43 +260,91 @@ public class AdminHandler {
         }
 
         final Properties properties = new Properties();
-        final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
 
-        final String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
+        if (key == null || key.equals(EscidocConfiguration.GSEARCH_URL)) {
+            final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
+            if (gsearchUrl != null) {
+                properties.setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
+            }
+        }
 
-        if (buildNr != null) {
-            properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
+        if (key == null || key.equals(EscidocConfiguration.BUILD_NUMBER)) {
+            final String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
+            if (buildNr != null) {
+                properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
+            }
         }
-        if (gsearchUrl != null) {
-            properties.setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
+
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_CORE_BASEURL)) {
+            final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
+            if (baseUrl != null) {
+                properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL, baseUrl);
+            }
         }
-        final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
-        if (baseUrl != null) {
-            properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL, baseUrl);
+
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME)) {
+            final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
+            if (name != null) {
+                properties.setProperty(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
+            }
         }
-        final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
-        if (name != null) {
-            properties.setProperty(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
+
+        if (key == null || key.equals(EscidocConfiguration.ADMIN_EMAIL)) {
+            final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
+            if (email != null) {
+                properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
+            }
         }
-        final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
-        if (email != null) {
-            properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
+
+        if (key == null || key.equals("escidoc-core.earliest-date")) {
+            // handle case where nothing is in the repository 
+            final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
+            if (earliestCreationDate != null) {
+                properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
+            }
+            else {
+                properties.setProperty("escidoc-core.earliest-date", "n/o");
+            }
         }
-        properties.setProperty("escidoc-core.earliest-date", earliestCreationDate);
-        properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
-        try {
-            properties.setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
+
+        if (key == null || key.equals("escidoc-core.database.version")) {
+            properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
         }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e);
+
+        if (key == null || key.equals("escidoc-core.database.consistent")) {
+            try {
+                properties
+                    .setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
+            }
+            catch (final Exception e) {
+                throw new WebserverSystemException(e);
+            }
+        }
+
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM)) {
+            final String checksumAlgorithm =
+                config.get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
+            if (checksumAlgorithm != null) {
+                properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
+                    checksumAlgorithm);
+            }
         }
 
         // add namespace of important schemas
-        properties.putAll(schemaNamespaces());
-
-        final String checksumAlgorithm = config.get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
-        if (checksumAlgorithm != null) {
-            properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, checksumAlgorithm);
+        if (key == null || key.equals("item")) {
+            properties.setProperty("item", Constants.ITEM_NAMESPACE_URI);
+        }
+        if (key == null || key.equals("container")) {
+            properties.setProperty("container", Constants.CONTAINER_NAMESPACE_URI);
+        }
+        if (key == null || key.equals("organizational-unit")) {
+            properties.setProperty("organizational-unit", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
+        }
+        if (key == null || key.equals("context")) {
+            properties.setProperty("context", Constants.CONTEXT_NAMESPACE_URI);
+        }
+        if (key == null || key.equals("user-account")) {
+            properties.setProperty("user-account", Constants.USER_ACCOUNT_NS_URI);
         }
 
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -289,24 +362,6 @@ public class AdminHandler {
             throw new EncodingSystemException(e);
         }
         return propertiesXml;
-    }
-
-    /**
-     * Namespace of (important) schemas.
-     *
-     * @return Properties with name and Namespace URI of important eSciDoc schemas
-     */
-    private static Map schemaNamespaces() {
-
-        final Properties p = new Properties();
-
-        p.setProperty("item", Constants.ITEM_NAMESPACE_URI);
-        p.setProperty("container", Constants.CONTAINER_NAMESPACE_URI);
-        p.setProperty("organizational-unit", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
-        p.setProperty("context", Constants.CONTEXT_NAMESPACE_URI);
-        p.setProperty("user-account", Constants.USER_ACCOUNT_NS_URI);
-
-        return p;
     }
 
     /**

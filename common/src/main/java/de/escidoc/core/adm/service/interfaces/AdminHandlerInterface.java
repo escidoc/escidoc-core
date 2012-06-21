@@ -127,7 +127,8 @@ public interface AdminHandlerInterface {
     /**
      * Provides an XML structure containing public configuration properties of the eSciDoc Infrastructure and the
      * earliest creation date of eSciDoc repository objects.
-     *
+     * 
+     * @param key property-key
      * @return XML structure with eSciDoc configuration properties
      * @throws SystemException         Thrown in case of an internal error.
      * @throws AuthenticationException Thrown if the authentication failed due to an invalid provided eSciDoc user
@@ -135,6 +136,30 @@ public interface AdminHandlerInterface {
      * @throws AuthorizationException  Thrown if the authorization failed.
      */
     String getRepositoryInfo() throws SystemException, AuthenticationException, AuthorizationException;
+
+    /**
+     * Provides an XML structure containing public configuration properties of the eSciDoc Infrastructure and the
+     * earliest creation date of eSciDoc repository objects.
+     * If parameter "key" is provided, only property with given key is returned.
+     * Supported keys are:
+     * gsearch.url
+     * escidoc-core.build
+     * escidoc-core.baseurl
+     * escidoc-core.repository-name
+     * escidoc-core.admin-email
+     * escidoc-core.earliest-date
+     * escidoc-core.database.version
+     * escidoc-core.database.consistent
+     * escidoc-core.om.content.checksum-algorithm
+     * 
+     * @param key property-key
+     * @return XML structure with eSciDoc configuration properties
+     * @throws SystemException         Thrown in case of an internal error.
+     * @throws AuthenticationException Thrown if the authentication failed due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if the authorization failed.
+     */
+    String getRepositoryInfo(final String key) throws SystemException, AuthenticationException, AuthorizationException;
 
     /**
      * Loads a set of example objects into the framework.
