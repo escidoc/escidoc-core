@@ -65,11 +65,11 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         return ContentModelXmlProvider.getInstance().getContentModelXml(values);
     }
 
-    protected String renderProperties() throws WebserverSystemException {
-
+    protected String renderProperties() throws WebserverSystemException, ContentModelNotFoundException,
+        TripleStoreSystemException, IntegritySystemException {
         final Map<String, String> values = getCommonValues(getContentModel());
-        values.putAll(getResourcesValues(getContentModel()));
-        values.put(XmlTemplateProviderConstants.IS_ROOT_RESOURCES, XmlTemplateProviderConstants.TRUE);
+        values.putAll(getPropertiesValues(getContentModel()));
+        values.put(XmlTemplateProviderConstants.IS_ROOT_PROPERTIES, XmlTemplateProviderConstants.TRUE);
         return ContentModelXmlProvider.getInstance().getContentModelPropertiesXml(values);
     }
 
