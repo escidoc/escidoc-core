@@ -171,7 +171,34 @@ public class AdminHandler implements AdminHandlerInterface {
     /**
      * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
      * creation date of Escidoc repository objects.
-     *
+     * If parameter "key" is provided, only property with given key is returned.
+     * Supported keys are:
+     * gsearch.url
+     * escidoc-core.build
+     * escidoc-core.baseurl
+     * escidoc-core.repository-name
+     * escidoc-core.admin-email
+     * escidoc-core.earliest-date
+     * escidoc-core.database.version
+     * escidoc-core.database.consistent
+     * escidoc-core.om.content.checksum-algorithm
+     * 
+     * @param key property-key
+     * @return xml structure with escidoc configuration properties
+     * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
+     *                                 handle.
+     * @throws AuthorizationException  Thrown if authorization fails.
+     */
+    @Override
+    public String getRepositoryInfo(final String key) throws AuthenticationException, AuthorizationException,
+        TripleStoreSystemException, EncodingSystemException, WebserverSystemException {
+        return this.business.getRepositoryInfo(key);
+    }
+
+    /**
+     * Provides a xml structure containing public configuration properties of escidoc-core framework and the earliest
+     * creation date of Escidoc repository objects.
+     * 
      * @return xml structure with escidoc configuration properties
      * @throws AuthenticationException Thrown if the authentication fails due to an invalid provided eSciDoc user
      *                                 handle.

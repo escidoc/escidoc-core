@@ -67,13 +67,19 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
     /**
      * Get repository information.
      *
+     * @param key property-key
      * @return The HttpMethod after the service call .
      * @throws Exception If the service call fails.
      */
-    public Object getRepositoryInfo() throws Exception {
-
-        return callEsciDoc("Admin.getRepositoryInfo", METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
-            Constants.REPOSITORY_INFO_BASE_URI, new String[] {});
+    public Object getRepositoryInfo(final String key) throws Exception {
+        if (key != null) {
+            return callEsciDoc("Admin.getRepositoryInfo", METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
+                Constants.REPOSITORY_INFO_BASE_URI, new String[] { key });
+        }
+        else {
+            return callEsciDoc("Admin.getRepositoryInfo", METHOD_GET_REPOSITORY_INFO, Constants.HTTP_METHOD_GET,
+                Constants.REPOSITORY_INFO_BASE_URI, new String[] {});
+        }
     }
 
     /**
