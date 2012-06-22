@@ -263,42 +263,42 @@ public class AdminHandler {
 
         final Properties properties = new Properties();
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.GSEARCH_URL)) {
+        if (key == null || key.equals(EscidocConfiguration.GSEARCH_URL)) {
             final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
             if (gsearchUrl != null) {
                 properties.setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.BUILD_NUMBER)) {
+        if (key == null || key.equals(EscidocConfiguration.BUILD_NUMBER)) {
             final String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
             if (buildNr != null) {
                 properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.ESCIDOC_CORE_BASEURL)) {
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_CORE_BASEURL)) {
             final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
             if (baseUrl != null) {
                 properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL, baseUrl);
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME)) {
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME)) {
             final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
             if (name != null) {
                 properties.setProperty(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.ADMIN_EMAIL)) {
+        if (key == null || key.equals(EscidocConfiguration.ADMIN_EMAIL)) {
             final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
             if (email != null) {
                 properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals("escidoc-core.earliest-date")) {
+        if (key == null || key.equals("escidoc-core.earliest-date")) {
             // handle case where nothing is in the repository 
             final String earliestCreationDate = tripleStoreUtility.getEarliestCreationDate();
             if (earliestCreationDate != null) {
@@ -309,11 +309,11 @@ public class AdminHandler {
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals("escidoc-core.database.version")) {
+        if (key == null || key.equals("escidoc-core.database.version")) {
             properties.setProperty("escidoc-core.database.version", frameworkInfo.getVersion().toString());
         }
 
-        if (StringUtils.isBlank(key) || key.equals("escidoc-core.database.consistent")) {
+        if (key == null || key.equals("escidoc-core.database.consistent")) {
             try {
                 properties
                     .setProperty("escidoc-core.database.consistent", String.valueOf(frameworkInfo.isConsistent()));
@@ -323,7 +323,7 @@ public class AdminHandler {
             }
         }
 
-        if (StringUtils.isBlank(key) || key.equals(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM)) {
+        if (key == null || key.equals(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM)) {
             final String checksumAlgorithm =
                 config.get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
             if (checksumAlgorithm != null) {
@@ -333,19 +333,19 @@ public class AdminHandler {
         }
 
         // add namespace of important schemas
-        if (StringUtils.isBlank(key) || key.equals("item")) {
+        if (key == null || key.equals("item")) {
             properties.setProperty("item", Constants.ITEM_NAMESPACE_URI);
         }
-        if (StringUtils.isBlank(key) || key.equals("container")) {
+        if (key == null || key.equals("container")) {
             properties.setProperty("container", Constants.CONTAINER_NAMESPACE_URI);
         }
-        if (StringUtils.isBlank(key) || key.equals("organizational-unit")) {
+        if (key == null || key.equals("organizational-unit")) {
             properties.setProperty("organizational-unit", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
         }
-        if (StringUtils.isBlank(key) || key.equals("context")) {
+        if (key == null || key.equals("context")) {
             properties.setProperty("context", Constants.CONTEXT_NAMESPACE_URI);
         }
-        if (StringUtils.isBlank(key) || key.equals("user-account")) {
+        if (key == null || key.equals("user-account")) {
             properties.setProperty("user-account", Constants.USER_ACCOUNT_NS_URI);
         }
 
