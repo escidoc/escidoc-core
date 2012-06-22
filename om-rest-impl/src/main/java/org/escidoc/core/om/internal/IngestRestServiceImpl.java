@@ -85,6 +85,8 @@ public class IngestRestServiceImpl implements IngestRestService {
         catch (SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
+        //TODO: Remove this code when we convert to DOs. IngestHandler then can decide itself
+        //dependent on DO-Type
         String resourceType;
         if (to instanceof JAXBElement<?>) {
             if (((JAXBElement<?>) to).getValue() instanceof ContainerTypeTO) {
