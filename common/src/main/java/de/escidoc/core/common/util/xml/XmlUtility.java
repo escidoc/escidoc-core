@@ -28,9 +28,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,11 +38,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.Validator;
 
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
@@ -60,17 +55,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
-import com.ctc.wstx.exc.WstxParsingException;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -84,7 +73,6 @@ import de.escidoc.core.common.util.xml.stax.StaxAttributeEscapingWriterFactory;
 import de.escidoc.core.common.util.xml.stax.StaxTextEscapingWriterFactory;
 import de.escidoc.core.common.util.xml.stax.events.AbstractElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.CheckRootElementStaxHandler;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 
@@ -1039,161 +1027,6 @@ public final class XmlUtility {
 
         writer.writeAttribute(Constants.XML_NS_URI, "base", EscidocConfiguration.getInstance().get(
             EscidocConfiguration.ESCIDOC_CORE_BASEURL));
-    }
-
-    /**
-     * Gets the {@code Schema} from the cache.<br> If none exists for the provided schema URL, it is created and
-     * put into the cache.
-     *
-     * @param schemaUri The schema URI
-     * @return Returns the validator for the schema specified by the provided URL.
-     * @throws IOException              Thrown in case of an I/O error.
-     * @throws WebserverSystemException Thrown if schema can not be parsed.
-     */
-    public Schema getSchema(final String schemaUri) throws IOException, WebserverSystemException {
-
-        return schemasCache.getSchema(schemaUri);
-    }
-
-    /**
-     * Validates the provided XML data using the specified schema and creates a {@code ByteArrayInputStream} for
-     * the data.
-     *
-     * @param xmlData   The xml data.
-     * @param schemaUri The URL identifying the schema that shall be used for validation.
-     * @return Returns the xml data in a {@code ByteArrayInputStream}.
-     * @throws XmlSchemaValidationException Thrown if data in not valid.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws WebserverSystemException     Thrown in case of any other failure.
-     */
-    public ByteArrayInputStream createValidatedByteArrayInputStream(final String xmlData, final String schemaUri)
-        throws XmlCorruptedException, WebserverSystemException, XmlSchemaValidationException {
-
-        final ByteArrayInputStream byteArrayInputStream = convertToByteArrayInputStream(xmlData);
-        validate(byteArrayInputStream, schemaUri);
-        return byteArrayInputStream;
-    }
-
-    /**
-     * Validates the provided XML data using the specified schema.<br> The provided {@code ByteArrayInputStream} is
-     * reset after validation.
-     *
-     * @param byteArrayInputStream The XML data to validate in an {@code ByteArrayInputStream}.<br> This input
-     *                             stream is reset after the validation.
-     * @param schemaUri            The URL identifying the schema that shall be used for validation.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
-     * @throws WebserverSystemException     Thrown in any other case.
-     */
-    public void validate(final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
-        throws XmlCorruptedException, XmlSchemaValidationException, WebserverSystemException {
-
-        try {
-            final Validator validator = getSchema(schemaUri).newValidator();
-            validator.validate(new SAXSource(new InputSource(byteArrayInputStream)));
-        }
-        catch (final SAXParseException e) {
-            final String errorMsg =
-                "Error in line " + e.getLineNumber() + ", column " + e.getColumnNumber() + ". " + e.getMessage();
-            if (e.getMessage().startsWith("cvc")) {
-                throw new XmlSchemaValidationException(errorMsg, e);
-            }
-            else {
-                throw new XmlCorruptedException(errorMsg, e);
-            }
-        }
-        catch (final Exception e) {
-            throw new WebserverSystemException(e.getMessage(), e);
-        }
-        finally {
-            if (byteArrayInputStream != null) {
-                byteArrayInputStream.reset();
-            }
-        }
-    }
-
-    /**
-     * Checks, if the provided XML data has the provided root element, afterwards validates the provided XML data using
-     * the specified schema.
-     *
-     * @param xmlData   The XML data to validate.
-     * @param schemaUri The URL identifying the schema that shall be used for validation.
-     * @param root      Check for this root element.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
-     * @throws WebserverSystemException     Thrown in any other case.
-     * @throws XmlParserSystemException     Thrown if the expected root element raise an unexpected error.
-     */
-    public void validate(final String xmlData, final String schemaUri, final String root) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException, XmlParserSystemException {
-
-        if (root.length() > 0) {
-            checkRootElement(xmlData, root);
-        }
-        validate(xmlData, schemaUri);
-    }
-
-    /**
-     * Check if the root element has the expected element.
-     *
-     * @param xmlData      The XML document which is to check.
-     * @param expectedRoot The expected root element.
-     * @throws XmlCorruptedException    Thrown if the document has not the expected element.
-     * @throws XmlParserSystemException Thrown if the expected root element raise an unexpected error.
-     */
-    private static void checkRootElement(final String xmlData, final String expectedRoot) throws XmlCorruptedException,
-        XmlParserSystemException {
-
-        final StaxParser sp = new StaxParser();
-        final CheckRootElementStaxHandler checkRoot = new CheckRootElementStaxHandler(expectedRoot);
-        sp.addHandler(checkRoot);
-        try {
-            sp.parse(xmlData);
-        }
-        catch (final InvalidXmlException e) {
-            throw new XmlCorruptedException("Xml Document has wrong root element, expected '" + expectedRoot + "'.", e);
-        }
-        catch (final WstxParsingException e) {
-            throw new XmlCorruptedException(e.getMessage(), e);
-        }
-        catch (final WebserverSystemException e) {
-            // ignore, check was successful and parsing aborted
-        }
-        catch (final Exception e) {
-            handleUnexpectedStaxParserException("Check for root '" + expectedRoot
-                + "' element raised unexpected exception! ", e);
-        }
-    }
-
-    /**
-     * Validates the provided XML data using the specified schema.
-     *
-     * @param xmlData   The XML data to validate.
-     * @param schemaUri The URL identifying the schema that shall be used for validation.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException Thrown if both validation fail or only one validation is executed and fails
-     * @throws WebserverSystemException     Thrown in any other case.
-     */
-    public void validate(final String xmlData, final String schemaUri) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException {
-
-        validate(convertToByteArrayInputStream(xmlData), schemaUri);
-    }
-
-    /**
-     * Validates the provided XML data using the specified resource type.
-     *
-     * @param xmlData      The XML data to validate.
-     * @param resourceType The resourceType whose schema will be used for validation validation.
-     * @throws XmlCorruptedException        Thrown if the XML data cannot be parsed.
-     * @throws XmlSchemaValidationException # Thrown if both validation fail or only one validation is executed and
-     *                                      fails
-     * @throws WebserverSystemException     Thrown in any other case.
-     */
-    public void validate(final String xmlData, final ResourceType resourceType) throws XmlCorruptedException,
-        XmlSchemaValidationException, WebserverSystemException {
-        validate(xmlData, getSchemaLocationForResource(resourceType));
-
     }
 
     /**

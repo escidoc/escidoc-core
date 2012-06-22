@@ -11,8 +11,10 @@ import java.rmi.RemoteException;
  */
 public interface IngestHandlerService extends Remote {
 
-    String ingest(String xmlData, SecurityContext securityContext) throws EscidocException, RemoteException;
+    String ingest(String xmlData, String resourceType, SecurityContext securityContext) throws EscidocException,
+        RemoteException;
 
-    String ingest(String xmlData, String authHandle, Boolean restAccess) throws EscidocException, RemoteException;
+    String ingest(String xmlData, String resourceType, String authHandle, Boolean restAccess) throws EscidocException,
+        RemoteException;
 
 }

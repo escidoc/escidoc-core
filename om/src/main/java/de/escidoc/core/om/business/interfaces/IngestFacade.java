@@ -44,9 +44,10 @@ public interface IngestFacade {
      * checked exceptions the assumptions regarding exceptions have to be fairly generic.
      *
      * @param xmlData The resource which is to ingest as XML.
+     * @param resourceType the type of the resource to ingest
      * @return Returns the object id.
      * @throws EscidocException Thrown if ingest failed.
      */
-    String ingest(final String xmlData) throws EscidocException;
+    String ingest(final String xmlData, final String resourceType) throws EscidocException;
 
 }

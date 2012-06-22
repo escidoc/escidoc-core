@@ -45,8 +45,6 @@ public class ResourceMapperBean {
 
     private IngestableResource resource;
 
-    private IngestValidator validator;
-
     /**
      * Constructor for the ResourceMapperBean.
      * @param resourceType
@@ -57,7 +55,6 @@ public class ResourceMapperBean {
         final IngestValidator validator) {
         this.resourceType = resourceType;
         this.resource = resource;
-        this.validator = validator;
     }
 
     /**
@@ -65,23 +62,6 @@ public class ResourceMapperBean {
      */
     public ResourceMapperBean() {
 
-    }
-
-    /**
-     * Getter for the IngestValidator.
-     *
-     * @return the validator
-     */
-    public IngestValidator getValidator() {
-        return this.validator;
-    }
-
-    /**
-     * Setter for the IngestValidator.
-     * @param validator
-     */
-    public void setValidator(final IngestValidator validator) {
-        this.validator = validator;
     }
 
     /**

@@ -19,8 +19,17 @@
  */
 package org.escidoc.core.om.internal;
 
+import javax.xml.bind.JAXBElement;
+
 import net.sf.oval.guard.Guarded;
+
 import org.escidoc.core.domain.ObjectFactoryProvider;
+import org.escidoc.core.domain.container.ContainerTypeTO;
+import org.escidoc.core.domain.content.model.ContentModelTypeTO;
+import org.escidoc.core.domain.content.relation.ContentRelationTypeTO;
+import org.escidoc.core.domain.context.ContextTypeTO;
+import org.escidoc.core.domain.item.ItemTypeTO;
+import org.escidoc.core.domain.ou.OrganizationalUnitTypeTO;
 import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.om.IngestRestService;
@@ -33,11 +42,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
-
-import javax.xml.bind.JAXBElement;
 
 /**
  * REST Service Implementation for Ingest.
@@ -69,15 +77,44 @@ public class IngestRestServiceImpl implements IngestRestService {
     }
 
     @Override
-    public JAXBElement<ResultTypeTO> ingest(final Stream xmlStream)
-        throws EscidocException {
+    public JAXBElement<ResultTypeTO> ingest(final Stream xmlStream) throws EscidocException {
         Object to;
         try {
             to = serviceUtility.fromXML(xmlStream, escidocJaxbProvider.getSchema());
-        } catch (SystemException e) {
+        }
+        catch (SystemException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
+        String resourceType;
+        if (to instanceof JAXBElement<?>) {
+            if (((JAXBElement<?>) to).getValue() instanceof ContainerTypeTO) {
+                resourceType = "container";
+            }
+            else if (((JAXBElement<?>) to).getValue() instanceof ItemTypeTO) {
+                resourceType = "item";
+            }
+            else if (((JAXBElement<?>) to).getValue() instanceof ContextTypeTO) {
+                resourceType = "context";
+            }
+            else if (((JAXBElement<?>) to).getValue() instanceof ContentRelationTypeTO) {
+                resourceType = "content-relation";
+            }
+            else if (((JAXBElement<?>) to).getValue() instanceof OrganizationalUnitTypeTO) {
+                resourceType = "organizational-unit";
+            }
+            else if (((JAXBElement<?>) to).getValue() instanceof ContentModelTypeTO) {
+                resourceType = "content-model";
+            }
+            else {
+                throw new InvalidResourceException("Unable to detect resource-type for given resource");
+            }
+        }
+        else {
+            throw new InvalidResourceException("Unable to detect resource-type for given resource");
+        }
+
         return factoryProvider.getResultFactory().createResult(
-            serviceUtility.fromXML(ResultTypeTO.class, this.ingestHandler.ingest(serviceUtility.toXML(to))));
+            serviceUtility.fromXML(ResultTypeTO.class,
+                this.ingestHandler.ingest(serviceUtility.toXML(to), resourceType)));
     }
 }

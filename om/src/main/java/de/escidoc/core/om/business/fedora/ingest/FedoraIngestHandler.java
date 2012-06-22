@@ -69,11 +69,12 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
      * Ingest a resource.
      *
      * @param xmlData The string that contains the resource
+     * @param resourceType the type of the resource to ingest
      * @return XML structure including objid and resource type.
      * @throws EscidocException Thrown if XML representation fulfills not all requirements or internal errors occur.
      */
     @Override
-    public String ingest(final String xmlData) throws EscidocException {
-        return ingestFacade.ingest(xmlData);
+    public String ingest(final String xmlData, final String resourceType) throws EscidocException {
+        return ingestFacade.ingest(xmlData, resourceType);
     }
 }

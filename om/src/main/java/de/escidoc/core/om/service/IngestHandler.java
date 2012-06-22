@@ -59,13 +59,14 @@ public class IngestHandler implements IngestHandlerInterface {
      * Ingest method.
      *
      * @param xmlData XML representation of resource which is to create via ingest.
+     * @param resourceType the type of the resource to ingest
      * @return objid of created resource.
      * @throws EscidocException Thrown if XML representation fulfills not all requirements or internal errors occur.
      */
     @Override
-    public String ingest(final String xmlData) throws EscidocException {
+    public String ingest(final String xmlData, final String resourceType) throws EscidocException {
 
-        return handler.ingest(xmlData);
+        return handler.ingest(xmlData, resourceType);
     }
 
 }

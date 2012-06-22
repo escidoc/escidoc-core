@@ -45,9 +45,10 @@ public interface IngestHandlerInterface {
      *
      * @param xmlData The XML representation of the resource to be ingested. The resource can be either one of Item,
      *                Container, Content Model, Organizational Unit or Context.
+     * @param resourceType the type of the resource to ingest
      * @return Returns an XML document with the generated object id (objid).
      * @throws EscidocException Thrown if the ingest fails for any reason.
      */
-    String ingest(String xmlData) throws EscidocException;
+    String ingest(String xmlData, String resourceType) throws EscidocException;
 
 }

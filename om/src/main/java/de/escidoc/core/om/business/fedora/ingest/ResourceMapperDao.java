@@ -65,24 +65,16 @@ public class ResourceMapperDao {
     /**
      * Returns the IngestableResource upon the first match.
      *
-     * @param xmlData
+     * @param resourceType
      * @return the IngestableResource responsible for the given resource.
      * @throws de.escidoc.core.common.exceptions.EscidocException
      */
-    public ResourceMapperBean getIngestableForResource(final String xmlData) throws EscidocException {
+    public ResourceMapperBean getIngestableForResource(final String resourceType) throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();
         for (final ResourceMapperBean bean : getResourceMappers()) {
-            try {
-                if (bean.getValidator().isResourceValid(xmlData, bean.getResourceType())) {
-                    return bean;
-                }
+            if (bean.getResourceType().getLabel().equals(resourceType)) {
+                return bean;
             }
-            catch (final InvalidResourceException e) {
-                // possible smell here. how to better communicate exceptions in
-                // this case ?
-                exceptions.append("Not a valid ").append(bean.getResourceType()).append(" : ").append(e).append('\n');
-            }
-
         }
         // for valid resources this code should never be reached
         throw new InvalidResourceException("The given resource is invalid. It cannot be validated against any schema: "
