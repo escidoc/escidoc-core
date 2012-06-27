@@ -19,7 +19,7 @@
   <artifactId>eSciDocCore</artifactId>
   <packaging>pom</packaging>
   <name>eSciDoc Core</name>
-  <version>1.4.2-SNAPSHOT</version>
+  <version>1.4.2</version>
   <url>https://www.escidoc.org</url>
 
   <issueManagement>
@@ -1055,7 +1055,7 @@
     <copylibstask.version>1.0.0</copylibstask.version>
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
-    <escidoc.fedoragsearch.version>1.4.27</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.4.28</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.4.18</escidoc.srw.version>
     <srw.version>1.4.9</srw.version>
     <escidoc-analyzers.version>1.4.4</escidoc-analyzers.version>

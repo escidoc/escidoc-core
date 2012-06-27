@@ -1,0 +1,2 @@
+-change version in all poms (without -SNAPSHOT)
+-set version in Bugzilla to published
