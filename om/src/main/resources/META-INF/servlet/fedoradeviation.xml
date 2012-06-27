@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapping>
 	<define>
-		<var name="DS-ID" regexp="/(.*/content)" />
+		<var name="DS-ID" regexp="/(.*)/content" />
 		<var name="OBJECT-ID" regexp="/([^/?]*)" />
 	</define>
 	<resource name="FedoraDescribeDeviation"
@@ -54,7 +54,7 @@
 				</documentation>
 			</invoke>
 		</descriptor>
-		<descriptor uri="/fedoradeviation/objects/${OBJECT-ID}/datastreams/${DS-ID}/content">
+		<descriptor uri="/fedoradeviation/objects/${OBJECT-ID}/datastreams/${DS-ID}">
 			<invoke http="GET" method="getDatastreamDissemination" 
 					param1="${OBJECT-ID}" param2="${DS-ID}" param3="${PARAMETERS}">
 				<documentation visible="false">

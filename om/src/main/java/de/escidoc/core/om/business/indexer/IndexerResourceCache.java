@@ -311,8 +311,32 @@ public final class IndexerResourceCache {
 
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
-                final String mimeType =
-                    ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+                String mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+
+                //If mime-type is octet-stream, try guessing from file-extension    
+                if (mimeType.equals(FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM)) {
+                    if (identifier.endsWith(".docx")) {
+                        mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                    }
+                    else if (identifier.endsWith(".doc")) {
+                        mimeType = "application/msword";
+                    }
+                    else if (identifier.endsWith(".pptx")) {
+                        mimeType = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+                    }
+                    else if (identifier.endsWith("ppt")) {
+                        mimeType = "application/vnd.ms-powerpoint";
+                    }
+                    else if (identifier.endsWith(".xlsx")) {
+                        mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    }
+                    else if (identifier.endsWith(".xls")) {
+                        mimeType = "application/vnd.ms-excel";
+                    }
+                    else if (identifier.endsWith(".pdf")) {
+                        mimeType = "application/pdf";
+                    }
+                }
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();
