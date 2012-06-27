@@ -434,7 +434,7 @@
             <properties:mime-type>text/xml</properties:mime-type>
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
-                                    xlink:href="http://localhost:8082/ir/xml/EPFull_10890652.xml?test=eins&amp;test1=content"
+                                    xlink:href="http://localhost:8082/ir/xml/EPFull_1089065.xml"
                                     storage="external-url"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
