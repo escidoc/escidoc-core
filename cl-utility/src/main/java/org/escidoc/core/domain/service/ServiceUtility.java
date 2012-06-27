@@ -5,7 +5,6 @@ package org.escidoc.core.domain.service;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -88,6 +87,9 @@ public class ServiceUtility {
      * @return
      */
     private Object tryToResolveMarshallableObject(@NotNull Object objectTO) {
+        if (objectTO instanceof JAXBElement) {
+            return objectTO;
+        }
         try {
             Class<?> factoryClass = Class.forName(objectTO.getClass().getPackage().getName() + ".ObjectFactory");
             Object factory = factoryClass.getConstructor().newInstance();

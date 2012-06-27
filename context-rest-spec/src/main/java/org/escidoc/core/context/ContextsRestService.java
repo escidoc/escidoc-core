@@ -10,6 +10,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
 import org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean;
 
@@ -38,7 +39,8 @@ public interface ContextsRestService {
      */
     @GET
     @Produces(MediaType.TEXT_XML)
-    JAXBElement<? extends ResponseTypeTO> retrieveContexts(@QueryParam("") SruSearchRequestParametersBean parameters,
+    JAXBElement<? extends ResponseTypeTO> retrieveContexts(
+        @NotNull @QueryParam("") SruSearchRequestParametersBean parameters,
         @QueryParam("x-info5-roleId") String roleId, @QueryParam("x-info5-userId") String userId,
         @QueryParam("x-info5-omitHighlighting") String omitHighlighting)
         throws MissingMethodParameterException, SystemException;

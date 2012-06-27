@@ -27,18 +27,18 @@ import org.apache.cxf.jaxrs.ext.Nullable;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 import org.apache.cxf.jaxrs.utils.InjectionUtils;
-import org.apache.cxf.jaxrs.utils.schemas.SchemaHandler;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.apache.cxf.staxutils.DepthExceededStaxException;
 import org.apache.cxf.staxutils.transform.TransformUtils;
 import org.escidoc.core.domain.properties.java.PropertiesTypeTO;
-
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * eSciDoc specific implementation of {@link JAXBElementProvider}. Generates stylesheet-header with given
  * stylesheet-path
  *
  * @author Michael Hoppe
+ * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Produces({"application/xml", "application/*+xml", "text/xml"})
 @Consumes({"application/xml", "application/*+xml", "text/xml"})
@@ -52,17 +52,15 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
 
     private JAXBContextProvider jaxbContextProvider;
 
-    private SchemaHandler schemaHandler;
-
     private Map<String, Object> maProperties;
 
     private Map<String, Object> maPropertiesWithDoctype;
 
-    @Override
     /**
      * Save 2 properties-sets.
      * One without DOCTYPE-element and one With DOCTYPE-element for JavaUtilPropertiesTO.
      */
+    @Override
     public void setMarshallerProperties(Map<String, Object> marshallProperties) {
         overrideXmlHeadersProperty(marshallProperties);
         super.setMarshallerProperties(marshallProperties);
@@ -77,14 +75,14 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         }
     }
 
-    @Override
-    public void setSchemaHandler(SchemaHandler schemaHandler) {
-        this.schemaHandler = schemaHandler;
-    }
-
+    /**
+     * Override for public access.
+     *
+     * @return The schema.
+     */
     @Override
     public Schema getSchema() {
-        return schemaHandler.getSchema();
+        return super.getSchema();
     }
 
     public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {
@@ -168,11 +166,11 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         return super.createUnmarshaller(cls, genericType, isCollection);
     }
 
-    @Override
     /**
      * set DOCTYPE-element in xml if xml has schema java.util.properties
      *
      */
+    @Override
     protected void marshal(
         Object obj, Class<?> cls, Type genericType, String enc, OutputStream os, MediaType mt, Marshaller ms)
         throws Exception {

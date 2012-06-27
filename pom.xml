@@ -1130,6 +1130,7 @@
     <jaxb.version>2.2.5</jaxb.version>
     <aspectj.version>1.6.12</aspectj.version>
     <spring.version>3.0.7.RELEASE</spring.version>
+    <!-- TODO: Update to 2.6.2 when released for XML catalog support -->
     <cxf.version>2.6.1</cxf.version>
     <oval.version>1.81</oval.version>
     <camel.version>2.9.0</camel.version>
@@ -1645,6 +1646,7 @@
         <artifactId>jaxb2-basics-runtime</artifactId>
         <version>${jaxb2-basics.version}</version>
       </dependency>
+
       <dependency>
         <groupId>javax.xml.bind</groupId>
         <artifactId>jaxb-api</artifactId>

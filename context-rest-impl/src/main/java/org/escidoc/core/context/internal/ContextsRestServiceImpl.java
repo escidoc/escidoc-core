@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import net.sf.oval.guard.Guarded;
 import org.escidoc.core.context.ContextsRestService;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -17,11 +18,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Marko Voss
  * 
  */
+@Service
+@Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
+    assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContextsRestServiceImpl implements ContextsRestService {
 
     @Autowired
@@ -35,13 +40,10 @@ public class ContextsRestServiceImpl implements ContextsRestService {
      * 
      */
     protected ContextsRestServiceImpl() {
-
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.context.ContextsRestService#retrieveContexts(org.escidoc.core.domain.sru.parameters.SruSearchRequestParametersBean, java.util.String, java.util.String, java.util.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public JAXBElement<? extends ResponseTypeTO> retrieveContexts(
@@ -55,5 +57,4 @@ public class ContextsRestServiceImpl implements ContextsRestService {
         return (JAXBElement<? extends ResponseTypeTO>) serviceUtility.fromXML(
                 this.contextHandler.retrieveContexts(map));
     }
-
 }

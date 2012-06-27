@@ -52,10 +52,12 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
+@Service
 @Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
     assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class ContextRestServiceImpl implements ContextRestService {
