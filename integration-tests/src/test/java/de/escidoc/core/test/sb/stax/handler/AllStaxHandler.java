@@ -33,6 +33,7 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.Constants;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ public class AllStaxHandler extends DefaultHandler {
                 String value = attribute.getValue();
                 String namespace = attribute.getNamespace();
                 String localName = attribute.getLocalName();
-                if (namespace != null && EscidocTestBase.XLINK_NS_URI.equals(namespace)) {
+                if (namespace != null && Constants.NS_EXTERNAL_XLINK.equals(namespace)) {
                     if (attribute.getLocalName().equals("href")) {
                         localName = "id";
                         value = value.replaceFirst(".*/", "");

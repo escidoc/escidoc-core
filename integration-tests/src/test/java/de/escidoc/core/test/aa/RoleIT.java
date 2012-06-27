@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConst
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import org.junit.Test;
@@ -1006,8 +1006,7 @@ public class RoleIT extends AaTestBase {
     @Test
     public void testAAUro3() throws Exception {
 
-        Document createdDocument = createSuccessfully("role_for_create.xml");
-        Document toBeUpdatedDocument = createdDocument;
+        Document toBeUpdatedDocument = createSuccessfully("role_for_create.xml");
 
         try {
             update(UNKNOWN_ID, toString(toBeUpdatedDocument, false));
@@ -1026,8 +1025,7 @@ public class RoleIT extends AaTestBase {
     @Test
     public void testAAUro3_2() throws Exception {
 
-        Document createdDocument = createSuccessfully("role_for_create.xml");
-        Document toBeUpdatedDocument = createdDocument;
+        Document toBeUpdatedDocument = createSuccessfully("role_for_create.xml");
 
         try {
             update(CONTEXT_ID, toString(toBeUpdatedDocument, false));
@@ -1235,8 +1233,8 @@ public class RoleIT extends AaTestBase {
         assertNotNull(updatedXml);
         Document toBeUpdatedDocument2 = EscidocAbstractTest.getDocument(updatedXml);
         deleteAttribute(toBeUpdatedDocument2, XPATH_ROLE, EscidocTestBase.NAME_LAST_MODIFICATION_DATE);
-        addAttribute(toBeUpdatedDocument2, XPATH_ROLE, createAttributeNode(toBeUpdatedDocument2, XLINK_NS_URI, null,
-            EscidocTestBase.NAME_LAST_MODIFICATION_DATE, lastModificationDate));
+        addAttribute(toBeUpdatedDocument2, XPATH_ROLE, createAttributeNode(toBeUpdatedDocument2,
+            Constants.NS_EXTERNAL_XLINK, null, EscidocTestBase.NAME_LAST_MODIFICATION_DATE, lastModificationDate));
 
         try {
             update(getObjidValue(toBeUpdatedDocument2), toString(toBeUpdatedDocument2, false));
@@ -1932,8 +1930,8 @@ public class RoleIT extends AaTestBase {
 
         Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
-        addAttribute(toBeCreatedDocument, XPATH_ROLE, createAttributeNode(toBeCreatedDocument, XLINK_NS_URI, null,
-            EscidocTestBase.NAME_OBJID, "escidoc:42"));
+        addAttribute(toBeCreatedDocument, XPATH_ROLE, createAttributeNode(toBeCreatedDocument,
+            Constants.NS_EXTERNAL_XLINK, null, EscidocTestBase.NAME_OBJID, "escidoc:42"));
         insertUniqueRoleName(toBeCreatedDocument);
 
         try {

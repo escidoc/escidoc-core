@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContextHandlerClientInterface;
 
 import java.util.Map;
@@ -51,7 +51,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveContexts(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Context.retrieveContexts", METHOD_RETRIEVE_CONTEXTS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXTS_BASE_URI, new String[] {}, filter);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXTS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveMembers(final String id, final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Context.retrieveMembers", METHOD_RETRIEVE_MEMBERS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES + "/" + Constants.SUB_CONTAINER_MEMBERS }, filter);
     }
 
@@ -79,7 +79,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveResources(final String id) throws Exception {
 
         return callEsciDoc("Context.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI,
+            new String[] { id, Constants.SUB_RESOURCES });
     }
 
     /**
@@ -92,8 +93,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveAdminDescriptors(final String id) throws Exception {
 
         return callEsciDoc("Context.retrieveAdminDescriptors", METHOD_RETRIEVE_ADMIN_DESCRIPTORS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id,
-                Constants.SUB_ADMINDESCRIPTORS });
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] {
+                id, Constants.SUB_ADMINDESCRIPTORS });
     }
 
     /**
@@ -107,8 +108,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveAdminDescriptor(final String id, final String admDescriptorId) throws Exception {
 
         return callEsciDoc("Context.retrieveAdminDescriptor", METHOD_RETRIEVE_ADMINDESCRIPTOR,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id,
-                Constants.SUB_ADMINDESCRIPTOR, admDescriptorId });
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] {
+                id, Constants.SUB_ADMINDESCRIPTOR, admDescriptorId });
     }
 
     /**
@@ -124,8 +125,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
         throws Exception {
 
         return callEsciDoc("Context.updateAdminDescriptor", METHOD_UPDATE_ADMINDESCRIPTOR, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_ADMINDESCRIPTOR,
-                admDescriptorId }, content);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id,
+                Constants.SUB_ADMINDESCRIPTOR, admDescriptorId }, content);
     }
 
     /**
@@ -139,8 +140,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object open(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("Context.retrieveMembers", METHOD_OPEN, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_CONTEXT_OPEN },
-            taskParam);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id,
+                Constants.SUB_CONTEXT_OPEN }, taskParam);
     }
 
     /**
@@ -154,7 +155,7 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object close(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("Context.retrieveMembers", METHOD_CLOSE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_CLOSE },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_CLOSE },
             taskParam);
     }
 
@@ -168,8 +169,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("Context.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTEXT_BASE_URI, new String[] { id });
+        return callEsciDoc("Context.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id });
     }
 
     /**
@@ -182,7 +183,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     public Object retrieveProperties(final String id) throws Exception {
 
         return callEsciDoc("Context.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTEXT_BASE_URI, new String[] { id, Constants.SUB_PROPERTIES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI,
+            new String[] { id, Constants.SUB_PROPERTIES });
     }
 
     /**
@@ -195,8 +197,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     @Override
     public Object create(final Object contextXml) throws Exception {
 
-        return callEsciDoc("Context.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTEXT_BASE_URI, new String[] {}, changeToString(contextXml));
+        return callEsciDoc("Context.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] {}, changeToString(contextXml));
     }
 
     /**
@@ -210,8 +212,9 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     @Override
     public Object update(final String id, final Object contextXml) throws Exception {
 
-        return callEsciDoc("Context.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTEXT_BASE_URI, new String[] { id }, changeToString(contextXml));
+        return callEsciDoc("Context.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id },
+            changeToString(contextXml));
     }
 
     /**
@@ -224,8 +227,8 @@ public class ContextClient extends ClientBase implements ContextHandlerClientInt
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("Context.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTEXT_BASE_URI, new String[] { id });
+        return callEsciDoc("Context.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTEXT_BASE_URI, new String[] { id });
     }
 
 }

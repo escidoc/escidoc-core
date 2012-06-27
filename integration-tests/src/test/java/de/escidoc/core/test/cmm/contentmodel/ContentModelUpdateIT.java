@@ -32,8 +32,8 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -48,8 +48,6 @@ import static org.junit.Assert.assertEquals;
  * @author Michael Schneider
  */
 public class ContentModelUpdateIT extends ContentModelTestBase {
-
-    private final static String CONTENT_MODEL_XML_SCHEMA = "http://www.escidoc.de/schemas/contentmodel/0.2";
 
     /**
      * Test updating a ContentModel with unchanged representation.
@@ -275,16 +273,17 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
         String contentModelNsPrefix = determineContentModelNamespacePrefix(cmDocV1E1);
         String xlinkNsPrefix = determineXlinkNamespacePrefix(cmDocV1E1);
         Element mdRecord =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":md-record-definition");
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, contentModelNsPrefix + ":md-record-definition");
         mdRecord.setAttribute("name", testDefinitionName);
-        Element mdRecordContent = cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":schema");
-        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", xlinkNsPrefix + ":href", getBaseUrl()
-            + Constants.ESCIDOC_BASE_URI + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
+        Element mdRecordContent =
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, contentModelNsPrefix + ":schema");
+        mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", xlinkNsPrefix + ":href",
+            Constants.WEB_APP_URI_ESCIDOC + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 
         // create MdRecordDefinitions
         Element mdRecords =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, contentModelNsPrefix + ":md-record-definitions");
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, contentModelNsPrefix + ":md-record-definitions");
         mdRecords.appendChild(mdRecord);
 
         Node resources = selectSingleNode(cmDocV1E1, "/content-model/resources");
@@ -347,16 +346,16 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
 
         // create additional resource definition
         Element newResourceDefinition =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:resource-definition");
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, "escidocContentModel:resource-definition");
         newResourceDefinition.setAttribute("name", testDefinitionName);
         Element resourceDefinitionXslt =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:xslt");
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, "escidocContentModel:xslt");
         resourceDefinitionXslt.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", selectSingleNode(cmDocV1E1,
             "/content-model/resource-definitions/resource-definition[@name = 'trans']/xslt/@href").getNodeValue());
         newResourceDefinition.appendChild(resourceDefinitionXslt);
 
         Element resourceDefinitionMdRecordName =
-            cmDocV1E1.createElementNS(CONTENT_MODEL_XML_SCHEMA, "escidocContentModel:md-record-name");
+            cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, "escidocContentModel:md-record-name");
         resourceDefinitionMdRecordName.setTextContent("somemd");
         newResourceDefinition.appendChild(resourceDefinitionMdRecordName);
 

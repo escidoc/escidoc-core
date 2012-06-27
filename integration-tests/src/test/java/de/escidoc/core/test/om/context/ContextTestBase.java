@@ -39,7 +39,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
 

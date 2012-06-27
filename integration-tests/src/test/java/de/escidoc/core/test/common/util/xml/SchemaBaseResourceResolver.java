@@ -30,7 +30,7 @@
 package de.escidoc.core.test.common.util.xml;
 
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import org.apache.xerces.dom.DOMInputImpl;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -50,7 +50,8 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      */
     private static final Pattern PATTERN_SCHEMA_LOCATION_BASE = Pattern.compile(Constants.SCHEMA_LOCATION_BASE);
 
-    private final String schemaLocationReplacement = EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd";
+    private final String schemaLocationReplacement =
+        EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + "/xsd";
 
     /**
      * Replaces base-part of system-id.

@@ -31,6 +31,7 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
@@ -313,8 +314,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
 
         Element contentNode = (Element) selectSingleNode(itemDoc, componentXpath + "/content");
         String xlinkNamespacePrefix = determineXlinkNamespacePrefix(itemDoc);
-        Attr attr =
-            itemDoc.createAttributeNS(de.escidoc.core.test.Constants.XLINK_NS_URI, xlinkNamespacePrefix + ":href");
+        Attr attr = itemDoc.createAttributeNS(Constants.NS_EXTERNAL_XLINK, xlinkNamespacePrefix + ":href");
         String imageUrl = getBaseUrl() + "/images/escidoc-logo.jpg";
 
         attr.setValue(imageUrl);

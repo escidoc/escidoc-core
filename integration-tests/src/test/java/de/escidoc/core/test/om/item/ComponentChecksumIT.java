@@ -30,15 +30,12 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import static org.junit.Assert.assertEquals;
@@ -110,7 +107,8 @@ public class ComponentChecksumIT extends ItemTestBase {
             selectSingleNode(itemDoc,
                 "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String imageUrl = EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/testDocuments/images/1.jpeg";
+        String imageUrl =
+            EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_TEST_DATA + "/testDocuments/images/1.jpeg";
 
         // change url to the one from creation of item
         substitute(itemDoc, "//components/component" + "[properties/mime-type = 'image/jpeg']/content/@href", imageUrl);
@@ -146,7 +144,7 @@ public class ComponentChecksumIT extends ItemTestBase {
             selectSingleNode(itemDoc,
                 "//components/component/properties" + "[mime-type = 'image/jpeg']/checksum/text()").getNodeValue();
 
-        String imageUrl = getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/images/escidoc-logo.jpg";
+        String imageUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + "/images/escidoc-logo.jpg";
 
         // change url to the one of a different image
         substitute(itemDoc, "//components/component" + "[properties/mime-type = 'image/jpeg']/content/@href", imageUrl);

@@ -61,7 +61,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -994,7 +994,7 @@ public class ItemUpdateIT extends ItemTestBase {
         String imageUrl =
             "http://" + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME) + ":"
                 + PropertiesProvider.getInstance().getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
-                + Constants.ESCIDOC_BASE_URI + "/images/escidoc-logo.jpg";
+                + Constants.WEB_CONTEXT_URI_ESCIDOC + "/images/escidoc-logo.jpg";
 
         Node itemWithNewContentHref =
             substitute(newItem, "/item/components/component[@href = '/ir/item/" + this.theItemId

@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
 import java.util.Map;
@@ -50,8 +50,9 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     @Override
     public Object create(final Object userGroupXml) throws Exception {
 
-        return callEsciDoc("UserGroup.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.USER_GROUP_BASE_URI, new String[] {}, changeToString(userGroupXml));
+        return callEsciDoc("UserGroup.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] {},
+            changeToString(userGroupXml));
     }
 
     /**
@@ -63,8 +64,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      */
     @Override
     public Object delete(final String id) throws Exception {
-        return callEsciDoc("UserGroup.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
-            + Constants.USER_GROUP_BASE_URI, new String[] { id });
+        return callEsciDoc("UserGroup.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id });
     }
 
     /**
@@ -76,8 +77,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      */
     @Override
     public Object retrieve(final String id) throws Exception {
-        return callEsciDoc("UserGroup.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
-            + Constants.USER_GROUP_BASE_URI, new String[] { id });
+        return callEsciDoc("UserGroup.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id });
     }
 
     /**
@@ -89,7 +90,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      */
     public Object retrieveResources(final String id) throws Exception {
         return callEsciDoc("UserGroup.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id,
+                Constants.SUB_RESOURCES });
     }
 
     /**
@@ -101,7 +103,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
      */
     public Object retrieveUserGroups(final Map<String, String[]> filter) throws Exception {
         return callEsciDoc("UserGroup.retrieveUserGroups", METHOD_RETRIEVE_USER_GROUPS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUPS_BASE_URI, new String[] {}, filter);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUPS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -115,8 +117,9 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     @Override
     public Object update(final String id, final Object userGroupXml) throws Exception {
 
-        return callEsciDoc("UserGroup.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.USER_GROUP_BASE_URI, new String[] { id }, changeToString(userGroupXml));
+        return callEsciDoc("UserGroup.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id },
+            changeToString(userGroupXml));
     }
 
     /**
@@ -130,7 +133,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object activate(final String id, final String taskParamXml) throws Exception {
 
         return callEsciDoc("UserGroup.activate", METHOD_ACTIVATE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id, "activate" },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id, "activate" },
             changeToString(taskParamXml));
     }
 
@@ -145,7 +148,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object deactivate(final String id, final String taskParamXml) throws Exception {
 
         return callEsciDoc("UserGroup.deactivate", METHOD_DEACTIVATE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id, "deactivate" },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id, "deactivate" },
             changeToString(taskParamXml));
     }
 
@@ -160,8 +163,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object retrieveCurrentGrants(final String id) throws Exception {
 
         return callEsciDoc("UserGroup.retrieveCurrentGrants", METHOD_RETRIEVE_CURRENT_GRANTS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id,
-                "resources/current-grants" });
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] {
+                id, "resources/current-grants" });
     }
 
     /**
@@ -176,8 +179,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object createGrant(final String id, final String grantXml) throws Exception {
 
         return callEsciDoc("UserGroup.createGrant", METHOD_CREATE_GRANT, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id, "/resources/grants/grant" },
-            changeToString(grantXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id,
+                "/resources/grants/grant" }, changeToString(grantXml));
     }
 
     /**
@@ -192,8 +195,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object retrieveGrant(final String id, final String grantId) throws Exception {
 
         return callEsciDoc("UserGroup.retrieveGrant", METHOD_RETRIEVE_GRANT, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id, "resources/grants/grant",
-                grantId });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id,
+                "resources/grants/grant", grantId });
     }
 
     /**
@@ -208,8 +211,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object addSelectors(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("UserGroup.addSelectors", METHOD_ADD_SELECTORS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI,
-            new String[] { id, Constants.SUB_ADD_SELECTORS }, taskParam);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id,
+                Constants.SUB_ADD_SELECTORS }, taskParam);
     }
 
     /**
@@ -224,7 +227,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
     public Object removeSelectors(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("UserGroup.removeSelectors", METHOD_REMOVE_SELECTORS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, new String[] { id,
                 Constants.SUB_REMOVE_SELECTORS }, taskParam);
     }
 
@@ -241,7 +244,7 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
 
         String[] pathElements = new String[] { id, "resources/grants/revoke-grants" };
         return callEsciDoc("UserGroup.revokeGrants", METHOD_REVOKE_GRANTS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, pathElements, changeToString(filterXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, pathElements, changeToString(filterXml));
     }
 
     /**
@@ -258,7 +261,8 @@ public class UserGroupClient extends GrantClient implements ResourceHandlerClien
 
         String[] pathElements = new String[] { id, "resources/grants/grant", grantId, "revoke-grant" };
         return callEsciDoc("UserGroup.revokeGrant", METHOD_REVOKE_GRANT, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.USER_GROUP_BASE_URI, pathElements, changeToString(taskParamXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.USER_GROUP_BASE_URI, pathElements,
+            changeToString(taskParamXml));
     }
 
 }

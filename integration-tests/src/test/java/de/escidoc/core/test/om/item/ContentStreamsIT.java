@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
@@ -311,8 +311,8 @@ public class ContentStreamsIT extends ItemTestBase {
             // retrieve old version of content
 
             String tocHref =
-                HttpHelper.createUrl(Constants.PROTOCOL, getBaseHost() + ":" + getBasePort(),
-                    Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { createdItemId + ":1",
+                HttpHelper.createUrl(Constants.HTTP_PROTOCOL, getBaseHost() + ":" + getBasePort(),
+                    Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { createdItemId + ":1",
                         "/content-streams/content-stream/toc/content" });
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(tocHref);

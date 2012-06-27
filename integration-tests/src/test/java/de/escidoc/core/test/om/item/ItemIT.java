@@ -59,7 +59,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedR
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 
 /**
@@ -437,7 +437,7 @@ public class ItemIT extends ItemTestBase {
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         deleteElement(toBeCreatedDocument, XPATH_ITEM_CONTENT_MODEL);
         addAfter(toBeCreatedDocument, XPATH_ITEM_CONTEXT, createElementNode(toBeCreatedDocument,
-            STRUCTURAL_RELATIONS_NS_URI, "srel", NAME_CONTENT_MODEL, null));
+            Constants.NS_COMMON_SREL, SREL_PREFIX_ESCIDOC, NAME_CONTENT_MODEL, null));
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 
@@ -1144,7 +1144,7 @@ public class ItemIT extends ItemTestBase {
         String newDate = "1970-01-01T01:00:00.000Z";
         Document xmlItem =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        Element creator = xmlItem.createElementNS(PROPERTIES_NS_URI_04, "prop:creation-date");
+        Element creator = xmlItem.createElementNS(Constants.NS_COMMON_PROPERTIES, "prop:creation-date");
         creator.setTextContent(newDate);
         NodeList propertiesList = xmlItem.getElementsByTagName("escidocItem:properties");
         Node properties = null;

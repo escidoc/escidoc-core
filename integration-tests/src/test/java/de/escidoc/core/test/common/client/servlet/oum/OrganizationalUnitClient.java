@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.oum;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 import java.util.Map;
 
@@ -51,7 +51,8 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object create(final Object ouXml) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] {}, changeToString(ouXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] {},
+            changeToString(ouXml));
     }
 
     /**
@@ -65,7 +66,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object delete(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id });
     }
 
     /**
@@ -80,7 +81,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object update(final String id, final Object ouXml) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id },
             changeToString(ouXml));
     }
 
@@ -98,7 +99,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveMdRecord(final String id, final String name) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveMdRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
                 "/" + Constants.SUB_MD_RECORD, name });
     }
 
@@ -113,7 +114,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object updateMdRecords(final String id, final Object ouXml) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.updateMdRecords", METHOD_UPDATE_MD_RECORDS, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
                 "/" + Constants.SUB_MD_RECORDS }, changeToString(ouXml));
     }
 
@@ -128,7 +129,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object updateParents(final String id, final Object ouXml) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.updateParents", METHOD_UPDATE_PARENTS, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
                 "/" + Constants.SUB_PARENTS }, changeToString(ouXml));
     }
 
@@ -143,7 +144,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id });
     }
 
     /**
@@ -156,7 +157,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveResources(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveResources", METHOD_RETRIEVE_RESOURCES,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, "/" + Constants.SUB_RESOURCES });
     }
 
@@ -170,7 +171,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveProperties(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveProperties", METHOD_RETRIEVE_PROPERTIES,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, "/" + Constants.SUB_PROPERTIES });
     }
 
@@ -184,7 +185,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveMdRecords(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveMdRecords", METHOD_RETRIEVE_MD_RECORDS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, "/" + Constants.SUB_MD_RECORDS });
     }
 
@@ -198,7 +199,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveParents(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveParentOus", METHOD_RETRIEVE_PARENTS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
                 "/" + Constants.SUB_PARENTS });
     }
 
@@ -212,7 +213,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveChildObjects(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveChildObjects", METHOD_RETRIEVE_CHILD_OBJECTS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, Constants.SUB_CHILD_OBJECTS });
     }
 
@@ -226,7 +227,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveParentObjects(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveParentObjectss", METHOD_RETRIEVE_PARENT_OBJECTS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, Constants.SUB_PARENT_OBJECTS });
     }
 
@@ -240,7 +241,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveOrganizationalUnits(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveOrganizationalUnits", METHOD_RETRIEVE_ORGANIZATIONAL_UNITS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNITS_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNITS_BASE_URI,
             new String[] {}, filter);
     }
 
@@ -256,8 +257,8 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object close(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.cloae", METHOD_CLOSE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
-            new String[] { id, Constants.SUB_CLOSE }, taskParam);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+                Constants.SUB_CLOSE }, taskParam);
     }
 
     /**
@@ -272,8 +273,8 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object open(final String id, final String taskParam) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.open", METHOD_OPEN, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
-            new String[] { id, Constants.SUB_OPEN }, taskParam);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI, new String[] { id,
+                Constants.SUB_OPEN }, taskParam);
     }
 
     /**
@@ -286,7 +287,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrievePathList(final String id) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrievePathList", METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_PATH_LIST,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { id, Constants.SUB_PATH_LIST });
     }
 
@@ -300,7 +301,7 @@ public class OrganizationalUnitClient extends ClientBase {
     public Object retrieveSuccessors(final String objid) throws Exception {
 
         return callEsciDoc("OrganizationalUnit.retrieveSuccessors", METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_SUCCESSORS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI,
             new String[] { objid, Constants.SUB_SUCCESSORS });
     }
 

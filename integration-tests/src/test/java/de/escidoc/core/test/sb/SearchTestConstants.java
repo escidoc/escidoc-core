@@ -36,7 +36,7 @@ import java.util.HashMap;
  *
  * @author Michael Hoppe
  */
-public final class Constants {
+public final class SearchTestConstants {
 
     public static final int NUM_ITEMS = 10;
 
@@ -83,7 +83,7 @@ public final class Constants {
     /**
      * Private Constructor.
      */
-    private Constants() {
+    private SearchTestConstants() {
 
     }
 

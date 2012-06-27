@@ -28,9 +28,11 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -72,11 +74,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
     private static String[] contentRelationIds = null;
 
-    private static String[] itemIds = null;
-
     private static int methodCounter = 0;
-
-    private static String startTime = "";
 
     /**
      * @throws Exception
@@ -140,15 +138,13 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
-        startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
+        String startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
         // Create Items to relate
-        itemIds = new String[10];
+        String[] itemIds = new String[10];
         for (int k = 0; k < 10; k++) {
             String status = STATUS_PENDING;
             HashMap<String, String> itemHash =
@@ -193,8 +189,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -327,8 +323,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_CONTENT_RELATION_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTENT_RELATION_BASE_URI + "/"
-                    + contentRelationIds[0]);
+                put("scope0", Constants.CONTENT_RELATION_BASE_URI + "/" + contentRelationIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "2");
@@ -444,8 +439,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
-            String contextHref =
-                de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
             String objectId = getObjidValue(xml);
@@ -456,7 +450,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
 
             for (int i = 1;; i++) {
                 try {
-                    String componentId = getComponentObjidValue(itemDoc, i);
+                    String componentId = OmTestBase.getComponentObjidValue(itemDoc, i);
                     if (componentId == null) {
                         break;
                     }
@@ -487,7 +481,7 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
                         xml = item.retrieve(objectId);
                         Node n = selectSingleNode(getDocument(xml), "/item/properties/version/number");
 
-                        String componentId = getComponentObjidValue(itemDoc, 1);
+                        String componentId = OmTestBase.getComponentObjidValue(itemDoc, 1);
                         String pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
                         xml = item.assignContentPid(objectId, componentId, pidParam);
                         pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
@@ -564,8 +558,8 @@ public class ContentRelationAdminSearchIT extends SearchTestBase {
             Document xmlData =
                 EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
 
-            String subjectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + subjectId;
-            String objectHref = de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + objectId;
+            String subjectHref = Constants.ITEM_BASE_URI + "/" + subjectId;
+            String objectHref = Constants.ITEM_BASE_URI + "/" + objectId;
             substitute(xmlData, "/content-relation/subject/@href", subjectHref);
             substitute(xmlData, "/content-relation/object/@href", objectHref);
             String xml = contentRelation.create(toString(xmlData, false));

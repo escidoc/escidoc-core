@@ -49,9 +49,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
-import de.escidoc.core.test.EntityUtil;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.TaskParamFactory;
+import de.escidoc.core.test.*;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
@@ -62,7 +60,6 @@ import org.apache.http.client.protocol.ResponseProcessCookies;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 
 import org.joda.time.DateTime;
 
@@ -71,10 +68,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
@@ -96,7 +91,6 @@ import de.escidoc.core.test.common.client.servlet.sm.ReportDefinitionClient;
 import de.escidoc.core.test.common.client.servlet.sm.ScopeClient;
 import de.escidoc.core.test.common.client.servlet.sm.StatisticDataClient;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -2476,7 +2470,8 @@ public class AaTestBase extends EscidocAbstractTest {
         PWCallback.setHandle(userHandle);
 
         final File f =
-            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/" + testUploadFile));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_TEST_DATA + "/"
+                + testUploadFile));
 
         final InputStream fileInputStream = new FileInputStream(f);
 
@@ -4068,7 +4063,7 @@ public class AaTestBase extends EscidocAbstractTest {
 
             // Check status-code when requesting resource with invalid handle
             final String httpUrl =
-                getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.ROLE_BASE_URI + "/"
+                getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ROLE_BASE_URI + "/"
                     + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
 
             final int statusCode = getStatusCode(httpUrl);

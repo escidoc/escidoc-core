@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
@@ -382,7 +382,7 @@ public class AdministratorIT extends GrantTestBase {
         final Document toBeCreatedGrantDocument =
             getTemplateAsFixedGrantDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         substitute(toBeCreatedGrantDocument, XPATH_GRANT_OBJECT, createReferencingElementNode(toBeCreatedGrantDocument,
-            GRANTS_NS_URI, SREL_PREFIX_TEMPLATES, NAME_ASSIGNED_ON, XLINK_PREFIX_TEMPLATES, "",
+            Constants.NS_AA_GRANTS, SREL_PREFIX_TEMPLATES, NAME_ASSIGNED_ON, XLINK_PREFIX_TEMPLATES, "",
             Constants.CONTEXT_BASE_URI + "/" + id));
         final String toBeCreatedGrantXml = toString(toBeCreatedGrantDocument, false);
 

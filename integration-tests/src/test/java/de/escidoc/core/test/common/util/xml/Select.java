@@ -1,5 +1,6 @@
 package de.escidoc.core.test.common.util.xml;
 
+import de.escidoc.core.test.Constants;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,7 +29,7 @@ public class Select {
     public static String getObjidValue(final Document document) throws Exception {
 
         return getObjidFromHref(getRootElementAttributeValueNS(document,
-            de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF, de.escidoc.core.test.Constants.XLINK_NS_URI));
+            de.escidoc.core.test.Constants.ATTRIBUTE_NAME_HREF, Constants.NS_EXTERNAL_XLINK));
     }
 
     /**

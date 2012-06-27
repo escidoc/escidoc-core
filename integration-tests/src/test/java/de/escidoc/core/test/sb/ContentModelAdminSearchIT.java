@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -124,10 +125,8 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
@@ -158,8 +157,8 @@ public class ContentModelAdminSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**

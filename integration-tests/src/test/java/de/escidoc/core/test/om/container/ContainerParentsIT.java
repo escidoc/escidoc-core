@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 /**
  * Test retrieving parents of the Container resource.
@@ -133,7 +133,7 @@ public class ContainerParentsIT extends ContainerTestBase {
     @Test
     public void testRetrieveParents() throws Exception {
         String parentsXml = retrieveParents(middleLevelContainerIds[1]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 1);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + topLevelContainerId
@@ -148,7 +148,7 @@ public class ContainerParentsIT extends ContainerTestBase {
     @Test
     public void testRetrieveParents1() throws Exception {
         String parentsXml = retrieveParents(lowLevelContainerIds[0]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 3);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='"
@@ -170,7 +170,7 @@ public class ContainerParentsIT extends ContainerTestBase {
     @Test
     public void testRetrieveParents2() throws Exception {
         String parentsXml = retrieveParents(lowLevelContainerIds[1]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 2);
         assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='"
@@ -192,7 +192,7 @@ public class ContainerParentsIT extends ContainerTestBase {
     @Test
     public void testRetrieveParents3() throws Exception {
         String parentsXml = retrieveParents(topLevelContainerId);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 0);
     }
 
@@ -204,7 +204,7 @@ public class ContainerParentsIT extends ContainerTestBase {
     @Test
     public void testRetrieveParentsWithVersion() throws Exception {
         String parentsXml = retrieveParents(lowLevelContainerIds[0] + ":1");
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 3);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='"

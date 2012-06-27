@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -125,10 +126,8 @@ public class ContextAdminSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
@@ -159,8 +158,8 @@ public class ContextAdminSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTEXT_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.CONTEXT_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.CONTEXT_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.CONTEXT_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -261,8 +260,7 @@ public class ContextAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/"
-                    + contextIds[0]);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + contextIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "3");
@@ -319,8 +317,7 @@ public class ContextAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_CONTEXT_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/"
-                    + contextIds[1]);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + contextIds[1]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "3");

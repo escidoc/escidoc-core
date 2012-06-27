@@ -39,7 +39,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,13 +56,11 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.xpath.XPathAPI;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
@@ -73,9 +70,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
@@ -90,56 +85,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     private static final String XPATH_MODIFIED_BY = "//" + NAME_PROPERTIES + "/" + NAME_MODIFIED_BY;
 
     private static final String XPATH_CREATED_BY = "//" + NAME_PROPERTIES + "/" + NAME_CREATED_BY;
-
-    private static final String CONTEXT_XSD = "context.xsd";
-
-    private static final String GRANTS_XSD = "grants.xsd";
-
-    private static final String PREFERENCES_XSD = "preferences.xsd";
-
-    private static final String ATTRIBUTES_XSD = "attributes.xsd";
-
-    private static final String ORGANIZATIONAL_UNIT_REF_LIST_XSD = "organizational-unit-ref-list.xsd";
-
-    private static final String ORGANIZATIONAL_UNIT_LIST_XSD = "organizational-unit-list.xsd";
-
-    private static final String ORGANIZATIONAL_UNIT_PATH_LIST_XSD = "organizational-unit-path-list.xsd";
-
-    private static final String ORGANIZATIONAL_UNIT_XSD = "organizational-unit.xsd";
-
-    private static final String CONTENT_MODEL_XSD = "content-model.xsd";
-
-    private static final String REQUESTS_XSD = "requests.xsd";
-
-    private static final String RESULTS_XSD = "results.xsd";
-
-    private static final String ROLE_XSD = "role.xsd";
-
-    private static final String ROLE_LIST_XSD = "role-list.xsd";
-
-    private static final String USER_ACCOUNT_XSD = "user-account.xsd";
-
-    private static final String USER_ACCOUNT_LIST_XSD = "user-account-list.xsd";
-
-    private static final String USER_GROUP_XSD = "user-group.xsd";
-
-    private static final String USER_GROUP_LIST_XSD = "user-group-list.xsd";
-
-    private static final String INDEX_CONFIGURATION_XSD = "index-configuration.xsd";
-
-    private static final String CONTAINER_XSD = "container.xsd";
-
-    private static final String CONTAINER_LIST_XSD = "container-list.xsd";
-
-    private static final String VERSION_HISTORY_XSD = "version-history.xsd";
-
-    private static final String RELATIONS_XSD = "relations.xsd";
-
-    private static final String MEMBER_LIST_XSD = "member-list.xsd";
-
-    private static final String PARENTS_XSD = "parents.xsd";
-
-    private static final String CONTAINER_REF_LIST_XSD = "container-ref-list.xsd";
 
     public static final String NAME_PARAM = "param";
 
@@ -246,19 +191,19 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public static final String NAME_EMAIL = "email";
 
-    public static final String FILTER_URI_EMAIL = PROPERTIES_NS_URI_04 + NAME_EMAIL;
+    public static final String FILTER_URI_EMAIL = Constants.NS_COMMON_PROPERTIES + NAME_EMAIL;
 
     public static final String FILTER_EMAIL = PROPERTIES_FILTER_PREFIX + NAME_EMAIL;
 
     public static final String NAME_LOGIN_NAME = "login-name";
 
-    public static final String FILTER_URI_LOGIN_NAME = PROPERTIES_NS_URI_04 + NAME_LOGIN_NAME;
+    public static final String FILTER_URI_LOGIN_NAME = Constants.NS_COMMON_PROPERTIES + NAME_LOGIN_NAME;
 
     public static final String FILTER_LOGIN_NAME = PROPERTIES_FILTER_PREFIX + NAME_LOGIN_NAME;
 
     public static final String NAME_LABEL = "label";
 
-    public static final String FILTER_URI_LABEL = PROPERTIES_NS_URI_04 + NAME_LABEL;
+    public static final String FILTER_URI_LABEL = Constants.NS_COMMON_PROPERTIES + NAME_LABEL;
 
     public static final String FILTER_LABEL = PROPERTIES_FILTER_PREFIX + NAME_LABEL;
 
@@ -267,80 +212,80 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public static final String FILTER_SET_SPECIFICATION = PROPERTIES_FILTER_PREFIX + "specification";
 
-    public static final String FILTER_URI_NAME = PROPERTIES_NS_URI_04 + NAME_NAME;
+    public static final String FILTER_URI_NAME = Constants.NS_COMMON_PROPERTIES + NAME_NAME;
 
     public static final String FILTER_NAME = PROPERTIES_FILTER_PREFIX + NAME_NAME;
 
-    public static final String FILTER_URI_ORGANIZATIONAL_UNIT = STRUCTURAL_RELATIONS_NS_URI + NAME_ORGANIZATIONAL_UNIT;
+    public static final String FILTER_URI_ORGANIZATIONAL_UNIT = Constants.NS_COMMON_SREL + NAME_ORGANIZATIONAL_UNIT;
 
     public static final String FILTER_ORGANIZATIONAL_UNIT =
         STRUCTURAL_RELATIONS_FILTER_PREFIX + NAME_ORGANIZATIONAL_UNIT;
 
     public static final String NAME_ACTIVE = "active";
 
-    public static final String FILTER_URI_ACTIVE = PROPERTIES_NS_URI_04 + NAME_ACTIVE;
+    public static final String FILTER_URI_ACTIVE = Constants.NS_COMMON_PROPERTIES + NAME_ACTIVE;
 
     public static final String FILTER_ACTIVE = PROPERTIES_FILTER_PREFIX + NAME_ACTIVE;
 
-    public static final String FILTER_URI_CONTEXT = PROPERTIES_NS_URI_04 + NAME_CONTEXT;
+    public static final String FILTER_URI_CONTEXT = Constants.NS_COMMON_PROPERTIES + NAME_CONTEXT;
 
     public static final String FILTER_CONTEXT = PROPERTIES_FILTER_PREFIX + NAME_CONTEXT;
 
     public static final String FILTER_PRIMARY_AFFILIATION = "primary-affiliation";
 
-    public static final String FILTER_URI_CONTENT_MODEL = STRUCTURAL_RELATIONS_NS_URI + NAME_CONTENT_MODEL;
+    public static final String FILTER_URI_CONTENT_MODEL = Constants.NS_COMMON_SREL + NAME_CONTENT_MODEL;
 
-    public static final String FILTER_URI_VERSION_STATUS = PROPERTIES_NS_URI_04 + "version/status";
+    public static final String FILTER_URI_VERSION_STATUS = Constants.NS_COMMON_PROPERTIES + "version/status";
 
-    public static final String FILTER_URI_PUBLIC_STATUS = PROPERTIES_NS_URI_04 + NAME_PUBLIC_STATUS;
+    public static final String FILTER_URI_PUBLIC_STATUS = Constants.NS_COMMON_PROPERTIES + NAME_PUBLIC_STATUS;
 
-    public static final String FILTER_URI_USER = PROPERTIES_NS_URI_04 + "user";
+    public static final String FILTER_URI_USER = Constants.NS_COMMON_PROPERTIES + "user";
 
     public static final String FILTER_USER = PROPERTIES_FILTER_PREFIX + "user/id";
 
     public static final String FILTER_USER_GROUP_USER = STRUCTURAL_RELATIONS_FILTER_PREFIX + "user/id";
 
-    public static final String FILTER_URI_GROUP = PROPERTIES_NS_URI_04 + "group";
+    public static final String FILTER_URI_GROUP = Constants.NS_COMMON_PROPERTIES + "group";
 
     public static final String FILTER_GROUP = PROPERTIES_FILTER_PREFIX + "group/id";
 
     public static final String FILTER_USER_ACCOUNT_GROUP = STRUCTURAL_RELATIONS_FILTER_PREFIX + "group/id";
 
-    public static final String FILTER_URI_ROLE = PROPERTIES_NS_URI_04 + "role";
+    public static final String FILTER_URI_ROLE = Constants.NS_COMMON_PROPERTIES + "role";
 
     public static final String FILTER_ROLE = PROPERTIES_FILTER_PREFIX + "role/id";
 
-    public static final String FILTER_URI_ASSIGNED_ON = PROPERTIES_NS_URI_04 + "assigned-on";
+    public static final String FILTER_URI_ASSIGNED_ON = Constants.NS_COMMON_PROPERTIES + "assigned-on";
 
     public static final String FILTER_ASSIGNED_ON = PROPERTIES_FILTER_PREFIX + "assigned-on/id";
 
-    public static final String FILTER_URI_REVOCATION_DATE = PROPERTIES_NS_URI_04 + "revocation-date";
+    public static final String FILTER_URI_REVOCATION_DATE = Constants.NS_COMMON_PROPERTIES + "revocation-date";
 
     public static final String FILTER_REVOCATION_DATE = PROPERTIES_FILTER_PREFIX + "revocation-date";
 
-    public static final String FILTER_URI_CREATION_DATE = PROPERTIES_NS_URI_04 + "creation-date";
+    public static final String FILTER_URI_CREATION_DATE = Constants.NS_COMMON_PROPERTIES + "creation-date";
 
     public static final String FILTER_CREATION_DATE = PROPERTIES_FILTER_PREFIX + "creation-date";
 
-    public static final String FILTER_URI_GRANTED_FROM = PROPERTIES_NS_URI_04 + "granted-from";
+    public static final String FILTER_URI_GRANTED_FROM = Constants.NS_COMMON_PROPERTIES + "granted-from";
 
     public static final String FILTER_GRANTED_FROM = PROPERTIES_FILTER_PREFIX + "granted-from";
 
-    public static final String FILTER_URI_GRANTED_TO = PROPERTIES_NS_URI_04 + "granted-to";
+    public static final String FILTER_URI_GRANTED_TO = Constants.NS_COMMON_PROPERTIES + "granted-to";
 
     public static final String FILTER_GRANTED_TO = PROPERTIES_FILTER_PREFIX + "granted-to";
 
-    public static final String FILTER_URI_CREATED_BY = PROPERTIES_NS_URI_04 + "created-by";
+    public static final String FILTER_URI_CREATED_BY = Constants.NS_COMMON_PROPERTIES + "created-by";
 
     public static final String FILTER_CREATED_BY = PROPERTIES_FILTER_PREFIX + "created-by/id";
 
-    public static final String FILTER_URI_REVOKED_BY = PROPERTIES_NS_URI_04 + "revoked-by";
+    public static final String FILTER_URI_REVOKED_BY = Constants.NS_COMMON_PROPERTIES + "revoked-by";
 
     public static final String FILTER_REVOKED_BY = PROPERTIES_FILTER_PREFIX + "revoked-by/id";
 
     public static final String FILTER_TOP_LEVEL_OUS_ONLY = "top-level-organizational-units";
 
-    public static final String FILTER_URI_TYPE = PROPERTIES_NS_URI_04 + NAME_TYPE;
+    public static final String FILTER_URI_TYPE = Constants.NS_COMMON_PROPERTIES + NAME_TYPE;
 
     public static final String LOWEST_COMPARABLE = "";
 
@@ -634,9 +579,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         final String xlinkPrefix, final String title, final String href, final boolean withRestReadOnly)
         throws Exception {
 
-        Element newElement =
-            createElementNodeWithXlink(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href, withRestReadOnly);
-        return newElement;
+        return createElementNodeWithXlink(doc, namespaceUri, prefix, tagName, xlinkPrefix, title, href,
+            withRestReadOnly);
     }
 
     /**
@@ -671,510 +615,16 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
         Element newElement = createElementNode(doc, namespaceUri, prefix, tagName, null);
         if (withRestReadOnly) {
-            Attr xlinkTypeAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_TYPE, "simple");
-            Attr xlinkTitleAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_TITLE, title);
+            Attr xlinkTypeAttr =
+                createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_TYPE, "simple");
+            Attr xlinkTitleAttr = createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_TITLE, title);
             newElement.getAttributes().setNamedItemNS(xlinkTypeAttr);
             newElement.getAttributes().setNamedItemNS(xlinkTitleAttr);
         }
-        Attr xlinkHrefAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_HREF, href);
+        Attr xlinkHrefAttr = createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_HREF, href);
         newElement.getAttributes().setNamedItemNS(xlinkHrefAttr);
 
         return newElement;
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for grants schema.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidGrants(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation()));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for preferences schema.<br/>
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidPreferences(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getPreferencesSchemaLocation()));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid for attributes schema.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidAttributes(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation()));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContext(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContextSchemaBase() + CONTEXT_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContextsList(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-list.xsd"));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContextRefsList(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getContextSchemaBase() + "context-ref-list.xsd"));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.<br/>
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidContentModel(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContentModelSchemaBase("0.2") + CONTENT_MODEL_XSD));
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnit(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.8") + ORGANIZATIONAL_UNIT_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid role.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRequests(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getRequestsSchemaBase() + REQUESTS_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for authorization responses.
-     *
-     * @param toBeAsserted
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidResults(final String toBeAsserted) throws Exception {
-
-        assertXmlValid(toBeAsserted, new URL(getResultsSchemaBase() + RESULTS_XSD));
-        assertAllPlaceholderResolved(toBeAsserted);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid role.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRole(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getRoleSchemaBase() + ROLE_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of roles.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidRoleList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getRoleListSchemaBase() + ROLE_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid index configuration.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidIndexConfiguration(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getAdminSchemaBase() + INDEX_CONFIGURATION_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user account.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAccount(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getUserAccountSchemaBase() + USER_ACCOUNT_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user account.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAttribute(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getAttributesSchemaLocation()));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of user accounts.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserAccountList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getUserAccountListSchemaBase() + USER_ACCOUNT_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid user group.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserGroup(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getUserGroupSchemaBase() + USER_GROUP_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of user groups.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidUserGroupList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getUserGroupListSchemaBase() + USER_GROUP_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid list of grants.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidGrantList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getGrantsSchemaLocation()));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContainer(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + CONTAINER_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContainerList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase() + CONTAINER_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidVersionHistory(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getVersionHistorySchemaBase() + VERSION_HISTORY_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidRelations(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getCommonSchemaBase_03() + RELATIONS_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContainerMembersList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getMemberListSchemaBase() + MEMBER_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidParents(final String xmlData) throws Exception {
-        assertXmlValidOrganizationalUnit(xmlData);
-        //        assertXmlValid(xmlData, new URL(getParentsSchemaBase() + PARENTS_XSD));
-        //        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidContainerRefList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getContainerSchemaBase_03() + CONTAINER_REF_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit pathlist.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnitPathList(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.4") + ORGANIZATIONAL_UNIT_PATH_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnits(final String xmlData) throws Exception {
-
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.8") + ORGANIZATIONAL_UNIT_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.
-     *
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase("0.4") + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Get location of Schema. Schema are delived with framework and therefore the schema location based on the
-     * framework location. Schemas are currently not pulled from www.escidoc.org wven if they could.
-     * 
-     * @return schema location
-     */
-    protected String getSchemaLocationBase() {
-        if (BASE_URL_SCHEMA_LOCATION == null) {
-            // Maybe it would be better to load the schema from www.escidoc.org
-            BASE_URL_SCHEMA_LOCATION = getBaseUrl() + getFrameworkContext() + "/xsd/";
-        }
-        return BASE_URL_SCHEMA_LOCATION + "rest";
-    }
-
-    protected String getContextSchemaBase() {
-
-        return getSchemaLocationBase() + "/context/0.7/";
-    }
-
-    protected String getContainerSchemaBase() {
-
-        return getSchemaLocationBase() + "/container/0.9/";
-    }
-
-    protected String getMemberListSchemaBase() {
-
-        return getSchemaLocationBase() + "/common/0.10/";
-    }
-
-    protected String getParentsSchemaBase() {
-
-        return getSchemaLocationBase() + "/common/0.9/";
-    }
-
-    protected String getContainerSchemaBase_03() {
-
-        return getSchemaLocationBase() + "/container/0.3/";
-    }
-
-    protected String getCommonSchemaBase_03() {
-
-        return getSchemaLocationBase() + "/common/0.3/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to organizational units.
-     *
-     * @return Returns the base url for all schema locations related to organizational units.
-     */
-    protected String getOrganizationalUnitSchemaBase(final String version) {
-
-        return getSchemaLocationBase() + "/organizational-unit/" + version + "/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to organizational units.
-     *
-     * @return Returns the base url for all schema locations related to organizational units.
-     */
-    protected String getContentModelSchemaBase(final String version) {
-
-        return getSchemaLocationBase() + "/content-model/" + version + "/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to PDP requests.
-     *
-     * @return Returns the base url for all schema locations related to PDP requests.
-     */
-    protected String getRequestsSchemaBase() {
-
-        return getSchemaLocationBase() + "/pdp/0.3/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to PDP results.
-     *
-     * @return Returns the base url for all schema locations related to PDP results.
-     */
-    protected String getResultsSchemaBase() {
-
-        return getSchemaLocationBase() + "/pdp/0.3/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to roles.
-     *
-     * @return Returns the base url for all schema locations related to roles.
-     */
-    protected String getRoleSchemaBase() {
-
-        return getSchemaLocationBase() + "/role/0.5/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to list of roles.
-     *
-     * @return Returns the base url for all schema locations related to list of roles.
-     */
-    protected String getRoleListSchemaBase() {
-
-        return getSchemaLocationBase() + "/role/0.5/";
-    }
-
-    /**
-     * Gets the schema locations for grants grants.
-     *
-     * @return Returns the grants schema location.
-     */
-    protected String getGrantsSchemaLocation() {
-
-        return getSchemaLocationBase() + "/user-account/0.5/" + GRANTS_XSD;
-    }
-
-    /**
-     * Gets the schema locations for preferences.
-     *
-     * @return Returns the preferences schema location.
-     */
-    protected String getPreferencesSchemaLocation() {
-
-        return getSchemaLocationBase() + "/user-account/0.1/" + PREFERENCES_XSD;
-    }
-
-    /**
-     * Gets the schema locations for attributes.
-     *
-     * @return Returns the attributes schema location.
-     */
-    protected String getAttributesSchemaLocation() {
-
-        return getSchemaLocationBase() + "/user-account/0.1/" + ATTRIBUTES_XSD;
-    }
-
-    /**
-     * Gets the base url for all schema locations related to user accounts.
-     *
-     * @return Returns the base url for all schema locations related to user accounts.
-     */
-    protected String getUserAccountSchemaBase() {
-
-        return getSchemaLocationBase() + "/user-account/0.7/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to list of user accounts.
-     *
-     * @return Returns the base url for all schema locations related to list of user accounts.
-     */
-    protected String getUserAccountListSchemaBase() {
-
-        return getSchemaLocationBase() + "/user-account/0.7/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to user groups.
-     *
-     * @return Returns the base url for all schema locations related to user groups.
-     */
-    protected String getUserGroupSchemaBase() {
-
-        return getSchemaLocationBase() + "/user-group/0.6/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to user groups.
-     *
-     * @return Returns the base url for all schema locations related to user groups.
-     */
-    protected String getVersionHistorySchemaBase() {
-
-        return getSchemaLocationBase() + "/common/0.4/";
     }
 
     /**
@@ -1194,26 +644,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         final Node nameNode = selectSingleNodeAsserted(document, nameXpath);
         assertNotNull("Expected name element does not exist [" + nameXpath + "]", nameNode);
         return nameNode.getTextContent();
-    }
-
-    /**
-     * Gets the base url for all schema locations related to list of user groups.
-     *
-     * @return Returns the base url for all schema locations related to list of user groups.
-     */
-    protected String getUserGroupListSchemaBase() {
-
-        return getSchemaLocationBase() + "/user-group/0.6/";
-    }
-
-    /**
-     * Gets the base url for all schema locations related to admin.
-     *
-     * @return Returns the base url for all schema locations related to user accounts.
-     */
-    protected String getAdminSchemaBase() {
-
-        return getSchemaLocationBase() + "/admin/0.1/";
     }
 
     /**
@@ -1254,10 +684,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      *             Thrown if parsing fails.
      */
     public String getLatestVersionObjidValue(final Document document) throws Exception {
-        String id =
-            getIdFromHrefValue(selectSingleNode(document, "//properties/latest-version/@href").getTextContent());
-        ;
-        return (id);
+        return getIdFromHrefValue(selectSingleNode(document, "//properties/latest-version/@href").getTextContent());
     }
 
     /**
@@ -1847,7 +1274,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     public static String[] getObjidValues(final Node node, final String xpath) throws Exception {
 
-        String[] objids = null;
+        String[] objids;
 
         final String attributeXpathPrefix;
         if (xpath == null || xpath.isEmpty()) {
@@ -2104,8 +1531,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      * @param expectedRdfResource
      *            The expected rdf resource. If this is null, asserting the resource value is skipped.
      */
-    public void assertRdfDescriptions(final Node toBeAssertedNode, final String expectedRdfResource) throws Exception,
-        TransformerException {
+    public void assertRdfDescriptions(final Node toBeAssertedNode, final String expectedRdfResource) throws Exception {
 
         final NodeList descriptionNodes = selectNodeList(toBeAssertedNode, XPATH_RDF_DESCRIPTION);
         for (int i = 0; i < descriptionNodes.getLength(); i++) {
@@ -2252,24 +1678,6 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
     }
 
     /**
-     * Asserts that the provided xml data is valid for a staging file.
-     * 
-     * @param toBeAsserted
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValidStagingFile(final String toBeAsserted) throws Exception {
-
-        if (EscidocTestBase.stagingFileSchema == null) {
-            EscidocTestBase.stagingFileSchema =
-                EscidocTestBase.getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                    + "/xsd/rest/staging-file/0.3/staging-file.xsd");
-        }
-        EscidocTestBase.assertXmlValid(toBeAsserted, EscidocTestBase.stagingFileSchema);
-    }
-
-    /**
      * Retrieve a Template as a String.
      * 
      * @param path
@@ -2279,8 +1687,8 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      *             If anything fails.
      */
     public static String getTemplateAsString(final URL path) throws Exception {
-        InputStream is = null;
-        StringBuffer response = new StringBuffer();
+        InputStream is;
+        StringBuilder response = new StringBuilder();
 
         // Open Connection to given resource
         HttpURLConnection con = (HttpURLConnection) path.openConnection();
@@ -2295,7 +1703,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         String currentLine = null;
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         while ((currentLine = br.readLine()) != null) {
-            response.append(currentLine + "\n");
+            response.append(currentLine).append("\n");
         }
         is.close();
         return response.toString();
@@ -2340,24 +1748,24 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
         // replace URLs if they don't fit to the current framework config
         String fedoraTemplateUrl = "http://localhost:8082/fedora";
-        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
+        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA;
 
-        if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
+        if (!fedoraTemplateUrl.equals(fedoraUrl)) {
             template = template.replace(fedoraTemplateUrl, fedoraUrl);
         }
 
         String testdataTemplateUrl = "http://localhost:8082/ir/";
-        String testdataUrl = EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI;
+        String testdataUrl = EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_TEST_DATA;
 
-        if (testdataUrl != null && !testdataTemplateUrl.equals(testdataUrl)) {
+        if (!testdataTemplateUrl.equals(testdataUrl)) {
             template = template.replace(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");
         }
 
-        String framworkTemplateUrl = "http://localhost:8080";
+        String frameworkTemplateUrl = "http://localhost:8080";
         String frameworkUrl = getBaseUrl();
 
-        if (frameworkUrl != null && !framworkTemplateUrl.equals(frameworkUrl)) {
-            template = template.replace(framworkTemplateUrl, frameworkUrl);
+        if (frameworkUrl != null && !frameworkTemplateUrl.equals(frameworkUrl)) {
+            template = template.replace(frameworkTemplateUrl, frameworkUrl);
         }
 
         return template;
@@ -2430,7 +1838,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     public static Document getDocument(final InputStream xml) throws Exception {
 
-        Document result = null;
+        Document result;
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
         result = docBuilder.parse(xml);
@@ -2472,7 +1880,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         assertNotNull("Can't create a document without provided XML data. ", xml);
 
         // TODO re work of encoding settings
-        String charset = EscidocTestBase.DEFAULT_CHARSET;
+        String charset = Constants.DEFAULT_CHARSET;
         Document result = null;
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -2547,7 +1955,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     public static void failMissingException(final String message, final Class<?> exceptionClass) {
 
-        StringBuffer msg = new StringBuffer(message);
+        StringBuilder msg = new StringBuilder(message);
         msg.append(" Missing expected exception: ");
         msg.append(exceptionClass.getName());
         fail(msg.toString());
@@ -2700,15 +2108,15 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         String userHandleFromRedirectUrl = null;
         String userHandleFromCookie = null;
         Header[] headers = result.getAllHeaders();
-        for (int i = 0; i < headers.length; ++i) {
-            if ("Location".equals(headers[i].getName())) {
+        for (Header header : headers) {
+            if ("Location".equals(header.getName())) {
                 String locationHeaderValue = result.getFirstHeader("Location").getValue();
                 int index = locationHeaderValue.indexOf('=');
                 userHandleFromRedirectUrl =
                     new String(Base64.decodeBase64(locationHeaderValue.substring(index + 1, locationHeaderValue
                         .length())));
             }
-            else if ("Set-Cookie".equals(headers[i].getName())) {
+            else if ("Set-Cookie".equals(header.getName())) {
                 String setCookieHeaderValue = result.getFirstHeader("Set-Cookie").getValue();
                 int index = setCookieHeaderValue.indexOf("escidocCookie=");
                 String value = setCookieHeaderValue.substring(index + "escidocCookie=".length());
@@ -2731,7 +2139,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      *            URL to file
      * @return File handler for temporary file.
      */
-    public File downloadTempFile(final URL url) throws IOException, FileNotFoundException {
+    public File downloadTempFile(final URL url) throws IOException {
 
         java.io.BufferedInputStream in = new java.io.BufferedInputStream(url.openStream());
 
@@ -2742,7 +2150,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
 
         byte[] data = new byte[1024];
-        int x = 0;
+        int x;
         while ((x = in.read(data, 0, 1024)) >= 0) {
             bout.write(data, 0, x);
         }

@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.aa;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 /**
  * Offers access methods to the escidoc interface of the policy decision point.
@@ -46,7 +46,7 @@ public class PolicyDecisionPointClient extends ClientBase {
      * @throws Exception If the service call fails.
      */
     public Object evaluate(final String requestsXml) throws Exception {
-        return callEsciDoc("Pdp.evaluate", METHOD_EVALUATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.PDP_BASE_URI, new String[] {}, changeToString(requestsXml));
+        return callEsciDoc("Pdp.evaluate", METHOD_EVALUATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.PDP_BASE_URI, new String[] {}, changeToString(requestsXml));
     }
 }

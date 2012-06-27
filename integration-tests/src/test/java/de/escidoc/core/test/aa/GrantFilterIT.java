@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearc
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;

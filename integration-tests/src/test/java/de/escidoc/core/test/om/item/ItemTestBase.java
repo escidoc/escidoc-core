@@ -47,7 +47,7 @@ import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.om.OmTestBase;

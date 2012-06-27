@@ -30,9 +30,11 @@ package de.escidoc.core.test.sb;
 
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.sb.stax.handler.AllStaxHandler;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -134,10 +136,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
         // Create
         // Containers/////////////////////////////////////////////////////
@@ -338,8 +338,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -519,9 +519,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MODERATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("handle", PWCallback.DEFAULT_HANDLE);
                 put("forUser", TEST_USER_ACCOUNT_ID1);
@@ -629,7 +629,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_DEPOSITOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "54");
@@ -672,7 +672,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_DEPOSITOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "54");
@@ -831,7 +831,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "86");
@@ -892,7 +892,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "86");
@@ -953,9 +953,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_ADMINISTRATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "118");
@@ -1001,8 +1001,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1059,8 +1058,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[7]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[7]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1117,11 +1115,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[7]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[7]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "110");
@@ -1173,14 +1169,11 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[2]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[2]);
                 put("role2", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope2", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[10]);
+                put("scope2", Constants.CONTAINER_BASE_URI + "/" + containerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1245,8 +1238,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[1]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "67");
@@ -1322,8 +1314,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[2]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[2]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "66");
@@ -1399,8 +1390,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "57");
@@ -1450,8 +1440,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[10]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "57");
@@ -1501,11 +1490,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[0]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[10]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "60");
@@ -1555,11 +1542,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[13]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[13]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -1610,8 +1595,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[8]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "54");
@@ -1661,8 +1645,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1719,8 +1702,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[7]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[7]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1777,11 +1759,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[7]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[7]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "110");
@@ -1833,14 +1813,11 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[2]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[2]);
                 put("role2", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope2", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[10]);
+                put("scope2", Constants.CONTAINER_BASE_URI + "/" + containerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "82");
@@ -1905,8 +1882,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[1]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "67");
@@ -1982,8 +1958,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[2]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[2]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "66");
@@ -2059,8 +2034,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "57");
@@ -2110,8 +2084,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[10]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "57");
@@ -2161,11 +2134,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[0]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[10]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "60");
@@ -2209,11 +2180,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[13]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[13]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2264,8 +2233,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[8]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "54");
@@ -2315,8 +2283,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2363,8 +2330,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2411,8 +2377,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[8]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "54");
@@ -2459,8 +2424,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[0]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "60");
@@ -2513,8 +2477,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[4]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[4]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "59");
@@ -2566,8 +2529,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[10]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "57");
@@ -2616,8 +2578,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[11]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[11]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2664,7 +2625,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[0]);
+                put("scope0", Constants.ITEM_BASE_URI + "/" + itemIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2711,19 +2672,19 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[0]);
+                put("scope0", Constants.ITEM_BASE_URI + "/" + itemIds[0]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[6]);
+                put("scope1", Constants.ITEM_BASE_URI + "/" + itemIds[6]);
                 put("role2", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope2", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[13]);
+                put("scope2", Constants.ITEM_BASE_URI + "/" + itemIds[13]);
                 put("role3", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope3", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[42]);
+                put("scope3", Constants.ITEM_BASE_URI + "/" + itemIds[42]);
                 put("role4", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope4", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[55]);
+                put("scope4", Constants.ITEM_BASE_URI + "/" + itemIds[55]);
                 put("role5", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope5", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[66]);
+                put("scope5", Constants.ITEM_BASE_URI + "/" + itemIds[66]);
                 put("role6", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope6", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[72]);
+                put("scope6", Constants.ITEM_BASE_URI + "/" + itemIds[72]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "61");
@@ -2776,8 +2737,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[3]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[3]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2824,11 +2784,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[3]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[3]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[9]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[9]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "56");
@@ -2876,11 +2834,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[8]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2928,7 +2884,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "86");
@@ -2989,9 +2945,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR_MODIFIER);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "118");
@@ -3040,8 +2996,8 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[43]
-                    + "/components/component/" + componentIds[43][0]);
+                put("scope0", Constants.ITEM_BASE_URI + "/" + itemIds[43] + "/components/component/"
+                    + componentIds[43][0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -3088,7 +3044,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[49]);
+                put("scope0", Constants.ITEM_BASE_URI + "/" + itemIds[49]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -3135,19 +3091,19 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[0]);
+                put("scope0", Constants.ITEM_BASE_URI + "/" + itemIds[0]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[6]);
+                put("scope1", Constants.ITEM_BASE_URI + "/" + itemIds[6]);
                 put("role2", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope2", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[13]);
+                put("scope2", Constants.ITEM_BASE_URI + "/" + itemIds[13]);
                 put("role3", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope3", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[42]);
+                put("scope3", Constants.ITEM_BASE_URI + "/" + itemIds[42]);
                 put("role4", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope4", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[55]);
+                put("scope4", Constants.ITEM_BASE_URI + "/" + itemIds[55]);
                 put("role5", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope5", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[66]);
+                put("scope5", Constants.ITEM_BASE_URI + "/" + itemIds[66]);
                 put("role6", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope6", de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemIds[72]);
+                put("scope6", Constants.ITEM_BASE_URI + "/" + itemIds[72]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "61");
@@ -3200,8 +3156,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[3]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[3]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -3248,11 +3203,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[3]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + containerIds[3]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + containerIds[9]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + containerIds[9]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "56");
@@ -3300,11 +3253,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[1]);
+                put("scope0", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[1]);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                    + adminTestContainerIds[8]);
+                put("scope1", Constants.CONTAINER_BASE_URI + "/" + adminTestContainerIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -3352,7 +3303,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "86");
@@ -3413,9 +3364,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_COLLABORATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "118");
@@ -3464,7 +3415,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MD_EDITOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "71");
@@ -3521,7 +3472,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MD_EDITOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "71");
@@ -3578,9 +3529,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MD_EDITOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_MD_EDITOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "88");
@@ -3625,7 +3576,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MODERATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "71");
@@ -3682,7 +3633,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MODERATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "71");
@@ -3739,9 +3690,9 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_MODERATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
+                put("scope0", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID);
                 put("role1", GrantHelper.ROLE_HREF_MODERATOR);
-                put("scope1", de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
+                put("scope1", Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "88");
@@ -3884,8 +3835,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData = EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
-            String contextHref =
-                de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+            String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
             substitute(xmlData, "/item/properties/context/@href", contextHref);
             String xml = item.create(toString(xmlData, false));
             String objectId = getObjidValue(xml);
@@ -3896,7 +3846,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
             returnHash.put("itemId", objectId);
             for (int i = 1;; i++) {
                 try {
-                    String componentId = getComponentObjidValue(itemDoc, i);
+                    String componentId = OmTestBase.getComponentObjidValue(itemDoc, i);
                     if (componentId == null) {
                         break;
                     }
@@ -3929,7 +3879,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                         xml = item.retrieve(objectId);
                         Node n = selectSingleNode(getDocument(xml), "/item/properties/version/number");
 
-                        String componentId = getComponentObjidValue(itemDoc, 1);
+                        String componentId = OmTestBase.getComponentObjidValue(itemDoc, 1);
                         String pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
                         xml = item.assignContentPid(objectId, componentId, pidParam);
                         pidParam = getItemPidParam(objectId, getLastModificationDateValue2(getDocument(xml)));
@@ -3961,11 +3911,11 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
             }
             returnHash.put("xml", xml);
             if (containerIds != null) {
-                for (int i = 0; i < containerIds.length; i++) {
-                    xml = container.retrieve(containerIds[i]);
+                for (String containerId : containerIds) {
+                    xml = container.retrieve(containerId);
                     List<String> ids = new ArrayList<String>();
                     ids.add(objectId);
-                    container.addMembers(containerIds[i], TaskParamFactory.getMembersTaskParam(ids,
+                    container.addMembers(containerId, TaskParamFactory.getMembersTaskParam(ids,
                         getLastModificationDateValue2(getDocument(xml))));
                 }
             }
@@ -3993,10 +3943,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
         final String templateName, final String status) throws Exception {
         try {
             PWCallback.setHandle(creatorHandle);
-            String xml = null;
-            String lastModDate = null;
-            String objectId = null;
-            String containerStatus = "init";
+            String xml, lastModDate, objectId, containerStatus = "init";
             if (containerId != null) {
                 xml = container.retrieve(containerId);
                 lastModDate = getLastModificationDate(xml);
@@ -4007,8 +3954,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
             else {
                 Document xmlData =
                     EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_CONTAINER_SEARCH_PATH, templateName);
-                String contextHref =
-                    de.escidoc.core.test.common.client.servlet.Constants.CONTEXT_BASE_URI + "/" + contextId;
+                String contextHref = Constants.CONTEXT_BASE_URI + "/" + contextId;
                 substitute(xmlData, "/container/properties/context/@href", contextHref);
                 xml = container.create(toString(xmlData, false));
                 objectId = getObjidValue(xml);

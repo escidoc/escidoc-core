@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.PreferenceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -168,21 +169,21 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
 
         ec = XmlSchemaValidationException.class;
         try {
-            createPreference(userId, "<preferenc xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " name=\"" + key
+            createPreference(userId, "<preferenc xmlns=\"" + Constants.NS_AA_PREFERENCES + "\"" + " name=\"" + key
                 + "\">" + value + "</preference>");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
-            createPreference(userId, "<preferenc xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " name=\"" + key
+            createPreference(userId, "<preferenc xmlns=\"" + Constants.NS_AA_PREFERENCES + "\"" + " name=\"" + key
                 + "\">");
         }
         catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
-            createPreference(userId, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " >" + value
+            createPreference(userId, "<preference xmlns=\"" + Constants.NS_AA_PREFERENCES + "\"" + " >" + value
                 + "</preference>");
         }
         catch (final Exception e) {
@@ -275,7 +276,7 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
 
         Class ec = MissingAttributeValueException.class;
         try {
-            updatePreferences(userId, "<preferences " + "xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\">"
+            updatePreferences(userId, "<preferences " + "xmlns=\"" + Constants.NS_AA_PREFERENCES + "\">"
                 + "<preference name=\"" + key + "\">updated</preference></preferences>");
         }
         catch (final Exception e) {
@@ -332,7 +333,7 @@ public class UserPreferenceIT extends UserPreferenceTestBase {
 
         Class ec = MissingAttributeValueException.class;
         try {
-            updatePreference(userId, key, "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " name=\""
+            updatePreference(userId, key, "<preference xmlns=\"" + Constants.NS_AA_PREFERENCES + "\"" + " name=\""
                 + key + "\">single updated</preference>");
             fail(ec.getName() + " expected");
         }

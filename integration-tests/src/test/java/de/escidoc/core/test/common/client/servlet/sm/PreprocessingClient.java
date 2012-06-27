@@ -33,7 +33,7 @@ import org.w3c.dom.Document;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 /**
  * Offers access methods to the escidoc interface of the Statistic Preprocessing resource.
@@ -53,7 +53,7 @@ public class PreprocessingClient extends ClientBase {
     public Object preprocess(final String id, final Object preprocessingInformationXml) throws Exception {
 
         return callEsciDoc("Preprocessing.preprocess", METHOD_PREPROCESS_STATISTICS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_PREPROCESSING_BASE_URI, new String[] { id },
             changeToString(preprocessingInformationXml));
     }
 

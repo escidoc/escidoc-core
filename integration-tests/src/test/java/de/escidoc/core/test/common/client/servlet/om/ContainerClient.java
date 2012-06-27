@@ -33,7 +33,7 @@ import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -61,8 +61,9 @@ public class ContainerClient extends ClientBase
     @Override
     public Object create(final Object containerXml) throws Exception {
 
-        return callEsciDoc("Container.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] {}, changeToString(containerXml));
+        return callEsciDoc("Container.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] {},
+            changeToString(containerXml));
     }
 
     /**
@@ -75,8 +76,8 @@ public class ContainerClient extends ClientBase
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("Container.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { id });
+        return callEsciDoc("Container.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id });
     }
 
     /**
@@ -89,8 +90,8 @@ public class ContainerClient extends ClientBase
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("Container.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { id });
+        return callEsciDoc("Container.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id });
     }
 
     /**
@@ -104,8 +105,9 @@ public class ContainerClient extends ClientBase
     @Override
     public Object update(final String id, final Object containerXml) throws Exception {
 
-        return callEsciDoc("Container.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { id }, changeToString(containerXml));
+        return callEsciDoc("Container.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id },
+            changeToString(containerXml));
     }
 
     /**
@@ -118,7 +120,7 @@ public class ContainerClient extends ClientBase
     public Object retrieveContainers(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Container.retrieveContainers", METHOD_RETRIEVE_CONTAINERS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINERS_BASE_URI, new String[] {}, filter);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINERS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -131,7 +133,7 @@ public class ContainerClient extends ClientBase
     public Object retrieveItems(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveItems", METHOD_RETRIEVE_ITEMS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_ITEMS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_ITEMS });
     }
 
     /**
@@ -145,7 +147,7 @@ public class ContainerClient extends ClientBase
     public Object retrieveMembers(final String id, final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Container.retrieveMembers", METHOD_RETRIEVE_MEMBERS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES + "/" + Constants.SUB_CONTAINER_MEMBERS }, filter);
     }
 
@@ -159,14 +161,15 @@ public class ContainerClient extends ClientBase
     public Object retrieveParents(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveParents", METHOD_RETRIEVE_PARENTS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES + "/" + Constants.SUB_PARENTS });
     }
 
     public Object retrieveStructMap(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveStructMap", METHOD_RETRIEVE_STRUCT_MAP, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_STRUCT_MAP });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_STRUCT_MAP });
     }
 
     /**
@@ -180,8 +183,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveMdRecord(final String itemId, final String mdRecordId) throws Exception {
 
         return callEsciDoc("Container.retrieveMetadataRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORD,
-                mdRecordId });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORD, mdRecordId });
     }
 
     /**
@@ -197,8 +200,8 @@ public class ContainerClient extends ClientBase
         throws Exception {
 
         return callEsciDoc("Container.updateMetadataRecord", METHOD_UPDATE_MD_RECORD, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORD,
-                mdRecordId }, changeToString(mdRecordXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORD, mdRecordId }, changeToString(mdRecordXml));
     }
 
     /**
@@ -211,7 +214,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveMetaDataRecords(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveMetadataRecords", METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_MD_RECORDS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_MD_RECORDS });
 
     }
 
@@ -226,8 +230,8 @@ public class ContainerClient extends ClientBase
     public Object updateMetaDataRecords(final String id, final String metaDataRecords) throws Exception {
 
         return callEsciDoc("Container.updateMetaDataRecords", METHOD_UPDATE_MD_RECORDS, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_MD_RECORDS },
-            metaDataRecords);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_MD_RECORDS }, metaDataRecords);
     }
 
     /**
@@ -240,7 +244,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveProperties(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_PROPERTIES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_PROPERTIES });
     }
 
     /**
@@ -253,7 +258,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveResources(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_RESOURCES });
     }
 
     /**
@@ -267,8 +273,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveResource(final String id, final String methodName) throws Exception {
 
         return callEsciDoc("Container.retrieveResource", METHOD_RETRIEVE_RESOURCE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_RESOURCES,
-                methodName });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_RESOURCES, methodName });
     }
 
     /**
@@ -281,7 +287,8 @@ public class ContainerClient extends ClientBase
     public Object retrieveRelations(final String id) throws Exception {
 
         return callEsciDoc("Container.retrieveRelations", METHOD_RETRIEVE_RELATIONS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { id, Constants.SUB_RELATIONS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { id,
+                Constants.SUB_RELATIONS });
     }
 
     /**
@@ -294,7 +301,7 @@ public class ContainerClient extends ClientBase
     public Object retrieveVersionHistory(final String containerId) throws Exception {
 
         return callEsciDoc("Container.retrieveVersionHistory", METHOD_RETRIEVE_VERSION_HISTORY,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] {
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] {
                 containerId, Constants.SUB_VERSION_HISTORY });
     }
 
@@ -308,20 +315,21 @@ public class ContainerClient extends ClientBase
     public Object retrieveMets(final String containerId) throws Exception {
 
         return callEsciDoc("Container.retrieveMets", METHOD_RETRIEVE_METS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_METS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+                Constants.SUB_METS });
     }
 
     public Object addMembers(final String containerId, final String taskParam) throws Exception {
 
         return callEsciDoc("Container.addMembers", METHOD_ADD_MEMBERS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_ADD_MEMBERS }, taskParam);
     }
 
     public Object removeMembers(final String containerId, final String taskParam) throws Exception {
 
         return callEsciDoc("Container.removeMembers", METHOD_REMOVE_MEMBERS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_REMOVE_MEMBERS }, taskParam);
     }
 
@@ -426,8 +434,9 @@ public class ContainerClient extends ClientBase
      */
     public Object releaseWithoutPid(final String containerId, final String param) throws Exception {
 
-        return callEsciDoc("Container.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_RELEASE }, param);
+        return callEsciDoc("Container.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+                Constants.SUB_RELEASE }, param);
     }
 
     /**
@@ -440,8 +449,9 @@ public class ContainerClient extends ClientBase
      */
     public Object revise(final String containerId, final String param) throws Exception {
 
-        return callEsciDoc("Container.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_REVISE }, param);
+        return callEsciDoc("Container.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+                Constants.SUB_REVISE }, param);
     }
 
     /**
@@ -454,8 +464,9 @@ public class ContainerClient extends ClientBase
      */
     public Object submit(final String containerId, final String param) throws Exception {
 
-        return callEsciDoc("Container.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_SUBMIT }, param);
+        return callEsciDoc("Container.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+                Constants.SUB_SUBMIT }, param);
     }
 
     /**
@@ -469,7 +480,7 @@ public class ContainerClient extends ClientBase
     public Object withdraw(final String containerId, final String param) throws Exception {
 
         return callEsciDoc("Container.withdraw", METHOD_WITHDRAW, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_WITHDRAW }, param);
     }
 
@@ -483,7 +494,7 @@ public class ContainerClient extends ClientBase
      */
     public Object lock(final String containerId, final String param) throws Exception {
 
-        return callEsciDoc("Container.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Container.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_LOCK }, param);
     }
 
@@ -497,8 +508,9 @@ public class ContainerClient extends ClientBase
      */
     public Object unlock(final String containerId, final String param) throws Exception {
 
-        return callEsciDoc("Container.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTAINER_BASE_URI, new String[] { containerId, Constants.SUB_UNLOCK }, param);
+        return callEsciDoc("Container.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+                Constants.SUB_UNLOCK }, param);
     }
 
     /**
@@ -511,7 +523,7 @@ public class ContainerClient extends ClientBase
     public Object addContentRelations(final String containerId, final String param) throws Exception {
 
         return callEsciDoc("Container.addContentRelations", METHOD_ADD_CONTENT_RELATIONS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_ADD_CONTENT_RELATIONS }, param);
     }
 
@@ -525,21 +537,21 @@ public class ContainerClient extends ClientBase
     public Object removeContentRelations(final String containerId, final String param) throws Exception {
 
         return callEsciDoc("Container.removeContentRelations", METHOD_REMOVE_CONTENT_RELATIONS,
-            Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] {
+            Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] {
                 containerId, Constants.SUB_REMOVE_CONTENT_RELATIONS }, param);
     }
 
     public Object assignObjectPid(final String containerId, final String param) throws Exception {
 
         return callEsciDoc("Container.assignObjectPid", METHOD_ASSIGN_OBJECT_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_ASSIGN_OBJECT_PID }, param);
     }
 
     public Object assignVersionPid(final String containerId, final String param) throws Exception {
 
         return callEsciDoc("Container.assignVersionPid", METHOD_ASSIGN_VERSION_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTAINER_BASE_URI, new String[] { containerId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI, new String[] { containerId,
                 Constants.SUB_ASSIGN_VERSION_PID }, param);
     }
 

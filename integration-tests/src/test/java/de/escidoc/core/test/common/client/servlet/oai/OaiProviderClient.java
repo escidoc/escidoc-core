@@ -37,7 +37,7 @@ import org.apache.http.HttpResponse;
 
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
@@ -80,8 +80,8 @@ public class OaiProviderClient extends ClientBase {
         }
 
         String url =
-            HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getBaseHost() + ":"
-                + EscidocTestBase.getBasePort(), Constants.OAIPMH_BASE_URI, new String[0], null, false);
+            HttpHelper.createUrl(Constants.HTTP_PROTOCOL, EscidocTestBase.getBaseHost() + ":"
+                + EscidocTestBase.getBasePort(), Constants.WEB_CONTEXT_URI_OAI_PMH, new String[0], null, false);
         HttpResponse response =
             HttpHelper.executeHttpRequest(getHttpClient(), Constants.HTTP_METHOD_GET, url, null, null, parametersMap);
         if (((HttpResponse) response).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {

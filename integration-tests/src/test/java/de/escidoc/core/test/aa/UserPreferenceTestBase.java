@@ -29,6 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -361,8 +362,8 @@ public abstract class UserPreferenceTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     public String getCreatePreferenceTaskParam(final String prefName, final String prefValue) throws Exception {
-        return "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\"" + " name=\"" + prefName + "\">"
-            + prefValue + "</preference>";
+        return "<preference xmlns=\"" + Constants.NS_AA_PREFERENCES + "\"" + " name=\"" + prefName + "\">" + prefValue
+            + "</preference>";
     }
 
     /**
@@ -375,7 +376,7 @@ public abstract class UserPreferenceTestBase extends UserAccountTestBase {
      */
     public String getUpdatePreferenceTaskParam(final String prefName, final String prefValue, final String lmd)
         throws Exception {
-        return "<preference xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\" last-modification-date=\"" + lmd
+        return "<preference xmlns=\"" + Constants.NS_AA_PREFERENCES + "\" last-modification-date=\"" + lmd
             + "\" name=\"" + prefName + "\">" + prefValue + "</preference>";
     }
 
@@ -389,7 +390,7 @@ public abstract class UserPreferenceTestBase extends UserAccountTestBase {
      */
     public String getUpdatePreferencesTaskParam(final String prefName, final String prefValue, final String lmd)
         throws Exception {
-        return "<preferences xmlns=\"" + USER_ACCOUNT_PREFERENCE_NS_URI + "\" " + "last-modification-date=\"" + lmd
+        return "<preferences xmlns=\"" + Constants.NS_AA_PREFERENCES + "\" " + "last-modification-date=\"" + lmd
             + "\"><preference" + " name=\"" + prefName + "\">" + prefValue + "</preference></preferences>";
     }
 

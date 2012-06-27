@@ -1,7 +1,7 @@
 package de.escidoc.core.test;
 
 /**
- * Class contains all XML elements and attribute definition (as Constants).
+ * Class contains all XML elements and attribute definition (as SearchTestConstants).
  *
  * @author Steffen Wagner
  */

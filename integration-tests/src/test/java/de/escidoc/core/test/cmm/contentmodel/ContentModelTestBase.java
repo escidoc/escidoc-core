@@ -31,7 +31,7 @@ package de.escidoc.core.test.cmm.contentmodel;
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.cmm.CmmTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.om.OmTestBase;
 import org.apache.http.HttpResponse;
@@ -296,9 +296,10 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                        + Constants.ITEM_BASE_URI + "/" + getObjidValue(getDocument(itemXml)) + "/resources/trans",
-                        null, MediaType.TEXT_XML.toString(), null);
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl()
+                        + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI + "/"
+                        + getObjidValue(getDocument(itemXml)) + "/resources/trans", null,
+                        MediaType.TEXT_XML.toString(), null);
                 String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
                 Document resultCheckDoc = getDocument(resultCheckString);
@@ -330,9 +331,10 @@ public class ContentModelTestBase extends CmmTestBase {
 
                 // check behavior
                 HttpResponse httpRes =
-                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                        + Constants.CONTAINER_BASE_URI + "/" + getObjidValue(getDocument(containerXml))
-                        + "/resources/trans", null, MediaType.TEXT_XML.toString(), null);
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, getBaseUrl()
+                        + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTAINER_BASE_URI + "/"
+                        + getObjidValue(getDocument(containerXml)) + "/resources/trans", null, MediaType.TEXT_XML
+                        .toString(), null);
                 String resultCheckString = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");

@@ -1,7 +1,7 @@
 package de.escidoc.core.test.om.deviation;
 
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.om.deviation.DeviationTestBase;
 import org.junit.Test;

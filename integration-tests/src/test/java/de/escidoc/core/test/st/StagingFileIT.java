@@ -36,7 +36,6 @@ import java.io.InputStream;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -45,7 +44,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFile
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -82,7 +81,7 @@ public class StagingFileIT extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         final String stagingFileXml = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
-        EscidocAbstractTest.assertXmlValidStagingFile(stagingFileXml);
+        assertXmlValidStagingFile(stagingFileXml);
         Document document = EscidocAbstractTest.getDocument(stagingFileXml);
         assertXmlExists("No xlink type", document, "/staging-file/@type");
         assertXmlExists("No xlink href", document, "/staging-file/@href");
@@ -246,11 +245,12 @@ public class StagingFileIT extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         final String stagingFileXml = EntityUtil.toString(httpRes.getEntity(), HTTP.UTF_8);
 
-        EscidocAbstractTest.assertXmlValidStagingFile(stagingFileXml);
+        assertXmlValidStagingFile(stagingFileXml);
         Document document = EscidocAbstractTest.getDocument(stagingFileXml);
         String stagingFileHref =
-            Constants.PROTOCOL + "://" + EscidocTestBase.getBaseHost() + ":" + EscidocTestBase.getBasePort()
-                + Constants.ESCIDOC_BASE_URI + selectSingleNode(document, "/staging-file/@href").getTextContent();
+            Constants.HTTP_PROTOCOL + "://" + EscidocTestBase.getBaseHost() + ":" + EscidocTestBase.getBasePort()
+                + Constants.WEB_CONTEXT_URI_ESCIDOC
+                + selectSingleNode(document, "/staging-file/@href").getTextContent();
 
         Document itemDoc =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ST_ITEM_PATH, "escidoc_item_for_staging.xml");

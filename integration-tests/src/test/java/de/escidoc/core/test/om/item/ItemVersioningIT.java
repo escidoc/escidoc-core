@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.util.xml.Select;
 import de.escidoc.core.test.security.client.PWCallback;

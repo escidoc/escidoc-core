@@ -36,6 +36,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.Constants;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -107,16 +108,14 @@ public class OuSearchIT extends SearchTestBase {
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
 
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl
-            + INDEX_NAME, null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl + INDEX_NAME, null, null, null);
         // ////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(System.currentTimeMillis() - (60 * 60 * 1000), DateTimeZone.UTC).toString();
         // Create Org-Units////////////////////////////////////////////////////
-        orgUnitIds = new String[Constants.NUM_ORG_UNITS];
-        for (int i = 0; i < Constants.NUM_ORG_UNITS; i++) {
+        orgUnitIds = new String[SearchTestConstants.NUM_ORG_UNITS];
+        for (int i = 0; i < SearchTestConstants.NUM_ORG_UNITS; i++) {
             final String templateName = "escidoc_search_ou" + i + ".xml";
             final Document document = getTemplateAsDocument(TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH, templateName);
 
@@ -191,8 +190,8 @@ public class OuSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/escidocou_all", getDatabase(response));
-        assertEquals(Constants.OU_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.OU_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.OU_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.OU_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -207,8 +206,8 @@ public class OuSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/escidocou_all", getDatabase(response));
-        assertEquals(Constants.OU_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.OU_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.OU_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.OU_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -284,7 +283,7 @@ public class OuSearchIT extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("2", getNextRecordPosition(response));
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -301,7 +300,7 @@ public class OuSearchIT extends SearchTestBase {
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("2", getNextRecordPosition(response));
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
     /**
@@ -482,7 +481,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -498,7 +497,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -531,12 +530,12 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata any \"type institute\"");
         String response = search(parameters, INDEX_NAME);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=type or escidoc.metadata=institute");
         response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -561,7 +560,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=or*ni*");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -576,7 +575,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=org*");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
 
@@ -661,8 +660,8 @@ public class OuSearchIT extends SearchTestBase {
         Pattern orgUnitIdPattern = Pattern.compile("(.*)\\$\\{ORGUNIT(.*?)\\}(.*)");
         Matcher orgUnitIdMatcher = orgUnitIdPattern.matcher("");
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ORG_UNIT_INDEX_USERDEFINED_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ORG_UNIT_INDEX_USERDEFINED_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ORG_UNIT_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ORG_UNIT_INDEX_USERDEFINED_SEARCHES.get(indexName);
             orgUnitIdMatcher.reset(info.get("searchString"));
             String searchString = info.get("searchString");
             if (orgUnitIdMatcher.matches()) {
@@ -688,8 +687,8 @@ public class OuSearchIT extends SearchTestBase {
         Pattern orgUnitIdPattern = Pattern.compile("(.*)\\$\\{ORGUNIT(.*?)\\}(.*)");
         Matcher orgUnitIdMatcher = orgUnitIdPattern.matcher("");
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ORG_UNIT_INDEX_PROPERTIES_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ORG_UNIT_INDEX_PROPERTIES_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ORG_UNIT_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ORG_UNIT_INDEX_PROPERTIES_SEARCHES.get(indexName);
             orgUnitIdMatcher.reset(info.get("searchString"));
             String searchString = info.get("searchString");
             if (orgUnitIdMatcher.matches()) {
@@ -716,7 +715,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=ISSN");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
     /**
@@ -730,7 +729,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=ISSN*");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
     /**
@@ -786,7 +785,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.any-identifier=ISSN*");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
     /**
@@ -849,7 +848,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.creation-date>\"" + startTime + "\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
-        assertEquals(Integer.toString(Constants.NUM_ORG_UNITS), getNumberOfHits(response));
+        assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
     /**

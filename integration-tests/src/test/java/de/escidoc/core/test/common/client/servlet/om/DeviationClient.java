@@ -32,7 +32,7 @@ import com.yourmediashelf.fedora.client.FedoraCredentials;
 import com.yourmediashelf.fedora.client.response.FedoraResponse;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
 import java.net.URL;
@@ -103,9 +103,8 @@ public class DeviationClient extends ClientBase {
      */
     private static com.yourmediashelf.fedora.client.FedoraClient getFedoraRestClient() throws Exception {
         com.yourmediashelf.fedora.client.FedoraClient restClient =
-            new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(EscidocTestBase
-                .getBaseUrl()
-                + Constants.ESCIDOC_BASE_URI + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
+            new com.yourmediashelf.fedora.client.FedoraClient(new FedoraCredentials(new URL(
+                Constants.WEB_APP_URI_ESCIDOC + "/fedoradeviation"), "", PWCallback.DEFAULT_HANDLE));
         return restClient;
     }
 

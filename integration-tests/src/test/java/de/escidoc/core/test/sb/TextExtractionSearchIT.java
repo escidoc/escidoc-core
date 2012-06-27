@@ -28,9 +28,11 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.om.OmTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -98,10 +100,8 @@ public class TextExtractionSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&INDEX_NAME=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         try {
@@ -113,7 +113,7 @@ public class TextExtractionSearchIT extends SearchTestBase {
             itemId = getObjidValue(xml);
 
             Document itemDoc = EscidocAbstractTest.getDocument(xml);
-            String componentId = getComponentObjidValue(itemDoc, 1);
+            String componentId = OmTestBase.getComponentObjidValue(itemDoc, 1);
 
             // submit item
             xml =

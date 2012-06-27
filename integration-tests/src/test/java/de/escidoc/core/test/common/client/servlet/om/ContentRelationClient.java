@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContentRelationHandlerClientInterface;
 
 import java.util.Map;
@@ -53,7 +53,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object retrieveResources(final String id) throws Exception {
 
         return callEsciDoc("ContentRelation.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES });
     }
 
@@ -70,7 +70,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("ContentRelation.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -85,7 +85,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object retrieveContentRelations(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("ContentRelation.retrieveContentRelations", METHOD_RETRIEVE_CONTENT_RELATIONS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATIONS_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATIONS_BASE_URI,
             new String[] {}, filter);
     }
 
@@ -101,7 +101,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object retrieveProperties(final String id) throws Exception {
 
         return callEsciDoc("ContentRelation.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
                 Constants.SUB_PROPERTIES });
     }
 
@@ -118,7 +118,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object create(final Object contentRelationXml) throws Exception {
 
         return callEsciDoc("ContentRelation.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] {},
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] {},
             changeToString(contentRelationXml));
     }
 
@@ -137,7 +137,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object update(final String id, final Object contentRelationXml) throws Exception {
 
         return callEsciDoc("ContentRelation.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id },
             changeToString(contentRelationXml));
     }
 
@@ -154,7 +154,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
     public Object delete(final String id) throws Exception {
 
         return callEsciDoc("ContentRelation.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -168,8 +168,8 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object submit(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_SUBMIT }, param);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+                Constants.SUB_SUBMIT }, param);
 
     }
 
@@ -184,8 +184,8 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object release(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_RELEASE }, param);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+                Constants.SUB_RELEASE }, param);
 
     }
 
@@ -200,8 +200,8 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object revise(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_REVISE }, param);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+                Constants.SUB_REVISE }, param);
 
     }
 
@@ -215,8 +215,9 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      *             If the service call fails.
      */
     public Object lock(final String id, final String param) throws Exception {
-        return callEsciDoc("ContentRelation.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.CONTENT_RELATION_BASE_URI, new String[] { id, Constants.SUB_LOCK }, param);
+        return callEsciDoc("ContentRelation.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+                Constants.SUB_LOCK }, param);
     }
 
     /**
@@ -230,8 +231,8 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object unlock(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI,
-            new String[] { id, Constants.SUB_UNLOCK }, param);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+                Constants.SUB_UNLOCK }, param);
     }
 
     /**
@@ -244,7 +245,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     public Object assignObjectPid(final String id, final String param) throws Exception {
         return callEsciDoc("ContentRelation.assignObjectPid", METHOD_ASSIGN_OBJECT_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
                 Constants.SUB_ASSIGN_OBJECT_PID }, param);
     }
 
@@ -257,7 +258,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object retrieveMdRecords(final String id) throws Exception {
         return callEsciDoc("ContentRelation.retrieveMdRecords", METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
                 Constants.SUB_MD_RECORDS });
     }
 
@@ -275,7 +276,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
 
     public Object retrieveMdRecord(final String id, final String name) throws Exception {
         return callEsciDoc("ContentRelation.retrieveMdRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATION_BASE_URI, new String[] { id,
                 Constants.SUB_MD_RECORD, name });
     }
 
@@ -287,7 +288,7 @@ public class ContentRelationClient extends ClientBase implements ContentRelation
      */
     public Object retrieveRegisteredPredicates() throws Exception {
         return callEsciDoc("ContentRelation.retrieveRegisteredPredicates", METHOD_RETRIEVE_REGISTERED_PREDICATES,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.CONTENT_RELATIONS_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.CONTENT_RELATIONS_BASE_URI,
             new String[] { Constants.SUB_RETRIEVE_REGISTERED_PREDICATES });
 
     }

@@ -45,6 +45,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerException;
 
+import de.escidoc.core.test.*;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -80,9 +81,6 @@ import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
 import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.test.EntityUtil;
-import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
@@ -689,7 +687,7 @@ public abstract class ClientBase {
         final String filename, final Map<String, String[]> parameters) throws Exception {
         Object result = null;
         String httpUrl =
-            HttpHelper.createUrl(Constants.PROTOCOL, EscidocTestBase.getBaseHost() + ":"
+            HttpHelper.createUrl(Constants.HTTP_PROTOCOL, EscidocTestBase.getBaseHost() + ":"
                 + EscidocTestBase.getBasePort(), httpBaseUri, pathElements, parameter, false);
         logRestServiceCall(label, httpMethod, httpUrl, body);
         if (NOXML.equals(body)) {
@@ -803,8 +801,8 @@ public abstract class ClientBase {
         String message =
             '[' + method + "] Calling eSciDoc with URL='" + url + "' and http method='"
                 + HttpResponse.toUpperCase(Locale.ENGLISH) + "'";
-        // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
-        // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
+        // if ((SearchTestConstants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
+        // || (SearchTestConstants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
         // }
         LOGGER.debug(message);

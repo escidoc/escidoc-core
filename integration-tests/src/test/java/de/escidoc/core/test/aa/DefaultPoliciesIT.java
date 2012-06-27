@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFile
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -47,9 +47,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Test suite for the default policies. Test-Set for Grant-test: create new user (userId) create 2 new groups (groupId
@@ -1974,7 +1972,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
         try {
             PWCallback.setAnonymousHandle();
             String requestsXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests2.xml");
-            assertXmlValidRequests(requestsXml);
+            assertXmlValidPDPRequests(requestsXml);
             String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
         }
         finally {
@@ -1992,7 +1990,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
         try {
             PWCallback.setAnonymousHandle();
             String requestsXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests1.xml");
-            assertXmlValidRequests(requestsXml);
+            assertXmlValidPDPRequests(requestsXml);
             String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
             EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }
@@ -2015,7 +2013,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
             revokeAllGrants(TEST_USER_ACCOUNT_ID);
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
             String requestsXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests2.xml");
-            assertXmlValidRequests(requestsXml);
+            assertXmlValidPDPRequests(requestsXml);
             String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
         }
         finally {
@@ -2034,7 +2032,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
             revokeAllGrants(TEST_USER_ACCOUNT_ID);
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
             String requestsXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests1.xml");
-            assertXmlValidRequests(requestsXml);
+            assertXmlValidPDPRequests(requestsXml);
             String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
         }
         finally {
@@ -2053,7 +2051,7 @@ public class DefaultPoliciesIT extends GrantTestBase {
             revokeAllGrants(TEST_USER_ACCOUNT_ID);
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
             String requestsXml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
-            assertXmlValidRequests(requestsXml);
+            assertXmlValidPDPRequests(requestsXml);
             String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(requestsXml));
             EscidocAbstractTest.failMissingException(AuthorizationException.class);
         }

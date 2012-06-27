@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -73,13 +74,12 @@ public class ItemThreadIT extends SearchTestBase {
             ts[i] = new Thread(runnable);
             ts[i].start();
         }
-        for (int threadlength = 0; threadlength < ts.length; threadlength++) {
+        for (Thread t : ts) {
             try {
-                ts[threadlength].join();
+                t.join();
             }
             catch (final Exception e) {
             }
-
         }
     }
 
@@ -91,9 +91,7 @@ public class ItemThreadIT extends SearchTestBase {
     @Test
     public void testServlet() throws Exception {
         HttpRequester requester =
-            new HttpRequester(getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.ESCIDOC_BASE_URI
-                + "/fedoradeviation/describe", "mih:mih");
+            new HttpRequester(Constants.WEB_APP_URI_ESCIDOC + "/fedoradeviation/describe", "mih:mih");
         requester.doGet("");
     }
-
 }

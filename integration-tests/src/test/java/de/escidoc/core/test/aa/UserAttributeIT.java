@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccount
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAttributeNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocAbstractTest;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
@@ -104,7 +105,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
         String value = "ValueForTestCreate";
 
         try {
-            createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
+            createAttribute(USER_TEST, "<attribut xmlns=\"" + Constants.NS_AA_ATTRIBUTES + "\"" + " name=\"" + key
                 + "\">" + value + "</attribute>");
             EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
@@ -112,7 +113,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
             assertExceptionType(XmlSchemaValidationException.class, e);
         }
         try {
-            createAttribute(USER_TEST, "<attribut xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " name=\"" + key
+            createAttribute(USER_TEST, "<attribut xmlns=\"" + Constants.NS_AA_ATTRIBUTES + "\"" + " name=\"" + key
                 + "\">");
             EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }
@@ -121,7 +122,7 @@ public class UserAttributeIT extends UserAttributeTestBase {
         }
 
         try {
-            createAttribute(USER_TEST, "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\"" + " >" + value
+            createAttribute(USER_TEST, "<attribute xmlns=\"" + Constants.NS_AA_ATTRIBUTES + "\"" + " >" + value
                 + "</attribute>");
             EscidocAbstractTest.failMissingException(XmlSchemaValidationException.class);
         }

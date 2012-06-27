@@ -33,14 +33,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import de.escidoc.core.test.TaskParamFactory;
+import de.escidoc.core.test.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -388,8 +387,8 @@ public class ContainerRetrieveIT extends ContainerTestBase {
 
         assertXmlValidSrwResponse(xml);
 
-        NodeList nodes = null;
-        nodes = selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
+        NodeList nodes =
+            selectNodeList(EscidocAbstractTest.getDocument(xml), XPATH_SRW_CONTAINER_LIST_CONTAINER + "/@href");
 
         assertContainers(nodes);
     }
@@ -513,7 +512,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_PUBLIC_STATUS + "\"=submitted and "
-            + "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\"" });
+            + "\"" + Constants.NS_EXTERNAL_RDF_TYPE + "\"=\"" + Constants.NS_COMMON_RESOURCES + "Item\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -534,7 +533,7 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\"" + FILTER_URI_PUBLIC_STATUS + "\"=pending and "
-            + "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Container\"" });
+            + "\"" + Constants.NS_EXTERNAL_RDF_TYPE + "\"=\"" + Constants.NS_COMMON_RESOURCES + "Container\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -590,9 +589,9 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         }
 
         // compare the members with ids
-        for (int i = 0; i < ids.size(); i++) {
-            if (!members.contains(ids.get(i))) {
-                throw new Exception("Added Member '" + ids.get(i) + "' not part of the member list.");
+        for (String id : ids) {
+            if (!members.contains(id)) {
+                throw new Exception("Added Member '" + id + "' not part of the member list.");
             }
         }
     }
@@ -702,9 +701,9 @@ public class ContainerRetrieveIT extends ContainerTestBase {
             filterResultXPath = "/container/properties/version/status/text()";
         }
 
-        String list = null;
+        String list;
         final Map<String, String[]> filterParams = new HashMap<String, String[]>();
-        StringBuffer filter = new StringBuffer("\"" + filterName + "\"=" + reqStatus);
+        StringBuilder filter = new StringBuilder("\"" + filterName + "\"=" + reqStatus);
 
         if (versionStatus) {
             filter.append(" and " + "\"" + FILTER_URI_PUBLIC_STATUS + "\"=released");
@@ -746,17 +745,9 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
             Node node = nodes.item(count);
             String nodeValue = node.getNodeValue();
-            try {
-                nodeValue = getIdFromURI(nodeValue);
-                String container = retrieve(nodeValue);
-                assertXmlValidContainer(container);
-            }
-            catch (final de.escidoc.core.common.exceptions.remote.system.FedoraSystemException e) {
-                throw e;
-            }
-            catch (final Exception e) {
-                throw e;
-            }
+            nodeValue = getIdFromURI(nodeValue);
+            String container = retrieve(nodeValue);
+            assertXmlValidContainer(container);
         }
     }
 
@@ -792,37 +783,22 @@ public class ContainerRetrieveIT extends ContainerTestBase {
         }
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter });
 
-        NodeList items = null;
-        NodeList containers = null;
-
         String list = retrieveMembers(id, filterParams);
-        items = selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/item/@href");
-        containers = selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/container/@href");
+        NodeList items = selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/item/@href");
+        NodeList containers =
+            selectNodeList(EscidocAbstractTest.getDocument(list), "/member-list/member/container/@href");
 
         for (int count = containers.getLength() - 1; count >= 0; count--) {
             Node node = containers.item(count);
             String nodeValue = node.getNodeValue();
             nodeValue = getIdFromURI(nodeValue);
-            try {
-                retrieve(nodeValue);
-            }
-            catch (final ContainerNotFoundException e) {
-                throw e;
-            }
-
+            retrieve(nodeValue);
         }
         for (int count = items.getLength() - 1; count >= 0; count--) {
             Node node = items.item(count);
             String nodeValue = node.getNodeValue();
             nodeValue = getIdFromURI(nodeValue);
-            try {
-                handleXmlResult(getItemClient().retrieve(nodeValue));
-
-            }
-            catch (final ItemNotFoundException e) {
-                throw e;
-            }
-
+            handleXmlResult(getItemClient().retrieve(nodeValue));
         }
     }
 
@@ -839,10 +815,9 @@ public class ContainerRetrieveIT extends ContainerTestBase {
                 + theItemId + "\"/>";
 
         if (memberIds != null) {
-            // FIXME this methods does nothing useful
-            Iterator<String> it = memberIds.iterator();
-            while (it.hasNext()) {
-                String id = it.next();
+            // FIXME this method does nothing useful
+            for (String id : memberIds) {
+                // TODO
             }
         }
 

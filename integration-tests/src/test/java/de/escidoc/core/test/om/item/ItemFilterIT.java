@@ -44,7 +44,7 @@ import org.w3c.dom.NodeList;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
 import de.escidoc.core.test.om.container.ContainerTestBase;
@@ -59,7 +59,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  */
 public class ItemFilterIT extends ItemTestBase {
 
-    public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI + NAME_CREATED_BY;
+    public static final String FILTER_CREATED_BY = Constants.NS_COMMON_SREL + NAME_CREATED_BY;
 
     private String theItemXml;
 

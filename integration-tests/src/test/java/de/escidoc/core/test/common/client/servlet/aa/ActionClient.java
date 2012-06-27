@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.aa;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
 /**
@@ -48,7 +48,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
      */
     public Object retrieveResources(final String id) throws Exception {
         return callEsciDoc("Action.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id, "resources" });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { id, "resources" });
     }
 
     /**
@@ -62,7 +62,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object createUnsecuredActions(final String contextId, final String actions) throws Exception {
 
         return callEsciDoc("Action.createUnsecuredActions", METHOD_CREATE_UNSECURED_ACTIONS, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.UNSECURED_ACTIONS_BASE_URI, new String[] { contextId },
             changeToString(actions));
     }
 
@@ -76,7 +76,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object deleteUnsecuredActions(final String contextId) throws Exception {
 
         return callEsciDoc("Action.deleteUnsecuredActions", METHOD_DELETE_UNSECURED_ACTIONS,
-            Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI,
+            Constants.HTTP_METHOD_DELETE, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.UNSECURED_ACTIONS_BASE_URI,
             new String[] { contextId });
     }
 
@@ -90,7 +90,7 @@ public class ActionClient extends ClientBase implements ResourceHandlerClientInt
     public Object retrieveUnsecuredActions(final String contextId) throws Exception {
 
         return callEsciDoc("Action.retrieveUnsecuredActions", METHOD_RETRIEVE_UNSECURED_ACTIONS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.UNSECURED_ACTIONS_BASE_URI,
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.UNSECURED_ACTIONS_BASE_URI,
             new String[] { contextId });
     }
 }

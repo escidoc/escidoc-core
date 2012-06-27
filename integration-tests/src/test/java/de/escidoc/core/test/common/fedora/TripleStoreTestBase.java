@@ -31,8 +31,7 @@ package de.escidoc.core.test.common.fedora;
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.Constants;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
@@ -44,7 +43,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +97,7 @@ public class TripleStoreTestBase {
     }
 
     protected String getFedoraUrl() throws Exception {
-        return EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
+        return EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA;
     }
 
     /**
@@ -150,7 +148,7 @@ public class TripleStoreTestBase {
                 Pattern p2 = Pattern.compile(FORMAT_ERROR);
                 Matcher m2 = p2.matcher(result);
                 if (m.find()) {
-                    result = Constants.CDATA_START + result + Constants.CDATA_END;
+                    result = Constants.XML_CDATA_START + result + Constants.XML_CDATA_END;
                     if (m1.find()) {
                         throw new Exception(result);
                     }
@@ -159,7 +157,7 @@ public class TripleStoreTestBase {
                     }
                 }
                 else {
-                    result = Constants.CDATA_START + result + Constants.CDATA_END;
+                    result = Constants.XML_CDATA_START + result + Constants.XML_CDATA_END;
                     throw new Exception("Request to MPT failed." + result);
                 }
             }

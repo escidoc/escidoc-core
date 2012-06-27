@@ -86,7 +86,7 @@ public class PdpIT extends AaTestBase {
     public void testAAEar1() throws Exception {
 
         String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
-        assertXmlValidRequests(requestsXML);
+        assertXmlValidPDPRequests(requestsXML);
 
         String evaluationResponsesXml = null;
         try {
@@ -96,7 +96,7 @@ public class PdpIT extends AaTestBase {
             EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
-        assertXmlValidResults(evaluationResponsesXml);
+        assertXmlValidPDPResults(evaluationResponsesXml);
         Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         assertXmlExists("", evaluationDocument, "/results/result[1]");
         assertXmlExists("", evaluationDocument, "/results/result[2]");
@@ -145,7 +145,7 @@ public class PdpIT extends AaTestBase {
     public void testAAEar4() throws Exception {
 
         String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
-        assertXmlValidRequests(requestsXML);
+        assertXmlValidPDPRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {
             evaluationResponsesXml = evaluate(requestsXML);
@@ -154,7 +154,7 @@ public class PdpIT extends AaTestBase {
             EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
-        assertXmlValidResults(evaluationResponsesXml);
+        assertXmlValidPDPResults(evaluationResponsesXml);
         Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
         assertEquals("result-node not found", 1, nodes.getLength());
@@ -171,7 +171,7 @@ public class PdpIT extends AaTestBase {
     public void testAAEar5() throws Exception {
 
         String requestsXML = EscidocAbstractTest.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
-        assertXmlValidRequests(requestsXML);
+        assertXmlValidPDPRequests(requestsXML);
         String evaluationResponsesXml = null;
         try {
             evaluationResponsesXml = evaluate(requestsXML);
@@ -180,7 +180,7 @@ public class PdpIT extends AaTestBase {
             EscidocAbstractTest.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
-        assertXmlValidResults(evaluationResponsesXml);
+        assertXmlValidPDPResults(evaluationResponsesXml);
         Document evaluationDocument = EscidocAbstractTest.getDocument(evaluationResponsesXml);
         NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
         assertEquals("result-node not found", 1, nodes.getLength());

@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -191,25 +191,22 @@ public class DepositorIT extends GrantTestBase {
         final Document updatedDocument = EscidocAbstractTest.getDocument(updatedXml);
         final String objid = getObjidValue(updatedDocument);
 
-        String headXml = null;
         try {
-            headXml = retrieve(ITEM_HANDLER_CODE, objid);
+            retrieve(ITEM_HANDLER_CODE, objid);
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
         }
 
-        String version1Xml = null;
         try {
-            version1Xml = retrieve(ITEM_HANDLER_CODE, objid + ":1");
+            retrieve(ITEM_HANDLER_CODE, objid + ":1");
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
         }
 
-        String version2Xml = null;
         try {
-            version2Xml = retrieve(ITEM_HANDLER_CODE, objid + ":2");
+            retrieve(ITEM_HANDLER_CODE, objid + ":2");
         }
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
@@ -565,8 +562,8 @@ public class DepositorIT extends GrantTestBase {
         final Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT, createReferencingElementNode(
-            toBeCreatedDocument, SREL_NS_URI, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES, null,
-            Constants.CONTEXT_BASE_URI + "/" + UNKNOWN_ID));
+            toBeCreatedDocument, Constants.NS_COMMON_SREL, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES,
+            null, Constants.CONTEXT_BASE_URI + "/" + UNKNOWN_ID));
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         doTestCreateItem(HANDLE, ContextNotFoundException.class, toBeCreatedXml);
@@ -583,8 +580,8 @@ public class DepositorIT extends GrantTestBase {
         final Document toBeCreatedDocument =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT, createReferencingElementNode(
-            toBeCreatedDocument, SREL_NS_URI, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES, null,
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + "escidoc:persistent1"));
+            toBeCreatedDocument, Constants.NS_COMMON_SREL, SREL_PREFIX_ESCIDOC, NAME_CONTEXT, XLINK_PREFIX_TEMPLATES,
+            null, Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + "escidoc:persistent1"));
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
 
         doTestCreateItem(HANDLE, ContextNotFoundException.class, toBeCreatedXml);

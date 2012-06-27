@@ -39,7 +39,9 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.TaskParamFactory;
+import de.escidoc.core.test.om.OmTestBase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -122,10 +124,8 @@ public class SearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(DateTimeZone.UTC);
@@ -134,7 +134,7 @@ public class SearchIT extends SearchTestBase {
         prepareItem();
         releaseTestObjects();
 
-        waitForIndexerToAppear(itemIds[Constants.NUM_ITEMS - 1], INDEX_NAME);
+        waitForIndexerToAppear(itemIds[SearchTestConstants.NUM_ITEMS - 1], INDEX_NAME);
     }
 
     /**
@@ -142,9 +142,9 @@ public class SearchIT extends SearchTestBase {
      */
     private void prepareContainer() throws Exception {
 
-        containerIds = new String[Constants.NUM_CONTAINERS];
+        containerIds = new String[SearchTestConstants.NUM_CONTAINERS];
 
-        for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
+        for (int i = 0; i < SearchTestConstants.NUM_CONTAINERS; i++) {
             String xmlData =
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container" + i
                     + "_rest.xml");
@@ -169,8 +169,7 @@ public class SearchIT extends SearchTestBase {
             xml = container.retrieve(containerIds[i]);
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[i], xml);
-            versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
-                + containerIds[i], new HashMap<String, String>() {
+            versionCheckMap.put(Constants.CONTAINER_BASE_URI + "/" + containerIds[i], new HashMap<String, String>() {
                 private static final long serialVersionUID = -615466009125477112L;
 
                 {
@@ -189,9 +188,9 @@ public class SearchIT extends SearchTestBase {
      */
     void prepareItem() throws Exception {
 
-        itemIds = new String[Constants.NUM_ITEMS];
+        itemIds = new String[SearchTestConstants.NUM_ITEMS];
 
-        for (int i = 0; i < Constants.NUM_ITEMS; i++) {
+        for (int i = 0; i < SearchTestConstants.NUM_ITEMS; i++) {
 
             final String xmlData =
                 EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i
@@ -203,7 +202,7 @@ public class SearchIT extends SearchTestBase {
             DateTime lastModDate = getLastModificationDateValue2(itemDoc);
             itemIds[i] = getObjidValue(itemDoc);
 
-            String componentId = getComponentObjidValue(itemDoc, 1);
+            String componentId = OmTestBase.getComponentObjidValue(itemDoc, 1);
 
             // submit item
             xml = item.submit(itemIds[i], TaskParamFactory.getStatusTaskParam(lastModDate, null));
@@ -232,8 +231,7 @@ public class SearchIT extends SearchTestBase {
                 xml = toString(itemDoc, false);
                 xml = xml.replaceAll("Huffman", "Huffman1");
                 item.update(itemIds[i], xml);
-                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
-                    + itemIds[i] + ":1", new HashMap<String, String>() {
+                versionCheckMap.put(Constants.ITEM_BASE_URI + "/" + itemIds[i] + ":1", new HashMap<String, String>() {
                     private static final long serialVersionUID = -5739781891807617223L;
 
                     {
@@ -245,8 +243,7 @@ public class SearchIT extends SearchTestBase {
                 });
             }
             else {
-                versionCheckMap.put(de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/"
-                    + itemIds[i], new HashMap<String, String>() {
+                versionCheckMap.put(Constants.ITEM_BASE_URI + "/" + itemIds[i], new HashMap<String, String>() {
                     private static final long serialVersionUID = -562673198784019069L;
 
                     {
@@ -296,16 +293,14 @@ public class SearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         // Create Container/////////////////////////////////////////////////////
         try {
-            containerIds = new String[Constants.NUM_CONTAINERS];
-            for (int i = 0; i < Constants.NUM_CONTAINERS; i++) {
+            containerIds = new String[SearchTestConstants.NUM_CONTAINERS];
+            for (int i = 0; i < SearchTestConstants.NUM_CONTAINERS; i++) {
                 String xmlData =
                     EscidocAbstractTest.getTemplateAsString(TEMPLATE_CONTAINER_SEARCH_PATH, "escidoc_search_container"
                         + i + "_rest.xml");
@@ -365,7 +360,7 @@ public class SearchIT extends SearchTestBase {
 
                     // assignPids
                     Document itemDoc = EscidocAbstractTest.getDocument(xml);
-                    String componentId = getComponentObjidValue(itemDoc, 1);
+                    String componentId = OmTestBase.getComponentObjidValue(itemDoc, 1);
                     String pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(itemDoc));
                     xml = item.assignContentPid(itemIds[i], componentId, pidParam);
                     pidParam = getItemPidParam(itemIds[i], getLastModificationDateValue2(getDocument(xml)));
@@ -405,7 +400,7 @@ public class SearchIT extends SearchTestBase {
 
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0], getLastModificationDateValue2(getDocument(xml)));
-            xml = container.assignVersionPid(containerIds[0] + ":" + (Constants.NUM_ITEMS + 1), pidParam);
+            xml = container.assignVersionPid(containerIds[0] + ":" + (SearchTestConstants.NUM_ITEMS + 1), pidParam);
 
             // release container
             container.release(containerIds[0], TaskParamFactory.getStatusTaskParam(
@@ -429,8 +424,8 @@ public class SearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -446,8 +441,8 @@ public class SearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -1294,8 +1289,8 @@ public class SearchIT extends SearchTestBase {
         Pattern itemIdPattern = Pattern.compile("(.*)\\$\\{ITEM_ID\\}(.*)");
         Matcher itemIdMatcher = itemIdPattern.matcher("");
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_USERDEFINED_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ITEM_INDEX_USERDEFINED_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ITEM_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ITEM_INDEX_USERDEFINED_SEARCHES.get(indexName);
             String searchString = itemIdMatcher.reset(info.get("searchString")).replaceAll("$1" + itemIds[3] + "$2");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
@@ -1315,8 +1310,8 @@ public class SearchIT extends SearchTestBase {
     @Test
     public void testSBSR36() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.CONTAINER_INDEX_USERDEFINED_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.CONTAINER_INDEX_USERDEFINED_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.CONTAINER_INDEX_USERDEFINED_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
@@ -1336,8 +1331,8 @@ public class SearchIT extends SearchTestBase {
     @Test
     public void testSBSR37() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_PROPERTIES_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ITEM_INDEX_PROPERTIES_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ITEM_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ITEM_INDEX_PROPERTIES_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
@@ -1357,8 +1352,8 @@ public class SearchIT extends SearchTestBase {
     @Test
     public void testSBSR38() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.CONTAINER_INDEX_PROPERTIES_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.CONTAINER_INDEX_PROPERTIES_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.CONTAINER_INDEX_PROPERTIES_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
@@ -1378,8 +1373,8 @@ public class SearchIT extends SearchTestBase {
     @Test
     public void testSBSR39() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_COMPONENTS_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ITEM_INDEX_COMPONENTS_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ITEM_INDEX_COMPONENTS_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ITEM_INDEX_COMPONENTS_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
@@ -1642,8 +1637,8 @@ public class SearchIT extends SearchTestBase {
     @Test
     public void testSBSR54() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        for (String indexName : Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.keySet()) {
-            HashMap<String, String> info = Constants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.get(indexName);
+        for (String indexName : SearchTestConstants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.keySet()) {
+            HashMap<String, String> info = SearchTestConstants.ITEM_INDEX_SPECIAL_CHAR_SEARCHES.get(indexName);
             String searchString = info.get("searchString");
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");

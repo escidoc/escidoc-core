@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.st;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 import java.io.InputStream;
 
@@ -53,8 +53,8 @@ public class StagingFileClient extends ClientBase {
         throws Exception {
 
         return callEsciDocWithBinaryContent("StagingFile.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent, mimeType,
-            filename);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STAGING_FILE_BASE_URI, new String[] {}, binaryContent,
+            mimeType, filename);
     }
 
     /**
@@ -67,7 +67,7 @@ public class StagingFileClient extends ClientBase {
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("StagingFile.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STAGING_FILE_BASE_URI, new String[] { id }, null);
     }
 
     /**

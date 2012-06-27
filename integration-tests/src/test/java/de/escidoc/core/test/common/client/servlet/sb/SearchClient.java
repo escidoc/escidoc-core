@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.sb;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 import java.net.URLEncoder;
@@ -66,8 +66,8 @@ public class SearchClient extends ClientBase {
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
-        return callEsciDoc("Sb.search", METHOD_SEARCH, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-            + database + paramString, new String[] {}, parameters);
+        return callEsciDoc("Sb.search", METHOD_SEARCH, Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_SEARCH
+            + "/" + database + paramString, new String[] {}, parameters);
     }
 
     /**
@@ -89,8 +89,8 @@ public class SearchClient extends ClientBase {
             paramString.append(key).append("=").append(parameters.get(key));
         }
         parameters.put("database", new String[] { database });
-        return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
-            + database + paramString, new String[] {}, parameters);
+        return callEsciDoc("Sb.explain", METHOD_EXPLAIN, Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_SEARCH
+            + "/" + database + paramString, new String[] {}, parameters);
     }
 
     /**
@@ -117,7 +117,7 @@ public class SearchClient extends ClientBase {
             paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
-        return callEsciDoc("Sb.scan", METHOD_SCAN, Constants.HTTP_METHOD_GET, Constants.SEARCH_BASE_URI + "/"
+        return callEsciDoc("Sb.scan", METHOD_SCAN, Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_SEARCH + "/"
             + database + paramString, new String[] {});
     }
 

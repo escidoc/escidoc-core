@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -138,7 +138,7 @@ public class ItemParentsIT extends ItemTestBase {
     @Test
     public void testRetrieveParents() throws Exception {
         String parentsXml = retrieveParents(itemIds[0]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 3);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
@@ -157,7 +157,7 @@ public class ItemParentsIT extends ItemTestBase {
     @Test
     public void testRetrieveParents1() throws Exception {
         String parentsXml = retrieveParents(itemIds[1]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 2);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
@@ -176,7 +176,7 @@ public class ItemParentsIT extends ItemTestBase {
     @Test
     public void testRetrieveParents2() throws Exception {
         String parentsXml = retrieveParents(itemIds[2]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 1);
         assertXmlNotExists("non-expected container found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]
@@ -195,7 +195,7 @@ public class ItemParentsIT extends ItemTestBase {
     @Test
     public void testRetrieveParents3() throws Exception {
         String parentsXml = retrieveParents(itemIds[3]);
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 0);
     }
 
@@ -207,7 +207,7 @@ public class ItemParentsIT extends ItemTestBase {
     @Test
     public void testRetrieveParentsWithVersion() throws Exception {
         String parentsXml = retrieveParents(itemIds[1] + ":1");
-        assertXmlValidParents(parentsXml);
+        assertXmlValidOUParents(parentsXml);
         Document parentsDoc = getDocument(parentsXml);
         assertNodeCount(parentsXml, "/parents/parent", 2);
         assertXmlExists("expected container not found", parentsDoc, "/parents/parent[@objid='" + containerIds[0]

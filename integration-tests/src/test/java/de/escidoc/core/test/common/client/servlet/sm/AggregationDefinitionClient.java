@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.sm;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class AggregationDefinitionClient extends ClientBase {
     public Object create(final Object aggregationXml) throws Exception {
 
         return callEsciDoc("AggregationDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] {},
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] {},
             changeToString(aggregationXml));
     }
 
@@ -66,7 +66,8 @@ public class AggregationDefinitionClient extends ClientBase {
     public Object delete(final String id) throws Exception {
 
         return callEsciDoc("AggregationDefinition.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI,
+            new String[] { id });
     }
 
     /**
@@ -80,7 +81,8 @@ public class AggregationDefinitionClient extends ClientBase {
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("AggregationDefinition.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_AGGREGATION_DEFINITION_BASE_URI,
+            new String[] { id });
     }
 
     /**
@@ -93,7 +95,7 @@ public class AggregationDefinitionClient extends ClientBase {
     public Object retrieveAggregationDefinitions(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("AggregationDefinition.retrieveAggregationDefinitions",
-            METHOD_RETRIEVE_AGGREGATION_DEFINITIONS, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
+            METHOD_RETRIEVE_AGGREGATION_DEFINITIONS, Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC
                 + Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI, new String[] {}, filter);
     }
 

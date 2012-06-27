@@ -30,7 +30,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -640,8 +640,8 @@ public class ContainerCreateIT extends ContainerTestBase {
         Document toBeCreatedDocument =
             EscidocAbstractTest.getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         deleteElement(toBeCreatedDocument, XPATH_CONTAINER_CONTENT_MODEL);
-        addAfter(toBeCreatedDocument, XPATH_CONTAINER_CONTEXT, createElementNode(toBeCreatedDocument, SREL_NS_URI,
-            "srel", NAME_CONTENT_MODEL, null));
+        addAfter(toBeCreatedDocument, XPATH_CONTAINER_CONTEXT, createElementNode(toBeCreatedDocument,
+            Constants.NS_COMMON_SREL, SREL_PREFIX_ESCIDOC, NAME_CONTENT_MODEL, null));
 
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
 

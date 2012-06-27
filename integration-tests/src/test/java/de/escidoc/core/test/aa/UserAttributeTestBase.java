@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -517,7 +517,7 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      * @throws Exception If anything fails.
      */
     public String getCreateAttributeTaskParam(final String attName, final String attValue) throws Exception {
-        return "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\" name=\"" + attName + "\">" + attValue
+        return "<attribute xmlns=\"" + Constants.NS_AA_ATTRIBUTES + "\" name=\"" + attName + "\">" + attValue
             + "</attribute>";
     }
 
@@ -531,8 +531,8 @@ public abstract class UserAttributeTestBase extends UserAccountTestBase {
      */
     public String getUpdateAttributeTaskParam(final String attName, final String attValue, final String lmd)
         throws Exception {
-        return "<attribute xmlns=\"" + USER_ACCOUNT_ATTRIBUTE_NS_URI + "\" last-modification-date=\"" + lmd
-            + "\" name=\"" + attName + "\">" + attValue + "</attribute>";
+        return "<attribute xmlns=\"" + Constants.NS_AA_ATTRIBUTES + "\" last-modification-date=\"" + lmd + "\" name=\""
+            + attName + "\">" + attValue + "</attribute>";
     }
 
 }

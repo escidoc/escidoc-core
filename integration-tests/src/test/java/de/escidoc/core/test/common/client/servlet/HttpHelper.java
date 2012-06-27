@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
@@ -537,7 +538,7 @@ public final class HttpHelper {
         client.getCookieStore().clear();
 
         final String loginServletUrl =
-            EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.LOGIN_URI + "?target="
+            EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.LOGIN_URI + "?target="
                 + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
         final HttpGet loginMethod = new HttpGet(loginServletUrl);
         httpRes = client.execute(loginMethod);
@@ -560,12 +561,12 @@ public final class HttpHelper {
 
         // Second step: Send filled login form
         final HttpPost postMethod =
-            new HttpPost((EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.AA_BASE_URI
-                + Constants.LOGIN_DEFAULT_PROVIDER + "/j_spring_security_check"));
+            new HttpPost((EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.MANAGER_URI_AA
+                + Constants.LOGIN_DEFAULT_PROVIDER + Constants.LOGIN_SPRING_SECURITY_CHECK));
 
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-        formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
-        formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD, password));
+        formparams.add(new BasicNameValuePair(Constants.LOGIN_PARAM_UM_NAME, login));
+        formparams.add(new BasicNameValuePair(Constants.LOGIN_PARAM_UM_PASSWORD, password));
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, HTTP.UTF_8);
         postMethod.setEntity(entity);
 
@@ -583,7 +584,7 @@ public final class HttpHelper {
         if (expectedAuthenticationFailure) {
             // redirect to repeated login page
             assertEquals("Unexpected redirect from spring security after expected" + " failed authentication",
-                EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.LOGIN_URI
+                EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.LOGIN_URI
                     + "/login-repeated.html", retrievedRedirectUrl);
             return httpRes;
         }
@@ -657,11 +658,11 @@ public final class HttpHelper {
             // first step: Call the login servlet
             final String logoutServletUrl;
             if (targetUrl == null) {
-                logoutServletUrl = EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/aa/logout";
+                logoutServletUrl = EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + "/aa/logout";
             }
             else {
                 logoutServletUrl =
-                    EscidocTestBase.getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/aa/logout?target="
+                    EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + "/aa/logout?target="
                         + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             }
             final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
@@ -708,11 +709,11 @@ public final class HttpHelper {
 
         final String encoded;
         if (encodeSlashes) {
-            encoded = URLEncoder.encode(parameterValue, EscidocTestBase.DEFAULT_CHARSET);
+            encoded = URLEncoder.encode(parameterValue, Constants.DEFAULT_CHARSET);
 
         }
         else {
-            encoded = URLEncoder.encode(parameterValue, EscidocTestBase.DEFAULT_CHARSET).replaceAll("%2F", "/");
+            encoded = URLEncoder.encode(parameterValue, Constants.DEFAULT_CHARSET).replaceAll("%2F", "/");
         }
         return encoded;
     }

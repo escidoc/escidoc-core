@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -193,7 +193,7 @@ public class ContentTestBase extends ItemTestBase {
         String fedoraPw = PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_PASSWORD);
         String auth = fedoraUser + ":" + fedoraPw + "@";
 
-        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
+        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA;
         int pos = fedoraUrl.indexOf("://");
         String protocol = fedoraUrl.substring(0, pos + 3);
         String hostPart = fedoraUrl.substring(pos + 3);
@@ -245,7 +245,8 @@ public class ContentTestBase extends ItemTestBase {
      */
     protected File retrieveContentFromRepository(final String objectId, final String contentType) throws Exception {
 
-        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI + "/get/" + objectId + "/content";
+        String fedoraUrl =
+            EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA + "/get/" + objectId + "/content";
 
         String auth =
             PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER) + ":"

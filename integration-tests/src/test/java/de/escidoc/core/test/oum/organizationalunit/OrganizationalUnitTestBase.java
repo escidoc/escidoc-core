@@ -29,7 +29,7 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.oum.OumTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.w3c.dom.Document;
@@ -196,20 +196,20 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         final int numberParents = parentValues.length / 2;
         if (numberParents > 0) {
             if (!withRestReadOnly) {
-                parents = createElementNode(document, ORGANIZATIONAL_UNIT_NS_URI, prefix, NAME_PARENTS, null);
+                parents = createElementNode(document, Constants.NS_OUM_OU, prefix, NAME_PARENTS, null);
             }
             else {
                 parents =
-                    createReferencingElementNode(document, ORGANIZATIONAL_UNIT_NS_URI, prefix, NAME_PARENTS,
-                        xlinkPrefix, "Some Title", "/some/href/some:id", true);
+                    createReferencingElementNode(document, Constants.NS_OUM_OU, prefix, NAME_PARENTS, xlinkPrefix,
+                        "Some Title", "/some/href/some:id", true);
             }
             addAfter(document, xpathBefore, parents);
             for (int i = numberParents - 1; i >= 0; i--) {
                 final String parentId = parentValues[i];
                 final String parentTitle = parentValues[i + numberParents];
                 final Element parentRef =
-                    createReferencingElementNode(document, SREL_NS_URI, srelPrefix, NAME_PARENT, xlinkPrefix,
-                        parentTitle, "/oum/organizational-unit/" + parentId, withRestReadOnly);
+                    createReferencingElementNode(document, Constants.NS_COMMON_SREL, srelPrefix, NAME_PARENT,
+                        xlinkPrefix, parentTitle, "/oum/organizational-unit/" + parentId, withRestReadOnly);
                 parents.appendChild(parentRef);
             }
         }
@@ -288,7 +288,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 if (attributes != null) {
                     for (int j = 0; j < attributes.getLength(); j++) {
                         Node no = attributes.item(j);
-                        if (no.getNodeValue().equals(STRUCTURAL_RELATIONS_NS_URI)) {
+                        if (no.getNodeValue().equals(Constants.NS_COMMON_SREL)) {
                             return no.getNodeName().replaceAll(".*?:(.*)", "$1");
                         }
                     }
@@ -319,7 +319,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 if (attributes != null) {
                     for (int j = 0; j < attributes.getLength(); j++) {
                         Node no = attributes.item(j);
-                        if (no.getNodeValue().equals(ORGANIZATIONAL_UNIT_NS_URI)) {
+                        if (no.getNodeValue().equals(Constants.NS_OUM_OU)) {
                             return no.getNodeName().replaceAll(".*?:(.*)", "$1");
                         }
                     }
@@ -672,7 +672,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      * @param ouId                   The id of the ou to update.
      * @param expectedExceptionClass The class of the expected exception or <code>null</code> in case of expected
      *                               success.
-     * @return Returns the Xml representation of the updated organizational unit.
      * @throws Exception Thrown if anything fails.
      */
     public void doTestDelete(final String handle, final String ouId, final Class expectedExceptionClass)
@@ -868,9 +867,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         String[] parentsWithTitle = null;
         if (parentIds != null) {
             parentsWithTitle = new String[parentIds.length * 2];
-            for (int i = 0; i < parentIds.length; i++) {
-                parentsWithTitle[i] = parentIds[i];
-            }
+            System.arraycopy(parentIds, 0, parentsWithTitle, 0, parentIds.length);
         }
 
         // delete old parents and add new parent to child2

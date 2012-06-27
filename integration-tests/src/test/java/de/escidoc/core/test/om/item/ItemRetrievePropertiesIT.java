@@ -31,7 +31,7 @@ package de.escidoc.core.test.om.item;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;

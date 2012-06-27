@@ -35,7 +35,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,48 +43,32 @@ import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
-import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
-import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.After;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -96,9 +79,7 @@ import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
-import org.xml.sax.InputSource;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
@@ -110,9 +91,6 @@ import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
-import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import etm.core.configuration.EtmManager;
 import etm.core.monitor.EtmMonitor;
@@ -120,10 +98,10 @@ import etm.core.monitor.EtmPoint;
 
 /**
  * Base class for Escidoc tests.
- * 
+ *
  * @author Michael Schneider
  */
-public abstract class EscidocTestBase {
+public abstract class EscidocTestBase extends EscidocAssertions {
 
     public static final String VERSION_SUFFIX_SEPARATOR = ":";
 
@@ -147,19 +125,13 @@ public abstract class EscidocTestBase {
 
     public static final String NAME_SCOPE = "scope";
 
-    private static Map<String, URL> urlCache = new HashMap<String, URL>();
-
-    private static Map<URL, Schema> schemaCache = new HashMap<URL, Schema>();
-
-    public static final String DEFAULT_CHARSET = "UTF-8";
-
     private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EscidocTestBase.class);
 
     protected static final EtmMonitor ETM_MONITOR = EtmManager.getEtmMonitor();
 
-    private StagingFileClient stagingFileClient = null;
+    private StagingFileClient stagingFileClient = new StagingFileClient();
 
     /**
      * Id of a persistent content type object.
@@ -241,20 +213,13 @@ public abstract class EscidocTestBase {
      */
     protected static final String TEST_AGGREGATION_DEFINITION_ID = "escidoc:aggdef1";
 
-    /**
-     * Pattern to detect place holder in Velocity templates that are not replaced by values.
-     */
-    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER = Pattern.compile("\\$\\{.*?\\}");
-
-    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER2 = Pattern.compile("\\$esc\\.");
-
     public static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
 
     /**
      * Pattern used in modfyNamespacePrefixes to find and replace prefixes.
      */
     private static final Pattern PATTERN_MODIFY_NAMESPACE_PREFIXES_REPLACE_PREFIXES =
-        Pattern.compile("(</{0,1}|[\\s])([0-9a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
+        Pattern.compile("(</?|[\\s])([0-9a-zA-Z-]+?:[^ =/>]+)", Pattern.DOTALL | Pattern.MULTILINE);
 
     /**
      * Pattern used in modfyNamespacePrefixes to fix namespace declarations after changing prefixes.
@@ -423,87 +388,11 @@ public abstract class EscidocTestBase {
 
     public static final String USER_GROUP_PREFIX_ESCIDOC = NAME_USER_GROUP;
 
-    public static final String CONTAINER_NS_URI = "http://www.escidoc.de/schemas/container/0.7";
-
-    public static final String PROPERTIES_NS_URI_04 = "http://escidoc.de/core/01/properties/";
-
     public static final String PROPERTIES_FILTER_PREFIX = "/properties/";
-
-    public static final String RDF_NS_URI = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-
-    public static final String RDF_TYPE_NS_URI = RDF_NS_URI + "type";
-
-    public static final String STRUCTURAL_RELATIONS_NS_URI = "http://escidoc.de/core/01/structural-relations/";
 
     public static final String STRUCTURAL_RELATIONS_FILTER_PREFIX = "/structural-relations/";
 
-    public static final String RESOURCES_NS_URI = "http://escidoc.de/core/01/resources/";
-
     public static final String TYPE_FEDORA_OBJECT_URI = "info:fedora/fedora-system:def/model#FedoraObject";
-
-    public static final String CONTEXT_NS_URI = "http://www.escidoc.de/schemas/context/0.6";
-
-    public static final String CONTENT_TYPE_NS_URI = "http://www.escidoc.de/schemas/content-type/0.2";
-
-    public static final String DC_NS_URI = "http://purl.org/dc/elements/1.1/";
-
-    public static final String DCTERMS_NS_URI = "http://purl.org/dc/terms/";
-
-    public static final String GRANTS_NS_URI = "http://www.escidoc.de/schemas/grants/0.5";
-
-    public static final String INTERNAL_METADATA_NS_URI = "http://www.escidoc.de/schemas/internalmetadata/0.2";
-
-    public static final String ITEM_NS_URI = "http://www.escidoc.de/schemas/item/0.6";
-
-    public static final String COMPONENTS_NS_URI = "http://www.escidoc.de/schemas/components/0.7";
-
-    public static final String ITEM_PREFIX_TEMPLATES = "prefix-escidocItem";
-
-    public static final String MEMBER_LIST_NS_URI = "http://www.escidoc.de/schemas/memberlist/0.6";
-
-    public static final String MEMBER_REF_LIST_NS_URI = "http://www.escidoc.de/schemas/memberreflist/0.2";
-
-    public static final String METADATARECORDS_NS_URI = "http://www.escidoc.de/schemas/metadatarecords/0.2";
-
-    public static final String METADATA_NS_URI = "http://www.escidoc.de/schemas/metadata/0.2";
-
-    public static final String ORGANIZATIONAL_UNIT_NS_URI = "http://www.escidoc.de/schemas/organizationalunit/0.8";
-
-    public static final String PROPERTIES_NS_URI = "http://www.escidoc.de/schemas/properties/0.2";
-
-    public static final String RELATIONS_NS_URI = "http://www.escidoc.de/schemas/relations/0.2";
-
-    public static final String REQUESTS_NS_URI = "http://www.escidoc.de/schemas/pdp/0.2/requests";
-
-    public static final String RESULTS_NS_URI = "http://www.escidoc.de/schemas/pdp/0.2/results";
-
-    public static final String ROLE_NS_URI = "http://www.escidoc.de/schemas/role/0.2";
-
-    public static final String SREL_NS_URI = "http://escidoc.de/core/01/structural-relations/";
-
-    public static final String STAGING_FILE_NS_URI = "http://www.escidoc.de/schemas/stagingfile/0.2";
-
-    public static final String SCHEMA_NS_URI = "http://www.escidoc.de/schemas/xml-schema/0.2";
-
-    public static final String STRUCT_MAP_NS_URI = "http://www.escidoc.de/schemas/structmap/0.4";
-
-    public static final String USER_ACCOUNT_NS_URI = "http://www.escidoc.de/schemas/useraccount/0.7";
-
-    public static final String USER_ACCOUNT_PREFERENCE_NS_URI = "http://www.escidoc.de/schemas/preferences/0.1";
-
-    public static final String USER_ACCOUNT_ATTRIBUTE_NS_URI = "http://www.escidoc.de/schemas/attributes/0.1";
-
-    public static final String USER_GROUP_NS_URI = "http://www.escidoc.de/schemas/usergroup/0.6";
-
-    public static final String XACML_CONTEXT_NS_URI = "urn:oasis:names:tc:xacml:1.0:context";
-
-    public static final String XACML_POLICY_NS_URI = "urn:oasis:names:tc:xacml:1.0:policy";
-
-    public static final String XLINK_NS_URI = "http://www.w3.org/1999/xlink";
-
-    public static final String XML_NS_URI = "http://www.w3.org/XML/1998/namespace";
-
-    public static final String XSI_NS_URI = "http://www.w3.org/2001/XMLSchema-instance";
 
     public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
@@ -641,8 +530,6 @@ public abstract class EscidocTestBase {
 
     protected static final String WITHDRAW_COMMENT = "This is a &lt; withdraw comment.";
 
-    private static Schema resourcesSchema;
-
     protected static Schema stagingFileSchema;
 
     protected static String startTimestamp = getNowAsTimestamp();
@@ -661,12 +548,13 @@ public abstract class EscidocTestBase {
      * Xlink namespace declaration in templates.
      */
     public static final String XLINK_NS_DECL_TEPLATES =
-        "xmlns:" + XLINK_PREFIX_TEMPLATES + "=\"" + XLINK_NS_URI + "\" ";
+        "xmlns:" + XLINK_PREFIX_TEMPLATES + "=\"" + Constants.NS_EXTERNAL_XLINK + "\" ";
 
     /**
      * Xlink namespace declaration in documents retrieved from the eSciDoc.
      */
-    public static final String XLINK_NS_DECL_ESCIDOC = "xmlns:" + XLINK_PREFIX_ESCIDOC + "=\"" + XLINK_NS_URI + "\" ";
+    public static final String XLINK_NS_DECL_ESCIDOC =
+        "xmlns:" + XLINK_PREFIX_ESCIDOC + "=\"" + Constants.NS_EXTERNAL_XLINK + "\" ";
 
     /**
      * Prefix and name of xlink href attribute in templates.
@@ -677,26 +565,6 @@ public abstract class EscidocTestBase {
      * Prefix and name of xlink href attribute in documents retrieved from the eSciDoc.
      */
     public static final String XLINK_HREF_ESCIDOC = XLINK_PREFIX_ESCIDOC + ":href";
-
-    /**
-     * Prefix and name of objid attribute in documents retrieved from the eSciDoc.
-     */
-    public static final String ID_ESCIDOC = "objid";
-
-    /**
-     * Prefix and name of xlink title attribute in templates.
-     */
-    public static final String XLINK_TITLE_TEMPLATES = XLINK_PREFIX_TEMPLATES + ":title";
-
-    /**
-     * Prefix and name of xlink title attribute in documents retrieved from the eSciDoc.
-     */
-    public static final String XLINK_TITLE_ESCIDOC = XLINK_PREFIX_ESCIDOC + ":title";
-
-    /**
-     * Prefix and name of xlink type attribute in templates.
-     */
-    public static final String XLINK_TYPE_TEMPLATES = XLINK_PREFIX_TEMPLATES + ":type";
 
     /**
      * Prefix and name of xlink type attribute in documents retrieved from the eSciDoc.
@@ -940,7 +808,7 @@ public abstract class EscidocTestBase {
 
     public static final String NAME_ADMIN_DESCRIPTORS = "admin-descriptors";
 
-    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern.compile(".*/([^/>]+)>{0,1}");
+    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern.compile(".*/([^/>]+)>?");
 
     private static String REPOSITORY_VERSION = null;
 
@@ -949,8 +817,6 @@ public abstract class EscidocTestBase {
     private static String basePort = null;
 
     private static String frameworkContext = null;
-
-    private static String frameworkServiceUri = null;
 
     private static String fedoragsearchContext = null;
 
@@ -980,15 +846,10 @@ public abstract class EscidocTestBase {
 
     private OrganizationalUnitClient ouClient = null;
 
-    public EscidocTestBase() {
-        this.stagingFileClient = new StagingFileClient();
-    }
-
     /**
      * Tear down. Resets the user handle in <code>PWCallback</code>.
-     * 
-     * @throws Exception
-     *             If an error occurs.
+     *
+     * @throws Exception If an error occurs.
      */
     @After
     public void tearDown() throws Exception {
@@ -997,8 +858,7 @@ public abstract class EscidocTestBase {
 
     /**
      * @return Returns the client to use in the test.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public ResourceHandlerClientInterface getClient() throws Exception {
 
@@ -1082,7 +942,6 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     *
      * @return Returns the OrganizationalUnitClient.
      */
     public OrganizationalUnitClient getOrganizationalUnitClient() {
@@ -1094,12 +953,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Returns the xml data of the provided result.
-     * 
-     * @param result
-     *            The object holding the result.
+     *
+     * @param result The object holding the result.
      * @return Returns the xml string.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     protected String handleXmlResult(final Object result) throws Exception {
 
@@ -1118,9 +975,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Grab the object id from URI.
-     * 
-     * @param uri
-     *            Fedora URI with objid .
+     *
+     * @param uri Fedora URI with objid .
      * @return object id
      */
     public static String getIdFromURI(final String uri) {
@@ -1138,14 +994,12 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Test creating a resource using the specified resource handler.<br>
-     * The client to use is determined by getClient() that must be implemented by the concrete test class.
-     * 
-     * @param resourceXml
-     *            The xml representation of the resource.
+     * Test creating a resource using the specified resource handler.<br> The client to use is determined by getClient()
+     * that must be implemented by the concrete test class.
+     *
+     * @param resourceXml The xml representation of the resource.
      * @return The xml representation of the created resource.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String create(final String resourceXml) throws Exception {
 
@@ -1159,13 +1013,11 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Test deleting a resource from the framework.<br>
-     * The client to use is determined by getClient() that must be implemented by the concrete test class.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @throws Exception
-     *             If anything fails.
+     * Test deleting a resource from the framework.<br> The client to use is determined by getClient() that must be
+     * implemented by the concrete test class.
+     *
+     * @param id The id of the resource.
+     * @throws Exception If anything fails.
      */
     public void delete(final String id) throws Exception {
 
@@ -1177,14 +1029,12 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Test retrieving a resource from the framework.<br>
-     * The client to use is determined by getClient() that must be implemented by the concrete test class.
-     * 
-     * @param id
-     *            The id of the resource.
+     * Test retrieving a resource from the framework.<br> The client to use is determined by getClient() that must be
+     * implemented by the concrete test class.
+     *
+     * @param id The id of the resource.
      * @return The retrieved resource.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieve(final String id) throws Exception {
 
@@ -1199,14 +1049,12 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Test retrieving the virtual resources of a resource from the framework.<br>
-     * The client to use is determined by getClient() that must be implemented by the concrete test class.
-     * 
-     * @param id
-     *            The id of the resource.
+     * Test retrieving the virtual resources of a resource from the framework.<br> The client to use is determined by
+     * getClient() that must be implemented by the concrete test class.
+     *
+     * @param id The id of the resource.
      * @return The retrieved virtual resources.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String retrieveResources(final String id) throws Exception {
 
@@ -1214,16 +1062,13 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Test updating a resource of the framework.<br>
-     * The client to use is determined by getClient() that must be implemented by the concrete test class.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param resourceXml
-     *            The xml representation of the resource.
+     * Test updating a resource of the framework.<br> The client to use is determined by getClient() that must be
+     * implemented by the concrete test class.
+     *
+     * @param id          The id of the resource.
+     * @param resourceXml The xml representation of the resource.
      * @return The updated resource.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String update(final String id, final String resourceXml) throws Exception {
 
@@ -1238,319 +1083,8 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Assert that Map is empty.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param map
-     *            The map to check.
-     */
-    public static void assertEmptyMap(final String message, final Map map) {
-        if (map == null) {
-            fail(message + " Map is null");
-        }
-        if (!map.isEmpty()) {
-            StringBuffer buf = new StringBuffer("");
-            for (Object key : map.keySet()) {
-                buf.append(key);
-            }
-            fail(message + buf.toString());
-        }
-    }
-
-    /**
-     * Assert that the http request was successful.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param httpRes
-     *            The http method.
-     */
-    public static void assertHttpStatusOK(final String message, final HttpResponse httpRes) {
-        assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-
-    }
-
-    // Content-Type: text/xml;charset=UTF-8
-
-    /**
-     * Assert that the http request was successful.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param httpRes
-     *            The http method.
-     */
-    public static void assertContentTypeTextXmlUTF8OfMethod(final String message, final HttpResponse httpRes) {
-        assertContentType(message, MediaType.TEXT_XML.toString(), "utf-8", httpRes);
-    }
-
-    public static void assertContentType(
-        final String message, final String expectedContentType, final String expectedCharset, final HttpResponse httpRes) {
-        Header[] headers = httpRes.getAllHeaders();
-        String contentTypeHeaderValue = null;
-        for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
-            if (headers[i].getName().toLowerCase(Locale.ENGLISH).equals("content-type")) {
-                contentTypeHeaderValue = headers[i].getValue();
-            }
-        }
-        assertNotNull("No content-type header found, but expected 'content-type=" + expectedContentType + ";"
-            + expectedCharset + "'", contentTypeHeaderValue);
-        assertTrue("Wrong content-type found, expected '" + expectedContentType + "' but was '"
-            + contentTypeHeaderValue + "'", contentTypeHeaderValue.indexOf(expectedContentType) > -1);
-        assertTrue("Wrong charset found, expected '" + expectedCharset + "' but was '" + contentTypeHeaderValue + "'",
-            contentTypeHeaderValue.indexOf(expectedContentType) > -1);
-    }
-
-    /**
-     * Assert that the http request was successful.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param httpRes
-     *            The http method.
-     */
-    public static void assertHttpStatusOfMethod(final String message, final HttpResponse httpRes) {
-        // Delete Operation delivers Status code 206, HttpResponse doesn't
-        // contain the original hhtp method
-        if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-
-        }
-        else if ((httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT)) {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
-        }
-
-    }
-
-    /**
-     * Assert that the http response has the expected status.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expectedStatus
-     *            The expected status.
-     * @param httpRes
-     *            The http method.
-     */
-    public static void assertHttpStatus(final String message, final int expectedStatus, final HttpResponse httpRes) {
-        assertEquals(message + " Wrong response status!", expectedStatus, httpRes.getStatusLine().getStatusCode());
-    }
-
-    /**
-     * Assert that the http response has the expected status.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param matchString
-     *            expected String to match.
-     * @param toTest
-     *            toTest.
-     */
-    public static void assertMatches(final String message, final String matchString, final String toTest) {
-        if (!toTest.matches("(?s).*" + matchString + ".*")) {
-            fail(message);
-        }
-    }
-
-    /**
-     * Assert XML content is equal.<br/>
-     * <p/>
-     * This methods compares the attributes (if any exist) and either recursively compares the child elements (if any
-     * exists) or the text content.<br/>
-     * Therefore, mixed content is NOT supported by this method.
-     * 
-     * @param messageIn
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The expected XML content.
-     * @param toBeAsserted
-     *            The XML content to be compared with the expected content.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(final String messageIn, final Node expected, final Node toBeAsserted)
-        throws Exception {
-        // Assert both nodes are null or both nodes are not null
-        if (expected == null) {
-            assertNull(messageIn + "Unexpected node. ", toBeAsserted);
-            return;
-        }
-        assertNotNull(messageIn + " Expected node. ", toBeAsserted);
-        if (expected.equals(toBeAsserted)) {
-            return;
-        }
-        String nodeName = getLocalName(expected);
-        String message = messageIn;
-        if (!message.contains("-- Asserting ")) {
-            message = message + "-- Asserting " + nodeName + ". ";
-        }
-        else {
-            message = message + "/" + nodeName;
-        }
-        // assert both nodes are nodes of the same node type
-        // if thedocument container xslt directive than is the nodeName
-        // "#document" is here compared
-        assertEquals(message + " Type of nodes are different", expected.getNodeType(), toBeAsserted.getNodeType());
-        if (expected.getNodeType() == Node.TEXT_NODE) {
-            assertEquals(message + " Text nodes are different. ", expected.getTextContent().trim(), toBeAsserted
-                .getTextContent().trim());
-        }
-        // assert attributes
-        NamedNodeMap expectedAttributes = expected.getAttributes();
-        NamedNodeMap toBeAssertedAttributes = toBeAsserted.getAttributes();
-        if (expectedAttributes == null) {
-            assertNull(message + " Unexpected attributes. [" + nodeName + "]", toBeAssertedAttributes);
-        }
-        else {
-            assertNotNull(message + " Expected attributes. ", toBeAssertedAttributes);
-            final int expectedNumberAttributes = expectedAttributes.getLength();
-            for (int i = 0; i < expectedNumberAttributes; i++) {
-                Node expectedAttribute = expectedAttributes.item(i);
-                String expectedAttributeNamespace = expectedAttribute.getNamespaceURI();
-                Node toBeAssertedAttribute = null;
-                final String expectedAttributeNodeName = expectedAttribute.getNodeName();
-                if (expectedAttributeNamespace != null) {
-                    final String localName = expectedAttribute.getLocalName();
-                    toBeAssertedAttribute =
-                        toBeAssertedAttributes.getNamedItemNS(expectedAttributeNamespace, localName);
-                    if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
-                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
-                            toBeAssertedAttribute);
-                    }
-                }
-                else {
-                    // not namespace aware parsed. Attributes may have different
-                    // prefixes which are now part of their node name.
-                    // To compare expected and to be asserted attribute, it is
-                    // first it is tried to find the appropriate to be asserted
-                    // attribute by the node name. If this fails, xpath
-                    // selection is used after extracting the expected
-                    // attribute name
-                    toBeAssertedAttribute = toBeAssertedAttributes.getNamedItem(expectedAttributeNodeName);
-                    if (toBeAssertedAttribute == null) {
-                        final String attributeName = getLocalName(expectedAttribute);
-                        final String attributeXpath = "@" + attributeName;
-                        toBeAssertedAttribute = selectSingleNode(toBeAsserted, attributeXpath);
-                    }
-                    if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
-                        assertNotNull(message + " Expected attribute " + expectedAttributeNodeName,
-                            toBeAssertedAttribute);
-                    }
-                }
-                if (!expectedAttributeNodeName.startsWith("xmlns:") && !expectedAttributeNodeName.equals("xmlns")) {
-                    assertEquals(message + " Attribute value mismatch [" + expectedAttribute.getNodeName() + "] ",
-                        expectedAttribute.getTextContent(), toBeAssertedAttribute.getTextContent());
-                }
-            }
-        }
-        // As mixed content (text + child elements) is not supported,
-        // either the child elements or the text content have to be asserted.
-        // Therefore, it is first tried to assert the children.
-        // After that it is checked if children have been found. If this is not
-        // the case, the text content is compared.
-        NodeList expectedChildren = expected.getChildNodes();
-        NodeList toBeAssertedChildren = toBeAsserted.getChildNodes();
-        int expectedNumberElementNodes = 0;
-        int toBeAssertedNumberElementNodes = 0;
-        List<Node> previouslyAssertedChildren = new ArrayList<Node>();
-        for (int i = 0; i < expectedChildren.getLength(); i++) {
-            Node expectedChild = expectedChildren.item(i);
-            if (expectedChild.getNodeType() == Node.ELEMENT_NODE) {
-                expectedNumberElementNodes++;
-                String expectedChildName = getLocalName(expectedChild);
-                String expectedUri = expectedChild.getNamespaceURI();
-                boolean expectedElementAsserted = false;
-                for (int j = 0; j < toBeAssertedChildren.getLength(); j++) {
-                    final Node toBeAssertedChild = toBeAssertedChildren.item(j);
-                    // prevent previously asserted children from being
-                    // asserted again
-                    if (previouslyAssertedChildren.contains(toBeAssertedChild)) {
-                        continue;
-                    }
-                    if (toBeAssertedChild.getNodeType() == Node.ELEMENT_NODE
-                        && expectedChildName.equals(getLocalName(toBeAssertedChild))
-                        && (expectedUri == null || expectedUri.equals(toBeAssertedChild.getNamespaceURI()))) {
-                        expectedElementAsserted = true;
-                        toBeAssertedNumberElementNodes++;
-                        assertXmlEquals(message, expectedChild, toBeAssertedChild);
-                        // add asserted child to list of asserted children to
-                        // prevent it from being asserted again.
-                        previouslyAssertedChildren.add(toBeAssertedChild);
-                        break;
-                    }
-                }
-                if (!expectedElementAsserted) {
-                    fail(new StringBuffer(message).append(" Did not found expected corresponding element [").append(
-                        nodeName).append(", ").append(expectedChildName).append(", ").append(i).append("]").toString());
-                }
-            }
-        }
-        // check if any element node in toBeAssertedChildren exists
-        // that has not been asserted. In this case, this element node
-        // is unexpected!
-        for (int i = 0; i < toBeAssertedChildren.getLength(); i++) {
-            Node toBeAssertedChild = toBeAssertedChildren.item(i);
-            // prevent previously asserted children from being
-            // asserted again
-            if (previouslyAssertedChildren.contains(toBeAssertedChild)) {
-                continue;
-            }
-            if (toBeAssertedChild.getNodeType() == Node.ELEMENT_NODE) {
-                fail(new StringBuffer(message)
-                    .append("Found unexpected element node [").append(nodeName).append(", ").append(
-                        getLocalName(toBeAssertedChild)).append(", ").append(i).append("]").toString());
-            }
-        }
-        // if no children have been found, text content must be compared
-        if (expectedNumberElementNodes == 0 && toBeAssertedNumberElementNodes == 0) {
-            String expectedContent = expected.getTextContent();
-            String toBeAssertedContent = toBeAsserted.getTextContent();
-            assertEquals(message, expectedContent, toBeAssertedContent);
-        }
-    }
-
-    /**
-     * Gets the local name (the node name without the namespace prefix) of the provided node.
-     * 
-     * @param node
-     *            The node to extract the name from.
-     * @return Returns <code>node.getLocalName</code> if this is set, or the value of <code>node.getNodeName</code>
-     *         without the namespace prefix.
-     */
-    private static String getLocalName(final Node node) {
-
-        String name = node.getLocalName();
-        if (name == null) {
-            name = node.getNodeName().replaceAll(".*?:", "");
-        }
-        return name;
-    }
-
-    /**
-     * Assert XML content is equal.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The expected XML content.
-     * @param toBeAsserted
-     *            The XML content to be compared with the expected content.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(final String message, final String expected, final String toBeAsserted)
-        throws Exception {
-
-        Document expectedDoc = EscidocAbstractTest.getDocument(expected);
-        Document assertedDoc = EscidocAbstractTest.getDocument(toBeAsserted);
-
-        assertXmlEquals(message, expectedDoc, assertedDoc);
-    }
-
-    /**
      * Get the host name of the framework (read from properties).
-     * 
+     *
      * @return the host name of the framework
      */
     public static String getBaseHost() {
@@ -1562,7 +1096,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the port number of the framework (read from properties).
-     * 
+     *
      * @return the port number of the framework
      */
     public static String getBasePort() {
@@ -1574,7 +1108,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of the framework (read from properties).
-     * 
+     *
      * @return the context of the framework
      */
     public static String getFrameworkContext() {
@@ -1589,7 +1123,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of fedoragsearch (read from properties).
-     * 
+     *
      * @return the context of fedoragsearch
      */
     public static String getFedoragsearchContext() {
@@ -1602,7 +1136,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of oaiprovider (read from properties).
-     * 
+     *
      * @return the context of oaiprovider
      */
     public static String getOaiproviderContext() {
@@ -1615,7 +1149,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of fedora (read from properties).
-     * 
+     *
      * @return the context of fedora
      */
     public static String getFedoraContext() {
@@ -1627,7 +1161,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of testdata (read from properties).
-     * 
+     *
      * @return the context of testdata
      */
     public static String getTestdataContext() {
@@ -1639,7 +1173,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the context-path of srw (read from properties).
-     * 
+     *
      * @return the context of srw
      */
     public static String getSrwContext() {
@@ -1651,286 +1185,26 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the href of the framework (read from properties).
-     * 
+     *
      * @return the href of the framework.
      */
     public static String getBaseUrl() {
         if (baseUrl == null) {
-            baseUrl = Constants.PROTOCOL + "://" + getBaseHost() + ":" + getBasePort();
+            baseUrl = Constants.HTTP_PROTOCOL + "://" + getBaseHost() + ":" + getBasePort();
         }
         return baseUrl;
     }
 
     /**
-     * Assert XML content is equal.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The expected XML content.
-     * @param toBeAsserted
-     *            The XML content to be compared with the expected content.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(final String message, final InputStream expected, final String toBeAsserted)
-        throws Exception {
-
-        Document expectedDoc = EscidocAbstractTest.getDocument(ResourceProvider.getContentsFromInputStream(expected));
-        Document assertedDoc = EscidocAbstractTest.getDocument(toBeAsserted);
-        assertXmlEquals(message, expectedDoc, assertedDoc);
-    }
-
-    /**
-     * Assert XML content is equal.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The expected XML content.
-     * @param toBeAsserted
-     *            The XML content to be compared with the expected content.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(final String message, final File expected, final String toBeAsserted)
-        throws Exception {
-
-        assertXmlEquals(message, new FileInputStream(expected), toBeAsserted);
-    }
-
-    /**
-     * Assert that the Element/Attribute selected by the xPath exists.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param xml
-     *            The xml document as String.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlExists(final String message, final String xml, final String xPath) throws Exception {
-
-        assertXmlExists(message, EscidocAbstractTest.getDocument(xml), xPath);
-    }
-
-    /**
-     * Assert that the Element/Attribute selected by the xPath exists.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param node
-     *            The Node.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlExists(final String message, final Node node, final String xPath) throws Exception {
-
-        NodeList nodes = selectNodeList(node, xPath);
-        assertTrue(message, nodes.getLength() > 0);
-    }
-
-    /**
-     * Assert that the Element/Attribute selected by the xPath exists.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param node
-     *            The Node.
-     * @param xPath
-     *            The xPath.
-     * @param namespaceNode
-     *            The namespace node.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlExists(
-        final String message, final Node node, final String xPath, final Node namespaceNode) throws Exception {
-
-        NodeList nodes = selectNodeList(node, xPath, namespaceNode);
-        assertTrue(message, nodes.getLength() > 0);
-    }
-
-    /**
-     * Assert that the value in the Document selected by the xPath equals the expected value.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param xml
-     *            The xml document as String.
-     * @param xPath
-     *            The xPath.
-     * @param expectedValue
-     *            The expected value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(
-        final String message, final String xml, final String xPath, final String expectedValue) throws Exception {
-        assertXmlEquals(message, EscidocAbstractTest.getDocument(xml), xPath, expectedValue);
-    }
-
-    /**
-     * Assert that the value in the Document selected by the xPath equals the expected value.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param node
-     *            The Node.
-     * @param xPath
-     *            The xPath.
-     * @param expectedValue
-     *            The expected value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(
-        final String message, final Node node, final String xPath, final String expectedValue) throws Exception {
-        Node comp = selectSingleNode(node, xPath);
-        assertNotNull(message + " Node selected by xpath not found [" + xPath + "]", comp);
-        final String trimmed = comp.getTextContent().trim();
-        assertEquals(message, expectedValue, trimmed);
-    }
-
-    /**
-     * Assert that the value in the Document selected by the xPath equals the expected value.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The expected node
-     * @param result
-     *            The result to be asserted.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(final String message, final Node expected, final Node result, final String xPath)
-        throws Exception {
-
-        assertXmlEquals(message, expected, xPath, result, xPath);
-    }
-
-    /**
-     * Assert that the value(s) in the to be asserted node selected by the xPath equals the expected value.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param expected
-     *            The node from which the expected value is selected by the xpath.
-     * @param expectedXpath
-     *            The xpath expression navigating in the node to the expected value.
-     * @param toBeAsserted
-     *            The node for that the value selected by the xpath shall be asserted.
-     * @param toBeAssertedXpath
-     *            The xPath navigating to the value that shall be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlEquals(
-        final String message, final Node expected, final String expectedXpath, final Node toBeAsserted,
-        final String toBeAssertedXpath) throws Exception {
-
-        final String msg = prepareAssertionFailedMessage(message);
-
-        if (expected == toBeAsserted) {
-            return;
-        }
-        final NodeList expectedNodes = selectNodeList(expected, expectedXpath);
-        final NodeList toBeAssertedNodes = selectNodeList(toBeAsserted, toBeAssertedXpath);
-        assertEquals(msg + "Number of selected nodes differ. ", expectedNodes.getLength(), toBeAssertedNodes
-            .getLength());
-        final int length = toBeAssertedNodes.getLength();
-        for (int i = 0; i < length; i++) {
-            assertXmlEquals(msg + "Asserting " + (i + 1) + ". node. ", expectedNodes.item(i), toBeAssertedNodes.item(i));
-        }
-    }
-
-    /**
-     * Assert that the value in the Document selected by the xPath NOT equals the unexpected value.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param unexpected
-     *            The unexpected node
-     * @param toBeAsserted
-     *            The result to be asserted.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlNotEquals(
-        final String message, final Node unexpected, final Node toBeAsserted, final String xPath) throws Exception {
-
-        Node toBeAssertedComp = selectSingleNode(toBeAsserted, xPath);
-        Node unexpectedComp = selectSingleNode(unexpected, xPath);
-        assertNotEquals(message, unexpectedComp.getTextContent(), toBeAssertedComp.getTextContent());
-    }
-
-    /**
-     * Asserts that the timestamp has been updated.<br>
-     * This assertion fails if the timestamp in the previous document is not less than the timestamp in the updated
-     * document. The timestamp is identified by the root element's "last-modification-timestamp" attribute.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param previous
-     *            The document containing the expected timestamp
-     * @param toBeAsserted
-     *            The document for that the timestamp shall be asserted.
-     * @throws Exception
-     *             If an error ocurres.
-     */
-    public static void assertXmlLastModificationDateUpdate(
-        final String message, final Document previous, final Document toBeAsserted) throws Exception {
-
-        final String previousLastModificationDateValue = getLastModificationDateValue(previous);
-        final String toBeAssertedLastModificationDateValue = getLastModificationDateValue(toBeAsserted);
-        assertDateBeforeAfter(previousLastModificationDateValue, toBeAssertedLastModificationDateValue);
-    }
-
-    /**
-     * Asserts to objects are not equal.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param unexpected
-     *            The unexpected node
-     * @param toBeAsserted
-     *            The result to be asserted.
-     */
-    public static void assertNotEquals(final String message, final Object unexpected, final Object toBeAsserted) {
-
-        if (unexpected == null && toBeAsserted == null || unexpected.equals(toBeAsserted)) {
-            if (message == null || message.isEmpty()) {
-                fail("Values are equal. Expected unequal");
-            }
-            else {
-                fail(message);
-            }
-        }
-    }
-
-    /**
      * Serialize the given Dom Object to a String.
-     * 
-     * @param xml
-     *            The Xml Node to serialize.
-     * @param omitXMLDeclaration
-     *            Indicates if XML declaration will be omitted.
+     *
+     * @param xml                The Xml Node to serialize.
+     * @param omitXMLDeclaration Indicates if XML declaration will be omitted.
      * @return The String representation of the Xml Node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String toString(final Node xml, final boolean omitXMLDeclaration) throws Exception {
-
-        String result = new String();
+        String result;
         if (xml instanceof AttrImpl) {
             result = xml.getTextContent();
         }
@@ -1941,7 +1215,7 @@ public abstract class EscidocTestBase {
             format.setIndenting(true);
             format.setPreserveSpace(true);
             format.setOmitXMLDeclaration(omitXMLDeclaration);
-            format.setEncoding(DEFAULT_CHARSET);
+            format.setEncoding(Constants.DEFAULT_CHARSET);
             // serialize
             XMLSerializer serial = new XMLSerializer(stringOut, format);
             serial.asDOMSerializer();
@@ -1953,15 +1227,15 @@ public abstract class EscidocTestBase {
             DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
             DOMImplementationLS impl = (DOMImplementationLS) registry.getDOMImplementation("LS");
             LSOutput lsOutput = impl.createLSOutput();
-            lsOutput.setEncoding(DEFAULT_CHARSET);
+            lsOutput.setEncoding(Constants.DEFAULT_CHARSET);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             lsOutput.setByteStream(os);
             LSSerializer writer = impl.createLSSerializer();
             // result = writer.writeToString(xml);
             writer.write(xml, lsOutput);
-            result = ((ByteArrayOutputStream) lsOutput.getByteStream()).toString(DEFAULT_CHARSET);
-            if ((omitXMLDeclaration) && (result.indexOf("?>") != -1)) {
+            result = ((ByteArrayOutputStream) lsOutput.getByteStream()).toString(Constants.DEFAULT_CHARSET);
+            if (omitXMLDeclaration && result.contains("?>")) {
                 result = result.substring(result.indexOf("?>") + 2);
             }
             // result = toString(getDocument(writer.writeToString(xml)),
@@ -1972,14 +1246,11 @@ public abstract class EscidocTestBase {
 
     /**
      * Delete an Element from a Node.
-     * 
-     * @param node
-     *            the node.
-     * @param xPath
-     *            The xPath selecting the element.
+     *
+     * @param node  the node.
+     * @param xPath The xPath selecting the element.
      * @return The resulting node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node deleteElement(final Node node, final String xPath) throws Exception {
 
@@ -1996,14 +1267,11 @@ public abstract class EscidocTestBase {
 
     /**
      * Delete all Elements from a Node.
-     * 
-     * @param node
-     *            the node.
-     * @param xPath
-     *            The xPath selecting the element.
+     *
+     * @param node  the node.
+     * @param xPath The xPath selecting the element.
      * @return The resulting node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node deleteElements(final Node node, final String xPath) throws Exception {
 
@@ -2016,16 +1284,12 @@ public abstract class EscidocTestBase {
 
     /**
      * Return the text value of the selected attribute.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xpath to select the node contain the attribute,
-     * @param attributeName
-     *            The name of the attribute.
+     *
+     * @param node          The node.
+     * @param xPath         The xpath to select the node contain the attribute,
+     * @param attributeName The name of the attribute.
      * @return The text value of the selected attribute.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getAttributeValue(final Node node, final String xPath, final String attributeName)
         throws Exception {
@@ -2045,16 +1309,12 @@ public abstract class EscidocTestBase {
 
     /**
      * Delete an Attribute from an Element of a Node.
-     * 
-     * @param node
-     *            the node.
-     * @param xPath
-     *            The xPath selecting the element.
-     * @param attributeName
-     *            The name of the attribute.
+     *
+     * @param node          the node.
+     * @param xPath         The xPath selecting the element.
+     * @param attributeName The name of the attribute.
      * @return The resulting node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node deleteAttribute(final Node node, final String xPath, final String attributeName)
         throws Exception {
@@ -2080,17 +1340,13 @@ public abstract class EscidocTestBase {
 
     /**
      * Delete an Attribute from an Element of a Node.
-     * 
-     * @param node
-     *            the node.
-     * @param xPath
-     *            The xPath selecting the attribute.
+     *
+     * @param node  the node.
+     * @param xPath The xPath selecting the attribute.
      * @return The resulting node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node deleteAttribute(final Node node, final String xPath) throws Exception {
-
         final int index = xPath.lastIndexOf('/');
         final String elementXpath = xPath.substring(0, index);
         final String attrName = xPath.substring(index + 2);
@@ -2099,20 +1355,15 @@ public abstract class EscidocTestBase {
 
     /**
      * Substitute the element selected by the xPath in the given node with the new value.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newValue
-     *            The newValue.
+     *
+     * @param node     The node.
+     * @param xPath    The xPath.
+     * @param newValue The newValue.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node substitute(final Node node, final String xPath, final String newValue) throws Exception {
-        Node result = node;
-        Node replace = selectSingleNode(result, xPath);
+        Node replace = selectSingleNode(node, xPath);
         assertNotNull("No node found for specified xpath [" + xPath + "]", replace);
         // if (replace.getNodeType() == Node.ELEMENT_NODE) {
         replace.setTextContent(newValue);
@@ -2124,28 +1375,21 @@ public abstract class EscidocTestBase {
         // throw new Exception("Unsupported node type '"
         // + replace.getNodeType() + "' in EscidocTestBase.substitute.");
         // }
-        return result;
+        return node;
     }
 
     /**
      * Substitute the element selected by the xPath in the given node with the new value.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newValue
-     *            The newValue.
+     *
+     * @param node     The node.
+     * @param xPath    The xPath.
+     * @param newValue The newValue.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public Node substituteId(final Node node, final String xPath, final String newValue) throws Exception {
-        Node result = node;
-        Node replace = null;
-        String path = "";
-        replace = selectSingleNode(result, xPath + "/@href");
-        path = replace.getTextContent().substring(0, replace.getTextContent().lastIndexOf("/") + 1);
+        Node replace = selectSingleNode(node, xPath + "/@href");
+        String path = replace.getTextContent().substring(0, replace.getTextContent().lastIndexOf("/") + 1);
 
         assertNotNull("No node found for specified xpath [" + xPath + "]", replace);
         // if (replace.getNodeType() == Node.ELEMENT_NODE) {
@@ -2158,19 +1402,16 @@ public abstract class EscidocTestBase {
         // throw new Exception("Unsupported node type '"
         // + replace.getNodeType() + "' in EscidocTestBase.substitute.");
         // }
-        return result;
+        return node;
     }
 
     /**
-     * Gets the prefix of the provided node.<br>
-     * This returns Node.getPrefix() if this is not null. Otherwise, ittries to extract the prefix from
-     * Node.getNodeName(). If this fails, null is returned.
-     * 
-     * @param node
-     *            The node to get the prefix from.
+     * Gets the prefix of the provided node.<br> This returns Node.getPrefix() if this is not null. Otherwise, ittries
+     * to extract the prefix from Node.getNodeName(). If this fails, null is returned.
+     *
+     * @param node The node to get the prefix from.
      * @return Returns the determined prefix or null.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static String getPrefix(final Node node) throws Exception {
 
@@ -2188,25 +1429,17 @@ public abstract class EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that refers to another
      * resource, i.e. it has xlink attributes and an objid attribute.
-     * 
-     * @param doc
-     *            The document for that the node shall be created.
-     * @param namespaceUri
-     *            The name space uri of the node to create. This may be null.
-     * @param prefix
-     *            The prefix to use.
-     * @param tagName
-     *            The tag name of the node.
-     * @param xlinkPrefix
-     *            The prefix to use for the xlink attributes.
-     * @param title
-     *            The title of the referencing element (=xlink:title)
-     * @param href
-     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
-     *            href.
+     *
+     * @param doc          The document for that the node shall be created.
+     * @param namespaceUri The name space uri of the node to create. This may be null.
+     * @param prefix       The prefix to use.
+     * @param tagName      The tag name of the node.
+     * @param xlinkPrefix  The prefix to use for the xlink attributes.
+     * @param title        The title of the referencing element (=xlink:title)
+     * @param href         The href of the referencing element (=xlink:href). The objid attribute value is extracted
+     *                     from this href.
      * @return Returns the created node.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public Element createReferencingElementNode(
         final Document doc, final String namespaceUri, final String prefix, final String tagName,
@@ -2223,34 +1456,26 @@ public abstract class EscidocTestBase {
     /**
      * Creates a new element node for the provided document. The created element is an element that that has xlink
      * attributes, but does not have an objid attribute.
-     * 
-     * @param doc
-     *            The document for that the node shall be created.
-     * @param namespaceUri
-     *            The name space uri of the node to create. This may be null.
-     * @param prefix
-     *            The prefix to use.
-     * @param tagName
-     *            The tag name of the node.
-     * @param xlinkPrefix
-     *            The prefix to use for the xlink attributes.
-     * @param title
-     *            The title of the referencing element (=xlink:title)
-     * @param href
-     *            The href of the referencing element (=xlink:href). The objid attribute value is extracted from this
-     *            href.
+     *
+     * @param doc          The document for that the node shall be created.
+     * @param namespaceUri The name space uri of the node to create. This may be null.
+     * @param prefix       The prefix to use.
+     * @param tagName      The tag name of the node.
+     * @param xlinkPrefix  The prefix to use for the xlink attributes.
+     * @param title        The title of the referencing element (=xlink:title)
+     * @param href         The href of the referencing element (=xlink:href). The objid attribute value is extracted
+     *                     from this href.
      * @return Returns the created node.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static Element createElementNodeWithXlink(
         final Document doc, final String namespaceUri, final String prefix, final String tagName,
         final String xlinkPrefix, final String title, final String href) throws Exception {
 
         Element newElement = createElementNode(doc, namespaceUri, prefix, tagName, null);
-        Attr xlinkTypeAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_TYPE, "simple");
-        Attr xlinkTitleAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_TITLE, title);
-        Attr xlinkHrefAttr = createAttributeNode(doc, XLINK_NS_URI, xlinkPrefix, NAME_HREF, href);
+        Attr xlinkTypeAttr = createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_TYPE, "simple");
+        Attr xlinkTitleAttr = createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_TITLE, title);
+        Attr xlinkHrefAttr = createAttributeNode(doc, Constants.NS_EXTERNAL_XLINK, xlinkPrefix, NAME_HREF, href);
         newElement.getAttributes().setNamedItemNS(xlinkTypeAttr);
         newElement.getAttributes().setNamedItemNS(xlinkTitleAttr);
         newElement.getAttributes().setNamedItemNS(xlinkHrefAttr);
@@ -2260,20 +1485,14 @@ public abstract class EscidocTestBase {
 
     /**
      * Creates a new element node for the provided document.
-     * 
-     * @param doc
-     *            The document for that the node shall be created.
-     * @param namespaceUri
-     *            The name space uri of the node to create. This may be null.
-     * @param prefix
-     *            The prefix to use.
-     * @param tagName
-     *            The tag name of the node.
-     * @param textContent
-     *            The text content of the node. This may be null.
+     *
+     * @param doc          The document for that the node shall be created.
+     * @param namespaceUri The name space uri of the node to create. This may be null.
+     * @param prefix       The prefix to use.
+     * @param tagName      The tag name of the node.
+     * @param textContent  The text content of the node. This may be null.
      * @return Returns the created node.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static Element createElementNode(
         final Document doc, final String namespaceUri, final String prefix, final String tagName,
@@ -2289,20 +1508,14 @@ public abstract class EscidocTestBase {
 
     /**
      * Creates a new attribute node for the provided document.
-     * 
-     * @param doc
-     *            The document for that the node shall be created.
-     * @param namespaceUri
-     *            The name space uri of the node to create. This may be null.
-     * @param prefix
-     *            The prefix to use.
-     * @param tagName
-     *            The tag name of the node.
-     * @param value
-     *            The attribute value.
+     *
+     * @param doc          The document for that the node shall be created.
+     * @param namespaceUri The name space uri of the node to create. This may be null.
+     * @param prefix       The prefix to use.
+     * @param tagName      The tag name of the node.
+     * @param value        The attribute value.
      * @return Returns the created node.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static Attr createAttributeNode(
         final Document doc, final String namespaceUri, final String prefix, final String tagName, final String value)
@@ -2318,127 +1531,93 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Gets the prefix of the node selected by the xpath in the provided node.<br>
-     * This returns Node.getPrefix() if this is not null. Otherwise, ittries to extract the prefix from
-     * Node.getNodeName(). If this fails, null is returned.
-     * 
-     * @param node
-     *            The node to get the prefix from.
-     * @param xPath
-     *            XPath to the Node to select the prefix from.
+     * Gets the prefix of the node selected by the xpath in the provided node.<br> This returns Node.getPrefix() if this
+     * is not null. Otherwise, ittries to extract the prefix from Node.getNodeName(). If this fails, null is returned.
+     *
+     * @param node  The node to get the prefix from.
+     * @param xPath XPath to the Node to select the prefix from.
      * @return Returns the determined prefix or null.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static String getPrefix(final Node node, final String xPath) throws Exception {
-
         return getPrefix(selectSingleNode(node, xPath));
     }
 
     /**
      * Adds the provided new node as the child of the element selected by the xPath in the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newNode
-     *            The new node.
+     *
+     * @param node    The node.
+     * @param xPath   The xPath.
+     * @param newNode The new node.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node addAsChild(final Node node, final String xPath, final Element newNode) throws Exception {
-
-        Node result = node;
-        Node parent = selectSingleNode(result, xPath);
+        Node parent = selectSingleNode(node, xPath);
         assertNotNull("No node for xpath found [" + xPath + "]", parent);
         // inserts at end of list
         parent.insertBefore(newNode, null);
-
-        return result;
+        return node;
     }
 
     /**
      * Adds the provided new node after the element selected by the xPath in the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newNode
-     *            The new node.
+     *
+     * @param node    The node.
+     * @param xPath   The xPath.
+     * @param newNode The new node.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node addAfter(final Node node, final String xPath, final Node newNode) throws Exception {
-
-        Node result = node;
-        Node before = selectSingleNode(result, xPath);
+        Node before = selectSingleNode(node, xPath);
         assertNotNull("No node for xpath [" + xPath + "] found", before);
         Node parent = before.getParentNode();
         parent.insertBefore(newNode, before.getNextSibling());
-        return result;
+        return node;
     }
 
     /**
      * Adds the provided new node before the element selected by the xPath in the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newNode
-     *            The new node.
+     *
+     * @param node    The node.
+     * @param xPath   The xPath.
+     * @param newNode The new node.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node addBefore(final Node node, final String xPath, final Node newNode) throws Exception {
-
-        Node result = node;
-        Node after = selectSingleNode(result, xPath);
+        Node after = selectSingleNode(node, xPath);
         assertNotNull("No node for xpath found [" + xPath + "]", after);
         Node parent = after.getParentNode();
         parent.insertBefore(newNode, after);
-        return result;
+        return node;
     }
 
     /**
      * Adds the provided new attribute node to the element selected by the xPath in the given node.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param attributeNode
-     *            The new attribute node.
+     *
+     * @param node          The node.
+     * @param xPath         The xPath.
+     * @param attributeNode The new attribute node.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node addAttribute(final Node node, final String xPath, final Attr attributeNode) throws Exception {
-
-        Node result = node;
-        Node element = selectSingleNodeAsserted(result, xPath);
+        Node element = selectSingleNodeAsserted(node, xPath);
         NamedNodeMap attributes = element.getAttributes();
         attributes.setNamedItemNS(attributeNode);
-        return result;
+        return node;
     }
 
     /**
      * Substitute the element selected by the xPath in the given node with the new node.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param newNode
-     *            The new node.
+     *
+     * @param node    The node.
+     * @param xPath   The xPath.
+     * @param newNode The new node.
      * @return The resulting node after the substitution.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node substitute(final Node node, final String xPath, final Node newNode) throws Exception {
         Node result = node;
@@ -2446,41 +1625,6 @@ public abstract class EscidocTestBase {
         assertNotNull("No node selected for substitute. ", replace);
         Node parent = replace.getParentNode();
         parent.replaceChild(newNode, replace);
-        return result;
-    }
-
-    /**
-     * Return the list of children of the node selected by the xPath.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @return The list of children of the node selected by the xPath.
-     * @throws TransformerException
-     *             If anything fails.
-     */
-    public static NodeList selectNodeList(final Node node, final String xPath) throws TransformerException {
-        NodeList result = XPathAPI.selectNodeList(node, xPath);
-        return result;
-    }
-
-    /**
-     * Return the list of children of the node selected by the xPath.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param namespaceNode
-     *            The namespace node.
-     * @return The list of children of the node selected by the xPath.
-     * @throws TransformerException
-     *             If anything fails.
-     */
-    public static NodeList selectNodeList(final Node node, final String xPath, final Node namespaceNode)
-        throws TransformerException {
-        NodeList result = XPathAPI.selectNodeList(node, xPath, namespaceNode);
         return result;
     }
 
@@ -2494,106 +1638,44 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Return the child of the node selected by the xPath.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @return The child of the node selected by the xPath.
-     * @throws TransformerException
-     *             If anything fails.
-     */
-    public static Node selectSingleNode(final Node node, final String xPath) throws TransformerException {
-
-        Node result = XPathAPI.selectSingleNode(node, xPath);
-        return result;
-    }
-
-    /**
-     * Return the child of the node selected by the xPath.<br>
-     * This method includes an assert that the specified node exists.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @return The child of the node selected by the xPath.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static Node selectSingleNodeAsserted(final Node node, final String xPath) throws Exception {
-
-        Node result = selectSingleNode(node, xPath);
-        assertNotNull("Node does not exist [" + xPath + "]", result);
-        return result;
-    }
-
-    /**
-     * Return the child of the node selected by the xPath.
-     * 
-     * @param node
-     *            The node.
-     * @param xPath
-     *            The xPath.
-     * @param namespaceNode
-     *            The namespace node.
-     * @return The child of the node selected by the xPath.
-     * @throws TransformerException
-     *             If anything fails.
-     */
-    public static Node selectSingleNode(final Node node, final String xPath, final Node namespaceNode)
-        throws TransformerException {
-
-        Node result = XPathAPI.selectSingleNode(node, xPath, namespaceNode);
-        return result;
-    }
-
-    /**
      * Return a filter parameter including only an empty filter.
-     * 
+     *
      * @return The filter parameter including only an empty filter.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getEmptyFilter() throws Exception {
-
         return EscidocAbstractTest.getTemplateAsString(TEMPLATE_OM_COMMON_PATH, "emptyFilter.xml");
     }
 
     /**
      * Get the filter parameter for retrieving contexts matching the given filter criteria. If a criteria is null the
      * filter is deleted from the parameter.
-     * 
-     * @param user
-     *            The expected user.
-     * @param role
-     *            The expected role.
-     * @param contextType
-     *            The expected type of the context.
+     *
+     * @param user        The expected user.
+     * @param role        The expected role.
+     * @param contextType The expected type of the context.
      * @return The filter parameter.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Map<String, String[]> getFilterRetrieveContexts(
         final String user, final String role, final String contextType) throws Exception {
         Map<String, String[]> result = new HashMap<String, String[]>();
-        StringBuffer filter = new StringBuffer();
+        StringBuilder filter = new StringBuilder();
 
         if ((user != null) && (user.length() > 0)) {
-            filter.append("user=\"" + user + "\"");
+            filter.append("user=\"").append(user).append("\"");
         }
         if ((role != null) && (role.length() > 0)) {
             if (filter.length() > 0) {
                 filter.append(" and ");
             }
-            filter.append("role=\"" + role + "\"");
+            filter.append("role=\"").append(role).append("\"");
         }
         if ((contextType != null) && (contextType.length() > 0)) {
             if (filter.length() > 0) {
                 filter.append(" and ");
             }
-            filter.append("\"/properties/type\"=\"" + contextType + "\"");
+            filter.append("\"/properties/type\"=\"").append(contextType).append("\"");
         }
         if (filter.length() > 0) {
             result.put("query", new String[] { filter.toString() });
@@ -2605,22 +1687,15 @@ public abstract class EscidocTestBase {
     /**
      * Get the filter parameter for retrieving members of a context matching the given filter criteria. If a criteria is
      * null the filter is deleted from the parameter.
-     * 
-     * @param members
-     *            A list of members to restrict the resulting members.
-     * @param objectType
-     *            The type of the object (item or container).
-     * @param user
-     *            The expected user.
-     * @param role
-     *            The expected role.
-     * @param status
-     *            The expected status of the resulting objects.
-     * @param contentType
-     *            The expected contentType of the resulting objects.
+     *
+     * @param members     A list of members to restrict the resulting members.
+     * @param objectType  The type of the object (item or container).
+     * @param user        The expected user.
+     * @param role        The expected role.
+     * @param status      The expected status of the resulting objects.
+     * @param contentType The expected contentType of the resulting objects.
      * @return The filter parameter.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getFilterRetrieveMembersOfContext(
         final List<String> members, final String objectType, final String user, final String role, final String status,
@@ -2630,7 +1705,7 @@ public abstract class EscidocTestBase {
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH, "filterRetrieveMembersOfContext.xml");
         if ((members != null) && (members.size() > 0)) {
             for (int i = 0; i < 5; ++i) {
-                String value = null;
+                String value;
                 try {
                     value = members.get(i);
                     filter =
@@ -2660,23 +1735,18 @@ public abstract class EscidocTestBase {
         filter =
             (Document) replaceInFilter(filter, contentType, "param/filter[@name=\"http://escidoc.de/core/01/"
                 + "structural-relations/content-model\"]");
-        String result = toString(filter, true);
-        return result;
+        return toString(filter, true);
     }
 
     /**
      * If value is null the element selected by xPath is removed from the filter otherwise the elements value is set to
      * vlaue.
-     * 
-     * @param filter
-     *            The filter parameter.
-     * @param value
-     *            The value.
-     * @param xPath
-     *            The xPath.
+     *
+     * @param filter The filter parameter.
+     * @param value  The value.
+     * @param xPath  The xPath.
      * @return The resulting filter parameter.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node replaceInFilter(final Node filter, final String value, final String xPath) throws Exception {
 
@@ -2691,12 +1761,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Gets the last modification date from the resource through retrieve.
-     * 
-     * @param id
-     *            The id of the Resource.
+     *
+     * @param id The id of the Resource.
      * @return last-modification-date
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getTheLastModificationDate(final String id) throws Exception {
 
@@ -2706,12 +1774,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Gets the last modification date from the Resource.
-     * 
-     * @param resource
-     *            The Resource.
+     *
+     * @param resource The Resource.
      * @return last-modification-date
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getTheLastModificationDate(final Document resource) throws Exception {
 
@@ -2724,29 +1790,22 @@ public abstract class EscidocTestBase {
 
     /**
      * Gets the task param containing the last modification date of the specified object.
-     * 
-     * @param includeComment
-     *            Flag indicating if the comment shall be additionally included.
-     * @param id
-     *            The id of the object.
+     *
+     * @param includeComment Flag indicating if the comment shall be additionally included.
+     * @param id             The id of the object.
      * @return Returns the created task param xml.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public String getTheLastModificationParam(final boolean includeComment, final String id) throws Exception {
         return getTheLastModificationParam(includeComment, id, null);
     }
 
     /**
-     * @param includeComment
-     *            Flag indicating if the comment shall be additionally included.
-     * @param id
-     *            The id of the object.
-     * @param comment
-     *            The comment for the param structure (withdraw comment).
+     * @param includeComment Flag indicating if the comment shall be additionally included.
+     * @param id             The id of the object.
+     * @param comment        The comment for the param structure (withdraw comment).
      * @return Returns the created task param xml.
-     * @throws Exception
-     *             If an error occurs.
+     * @throws Exception If an error occurs.
      */
     @Deprecated
     public String getTheLastModificationParam(final boolean includeComment, final String id, final String comment)
@@ -2764,590 +1823,10 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Assert that the before timestamp is lower than the after timestamp.
-     * 
-     * @param before
-     *            Timestamp before the event
-     * @param after
-     *            Timestamp after event
-     * @throws Exception
-     *             Thrown if the before timestamp is not lower than after.
-     */
-    public static void assertDateBeforeAfter(final String before, final String after) throws Exception {
-        Calendar oldModCal = getCalendarFromXmlDateString(before);
-        Calendar newModCal = getCalendarFromXmlDateString(after);
-
-        if (!oldModCal.before(newModCal)) {
-            fail("Old last modification date is not before new last" + " modification date.");
-        }
-    }
-
-    /**
-     * Creates a <code>java.util.Calendar</code> object from an xml dateTime string.
-     * 
-     * @param dateTime
-     *            The xml dateTime string.
-     * @return The Calendar object.
-     * @throws ParseException
-     *             If the dateTime string can not be correctly parsed.
-     */
-    public static Calendar getCalendarFromXmlDateString(String dateTime) throws ParseException {
-        Calendar cal = null;
-
-        if (dateTime.length() >= 20 && dateTime.length() <= 23) {
-            // no timezone
-            // ensure 3 digits for millis
-            int add = 23 - dateTime.length();
-            while (add > 0) {
-                dateTime += "0";
-                add--;
-            }
-            dateTime += "+0000";
-        }
-        else if (dateTime.length() == 19) {
-            // no timezone
-            // not 3 digits for millis
-            // no dot
-            dateTime += ".000+0000";
-        }
-        // else if (dateTime.length() == 18) {
-        // // no timezone
-        // // not 3 digits for millis
-        // // no dot
-        // dateTime += "0.000+0000";
-        // }
-        // else if (dateTime.length() == 17) {
-        // // no timezone
-        // // not 3 digits for millis
-        // // no dot
-        // dateTime += "00.000+0000";
-        // }
-        // else if (dateTime.length() == 16) {
-        // // no timezone
-        // // not 3 digits for millis
-        // // no dot
-        // dateTime += ":00.000+0000";
-        // }
-
-        TimeZone gmt = TimeZone.getTimeZone("GMT");
-
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat tf = new SimpleDateFormat("HH:mm:ss.SSS");
-
-        Date oldModDateDate = df.parse(dateTime);
-        Date oldModDateTime = tf.parse(dateTime, new ParsePosition(11));
-
-        // DateFormat f = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss.SSS");
-        // dateTime = dateTime.replace('T', '-');
-        // dateTime = dateTime.trim();
-
-        cal = Calendar.getInstance();
-        // cal.setTime(f.parse(dateTime));
-        cal.setTimeZone(gmt);
-
-        cal.setTime(oldModDateDate);
-        long oldModDateDateMillis = cal.getTimeInMillis();
-
-        cal.setTime(oldModDateTime);
-        long oldModDateTimeMillis = cal.getTimeInMillis();
-
-        long oldModDateMillis = oldModDateDateMillis + oldModDateTimeMillis;
-        cal.setTimeInMillis(oldModDateMillis);
-
-        return cal;
-    }
-
-    /**
-     * Asserts first value to be greater or equals than second value.
-     * 
-     * @param greater
-     *            first value.
-     * @param lower
-     *            second value.
-     */
-    protected void assertGreaterOrEquals(final int greater, final int lower) {
-
-        if (lower > greater) {
-            fail(lower + " is greater than " + greater);
-        }
-    }
-
-    /**
-     * Validates Item XML against the XML Schema, checks if the xml:base exists and if all placeholders are replaced.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXmlValidItem(final String xmlData) throws Exception {
-
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/item/0.10/item.xsd");
-        assertXmlValid(xmlData, url);
-        assertXlinkXmlBaseExists(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-        assertItemXlinkTitles(xmlData);
-    }
-
-    /**
-     * Validates Component XML against the XML Schema, checks if the xml:base exists and if all placeholders are
-     * replaced.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXmlValidComponent(final String xmlData) throws Exception {
-
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/item/0.10/item.xsd");
-        assertXmlValid(xmlData, url);
-        assertXlinkXmlBaseExists(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Validates ContentRelation XML against the XML Schema, checks if the xml:base exists and if all placeholders are
-     * replaced.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXmlValidContentRelation(final String xmlData) throws Exception {
-
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/content-relation/0.1/content-relation.xsd");
-        assertXmlValid(xmlData, url);
-        assertXlinkXmlBaseExists(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Validates ContentRelations reistered predicates list XML against the XML Schema, checks if the xml:base exists
-     * and if all placeholders are replaced.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXMLValidRegisteredPredicates(final String xmlData) throws Exception {
-
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/content-relation/0.1/predicate-list.xsd");
-        assertXmlValid(xmlData, url);
-        assertXlinkXmlBaseExists(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Validates Content Model XML against the XML Schema, if the xml:base exists and if all placeholders are resolved.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public void assertXmlValidContentModel(final String xmlData) throws Exception {
-
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/content-model/0.1/content-model" + ".xsd");
-        assertXmlValid(xmlData, url);
-        assertXlinkXmlBaseExists(xmlData);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidSetDefinition(final String xmlData) throws Exception {
-
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/set-definition/0.2/set-definition.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts there is no namespace declaration for prefixes starting with 'xml'.
-     * 
-     * @param xmlData
-     *            The xml document as string.
-     */
-    public static void assertXmlPrefixNotDeclared(final String xmlData) {
-        if (xmlData.contains("xmlns:xml")) {
-            fail("Namespace declaration for prefixes starting with 'xml'"
-                + " is not allowed. Even not the declaration of the XML "
-                + "Namespace because MS Internet Explorer perceive it as " + "an error.");
-        }
-    }
-
-    /**
-     * Asserts that all template placeholders are replaced by values.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     */
-    protected void assertAllPlaceholderResolved(final String xmlData) {
-
-        assertTrue("Placeholder not resolved during rendering\n." + xmlData, !PATTERN_VELOCITY_PLACEHOLDER.matcher(
-            xmlData).find());
-        assertTrue("Placeholder not resolved during rendering\n." + xmlData, !PATTERN_VELOCITY_PLACEHOLDER2.matcher(
-            xmlData).find());
-    }
-
-    /**
-     * Asserts that no local href (without protocol and host) appears without xml:base.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If an error ocurres.
-     */
-    protected void assertXlinkXmlBaseExists(final String xmlData) throws Exception {
-
-        Document document = EscidocAbstractTest.getDocument(xmlData);
-        NodeList localHrefs = selectNodeList(document, "//*[starts-with(@href, '/')]");
-        NodeList xmlBase = selectNodeList(document, "//@base", document);
-
-        assertTrue("xml:base needed", localHrefs.getLength() == 0 || xmlBase.getLength() != 0);
-    }
-
-    /**
-     * Assert the XML structure of the return value (task oriented methods).
-     * 
-     * @param xmlData
-     *            The return value of task oriented method
-     * @throws Exception
-     *             Thrown if the XML has not the expected structure or values.
-     */
-    public void assertXmlValidResult(final String xmlData) throws Exception {
-
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/common/0.1/result.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * @param xmlData
-     *            The xml document as string.
-     * @throws Exception
-     *             If an error occures.
-     */
-    public static void assertXmlValidTaskParam(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/common/0.2/add-relations.xsd");
-        assertXmlValid(xmlData, url);
-    }
-
-    public void assertXmlValidItemList(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/item/0.10/item-list.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public void assertXmlValidItemRefList(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/item/0.4/item-ref-list.xsd");
-        assertXmlValid(xmlData, url);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    public static void assertXmlValidXmlSchema(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/common/0.2/xml-schema.xsd");
-        assertXmlValid(xmlData, url);
-    }
-
-    public void assertXmlValidContextMembersList(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/common/0.10/member-list.xsd");
-        assertXmlValid(xmlData, url);
-    }
-
-    public static void assertXmlValidContextMemberRefsList(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/common/0.3/member-ref-list.xsd");
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for the subresource resources.
-     * 
-     * @param toBeAsserted
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValidResources(final String toBeAsserted) throws Exception {
-
-        if (resourcesSchema == null) {
-            resourcesSchema = getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/common/0.2/resources.xsd");
-        }
-        assertXmlValid(toBeAsserted, resourcesSchema);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid scope.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidScope(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/scope/0.4/scope.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid scope-list.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidScopeList(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/scope/0.4/scope-list.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid SRW response.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidSrwResponse(final String xmlData) throws Exception {
-        Schema srwListSchema =
-            getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/common/0.4/srw-types.xsd");
-
-        assertXmlValid(xmlData, srwListSchema);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided XML data is a valid struct-map.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidStructMap(final String xmlData) throws Exception {
-        Schema structMapSchema =
-            getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/container/0.4/struct-map.xsd");
-
-        assertXmlValid(xmlData, structMapSchema);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided XML data is valid agains successors XSD.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidSuccessors(final String xmlData) throws Exception {
-        Schema structMapSchema =
-            getSchema(getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                + "/xsd/rest/organizational-unit/0.8/organizational-unit-successors.xsd");
-
-        assertXmlValid(xmlData, structMapSchema);
-        assertAllPlaceholderResolved(xmlData);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid aggregation-definition.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidAggregationDefinition(final String xmlData) throws Exception {
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                + "/xsd/rest/aggregation-definition/0.4/aggregation-definition.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid aggregation-definition.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidTmeResult(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/tme/jhove.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid aggregation-definition-list.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidAggregationDefinitionList(final String xmlData) throws Exception {
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                + "/xsd/rest/aggregation-definition/0.4/aggregation-definition-list.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid report-definition.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidReportDefinition(final String xmlData) throws Exception {
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/report-definition/0.4/report-definition.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid report-definition-list.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidReportDefinitionList(final String xmlData) throws Exception {
-        URL url =
-            new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI
-                + "/xsd/rest/report-definition/0.4/report-definition-list.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid report-definition.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void assertXmlValidReport(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/report/0.4/report.xsd");
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for a search result.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValidSearchResult(final String xmlData) throws Exception {
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/search-result/0.8/srw-types.xsd");
-        assertXmlValid(xmlData, url);
-    }
-
-    /**
-     * Asserts that the provided xml data is valid for a explain plan.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValidExplainPlan(final String xmlData) throws Exception {
-        String replacedData = xmlData;
-        if (replacedData.indexOf("explainResponse") > -1) {
-            replacedData = replacedData.replaceFirst("(?s).*?(<[^>]*?explain[\\s>].*?<\\/[^>]*?explain.*?>).*", "$1");
-        }
-        URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/xsd/rest/search-result/0.4/zeerex-2.0.xsd");
-        assertXmlValid(replacedData, url);
-    }
-
-    /**
-     * Assert the provided XML data is valid against the provided schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @param schemaURL
-     *            The URL of the schema.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValid(final String xmlData, final URL schemaURL) throws Exception {
-
-        Schema theSchema = getSchema(schemaURL);
-        assertXmlValid(xmlData, theSchema);
-    }
-
-    /**
-     * Assert the provided XML data is valid against the provided schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @param schema
-     *            The schema inputstream.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValid(final String xmlData, final InputStream schema) throws Exception {
-
-        Schema theSchema = getSchema(schema);
-        assertXmlValid(xmlData, theSchema);
-    }
-
-    /**
-     * Assert the provided XML data is valid against the provided schema.
-     * 
-     * @param xmlData
-     *            The xml data to be asserted.
-     * @param schema
-     *            The schema.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static void assertXmlValid(final String xmlData, final Schema schema) throws Exception {
-
-        assertNotNull("No Xml data. ", xmlData);
-        try {
-            Validator validator = schema.newValidator();
-            InputStream in = new ByteArrayInputStream(xmlData.getBytes(DEFAULT_CHARSET));
-            validator.validate(new SAXSource(new InputSource(in)));
-        }
-        catch (final Exception e) {
-            final StringBuffer errorMsg = new StringBuffer("XML invalid. ");
-            errorMsg.append(e.getMessage());
-            if (LOGGER.isDebugEnabled()) {
-                errorMsg.append(xmlData);
-                errorMsg.append("============ End of invalid xml ============\n");
-            }
-            fail(errorMsg.toString());
-        }
-        assertXmlPrefixNotDeclared(xmlData);
-    }
-
-    /**
      * Asserts that the objid and href attributes of the root element exist and are consistent.
-     * 
-     * @param document
-     *            The document.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param document The document.
+     * @throws Exception Thrown if anything fails.
      */
     public void assertHrefObjidConsistency(final Document document) throws Exception {
 
@@ -3356,11 +1835,9 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that a given string has the structure of an eSciDoc objid.
-     * 
-     * @param objid
-     *            The string.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param objid The string.
+     * @throws Exception Thrown if anything fails.
      */
     public void assertObjid(final String objid) throws Exception {
 
@@ -3372,19 +1849,16 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that the objid and href attributes exist and are consistent.
-     * 
-     * @param document
-     *            The document.
-     * @param xPath
-     *            The xpath to the element containing the objid and href attributes. If this parameter is
-     *            <code>null</code>, the root element is used.
-     * @throws Exception
-     *             Thrown if anything fails.
+     *
+     * @param document The document.
+     * @param xPath    The xpath to the element containing the objid and href attributes. If this parameter is
+     *                 <code>null</code>, the root element is used.
+     * @throws Exception Thrown if anything fails.
      */
     public void assertHrefObjidConsistency(final Document document, final String xPath) throws Exception {
-
         final String objid;
         final String objidFromHref;
+
         if (xPath == null) {
             objid = getRootElementAttributeValue(document, NAME_OBJID);
             objidFromHref = getObjidFromHref(getRootElementHrefValue(document));
@@ -3404,11 +1878,9 @@ public abstract class EscidocTestBase {
 
     /**
      * Assert if the framework created the necessary elements and attributes.
-     * 
-     * @param xmlData
-     *            The xml representation of the context.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param xmlData The xml representation of the context.
+     * @throws Exception If anything fails.
      */
     public static void assertXmlCreatedContext(final String xmlData) throws Exception {
 
@@ -3433,49 +1905,36 @@ public abstract class EscidocTestBase {
 
     /**
      * Assert that the Element/Attribute selected by the xPath does not exist.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param xml
-     *            XML
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param message The message printed if assertion fails.
+     * @param xml     XML
+     * @param xPath   The xPath.
+     * @throws Exception If anything fails.
      */
     public static void assertXmlNotExists(final String message, final String xml, final String xPath) throws Exception {
-
+        // TODO: do more than nothing
     }
 
     /**
      * Assert that the Element/Attribute selected by the xPath does not exist.
-     * 
-     * @param message
-     *            The message printed if assertion fails.
-     * @param node
-     *            The Node.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param message The message printed if assertion fails.
+     * @param node    The Node.
+     * @param xPath   The xPath.
+     * @throws Exception If anything fails.
      */
     public static void assertXmlNotExists(final String message, final Node node, final String xPath) throws Exception {
-
         NodeList nodes = selectNodeList(node, xPath);
         assertTrue(message, nodes.getLength() == 0);
     }
 
     /**
      * Assert that the node selected by the xpath exists int the given document and is not empty.
-     * 
-     * @param elementLabel
-     *            The label for assertion messages.
-     * @param document
-     *            The document.
-     * @param xPath
-     *            The xPath.
-     * @throws Exception
-     *             If anything fails.
+     *
+     * @param elementLabel The label for assertion messages.
+     * @param document     The document.
+     * @param xPath        The xPath.
+     * @throws Exception If anything fails.
      */
     public static void assertXmlNotNull(final String elementLabel, final Node document, final String xPath)
         throws Exception {
@@ -3486,12 +1945,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Extracts the id from the href attribute of the root element of the provided document.
-     * 
-     * @param document
-     *            The document to retrieve the id from.
+     *
+     * @param document The document to retrieve the id from.
      * @return Returns the extracted id value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getIdFromRootElementHref(final Document document) throws Exception {
 
@@ -3500,9 +1957,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Obtain the objid from the href.
-     * 
-     * @param val
-     *            The href attribute.
+     *
+     * @param val The href attribute.
      * @return objid
      */
     public String getIdFromHrefValue(final String val) {
@@ -3519,17 +1975,16 @@ public abstract class EscidocTestBase {
 
     /**
      * Obtain the objid from the XML root element.
-     * 
-     * @param xml
-     *            The XML data.
+     *
+     * @param xml The XML data.
      * @return objid
      */
     public String getIdFromRootElement(final String xml) {
         String result = null;
         // FIXME PATTERN_OBJID_ATTRIBUTE is static field !
         // FIXME this pattern does not work for componentId
-        Pattern pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD = Pattern.compile("href=\"/ir/[^/]+/([^\"]*)\"");
-        Matcher m1 = pATTERNoBJIDaTTRIBUTEjUSTfORtHISmETHOD.matcher(xml);
+        Pattern patternObjidAttributeJustForThisMethod = Pattern.compile("href=\"/ir/[^/]+/([^\"]*)\"");
+        Matcher m1 = patternObjidAttributeJustForThisMethod.matcher(xml);
         if (m1.find()) {
             result = m1.group(1);
         }
@@ -3539,46 +1994,36 @@ public abstract class EscidocTestBase {
 
     /**
      * Gets the id from the provided uri (href).
-     * 
-     * @param href
-     *            The uri to extract the id from.
+     *
+     * @param href The uri to extract the id from.
      * @return Returns the extracted id.
      */
     public static String getObjidFromHref(final String href) {
-
-        String grantId = href.substring(href.lastIndexOf('/') + 1);
-        return grantId;
+        return href.substring(href.lastIndexOf('/') + 1);
     }
 
     /**
      * Gets the href attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
+     *
+     * @param document The document to retrieve the value from.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String getRootElementHrefValue(final Document document) throws Exception {
-
-        return getRootElementAttributeValueNS(document, NAME_HREF, XLINK_NS_URI);
+        return getRootElementAttributeValueNS(document, NAME_HREF, Constants.NS_EXTERNAL_XLINK);
     }
 
     /**
-     * Gets the objid attribute of the element selected in the provided node.<br>
-     * It tries to get the objid attribute of the selected node. If this fails, it tries to get the xlink:href
-     * attribute. If both fails, an assertion exception is "thrown".
-     * 
-     * @param node
-     *            The node to select an element from.
-     * @param xPath
-     *            The xpath to select the element in the provided node.
+     * Gets the objid attribute of the element selected in the provided node.<br> It tries to get the objid attribute of
+     * the selected node. If this fails, it tries to get the xlink:href attribute. If both fails, an assertion exception
+     * is "thrown".
+     *
+     * @param node  The node to select an element from.
+     * @param xPath The xpath to select the element in the provided node.
      * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String getObjidValue(final Node node, final String xPath) throws Exception {
-
         Node selected = selectSingleNode(node, xPath);
         assertNotNull("No Element selected to retrieve the object id from", selected);
         NamedNodeMap attributes = selected.getAttributes();
@@ -3596,12 +2041,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Gets the objid attribute of the root element from the Xml.
-     * 
-     * @param xml
-     *            The xml representation of an object to retrieve the value from.
+     *
+     * @param xml The xml representation of an object to retrieve the value from.
      * @return Returns the objid.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String getObjidValue(final String xml) throws Exception {
 
@@ -3617,12 +2060,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Get objId with version part of latest version of document.
-     * 
-     * @param xml
-     *            The Item XML.
+     *
+     * @param xml The Item XML.
      * @return The object id of the latest version.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public final String getLatestVersionObjidValue(final String xml) throws Exception {
 
@@ -3634,9 +2075,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Remove version informaion from given objid.
-     * 
-     * @param objid
-     *            The objid.
+     *
+     * @param objid The objid.
      * @return The objid without version information.
      */
     public static String getObjidWithoutVersion(final String objid) {
@@ -3650,124 +2090,12 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Gets the last-modification-date attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getLastModificationDateValue(final Document document) throws Exception {
-
-        return getRootElementAttributeValue(document, "last-modification-date");
-    }
-
-    /**
-     * Gets the last-modification-date attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static DateTime getLastModificationDateValue2(final Document document) throws Exception {
-
-        String dateString = getRootElementAttributeValue(document, "last-modification-date");
-        if (dateString == null) {
-            return null;
-        }
-        final Calendar calendar = DatatypeConverter.parseDate(dateString);
-        return new DateTime(calendar.getTimeInMillis(), DateTimeZone.forTimeZone(calendar.getTimeZone()));
-    }
-
-    /**
-     * Gets the creation-date element of the first element named "properties" from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @return Returns the creation date value or <code>null</code>.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getCreationDateValue(final Document document) throws Exception {
-
-        return getCreationDateValue(document, null);
-    }
-
-    /**
-     * Gets the creation-date element of the specified properties element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param xPath
-     *            The xpath to the parent element that contains the creation date element. If this is <code>null</code>,
-     *            the first element named "properties" will be selected.
-     * @return Returns the creation date value or <code>null</code>.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getCreationDateValue(final Document document, final String xPath) throws Exception {
-
-        String creationDateXpath = "";
-        if (xPath == null) {
-            creationDateXpath = "//properties[1]/creation-date";
-        }
-        else {
-            creationDateXpath = xPath + "/creation-date";
-        }
-        final Node creationDateElement = selectSingleNode(document, creationDateXpath);
-        if (creationDateElement == null) {
-            return null;
-        }
-        else {
-            return creationDateElement.getTextContent();
-        }
-    }
-
-    /**
-     * Get objid from ordered component.
-     * 
-     * @param document
-     *            the document.
-     * @param componentNo
-     *            the component order number.
-     * @return component object id
-     * @throws Exception
-     *             Thrown in case of internal error.
-     */
-    // TODO should better be in OmTestBase
-    public String getComponentObjidValue(final Document document, final int componentNo) throws Exception {
-        return getObjidFromHref(getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
-            + componentNo + "]", "href"));
-    }
-
-    /**
-     * Get objid from component.
-     * 
-     * @param document
-     *            the document.
-     * @param xpath
-     *            tXPath identifying the component.
-     * @return component object id
-     * @throws Exception
-     *             Thrown in case of internal error.
-     */
-    public String getComponentObjidValue(final Document document, final String xpath) throws Exception {
-        return getObjidFromHref(getAttributeValue(document, xpath, "href"));
-    }
-
-    /**
      * Asserts that the creation-date element of the document exists.
-     * 
-     * @param message
-     *            The fail message.
-     * @param document
-     *            The document to retrieve the value from.
+     *
+     * @param message  The fail message.
+     * @param document The document to retrieve the value from.
      * @return Returns the creation date value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String assertCreationDateExists(final String message, final Document document) throws Exception {
 
@@ -3776,17 +2104,13 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that the creation-date element of the specified properties element from the document exists.
-     * 
-     * @param message
-     *            The fail message.
-     * @param document
-     *            The document to retrieve the value from.
-     * @param xPath
-     *            The xpath to the parent element that contains the creation date element. If this is <code>null</code>,
-     *            the first element named "properties" will be selected.
+     *
+     * @param message  The fail message.
+     * @param document The document to retrieve the value from.
+     * @param xPath    The xpath to the parent element that contains the creation date element. If this is
+     *                 <code>null</code>, the first element named "properties" will be selected.
      * @return Returns the creation date value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static String assertCreationDateExists(final String message, final Document document, final String xPath)
         throws Exception {
@@ -3797,149 +2121,12 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Gets the value of the specified attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param attributeName
-     *            The name of the attribute whose value shall be retrieved.
-     * @param namespaceURI
-     *            The namespace URI of the attribute.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getRootElementAttributeValueNS(
-        final Document document, final String attributeName, final String namespaceURI) throws Exception {
-
-        Node root = getRootElement(document);
-        if (root.getNamespaceURI() != null) {
-            // has been parsed namespace aware
-            Node attr = root.getAttributes().getNamedItemNS(namespaceURI, attributeName);
-            assertNotNull("Attribute not found [" + namespaceURI + ":" + attributeName + "]. ", attr);
-            return attr.getTextContent();
-        }
-        else {
-            // has not been parsed namespace aware.
-            String xPath;
-            if (attributeName.startsWith("@")) {
-                xPath = "/*/" + attributeName;
-            }
-            else {
-                xPath = "/*/@" + attributeName;
-            }
-            assertXmlExists("Attribute not found [" + xPath + "]. ", document, xPath);
-            final Node attr = selectSingleNode(root, xPath);
-            assertNotNull("Attribute not found [" + attributeName + "]. ", attr);
-            String value = attr.getTextContent();
-            return value;
-        }
-    }
-
-    /**
-     * Gets the value of the specified attribute of the root element from the document.
-     * 
-     * @param document
-     *            The document to retrieve the value from.
-     * @param attributeName
-     *            The name of the attribute whose value shall be retrieved.
-     * @return Returns the attribute value.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static String getRootElementAttributeValue(final Document document, final String attributeName)
-        throws Exception {
-
-        Node root = getRootElement(document);
-
-        // has not been parsed namespace aware.
-        String xPath;
-        if (attributeName.startsWith("@")) {
-            xPath = "/*/" + attributeName;
-        }
-        else {
-            xPath = "/*/@" + attributeName;
-        }
-        assertXmlExists("Attribute not found [" + attributeName + "]. ", document, xPath);
-        final Node attr = selectSingleNode(root, xPath);
-        assertNotNull("Attribute not found [" + attributeName + "]. ", attr);
-        String value = attr.getTextContent();
-        return value;
-    }
-
-    /**
-     * Gets the <code>Schema</code> object for the provided url.
-     * 
-     * @param urlString
-     *            The <code>String</code> specifying the URL.
-     * @return Returns the <code>Schema</code> object.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static Schema getSchema(final String urlString) throws Exception {
-
-        URL url = urlCache.get(urlString);
-        if (url == null) {
-            url = new URL(urlString);
-            urlCache.put(urlString, url);
-        }
-        return getSchema(url);
-    }
-
-    /**
-     * Gets the <code>Schema</code> object for the provided <code>URL</code>.
-     * 
-     * @param url
-     *            The url to get the schema for.
-     * @return Returns the <code>Schema</code> object.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static Schema getSchema(final URL url) throws Exception {
-
-        Schema schema = schemaCache.get(url);
-        if (schema == null) {
-            URLConnection conn = url.openConnection();
-            InputStream schemaStream = conn.getInputStream();
-            schema = getSchema(schemaStream);
-            schemaCache.put(url, schema);
-        }
-        return schema;
-    }
-
-    /**
-     * Gets the <code>Schema</code> object for the provided <code>InputStream</code>.
-     * 
-     * @param schemaStream
-     *            The Stream containing the schema.
-     * @return Returns the <code>Schema</code> object.
-     * @throws Exception
-     *             If anything fails.
-     */
-    private static Schema getSchema(final InputStream schemaStream) throws Exception {
-
-        if (schemaStream == null) {
-            throw new Exception("No schema input stream provided");
-        }
-
-        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        // set resource resolver to change schema-location-host
-        sf.setResourceResolver(new SchemaBaseResourceResolver());
-        Schema theSchema = sf.newSchema(new SAXSource(new InputSource(schemaStream)));
-        return theSchema;
-    }
-
-    /**
      * Asserts that ts1 depicts a time after ts2 (ts1 > ts2).
-     * 
-     * @param message
-     *            The message is the assertion fails.
-     * @param ts1
-     *            The first timestamp.
-     * @param ts2
-     *            The second timestamp.
-     * @throws Exception
-     *             If anything fails (e.g. one timstamp has incorrect format)
+     *
+     * @param message The message is the assertion fails.
+     * @param ts1     The first timestamp.
+     * @param ts2     The second timestamp.
+     * @throws Exception If anything fails (e.g. one timstamp has incorrect format)
      */
     public static void assertTimestampIsEqualOrAfter(final String message, final String ts1, final String ts2)
         throws Exception {
@@ -3949,15 +2136,11 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that ts1 and ts2 depict the same time (ts1 == ts2).
-     * 
-     * @param message
-     *            The message is the assertion fails.
-     * @param ts1
-     *            The first timestamp.
-     * @param ts2
-     *            The second timestamp.
-     * @throws Exception
-     *             If anything fails (e.g. one timstamp has incorrect format)
+     *
+     * @param message The message is the assertion fails.
+     * @param ts1     The first timestamp.
+     * @param ts2     The second timestamp.
+     * @throws Exception If anything fails (e.g. one timstamp has incorrect format)
      */
     public static void assertTimestampEquals(final String message, final String ts1, final String ts2) throws Exception {
 
@@ -3967,14 +2150,11 @@ public abstract class EscidocTestBase {
     /**
      * Returns a positive integer if ts1 depicts a time after ts2 (ts1 > ts2), 0 if ts1 and ts2 depict the same time
      * (ts1 == ts2), and a negative integer if if ts1 depicts a time before ts2 (ts1 < ts2).
-     * 
-     * @param ts1
-     *            The first timestamp.
-     * @param ts2
-     *            The second timestamp.
+     *
+     * @param ts1 The first timestamp.
+     * @param ts2 The second timestamp.
      * @return The comparison result.
-     * @throws Exception
-     *             If anything fails (e.g. one timstamp has incorrect format).
+     * @throws Exception If anything fails (e.g. one timstamp has incorrect format).
      */
     public static int compareTimestamps(final String ts1, final String ts2) throws Exception {
 
@@ -4002,7 +2182,7 @@ public abstract class EscidocTestBase {
 
     /**
      * Get the current time as timestamp. The date format is yyyy-MM-dd'T'HH:mm:ss.SSSZ.
-     * 
+     *
      * @return The current time as timestamp.
      */
     public static String getNowAsTimestamp() {
@@ -4013,9 +2193,8 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * 
-     * @param timestamp
-     * @return
+     * @param timestamp The timestamp.
+     * @return The normalized timestamp.
      */
     public static String normalizeTimestamp(final String timestamp) {
 
@@ -4024,9 +2203,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Return a unique name. It is the concatenation of the prefix and the current time in milli seconds.
-     * 
-     * @param prefix
-     *            The prefix.
+     *
+     * @param prefix The prefix.
      * @return The unique name.
      */
     public static String getUniqueName(final String prefix) {
@@ -4036,9 +2214,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Makes the value of the provided node unique by adding a timestamp to it.
-     * 
-     * @param node
-     *            The node to find the "name" element in and make it unique.
+     *
+     * @param node The node to find the "name" element in and make it unique.
      * @return Returns the unique value.
      */
     public String setUniqueName(final Node node) {
@@ -4049,16 +2226,13 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Makes the value of the selected node of the provided node unique by adding a timestamp to it.<br>
-     * If no node can be selected, an assertion fails.
-     * 
-     * @param node
-     *            The node to find the "name" element in and make it unique.
-     * @param xpath
-     *            The xpath selecting the "name" element to change.
+     * Makes the value of the selected node of the provided node unique by adding a timestamp to it.<br> If no node can
+     * be selected, an assertion fails.
+     *
+     * @param node  The node to find the "name" element in and make it unique.
+     * @param xpath The xpath selecting the "name" element to change.
      * @return Returns the unique value.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String setUniqueValue(final Node node, final String xpath) throws Exception {
 
@@ -4072,16 +2246,12 @@ public abstract class EscidocTestBase {
      * elements Map, currentElement is interpreted as a xpath and the selected node is removed from the template. If the
      * value for key currentElement is different from the empty String, the selected node's value is substituted with
      * this value.
-     * 
-     * @param template
-     *            The context template.
-     * @param elements
-     *            The elements Map.
-     * @param currentElement
-     *            The currentElemnt.
+     *
+     * @param template       The context template.
+     * @param elements       The elements Map.
+     * @param currentElement The currentElemnt.
      * @return The resulting template.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public static Node changeTemplateWithReadOnly(
         final Node template, final Map<String, String> elements, final String currentElement) throws Exception {
@@ -4102,7 +2272,7 @@ public abstract class EscidocTestBase {
         }
         else if (!"".equals(elements.get(currentElement))) {
             String element = currentElement;
-            if (element.indexOf("@" + XLINK_HREF_TEMPLATES) != -1) {
+            if (element.contains("@" + XLINK_HREF_TEMPLATES)) {
                 element = element.replaceAll("@" + XLINK_HREF_TEMPLATES, "@href");
             }
             result = substitute(result, element, elements.get(currentElement));
@@ -4111,71 +2281,46 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Gets the root element of the provided document.
-     * 
-     * @param doc
-     *            The document to get the root element from.
-     * @return Returns the first child of the document htat is an element node.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public static Element getRootElement(final Document doc) throws Exception {
-
-        Node node = doc.getFirstChild();
-        while (node != null) {
-            if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-                return (Element) node;
-            }
-            node = node.getNextSibling();
-        }
-        return null;
-    }
-
-    /**
      * Inserts the namespaces into the provided element node.
-     * 
-     * @param element
-     *            The element into that the namespace definitions shall be inserted.
+     *
+     * @param element The element into that the namespace definitions shall be inserted.
      * @return Returns the changed element node.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public Element insertNamespaces(final Element element) throws Exception {
 
-        element.setAttribute("xmlns:prefix-container", CONTAINER_NS_URI);
-        element.setAttribute("xmlns:prefix-content-type", CONTENT_TYPE_NS_URI);
-        element.setAttribute("xmlns:prefix-context", CONTEXT_NS_URI);
-        element.setAttribute("xmlns:prefix-dc", DC_NS_URI);
-        element.setAttribute("xmlns:prefix-dcterms", DCTERMS_NS_URI);
-        element.setAttribute("xmlns:prefix-grants", GRANTS_NS_URI);
-        element.setAttribute("xmlns:prefix-internal-metadata", INTERNAL_METADATA_NS_URI);
-        element.setAttribute("xmlns:prefix-item", ITEM_NS_URI);
-        element.setAttribute("xmlns:prefix-member-list", MEMBER_LIST_NS_URI);
-        element.setAttribute("xmlns:prefix-member-ref-list", MEMBER_REF_LIST_NS_URI);
-        element.setAttribute("xmlns:prefix-metadata", METADATA_NS_URI);
-        element.setAttribute("xmlns:prefix-metadatarecords", METADATARECORDS_NS_URI);
-        element.setAttribute("xmlns:escidocMetadataRecords", METADATARECORDS_NS_URI);
-        element.setAttribute("xmlns:escidocComponents", COMPONENTS_NS_URI);
-        element.setAttribute("xmlns:prefix-organizational-unit", ORGANIZATIONAL_UNIT_NS_URI);
-        element.setAttribute("xmlns:prefix-properties", PROPERTIES_NS_URI);
-        element.setAttribute("xmlns:prefix-schema", SCHEMA_NS_URI);
-        element.setAttribute("xmlns:prefix-staging-file", STAGING_FILE_NS_URI);
-        element.setAttribute("xmlns:prefix-user-account", USER_ACCOUNT_NS_URI);
-        element.setAttribute("xmlns:prefix-xacml-context", XACML_CONTEXT_NS_URI);
-        element.setAttribute("xmlns:prefix-xacml-policy", XACML_POLICY_NS_URI);
-        element.setAttribute("xmlns:prefix-xlink", XLINK_NS_URI);
-        element.setAttribute("xmlns:prefix-xsi", XSI_NS_URI);
+        element.setAttribute("xmlns:prefix-container", Constants.NS_IR_CONTAINER);
+        //element.setAttribute("xmlns:prefix-content-type", CONTENT_TYPE_NS_URI); TODO: does no longer exist?
+        element.setAttribute("xmlns:prefix-context", Constants.NS_IR_CONTEXT);
+        element.setAttribute("xmlns:prefix-dc", Constants.NS_EXTERNAL_DC);
+        element.setAttribute("xmlns:prefix-dcterms", Constants.NS_EXTERNAL_DC_TERMS);
+        element.setAttribute("xmlns:prefix-grants", Constants.NS_AA_GRANTS);
+        //element.setAttribute("xmlns:prefix-internal-metadata", INTERNAL_METADATA_NS_URI); TODO: does no longer exist?
+        element.setAttribute("xmlns:prefix-item", Constants.NS_IR_ITEM);
+        //element.setAttribute("xmlns:prefix-member-list", MEMBER_LIST_NS_URI); TODO: does no longer exist?
+        //element.setAttribute("xmlns:prefix-member-ref-list", MEMBER_REF_LIST_NS_URI); TODO: does no longer exist?
+        //element.setAttribute("xmlns:prefix-metadata", METADATA_NS_URI); TODO: does no longer exist?
+        //element.setAttribute("xmlns:prefix-metadatarecords", METADATARECORDS_NS_URI); TODO: does no longer exist?
+        //element.setAttribute("xmlns:escidocMetadataRecords", METADATARECORDS_NS_URI); TODO: does no longer exist?
+        element.setAttribute("xmlns:escidocComponents", Constants.NS_IR_COMPONENTS);
+        element.setAttribute("xmlns:prefix-organizational-unit", Constants.NS_OUM_OU);
+        //element.setAttribute("xmlns:prefix-properties", PROPERTIES_NS_URI); TODO: does no longer exist?
+        //element.setAttribute("xmlns:prefix-schema", SCHEMA_NS_URI); TODO: huh???
+        element.setAttribute("xmlns:prefix-staging-file", Constants.NS_ST_FILE);
+        element.setAttribute("xmlns:prefix-user-account", Constants.NS_AA_USER_ACCOUNT);
+        element.setAttribute("xmlns:prefix-xacml-context", Constants.NS_EXTERNAL_XACML_CONTEXT);
+        element.setAttribute("xmlns:prefix-xacml-policy", Constants.NS_EXTERNAL_XACML_POLICY);
+        element.setAttribute("xmlns:prefix-xlink", Constants.NS_EXTERNAL_XLINK);
+        element.setAttribute("xmlns:prefix-xsi", Constants.NS_EXTERNAL_XSI);
         return element;
     }
 
     /**
      * Inserts the namespaces into the root element of the provided document.
-     * 
-     * @param doc
-     *            The document that shall be changed.
+     *
+     * @param doc The document that shall be changed.
      * @return Returns the changed document.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public Document insertNamespacesInRootElement(final Document doc) throws Exception {
 
@@ -4187,43 +2332,23 @@ public abstract class EscidocTestBase {
 
     /**
      * Inserts the namespaces into the root element of the provided xml data.
-     * 
-     * @param xmlData
-     *            The xmlData that shall be changed.
+     *
+     * @param xmlData The xmlData that shall be changed.
      * @return Returns the changed XML data.
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String insertNamespacesInRootElement(final String xmlData) throws Exception {
 
         return toString(insertNamespacesInRootElement(EscidocAbstractTest.getDocument(xmlData)), false);
     }
 
-    protected static String prepareAssertionFailedMessage(final String message) {
-
-        final String msg;
-        if (message == null) {
-            msg = "";
-        }
-        else if (!message.endsWith(" ")) {
-            msg = message + " ";
-        }
-        else {
-            msg = message;
-        }
-        return msg;
-    }
-
     /**
      * Deletes the node selected by the given XPath from the provided node.
-     * 
-     * @param node
-     *            The Node to delete the selected nodes from.
-     * @param xPath
-     *            The XPath selecting the sub nodes in the provided node.
+     *
+     * @param node  The Node to delete the selected nodes from.
+     * @param xPath The XPath selecting the sub nodes in the provided node.
      * @return returns the provided <code>Node</code> object. This <code>Node</code> object may be changed.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static Node deleteNodes(final Node node, final String xPath) throws Exception {
 
@@ -4255,16 +2380,12 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that the value of the selected node of the provided node starts with the expected base.
-     * 
-     * @param node
-     *            The node in that the node shall be selected abd asserted.
-     * @param xPath
-     *            The Xpath to select the node that shall be asserted.
-     * @param expectedBase
-     *            The expected value with that the selected node's value shall start.
+     *
+     * @param node         The node in that the node shall be selected abd asserted.
+     * @param xPath        The Xpath to select the node that shall be asserted.
+     * @param expectedBase The expected value with that the selected node's value shall start.
      * @return Returns the value of the node that has been successfully checked.
-     * @throws Exception
-     *             Thrown if anything fails.
+     * @throws Exception Thrown if anything fails.
      */
     public static String assertHrefBase(final Node node, final String xPath, final String expectedBase)
         throws Exception {
@@ -4277,11 +2398,9 @@ public abstract class EscidocTestBase {
 
     /**
      * Asserts that the selected xlink:type attribute of the provided node has the value "simple".
-     * 
-     * @param document
-     *            The node from that the xlink:type attribute shall be selected and asserted.
-     * @throws Exception
-     *             If an error ocurres.
+     *
+     * @param document The node from that the xlink:type attribute shall be selected and asserted.
+     * @throws Exception If an error ocurres.
      */
     public static void assertXlinkType(final Document document, final String xPath) throws Exception {
 
@@ -4292,9 +2411,8 @@ public abstract class EscidocTestBase {
 
     /**
      * Modifies the namespace prefixes of the provided xml data by adding a prefix to the namespac.
-     * 
-     * @param xml
-     *            The xml data to change the namespace prefixes in.
+     *
+     * @param xml The xml data to change the namespace prefixes in.
      * @return Returns the modified xml data.
      */
     public static String modifyNamespacePrefixes(final String xml) {
@@ -4358,9 +2476,13 @@ public abstract class EscidocTestBase {
                     // }
                 }
                 if (descending) {
+                    assertNotNull(orderNodeA);
+                    assertNotNull(orderNodeB);
                     assertOrderNotAfter(orderNodeB.getTextContent(), orderNodeA.getTextContent());
                 }
                 else {
+                    assertNotNull(orderNodeA);
+                    assertNotNull(orderNodeB);
                     assertOrderNotAfter(orderNodeA.getTextContent(), orderNodeB.getTextContent());
                 }
                 orderNodeA = orderNodeB;
@@ -4389,18 +2511,6 @@ public abstract class EscidocTestBase {
 
     }
 
-    public static void assertOrderNotAfter(final int lower, final int higher) throws Exception {
-        if (lower > higher) {
-            fail("Incorrect order: " + lower + " < " + higher + ".");
-        }
-    }
-
-    public static void assertOrderNotAfter(final String lower, final String higher) throws Exception {
-        if (lower.compareTo(higher) > 0) {
-            LOGGER.debug("Incorrect order: " + lower + " < " + higher + ".");
-        }
-    }
-
     public void assertContentStreamsOf_escidoc_item_198_for_create_3content_streams(
         final String itemId, final Document itemDoc, final boolean isRootContentStreams) throws Exception {
 
@@ -4412,7 +2522,7 @@ public abstract class EscidocTestBase {
             // there should be attributes xml:base, xlink:href and
             // last-modification-date in content streams container
             selectSingleNodeAsserted(itemDoc, "/content-streams[@base]");
-            // = '" + Constants.PROTOCOL + "://" + Constants.HOST_PORT + "']");
+            // = '" + SearchTestConstants.HTTP_PROTOCOL + "://" + SearchTestConstants.HOST_PORT + "']");
             selectSingleNodeAsserted(itemDoc, "/content-streams[@href = '/ir/item/" + itemId + "/content-streams']");
             selectSingleNodeAsserted(itemDoc, "/content-streams[@last-modification-date]");
             // TODO check if latter is date
@@ -4446,12 +2556,10 @@ public abstract class EscidocTestBase {
 
     /**
      * Uploading file to Staging Service and get URL back.
-     * 
-     * @param file
-     *            The file which is to upload to the staging service.
+     *
+     * @param file The file which is to upload to the staging service.
      * @return The URL at the staging service.
-     * @throws Exception
-     *             Thrown if uploading failed.
+     * @throws Exception Thrown if uploading failed.
      */
     public URL uploadFileToStagingServlet(final File file) throws Exception {
 
@@ -4461,14 +2569,11 @@ public abstract class EscidocTestBase {
 
     /**
      * Uploading file to Staging Service and get URL back.
-     * 
-     * @param file
-     *            The file (which is to upload).
-     * @param mimeType
-     *            The mime type of the content.
+     *
+     * @param file     The file (which is to upload).
+     * @param mimeType The mime type of the content.
      * @return The URL at the staging service.
-     * @throws Exception
-     *             Thrown if uploading failed.
+     * @throws Exception Thrown if uploading failed.
      */
     public URL uploadFileToStagingServlet(final File file, final String mimeType) throws Exception {
 
@@ -4479,16 +2584,12 @@ public abstract class EscidocTestBase {
 
     /**
      * Uploading file to Staging Service and get URL back.
-     * 
-     * @param fileInputStream
-     *            The filenInputStream (whic upload).
-     * @param filename
-     *            The name of the file.
-     * @param mimeType
-     *            The mime type of the content.
+     *
+     * @param fileInputStream The filenInputStream (whic upload).
+     * @param filename        The name of the file.
+     * @param mimeType        The mime type of the content.
      * @return The URL fro the staging service.
-     * @throws Exception
-     *             Thrown if uploading failed.
+     * @throws Exception Thrown if uploading failed.
      */
     public URL uploadFileToStagingServlet(
         final InputStream fileInputStream, final String filename, final String mimeType) throws Exception {
@@ -4500,9 +2601,8 @@ public abstract class EscidocTestBase {
             EntityUtil.consumeContent(httpRes.getEntity());
             Document document = EscidocAbstractTest.getDocument(stagingFileXml);
             Node fileHref = selectSingleNode(document, "/staging-file/@href");
-            URL url = new URL(getBaseUrl() + Constants.ESCIDOC_BASE_URI + fileHref.getTextContent());
 
-            return url;
+            return new URL(getBaseUrl() + Constants.WEB_CONTEXT_URI_ESCIDOC + fileHref.getTextContent());
         }
         else {
             fail("Unsupported result type [" + result.getClass().getName() + "]");
@@ -4519,7 +2619,7 @@ public abstract class EscidocTestBase {
 
     /**
      * count the number of testMethods in the testClass.
-     * 
+     *
      * @return number of testMethods.
      */
     public int getTestMethodCount() {
@@ -4536,16 +2636,16 @@ public abstract class EscidocTestBase {
 
     /**
      * count the number of testMethods in the testClass.
-     * 
+     *
      * @return number of testMethods.
      */
     public int getTestAnnotationsCount() {
         Method[] methods = this.getClass().getMethods();
         int count = 0;
-        for (int i = 0; i < methods.length; i++) {
-            if (methods[i].getAnnotations() != null) {
-                for (Annotation annotation : methods[i].getAnnotations()) {
-                    if (annotation.annotationType().equals(org.junit.Test.class)) {
+        for (Method method : methods) {
+            if (method.getAnnotations() != null) {
+                for (Annotation annotation : method.getAnnotations()) {
+                    if (annotation.annotationType().equals(Test.class)) {
                         count++;
                     }
                 }
@@ -4555,47 +2655,10 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Assert that all Xlink titles match the (eSciDoc) Xlink title conventions.
-     * <p/>
-     * TODO this test is not complete, because of an outstanding definition. (see issue INFR-865)
-     * 
-     * @param xmlData
-     *            XML of the Item
-     */
-    public void assertItemXlinkTitles(final String xmlData) throws Exception {
-        Document document = EscidocAbstractTest.getDocument(xmlData);
-        // relations
-        Node relations = XPathAPI.selectSingleNode(document, "/item/relations/@title", document);
-        if (relations != null) {
-            assertEquals("Xlink:title of relations differs from convention", "Relations of Item", relations
-                .getTextContent());
-        }
-    }
-
-    /**
-     * Assert that all Xlink titles match the (eSciDoc) Xlink title conventions.
-     * <p/>
-     * TODO this test is not complete, because of an outstanding definition. (see issue INFR-865)
-     * 
-     * @param xmlData
-     *            XML of the Container
-     */
-    public void assertContainerXlinkTitles(final String xmlData) throws Exception {
-        Document document = EscidocAbstractTest.getDocument(xmlData);
-        // relations
-        Node relations = XPathAPI.selectSingleNode(document, "/container/relations/@title", document);
-        if (relations != null) {
-            assertEquals("Xlink:title of relations differs from convention", "Relations of Container", relations
-                .getTextContent());
-        }
-    }
-
-    /**
      * Obtain version number of framework by requesting it from Admin Service.
-     * 
+     *
      * @return version number of framework.
-     * @throws Exception
-     *             Thrown if request failed.
+     * @throws Exception Thrown if request failed.
      */
     public String obtainFrameworkVersion() throws Exception {
 

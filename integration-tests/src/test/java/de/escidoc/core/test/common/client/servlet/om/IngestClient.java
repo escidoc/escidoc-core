@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.om;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 
 /**
@@ -47,7 +47,7 @@ public class IngestClient extends ClientBase implements ResourceHandlerClientInt
      * @throws Exception If the service call fails.
      */
     public Object ingest(final String xmlData) throws Exception {
-        return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Ingest.ingest", "ingest", Constants.HTTP_METHOD_PUT, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.INGEST_BASE_URI, new String[] {}, changeToString(xmlData));
 
     }

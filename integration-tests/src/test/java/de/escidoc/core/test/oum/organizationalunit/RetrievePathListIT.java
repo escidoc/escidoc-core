@@ -30,7 +30,7 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

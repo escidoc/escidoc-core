@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.client.protocol.ResponseProcessCookies;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -45,7 +44,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -161,11 +159,7 @@ public class ContainerReferenceIT extends ContainerTestBase {
         // prevent duplicate href checking
         Vector<String> checkedRefs = new Vector<String>();
 
-        Iterator<String> refIt = refList.iterator();
-
-        while (refIt.hasNext()) {
-            String ref = refIt.next();
-
+        for (String ref : refList) {
             if (!checkedRefs.contains(ref) && !skipRefCheck(ref)) {
                 call(ref);
                 checkedRefs.add(ref);
@@ -186,8 +180,8 @@ public class ContainerReferenceIT extends ContainerTestBase {
         skipList.add("members/filter");
         skipList.add("members/filter/refs");
 
-        for (int i = 0; i < skipList.size(); i++) {
-            if (ref.endsWith(skipList.get(i))) {
+        for (String aSkipList : skipList) {
+            if (ref.endsWith(aSkipList)) {
                 return (true);
             }
         }
@@ -238,7 +232,7 @@ public class ContainerReferenceIT extends ContainerTestBase {
         httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
         httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
-        String httpUrl = getBaseUrl() + Constants.ESCIDOC_BASE_URI + href;
+        String httpUrl = Constants.WEB_APP_URI_ESCIDOC + href;
 
         HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 
@@ -262,7 +256,6 @@ public class ContainerReferenceIT extends ContainerTestBase {
 
         String xmlData = getItemTemplate("escidoc_item_198_for_create.xml");
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
-        String itemId = getObjidValue(theItemXml);
-        return itemId;
+        return getObjidValue(theItemXml);
     }
 }

@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.sm;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 /**
  * Offers access methods to the escidoc interface of the Statistic Report resource.
@@ -47,8 +47,8 @@ public class ReportClient extends ClientBase {
      */
     public Object retrieve(final String xml) throws Exception {
 
-        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.STATISTIC_REPORT_BASE_URI, new String[] {}, xml);
+        return callEsciDoc("Report.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_REPORT_BASE_URI, new String[] {}, xml);
     }
 
 }

@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConst
 import de.escidoc.core.common.exceptions.remote.system.SqlDatabaseSystemException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -349,7 +349,7 @@ public class UserAccountIT extends UserAccountTestBase {
 
         final Document createdDocument = createSuccessfully("escidoc_useraccount_WithSpaceInLoginName_create.xml");
         final String loginname = selectSingleNode(createdDocument, XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
-        String encodedLoginName = URLEncoder.encode(loginname, DEFAULT_CHARSET);
+        String encodedLoginName = URLEncoder.encode(loginname, Constants.DEFAULT_CHARSET);
         String retrievedXml = null;
         try {
             retrievedXml = retrieve(encodedLoginName);
@@ -1277,11 +1277,10 @@ public class UserAccountIT extends UserAccountTestBase {
      */
     @Test
     public void testDecliningDeleteUserWithReferences() throws Exception {
-        String grantId = null;
         String grantXml =
             grantTestBase.doTestCreateGrant(PWCallback.SYSTEMADMINISTRATOR_HANDLE, TEST_SYSTEMADMINISTRATOR_ID1,
                 Constants.CONTEXT_BASE_URI + "/" + CONTEXT_ID, ROLE_HREF_DEPOSITOR, null);
-        grantId = getObjidValue(grantXml);
+        String grantId = getObjidValue(grantXml);
         try {
             delete(TEST_SYSTEMADMINISTRATOR_ID1);
             fail("No exception on delete user with references.");
@@ -1659,10 +1658,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 3, userAccountNodes.getLength());
 
-        String href = "";
-        String attributeName = "objid";
-        href = "/aa/user-account/";
-        attributeName = "href";
+        String href = "/aa/user-account/";
+        String attributeName = "href";
         assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID, retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@" + attributeName + "='" + href + TEST_USER_ACCOUNT_ID + "']");
         assertXmlExists("Missing user " + userAccountFilterUser, retrievedDocument,
@@ -1771,10 +1768,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final NodeList userAccountNodes = selectNodeList(retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 4, userAccountNodes.getLength());
 
-        String href = "";
-        String attributeName = "objid";
-        href = "/aa/user-account/";
-        attributeName = "href";
+        String href = "/aa/user-account/";
+        String attributeName = "href";
         assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[0], retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@" + attributeName + "='" + href
                 + additonalGroupFilterSearchUsers[0] + "']");
@@ -2268,7 +2263,7 @@ public class UserAccountIT extends UserAccountTestBase {
 
         Document newUserAccountDoc =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH, "escidoc_useraccount_for_create.xml");
-        Attr newNode = createAttributeNode(newUserAccountDoc, USER_ACCOUNT_NS_URI, null, "objid", "escidoc:1");
+        Attr newNode = createAttributeNode(newUserAccountDoc, Constants.NS_AA_USER_ACCOUNT, null, "objid", "escidoc:1");
         addAttribute(newUserAccountDoc, XPATH_USER_ACCOUNT, newNode);
         insertUniqueLoginName(newUserAccountDoc);
         final String newUserAccountXML = toString(newUserAccountDoc, false);

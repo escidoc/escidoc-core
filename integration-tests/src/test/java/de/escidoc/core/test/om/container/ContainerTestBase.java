@@ -47,7 +47,7 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -642,7 +642,6 @@ public class ContainerTestBase extends OmTestBase {
     /**
      * Prepares a container for a test.<br> The container is created and set into the specified state.
      *
-     * @param creatorUserHandle    The eSciDoc user handle of the creator.
      * @param status               The status to set for the item. If this is <code>null</code>, no item is created and
      *                             <code>null</code> is returned.
      * @param contextId            id of context to create container in.

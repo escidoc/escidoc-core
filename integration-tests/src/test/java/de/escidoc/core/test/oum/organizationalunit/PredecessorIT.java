@@ -31,7 +31,7 @@ package de.escidoc.core.test.oum.organizationalunit;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.test.EscidocXmlElements;
 import de.escidoc.core.test.TaskParamFactory;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -79,11 +79,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // add predecessor to OU 2
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(Constants.NS_OUM_OU, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
@@ -138,20 +139,22 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // add predecessor to OU 3
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(Constants.NS_OUM_OU, "prefix-organizational-unit:predecessors");
 
         // add predecessor 1
-        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
         predecessorsElement.appendChild(predecessorElement);
 
         // add predecessor 2
-        Element predecessorElement2 = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement2.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou2Id);
+        Element predecessorElement2 =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement2.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou2Id);
         predecessorElement2.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
         predecessorsElement.appendChild(predecessorElement2);
@@ -220,20 +223,22 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // add predecessor to OU 3
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(Constants.NS_OUM_OU, "prefix-organizational-unit:predecessors");
 
         // add predecessor 1
-        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
 
         // add predecessor 2
-        Element predecessorElement2 = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement2.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou2Id);
+        Element predecessorElement2 =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement2.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou2Id);
         predecessorElement2.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement2);
@@ -271,11 +276,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
 
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(Constants.NS_OUM_OU, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
@@ -300,10 +306,10 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         String srelPrefix = determineSrelNamespacePrefix(ou2doc);
         String xlinkPrefix = determineXlinkNamespacePrefix(ou2doc);
-        predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, srelPrefix + ":predecessor");
+        predecessorElement = toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, srelPrefix + ":predecessor");
 
-        predecessorElement.setAttributeNS(XLINK_NS_URI, xlinkPrefix + ":href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou3Id);
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, xlinkPrefix + ":href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou3Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         ou2doc.adoptNode(predecessorElement);
@@ -339,11 +345,11 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
         String xlinkPrefix = determineXlinkNamespacePrefix(ou1doc);
         String ouPrefix = determineOuNamespacePrefix(ou1doc);
         // append OU1 as predecessor to OU1
-        Element predecessorsElement = ou1doc.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, ouPrefix + ":predecessors");
+        Element predecessorsElement = ou1doc.createElementNS(Constants.NS_OUM_OU, ouPrefix + ":predecessors");
 
-        Element predecessorElement = ou1doc.createElementNS(SREL_NS_URI, srelPrefix + ":predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, xlinkPrefix + ":href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement = ou1doc.createElementNS(Constants.NS_COMMON_SREL, srelPrefix + ":predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, xlinkPrefix + ":href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
@@ -384,11 +390,12 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // add OU1 as predecessor to OU 2
         Element predecessorsElement =
-            toBeCreatedDocument.createElementNS(ORGANIZATIONAL_UNIT_NS_URI, "prefix-organizational-unit:predecessors");
+            toBeCreatedDocument.createElementNS(Constants.NS_OUM_OU, "prefix-organizational-unit:predecessors");
 
-        Element predecessorElement = toBeCreatedDocument.createElementNS(SREL_NS_URI, "prefix-srel:predecessor");
-        predecessorElement.setAttributeNS(XLINK_NS_URI, "prefix-xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI
-            + "/" + ou1Id);
+        Element predecessorElement =
+            toBeCreatedDocument.createElementNS(Constants.NS_COMMON_SREL, "prefix-srel:predecessor");
+        predecessorElement.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "prefix-xlink:href",
+            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou1Id);
         predecessorElement.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, REPLACEMENT);
 
         predecessorsElement.appendChild(predecessorElement);
@@ -411,8 +418,9 @@ public class PredecessorIT extends OrganizationalUnitTestBase {
 
         // append OU3 as predecessor to OU
 
-        Element predOU3 = ou2doc.createElementNS(SREL_NS_URI, "srel:predecessor");
-        predOU3.setAttributeNS(XLINK_NS_URI, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ou3Id);
+        Element predOU3 = ou2doc.createElementNS(Constants.NS_COMMON_SREL, "srel:predecessor");
+        predOU3.setAttributeNS(Constants.NS_EXTERNAL_XLINK, "xlink:href", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
+            + ou3Id);
         predOU3.setAttribute(EscidocXmlElements.OU_PREDECESSORS_ATTR_FORM, FUSION);
 
         selectSingleNode(ou2doc, "/organizational-unit/predecessors").appendChild(predOU3);

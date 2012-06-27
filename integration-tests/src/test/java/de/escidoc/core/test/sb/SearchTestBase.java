@@ -38,10 +38,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.TaskParamFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -49,7 +49,6 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
@@ -137,13 +136,11 @@ public class SearchTestBase extends SbTestBase {
         long time = System.currentTimeMillis();
         String query = "PID=" + id + " or distinction.rootPid=" + id;
         String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI + "/" + indexName
-                + "?query=" + URLEncoder.encode(query, DEFAULT_CHARSET);
+            getBaseUrl() + Constants.WEB_CONTEXT_URI_SEARCH + "/" + indexName + "?query="
+                + URLEncoder.encode(query, Constants.DEFAULT_CHARSET);
 
         for (;;) {
-            HttpResponse httpRes =
-                HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                    httpUrl, null, null, null);
+            HttpResponse httpRes = HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 Pattern numberOfRecordsPattern = Pattern.compile("numberOfRecords>(.*?)<");
@@ -454,8 +451,7 @@ public class SearchTestBase extends SbTestBase {
     protected final String getItemPidParam(final String itemId, final DateTime lastModificationDate) throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI
-            + itemId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.ITEM_BASE_URI + itemId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
@@ -474,8 +470,7 @@ public class SearchTestBase extends SbTestBase {
         throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getBaseUrl()
-            + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.CONTAINER_BASE_URI + containerId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }

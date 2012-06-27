@@ -32,19 +32,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Vector;
 
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
-import de.escidoc.core.test.common.client.servlet.om.ContentRelationClient;
-import de.escidoc.core.test.common.client.servlet.om.ContextClient;
-import de.escidoc.core.test.common.client.servlet.om.DeviationClient;
-import de.escidoc.core.test.common.client.servlet.om.IngestClient;
-import de.escidoc.core.test.common.client.servlet.om.ItemClient;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.sb.SearchTestBase;
 
 import org.joda.time.DateTime;
@@ -160,12 +152,8 @@ public class OmTestBase extends EscidocAbstractTest {
      *             Thrown in case of XML Parser failure.
      */
     public String getContextId(final Document doc) throws TransformerException {
-
-        String containerContextId = null;
-        Node contextNode = null;
-        contextNode = XPathAPI.selectSingleNode(doc, "//properties/context/@href");
-        containerContextId = getObjidFromHref(contextNode.getNodeValue());
-        return containerContextId;
+        Node contextNode = XPathAPI.selectSingleNode(doc, "//properties/context/@href");
+        return getObjidFromHref(contextNode.getNodeValue());
     }
 
     /**
@@ -193,11 +181,7 @@ public class OmTestBase extends EscidocAbstractTest {
      *             Thrown in case of XML Parser failure.
      */
     public String getVersionStatus(final Document doc) throws TransformerException {
-
-        Node statusNode = null;
-
-        statusNode = XPathAPI.selectSingleNode(doc, "//properties/version/status");
-
+        Node statusNode = XPathAPI.selectSingleNode(doc, "//properties/version/status");
         return statusNode.getTextContent();
     }
 
@@ -211,11 +195,7 @@ public class OmTestBase extends EscidocAbstractTest {
      *             Thrown in case of XML Parser failure.
      */
     public String getPublicStatus(final Document doc) throws TransformerException {
-
-        Node statusNode = null;
-
-        statusNode = XPathAPI.selectSingleNode(doc, "//properties/public-status");
-
+        Node statusNode = XPathAPI.selectSingleNode(doc, "//properties/public-status");
         return statusNode.getTextContent();
     }
 
@@ -229,11 +209,8 @@ public class OmTestBase extends EscidocAbstractTest {
      *             Thrown in case of XML Parser failure.
      */
     public String getLatestVersionId(final Document doc) throws TransformerException {
-        String latestVersion = null;
-        Node latestVersionNode = null;
-        latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/@href");
-        latestVersion = getObjidFromHref(latestVersionNode.getNodeValue());
-        return latestVersion;
+        Node latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/@href");
+        return getObjidFromHref(latestVersionNode.getNodeValue());
     }
 
     /**
@@ -246,11 +223,7 @@ public class OmTestBase extends EscidocAbstractTest {
      *             Thrown in case of XML Parser failure.
      */
     public int getLatestVersionNumber(final Document doc) throws TransformerException {
-
-        Node latestVersionNode = null;
-
-        latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/number");
-
+        Node latestVersionNode = XPathAPI.selectSingleNode(doc, "//properties/latest-version/number");
         return Integer.valueOf(latestVersionNode.getTextContent());
     }
 
@@ -329,11 +302,9 @@ public class OmTestBase extends EscidocAbstractTest {
     public String prepareContainerPid(final String containerId, final String lmd) throws Exception {
 
         String newLmd = lmd;
-        String objectPidXml = null;
-        String versionPidXml = null;
         String containerXml = retrieve(containerId);
+        String objectPidXml, versionPidXml, pidParam;
 
-        String pidParam;
         AssignParam assignPidParam = new AssignParam();
 
         // assign pid to member (Container)
@@ -384,10 +355,7 @@ public class OmTestBase extends EscidocAbstractTest {
     public String prepareItemPid(final String itemId, final String lmd) throws Exception {
 
         String newLmd = lmd;
-        String objectPidXml = null;
-        String versionPidXml = null;
-
-        String pidParam;
+        String objectPidXml, versionPidXml, pidParam;
         AssignParam assignPidParam = new AssignParam();
 
         // assign pid to member (item)
@@ -415,4 +383,28 @@ public class OmTestBase extends EscidocAbstractTest {
         return newLmd;
     }
 
+    /**
+     * Get objid from ordered component.
+     *
+     * @param document    the document.
+     * @param componentNo the component order number.
+     * @return component object id
+     * @throws Exception Thrown in case of internal error.
+     */
+    public static String getComponentObjidValue(final Document document, final int componentNo) throws Exception {
+        return getObjidFromHref(getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
+            + componentNo + "]", "href"));
+    }
+
+    /**
+     * Get objid from component.
+     *
+     * @param document the document.
+     * @param xpath    tXPath identifying the component.
+     * @return component object id
+     * @throws Exception Thrown in case of internal error.
+     */
+    public static String getComponentObjidValue(final Document document, final String xpath) throws Exception {
+        return getObjidFromHref(getAttributeValue(document, xpath, "href"));
+    }
 }

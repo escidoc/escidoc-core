@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.sm;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 /**
  * Offers access methods to the escidoc interface of the Statistic Data resource.
@@ -46,8 +46,9 @@ public class StatisticDataClient extends ClientBase {
      * @throws Exception If the service call fails.
      */
     public Object create(final Object statisticDataXml) throws Exception {
-        return callEsciDoc("StatisticData.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
-            + Constants.STATISTIC_DATA_BASE_URI, new String[] {}, changeToString(statisticDataXml));
+        return callEsciDoc("StatisticData.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_DATA_BASE_URI, new String[] {},
+            changeToString(statisticDataXml));
     }
 
 }

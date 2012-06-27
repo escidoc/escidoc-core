@@ -1,12 +1,10 @@
 package de.escidoc.core.test.tme.jhove;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.TmeException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -46,8 +44,8 @@ public class JhoveIT extends JhoveTestBase {
 
         // prepare item with pdf content
         File f =
-            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/testDocuments/"
-                + "ges-eSciDoc-article.pdf"));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_TEST_DATA
+                + "/testDocuments/" + "ges-eSciDoc-article.pdf"));
         URL file = uploadFileToStagingServlet(f, "application/pdf");
 
         Document template = getTemplateAsDocument(TEMPLATE_TME_PATH, "request.xml");
@@ -59,8 +57,8 @@ public class JhoveIT extends JhoveTestBase {
 
         Document resultDoc = getDocument(result);
         selectSingleNodeAsserted(resultDoc, "/jhove");
-        assertJhoveRepInfo(resultDoc, getBaseUrl() + Constants.ESCIDOC_BASE_URI + "/images/escidoc-logo.jpg",
-            "JPEG-hul", "1.2", "5304", "JPEG", "1.02", "Well-Formed and valid", "JPEG-hul");
+        assertJhoveRepInfo(resultDoc, Constants.WEB_APP_URI_ESCIDOC + "/images/escidoc-logo.jpg", "JPEG-hul", "1.2",
+            "5304", "JPEG", "1.02", "Well-Formed and valid", "JPEG-hul");
         assertJhoveRepInfo(resultDoc, file.toString(), "PDF-hul", "1.7", "129361", "PDF", "1.4",
             "Well-Formed and valid", "PDF-hul");
         assertEquals("Jhove report does not contain expected number of results!", 2, selectNodeList(resultDoc,

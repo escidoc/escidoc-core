@@ -31,7 +31,6 @@ package de.escidoc.core.test.om.contentRelation;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 import org.junit.Before;
 import org.junit.Test;

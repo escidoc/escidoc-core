@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
@@ -116,10 +117,8 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
         // create empty indices/////////////////////////////////////////////////
         String urlParameters =
             "?operation=updateIndex" + "&action=createEmpty" + "&repositoryName=escidocrepository" + "&indexName=";
-        String httpUrl =
-            getBaseUrl() + de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI + urlParameters;
-        HttpHelper.executeHttpRequest(de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET, httpUrl,
-            null, null, null);
+        String httpUrl = getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA_GSEARCH + urlParameters;
+        HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET, httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         startTime = new DateTime(System.currentTimeMillis(), DateTimeZone.UTC).toString();
@@ -190,8 +189,8 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.OU_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
-        assertEquals(Constants.OU_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
+        assertEquals(SearchTestConstants.OU_ADMIN_INDEX_FIELD_COUNT, getIndexFieldCount(response));
+        assertEquals(SearchTestConstants.OU_ADMIN_SORT_FIELD_COUNT, getSortFieldCount(response));
     }
 
     /**
@@ -297,8 +296,7 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                    + ouIds[7]);
+                put("scope0", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ouIds[7]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "12");
@@ -333,8 +331,7 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                    + ouIds[8]);
+                put("scope0", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ouIds[8]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "9");
@@ -370,8 +367,7 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                    + ouIds[9]);
+                put("scope0", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ouIds[9]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "8");
@@ -406,8 +402,7 @@ public class OrgUnitAdminSearchIT extends SearchTestBase {
 
             {
                 put("role0", GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client.servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                    + ouIds[12]);
+                put("scope0", Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + ouIds[12]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "6");

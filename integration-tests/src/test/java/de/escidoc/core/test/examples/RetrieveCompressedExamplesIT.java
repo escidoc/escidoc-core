@@ -41,7 +41,7 @@ import org.junit.Test;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.test.EscidocAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 
@@ -64,8 +64,7 @@ public class RetrieveCompressedExamplesIT extends EscidocAbstractTest {
             String response = null;
 
             String url =
-                getBaseUrl() + Constants.ESCIDOC_BASE_URI + Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/"
-                    + EXAMPLE_OU_IDS[i];
+                Constants.WEB_APP_URI_ESCIDOC + Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + EXAMPLE_OU_IDS[i];
 
             HttpClient client = new HttpClient();
 

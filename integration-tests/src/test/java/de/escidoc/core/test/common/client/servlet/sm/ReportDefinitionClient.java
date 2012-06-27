@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.sm;
 
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class ReportDefinitionClient extends ClientBase {
     public Object create(final Object reportDefinitionXml) throws Exception {
 
         return callEsciDoc("ReportDefinition.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] {},
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] {},
             changeToString(reportDefinitionXml));
     }
 
@@ -66,7 +66,7 @@ public class ReportDefinitionClient extends ClientBase {
     public Object delete(final String id) throws Exception {
 
         return callEsciDoc("ReportDefinition.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -80,7 +80,7 @@ public class ReportDefinitionClient extends ClientBase {
     public Object retrieve(final String id) throws Exception {
 
         return callEsciDoc("ReportDefinition.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id });
     }
 
     /**
@@ -93,8 +93,8 @@ public class ReportDefinitionClient extends ClientBase {
     public Object retrieveReportDefinitions(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("ReportDefinition.retrieveReportDefinitions", METHOD_RETRIEVE_REPORT_DEFINITIONS,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_REPORT_DEFINITIONS_BASE_URI,
-            new String[] {}, filter);
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC
+                + Constants.STATISTIC_REPORT_DEFINITIONS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -109,7 +109,7 @@ public class ReportDefinitionClient extends ClientBase {
     public Object update(final String id, final Object itemXml) throws Exception {
 
         return callEsciDoc("ReportDefinition.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.STATISTIC_REPORT_DEFINITION_BASE_URI, new String[] { id },
             changeToString(itemXml));
     }
 

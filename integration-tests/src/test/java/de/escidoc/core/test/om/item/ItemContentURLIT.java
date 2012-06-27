@@ -32,12 +32,11 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoun
 import de.escidoc.core.test.EntityUtil;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -244,7 +243,8 @@ public class ItemContentURLIT extends ItemTestBase {
 
         // download file from test data service to local tempfile
         File f =
-            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.TESTDATA_BASE_URI + "/" + testUploadFile));
+            downloadTempFile(new URL(EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_TEST_DATA + "/"
+                + testUploadFile));
 
         InputStream fileInputStream = new FileInputStream(f);
 
@@ -313,7 +313,7 @@ public class ItemContentURLIT extends ItemTestBase {
         this.theItemId = getObjidValue(this.theItemDoc);
 
         // content to staging
-        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.FEDORA_BASE_URI;
+        String fedoraUrl = EscidocTestBase.getBaseUrl() + Constants.WEB_CONTEXT_URI_FEDORA;
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
         this.theItemDoc = (Document) substitute(this.theItemDoc, "/item/components/component[1]/content/@href", url);

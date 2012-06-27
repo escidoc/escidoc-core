@@ -33,7 +33,7 @@ import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -44,7 +44,6 @@ import java.net.URL;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
@@ -64,7 +63,7 @@ public class ItemClient extends ClientBase
     public Object retrieveItems(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Item.retrieveItems", METHOD_RETRIEVE_ITEMS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEMS_BASE_URI, new String[] {}, filter);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEMS_BASE_URI, new String[] {}, filter);
     }
 
     /**
@@ -77,7 +76,7 @@ public class ItemClient extends ClientBase
     @Override
     public Object create(final Object itemXml) throws Exception {
 
-        return callEsciDoc("Item.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.create", METHOD_CREATE, Constants.HTTP_METHOD_PUT, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] {}, changeToString(itemXml));
     }
 
@@ -91,8 +90,8 @@ public class ItemClient extends ClientBase
     @Override
     public Object delete(final String id) throws Exception {
 
-        return callEsciDoc("Item.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE, Constants.ESCIDOC_BASE_URI
-            + Constants.ITEM_BASE_URI, new String[] { id });
+        return callEsciDoc("Item.delete", METHOD_DELETE, Constants.HTTP_METHOD_DELETE,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id });
     }
 
     /**
@@ -105,21 +104,21 @@ public class ItemClient extends ClientBase
     @Override
     public Object retrieve(final String id) throws Exception {
 
-        return callEsciDoc("Item.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI
-            + Constants.ITEM_BASE_URI, new String[] { id });
+        return callEsciDoc("Item.retrieve", METHOD_RETRIEVE, Constants.HTTP_METHOD_GET,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id });
     }
 
     public Object addContentRelations(final String itemId, final String param) throws Exception {
 
         return callEsciDoc("Item.addContentRelations", METHOD_ADD_CONTENT_RELATIONS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
                 Constants.SUB_ADD_CONTENT_RELATIONS }, param);
     }
 
     public Object removeContentRelations(final String itemId, final String param) throws Exception {
 
         return callEsciDoc("Item.removeContentRelations", METHOD_REMOVE_CONTENT_RELATIONS, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
                 Constants.SUB_REMOVE_CONTENT_RELATIONS }, param);
     }
 
@@ -134,7 +133,7 @@ public class ItemClient extends ClientBase
     @Override
     public Object update(final String id, final Object itemXml) throws Exception {
 
-        return callEsciDoc("Item.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.update", METHOD_UPDATE, Constants.HTTP_METHOD_PUT, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] { id }, changeToString(itemXml));
     }
 
@@ -149,7 +148,7 @@ public class ItemClient extends ClientBase
     public Object createComponent(final String id, final String component) throws Exception {
 
         return callEsciDoc("Item.createComponent", METHOD_CREATE_COMPONENT, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_COMPONENT },
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_COMPONENT },
             component);
     }
 
@@ -164,8 +163,8 @@ public class ItemClient extends ClientBase
     public Object retrieveComponent(final String itemId, final String componentId) throws Exception {
 
         return callEsciDoc("Item.retrieveComponent", METHOD_RETRIEVE_COMPONENT, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENT,
-                componentId });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENT, componentId });
     }
 
     /**
@@ -179,8 +178,8 @@ public class ItemClient extends ClientBase
     public Object deleteComponent(final String itemId, final String componentId) throws Exception {
 
         return callEsciDoc("Item.deleteComponent", METHOD_DELETE_COMPONENT, Constants.HTTP_METHOD_DELETE,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENT,
-                componentId });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENT, componentId });
     }
 
     /**
@@ -196,8 +195,8 @@ public class ItemClient extends ClientBase
         throws Exception {
 
         return callEsciDoc("Item.updateComponent", METHOD_UPDATE_COMPONENT, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENT,
-                componentId }, component);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENT, componentId }, component);
     }
 
     /**
@@ -211,8 +210,8 @@ public class ItemClient extends ClientBase
     public Object retrieveContent(final String itemId, final String componentId) throws Exception {
 
         return callEsciDoc("Item.retrieveContent", METHOD_RETRIEVE_CONTENT, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENT,
-                componentId, Constants.SUB_CONTENT });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENT, componentId, Constants.SUB_CONTENT });
     }
 
     /**
@@ -230,7 +229,7 @@ public class ItemClient extends ClientBase
         throws Exception {
 
         return callEsciDoc("Item.retrieveContent", METHOD_RETRIEVE_CONTENT, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, transformParams, new String[] { itemId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, transformParams, new String[] { itemId,
                 Constants.SUB_COMPONENT, componentId, Constants.SUB_CONTENT, transformationSerice });
     }
 
@@ -244,7 +243,8 @@ public class ItemClient extends ClientBase
     public Object retrieveComponents(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveComponents", METHOD_RETRIEVE_COMPONENTS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENTS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENTS });
     }
 
     /**
@@ -258,8 +258,8 @@ public class ItemClient extends ClientBase
     public Object retrieveComponentProperties(final String itemId, final String componentId) throws Exception {
 
         return callEsciDoc("Item.retrieveComponentProperties", METHOD_RETRIEVE_COMPONENT_PROPERTIES,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
-                Constants.SUB_COMPONENT, componentId, Constants.SUB_PROPERTIES });
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] {
+                itemId, Constants.SUB_COMPONENT, componentId, Constants.SUB_PROPERTIES });
     }
 
     /**
@@ -273,8 +273,8 @@ public class ItemClient extends ClientBase
     public Object retrieveMdRecord(final String itemId, final String mdRecordId) throws Exception {
 
         return callEsciDoc("Item.retrieveMetadataRecord", METHOD_RETRIEVE_MD_RECORD, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORD,
-                mdRecordId });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORD, mdRecordId });
     }
 
     /**
@@ -290,8 +290,8 @@ public class ItemClient extends ClientBase
         throws Exception {
 
         return callEsciDoc("Item.updateMetadataRecord", METHOD_UPDATE_MD_RECORD, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORD,
-                mdRecordId }, changeToString(mdRecordXml));
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORD, mdRecordId }, changeToString(mdRecordXml));
     }
 
     /**
@@ -304,7 +304,8 @@ public class ItemClient extends ClientBase
     public Object retrieveMdRecords(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveMetadataRecords", METHOD_RETRIEVE_MD_RECORDS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORDS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORDS });
 
     }
 
@@ -318,7 +319,7 @@ public class ItemClient extends ClientBase
     public Object retrieveParents(final String id) throws Exception {
 
         return callEsciDoc("Item.retrieveParents", METHOD_RETRIEVE_PARENTS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { id,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES + "/" + Constants.SUB_PARENTS });
     }
 
@@ -333,8 +334,8 @@ public class ItemClient extends ClientBase
     public Object retrieveContentStreams(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStreams", METHOD_RETRIEVE_CONTENT_STREAMS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI,
-            new String[] { itemId, Constants.SUB_CONTENT_STREAMS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_CONTENT_STREAMS });
 
     }
 
@@ -350,8 +351,8 @@ public class ItemClient extends ClientBase
     public Object retrieveContentStreamContent(final String itemId, final String contentStreamName) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStreamContent", METHOD_RETRIEVE_CONTENT_STREAM_CONTENT,
-            Constants.HTTP_METHOD_GET, Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
-                Constants.SUB_CONTENT_STREAM, contentStreamName, "/content" });
+            Constants.HTTP_METHOD_GET, Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] {
+                itemId, Constants.SUB_CONTENT_STREAM, contentStreamName, "/content" });
 
     }
 
@@ -367,8 +368,8 @@ public class ItemClient extends ClientBase
     public Object retrieveContentStream(final String itemId, final String contentStreamName) throws Exception {
 
         return callEsciDoc("Item.retrieveContentStream", METHOD_RETRIEVE_CONTENT_STREAM, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_CONTENT_STREAM,
-                contentStreamName });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_CONTENT_STREAM, contentStreamName });
 
     }
 
@@ -383,8 +384,8 @@ public class ItemClient extends ClientBase
     public Object updateMdRecords(final String itemId, final String metaDataRecords) throws Exception {
 
         return callEsciDoc("Item.updateMetaDataRecords", METHOD_UPDATE_MD_RECORDS, Constants.HTTP_METHOD_PUT,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_MD_RECORDS },
-            metaDataRecords);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_MD_RECORDS }, metaDataRecords);
 
     }
 
@@ -398,7 +399,7 @@ public class ItemClient extends ClientBase
     public Object retrieveProperties(final String id) throws Exception {
 
         return callEsciDoc("Item.retrieveProperties", METHOD_RETRIEVE_PROPERTIES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_PROPERTIES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_PROPERTIES });
     }
 
     /**
@@ -411,8 +412,8 @@ public class ItemClient extends ClientBase
     public Object retrieveVersionHistory(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveVersionHistory", METHOD_RETRIEVE_VERSION_HISTORY, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI,
-            new String[] { itemId, Constants.SUB_VERSION_HISTORY });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_VERSION_HISTORY });
     }
 
     /**
@@ -425,7 +426,7 @@ public class ItemClient extends ClientBase
     public Object retrieveResources(final String id) throws Exception {
 
         return callEsciDoc("Item.retrieveResources", METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_RESOURCES });
     }
 
     /**
@@ -438,7 +439,7 @@ public class ItemClient extends ClientBase
     public Object retrieveRelations(final String id) throws Exception {
 
         return callEsciDoc("Item.retrieveRelations", METHOD_RETRIEVE_RELATIONS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_RELATIONS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { id, Constants.SUB_RELATIONS });
     }
 
     /**
@@ -451,7 +452,7 @@ public class ItemClient extends ClientBase
     public Object retrieveMets(final String itemId) throws Exception {
 
         return callEsciDoc("Item.retrieveMets", METHOD_RETRIEVE_METS, Constants.HTTP_METHOD_GET,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_METS });
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_METS });
     }
 
     /**
@@ -465,7 +466,7 @@ public class ItemClient extends ClientBase
     public Object assignVersionPid(final String itemId, final String param) throws Exception {
 
         return callEsciDoc("Item.assignVersionPid", METHOD_ASSIGN_VERSION_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
                 Constants.SUB_ASSIGN_VERSION_PID }, param);
     }
 
@@ -480,7 +481,7 @@ public class ItemClient extends ClientBase
     public Object assignObjectPid(final String itemId, final String param) throws Exception {
 
         return callEsciDoc("Item.assignObjectPid", METHOD_ASSIGN_OBJECT_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
                 Constants.SUB_ASSIGN_OBJECT_PID }, param);
     }
 
@@ -496,8 +497,8 @@ public class ItemClient extends ClientBase
     public Object assignContentPid(final String itemId, final String componentId, final String param) throws Exception {
 
         return callEsciDoc("Item.assignContentPid", METHOD_ASSIGN_CONTENT_PID, Constants.HTTP_METHOD_POST,
-            Constants.ESCIDOC_BASE_URI + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_COMPONENT,
-                componentId, Constants.SUB_ASSIGN_CONTENT_PID }, param);
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI, new String[] { itemId,
+                Constants.SUB_COMPONENT, componentId, Constants.SUB_ASSIGN_CONTENT_PID }, param);
     }
 
     /**
@@ -596,8 +597,9 @@ public class ItemClient extends ClientBase
      */
     public Object releaseWithoutPid(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_RELEASE }, param);
+        return callEsciDoc("Item.release", METHOD_RELEASE, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI,
+            new String[] { itemId, Constants.SUB_RELEASE }, param);
     }
 
     /**
@@ -608,7 +610,7 @@ public class ItemClient extends ClientBase
      */
     public Object revise(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.revise", METHOD_REVISE, Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_REVISE }, param);
     }
 
@@ -620,7 +622,7 @@ public class ItemClient extends ClientBase
      */
     public Object submit(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.submit", METHOD_SUBMIT, Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_SUBMIT }, param);
     }
 
@@ -632,8 +634,9 @@ public class ItemClient extends ClientBase
      */
     public Object withdraw(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.withdraw", METHOD_WITHDRAW, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
-            + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_WITHDRAW }, param);
+        return callEsciDoc("Item.withdraw", METHOD_WITHDRAW, Constants.HTTP_METHOD_POST,
+            Constants.WEB_CONTEXT_URI_ESCIDOC + Constants.ITEM_BASE_URI,
+            new String[] { itemId, Constants.SUB_WITHDRAW }, param);
     }
 
     /**
@@ -646,7 +649,7 @@ public class ItemClient extends ClientBase
      */
     public Object lock(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.lock", METHOD_LOCK, Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_LOCK }, param);
     }
 
@@ -660,7 +663,7 @@ public class ItemClient extends ClientBase
      */
     public Object unlock(final String itemId, final String param) throws Exception {
 
-        return callEsciDoc("Item.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST, Constants.ESCIDOC_BASE_URI
+        return callEsciDoc("Item.unlock", METHOD_UNLOCK, Constants.HTTP_METHOD_POST, Constants.WEB_CONTEXT_URI_ESCIDOC
             + Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_UNLOCK }, param);
     }
 }
