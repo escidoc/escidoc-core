@@ -46,11 +46,29 @@
   <bean id="service.adm.admin"                class="org.escidoc.core.adm.internal.AdminRestServiceImpl"/>
   <bean id="service.fedora.deviation"         class="org.escidoc.core.fedoradeviation.internal.FedoraDeviationRestServiceImpl"/>
 
+  <!-- Security Issues -->
+  <!-- 1. Avoid XML payload attacks (You may change this configuration to your needs) -->
+  <bean id="depthInterceptor" class="org.apache.cxf.interceptor.security.DepthRestrictingStreamInterceptor">
+    <!-- Total number of elements in the XML payload -->
+    <property name="elementCountThreshold" value="5000"/>
+    <!-- Total number of child elements in the XML payload -->
+    <property name="innerElementCountThreshold" value="3000"/>
+    <!-- Maximum stack depth of the XML payload -->
+    <property name="innerElementLevelThreshold" value="20"/>
+  </bean>
+  <!-- 2. Nothing yet -->
+
   <!--
+  Server Configuration
+
   We do not need dynamic sub-resource resolution, because of we define our JAX-RS interfaces and do not dynamically add
   other endpoints. This will increase performance.
   -->
   <jaxrs:server id="RestServices" address="" staticSubresourceResolution="true">
+    <!-- TODO: enable when CXF 2.6.2 got released -->
+    <!--jaxrs:schemaLocations>
+      <jaxrs:schemaLocation>classpath*:/xsd/*.xsd</jaxrs:schemaLocation>
+    </jaxrs:schemaLocations-->
     <jaxrs:providers>
       <ref bean="escidocJaxbProvider"/>
       <ref bean="escidocExceptionMapper"/>
@@ -58,7 +76,7 @@
       <ref bean="cachedOutputStreamMessageBodyWriter"/>
     </jaxrs:providers>
     <jaxrs:serviceBeans>
-      <!-- Configured services available on runtime -->
+      <!-- Configured services available at runtime -->
       <ref bean="service.ir.item"/>
       <ref bean="service.ir.item-filter"/>
       <ref bean="service.ir.container"/>
@@ -100,5 +118,8 @@
       <ref bean="compressGZIPFeature"/>
       <ref bean="loggingFeature"/>
     </jaxrs:features>
+    <jaxrs:inInterceptors>
+      <ref bean="depthInterceptor"/>
+    </jaxrs:inInterceptors>
   </jaxrs:server>
 </beans>
