@@ -3,10 +3,7 @@
 <processing>
  
   <job name="Migration">
-    <executefile name="java">
-      <arg>-classpath</arg>
-      <arg>${INSTALL_PATH}/tools/migration/lib/ant-contrib-1.0b1.jar;${INSTALL_PATH}/tools/migration/lib/ant-launcher.jar;${INSTALL_PATH}/tools/migration/lib/ant.jar</arg>
-      <arg>org.apache.tools.ant.Main</arg>
+    <executefile name="ant">
       <arg>-f</arg>
       <arg>${INSTALL_PATH}/tools/migration/build.xml</arg>
       <arg>db-migration</arg>
