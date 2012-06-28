@@ -130,6 +130,8 @@
       <variable name="SqlScriptDelimiterTypePostgres" value="normal" />
       <variable name="SqlScriptKeepFormatPostgres" value="false" />
       <variable name="RootDatabaseNamePostgres" value="postgres" />
+      <variable name="DatabaseMaxStatementsPostgres" value="15000" />
+      <variable name="DatabaseMaxStatementsPerConnectionPostgres" value="1000" />
 
       <!-- MySQL -->
       <variable name="jdbc.driver.mysql" value="" />
@@ -139,6 +141,8 @@
       <variable name="SqlScriptDelimiterMySQL" value=";" />
       <variable name="SqlScriptDelimiterTypeMySQL" value="normal" />
       <variable name="SqlScriptKeepFormatMySQL" value="false" />
+      <variable name="DatabaseMaxStatementsMySQL" value="15000" />
+      <variable name="DatabaseMaxStatementsPerConnectionMySQL" value="1000" />
 
       <!-- Oracle -->
       <variable name="DatabaseAdminUsernameOracle" value="oraesci_adm" />
@@ -149,6 +153,8 @@
       <variable name="SqlScriptKeepFormatOracle" value="true" />
       <variable name="OracleDDLGenerator" value="mptstore-oracle-0.9.4.jar" />
       <variable name="RootDatabaseNameOracle" value="oraesci01" />
+      <variable name="DatabaseMaxStatementsOracle" value="0" />
+      <variable name="DatabaseMaxStatementsPerConnectionOracle" value="0" />
 
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
@@ -211,6 +217,13 @@
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernamePostgres}" condition="databaseIsPostgres" />
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameMySQL}" condition="databaseIsMySQL" />
       <variable name="DatabaseAdminUsername" value="${DatabaseAdminUsernameOracle}" condition="databaseIsOracle" />
+      <!-- database max prepared statements -->
+      <variable name="DatabaseMaxStatements" value="${DatabaseMaxStatementsOracle}" condition="databaseIsOracle" />
+      <variable name="DatabaseMaxStatements" value="${DatabaseMaxStatementsMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseMaxStatements" value="${DatabaseMaxStatementsPostgres}" condition="databaseIsPostgres" />
+      <variable name="DatabaseMaxStatementsPerConnection" value="${DatabaseMaxStatementsPerConnectionOracle}" condition="databaseIsOracle" />
+      <variable name="DatabaseMaxStatementsPerConnection" value="${DatabaseMaxStatementsPerConnectionMySQL}" condition="databaseIsMySQL" />
+      <variable name="DatabaseMaxStatementsPerConnection" value="${DatabaseMaxStatementsPerConnectionPostgres}" condition="databaseIsPostgres" />
       <!-- PostgreSQL requires a root database to which one needs to connected to be able to create databaes and roles -->
       <variable name="DatabaseAccessor" value="DirectPostgresDatabaseAccessor" condition="databaseIsPostgres" />
       <variable name="DatabaseAccessor" value="DirectMysqlDatabaseAccessor" condition="databaseIsMySQL" />
