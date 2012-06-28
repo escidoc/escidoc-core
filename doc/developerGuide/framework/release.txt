@@ -14,3 +14,5 @@
 -copy artifacts to escidoc.org directory /builds/stable-releases/<version>
 
 -adapt escidoc.org wiki -> DownloadInfrastructure ->Download and ->Installation with new Links
+
+-update all poms with <new-version>-SNAPSHOT
