@@ -421,7 +421,7 @@
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
                                     xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1277907.xml"
-                                    storage="internal-managed"/>
+                                    storage="external-url"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
                                               xlink:title="eSciDoc internal MD Record"
@@ -804,7 +804,7 @@
          </escidocComponents:properties>
          <escidocComponents:content xlink:type="simple"
                                     xlink:href="http://localhost:8080/testdata/testDocuments/ir/pdf/EPFull_1277907.pdf"
-                                    storage="internal-managed"/>
+                                    storage="external-url"/>
          <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
                                               xlink:title="eSciDoc internal MD Record"
