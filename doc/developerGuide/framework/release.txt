@@ -1,3 +1,16 @@
 -change version in all poms (without -SNAPSHOT)
 -set version in Bugzilla to published
 -neue version in Bugzilla erstellen 
+
+-if sonar throws exception, maybe new version already was deployed once before.
+ check history in sonar as admin. If so, change name of version in sonar.
+ 
+-generated artifacts are located in 
+  .jenkins/jobs/eSciDoc-1.3/builds/257/archive/eSciDocCore/installer/target
+    and
+  .jenkins/jobs/eSciDoc-1.3/builds/257/archive/eSciDocCore/assembly/target
+  
+-create new subdirectory for version-artifacts on escidoc.org, dirctory /builds/stable-releases
+-copy artifacts to escidoc.org directory /builds/stable-releases/<version>
+
+-adapt escidoc.org wiki -> DownloadInfrastructure ->Download and ->Installation with new Links
