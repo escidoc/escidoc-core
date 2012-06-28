@@ -7,7 +7,6 @@
       <arg>-f</arg>
       <arg>${INSTALL_PATH}/tools/migration/build.xml</arg>
       <arg>db-migration</arg>
-      <arg>foxml-migration</arg>
     </executefile>
   </job>
  
