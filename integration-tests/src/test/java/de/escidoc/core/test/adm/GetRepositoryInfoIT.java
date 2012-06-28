@@ -37,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.Properties;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -55,7 +56,7 @@ public class GetRepositoryInfoIT extends AdminToolTestBase {
     @Test
     public void testGetRepositoryInfo() throws Exception {
         // remove style sheet from XML
-        BufferedReader reader = new BufferedReader(new StringReader(getRepositoryInfo()));
+        BufferedReader reader = new BufferedReader(new StringReader(getRepositoryInfo(null)));
         StringBuffer output = new StringBuffer();
         String line = null;
 
@@ -82,6 +83,70 @@ public class GetRepositoryInfoIT extends AdminToolTestBase {
 
         assertTrue("current database structure differs from the internally stored structure", Boolean
             .valueOf(repositoryInfo.getProperty("escidoc-core.database.consistent")));
+    }
+
+    /**
+     * Get some information about the repository.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testGetRepositoryInfoValidKey() throws Exception {
+        // remove style sheet from XML
+        BufferedReader reader =
+            new BufferedReader(new StringReader(getRepositoryInfo(PropertiesProvider.ESCIDOC_VERSION)));
+        StringBuffer output = new StringBuffer();
+        String line = null;
+
+        while ((line = reader.readLine()) != null) {
+            if (line.contains("<?xml-stylesheet")) {
+                line = line.replaceFirst("<\\?xml-stylesheet[^>]*?>", "");
+            }
+            output.append(line);
+        }
+
+        Properties repositoryInfo = new Properties();
+
+        repositoryInfo.loadFromXML(new ByteArrayInputStream(output.toString().getBytes(Charsets.UTF8_CHARSET)));
+
+        // Check Property escidoc-core.build that comes from
+        // internal configuration file escidoc-core.constant.properties
+        assertNotNull("Property " + PropertiesProvider.ESCIDOC_VERSION + " is null", repositoryInfo
+            .getProperty(PropertiesProvider.ESCIDOC_VERSION));
+
+        // Check Property escidoc-core.repository-name that comes from
+        // external configuration file escidoc-core.properties
+        assertEquals("Property escidoc-core.repository-name is not null", null, repositoryInfo
+            .getProperty("escidoc-core.repository-name"));
+
+        assertEquals("Property escidoc-core.database.consistent is not null", null, repositoryInfo
+            .getProperty("escidoc-core.database.consistent"));
+    }
+
+    /**
+     * Get some information about the repository.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testGetRepositoryInfoInvalidKey() throws Exception {
+        // remove style sheet from XML
+        BufferedReader reader = new BufferedReader(new StringReader(getRepositoryInfo("invalid")));
+        StringBuffer output = new StringBuffer();
+        String line = null;
+
+        while ((line = reader.readLine()) != null) {
+            if (line.contains("<?xml-stylesheet")) {
+                line = line.replaceFirst("<\\?xml-stylesheet[^>]*?>", "");
+            }
+            output.append(line);
+        }
+
+        Properties repositoryInfo = new Properties();
+
+        repositoryInfo.loadFromXML(new ByteArrayInputStream(output.toString().getBytes(Charsets.UTF8_CHARSET)));
+
+        assertEquals("Properties are not empty", 0, repositoryInfo.size());
     }
 
     /**

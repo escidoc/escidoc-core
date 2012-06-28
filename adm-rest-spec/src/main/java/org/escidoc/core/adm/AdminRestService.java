@@ -166,6 +166,36 @@ public interface AdminRestService {
         throws AuthenticationException, AuthorizationException, InvalidXmlException, SystemException;
 
     /**
+     * Provides an XML structure containing property with given key out of public configuration properties of the
+     * eSciDoc Infrastructure as TO.
+     * Supported keys are:
+     * gsearch.url
+     * escidoc-core.build
+     * escidoc-core.baseurl
+     * escidoc-core.repository-name
+     * escidoc-core.admin-email
+     * escidoc-core.earliest-date
+     * escidoc-core.database.version
+     * escidoc-core.database.consistent
+     * escidoc-core.om.content.checksum-algorithm
+     * 
+     * @param key property-key
+     * @return XML structure with eSciDoc configuration property as TO
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @throws AuthenticationException
+     *             Thrown if the authentication failed due to an invalid provided eSciDoc user handle.
+     * @throws AuthorizationException
+     *             Thrown if the authorization failed.
+     */
+    @GET
+    @Path("/get-repository-info/{key}")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<PropertiesTypeTO> getRepositoryInfo(@NotNull @PathParam("key") String key)
+        throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
+        EncodingSystemException, SystemException;
+
+    /**
      * Provides an XML structure containing public configuration properties of the eSciDoc Infrastructure and the
      * earliest creation date of eSciDoc repository objects as TO.
      *
@@ -179,22 +209,6 @@ public interface AdminRestService {
     @Path("/get-repository-info")
     @Produces(MediaType.TEXT_XML)
     JAXBElement<PropertiesTypeTO> getRepositoryInfo()
-        throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
-        EncodingSystemException, SystemException;
-
-    /**
-     * Provides a xml structure containing information about database-consistency.
-     *
-     * @return xml structure with database consistency properties as TO
-     * @throws SystemException         Thrown in case of an internal error.
-     * @throws AuthenticationException Thrown if the authentication failed due to an invalid provided eSciDoc user
-     *                                 handle.
-     * @throws AuthorizationException  Thrown if the authorization failed.
-     */
-    @GET
-    @Path("/check-database-consistency")
-    @Produces(MediaType.TEXT_XML)
-    JAXBElement<PropertiesTypeTO> checkDatabaseConsistency()
         throws AuthenticationException, AuthorizationException, WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, SystemException;
 

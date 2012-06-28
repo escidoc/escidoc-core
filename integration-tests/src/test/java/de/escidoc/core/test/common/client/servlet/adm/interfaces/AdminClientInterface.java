@@ -13,5 +13,5 @@ public interface AdminClientInterface {
      * @return information about the repository.
      * @throws Exception Thrown if retrieving failed.
      */
-    Object getRepositoryInfo() throws Exception;
+    Object getRepositoryInfo(final String key) throws Exception;
 }

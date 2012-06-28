@@ -88,8 +88,8 @@ public class AdminToolTestBase extends EscidocAbstractTest {
      * @return repository information
      * @throws Exception If anything fails.
      */
-    protected String getRepositoryInfo() throws Exception {
-        return handleXmlResult(adminClient.getRepositoryInfo());
+    protected String getRepositoryInfo(final String key) throws Exception {
+        return handleXmlResult(adminClient.getRepositoryInfo(key));
     }
 
     /**

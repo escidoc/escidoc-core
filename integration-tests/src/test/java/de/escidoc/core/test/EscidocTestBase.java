@@ -2665,7 +2665,7 @@ public abstract class EscidocTestBase extends EscidocAssertions {
         if (REPOSITORY_VERSION == null) {
 
             AdminClient admClient = new AdminClient();
-            String info = handleXmlResult(admClient.getRepositoryInfo());
+            String info = handleXmlResult(admClient.getRepositoryInfo(null));
 
             Pattern p = Pattern.compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
             Matcher m = p.matcher(info);

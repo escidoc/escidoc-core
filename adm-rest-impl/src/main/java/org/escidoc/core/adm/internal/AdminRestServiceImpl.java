@@ -124,22 +124,23 @@ public class AdminRestServiceImpl implements AdminRestService {
     }
 
     /* (non-Javadoc)
+     * @see de.escidoc.core.adm.AdminRestService#getRepositoryInfo(String)
+     */
+    @Override
+    public JAXBElement<PropertiesTypeTO> getRepositoryInfo(String key)
+        throws AuthenticationException, AuthorizationException, SystemException {
+        String xml = this.adminHandler.getRepositoryInfo(key);
+        return factoryProvider.getJavaPropertiesFactory().createProperties(
+            serviceUtility.fromXML(PropertiesTypeTO.class, xml));
+    }
+
+    /* (non-Javadoc)
      * @see de.escidoc.core.adm.AdminRestService#getRepositoryInfo()
      */
     @Override
     public JAXBElement<PropertiesTypeTO> getRepositoryInfo()
         throws AuthenticationException, AuthorizationException, SystemException {
         String xml = this.adminHandler.getRepositoryInfo();
-        return factoryProvider.getJavaPropertiesFactory().createProperties(
-            serviceUtility.fromXML(PropertiesTypeTO.class, xml));
-    }
-
-    /* (non-Javadoc)
-     * @see de.escidoc.core.adm.AdminRestService#checkDatabaseConsistency()
-     */
-    @Override
-    public JAXBElement<PropertiesTypeTO> checkDatabaseConsistency() throws AuthenticationException, AuthorizationException, SystemException {
-        String xml = this.adminHandler.checkDatabaseConsistency();
         return factoryProvider.getJavaPropertiesFactory().createProperties(
             serviceUtility.fromXML(PropertiesTypeTO.class, xml));
     }
