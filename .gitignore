@@ -1,2 +1,6 @@
 target/
-/attachments
+.classpath
+.checkstyle
+.project
+.externalToolBuilders/
+.settings/
