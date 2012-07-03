@@ -1,3 +1,6 @@
 target/
-/activemq-data
-/attachments
+.classpath
+.checkstyle
+.project
+.externalToolBuilders/
+.settings/
