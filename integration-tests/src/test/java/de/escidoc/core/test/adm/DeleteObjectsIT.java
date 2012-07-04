@@ -28,18 +28,19 @@
  */
 package de.escidoc.core.test.adm;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.junit.Test;
+
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
-import org.junit.Test;
-
-import static org.junit.Assert.fail;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
@@ -80,6 +81,10 @@ public class DeleteObjectsIT extends AdminToolTestBase {
         catch (final ItemNotFoundException e) {
             // that's alright
         }
+
+        // check if item still exists in search index
+        int numHits = retrieveItems(Arrays.asList(id));
+        assertEquals("Number of hits not as expected", 1, numHits);
     }
 
     /**
@@ -120,6 +125,9 @@ public class DeleteObjectsIT extends AdminToolTestBase {
                 // that's expected for every Item
             }
         }
+        // check if items still exist in search index
+        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
     /**
@@ -160,6 +168,9 @@ public class DeleteObjectsIT extends AdminToolTestBase {
                 // that's expected for every Item
             }
         }
+        // check if items still exist in search index
+        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
     /**
@@ -201,6 +212,9 @@ public class DeleteObjectsIT extends AdminToolTestBase {
                 // that's expected for every Item
             }
         }
+        // check if items still exist in search index
+        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        assertEquals("Number of hits not as expected", 0, numHits);
     }
 
     /**

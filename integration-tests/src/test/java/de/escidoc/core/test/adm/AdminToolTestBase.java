@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.test.adm;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
@@ -122,6 +128,36 @@ public class AdminToolTestBase extends EscidocAbstractTest {
      */
     protected String retrieveItem(final String id) throws Exception {
         return handleXmlResult(itemClient.retrieve(id));
+    }
+
+    /**
+     * Retrieve items.
+     *
+     * @param ids item ids
+     * @return number of hits
+     * @throws Exception If anything fails.
+     */
+    protected int retrieveItems(final List<String> ids) throws Exception {
+        final Map<String, String[]> filterParams = new HashMap<String, String[]>();
+        StringBuilder query = new StringBuilder();
+        String numberOfHits = null;
+        for (String id : ids) {
+            if (query.length() > 0) {
+                query.append(" or ");
+            }
+            query.append("PID=").append(id);
+        }
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { query.toString() });
+
+        String searchResult = handleXmlResult(itemClient.retrieveItems(filterParams));
+
+        Pattern dateAttributePattern = Pattern.compile("numberOfRecords>(.*?)<");
+        Matcher m = dateAttributePattern.matcher(searchResult);
+        if (m.find()) {
+            numberOfHits = m.group(1);
+        }
+        return Integer.parseInt(numberOfHits);
     }
 
     /**
