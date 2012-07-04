@@ -126,7 +126,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
         assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
@@ -169,7 +169,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
         assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
@@ -213,7 +213,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[])l.toArray()));
+        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
         assertEquals("Number of hits not as expected", 0, numHits);
     }
 
