@@ -91,7 +91,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 /**
- * Base class for AA tests. 
+ * Base class for AA tests.
  *
  * @author Torsten Tetteroo
  */
