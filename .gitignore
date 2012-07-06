@@ -4,5 +4,5 @@ target/
 .project
 .externalToolBuilders/
 .settings/
-/attachments
-/activemq-data
+attachments/
+activemq-data/
