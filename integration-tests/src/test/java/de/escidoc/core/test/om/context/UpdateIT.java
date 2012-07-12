@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ContextName
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -355,8 +356,7 @@ public class UpdateIT extends ContextTestBase {
         Node type = selectSingleNode(resultDocument, "/context/properties/type");
         String propertiesNsPrefix = determinePropertiesNamespacePrefix(resultDocument);
         Element newDescription =
-            resultDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", propertiesNsPrefix
-                + ":description");
+            resultDocument.createElementNS(Constants.NS_IR_CONTEXT, propertiesNsPrefix + ":description");
         newDescription.setTextContent("new Description");
         selectSingleNode(resultDocument, "/context/properties").insertBefore(newDescription, type);
         String doubleModified = toString(resultDocument, false);
@@ -754,8 +754,7 @@ public class UpdateIT extends ContextTestBase {
 
         String contextNsPrefix = determineContextNamespacePrefix(createdDocument);
         Element adminDescriptor =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/context/0.6", contextNsPrefix
-                + ":admin-descriptor");
+            createdDocument.createElementNS(Constants.NS_IR_CONTEXT, contextNsPrefix + ":admin-descriptor");
         adminDescriptor.setAttribute("name", "name1");
 
         Element adminDescriptorContent = createdDocument.createElement("bla");

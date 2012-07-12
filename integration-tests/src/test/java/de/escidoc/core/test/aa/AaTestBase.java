@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 
 import de.escidoc.core.test.*;
+
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
@@ -4296,6 +4297,30 @@ public class AaTestBase extends EscidocAbstractTest {
             fail("Unexpected result, expected result of type HttpResponse.");
         }
         return xmlResult;
+    }
+
+    /**
+     * Get UserAttributeXml with given name + value.
+     * 
+     * @param name attribute-name
+     * @param value attribute-value
+     * @return UserAttributeXml.
+     */
+    protected String getUserAttributeXml(final String name, final String value) {
+        return de.escidoc.core.test.Constants.XML_HEADER + "<attribute xmlns=\"" + Constants.NS_AA_ATTRIBUTES
+            + "\" name=\"" + name + "\">" + value + "</attribute>";
+    }
+
+    /**
+     * Get UserPreferenceXml with given name + value.
+     * 
+     * @param name preference-name
+     * @param value preference-value
+     * @return UserPreferenceXml.
+     */
+    protected String getUserPreferenceXml(final String name, final String value) {
+        return de.escidoc.core.test.Constants.XML_HEADER + "<preference xmlns=\"" + Constants.NS_AA_PREFERENCES
+            + "\" name=\"key\">value</preference>";
     }
 
     /**

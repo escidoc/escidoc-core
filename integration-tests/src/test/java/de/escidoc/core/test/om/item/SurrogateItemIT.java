@@ -32,6 +32,7 @@ import java.net.URL;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
@@ -64,9 +65,7 @@ public class SurrogateItemIT extends ItemTestBase {
     public void testCreateSurrogateItemWithOwnAndInheritedMdRecordsLatestRelease() throws Exception {
         Document item =
             EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
-        Element mdRecord =
-            item.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5",
-                "escidocMetadataRecords:md-record");
+        Element mdRecord = item.createElementNS(Constants.NS_IR_MD_RECORDS, "escidocMetadataRecords:md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = item.createElement("bla");
@@ -331,8 +330,7 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
-                + ":md-record");
+            releasedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -401,8 +399,7 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
-                + ":md-record");
+            releasedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");
@@ -835,8 +832,7 @@ public class SurrogateItemIT extends ItemTestBase {
         // and the last pending version.
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(releasedDocument);
         Element mdRecord =
-            releasedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
-                + ":md-record");
+            releasedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = releasedDocument.createElement("bla");

@@ -1947,17 +1947,15 @@ public class UserGroupIT extends UserGroupTestBase {
         //create user with child ou
         Document createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_create1.xml");
         userAccountOuUser = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountOuUser, "<attribute xmlns="
-            + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1 + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountOuUser, getUserAttributeXml("o", ouId1));
 
         //create user with attribute
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
         String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
         createdUser = userAccountTestBase.createSuccessfully("escidoc_useraccount_for_groupfilter_test.xml");
         userAccountAttributeUser = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountAttributeUser, "<attribute xmlns="
-            + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName + "\">" + attributeValue
-            + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountAttributeUser, getUserAttributeXml(attributeName,
+            attributeValue));
 
         //create searchable groups
         for (int i = 0; i < additonalUserFilterSearchGroupsCount; i++) {

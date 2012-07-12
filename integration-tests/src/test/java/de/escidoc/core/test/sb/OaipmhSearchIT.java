@@ -290,8 +290,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     public void testSBOAIPMHSR1() throws Exception {
 
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("3", getNumberOfHits(response));
@@ -306,8 +306,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR2() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         try {
             search(parameters, "escidoc_fault");
             fail("No exception occured on search in non-existing database.");
@@ -325,8 +325,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR6() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "2");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -341,8 +341,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR7() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "0");
         String response = null;
         try {
@@ -362,8 +362,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR8() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "1");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -379,8 +379,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR9() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "0");
         String response = null;
         try {
@@ -402,8 +402,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR10() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "-1");
         try {
             String response = search(parameters, INDEX_NAME);
@@ -422,8 +422,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR11() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "xml");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -438,8 +438,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR12() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "string");
         String response = search(parameters, INDEX_NAME);
         assertEquals(null, getDiagnostics(response));
@@ -453,8 +453,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR13() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "something");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -469,8 +469,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR14() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "default");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -485,8 +485,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR15() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "none");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -501,8 +501,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR16() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.last-modification-date");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -526,8 +526,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR17() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.last-modification-date,,0");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -551,8 +551,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR18() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.sonstwas,,0");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -567,8 +567,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR21() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
@@ -583,8 +583,8 @@ public class OaipmhSearchIT extends SearchTestBase {
     @Test
     public void testSBOAIPMHSR22() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier="
-            + "\"escidoc@http://escidoc.mpg.de/metadataprofile/schema/0.1/\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
+            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);

@@ -128,9 +128,9 @@ public class ContainerCreateIT extends ContainerTestBase {
 
         // assert that namespace declarations of metadata are still present
         // after create
-        assertTrue("Missing eterms namespace", createdContainer
-            .contains("xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\""));
-        assertTrue("Missing PURL", createdContainer.contains("xmlns:dc=\"http://purl.org/dc/elements/1.1\""));
+        assertTrue("Missing eterms namespace", createdContainer.contains("xmlns:eterms=\""
+            + Constants.NS_EXTERNAL_ESCIDOC_DC + "\""));
+        assertTrue("Missing PURL", createdContainer.contains("xmlns:dc=\"" + Constants.NS_EXTERNAL_DC + "\""));
     }
 
     /**

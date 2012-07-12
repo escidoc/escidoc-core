@@ -31,6 +31,8 @@ package de.escidoc.core.test.sb;
 
 import java.util.HashMap;
 
+import de.escidoc.core.test.Constants;
+
 /**
  * Constants for Search-Tests.
  *
@@ -808,8 +810,8 @@ public final class SearchTestConstants {
                     private static final long serialVersionUID = 1L;
 
                     {
-                        put("searchString", "escidoc.md-record-identifier=" + "\"escidoc@http://escidoc.mpg.de/"
-                            + "metadataprofile/schema/0.1/\"");
+                        put("searchString", "escidoc.md-record-identifier=\"escidoc@"
+                            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
                         put("expectedHits", "2");
                     }
                 });
@@ -818,7 +820,7 @@ public final class SearchTestConstants {
 
                     {
                         put("searchString", "escidoc.md-record-identifier=" + "\"technical-md@"
-                            + "http://jhove.com/metadata/schema/0.5\"");
+                            + Constants.NS_EXTERNAL_JHOVE_METADATA + "\"");
                         put("expectedHits", "2");
                     }
                 });
@@ -858,8 +860,8 @@ public final class SearchTestConstants {
                     private static final long serialVersionUID = 1L;
 
                     {
-                        put("searchString", "escidoc.md-record-identifier=" + "\"escidoc@http://escidoc.mpg.de/"
-                            + "metadataprofile/schema/0.1/\"");
+                        put("searchString", "escidoc.md-record-identifier=\"escidoc@"
+                            + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
                         put("expectedHits", "1");
                     }
                 });
@@ -868,7 +870,7 @@ public final class SearchTestConstants {
 
                     {
                         put("searchString", "escidoc.md-record-identifier=" + "\"technical-md@"
-                            + "http://jhove.com/metadata/schema/0.5\"");
+                            + Constants.NS_EXTERNAL_JHOVE_METADATA + "\"");
                         put("expectedHits", "0");
                     }
                 });

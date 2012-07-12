@@ -1253,10 +1253,8 @@ public class UserAccountIT extends UserAccountTestBase {
         final Document createdDocument = createSuccessfully("escidoc_useraccount_for_create.xml");
 
         final String id = getObjidValue(createdDocument);
-        userAttributeTestBase.createAttribute(id, "<attribute xmlns="
-            + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"key\">value</attribute>");
-        userPreferenceTestBase.createPreference(id,
-            "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\"" + " name=\"key\">value</preference>");
+        userAttributeTestBase.createAttribute(id, getUserAttributeXml("key", "value"));
+        userPreferenceTestBase.createPreference(id, getUserPreferenceXml("key", "value"));
         delete(id);
         try {
             retrieve(id);
@@ -2200,18 +2198,15 @@ public class UserAccountIT extends UserAccountTestBase {
         // create user with child ou
         Document createdUser = createSuccessfully("escidoc_useraccount_for_create1.xml");
         userAccountFilterUser = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountFilterUser, de.escidoc.core.test.Constants.XML_HEADER
-            + "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">" + ouId1
-            + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountFilterUser, getUserAttributeXml("o", ouId1));
 
         // create user with attribute
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
         String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
         createdUser = createSuccessfully("escidoc_useraccount_for_create.xml");
         userAccountFilterUser1 = getObjidValue(createdUser);
-        userAttributeTestBase.createAttribute(userAccountFilterUser1, de.escidoc.core.test.Constants.XML_HEADER
-            + "<attribute xmlns=" + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"" + attributeName
-            + "\">" + attributeValue + "</attribute>");
+        userAttributeTestBase.createAttribute(userAccountFilterUser1,
+            getUserAttributeXml(attributeName, attributeValue));
 
         // create searchable users with no group
         for (int i = 0; i < additonalGroupFilterSearchUsersCount; i++) {

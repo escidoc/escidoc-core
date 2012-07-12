@@ -125,9 +125,7 @@ public class ItemUpdateIT extends ItemTestBase {
         // Node componentMdRecords =
         // selectSingleNode(createdDocument, mdRecordsPath);
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
-        Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = createdDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "escidoc");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("oai_dc");
@@ -1867,9 +1865,7 @@ public class ItemUpdateIT extends ItemTestBase {
         assertEquals((mdrecordsAfterCreate.getLength() - 1), mdrecordsAfterUpdate.getLength());
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(updatedDocument);
-        Element mdRecord =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = updatedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = updatedDocument.createElement("bla");
@@ -1906,9 +1902,7 @@ public class ItemUpdateIT extends ItemTestBase {
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
-        Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = createdDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
@@ -2015,9 +2009,7 @@ public class ItemUpdateIT extends ItemTestBase {
         assertEquals((mdrecordsAfterCreate.getLength() - 1), mdrecordsAfterUpdate.getLength());
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(udatedDocument);
-        Element mdRecord =
-            udatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = udatedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "md1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = udatedDocument.createElement("bla");
@@ -2053,18 +2045,11 @@ public class ItemUpdateIT extends ItemTestBase {
             selectNodeList(createdDocument, "/item/components/component/md-records/md-record");
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
-        Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.4", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = createdDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
         mdRecord.appendChild(mdRecordContent);
-        // Element mdRecords =
-        // createdDocument.createElementNS(
-        // "http://www.escidoc.de/schemas/metadatarecords/0.4",
-        // "escidocMetadataRecords:md-records");
-        // mdRecords.appendChild(mdRecord);
         selectSingleNode(createdDocument, "/item/components/component[1]/md-records").appendChild(mdRecord);
         // FIXME: DOM-API does not create a new element with a namespace
         // declaration, therefore
@@ -2197,17 +2182,13 @@ public class ItemUpdateIT extends ItemTestBase {
         String itemId = getObjidValue(itemDoc2);
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(itemDoc2);
-        Element mdRecord =
-            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = itemDoc2.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = itemDoc2.createElement("bla");
         mdRecord.appendChild(mdRecordContent);
 
-        Element mdRecords =
-            itemDoc2.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.5", mdRecordNsPrefix
-                + ":md-records");
+        Element mdRecords = itemDoc2.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-records");
         mdRecords.appendChild(mdRecord);
         selectSingleNode(itemDoc2, "/item/components/component[1]").appendChild(mdRecords);
         String newXml = toString(itemDoc2, true);
@@ -2258,7 +2239,7 @@ public class ItemUpdateIT extends ItemTestBase {
 
         String itemDocString = toString(itemDoc, false);
         itemDocString =
-            itemDocString.replace("xmlns:publication=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
+            itemDocString.replace("xmlns:publication=\"" + Constants.NS_EXTERNAL_MPG_METADATA + "\"",
                 "xmlns:publication=\"http://just.for.test/namespace\"");
 
         String updatedItem = update(this.theItemId, itemDocString);

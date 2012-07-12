@@ -40,6 +40,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPre
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.TaskParamFactory;
 import de.escidoc.core.test.common.AssignParam;
@@ -298,8 +299,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
         String xmlData = getItemTemplate("escidoc_item_198_for_create.xml");
         xmlData =
-            xmlData.replaceFirst("xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.10",
-                "xmlns:escidocItem=\"http://www.escidoc.de/schemas/item/0.8");
+            xmlData.replaceFirst("xmlns:escidocItem=\"" + Constants.NS_IR_ITEM, "xmlns:escidocItem=\""
+                + Constants.SCHEMA_LOCATION_BASE + "/item/0.0");
 
         createItem(theContainerId, xmlData);
     }
@@ -1514,9 +1515,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
         assertEquals(mdrecordsAfterUpdate.getLength() + 1, mdrecordsAfterCreate.getLength());
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(updatedDocument);
-        Element mdRecord =
-            updatedDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = updatedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = updatedDocument.createElement("bla");
@@ -1556,9 +1555,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
         assertEquals(mdrecords.getLength(), mdrecordsAfterCreate.getLength());
 
         String mdRecordNsPrefix = determineMdRecordNamespacePrefix(createdDocument);
-        Element mdRecord =
-            createdDocument.createElementNS("http://www.escidoc.de/schemas/metadatarecords/0.3", mdRecordNsPrefix
-                + ":md-record");
+        Element mdRecord = createdDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");
         mdRecord.setAttribute("name", "name1");
         mdRecord.setAttribute("schema", "bla");
         Element mdRecordContent = createdDocument.createElement("bla");
@@ -1635,7 +1632,7 @@ public class ContainerUpdateIT extends ContainerTestBase {
 
         String resourceDocString = toString(resourceDoc, false);
         resourceDocString =
-            resourceDocString.replace("xmlns=\"http://escidoc.mpg.de/metadataprofile/schema/0.1/\"",
+            resourceDocString.replace("xmlns=\"" + Constants.NS_EXTERNAL_MPG_METADATA + "\"",
                 "xmlns=\"http://just.for.test/namespace\"");
 
         String updatedResource = update(this.theContainerId, resourceDocString);

@@ -278,7 +278,7 @@ public class ContentModelUpdateIT extends ContentModelTestBase {
         Element mdRecordContent =
             cmDocV1E1.createElementNS(Constants.NS_CMM_CONTENT_MODEL, contentModelNsPrefix + ":schema");
         mdRecordContent.setAttributeNS("http://www.w3.org/1999/xlink", xlinkNsPrefix + ":href",
-            Constants.WEB_APP_URI_ESCIDOC + "/xsd/rest/organizational-unit/0.8/organizational-unit.xsd");
+            Constants.XSD_ACCESS_OUM_OU);
         mdRecord.appendChild(mdRecordContent);
 
         // create MdRecordDefinitions

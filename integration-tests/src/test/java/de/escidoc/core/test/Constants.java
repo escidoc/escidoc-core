@@ -312,6 +312,8 @@ public class Constants {
 
     public static final String NS_BASE_IR_COMPONENTS = "/components/0.9";
 
+    public static final String NS_BASE_IR_MD_RECORDS = "/metadatarecords/0.5";
+
     // OUM
     public static final String NS_BASE_OUM_OU = "/organizationalunit/0.8";
 
@@ -347,6 +349,35 @@ public class Constants {
 
     // OAI
     public static final String NS_BASE_OAI_SET_DEFINITION = "/setdefinition/0.2";
+
+    // TASK PARAM
+    private static final String NS_BASE_TP_OPTIMISTIC_LOCKING = "/optimistic-locking-task-param/0.1";
+
+    private static final String NS_BASE_TP_UPDATE_PASSWORD = "/update-password-task-param/0.1";
+
+    private static final String NS_BASE_TP_REVOKE_GRANT = "/revoke-grant-task-param/0.1";
+
+    private static final String NS_BASE_TP_REVOKE_GRANTS = "/revoke-grants-task-param/0.1";
+
+    private static final String NS_BASE_TP_SELECTOR_ADD = "/addselectors/0.6";
+
+    private static final String NS_BASE_TP_SELECTOR_REMOVE = "/removeselectors/0.6";
+
+    private static final String NS_BASE_TP_REINDEX = "/schemas/reindex-task-param/0.1";
+
+    private static final String NS_BASE_TP_MEMBERS = "/members-task-param/0.1";
+
+    private static final String NS_BASE_TP_ID_SET = "/id-set-task-param/0.1";
+
+    private static final String NS_BASE_TP_DELETE_OBJECTS = "/delete-objects-task-param/0.1";
+
+    private static final String NS_BASE_TP_ASSIGN_PID = "/assign-pid-task-param/0.1";
+
+    private static final String NS_BASE_TP_STATUS = "/status-task-param/0.1";
+
+    private static final String NS_BASE_TP_RELATION = "/relation-task-param/0.1";
+
+    private static final String NS_BASE_TP_SEMANTIC_STORE_QUERY = "/semantic-store-query/0.4";
 
     // *****************************************************************************************************************
     // * ESCIDOC NAMESPACES
@@ -395,6 +426,8 @@ public class Constants {
 
     public static final String NS_IR_COMPONENTS = SCHEMA_LOCATION_BASE + NS_BASE_IR_COMPONENTS;
 
+    public static final String NS_IR_MD_RECORDS = SCHEMA_LOCATION_BASE + NS_BASE_IR_MD_RECORDS;
+
     // OUM
     public static final String NS_OUM_OU = SCHEMA_LOCATION_BASE + NS_BASE_OUM_OU;
 
@@ -413,11 +446,46 @@ public class Constants {
     // OAI
     public static final String NS_OAI_SET_DEFINITION = SCHEMA_LOCATION_BASE + NS_BASE_OAI_SET_DEFINITION;
 
+    // TASK PARAM
+    public static final String NS_TP_OPTIMISTIC_LOCKING = SCHEMA_LOCATION_BASE + NS_BASE_TP_OPTIMISTIC_LOCKING;
+
+    public static final String NS_TP_UPDATE_PASSWORD = SCHEMA_LOCATION_BASE + NS_BASE_TP_UPDATE_PASSWORD;
+
+    public static final String NS_TP_REVOKE_GRANT = SCHEMA_LOCATION_BASE + NS_BASE_TP_REVOKE_GRANT;
+
+    public static final String NS_TP_REVOKE_GRANTS = SCHEMA_LOCATION_BASE + NS_BASE_TP_REVOKE_GRANTS;
+
+    public static final String NS_TP_SELECTOR_ADD = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_ADD;
+
+    public static final String NS_TP_SELECTOR_REMOVE = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_REMOVE;
+
+    public static final String NS_TP_REINDEX = SCHEMA_LOCATION_BASE + NS_BASE_TP_REINDEX;
+
+    public static final String NS_TP_MEMBERS = SCHEMA_LOCATION_BASE + NS_BASE_TP_MEMBERS;
+
+    public static final String NS_TP_ID_SET = SCHEMA_LOCATION_BASE + NS_BASE_TP_ID_SET;
+
+    public static final String NS_TP_DELETE_OBJECTS = SCHEMA_LOCATION_BASE + NS_BASE_TP_DELETE_OBJECTS;
+
+    public static final String NS_TP_ASSIGN_PID = SCHEMA_LOCATION_BASE + NS_BASE_TP_ASSIGN_PID;
+
+    public static final String NS_TP_STATUS = SCHEMA_LOCATION_BASE + NS_BASE_TP_STATUS;
+
+    public static final String NS_TP_RELATION = SCHEMA_LOCATION_BASE + NS_BASE_TP_RELATION;
+
+    public static final String NS_TP_SEMANTIC_STORE_QUERY = SCHEMA_LOCATION_BASE + NS_BASE_TP_SEMANTIC_STORE_QUERY;
+
     // *****************************************************************************************************************
     // * EXTERNAL NAMESPACES
     // *****************************************************************************************************************
 
     public static final String NS_EXTERNAL_DC = "http://purl.org/dc/elements/1.1/";
+
+    public static final String NS_EXTERNAL_ESCIDOC_DC = "http://purl.org/escidoc/metadata/terms/0.1/";
+
+    public static final String NS_EXTERNAL_MPG_METADATA = "http://escidoc.mpg.de/metadataprofile/schema/0.1/";
+
+    public static final String NS_EXTERNAL_JHOVE_METADATA = "http://jhove.com/metadata/schema/0.5";
 
     public static final String NS_EXTERNAL_DC_TERMS = "http://purl.org/dc/terms/";
 
@@ -606,7 +674,7 @@ public class Constants {
 
     // OUM
     public static final String XSD_ACCESS_OUM_OU =
-        WEB_CONTEXT_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.8/" + XSD_OUM_OU;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.8/" + XSD_OUM_OU;
 
     public static final String XSD_ACCESS_OUM_OU_SUCCESSORS =
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.8/" + XSD_OUM_OU_SUCCESSORS;

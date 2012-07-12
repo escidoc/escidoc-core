@@ -219,9 +219,8 @@ public class GrantFilterIT extends GrantTestBase {
             for (int i = 0; i < NUM_USERS; i++) {
                 Document user = createSuccessfully("escidoc_useraccount_for_create1.xml");
                 String userId = getObjidValue(user);
-                userAttributeTestBase.createAttribute(userId, "<attribute xmlns="
-                    + "\"http://www.escidoc.de/schemas/attributes/0.1\"" + " name=\"o\">"
-                    + EscidocTestBase.ORGANIZATIONAL_UNIT_ID1 + "</attribute>");
+                userAttributeTestBase.createAttribute(userId, getUserAttributeXml("o",
+                    EscidocTestBase.ORGANIZATIONAL_UNIT_ID1));
                 userIds.add(userId);
             }
 

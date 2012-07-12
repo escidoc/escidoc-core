@@ -188,8 +188,8 @@ public abstract class EscidocAssertions {
      * @throws Exception If anything fails.
      */
     public void assertXmlValidGrants(final String xmlData) throws Exception {
-        assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_AA_GRANTS));
         assertAllPlaceholderResolved(xmlData);
+        assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_AA_GRANTS));
     }
 
     /**

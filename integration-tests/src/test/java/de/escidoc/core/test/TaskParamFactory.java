@@ -1,11 +1,12 @@
 package de.escidoc.core.test;
 
+import java.util.List;
+import java.util.Set;
+
+import org.joda.time.DateTime;
+
 import de.escidoc.core.test.common.AssignParam;
 import de.escidoc.core.test.utils.DateTimeJaxbConverter;
-import org.joda.time.DateTime;
-import org.w3c.dom.Document;
-
-import java.util.*;
 
 /**
  * Factory to create TaskParam XML strings.<br/><br/>
@@ -20,38 +21,6 @@ import java.util.*;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 public class TaskParamFactory {
-
-    private static final String NS_DC = "http://purl.org/dc/elements/1.1/";
-
-    // NAMESPACES
-    private static final String NS_TP_OPTIMISTIC_LOCKING =
-        "http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1";
-
-    private static final String NS_TP_UPDATE_PASSWORD = "http://www.escidoc.org/schemas/update-password-task-param/0.1";
-
-    private static final String NS_TP_REVOKE_GRANT = "http://www.escidoc.org/schemas/revoke-grant-task-param/0.1";
-
-    private static final String NS_TP_REVOKE_GRANTS = "http://www.escidoc.org/schemas/revoke-grants-task-param/0.1";
-
-    private static final String NS_TP_SELECTOR_ADD = "http://www.escidoc.de/schemas/addselectors/0.6";
-
-    private static final String NS_TP_SELECTOR_REMOVE = "http://www.escidoc.de/schemas/removeselectors/0.6";
-
-    private static final String NS_TP_REINDEX = "http://www.escidoc.org/schemas/reindex-task-param/0.1";
-
-    private static final String NS_TP_MEMBERS = "http://www.escidoc.org/schemas/members-task-param/0.1";
-
-    private static final String NS_TP_ID_SET = "http://www.escidoc.org/schemas/id-set-task-param/0.1";
-
-    private static final String NS_TP_DELETE_OBJECTS = "http://www.escidoc.org/schemas/delete-objects-task-param/0.1";
-
-    private static final String NS_TP_ASSIGN_PID = "http://www.escidoc.org/schemas/assign-pid-task-param/0.1";
-
-    private static final String NS_TP_STATUS = "http://www.escidoc.org/schemas/status-task-param/0.1";
-
-    private static final String NS_TP_RELATION = "http://www.escidoc.org/schemas/relation-task-param/0.1";
-
-    private static final String NS_TP_SEMANTIC_STORE_QUERY = "http://www.escidoc.org/schemas/semantic-store-query/0.4";
 
     // SELECTOR TYPES
     public static final String SELECTOR_TYPE_USER_ATTR = "user-attribute";
@@ -134,7 +103,7 @@ public class TaskParamFactory {
      * @return task param XML (optimistic-locking-task-param.xsd)
      */
     public static String getOptimisticLockingTaskParam(final DateTime timestamp) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_OPTIMISTIC_LOCKING, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_OPTIMISTIC_LOCKING, timestamp);
         return xml.append("/>").toString();
     }
 
@@ -174,7 +143,7 @@ public class TaskParamFactory {
      */
     public static String getUpdatePasswordTaskParam(final String timestamp, final String password) {
 
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_UPDATE_PASSWORD, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_UPDATE_PASSWORD, timestamp);
 
         if (password == null) {
             xml.append(">");
@@ -221,7 +190,7 @@ public class TaskParamFactory {
      * @return
      */
     public static String getRevokeGrantTaskParam(final String timestamp, final String revocationRemark) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_REVOKE_GRANT, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_REVOKE_GRANT, timestamp);
 
         if (revocationRemark == null) {
             return xml.append("/>").toString();
@@ -237,7 +206,7 @@ public class TaskParamFactory {
     }
 
     public static String getAddSelectorsTaskParam(final List<Selector> selectors, final String timestamp) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_SELECTOR_ADD, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_SELECTOR_ADD, timestamp);
 
         if (selectors == null || selectors.isEmpty()) {
             xml.append("/>");
@@ -276,7 +245,7 @@ public class TaskParamFactory {
      * @return Returns the created task param xml.
      */
     public static String getRemoveSelectorsTaskParam(final List<String> selectorIds, final String timestamp) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_SELECTOR_REMOVE, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_SELECTOR_REMOVE, timestamp);
 
         if (selectorIds == null) {
             return xml.append("/>").toString();
@@ -298,7 +267,7 @@ public class TaskParamFactory {
      */
     public static String getReindexTaskParam(
         final String indexName, final boolean clearIndex, final boolean commitWrites) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_REINDEX);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_REINDEX);
         xml.append(">\n");
 
         if (indexName != null) {
@@ -319,7 +288,7 @@ public class TaskParamFactory {
      * @return task param XML (assign-pid-task-param.xsd)
      */
     public static String getMembersTaskParam(final List<String> ids, final DateTime timestamp) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_MEMBERS, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_MEMBERS, timestamp);
 
         if (ids == null) {
             return xml.append("/>").toString();
@@ -340,7 +309,7 @@ public class TaskParamFactory {
      * @return task param XML (assign-pid-task-param.xsd)
      */
     public static String getIdSetTaskParam(final Set<String> ids) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_ID_SET);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_ID_SET);
 
         if (ids == null) {
             return xml.append("/>").toString();
@@ -362,7 +331,7 @@ public class TaskParamFactory {
      * @return task param XML (assign-pid-task-param.xsd)
      */
     public static String getDeleteObjectsTaskParam(final Set<String> ids, final Boolean sync) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_DELETE_OBJECTS);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_DELETE_OBJECTS);
 
         if (ids == null && sync == null) {
             return xml.append("/>").toString();
@@ -405,7 +374,7 @@ public class TaskParamFactory {
      * @see TaskParamFactory#getAssignPidTaskParam(de.escidoc.core.test.common.AssignParam, org.joda.time.DateTime) 
      */
     public static String getAssignPidTaskParam(final AssignParam param, final String timestamp) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_ASSIGN_PID, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_ASSIGN_PID, timestamp);
 
         if (param == null) {
             return xml.append("/>").toString();
@@ -431,7 +400,7 @@ public class TaskParamFactory {
      * @return task param XML (revoke-grant-task-param.xsd)
      */
     public static String getRevokeGrantsTaskParam(final Set<String> ids, final String revocationRemark) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_REVOKE_GRANTS);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_REVOKE_GRANTS);
 
         if (ids == null && revocationRemark == null) {
             return xml.append("/>").toString();
@@ -441,7 +410,7 @@ public class TaskParamFactory {
 
         if (ids != null) {
             if (!ids.isEmpty()) {
-                xml.append("<filter name=\"").append(NS_DC).append("identifier\">");
+                xml.append("<filter name=\"").append(Constants.NS_EXTERNAL_DC).append("identifier\">");
                 for (final String id : ids) {
                     xml.append("<id>");
                     xml.append(id);
@@ -450,7 +419,7 @@ public class TaskParamFactory {
                 xml.append("</filter>\n");
             }
             else {
-                xml.append("<filter name=\"").append(NS_DC).append("identifier\"/>");
+                xml.append("<filter name=\"").append(Constants.NS_EXTERNAL_DC).append("identifier\"/>");
             }
         }
 
@@ -496,7 +465,7 @@ public class TaskParamFactory {
      * @return
      */
     public static String getStatusTaskParam(final String timestamp, final String comment) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_STATUS, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_STATUS, timestamp);
 
         if (comment == null) {
             return xml.append("/>").toString();
@@ -574,7 +543,7 @@ public class TaskParamFactory {
     @Deprecated
     public static String getRelationTaskParam(
         final List<Relation> relations, final String timestamp, final String defaultPredicate) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_RELATION, timestamp);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_RELATION, timestamp);
 
         if (relations == null) {
             return xml.append("/>").toString();
@@ -609,7 +578,7 @@ public class TaskParamFactory {
      * @return
      */
     public static String getSemanticStoreQueryTaskParam(final String query, final String format) {
-        StringBuilder xml = getOpenedTaskParamElement(NS_TP_SEMANTIC_STORE_QUERY);
+        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_SEMANTIC_STORE_QUERY);
 
         if (query == null && format == null) {
             return xml.append("/>").toString();

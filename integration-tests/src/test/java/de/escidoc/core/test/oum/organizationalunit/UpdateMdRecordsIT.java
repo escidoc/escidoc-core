@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -439,8 +440,8 @@ public class UpdateMdRecordsIT extends OrganizationalUnitTestBase {
         // check if name and title was also changed in RELS-EXT
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
-            tripleStore.requestMPT("<info:fedora/" + ou1Id + "> "
-                + "<http://www.escidoc.de/schemas/organizationalunit/0.3/name>" + " *", "RDF/XML");
+            tripleStore.requestMPT("<info:fedora/" + ou1Id + "> " + "<" + Constants.NS_OUM_OU + "/name>" + " *",
+                "RDF/XML");
 
         String resultName = selectSingleNodeAsserted(getDocument(result), XPATH_TRIPLE_STORE_OU_NAME).getTextContent();
 

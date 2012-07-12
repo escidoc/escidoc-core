@@ -207,8 +207,7 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
 
     public static final String FILTER_LABEL = PROPERTIES_FILTER_PREFIX + NAME_LABEL;
 
-    public static final String FILTER_URI_SET_SPECIFICATION =
-        "http://www.escidoc.de/schemas/setdefinition/0.2/specification";
+    public static final String FILTER_URI_SET_SPECIFICATION = Constants.NS_OAI_SET_DEFINITION + "/specification";
 
     public static final String FILTER_SET_SPECIFICATION = PROPERTIES_FILTER_PREFIX + "specification";
 
