@@ -153,8 +153,8 @@
       <variable name="SqlScriptKeepFormatOracle" value="true" />
       <variable name="OracleDDLGenerator" value="mptstore-oracle-0.9.4.jar" />
       <variable name="RootDatabaseNameOracle" value="oraesci01" />
-      <variable name="DatabaseMaxStatementsOracle" value="0" />
-      <variable name="DatabaseMaxStatementsPerConnectionOracle" value="0" />
+      <variable name="DatabaseMaxStatementsOracle" value="500" />
+      <variable name="DatabaseMaxStatementsPerConnectionOracle" value="50" />
 
       <variable name="DatabaseAdminPassword" value="" />
       <variable name="DatabaseUsername" value="escidoc" />
