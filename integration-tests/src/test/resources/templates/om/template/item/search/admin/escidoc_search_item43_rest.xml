@@ -4,7 +4,7 @@
                   xmlns:metadata="http://www.escidoc.de/metadata/schema/0.1"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   xmlns:metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
                   xlink:type="simple"
                   xml:base="http://localhost:8080"
                   xlink:title="Halbleiterbauelemente in einem Waferverbund">
@@ -87,7 +87,7 @@
          </escidocMetadataProfile:publication>
       </escidocMetadataRecords:md-record>
    </escidocMetadataRecords:md-records>
-   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
                                  xlink:type="simple"
                                  xlink:href="/ir/item/escidoc:198/components"
                                  xlink:title="Components of Item"

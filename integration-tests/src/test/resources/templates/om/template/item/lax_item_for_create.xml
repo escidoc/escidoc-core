@@ -139,7 +139,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 		<escidocComponents:component>
 			<escidocComponents:properties>
 				<escidocComponents:description>this is the first file PubMan</escidocComponents:description>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- item: 12121 Version 0.6, updated: 21.11.2006-->
 <prefix-container:container xml:base="http://www.escidoc.de/"
-	xmlns="http://www.escidoc.de/schemas/container/0.9"
-	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.9"
+	xmlns="http://www.escidoc.de/schemas/container/0.10"
+	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.10"
 	
 	xmlns:prefix-struct-map="http://www.escidoc.de/schemas/structmap/0.4"
 	xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3"

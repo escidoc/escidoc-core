@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
 	xml:base="http://localhost:8080"
@@ -130,7 +130,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
 				<prop:description>this is the first file PubMan Ein &lt;a href=&quot;http://www.escidoc.de/farbtest_wasserfarben.jpg&quot;&gt; Farbtest mit Wasserfarben.&lt;/a&gt;</prop:description>				

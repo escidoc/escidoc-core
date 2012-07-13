@@ -54,7 +54,7 @@
       MIMETYPE="text/xml" SIZE="182">
       <foxml:xmlContent>
         <prop:content-model-specific xmlns:prop="http://escidoc.de/core/01/properties/">
-          <xxx xmlns="http://www.escidoc.de/schemas/container/0.9"/>
+          <xxx xmlns="http://www.escidoc.de/schemas/container/0.10"/>
         </prop:content-model-specific>
       </foxml:xmlContent>
     </foxml:datastreamVersion>

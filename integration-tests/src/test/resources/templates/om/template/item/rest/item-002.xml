@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-item:item
-	xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
 	xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
 	xmlns:prefix-dcmitype="http://purl.org/dc/dcmitype/"
 	xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
 	xmlns:prefix-dcterms="http://purl.org/dc/terms/"
-	xmlns:components="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:components="http://www.escidoc.de/schemas/components/0.10"
 	xmlns:prefix-internal-metadata="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
 	xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
 	xmlns:prefix-properties="http://www.escidoc.de/schemas/properties/0.2"

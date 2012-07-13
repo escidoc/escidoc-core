@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
 	xml:base="http://localhost:8080"
@@ -131,7 +131,7 @@
 			</publication>
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
-	<content-streams:content-streams xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.7" xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+	<content-streams:content-streams xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.8" xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
 		<content-streams:content-stream 
 				name="toc" prefix-xlink:type="simple" prefix-xlink:title="A minimal TOC" 
 				mime-type="text/xml" 

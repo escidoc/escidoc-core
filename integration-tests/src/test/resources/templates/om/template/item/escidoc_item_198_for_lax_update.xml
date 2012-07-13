@@ -150,10 +150,10 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 		<escidocComponents:component objid="##COMPONENTID##">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>
 				<escidocComponents:creation-date>##COMPCREATIONDATE##</escidocComponents:creation-date>
 				<escidocComponents:last-modification-date>##COMPLASTMODIFICATIONDATE##</escidocComponents:last-modification-date>

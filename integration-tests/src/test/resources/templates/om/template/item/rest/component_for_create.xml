@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocComponents:component
-	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
 	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	xmlns:xlink="http://www.w3.org/1999/xlink">

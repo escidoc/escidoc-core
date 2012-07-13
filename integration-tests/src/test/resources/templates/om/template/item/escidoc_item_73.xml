@@ -85,7 +85,7 @@
 		prefix-xlink:href="/ir/item/escidoc:73/relations"
 		prefix-xlink:title="Relations"><!-- FedoraItemHandler.getRelations not implemented --></escidocRelations:relations>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 		prefix-xlink:type="simple"
 		prefix-xlink:href="/ir/item/escidoc:73/components"
 		prefix-xlink:title="Components of Item escidoc:73">
@@ -94,7 +94,7 @@
 			prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74"
 			prefix-xlink:title="page scan 21">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:74/properties"
 				prefix-xlink:title="Properties" prefix-xlink:type="simple">
@@ -164,7 +164,7 @@
 			prefix-xlink:title="page scan 211">
 
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 				prefix-xlink:href="/ir/item/escidoc:73/components/component/escidoc:111/properties"
 				prefix-xlink:title="Properties" prefix-xlink:type="simple">

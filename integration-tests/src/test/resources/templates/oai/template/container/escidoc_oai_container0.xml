@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-container:container xml:base="http://www.escidoc.de/"
-	xmlns="http://www.escidoc.de/schemas/container/0.9"
-	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.9"
+	xmlns="http://www.escidoc.de/schemas/container/0.10"
+	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.10"
 	xmlns:prefix-struct-map="http://www.escidoc.de/schemas/structmap/0.4"
 	xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3"
 	xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"

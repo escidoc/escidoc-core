@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xml:base="http://localhost:8080"
 	xlink:title="the two ä mystic scans?"
@@ -145,7 +145,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 		<escidocComponents:component>
 			<escidocComponents:properties
 				xmlns:prop="http://escidoc.de/core/01/properties/" 

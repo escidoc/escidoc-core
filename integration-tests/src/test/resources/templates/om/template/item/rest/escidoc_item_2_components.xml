@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xml:base="http://localhost:8080"
 	prefix-xlink:title="the two ä mystic scans?"
@@ -131,12 +131,12 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
 		<escidocComponents:component>
 			<escidocComponents:properties
 		xmlns:prop="http://escidoc.de/core/01/properties/" 
 		xmlns:srel="http://escidoc.de/core/01/structural-relations/"
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
 				<prop:description>this is the first file PubMa</prop:description>
 				
@@ -292,7 +292,7 @@
 			<escidocComponents:properties
 		xmlns:prop="http://escidoc.de/core/01/properties/" 
 		xmlns:srel="http://escidoc.de/core/01/structural-relations/"
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>

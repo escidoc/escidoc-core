@@ -34,11 +34,11 @@
             </publication>
         </escidocMetadataRecords:md-record>
     </escidocMetadataRecords:md-records>
-    <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+    <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
                                   prefix-xlink:type="simple">
         <escidocComponents:component prefix-xlink:type="simple">
             <escidocComponents:properties prefix-xlink:type="simple"
-                                          xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+                                          xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
                                           xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
                 <escidocComponents:description>Web resolution image for Annette Postel schreitet durch die Pressemeute
                 </escidocComponents:description>
