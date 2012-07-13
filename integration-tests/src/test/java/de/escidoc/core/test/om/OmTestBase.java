@@ -285,7 +285,7 @@ public class OmTestBase extends EscidocAbstractTest {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "PID=" + resourceId + " or distinction.rootPid=" + resourceId);
         String response = getSearchTestBase().search(parameters, indexName);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getSearchTestBase().getNumberOfHits(response));
     }
 

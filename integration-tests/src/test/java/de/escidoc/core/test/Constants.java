@@ -604,7 +604,7 @@ public class Constants {
 
     // COMMON
     public static final String XSD_ACCESS_COMMON_SRW =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/common/0.4/" + XSD_COMMON_SRW;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/search-result/0.8/" + XSD_COMMON_SRW;
 
     public static final String XSD_ACCESS_COMMON_ZEEREX =
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/search-result/0.4/" + XSD_COMMON_ZEEREX;

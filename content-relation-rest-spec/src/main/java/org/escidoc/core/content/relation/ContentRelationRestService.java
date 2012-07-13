@@ -39,6 +39,8 @@ import org.escidoc.core.domain.metadatarecords.MdRecordTypeTO;
 import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
 import org.escidoc.core.domain.predicate.list.PredicatesTypeTO;
 import org.escidoc.core.domain.result.ResultTypeTO;
+import org.escidoc.core.domain.taskparam.assignpid.AssignPidTaskParamTO;
+import org.escidoc.core.domain.taskparam.optimisticlocking.OptimisticLockingTaskParamTO;
 import org.escidoc.core.domain.taskparam.status.StatusTaskParamTO;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -105,7 +107,8 @@ public interface ContentRelationRestService {
     @Path("{id}/lock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    JAXBElement<ResultTypeTO> lock(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParamTO)
+    JAXBElement<ResultTypeTO> lock(
+        @NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException, SystemException, OptimisticLockingException,
         InvalidXmlException, InvalidStatusException;
@@ -114,7 +117,8 @@ public interface ContentRelationRestService {
     @Path("{id}/unlock")
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
-    JAXBElement<ResultTypeTO> unlock(@NotNull @PathParam("id") String id, @NotNull StatusTaskParamTO statusTaskParamTO)
+    JAXBElement<ResultTypeTO> unlock(
+        @NotNull @PathParam("id") String id, @NotNull OptimisticLockingTaskParamTO optimisticLockingTaskParamTO)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, SystemException, OptimisticLockingException, InvalidXmlException,
         InvalidContentException, InvalidStatusException;
@@ -151,7 +155,7 @@ public interface ContentRelationRestService {
     @Produces(MediaType.TEXT_XML)
     @Consumes(MediaType.TEXT_XML)
     JAXBElement<ResultTypeTO> assignObjectPid(@NotNull @PathParam("id") String id,
-        @NotNull StatusTaskParamTO statusTaskParamTO)
+        @NotNull AssignPidTaskParamTO assignPidTaskParamTO)
         throws AuthenticationException, AuthorizationException, ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, OptimisticLockingException, InvalidXmlException, SystemException,
         PidAlreadyAssignedException;

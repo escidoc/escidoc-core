@@ -293,7 +293,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.md-record-identifier=" + "\"escidoc@"
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
     }
@@ -329,7 +329,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "2");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getFirstRecord(response));
     }
 
@@ -347,7 +347,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         String response = null;
         try {
             response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
         }
         catch (final Exception e) {
@@ -366,7 +366,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "1");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNextRecordPosition(response));
         assertEquals("3", getNumberOfHits(response));
     }
@@ -385,7 +385,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         String response = null;
         try {
             response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals(
                 "1/java.lang.IllegalArgumentException: " + "numHits must be &gt; 0; please use TotalHitCountCollector "
                     + "if you just need the total hit count", getDiagnostics(response));
@@ -407,7 +407,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "-1");
         try {
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
         }
         catch (final Exception e) {
@@ -426,7 +426,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "xml");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -457,7 +457,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "something");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("something", getDiagnostics(response));
     }
 
@@ -473,7 +473,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "default");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
     }
 
@@ -489,7 +489,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "none");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("none", getDiagnostics(response));
     }
 
@@ -505,7 +505,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.last-modification-date");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         String[] dates = response.split("<last-modification-date>");
         String savedDatepart = "0";
         for (int i = 1; i < dates.length; i++) {
@@ -530,7 +530,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.last-modification-date,,0");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         String[] dates = response.split("<last-modification-date>");
         String savedDatepart = "ZZZZZZZ";
         for (int i = 1; i < dates.length; i++) {
@@ -555,7 +555,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.sonstwas,,0");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
     }
 
@@ -571,7 +571,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
     }
 
@@ -587,7 +587,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             + Constants.NS_EXTERNAL_MPG_METADATA + "\"");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
     }
 
@@ -606,7 +606,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=" + "motor"
             + " and escidoc.publication.title=getriebe");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -625,7 +625,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=motor "
             + "or escidoc.publication.title=kalibrierung");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNumberOfHits(response));
     }
 
@@ -649,7 +649,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=mo*r");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -663,7 +663,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=mot*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -687,7 +687,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=mo?or");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -701,7 +701,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=moto?");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -715,7 +715,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.publication.title=/fuzzy kalirierung");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -731,7 +731,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             "escidoc.publication.creator.person.complete-name=patentanw\u00e4lte".getBytes(ClientBase.DEFAULT_CHARSET),
             ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -748,7 +748,7 @@ public class OaipmhSearchIT extends SearchTestBase {
                 + "\u6c13\u4fb7\u67f5\u82d7\u5b6b\u5b6b\u8ca1").getBytes(ClientBase.DEFAULT_CHARSET),
             ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNumberOfHits(response));
     }
 
@@ -766,7 +766,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -787,7 +787,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -807,7 +807,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -828,7 +828,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -848,7 +848,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=item");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -868,7 +868,7 @@ public class OaipmhSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString + " and escidoc.objecttype=container");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexLabel + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -884,7 +884,7 @@ public class OaipmhSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.latest-release.date>\"" + startTime.toString() + "\"");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getNumberOfHits(response));
     }
 
@@ -900,7 +900,7 @@ public class OaipmhSearchIT extends SearchTestBase {
                 HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + itemIds[i]);
                 String response = search(parameters, INDEX_NAME);
-                assertXmlValidSearchResult(response);
+                assertXmlValidSrwResponse(response);
                 assertEquals("1", getNumberOfHits(response));
                 assertElementEquals("element has not the expected value", getDocument(response),
                     "//*[local-name()='deleted']", "false");
@@ -911,7 +911,7 @@ public class OaipmhSearchIT extends SearchTestBase {
                 HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=" + containerIds[i]);
                 String response = search(parameters, INDEX_NAME);
-                assertXmlValidSearchResult(response);
+                assertXmlValidSrwResponse(response);
                 assertEquals("1", getNumberOfHits(response));
                 assertElementEquals("element has not the expected value", getDocument(response),
                     "//*[local-name()='deleted']", "false");

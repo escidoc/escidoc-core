@@ -221,7 +221,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=mitte-rechts");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(true, checkHighlighting(response));
         assertEquals("1", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
@@ -250,7 +250,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "3");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("3", getFirstRecord(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -266,7 +266,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STARTRECORD, "0");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
     }
 
@@ -281,7 +281,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "1");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNextRecordPosition(response));
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
@@ -298,7 +298,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "1");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNextRecordPosition(response));
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
@@ -314,7 +314,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "-1");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
     }
 
@@ -329,7 +329,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "xml");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -360,7 +360,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_RECORDPACKING, "something");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("something", getDiagnostics(response));
     }
 
@@ -375,7 +375,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=mitte-rechts");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "default");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -391,7 +391,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=mitte-rechts");
         parameters.put(FILTER_PARAMETER_RECORDSCHEMA, "none");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("none", getDiagnostics(response));
     }
 
@@ -406,7 +406,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.identifier");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(true, checkHighlighting(response));
         response = response.replaceAll("<search-result:highlight.*?</search-result:highlight>", "");
         String[] splitStr = response.split("<dc:identifier.*?>");
@@ -434,7 +434,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.organization-type,,0 sort.escidoc.identifier");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(true, checkHighlighting(response));
         response = response.replaceAll("<search-result:highlight.*?</search-result:highlight>", "");
         String[] records = response.split("<[^\\/>]*?:record>");
@@ -465,7 +465,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_SORTKEYS, "sort.escidoc.sonstwas,,0");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("7", getNumberOfHits(response));
     }
 
@@ -480,7 +480,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/searchRetrieveResponse.xsl");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -496,7 +496,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/xyz.xsl");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -515,7 +515,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=type and escidoc.metadata=institute");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -534,7 +534,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=type or escidoc.metadata=institute");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -559,7 +559,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=or*ni*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -574,7 +574,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=org*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -599,7 +599,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=wo??gro?p");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("4", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -614,7 +614,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=workgrou?");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("4", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -629,7 +629,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=/fuzzy werkgrup");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("4", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -645,7 +645,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_QUERY, new String("escidoc.metadata=t\u00fcbingen"
             .getBytes(ClientBase.DEFAULT_CHARSET), ClientBase.DEFAULT_CHARSET));
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
         assertEquals(true, checkHighlighting(response));
     }
@@ -671,7 +671,7 @@ public class OuSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString);
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -698,7 +698,7 @@ public class OuSearchIT extends SearchTestBase {
             String expectedHits = info.get("expectedHits");
             parameters.put(FILTER_PARAMETER_QUERY, searchString);
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("expected " + expectedHits + " for " + indexName + " but was " + getNumberOfHits(response),
                 expectedHits, getNumberOfHits(response));
         }
@@ -714,7 +714,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=ISSN");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
@@ -728,7 +728,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=ISSN*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
@@ -742,7 +742,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata all \"ISSN 2-*\"");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNumberOfHits(response));
     }
 
@@ -756,7 +756,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.any-identifier=ISSN:2-*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("2", getNumberOfHits(response));
     }
 
@@ -770,7 +770,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.any-identifier=ISSN:2-01-01");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
     }
 
@@ -784,7 +784,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.any-identifier=ISSN*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
@@ -798,13 +798,13 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.public-status=" + ORGANIZATIONAL_UNIT_STATUS_CLOSED);
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("0", getNumberOfHits(response));
 
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=updated");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("0", getNumberOfHits(response));
 
         update();
@@ -820,19 +820,19 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.public-status=" + ORGANIZATIONAL_UNIT_STATUS_CLOSED);
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
 
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=updated");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
 
         parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=london");
         response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
 
     }
@@ -847,7 +847,7 @@ public class OuSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.creation-date>\"" + startTime + "\"");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(Integer.toString(SearchTestConstants.NUM_ORG_UNITS), getNumberOfHits(response));
     }
 
@@ -862,7 +862,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -879,7 +879,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_RESPONSEPOSITION, "0");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -896,7 +896,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_RESPONSEPOSITION, "1");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -912,7 +912,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_RESPONSEPOSITION, "-2");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(FILTER_PARAMETER_RESPONSEPOSITION, getDiagnostics(response));
     }
 
@@ -929,7 +929,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_MAXIMUMTERMS, "4");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -945,7 +945,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_MAXIMUMTERMS, "-2");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(FILTER_PARAMETER_MAXIMUMTERMS, getDiagnostics(response));
     }
 
@@ -961,7 +961,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/scanResponse.xsl");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 
@@ -977,7 +977,7 @@ public class OuSearchIT extends SearchTestBase {
         parameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "escidoc.metadata=orgunit");
         parameters.put(FILTER_PARAMETER_STYLESHEET, getBaseUrl() + "/srw/yxr.xsl");
         String response = scan(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals(null, getDiagnostics(response));
     }
 

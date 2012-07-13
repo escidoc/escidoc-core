@@ -359,7 +359,7 @@ public class ContextAdminSearchIT extends SearchTestBase {
             parameters.put(FILTER_PARAMETER_QUERY, "PID=escidoc*");
             parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "150");
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             Document searchResultDoc = getDocument(response, true);
             Node n = selectSingleNode(searchResultDoc, "/searchRetrieveResponse/diagnostics/diagnostic/details");
             String textContent = null;

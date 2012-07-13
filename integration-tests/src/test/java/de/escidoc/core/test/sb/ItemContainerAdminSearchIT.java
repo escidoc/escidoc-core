@@ -355,7 +355,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
             search += " and \"/id\"=\"" + itemIds[0] + "\"";
             parameters.put(FILTER_PARAMETER_QUERY, search);
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             assertEquals("Number of Hits not as expected for query " + search, "1", getNumberOfHits(response));
         }
     }
@@ -3759,7 +3759,7 @@ public class ItemContainerAdminSearchIT extends SearchTestBase {
                 parameters.put(FILTER_PARAMETER_OMIT_HIGHLIGHTING, (String) role.get("omitHighlighting"));
             }
             String response = search(parameters, INDEX_NAME);
-            assertXmlValidSearchResult(response);
+            assertXmlValidSrwResponse(response);
             Document searchResultDoc = getDocument(response, true);
             Node n = selectSingleNode(searchResultDoc, "/searchRetrieveResponse/diagnostics/diagnostic/details");
             String textContent = null;

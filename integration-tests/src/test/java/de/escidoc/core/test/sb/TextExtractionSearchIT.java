@@ -159,7 +159,7 @@ public class TextExtractionSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=e*");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
     }
@@ -176,7 +176,7 @@ public class TextExtractionSearchIT extends SearchTestBase {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put(FILTER_PARAMETER_QUERY, "escidoc.fulltext=textfrompdffilenotextractable");
         String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
+        assertXmlValidSrwResponse(response);
         assertEquals("1", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
     }

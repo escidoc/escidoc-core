@@ -169,21 +169,23 @@ public final class Constants {
 
     private static final String NS_URI_SCHEMA_VERSION_0_10 = "/0.10";
 
+    private static final String NS_URI_SCHEMA_VERSION_0_11 = "/0.11";
+
     /*
      * Current schema versions per resource
      */
 
-    public static final String ITEM_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_10;
+    public static final String ITEM_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_11;
 
-    public static final String CONTENT_MODEL_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_2;
+    public static final String CONTENT_MODEL_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_3;
 
     private static final String ITEM_LIST_NS_URI_SCHEMA_VERSION = ITEM_NS_URI_SCHEMA_VERSION;
 
-    public static final String CONTAINER_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_9;
+    public static final String CONTAINER_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_10;
 
     public static final String CONTAINER_LIST_NS_URI_SCHEMA_VERSION = CONTAINER_NS_URI_SCHEMA_VERSION;
 
-    public static final String CONTEXT_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_7;
+    public static final String CONTEXT_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_8;
 
     public static final String CONTEXT_LIST_NS_URI_SCHEMA_VERSION = CONTEXT_NS_URI_SCHEMA_VERSION;
 
@@ -207,9 +209,9 @@ public final class Constants {
 
     private static final String ROLE_LIST_NS_URI_SCHEMA_VERSION = ROLE_NS_URI_SCHEMA_VERSION;
 
-    private static final String INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_1;
+    private static final String INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_2;
 
-    public static final String AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_4;
+    public static final String AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_5;
 
     public static final String AGGREGATION_DEFINITION_LIST_NS_URI_SCHEMA_VERSION =
         AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION;
@@ -329,15 +331,15 @@ public final class Constants {
         NS_URI_PREFIX + "metadatarecords" + NS_URI_SCHEMA_VERSION_0_5;
 
     public static final String CONTENT_STREAMS_NAMESPACE_URI =
-        NS_URI_PREFIX + "contentstreams" + NS_URI_SCHEMA_VERSION_0_7;
+        NS_URI_PREFIX + "contentstreams" + NS_URI_SCHEMA_VERSION_0_8;
 
-    public static final String COMPONENTS_NAMESPACE_URI = NS_URI_PREFIX + "components" + NS_URI_SCHEMA_VERSION_0_9;
+    public static final String COMPONENTS_NAMESPACE_URI = NS_URI_PREFIX + "components" + NS_URI_SCHEMA_VERSION_0_10;
 
     public static final String CONTENT_RELATIONS_NAMESPACE_URI =
         NS_URI_PREFIX + "relations" + NS_URI_SCHEMA_VERSION_0_3;
 
     public static final String CONTENT_RELATION_NAMESPACE_URI =
-        NS_URI_PREFIX + "content-relation" + NS_URI_SCHEMA_VERSION_0_1;
+        NS_URI_PREFIX + "content-relation" + NS_URI_SCHEMA_VERSION_0_2;
 
     public static final String PARENTS_NAMESPACE_URI = NS_URI_PREFIX + "parents" + NS_URI_SCHEMA_VERSION_0_9;
 
@@ -430,7 +432,7 @@ public final class Constants {
 
     public static final String ORGANIZATIONAL_UNIT_REF_PREFIX = "organizational-unit-ref";
 
-    public static final String ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_8;
+    public static final String ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION = NS_URI_SCHEMA_VERSION_0_9;
 
     public static final String ORGANIZATIONAL_UNIT_NAMESPACE_URI =
         NS_URI_PREFIX + "organizationalunit" + ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION;
@@ -439,16 +441,16 @@ public final class Constants {
         NS_URI_PREFIX + "organizationalunitlist" + ORGANIZATIONAL_UNIT_NS_URI_SCHEMA_VERSION;
 
     public static final String ORGANIZATIONAL_UNIT_PATH_LIST_NAMESPACE_URI =
-        NS_URI_PREFIX + "organizationalunitpathlist" + NS_URI_SCHEMA_VERSION_0_4;
+        NS_URI_PREFIX + "organizationalunitpathlist" + NS_URI_SCHEMA_VERSION_0_5;
 
     public static final String ORGANIZATIONAL_UNIT_SUCCESSORS_LIST_NAMESPACE_URI =
-        NS_URI_PREFIX + "organizationalunitsuccessors" + NS_URI_SCHEMA_VERSION_0_8;
+        NS_URI_PREFIX + "organizationalunitsuccessors" + NS_URI_SCHEMA_VERSION_0_9;
 
     public static final String ORGANIZATIONAL_UNIT_REFS_NAMESPACE_URI =
         NS_URI_PREFIX + "organizationalunitrefslist" + NS_URI_SCHEMA_VERSION_0_4;
 
     public static final String ORGANIZATIONAL_UNIT_REF_NAMESPACE_URI =
-        NS_URI_PREFIX + "organizationalunitref" + NS_URI_SCHEMA_VERSION_0_4;
+        NS_URI_PREFIX + "organizationalunitref" + NS_URI_SCHEMA_VERSION_0_5;
 
     /**
      * Base-URLs.

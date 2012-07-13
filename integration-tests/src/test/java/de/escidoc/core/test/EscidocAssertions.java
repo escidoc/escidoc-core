@@ -1,26 +1,11 @@
 package de.escidoc.core.test;
 
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.xpath.XPathAPI;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
-import org.w3c.dom.*;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
-import javax.xml.bind.DatatypeConverter;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,11 +16,42 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
@@ -399,19 +415,6 @@ public abstract class EscidocAssertions {
     public void assertXmlValidStagingFile(final String xmlData) throws Exception {
         assertAllPlaceholderResolved(xmlData);
         EscidocTestBase.assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_ST_FILE));
-    }
-
-    /**
-     * TODO: HUH?????? FIXME
-     * <p/>
-     * Asserts that the provided xml data is valid for a search result.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
-     */
-    public static void assertXmlValidSearchResult(final String xmlData) throws Exception {
-        URL url = new URL(Constants.WEB_CONTEXT_URI_ESCIDOC + "/xsd/rest/search-result/0.8/srw-types.xsd");
-        assertXmlValid(xmlData, url);
     }
 
     /**
