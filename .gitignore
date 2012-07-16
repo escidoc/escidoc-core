@@ -4,4 +4,5 @@ target/
 .project
 .externalToolBuilders/
 .settings/
+.git/
 /attachments

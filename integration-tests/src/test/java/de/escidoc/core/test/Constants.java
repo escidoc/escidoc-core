@@ -365,7 +365,7 @@ public class Constants {
 
     private static final String NS_BASE_TP_SELECTOR_REMOVE = "/removeselectors/0.6";
 
-    private static final String NS_BASE_TP_REINDEX = "/schemas/reindex-task-param/0.1";
+    private static final String NS_BASE_TP_REINDEX = "/reindex-task-param/0.1";
 
     private static final String NS_BASE_TP_MEMBERS = "/members-task-param/0.1";
 
@@ -457,9 +457,9 @@ public class Constants {
 
     public static final String NS_TP_REVOKE_GRANTS = SCHEMA_LOCATION_BASE + NS_BASE_TP_REVOKE_GRANTS;
 
-    public static final String NS_TP_SELECTOR_ADD = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_ADD;
+    public static final String NS_TP_SELECTOR_ADD = SCHEMA_LOCATION_BASE1 + NS_BASE_TP_SELECTOR_ADD;
 
-    public static final String NS_TP_SELECTOR_REMOVE = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_REMOVE;
+    public static final String NS_TP_SELECTOR_REMOVE = SCHEMA_LOCATION_BASE1 + NS_BASE_TP_SELECTOR_REMOVE;
 
     public static final String NS_TP_REINDEX = SCHEMA_LOCATION_BASE + NS_BASE_TP_REINDEX;
 
@@ -672,7 +672,7 @@ public class Constants {
 
     // CMM
     public static final String XSD_ACCESS_CMM_CONTENT_MODEL =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/contentmodel/0.1/" + XSD_CMM_CONTENT_MODEL;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/content-model/0.1/" + XSD_CMM_CONTENT_MODEL;
 
     // OUM
     public static final String XSD_ACCESS_OUM_OU =
@@ -692,10 +692,10 @@ public class Constants {
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/scope/0.4/" + XSD_SM_SCOPE;
 
     public static final String XSD_ACCESS_SM_AGGREGATION_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/aggregationdefinition/0.5/" + XSD_SM_AGGREGATION_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/aggregation-definition/0.5/" + XSD_SM_AGGREGATION_DEFINITION;
 
     public static final String XSD_ACCESS_SM_REPORT_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/reportdefinition/0.4/" + XSD_SM_REPORT_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/report-definition/0.4/" + XSD_SM_REPORT_DEFINITION;
 
     public static final String XSD_ACCESS_SM_REPORT =
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/report/0.4/" + XSD_SM_REPORT;
@@ -705,7 +705,7 @@ public class Constants {
 
     // OAI
     public static final String XSD_ACCESS_OAI_SET_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/setdefinition/0.2/" + XSD_OAI_SET_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/set-definition/0.2/" + XSD_OAI_SET_DEFINITION;
 
     // ST
     public static final String XSD_ACCESS_ST_FILE = "/rest/staging-file/0.3/" + XSD_ST_FILE;

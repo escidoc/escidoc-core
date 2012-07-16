@@ -52,7 +52,7 @@
   </util:map>
 
   <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
-    <!--<property name="schemaHandler" ref="schemaHolder"/>-->
+    <property name="schemaHandler" ref="schemaHolder"/>
     <property name="marshallerProperties" ref="marshallerProperties"/>
     <property name="enableBuffering" value="true"/>
     <!-- TODO: enable when CXF 2.6.2 got released -->

@@ -27,6 +27,7 @@ import org.apache.cxf.jaxrs.ext.Nullable;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 import org.apache.cxf.jaxrs.utils.InjectionUtils;
+import org.apache.cxf.jaxrs.utils.schemas.SchemaHandler;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.apache.cxf.staxutils.DepthExceededStaxException;
@@ -52,6 +53,8 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
 
     private JAXBContextProvider jaxbContextProvider;
 
+    private SchemaHandler schemaHandler;
+
     private Map<String, Object> maProperties;
 
     private Map<String, Object> maPropertiesWithDoctype;
@@ -75,14 +78,14 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         }
     }
 
-    /**
-     * Override for public access.
-     *
-     * @return The schema.
-     */
+    @Override
+    public void setSchemaHandler(SchemaHandler schemaHandler) {
+        this.schemaHandler = schemaHandler;
+    }
+
     @Override
     public Schema getSchema() {
-        return super.getSchema();
+        return schemaHandler.getSchema();
     }
 
     public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {

@@ -23,8 +23,6 @@
   <xs:element name="type"                         type="aggregation-definition:field-types"/>
   <xs:element name="reduce-to"                    type="aggregation-definition:date-reduction-types"/>
 
-  <xs:attribute name="feed"                       type="xs:string"/>
-
   <xs:complexType name="aggregationDefinitionType">
     <xs:annotation>
       <xs:documentation>
@@ -308,7 +306,7 @@
         </xs:annotation>
       </xs:element>
     </xs:sequence>
-    <xs:attribute ref="aggregation-definition:feed" use="required">
+    <xs:attribute name="feed" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>
           <create>
@@ -370,7 +368,7 @@
         </xs:annotation>
       </xs:element>
     </xs:sequence>
-    <xs:attribute ref="aggregation-definition:feed" use="required">
+    <xs:attribute name="feed" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>
           <create>
@@ -439,7 +437,7 @@
         </xs:annotation>
       </xs:element>
     </xs:sequence>
-    <xs:attribute ref="aggregation-definition:feed" use="required">
+    <xs:attribute name="feed" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>
           <create>
