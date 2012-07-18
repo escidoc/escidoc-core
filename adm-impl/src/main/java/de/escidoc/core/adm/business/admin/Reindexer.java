@@ -111,7 +111,7 @@ public class Reindexer {
      * @param clearIndex clear the index before adding objects to it
      * @param commitWrites    Commit index-writes while reindexing. 
      *                        Slows down indexing but allows searching while reindexing.
-     * @param indexName  name of the index (may be null for "all indexes")
+     * @param indexName  name of the index (may be "all" for "all indexes")
      * @return total number of objects found, ...
      * @throws SystemException             Thrown if a framework internal error occurs.
      */
