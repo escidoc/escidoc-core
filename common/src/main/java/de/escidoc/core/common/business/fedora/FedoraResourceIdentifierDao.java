@@ -22,6 +22,8 @@ package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.PidListTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,10 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      */
     @Override
     public List<String> getNextPids(final int noOfPids) throws FedoraSystemException {
-        final PidListTO pidListTO = fedoraServiceClient.getNextPID("escidoc", noOfPids);
+        final PidListTO pidListTO =
+            fedoraServiceClient.getNextPID(
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_IDENTIFIER_PREFIX, "escidoc"),
+                noOfPids);
         return pidListTO.getPid();
     }
 
