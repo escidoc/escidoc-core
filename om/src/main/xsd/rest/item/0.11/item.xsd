@@ -118,7 +118,7 @@
 	xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
 	xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.8"
 	xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
-	xmlns:item="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:item="http://www.escidoc.de/schemas/item/0.11"
 	xmlns:components="http://www.escidoc.de/schemas/components/0.10"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:srel="http://escidoc.de/core/01/structural-relations/">

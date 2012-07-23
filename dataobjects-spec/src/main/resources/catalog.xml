@@ -1,0 +1,5 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+<rewriteURI
+        uriStartString="http://www.escidoc.org/schemas/"
+        rewritePrefix="file:///" />
+</catalog>

@@ -47,6 +47,8 @@
     <module>aspects</module>
     <module>utilities</module>
     <module>dataobjects-spec</module>
+    <!-- module>persistence-spec</module>
+    <module>persistence-impl</module -->
     <module>cl-utility</module>
     <module>content-relation-rest-spec</module>
     <module>content-relation-rest-impl</module>
@@ -2326,6 +2328,21 @@
         <artifactId>fedoradeviation-rest-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <!-- dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>domain-objects-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>persistence-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>persistence-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency -->
       <dependency>
         <groupId>net.sourceforge.findbugs</groupId>
         <artifactId>annotations</artifactId>
