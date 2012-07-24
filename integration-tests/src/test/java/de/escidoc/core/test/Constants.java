@@ -508,7 +508,7 @@ public class Constants {
     // *****************************************************************************************************************
 
     // COMMON
-    public static final String XSD_COMMON_RESULTS = "results.xsd";
+    public static final String XSD_COMMON_RESULTS = "result.xsd";
 
     public static final String XSD_COMMON_VERSION_HISTORY = "version-history.xsd";
 

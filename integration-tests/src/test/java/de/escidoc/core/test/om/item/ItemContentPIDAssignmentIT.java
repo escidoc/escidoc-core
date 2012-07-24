@@ -315,7 +315,7 @@ public class ItemContentPIDAssignmentIT extends ItemTestBase {
         Element contentNode = (Element) selectSingleNode(itemDoc, componentXpath + "/content");
         String xlinkNamespacePrefix = determineXlinkNamespacePrefix(itemDoc);
         Attr attr = itemDoc.createAttributeNS(Constants.NS_EXTERNAL_XLINK, xlinkNamespacePrefix + ":href");
-        String imageUrl = getBaseUrl() + "/images/escidoc-logo.jpg";
+        String imageUrl = Constants.WEB_APP_URI_ESCIDOC + "/images/escidoc-logo.jpg";
 
         attr.setValue(imageUrl);
         contentNode.setAttributeNode(attr);
