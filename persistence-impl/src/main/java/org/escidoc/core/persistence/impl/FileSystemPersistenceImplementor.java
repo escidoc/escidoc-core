@@ -12,11 +12,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.commons.io.IOUtils;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.context.ContextDO;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.persistence.PersistenceImplementor;
+import org.escidoc.core.utils.io.IOUtils;
 
 /**
  * Realization of a PersistenceImplementor for FileSystem storage
@@ -80,7 +80,7 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 		if (isContextInUse(ctx)){
 			throw new IOException("Unable to delete a used context");
 		}
-		File f=new File(contextDirectory,id.getValue().toString() + ".xml");
+		File f=new File(contextDirectory,id.getValue() + ".xml");
 		deleteFile(f);
 	}
 
@@ -96,7 +96,7 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 						return true;
 					}
 				}finally{
-					IOUtils.closeQuietly(is);
+					IOUtils.closeStream(is);
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 
 	private void deleteItem(ID id) throws IOException{
 		assertDirectoryAccessible(itemDirectory);
-		File f = new File(itemDirectory,id.getValue().toString() + ".xml");
+		File f = new File(itemDirectory,id.getValue() + ".xml");
 		deleteFile(f);
 	}
 
@@ -130,10 +130,10 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 		assertDirectoryAccessible(contextDirectory);
 		InputStream is = null;
 		try {
-			is = new FileInputStream(new File(contextDirectory, id.getValue().toString() + ".xml"));
+			is = new FileInputStream(new File(contextDirectory, id.getValue() + ".xml"));
 			return (ContextDO) unmarshal(is);
 		} finally {
-			IOUtils.closeQuietly(is);
+			IOUtils.closeStream(is);
 		}
 	}
 
@@ -141,10 +141,10 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 		assertDirectoryAccessible(itemDirectory);
 		InputStream itemStream = null;
 		try {
-			itemStream = new FileInputStream(new File(itemDirectory, id.getValue().toString() + ".xml"));
+			itemStream = new FileInputStream(new File(itemDirectory, id.getValue() + ".xml"));
 			return (ItemDO) unmarshal(itemStream);
 		} finally {
-			IOUtils.closeQuietly(itemStream);
+			IOUtils.closeStream(itemStream);
 		}
 	}
 
@@ -167,7 +167,7 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 	}
 
 	private void saveContext(final ContextDO context, final boolean overwrite) throws IOException {
-		final File f = new File(contextDirectory, context.getId().getValue().toString() + ".xml");
+		final File f = new File(contextDirectory, context.getId().getValue() + ".xml");
 		assertDirectoryAccessible(contextDirectory);
 		if (f.exists() && !overwrite) {
 			throw new IOException(context.getId().toString() + " already exists in "
@@ -178,12 +178,12 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 			os = new FileOutputStream(f);
 			this.marshal(context, os);
 		} finally {
-			IOUtils.closeQuietly(os);
+			IOUtils.closeStream(os);
 		}
 	}
 
 	private void saveItem(final ItemDO item, final boolean overwrite) throws IOException {
-		final File f = new File(itemDirectory, item.getId().getValue().toString() + ".xml");
+		final File f = new File(itemDirectory, item.getId().getValue() + ".xml");
 		assertDirectoryAccessible(itemDirectory);
 		if (f.exists() && !overwrite) {
 			throw new IOException(item.getId().toString() + " already exists in "
@@ -194,7 +194,7 @@ public class FileSystemPersistenceImplementor implements PersistenceImplementor 
 			os = new FileOutputStream(f);
 			this.marshal(item, os);
 		} finally {
-			IOUtils.closeQuietly(os);
+			IOUtils.closeStream(os);
 		}
 	}
 

@@ -70,6 +70,10 @@
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>
+        <artifactId>persistence-spec</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
         <artifactId>domain-objects-impl</artifactId>
       </dependency>
     </dependencies>
