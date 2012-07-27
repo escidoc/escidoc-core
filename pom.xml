@@ -47,6 +47,9 @@
     <module>aspects</module>
     <module>utilities</module>
     <module>dataobjects-spec</module>
+    <module>domain-objects-impl</module>
+    <module>persistence-spec</module>
+    <module>persistence-impl</module>
     <module>cl-utility</module>
     <module>content-relation-rest-spec</module>
     <module>content-relation-rest-impl</module>
@@ -82,6 +85,8 @@
     <module>om-rest-impl</module>
     <module>om-spec</module>
     <module>om</module>
+    <module>om-business-spec</module>
+    <module>om-business-impl</module>
     <module>oum-rest-spec</module>
     <module>oum-rest-impl</module>
     <module>oum-spec</module>
@@ -2324,6 +2329,31 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>fedoradeviation-rest-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>domain-objects-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>persistence-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>persistence-impl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>om-business-spec</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>om-business-impl</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

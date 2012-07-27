@@ -25,43 +25,35 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>om-rest-impl</artifactId>
-    <name>eSciDoc Core - Object Service REST Impl.</name>
+    <artifactId>om-business-spec</artifactId>
+    <name>eSciDoc Core - Business - Object Service Spec.</name>
 
     <parent>
-        <groupId>org.escidoc.core</groupId>
         <artifactId>eSciDocCore</artifactId>
+        <groupId>org.escidoc.core</groupId>
         <version>trunk-SNAPSHOT</version>
     </parent>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>aspectj-maven-plugin</artifactId>
-        <configuration>
-          <aspectLibraries>
-            <aspectLibrary>
-              <groupId>org.escidoc.core</groupId>
-              <artifactId>common</artifactId>
-            </aspectLibrary>
-            <aspectLibrary>
-              <groupId>org.springframework</groupId>
-              <artifactId>spring-aspects</artifactId>
-            </aspectLibrary>
-            <aspectLibrary>
-              <groupId>org.escidoc.core</groupId>
-              <artifactId>policies</artifactId>
-            </aspectLibrary>
-            <aspectLibrary>
-              <groupId>org.escidoc.core</groupId>
-              <artifactId>aspects</artifactId>
-            </aspectLibrary>
-          </aspectLibraries>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <configuration>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>policies</artifactId>
+                        </aspectLibrary>
+                        <aspectLibrary>
+                            <groupId>org.escidoc.core</groupId>
+                            <artifactId>aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -74,15 +66,11 @@
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>
-            <artifactId>om-rest-spec</artifactId>
+            <artifactId>utilities</artifactId>
         </dependency>
         <dependency>
             <groupId>org.escidoc.core</groupId>
-            <artifactId>om</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.escidoc.core</groupId>
-            <artifactId>om-business-impl</artifactId>
+            <artifactId>common-spec</artifactId>
         </dependency>
         <dependency>
           <groupId>org.escidoc.core</groupId>
