@@ -6,10 +6,10 @@
  check history in sonar as admin. If so, change name of version in sonar.
  
 -generated artifacts are located in 
-  .jenkins/jobs/eSciDoc-<version>/builds/<build>/archive/eSciDocCore/installer/target
+  /data/jenkins/workspace/eSciDoc-<version>/installer/target
     and
-  .jenkins/jobs/eSciDoc-<version>/builds/<build>/archive/eSciDocCore/assembly/target
-  
+  /data/jenkins/workspace/eSciDoc-<version>/assembly/target
+    
 -create new subdirectory for version-artifacts on escidoc.org, directory /builds/stable-releases
 -copy artifacts to escidoc.org directory /builds/stable-releases/<version>
 

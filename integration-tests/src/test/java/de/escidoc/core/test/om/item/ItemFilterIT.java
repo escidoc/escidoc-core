@@ -493,7 +493,7 @@ public class ItemFilterIT extends ItemTestBase {
         catch (final Exception e) {
             EscidocAbstractTest.failException(e);
         }
-        assertXmlValidSrwResponse(result);
+        assertXmlValidExplainPlan(result);
     }
 
     /**

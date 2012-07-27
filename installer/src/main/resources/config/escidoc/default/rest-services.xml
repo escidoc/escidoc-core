@@ -50,11 +50,11 @@
   <!-- 1. Avoid XML payload attacks (You may change this configuration to your needs) -->
   <bean id="depthInterceptor" class="org.apache.cxf.interceptor.security.DepthRestrictingStreamInterceptor">
     <!-- Total number of elements in the XML payload -->
-    <property name="elementCountThreshold" value="5000"/>
+    <property name="elementCountThreshold" value="10000"/>
     <!-- Total number of child elements in the XML payload -->
-    <property name="innerElementCountThreshold" value="3000"/>
+    <property name="innerElementCountThreshold" value="6000"/>
     <!-- Maximum stack depth of the XML payload -->
-    <property name="innerElementLevelThreshold" value="20"/>
+    <property name="innerElementLevelThreshold" value="40"/>
   </bean>
   <!-- 2. Nothing yet -->
 
