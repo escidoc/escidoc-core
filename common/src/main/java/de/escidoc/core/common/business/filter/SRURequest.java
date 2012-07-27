@@ -197,7 +197,10 @@ public class SRURequest {
         final Writer output, final ResourceType[] resourceTypes, final String query, final int limit, final int offset,
         final Map<String, String> extraData, final RecordPacking recordPacking) throws WebserverSystemException {
         try {
-            String normalizedQuery = query.replaceAll("\\s+", " ");
+            String normalizedQuery = null;
+            if (query != null) {
+                normalizedQuery = query.replaceAll("\\s+", " ");
+            }
             FilterCqlDo filterCqlDo = new FilterCqlDo(normalizedQuery, resourceTypes);
             String url =
                 EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
