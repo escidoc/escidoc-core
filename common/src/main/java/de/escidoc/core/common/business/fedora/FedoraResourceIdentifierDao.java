@@ -54,9 +54,8 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
     @Override
     public List<String> getNextPids(final int noOfPids) throws FedoraSystemException {
         final PidListTO pidListTO =
-            fedoraServiceClient.getNextPID(
-                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_IDENTIFIER_PREFIX, "escidoc"),
-                noOfPids);
+            fedoraServiceClient.getNextPID(EscidocConfiguration.getInstance().get(
+                EscidocConfiguration.ESCIDOC_CORE_IDENTIFIER_PREFIX, "escidoc"), noOfPids);
         return pidListTO.getPid();
     }
 
