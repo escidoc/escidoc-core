@@ -2072,8 +2072,11 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
      */
     protected String determinePrefix(final Node node) {
         String prefix = node.getPrefix();
-        if (prefix == null) {
+        if (prefix == null && node.getNodeName().contains(":")) {
             prefix = node.getNodeName().replaceAll(":.*", "");
+        }
+        if (prefix == null) {
+            prefix = "";
         }
         return prefix;
     }

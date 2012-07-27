@@ -147,16 +147,22 @@ public class ItemIT extends ItemTestBase {
         // add c-m-s
         String propertiesNamespacePrefix = determinePropertiesNamespacePrefix(itemDoc);
         String itemNamespacePrefix = determineItemNamespacePrefix(itemDoc);
+        if (!propertiesNamespacePrefix.isEmpty()) {
+            propertiesNamespacePrefix += ":";
+        }
+        if (!itemNamespacePrefix.isEmpty()) {
+            itemNamespacePrefix += ":";
+        }
         item =
-            item.replaceFirst("</" + itemNamespacePrefix + ":properties", "<" + propertiesNamespacePrefix
-                + ":content-model-specific/></" + itemNamespacePrefix + ":properties");
+            item.replaceFirst("</" + itemNamespacePrefix + "properties", "<" + propertiesNamespacePrefix
+                + "content-model-specific/></" + itemNamespacePrefix + "properties");
         item = update(itemId, item);
         selectSingleNodeAsserted(getDocument(item), "/item/properties/content-model-specific");
         // insert into c-m-s
         item =
-            item.replaceFirst("<" + propertiesNamespacePrefix + ":content-model-specific[^>]*>", "<"
-                + propertiesNamespacePrefix + ":content-model-specific><nix></nix></" + propertiesNamespacePrefix
-                + ":content-model-specific>");
+            item.replaceFirst("<" + propertiesNamespacePrefix + "content-model-specific[^>]*>", "<"
+                + propertiesNamespacePrefix + "content-model-specific><nix></nix></" + propertiesNamespacePrefix
+                + "content-model-specific>");
         item = update(itemId, item);
         selectSingleNodeAsserted(getDocument(item), "/item/properties/content-model-specific/nix");
         // remove content from c-m-s
