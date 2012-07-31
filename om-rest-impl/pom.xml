@@ -85,8 +85,16 @@
             <artifactId>om-business-impl</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>om-business-spec</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.escidoc.core</groupId>
           <artifactId>domain-objects-impl</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.escidoc.core</groupId>
+          <artifactId>cl-utility</artifactId>
         </dependency>
     </dependencies>
 

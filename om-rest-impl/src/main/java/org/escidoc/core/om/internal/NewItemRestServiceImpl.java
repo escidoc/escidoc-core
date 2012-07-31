@@ -76,8 +76,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  *
  * @author SWA
  */
-@Service("service.NewItemHandler")
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+@Service
 @Guarded(applyFieldConstraintsToConstructors = false, applyFieldConstraintsToSetters = false,
     assertParametersNotNull = false, checkInvariants = false, inspectInterfaces = true)
 public class NewItemRestServiceImpl implements NewItemRestService {
@@ -92,6 +91,7 @@ public class NewItemRestServiceImpl implements NewItemRestService {
     private ObjectFactoryProvider factoryProvider;
 
     @Autowired
+    @Qualifier("domain.ItemTranslator")
     private ItemTranslator itemTranslator;
 
     protected NewItemRestServiceImpl() {
