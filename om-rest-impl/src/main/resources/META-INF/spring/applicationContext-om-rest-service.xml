@@ -24,6 +24,22 @@
     </jaxrs:features>
   </jaxrs:server>
 
+  <jaxrs:server id="newitemRestService" address="/ir/newitem">
+    <jaxrs:providers>
+      <ref bean="escidocJaxbProvider"/>
+      <ref bean="escidocExceptionMapper"/>
+      <ref bean="cachedOutputStreamMessageBodyReader"/>
+      <ref bean="cachedOutputStreamMessageBodyWriter"/>
+    </jaxrs:providers>
+    <jaxrs:serviceBeans>
+      <bean class="org.escidoc.core.om.internal.NewItemRestServiceImpl"/>
+    </jaxrs:serviceBeans>
+    <jaxrs:features>
+      <ref bean="compressGZIPFeature"/>
+      <ref bean="loggingFeature"/>
+    </jaxrs:features>
+  </jaxrs:server>
+
   <jaxrs:server id="itemsRestService" address="/ir/items">
     <jaxrs:providers>
       <ref bean="escidocJaxbProvider"/>

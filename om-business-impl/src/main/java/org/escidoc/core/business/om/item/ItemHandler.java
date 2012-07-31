@@ -28,14 +28,21 @@
  */
 package org.escidoc.core.business.om.item;
 
+import java.io.IOException;
+
+import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.business.om.interfaces.ItemHandlerInterface;
+import org.escidoc.core.persistence.PersistenceImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -61,6 +68,7 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
@@ -78,11 +86,15 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  *
  * @author Frank Schwichtenberg
  */
-@Service("business.FedoraItemHandler")
+@Service("business.NewItemHandler")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ItemHandler implements ItemHandlerInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandler.class);
+
+    @Autowired
+    @Qualifier("persistence.FedoraImplementor")
+    private PersistenceImplementor persistenceImplementor;
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -91,9 +103,14 @@ public class ItemHandler implements ItemHandlerInterface {
     }
 
     @Override
-    public ItemDO retrieve(final String id) throws ItemNotFoundException, MissingMethodParameterException,
-        SystemException, ComponentNotFoundException, AuthorizationException {
-        return null;
+    public ItemDO retrieve(final ID id) throws ItemNotFoundException, MissingMethodParameterException, SystemException,
+        ComponentNotFoundException, AuthorizationException {
+        try {
+            return persistenceImplementor.load(id, ItemDO.class);
+        }
+        catch (IOException e) {
+            throw new FedoraSystemException(e.getMessage());
+        }
     }
 
     /**
@@ -101,7 +118,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#update(String, String)
      */
     @Override
-    public ItemDO update(final String id, final ItemDO itemDo) throws ItemNotFoundException, FileNotFoundException,
+    public ItemDO update(final ID id, final ItemDO itemDo) throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
         MissingLicenceException, ComponentNotFoundException, MissingAttributeValueException, InvalidXmlException,
         MissingMethodParameterException, InvalidContentException, SystemException, OptimisticLockingException,

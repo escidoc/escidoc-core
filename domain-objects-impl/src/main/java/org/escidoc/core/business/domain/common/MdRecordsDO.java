@@ -16,7 +16,7 @@ import org.escidoc.core.util.collections.CollectionFactory;
  * TODO: Discuss: Existance of List-classes
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)
-public class MdRecordsDO implements DomainObject {
+public class MdRecordsDO extends DomainObject {
 
     @NotNull
     @Size(min = 1)  // TODO: constraint for default md-record "escidoc"? (EL or validation method)

@@ -6,7 +6,7 @@ import org.escidoc.core.business.domain.base.ID;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-public class ContextDO implements DomainObject {
+public class ContextDO extends DomainObject {
 
     private ID id = null;
 

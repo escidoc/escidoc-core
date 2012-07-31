@@ -5,5 +5,5 @@ import org.escidoc.core.business.domain.base.DomainObject;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-public class ContentModelDO implements DomainObject {
+public class ContentModelDO extends DomainObject {
 }

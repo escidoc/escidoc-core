@@ -10,6 +10,7 @@
 
   <!-- Available services -->
   <bean id="service.ir.item"                  class="org.escidoc.core.om.internal.ItemRestServiceImpl"/>
+  <bean id="service.ir.newitem"               class="org.escidoc.core.om.internal.NewItemRestServiceImpl"/>
   <bean id="service.ir.item-filter"           class="org.escidoc.core.om.internal.ItemsRestServiceImpl"/>
   <bean id="service.ir.container"             class="org.escidoc.core.om.internal.ContainerRestServiceImpl"/>
   <bean id="service.ir.container-filter"      class="org.escidoc.core.om.internal.ContainersRestServiceImpl"/>
@@ -78,6 +79,7 @@
     <jaxrs:serviceBeans>
       <!-- Configured services available at runtime -->
       <ref bean="service.ir.item"/>
+      <ref bean="service.ir.newitem"/>
       <ref bean="service.ir.item-filter"/>
       <ref bean="service.ir.container"/>
       <ref bean="service.ir.container-filter"/>

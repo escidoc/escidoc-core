@@ -16,7 +16,7 @@ import org.escidoc.core.utils.io.Stream;
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)
-public class ContentModelSpecificDO implements DomainObject {
+public class ContentModelSpecificDO extends DomainObject {
 
     @NotNull
     private final Stream content;

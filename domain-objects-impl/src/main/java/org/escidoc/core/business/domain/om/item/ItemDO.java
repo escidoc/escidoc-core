@@ -18,7 +18,7 @@ import org.escidoc.core.util.collections.CollectionFactory;
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)
-public final class ItemDO implements DomainObject {
+public final class ItemDO extends DomainObject {
 
 	private ID id = null;
 

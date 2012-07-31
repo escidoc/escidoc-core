@@ -1,0 +1,26 @@
+diff --git dataobjects-spec/src/main/resources/xsd/item.xsd dataobjects-spec/src/main/resources/xsd/item.xsd
+index 0c4cec1..503b601 100644
+--- dataobjects-spec/src/main/resources/xsd/item.xsd
++++ dataobjects-spec/src/main/resources/xsd/item.xsd
+@@ -309,6 +309,7 @@
+             </xs:annotation>
+           </xs:element>
+         </xs:sequence>
++        <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+         <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+       </xs:extension>
+     </xs:complexContent>
+diff --git integration-tests/src/test/resources/templates/om/template/item/rest/ItemWithWhitespaces.xml integration-tests/src/test/resources/templates/om/template/item/rest/ItemWithWhitespaces.xml
+index a2fcc3d..5aa56c1 100644
+--- integration-tests/src/test/resources/templates/om/template/item/rest/ItemWithWhitespaces.xml
++++ integration-tests/src/test/resources/templates/om/template/item/rest/ItemWithWhitespaces.xml
+@@ -15,7 +15,8 @@
+ 	xml:base="http://dev-coreservice.mpdl.mpg.de:8080" xlink:type="simple"
+ 	xlink:title="asdasd" xlink:href="/ir/item/escidoc:122361"
+ 	last-modification-date="2008-12-12T10:35:18.136Z">
+-	<escidocItem:properties>
++	<escidocItem:properties xlink:type="simple" xlink:title="Properties"
++		xlink:href="/ir/item/escidoc:122361/properties">
+ 		<prop:creation-date>2008-12-12T08:39:25.39Z</prop:creation-date>
+ 		<srel:created-by xlink:type="simple"
+ 			xlink:title="demo_depositor"

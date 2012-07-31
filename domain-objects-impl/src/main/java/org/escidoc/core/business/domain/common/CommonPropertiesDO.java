@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-public abstract class CommonPropertiesDO implements DomainObject {
+public abstract class CommonPropertiesDO extends DomainObject {
 
     @NotNull(profiles = {ValidationProfile.EXISTS})
     private DateTime creationDate;

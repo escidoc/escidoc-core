@@ -20,6 +20,7 @@
 
 package org.escidoc.core.business.om.interfaces;
 
+import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -44,7 +45,6 @@ import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateN
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
-import de.escidoc.core.common.exceptions.application.violated.AlreadyPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
@@ -176,7 +176,7 @@ public interface ItemHandlerInterface {
      * @throws SystemException
      *             If an error occurs.
      */
-    ItemDO retrieve(String id) throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException,
+    ItemDO retrieve(ID id) throws ItemNotFoundException, ComponentNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException, SystemException;
 
     /**
@@ -272,7 +272,7 @@ public interface ItemHandlerInterface {
      * @throws RelationPredicateNotFoundException
      *             If the predicate of a given relation is unknown.
      */
-    ItemDO update(String id, ItemDO itemDo) throws ItemNotFoundException, FileNotFoundException,
+    ItemDO update(ID id, ItemDO itemDo) throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException, NotPublishedException,
         MissingLicenceException, ComponentNotFoundException, MissingContentException, MissingAttributeValueException,
         AuthenticationException, AuthorizationException, InvalidXmlException, MissingMethodParameterException,

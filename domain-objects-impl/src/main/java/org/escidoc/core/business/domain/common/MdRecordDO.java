@@ -15,7 +15,7 @@ import java.util.List;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)
-public class MdRecordDO implements DomainObject {
+public class MdRecordDO extends DomainObject {
 
     @NotNull
     private final Stream content;
