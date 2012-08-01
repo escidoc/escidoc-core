@@ -17,29 +17,25 @@ import org.escidoc.core.business.util.aspect.ValidationProfile;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class ItemPropertiesDO extends CommonPropertiesDO {
 
 	private ID origin;
 
-	@NotNull
+	//@NotNull
 	private ID context;
 
-	@NotNull
+	//@NotNull
 	private ID contentModel;
 
 	// xml: object-status, object-status-comment
-	@NotNull(profiles = { ValidationProfile.EXISTS })
+	//@NotNull(profiles = { ValidationProfile.EXISTS })
 	private StatusInfoDO<ItemStatus> statusInfo;
 
 	// Only show in latest version
 	private LockInfoDO lockInfo;
 
-	/**
-	 * TODO: Discuss: URI instead of String? Migration? OR own Type PID xml name
-	 * object-pid
-	 */
-	@NotBlank
+	//@NotBlank
 	private Pid objectPid;
 
 	// alles in PropertiesDo

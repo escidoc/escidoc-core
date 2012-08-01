@@ -11,36 +11,33 @@ import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.common.MdRecordDO;
 import org.escidoc.core.business.domain.om.component.ComponentsDO;
-import org.escidoc.core.util.collections.CollectionFactory;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public final class ItemDO extends DomainObject {
 
 	private ID id = null;
 
-	@NotNull
-    private ItemPropertiesDO properties = null;
+	//@NotNull
+    private ItemPropertiesDO properties;
 
-    @NotNull
-    private final ComponentsDO components = new ComponentsDO();
+    //@NotNull
+    private ComponentsDO components;
 
-    @NotNull
-    private Set<MdRecordDO> mdRecords = CollectionFactory.getInstance().createSet();
+    //@NotNull
+    private Set<MdRecordDO> mdRecords;
 
-    @NotNull
-    private Set<RelationDO> relations = CollectionFactory.getInstance().createSet();
+    //@NotNull
+    private Set<RelationDO> relations;
 
-    @AssertFieldConstraints
 	public void setId(ID id) {
 		this.id = id;
 	}
 
-    @AssertFieldConstraints
-	public void setProperties(ItemPropertiesDO properties) {
+	public void setProperties(@AssertFieldConstraints ItemPropertiesDO properties) {
 		this.properties = properties;
 	}
 
@@ -69,13 +66,11 @@ public final class ItemDO extends DomainObject {
 		return relations;
 	}
 
-    @AssertFieldConstraints
-	public void setRelations(Set<RelationDO> relations) {
+	public void setRelations(@AssertFieldConstraints Set<RelationDO> relations) {
 		this.relations = relations;
 	}
 
-    @AssertFieldConstraints
-	public void setMdRecords(Set<MdRecordDO> mdRecords) {
+	public void setMdRecords(@AssertFieldConstraints Set<MdRecordDO> mdRecords) {
 		this.mdRecords = mdRecords;
 	}
 

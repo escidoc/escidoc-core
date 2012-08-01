@@ -15,10 +15,10 @@ import org.escidoc.core.utils.io.Stream;
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class ContentModelSpecificDO extends DomainObject {
 
-    @NotNull
+    //@NotNull
     private final Stream content;
 
     private boolean inherited;

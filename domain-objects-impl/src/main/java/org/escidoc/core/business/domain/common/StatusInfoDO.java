@@ -9,7 +9,7 @@ import net.sf.oval.guard.Guarded;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public final class StatusInfoDO<T extends Enum<?>> {
 
 	@NotNull

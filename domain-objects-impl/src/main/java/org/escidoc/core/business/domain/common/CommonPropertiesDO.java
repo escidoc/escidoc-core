@@ -14,20 +14,20 @@ import org.joda.time.DateTime;
  */
 public abstract class CommonPropertiesDO extends DomainObject {
 
-    @NotNull(profiles = {ValidationProfile.EXISTS})
+    //@NotNull(profiles = {ValidationProfile.EXISTS})
     private DateTime creationDate;
 
-    @NotNull(profiles = {ValidationProfile.EXISTS})
+    //@NotNull(profiles = {ValidationProfile.EXISTS})
     private ID createdBy;
 
     // @NotNull TODO: required or optional?
     // @Length TODO: specify max length?
-    @NotBlank
+    //@NotBlank
     private String name;
 
     // @NotNull TODO: required or optional?
     // @Length TODO: specify max length?
-    @NotBlank
+    //@NotBlank
     private String description;
 
     public void setCreationDate(@AssertFieldConstraints final DateTime creationDate) {

@@ -15,7 +15,7 @@ import org.escidoc.core.util.collections.CollectionFactory;
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  * TODO: Discuss: Existance of List-classes
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class MdRecordsDO extends DomainObject {
 
     @NotNull

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class MdRecordDO extends DomainObject {
 
     @NotNull

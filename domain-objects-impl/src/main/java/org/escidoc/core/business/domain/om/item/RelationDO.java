@@ -8,7 +8,7 @@ import net.sf.oval.guard.Guarded;
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class RelationDO {
 
     private URI predicate;

@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public final class LockInfoDO {
 
     @NotNull

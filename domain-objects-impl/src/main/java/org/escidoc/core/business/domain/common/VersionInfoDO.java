@@ -13,18 +13,18 @@ import org.joda.time.DateTime;
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true, inspectInterfaces = true)
+@Guarded(checkInvariants = true)
 public class VersionInfoDO {
 
     @NotNegative
     private final int versionNumber;
 
-    @NotNull
+    //@NotNull
     private final DateTime timestamp;
 
     private StatusInfoDO<ItemStatus> versionStatusInfo;
 
-    @NotNull
+    //@NotNull
     private ID modifiedBy;
 
     /**
@@ -33,7 +33,7 @@ public class VersionInfoDO {
      * information is being created for the changed resource, it then may have a PID or not.
      */
     //xml: version-pid
-    @NotBlank
+    //@NotBlank
     private final String pid;
 
     /**
