@@ -28,17 +28,9 @@ public final class StatusInfoDO<T extends Enum<?>> {
 	 * @param objectStatusComment
 	 *            The comment about this status.
 	 */
-	private StatusInfoDO(@AssertFieldConstraints final T objectStatus,
-			@AssertFieldConstraints final String objectStatusComment) {
-		this.objectStatus = objectStatus;
-		this.objectStatusComment = objectStatusComment;
-	}
-
-	@NotNull
-	public <U extends Enum<?>> StatusInfoDO<U> create(
-			@AssertFieldConstraints final U objectStatus,
-			@AssertFieldConstraints final String objectStatusComment) {
-		return new StatusInfoDO<U>(objectStatus, objectStatusComment);
+	private StatusInfoDO(Builder<T> builder) {
+		this.objectStatus = builder.objectStatus;
+		this.objectStatusComment = builder.objectStatusComment;
 	}
 
 	@AssertFieldConstraints
@@ -60,7 +52,7 @@ public final class StatusInfoDO<T extends Enum<?>> {
 			return false;
 		}
 
-		StatusInfoDO that = (StatusInfoDO) o;
+		StatusInfoDO<T> that = (StatusInfoDO<T>) o;
 
 		if (!objectStatusComment.equals(that.objectStatusComment)) {
 			return false;
@@ -92,4 +84,25 @@ public final class StatusInfoDO<T extends Enum<?>> {
 				objectStatus).append(", objectStatusComment='").append(
 				objectStatusComment).append("'}");
 	}
+
+    public static class Builder<T extends Enum<?>> {
+        private T objectStatus = null;
+
+        private String objectStatusComment = null;
+
+        public Builder<T> objectStatus(T objectStatus) {
+            this.objectStatus = objectStatus;
+            return this;
+        }
+
+        public Builder<T> objectStatusComment(String objectStatusComment) {
+            this.objectStatusComment = objectStatusComment;
+            return this;
+        }
+
+        public StatusInfoDO<T> build() {
+            return new StatusInfoDO<T>(this);
+        }
+        
+    }
 }

@@ -55,7 +55,8 @@ public class FedoraPersistenceImplementor implements PersistenceImplementor {
 	}
 
 	private ItemDO loadItem(ID id) throws IOException {
-	    return new ItemDO();
+	    ItemDO.Builder b = new ItemDO.Builder();
+	    return b.id(new ID("1")).build();
 	}
 
 	public void save(final Object obj, final boolean overwrite) throws IOException {

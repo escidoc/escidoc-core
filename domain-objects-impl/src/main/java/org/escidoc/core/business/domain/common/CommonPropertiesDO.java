@@ -1,12 +1,10 @@
 package org.escidoc.core.business.domain.common;
 
 import net.sf.oval.constraint.AssertFieldConstraints;
-import net.sf.oval.constraint.NotBlank;
-import net.sf.oval.constraint.NotNull;
 
 import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
-import org.escidoc.core.business.util.aspect.ValidationProfile;
+import org.escidoc.core.business.domain.om.item.ItemPropertiesDO.Builder;
 import org.joda.time.DateTime;
 
 /**
@@ -29,6 +27,13 @@ public abstract class CommonPropertiesDO extends DomainObject {
     // @Length TODO: specify max length?
     //@NotBlank
     private String description;
+
+    public CommonPropertiesDO(Builder builder) {
+        this.creationDate = builder.creationDate;
+        this.createdBy = builder.createdBy;
+        this.name = builder.name;
+        this.description = builder.description;
+    }
 
     public void setCreationDate(@AssertFieldConstraints final DateTime creationDate) {
         this.creationDate = creationDate;
@@ -64,5 +69,36 @@ public abstract class CommonPropertiesDO extends DomainObject {
     @AssertFieldConstraints
     public String getDescription() {
         return description;
+    }
+
+    public abstract static class Builder {
+        private String name = null;
+
+        private String description = null;
+
+        private ID createdBy = null;
+
+        private DateTime creationDate = null;
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder createdBy(ID createdBy) {
+            this.createdBy = createdBy;
+            return this;
+        }
+
+        public Builder creationDate(DateTime creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+        
     }
 }

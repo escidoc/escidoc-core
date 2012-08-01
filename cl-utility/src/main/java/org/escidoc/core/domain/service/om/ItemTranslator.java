@@ -3,6 +3,7 @@
  */
 package org.escidoc.core.domain.service.om;
 
+import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.domain.item.ItemTypeTO;
 import org.escidoc.core.domain.service.EntityMapperTranslator;
@@ -17,7 +18,8 @@ public class ItemTranslator extends EntityMapperTranslator<ItemTypeTO, ItemDO>
   {
     public ItemDO To2Do(ItemTypeTO value)
     {
-      ItemDO itemDo = new ItemDO();
+      ItemDO.Builder itemBuilder = new ItemDO.Builder();
+      ItemDO itemDo = itemBuilder.id(new ID("1")).build();
       return itemDo;
     }
    

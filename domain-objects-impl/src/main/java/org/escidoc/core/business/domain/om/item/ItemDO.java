@@ -19,22 +19,30 @@ import org.escidoc.core.business.domain.om.component.ComponentsDO;
 @Guarded(checkInvariants = true)
 public final class ItemDO extends DomainObject {
 
-	private ID id = null;
+	private ID id;
 
-	//@NotNull
+	@NotNull
     private ItemPropertiesDO properties;
 
-    //@NotNull
+    @NotNull
     private ComponentsDO components;
 
-    //@NotNull
+    @NotNull
     private Set<MdRecordDO> mdRecords;
 
-    //@NotNull
+    @NotNull
     private Set<RelationDO> relations;
 
 	public void setId(ID id) {
 		this.id = id;
+	}
+	
+	public ItemDO(Builder builder) {
+	    this.id = builder.id;
+	    this.properties = builder.properties;
+	    this.components = builder.components;
+	    this.mdRecords = builder.mdRecords;
+	    this.relations = builder.relations;
 	}
 
 	public void setProperties(@AssertFieldConstraints ItemPropertiesDO properties) {
@@ -132,5 +140,47 @@ public final class ItemDO extends DomainObject {
         sb.append(", id=").append(id);
         sb.append('}');
         return sb;
+    }
+    
+    public static class Builder {
+        private ID id = null;
+
+        private ItemPropertiesDO properties = null;
+
+        private ComponentsDO components = null;
+
+        private Set<MdRecordDO> mdRecords = null;
+
+        private Set<RelationDO> relations = null;
+        
+        public Builder id(ID id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder properties(ItemPropertiesDO properties) {
+            this.properties = properties;
+            return this;
+        }
+
+        public Builder components(ComponentsDO components) {
+            this.components = components;
+            return this;
+        }
+
+        public Builder mdRecords(Set<MdRecordDO> mdRecords) {
+            this.mdRecords = mdRecords;
+            return this;
+        }
+
+        public Builder relations(Set<RelationDO> relations) {
+            this.relations = relations;
+            return this;
+        }
+        
+        public ItemDO build() {
+            return new ItemDO(this);
+        }
+        
     }
 }

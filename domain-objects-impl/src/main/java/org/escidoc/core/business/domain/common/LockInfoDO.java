@@ -31,13 +31,11 @@ public final class LockInfoDO {
      * @param timestamp The timestamp when the resource got locked.
      * @param owner The owner of this lock.
      */
-    public LockInfoDO(@AssertFieldConstraints final LockStatus status,
-        @AssertFieldConstraints final DateTime timestamp,
-        @AssertFieldConstraints final ID owner) {
+    public LockInfoDO(Builder builder) {
 
-        this.status = status;
-        this.timestamp = timestamp;
-        this.owner = owner;
+        this.status = builder.status;
+        this.timestamp = builder.timestamp;
+        this.owner = builder.owner;
     }
 
     @AssertFieldConstraints
@@ -98,5 +96,33 @@ public final class LockInfoDO {
     public StringBuilder toStringBuilder() {
         return new StringBuilder("LockInfoDO{status=").append(status).append(", timestamp=").append(timestamp)
                                                       .append(", owner=").append(owner).append('}');
+    }
+
+    public static class Builder {
+        private LockStatus status = null;
+
+        private DateTime timestamp = null;
+
+        private ID owner = null;
+
+        public Builder status(LockStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder timestamp(DateTime timestamp) {
+            this.timestamp = timestamp;
+            return this;
+        }
+
+        public Builder owner(ID owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public LockInfoDO build() {
+            return new LockInfoDO(this);
+        }
+        
     }
 }
