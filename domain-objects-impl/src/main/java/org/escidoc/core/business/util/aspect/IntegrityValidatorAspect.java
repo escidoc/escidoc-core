@@ -1,57 +1,40 @@
 package org.escidoc.core.business.util.aspect;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.escidoc.core.business.domain.base.DomainObject;
-import org.escidoc.core.business.domain.base.ID;
+import java.util.Iterator;
+import java.util.List;
 
-import java.lang.reflect.Field;
+import net.sf.oval.ConstraintViolation;
+import net.sf.oval.Validator;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.escidoc.core.business.util.annotation.Validate;
+
+import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
- * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 @Aspect
 public class IntegrityValidatorAspect {
-
-    @Around("call(* testHookForSemanticValidation(..))")
-    public Object validate(final ProceedingJoinPoint joinPoint)
+    @After("execution(org.escidoc.core.business.domain..*DO.new(*))"
+        + " || execution(* org.escidoc.core.business.domain..*DO.set*(*))")
+    public void validate(final JoinPoint joinPoint)
         throws Throwable {
-
-        System.out.println("IntegrityValidatorAspect running...");
-
-        for (Object obj : joinPoint.getArgs()) {
-
-            if (obj instanceof DomainObject) {
-
-                System.out.println("\n-------------------------------------");
-                System.out.println("IntegrityValidatorAspect: Checking fields of class '" + obj.getClass().getName() + "'");
-
-                Class<?> currentClazz = obj.getClass();
-
-                while (currentClazz != null) {
-                    for (Field field : currentClazz.getDeclaredFields()) {
-
-                        if (ID.class.isAssignableFrom(field.getType())) {
-
-                            field.setAccessible(true);
-                            ID ref = (ID) field.get(obj);
-
-                            System.out.println("Field: " + field.getName() + "; Value: " + ref);
-
-                            // if (!PersistenceAPI.exists(ref.getId(), ref.getType())) {
-                            //     throw new SystemIntegrityException("Resource '" + ref.getId() + "'" does not exist.);
-                            // }
-                        }
-                    }
-                    currentClazz = currentClazz.getSuperclass();
-                }
-
-                System.out.println("\nIntegrityValidatorAspect: DONE");
-                System.out.println("-------------------------------------");
+        if (joinPoint.getThis().getClass().getAnnotation(Validate.class) != null) {
+            Validator v = new Validator(); 
+            v.enableProfile("update");
+            List<ConstraintViolation> violations = v.validate(joinPoint.getThis());
+            if(!violations.isEmpty())
+            {
+               StringBuilder errors = new StringBuilder();
+               for (ConstraintViolation violation : violations) {
+                   errors.append(violation.getMessage()).append("\n");
+               }
+               throw new SystemException(errors.toString());
             }
         }
-
-        return joinPoint.proceed();
     }
+
 }

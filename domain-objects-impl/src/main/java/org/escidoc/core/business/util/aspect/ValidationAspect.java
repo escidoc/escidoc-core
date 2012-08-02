@@ -1,6 +1,7 @@
 package org.escidoc.core.business.util.aspect;
 
 import net.sf.oval.guard.GuardAspect2;
+
 import org.aspectj.lang.annotation.Aspect;
 
 /**
@@ -17,4 +18,5 @@ public class ValidationAspect extends GuardAspect2 {
         getGuard().disableAllProfiles();
         getGuard().enableProfile("default");
     }
+
 }

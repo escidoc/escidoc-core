@@ -5,19 +5,20 @@ import java.util.Set;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.common.MdRecordDO;
 import org.escidoc.core.business.domain.om.component.ComponentsDO;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
-public final class ItemDO extends DomainObject {
+@Validate
+public class ItemDO extends DomainObject {
 
 	private ID id;
 
@@ -25,12 +26,10 @@ public final class ItemDO extends DomainObject {
     private ItemPropertiesDO properties;
 
     @NotNull
-    private ComponentsDO components;
-
-    @NotNull
     private Set<MdRecordDO> mdRecords;
 
-    @NotNull
+    private ComponentsDO components;
+
     private Set<RelationDO> relations;
 
 	public void setId(ID id) {
@@ -38,6 +37,7 @@ public final class ItemDO extends DomainObject {
 	}
 	
 	public ItemDO(Builder builder) {
+	    super(builder.validationProfile);
 	    this.id = builder.id;
 	    this.properties = builder.properties;
 	    this.components = builder.components;
@@ -81,6 +81,13 @@ public final class ItemDO extends DomainObject {
 	public void setMdRecords(@AssertFieldConstraints Set<MdRecordDO> mdRecords) {
 		this.mdRecords = mdRecords;
 	}
+
+    /**
+     * @param components the components to set
+     */
+    public void setComponents(@AssertFieldConstraints ComponentsDO components) {
+        this.components = components;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -142,7 +149,7 @@ public final class ItemDO extends DomainObject {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private ID id = null;
 
         private ItemPropertiesDO properties = null;
@@ -152,6 +159,10 @@ public final class ItemDO extends DomainObject {
         private Set<MdRecordDO> mdRecords = null;
 
         private Set<RelationDO> relations = null;
+        
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
         
         public Builder id(ID id) {
             this.id = id;

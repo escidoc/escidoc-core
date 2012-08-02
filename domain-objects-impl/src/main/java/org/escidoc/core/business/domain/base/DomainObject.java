@@ -1,9 +1,18 @@
 package org.escidoc.core.business.domain.base;
 
+
 /**
  * General interface for business logic layer's domain objects.
  *
- * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 public abstract class DomainObject {
+
+    protected String validationProfile;
+    
+    public DomainObject(String validationProfile) {
+        this.validationProfile = validationProfile;
+    }
+    public DomainObject() {
+    }
 }

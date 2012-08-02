@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.context.ContextDO;
 import org.escidoc.core.business.domain.om.item.ItemDO;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.escidoc.core.persistence.PersistenceImplementor;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -55,7 +56,7 @@ public class FedoraPersistenceImplementor implements PersistenceImplementor {
 	}
 
 	private ItemDO loadItem(ID id) throws IOException {
-	    ItemDO.Builder b = new ItemDO.Builder();
+	    ItemDO.Builder b = new ItemDO.Builder(ValidationProfile.EXISTS);
 	    return b.id(new ID("1")).build();
 	}
 
