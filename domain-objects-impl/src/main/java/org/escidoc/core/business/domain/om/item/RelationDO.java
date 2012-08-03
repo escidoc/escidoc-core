@@ -5,13 +5,16 @@ import java.net.URI;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
+
+import org.escidoc.core.business.domain.base.AbstractBuilder;
+import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
-public class RelationDO {
+@Validate
+public class RelationDO extends DomainObject {
 
     @NotNull
     private URI predicate;
@@ -20,6 +23,7 @@ public class RelationDO {
 	private URI resource;
 
     public RelationDO(Builder builder) {
+        super(builder.validationProfile);
         this.predicate = builder.predicate;
         this.resource = builder.resource;
     }
@@ -99,11 +103,15 @@ public class RelationDO {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private URI predicate = null;
 
         private URI resource = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder predicate(URI predicate) {
             this.predicate = predicate;
             return this;

@@ -7,9 +7,10 @@ import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.util.annotation.Validate;
 import org.escidoc.core.business.util.aspect.ValidationPattern;
 import org.escidoc.core.utils.io.Stream;
 
@@ -17,7 +18,7 @@ import org.escidoc.core.utils.io.Stream;
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class MdRecordDO extends DomainObject {
 
     @NotNull
@@ -38,6 +39,7 @@ public class MdRecordDO extends DomainObject {
     private Boolean inherited;
 
     public MdRecordDO(Builder builder) {
+        super(builder.validationProfile);
         this.name = builder.name;
         this.content = builder.content;
         this.mdType = builder.mdType;
@@ -180,13 +182,17 @@ public class MdRecordDO extends DomainObject {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private Stream content = null;
         private String name = null;
         private String mdType = null;   
         private URI schema = null;
         private Boolean inherited = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder content(Stream content) {
             this.content = content;
             return this;

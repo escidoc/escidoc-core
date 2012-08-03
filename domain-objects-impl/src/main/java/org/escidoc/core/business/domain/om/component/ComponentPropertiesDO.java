@@ -3,39 +3,33 @@ package org.escidoc.core.business.domain.om.component;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
 import org.escidoc.core.business.domain.base.Pid;
 import org.escidoc.core.business.domain.common.CommonPropertiesDO;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ComponentPropertiesDO extends CommonPropertiesDO {
 
-	//@NotNull(profiles = { ValidationProfile.EXISTS })
 	private ValidStatus validStatusInfo;
 
     @NotNull
     private String visibility;
 
-    @NotNull
     private Pid pid;
 
     @NotNull
     private String contentCategory;
 
-    @NotNull
     private String fileName;
 
-    @NotNull
     private String mimeType;
 
-    @NotNull
     private String checksum;
 
-    @NotNull
     private ChecksumAlgorithm checksumAlgorithm;
 
 	public ComponentPropertiesDO(Builder builder) {
@@ -262,6 +256,10 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
 
         private ChecksumAlgorithm checksumAlgorithm = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder validStatusInfo(ValidStatus validStatusInfo) {
             this.validStatusInfo = validStatusInfo;
             return this;

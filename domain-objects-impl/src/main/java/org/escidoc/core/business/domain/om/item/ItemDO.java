@@ -12,6 +12,7 @@ import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.common.MdRecordDO;
 import org.escidoc.core.business.domain.om.component.ComponentsDO;
 import org.escidoc.core.business.util.annotation.Validate;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
@@ -20,6 +21,7 @@ import org.escidoc.core.business.util.annotation.Validate;
 @Validate
 public class ItemDO extends DomainObject {
 
+    @NotNull(profiles = {ValidationProfile.EXISTS})
 	private ID id;
 
 	@NotNull
@@ -32,10 +34,6 @@ public class ItemDO extends DomainObject {
 
     private Set<RelationDO> relations;
 
-	public void setId(ID id) {
-		this.id = id;
-	}
-	
 	public ItemDO(Builder builder) {
 	    super(builder.validationProfile);
 	    this.id = builder.id;
@@ -45,6 +43,10 @@ public class ItemDO extends DomainObject {
 	    this.relations = builder.relations;
 	}
 
+    public void setId(ID id) {
+        this.id = id;
+    }
+    
 	public void setProperties(@AssertFieldConstraints ItemPropertiesDO properties) {
 		this.properties = properties;
 	}

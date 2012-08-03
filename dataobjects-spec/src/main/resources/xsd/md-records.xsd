@@ -104,7 +104,7 @@
         </xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="schema" type="xs:anyURI">
+    <xs:attribute name="schema" type="xs:anyURI" use="optional">
       <xs:annotation>
         <xs:documentation>
           <create>optional</create>

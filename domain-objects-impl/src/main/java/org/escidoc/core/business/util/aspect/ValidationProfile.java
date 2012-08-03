@@ -13,7 +13,7 @@ public final class ValidationProfile {
     /**
      * The {@link org.escidoc.core.business.domain.base.DomainObject} does not in the repository.
      */
-    public static final String DEFAULT = "default";
+    public static final String NEW = "new";
 
     /**
      * Avoid instantiation.

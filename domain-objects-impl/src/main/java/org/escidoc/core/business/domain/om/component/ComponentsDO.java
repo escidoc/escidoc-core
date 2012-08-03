@@ -5,14 +5,15 @@ import java.util.Set;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ComponentsDO extends DomainObject {
     @NotNull
     private Boolean inherited = false;
@@ -21,6 +22,7 @@ public class ComponentsDO extends DomainObject {
     private Set<ComponentDO> components;
     
     public ComponentsDO(Builder builder) {
+        super(builder.validationProfile);
         this.inherited = builder.inherited;
         this.components = builder.components;
     }
@@ -100,10 +102,14 @@ public class ComponentsDO extends DomainObject {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private Boolean inherited = false;
 
         private Set<ComponentDO> components = null;
+
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
 
         public Builder inherited(Boolean inherited) {
             this.inherited = inherited;

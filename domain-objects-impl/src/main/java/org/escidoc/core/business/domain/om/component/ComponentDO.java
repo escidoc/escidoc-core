@@ -5,20 +5,23 @@ import java.util.Set;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.common.MdRecordDO;
+import org.escidoc.core.business.util.annotation.Validate;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ComponentDO extends DomainObject {
-    @NotNull
-    private Boolean inherited = false;
 
+    private Boolean inherited;
+
+    @NotNull(profiles = {ValidationProfile.EXISTS})
     private ID id;
     
     @NotNull
@@ -31,6 +34,7 @@ public class ComponentDO extends DomainObject {
     private Set<MdRecordDO> mdRecords;
     
     public ComponentDO(Builder builder) {
+        super(builder.validationProfile);
         this.inherited = builder.inherited;
         this.id = builder.id;
         this.properties = builder.properties;
@@ -173,7 +177,7 @@ public class ComponentDO extends DomainObject {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private Boolean inherited = false;
 
         private ID id = null;
@@ -184,6 +188,10 @@ public class ComponentDO extends DomainObject {
 
         private Set<MdRecordDO> mdRecords = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder inherited(Boolean inherited) {
             this.inherited = inherited;
             return this;

@@ -5,21 +5,24 @@ import java.net.URI;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ContentDO extends DomainObject {
     @NotNull
     private URI location;
 
+    @NotNull
     private Storage storage;
     
     public ContentDO(Builder builder) {
+        super(builder.validationProfile);
         this.location = builder.location;
         this.storage = builder.storage;
     }
@@ -99,10 +102,14 @@ public class ContentDO extends DomainObject {
         return sb;
     }
     
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private URI location = null;
 
         private Storage storage = null;
+
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
 
         public Builder location(URI location) {
             this.location = location;

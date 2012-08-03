@@ -3,17 +3,19 @@ package org.escidoc.core.business.domain.common;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
+import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.base.LockStatus;
+import org.escidoc.core.business.util.annotation.Validate;
 import org.joda.time.DateTime;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
-public final class LockInfoDO {
+@Validate
+public final class LockInfoDO extends DomainObject {
 
     @NotNull
     private final LockStatus status;
@@ -32,7 +34,7 @@ public final class LockInfoDO {
      * @param owner The owner of this lock.
      */
     public LockInfoDO(Builder builder) {
-
+        super(builder.validationProfile);
         this.status = builder.status;
         this.timestamp = builder.timestamp;
         this.owner = builder.owner;
@@ -98,13 +100,17 @@ public final class LockInfoDO {
                                                       .append(", owner=").append(owner).append('}');
     }
 
-    public static class Builder {
+    public static class Builder extends AbstractBuilder {
         private LockStatus status = null;
 
         private DateTime timestamp = null;
 
         private ID owner = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder status(LockStatus status) {
             this.status = status;
             return this;

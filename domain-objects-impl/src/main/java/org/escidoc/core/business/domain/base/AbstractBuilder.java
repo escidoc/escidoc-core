@@ -40,7 +40,7 @@ import net.sf.oval.guard.Guarded;
 public class AbstractBuilder {
     @NotNull
     @NotBlank
-    @net.sf.oval.constraint.MatchPattern(pattern="exists|default")
+    @net.sf.oval.constraint.MatchPattern(pattern="exists|new")
     public String validationProfile;
     
     public AbstractBuilder(String validationProfile) {

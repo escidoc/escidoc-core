@@ -2,18 +2,26 @@ package org.escidoc.core.business.domain.om.context;
 
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
+import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
 import org.escidoc.core.business.domain.base.ID;
+import org.escidoc.core.business.util.annotation.Validate;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
+ * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ContextDO extends DomainObject {
 
-    private ID id = null;
+    @NotNull(profiles = {ValidationProfile.EXISTS})
+    private ID id;
+
+    public ContextDO(Builder builder) {
+        super(builder.validationProfile);
+    }
 
     /**
      * @return the id
@@ -69,5 +77,22 @@ public class ContextDO extends DomainObject {
         return sb;
     }
 
+    public static class Builder extends AbstractBuilder {
+        private ID id = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+
+        public Builder id(ID id) {
+            this.id = id;
+            return this;
+        }
+
+        public ContextDO build() {
+            return new ContextDO(this);
+        }
+        
+    }
+        
 }

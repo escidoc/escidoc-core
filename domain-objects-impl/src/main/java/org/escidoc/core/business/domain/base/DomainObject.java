@@ -13,6 +13,12 @@ public abstract class DomainObject {
     public DomainObject(String validationProfile) {
         this.validationProfile = validationProfile;
     }
-    public DomainObject() {
+
+    /**
+     * @return the validationProfile
+     */
+    public String getValidationProfile() {
+        return validationProfile;
     }
+
 }

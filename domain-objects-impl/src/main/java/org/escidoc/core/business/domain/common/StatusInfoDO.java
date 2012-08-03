@@ -3,14 +3,17 @@ package org.escidoc.core.business.domain.common;
 import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
+
+import org.escidoc.core.business.domain.base.AbstractBuilder;
+import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.util.annotation.Validate;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
-public final class StatusInfoDO<T extends Enum<?>> {
+@Validate
+public final class StatusInfoDO<T extends Enum<?>> extends DomainObject {
 
 	@NotNull
 	private T objectStatus;
@@ -29,6 +32,7 @@ public final class StatusInfoDO<T extends Enum<?>> {
 	 *            The comment about this status.
 	 */
 	private StatusInfoDO(Builder<T> builder) {
+	    super(builder.validationProfile);
 		this.objectStatus = builder.objectStatus;
 		this.objectStatusComment = builder.objectStatusComment;
 	}
@@ -85,11 +89,15 @@ public final class StatusInfoDO<T extends Enum<?>> {
 				objectStatusComment).append("'}");
 	}
 
-    public static class Builder<T extends Enum<?>> {
+    public static class Builder<T extends Enum<?>> extends AbstractBuilder {
         private T objectStatus = null;
 
         private String objectStatusComment = null;
 
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
+        
         public Builder<T> objectStatus(T objectStatus) {
             this.objectStatus = objectStatus;
             return this;

@@ -52,7 +52,8 @@ public class FedoraPersistenceImplementor implements PersistenceImplementor {
 	}
 
 	private ContextDO loadContext(ID id) throws IOException {
-	    return new ContextDO();
+        ContextDO.Builder b = new ContextDO.Builder(ValidationProfile.EXISTS);
+        return b.id(new ID("1")).build();
 	}
 
 	private ItemDO loadItem(ID id) throws IOException {

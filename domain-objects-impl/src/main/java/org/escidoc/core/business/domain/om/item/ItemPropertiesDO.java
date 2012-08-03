@@ -4,26 +4,26 @@ import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNegative;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.guard.Guarded;
 
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.base.Pid;
 import org.escidoc.core.business.domain.common.CommonPropertiesDO;
 import org.escidoc.core.business.domain.common.LockInfoDO;
 import org.escidoc.core.business.domain.common.StatusInfoDO;
+import org.escidoc.core.business.util.annotation.Validate;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.joda.time.DateTime;
 
 /**
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
-@Guarded(checkInvariants = true)
+@Validate
 public class ItemPropertiesDO extends CommonPropertiesDO {
 
-    //@NotNull
+    @NotNull(profiles = { ValidationProfile.EXISTS })
     private DateTime timestamp;
 
-    //@NotNull
 	private ID origin;
 
 	@NotNull
@@ -33,12 +33,13 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
 	private ID contentModel;
 
 	// xml: object-status, object-status-comment
-	//@NotNull(profiles = { ValidationProfile.EXISTS })
+	@NotNull(profiles = { ValidationProfile.EXISTS })
 	private StatusInfoDO<ItemStatus> statusInfo;
 
     @NotNegative
     private Integer versionNumber;
 
+    @NotNull(profiles = { ValidationProfile.EXISTS })
     private StatusInfoDO<ItemStatus> versionStatusInfo;
 
 	// Only show in latest version
@@ -47,11 +48,11 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
 	@NotBlank
 	private Pid objectPid;
 
-    //@NotNull
+    @NotNull(profiles = { ValidationProfile.EXISTS })
     private ID modifiedBy;
 
     //xml: version-pid
-    //@NotBlank
+    @NotBlank
     private Pid versionPid;
     
 	public ItemPropertiesDO(Builder builder) {
@@ -349,6 +350,10 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
         private ID modifiedBy = null;
 
         private Pid versionPid = null;
+        
+        public Builder(String validationProfile) {
+            super(validationProfile);
+        }
         
         public Builder timestamp(DateTime timestamp) {
             this.timestamp = timestamp;
