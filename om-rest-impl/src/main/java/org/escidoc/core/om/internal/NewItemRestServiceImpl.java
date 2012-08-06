@@ -28,6 +28,7 @@ import net.sf.oval.guard.Guarded;
 import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.business.om.interfaces.ItemHandlerInterface;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.item.ItemTypeTO;
 import org.escidoc.core.domain.service.om.ItemTranslator;
@@ -106,7 +107,7 @@ public class NewItemRestServiceImpl implements NewItemRestService {
         InvalidContentException, ReferencedResourceNotFoundException, RelationPredicateNotFoundException,
         MissingMdRecordException, InvalidStatusException, RemoteException {
         
-        ItemDO itemDo = itemTranslator.To2Do(itemTO);
+        ItemDO itemDo = itemTranslator.To2Do(itemTO, ValidationProfile.NEW);
         ItemDO returnDo = itemHandler.create(itemDo);
         return factoryProvider.getItemFactory().createItem(itemTranslator.Do2To(returnDo));
     }
@@ -129,7 +130,7 @@ public class NewItemRestServiceImpl implements NewItemRestService {
         RelationPredicateNotFoundException, ReadonlyVersionException, MissingAttributeValueException,
         MissingMdRecordException, RemoteException {
 
-        ItemDO itemDo = itemTranslator.To2Do(itemTO);
+        ItemDO itemDo = itemTranslator.To2Do(itemTO, ValidationProfile.EXISTS);
         ItemDO returnDo = itemHandler.update(new ID(id), itemDo);
         return factoryProvider.getItemFactory().createItem(itemTranslator.Do2To(returnDo));
     }

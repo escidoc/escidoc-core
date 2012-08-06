@@ -24,6 +24,7 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
     @NotNull(profiles = { ValidationProfile.EXISTS })
     private DateTime timestamp;
 
+    @NotNull(profiles = { ValidationProfile.EXISTS })
 	private ID origin;
 
 	@NotNull

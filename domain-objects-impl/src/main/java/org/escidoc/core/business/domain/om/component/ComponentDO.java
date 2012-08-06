@@ -21,6 +21,9 @@ public class ComponentDO extends DomainObject {
 
     private Boolean inherited;
 
+    @NotNull(profiles = { ValidationProfile.EXISTS })
+    private ID origin;
+    
     @NotNull(profiles = {ValidationProfile.EXISTS})
     private ID id;
     
@@ -36,10 +39,26 @@ public class ComponentDO extends DomainObject {
     public ComponentDO(Builder builder) {
         super(builder.validationProfile);
         this.inherited = builder.inherited;
+        this.origin = builder.origin;
         this.id = builder.id;
         this.properties = builder.properties;
         this.content = builder.content;
         this.mdRecords = builder.mdRecords;
+    }
+
+    /**
+     * @return the origin
+     */
+    @AssertFieldConstraints
+    public ID getOrigin() {
+        return origin;
+    }
+
+    /**
+     * @param origin the origin to set
+     */
+    public void setOrigin(@AssertFieldConstraints ID origin) {
+        this.origin = origin;
     }
 
     /**
@@ -131,6 +150,9 @@ public class ComponentDO extends DomainObject {
         if (!inherited.equals(componentDO.inherited)) {
             return false;
         }
+        if (!origin.equals(componentDO.origin)) {
+            return false;
+        }
         if (!id.equals(componentDO.id)) {
             return false;
         }
@@ -150,6 +172,7 @@ public class ComponentDO extends DomainObject {
     @Override
     public int hashCode() {
         int result = inherited.hashCode();
+        result = 31 * result + origin.hashCode();
         result = 31 * result + id.hashCode();
         result = 31 * result + properties.hashCode();
         result = 31 * result + content.hashCode();
@@ -169,6 +192,7 @@ public class ComponentDO extends DomainObject {
         final StringBuilder sb = new StringBuilder();
         sb.append("ComponentDO");
         sb.append("{inherited=").append(inherited);
+        sb.append("{origin=").append(origin);
         sb.append(", id=").append(id);
         sb.append(", properties=").append(properties);
         sb.append(", content=").append(content);
@@ -180,6 +204,8 @@ public class ComponentDO extends DomainObject {
     public static class Builder extends AbstractBuilder {
         private Boolean inherited = false;
 
+        private ID origin = null;
+        
         private ID id = null;
         
         private ComponentPropertiesDO properties = null;
@@ -194,6 +220,11 @@ public class ComponentDO extends DomainObject {
         
         public Builder inherited(Boolean inherited) {
             this.inherited = inherited;
+            return this;
+        }
+
+        public Builder origin(ID origin) {
+            this.origin = origin;
             return this;
         }
 

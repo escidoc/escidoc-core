@@ -4,15 +4,23 @@ import net.sf.oval.constraint.AssertFieldConstraints;
 import net.sf.oval.constraint.NotBlank;
 import net.sf.oval.constraint.NotNull;
 
+import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.domain.base.Pid;
 import org.escidoc.core.business.domain.common.CommonPropertiesDO;
 import org.escidoc.core.business.util.annotation.Validate;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 
 /**
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 @Validate
 public class ComponentPropertiesDO extends CommonPropertiesDO {
+
+    @NotNull(profiles = { ValidationProfile.EXISTS })
+    private ID originItem;
+
+    @NotNull(profiles = { ValidationProfile.EXISTS })
+    private ID originComponent;
 
 	private ValidStatus validStatusInfo;
 
@@ -34,6 +42,8 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
 
 	public ComponentPropertiesDO(Builder builder) {
 	    super(builder);
+        this.originItem = builder.originItem;
+        this.originComponent = builder.originComponent;
 	    this.validStatusInfo = builder.validStatusInfo;
 	    this.visibility = builder.visibility;
 	    this.pid = builder.pid;
@@ -43,6 +53,36 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
 	    this.checksum = builder.checksum;
 	    this.checksumAlgorithm = builder.checksumAlgorithm;
 	}
+
+    /**
+     * @return the originItem
+     */
+    @AssertFieldConstraints
+    public ID getOriginItem() {
+        return originItem;
+    }
+
+    /**
+     * @param originItem the originItem to set
+     */
+    public void setOriginItem(@AssertFieldConstraints ID originItem) {
+        this.originItem = originItem;
+    }
+
+    /**
+     * @return the originComponent
+     */
+    @AssertFieldConstraints
+    public ID getOriginComponent() {
+        return originComponent;
+    }
+
+    /**
+     * @param originComponent the originComponent to set
+     */
+    public void setOriginComponent(@AssertFieldConstraints ID originComponent) {
+        this.originComponent = originComponent;
+    }
 
     /**
      * @return the validStatusInfo
@@ -175,6 +215,12 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
 
         ComponentPropertiesDO componentPropertiesDO = (ComponentPropertiesDO) o;
 
+        if (!originItem.equals(componentPropertiesDO.originItem)) {
+            return false;
+        }
+        if (!originComponent.equals(componentPropertiesDO.originComponent)) {
+            return false;
+        }
         if (!validStatusInfo.equals(componentPropertiesDO.validStatusInfo)) {
             return false;
         }
@@ -206,6 +252,8 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
     @Override
     public int hashCode() {
         int result = validStatusInfo.hashCode();
+        result = 31 * result + originItem.hashCode();
+        result = 31 * result + originComponent.hashCode();
         result = 31 * result + visibility.hashCode();
         result = 31 * result + pid.hashCode();
         result = 31 * result + contentCategory.hashCode();
@@ -227,6 +275,8 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
     public StringBuilder toStringBuilder() {
         final StringBuilder sb = new StringBuilder();
         sb.append("ComponentPropertiesDO");
+        sb.append("{originItem=").append(originItem);
+        sb.append("{originComponent=").append(originComponent);
         sb.append("{validStatusInfo=").append(validStatusInfo);
         sb.append(", visibility=").append(visibility);
         sb.append(", pid=").append(pid);
@@ -240,7 +290,11 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
     }
     
     public static class Builder extends CommonPropertiesDO.Builder {
-        private ValidStatus validStatusInfo;
+        private ID originItem = null;
+
+        private ID originComponent = null;
+
+        private ValidStatus validStatusInfo = null;
 
         private String visibility = null;
 
@@ -260,6 +314,16 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
             super(validationProfile);
         }
         
+        public Builder originItem(ID originItem) {
+            this.originItem = originItem;
+            return this;
+        }
+
+        public Builder originComponent(ID originComponent) {
+            this.originComponent = originComponent;
+            return this;
+        }
+
         public Builder validStatusInfo(ValidStatus validStatusInfo) {
             this.validStatusInfo = validStatusInfo;
             return this;

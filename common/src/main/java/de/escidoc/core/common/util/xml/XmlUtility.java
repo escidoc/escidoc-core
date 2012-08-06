@@ -555,6 +555,17 @@ public final class XmlUtility {
     }
 
     /**
+     * Gets the item href for the provided item id.
+     *
+     * @param itemId The id of the container.
+     * @return Returns the href for the provided container id.
+     */
+    public static String getComponentHref(final String itemId, final String componentId) {
+
+        return Constants.ITEM_URL_BASE + itemId + Constants.COMPONENT_URL_PART + componentId;
+    }
+
+    /**
      * Gets the content-relation href for the provided content-relation id.
      *
      * @param contentRelationId The id of the content-relation.
