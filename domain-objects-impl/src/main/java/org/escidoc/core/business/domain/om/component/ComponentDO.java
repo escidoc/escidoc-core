@@ -36,7 +36,7 @@ public class ComponentDO extends DomainObject {
     @NotNull
     private Set<MdRecordDO> mdRecords;
     
-    public ComponentDO(Builder builder) {
+    private ComponentDO(Builder builder) {
         super(builder.validationProfile);
         this.inherited = builder.inherited;
         this.origin = builder.origin;

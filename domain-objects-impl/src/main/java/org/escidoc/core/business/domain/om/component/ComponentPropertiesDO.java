@@ -40,7 +40,7 @@ public class ComponentPropertiesDO extends CommonPropertiesDO {
 
     private ChecksumAlgorithm checksumAlgorithm;
 
-	public ComponentPropertiesDO(Builder builder) {
+	private ComponentPropertiesDO(Builder builder) {
 	    super(builder);
         this.originItem = builder.originItem;
         this.originComponent = builder.originComponent;

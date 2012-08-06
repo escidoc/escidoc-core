@@ -20,7 +20,7 @@ public class ContentModelSpecificDO extends DomainObject {
 
     private Boolean inherited;
 
-    public ContentModelSpecificDO(Builder builder) {
+    private ContentModelSpecificDO(Builder builder) {
         super(builder.validationProfile);
         this.content = builder.content;
         this.inherited = builder.inherited;

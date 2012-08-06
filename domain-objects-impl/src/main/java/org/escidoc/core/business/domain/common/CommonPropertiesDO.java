@@ -29,7 +29,7 @@ public abstract class CommonPropertiesDO extends DomainObject {
 //    @NotNull
 //    private String description;
 
-    public CommonPropertiesDO(Builder builder) {
+    protected CommonPropertiesDO(Builder builder) {
         super(builder.validationProfile);
         this.creationDate = builder.creationDate;
         this.createdBy = builder.createdBy;

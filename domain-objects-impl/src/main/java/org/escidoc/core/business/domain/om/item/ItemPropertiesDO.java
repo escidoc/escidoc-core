@@ -56,7 +56,7 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
     @NotBlank
     private Pid versionPid;
     
-	public ItemPropertiesDO(Builder builder) {
+	private ItemPropertiesDO(Builder builder) {
 	    super(builder);
 	    this.timestamp = builder.timestamp;
 	    this.origin = builder.origin;

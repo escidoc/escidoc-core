@@ -29,6 +29,7 @@
       classpath:/META-INF/spring/applicationContext-purge-service-impl.xml
       classpath:/META-INF/spring/applicationContext-sm.xml
       classpath:/META-INF/spring/applicationContext-om.xml
+      classpath:/META-INF/spring/applicationContext-om-business.xml
       classpath:/META-INF/spring/applicationContext-aa.xml
       classpath:/META-INF/spring/applicationContext-adm.xml
       classpath:/META-INF/spring/applicationContext-cmm.xml

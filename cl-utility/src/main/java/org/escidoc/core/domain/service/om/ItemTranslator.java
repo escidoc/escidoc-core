@@ -29,6 +29,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * @author MIH
  * 
+ *         Translates Item from/to DO/TO.
+ * 
  */
 @Service("domain.ItemTranslator")
 public class ItemTranslator extends EntityMapperTranslator<ItemTypeTO, ItemDO> {
@@ -40,16 +42,28 @@ public class ItemTranslator extends EntityMapperTranslator<ItemTypeTO, ItemDO> {
     @Autowired
     @Qualifier("domain.MdRecordTranslator")
     private MdRecordTranslator mdRecordTranslator;
-    
+
     @Autowired
     @Qualifier("domain.ItemPropertiesTranslator")
     private ItemPropertiesTranslator itemPropertiesTranslator;
-    
+
     @Autowired
     @Qualifier("domain.RelationTranslator")
     private RelationTranslator relationTranslator;
-    
-    public ItemDO To2Do(ItemTypeTO itemTo, String validationProfile) {
+
+    /**
+     * Translates Item from TO to DO.
+     * 
+     * @param itemTo
+     *            ItemTypeTO
+     * @param validationProfile
+     *            for oval-validation @see ValidationProfile.java
+     * @return ItemDO DO
+     * @throws SystemException
+     *             e
+     * 
+     */
+    public ItemDO To2Do(ItemTypeTO itemTo, String validationProfile) throws SystemException {
         ItemDO.Builder itemBuilder = new ItemDO.Builder(validationProfile);
 
         if (itemTo.getHref() != null) {
@@ -87,13 +101,23 @@ public class ItemTranslator extends EntityMapperTranslator<ItemTypeTO, ItemDO> {
         return itemDo;
     }
 
+    /**
+     * Translates Item from DO to TO.
+     * 
+     * @param itemDo
+     *            ItemDO
+     * @return ItemTypeTO TO
+     * @throws SystemException
+     *             e
+     * 
+     */
     public ItemTypeTO Do2To(ItemDO itemDo) throws SystemException {
         ItemTypeTO itemTo = new ItemTypeTO();
         try {
             itemTo.setBase(new URI(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
             itemTo.setTitle("item-title");
             itemTo.setType("simple");
-            
+
             if (itemDo.getId() != null) {
                 itemTo.setHref(new URI(XmlUtility.getItemHref(itemDo.getId().getValue())));
             }
@@ -130,7 +154,7 @@ public class ItemTranslator extends EntityMapperTranslator<ItemTypeTO, ItemDO> {
         catch (URISyntaxException e) {
             throw new SystemException(e.getMessage(), e);
         }
-        
+
         return itemTo;
     }
 }

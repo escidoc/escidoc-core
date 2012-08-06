@@ -7,9 +7,6 @@ import org.escidoc.core.business.domain.om.context.ContextDO;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.escidoc.core.persistence.PersistenceImplementor;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 /**
  * Realization of a PersistenceImplementor for Fedora storage
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Service;
  * @author ruckus
  * 
  */
-@Service("persistence.FedoraImplementor")
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class FedoraPersistenceImplementor implements PersistenceImplementor {
 	
 	public <T> void delete(ID id, Class<T> type) throws IOException {

@@ -34,7 +34,7 @@ public class ItemDO extends DomainObject {
 
     private Set<RelationDO> relations;
 
-	public ItemDO(Builder builder) {
+	private ItemDO(Builder builder) {
 	    super(builder.validationProfile);
 	    this.id = builder.id;
 	    this.properties = builder.properties;

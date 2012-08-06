@@ -11,7 +11,7 @@ public final class ValidationProfile {
     public static final String EXISTS = "exists";
 
     /**
-     * The {@link org.escidoc.core.business.domain.base.DomainObject} does not in the repository.
+     * The {@link org.escidoc.core.business.domain.base.DomainObject} does not exist in the repository.
      */
     public static final String NEW = "new";
 

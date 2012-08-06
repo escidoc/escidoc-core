@@ -33,7 +33,7 @@ public final class LockInfoDO extends DomainObject {
      * @param timestamp The timestamp when the resource got locked.
      * @param owner The owner of this lock.
      */
-    public LockInfoDO(Builder builder) {
+    private LockInfoDO(Builder builder) {
         super(builder.validationProfile);
         this.status = builder.status;
         this.timestamp = builder.timestamp;

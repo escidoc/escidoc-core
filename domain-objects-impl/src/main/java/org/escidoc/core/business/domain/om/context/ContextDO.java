@@ -19,7 +19,7 @@ public class ContextDO extends DomainObject {
     @NotNull(profiles = {ValidationProfile.EXISTS})
     private ID id;
 
-    public ContextDO(Builder builder) {
+    private ContextDO(Builder builder) {
         super(builder.validationProfile);
     }
 

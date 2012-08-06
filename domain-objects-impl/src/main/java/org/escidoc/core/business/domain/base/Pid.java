@@ -6,6 +6,8 @@ import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 
 /**
+ * Class encapsulates Pid.
+ * 
  * @author Michael Hoppe (michael.hoppe@fiz-karlsruhe.de)
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)

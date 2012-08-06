@@ -34,6 +34,9 @@ import net.sf.oval.guard.Guarded;
 
 /**
  * @author Michael Hoppe
+ * 
+ * Abstract Class for all DO-Builders.
+ * Holds validation-profile for oval-validation.
  *
  */
 @Guarded
@@ -43,7 +46,12 @@ public class AbstractBuilder {
     @net.sf.oval.constraint.MatchPattern(pattern="exists|new")
     public String validationProfile;
     
-    public AbstractBuilder(String validationProfile) {
+    /**
+     * Constructor with validation-profile.
+     * 
+     * @param validationProfile validationProfile
+     */
+    protected AbstractBuilder(String validationProfile) {
         this.validationProfile = validationProfile;
     }
     

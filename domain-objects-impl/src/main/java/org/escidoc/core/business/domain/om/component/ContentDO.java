@@ -21,7 +21,7 @@ public class ContentDO extends DomainObject {
     @NotNull
     private Storage storage;
     
-    public ContentDO(Builder builder) {
+    private ContentDO(Builder builder) {
         super(builder.validationProfile);
         this.location = builder.location;
         this.storage = builder.storage;

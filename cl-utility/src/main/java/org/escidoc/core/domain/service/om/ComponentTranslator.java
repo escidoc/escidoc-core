@@ -26,6 +26,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * @author MIH
  * 
+ *         Translates Item-Component from/to DO/TO.
+ * 
  */
 @Service("domain.ComponentTranslator")
 public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO, ComponentDO> {
@@ -33,16 +35,28 @@ public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO,
     @Autowired
     @Qualifier("domain.ContentTranslator")
     private ContentTranslator contentTranslator;
-    
+
     @Autowired
     @Qualifier("domain.MdRecordTranslator")
     private MdRecordTranslator mdRecordTranslator;
-    
+
     @Autowired
     @Qualifier("domain.ComponentPropertiesTranslator")
     private ComponentPropertiesTranslator componentPropertiesTranslator;
-    
-    public ComponentDO To2Do(ComponentTypeTO componentTo, String validationProfile) {
+
+    /**
+     * Translates Item-Components from TO to DO.
+     * 
+     * @param componentTo
+     *            ComponentTypeTO
+     * @param validationProfile
+     *            for oval-validation @see ValidationProfile.java
+     * @return ComponentDO DO
+     * @throws SystemException
+     *             e
+     * 
+     */
+    public ComponentDO To2Do(ComponentTypeTO componentTo, String validationProfile) throws SystemException {
         ComponentDO.Builder componentBuilder = new ComponentDO.Builder(validationProfile);
         if (componentTo.getHref() != null) {
             componentBuilder.id(new ID(XmlUtility.getIdFromURI(componentTo.getHref().toString())));
@@ -51,7 +65,8 @@ public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO,
             componentBuilder.content(contentTranslator.To2Do(componentTo.getContent(), validationProfile));
         }
         if (componentTo.getProperties() != null) {
-            componentBuilder.properties(componentPropertiesTranslator.To2Do(componentTo.getProperties(), validationProfile));
+            componentBuilder.properties(componentPropertiesTranslator.To2Do(componentTo.getProperties(),
+                validationProfile));
         }
         if (componentTo.getMdRecords() != null && componentTo.getMdRecords().getMdRecord() != null
             && !componentTo.getMdRecords().getMdRecord().isEmpty()) {
@@ -66,6 +81,16 @@ public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO,
         return componentDo;
     }
 
+    /**
+     * Translates Item-Component from DO to TO.
+     * 
+     * @param componentDo
+     *            ComponentDO
+     * @return ComponentTypeTO TO
+     * @throws SystemException
+     *             e
+     * 
+     */
     public ComponentTypeTO Do2To(ComponentDO componentDo) throws SystemException {
         ComponentTypeTO componentTo = new ComponentTypeTO();
         try {
@@ -78,9 +103,9 @@ public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO,
 
             componentTo.setInherited(componentDo.getInherited());
 
-            //TODO: integrate lmd in DO??
-            //componentTo.setLastModificationDate(componentDo.get???);
-            
+            // TODO: integrate lmd in DO??
+            // componentTo.setLastModificationDate(componentDo.get???);
+
             if (componentDo.getMdRecords() != null && !componentDo.getMdRecords().isEmpty()) {
                 MdRecordsTypeTO mdRecordsTo = new MdRecordsTypeTO();
                 for (MdRecordDO mdRecordDo : componentDo.getMdRecords()) {
@@ -94,7 +119,7 @@ public class ComponentTranslator extends EntityMapperTranslator<ComponentTypeTO,
             }
             componentTo.setTitle("component properties");
             componentTo.setType("simple");
-            
+
         }
         catch (URISyntaxException e) {
             throw new SystemException(e.getMessage(), e);

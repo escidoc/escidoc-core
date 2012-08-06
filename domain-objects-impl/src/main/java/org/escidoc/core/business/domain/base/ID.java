@@ -6,6 +6,8 @@ import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 
 /**
+ * Class encapsulates id.
+ * 
  * @author Marko Voss (marko.voss@fiz-karlsruhe.de)
  */
 @Guarded(checkInvariants = true, inspectInterfaces = true)

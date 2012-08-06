@@ -43,7 +43,7 @@ public class MdRecordDO extends DomainObject {
 
     private Boolean inherited;
 
-    public MdRecordDO(Builder builder) {
+    private MdRecordDO(Builder builder) {
         super(builder.validationProfile);
         this.origin = builder.origin;
         this.name = builder.name;

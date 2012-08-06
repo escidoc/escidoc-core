@@ -2,7 +2,6 @@ package org.escidoc.core.business.domain.cmm;
 
 import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
-import org.escidoc.core.business.domain.om.item.ContentModelSpecificDO;
 import org.escidoc.core.business.util.annotation.Validate;
 
 /**
@@ -11,7 +10,7 @@ import org.escidoc.core.business.util.annotation.Validate;
 @Validate
 public class ContentModelDO extends DomainObject {
 
-    public ContentModelDO(Builder builder) {
+    private ContentModelDO(Builder builder) {
         super(builder.validationProfile);
     }
 

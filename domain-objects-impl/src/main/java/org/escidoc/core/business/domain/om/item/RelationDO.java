@@ -22,7 +22,7 @@ public class RelationDO extends DomainObject {
     @NotNull
 	private URI resource;
 
-    public RelationDO(Builder builder) {
+    private RelationDO(Builder builder) {
         super(builder.validationProfile);
         this.predicate = builder.predicate;
         this.resource = builder.resource;

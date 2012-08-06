@@ -42,7 +42,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -70,6 +70,8 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 
 /**
  * The retrieve, update, create and delete methods implement the {@link ItemHandlerInterface ItemHandlerInterface}.
@@ -93,7 +95,7 @@ public class ItemHandler implements ItemHandlerInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandler.class);
 
     @Autowired
-    @Qualifier("persistence.FedoraImplementor")
+    @Qualifier("persistence.PersistenceImplementor")
     private PersistenceImplementor persistenceImplementor;
 
     /**
