@@ -71,8 +71,6 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
         this.versionPid = builder.versionPid;
 	}
 
-	// TODO: toString() etc.
-
 	/**
      * @return the timestamp
      */
@@ -152,14 +150,14 @@ public class ItemPropertiesDO extends CommonPropertiesDO {
      * @return the versionNumber
      */
     @AssertFieldConstraints
-    public int getVersionNumber() {
+    public Integer getVersionNumber() {
         return versionNumber;
     }
 
     /**
      * @param versionNumber the versionNumber to set
      */
-    public void setVersionNumber(@AssertFieldConstraints int versionNumber) {
+    public void setVersionNumber(@AssertFieldConstraints Integer versionNumber) {
         this.versionNumber = versionNumber;
     }
 

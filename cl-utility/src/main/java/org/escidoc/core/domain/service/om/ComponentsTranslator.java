@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
@@ -48,6 +49,7 @@ public class ComponentsTranslator extends EntityMapperTranslator<ComponentsTypeT
         ComponentsTypeTO componentsTo = new ComponentsTypeTO();
         
         try {
+            componentsTo.setBase(new URI(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
             if (componentsDo.getOrigin() != null) {
                 componentsTo.setHref(new URI(XmlUtility.getItemHref(componentsDo.getOrigin().getValue()) + "/components"));
             }

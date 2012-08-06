@@ -19,6 +19,7 @@ import org.escidoc.core.domain.service.EntityMapperTranslator;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
@@ -52,6 +53,7 @@ public class ComponentPropertiesTranslator
         ComponentPropertiesTypeTO componentPropertiesTo = new ComponentPropertiesTypeTO();
 
         try {
+            componentPropertiesTo.setBase(new URI(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
             componentPropertiesTo.setChecksum(componentPropertiesDo.getChecksum());
             componentPropertiesTo.setChecksumAlgorithm(ChecksumAlgorithmTypeTO.valueOf(componentPropertiesDo
                 .getChecksumAlgorithm().toString()));

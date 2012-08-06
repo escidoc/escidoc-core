@@ -10,8 +10,10 @@ import net.sf.oval.constraint.NotNull;
 
 import org.escidoc.core.business.domain.base.AbstractBuilder;
 import org.escidoc.core.business.domain.base.DomainObject;
+import org.escidoc.core.business.domain.base.ID;
 import org.escidoc.core.business.util.annotation.Validate;
 import org.escidoc.core.business.util.aspect.ValidationPattern;
+import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.escidoc.core.utils.io.Stream;
 
 /**
@@ -20,6 +22,9 @@ import org.escidoc.core.utils.io.Stream;
  */
 @Validate
 public class MdRecordDO extends DomainObject {
+
+    @NotNull(profiles = { ValidationProfile.EXISTS })
+    private ID origin;
 
     @NotNull
     private Stream content;
@@ -40,6 +45,7 @@ public class MdRecordDO extends DomainObject {
 
     public MdRecordDO(Builder builder) {
         super(builder.validationProfile);
+        this.origin = builder.origin;
         this.name = builder.name;
         this.content = builder.content;
         this.mdType = builder.mdType;
@@ -122,6 +128,20 @@ public class MdRecordDO extends DomainObject {
         this.inherited = inherited;
     }
 
+    /**
+     * @return the origin
+     */
+    public ID getOrigin() {
+        return origin;
+    }
+
+    /**
+     * @param origin the origin to set
+     */
+    public void setOrigin(ID origin) {
+        this.origin = origin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,6 +153,9 @@ public class MdRecordDO extends DomainObject {
 
         MdRecordDO that = (MdRecordDO) o;
 
+        if (origin != that.origin) {
+            return false;
+        }
         if (inherited != that.inherited) {
             return false;
         }
@@ -155,6 +178,7 @@ public class MdRecordDO extends DomainObject {
     @Override
     public int hashCode() {
         int result = content.hashCode();
+        result = 31 * result + origin.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + (mdType != null ? mdType.hashCode() : 0);
         result = 31 * result + (schema != null ? schema.hashCode() : 0);
@@ -174,6 +198,7 @@ public class MdRecordDO extends DomainObject {
         final StringBuilder sb = new StringBuilder();
         sb.append("MdRecordDO");
         sb.append("{content=").append(content);
+        sb.append(", origin='").append(origin).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", mdType='").append(mdType).append('\'');
         sb.append(", schema=").append(schema);
@@ -183,6 +208,7 @@ public class MdRecordDO extends DomainObject {
     }
     
     public static class Builder extends AbstractBuilder {
+        private ID origin = null;
         private Stream content = null;
         private String name = null;
         private String mdType = null;   
@@ -193,6 +219,11 @@ public class MdRecordDO extends DomainObject {
             super(validationProfile);
         }
         
+        public Builder origin(ID origin) {
+            this.origin = origin;
+            return this;
+        }
+
         public Builder content(Stream content) {
             this.content = content;
             return this;

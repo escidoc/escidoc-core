@@ -26,6 +26,12 @@ public class RelationTranslator extends EntityMapperTranslator<RelationTypeTO, R
 
     public RelationTypeTO Do2To(RelationDO relationDo) {
         RelationTypeTO relationTo = new RelationTypeTO();
+        
+        relationTo.setHref(relationDo.getResource());
+        relationTo.setPredicate(relationDo.getPredicate());
+        relationTo.setTitle("relations of item");
+        relationTo.setType("simple");
+        
         return relationTo;
     }
 }
