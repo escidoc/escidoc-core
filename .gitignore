@@ -6,3 +6,5 @@ target/
 .settings/
 .git/
 /attachments
+*.iml
+.idea/
