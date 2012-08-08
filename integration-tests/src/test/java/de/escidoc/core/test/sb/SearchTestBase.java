@@ -475,7 +475,8 @@ public class SearchTestBase extends SbTestBase {
     protected final String getItemPidParam(final String itemId) throws Exception {
         String xml = item.retrieve(itemId);
         String lastModDate = getLastModificationDate(xml);
-        String url = getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + itemId;
+        String url =
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI + "/" + itemId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
@@ -494,7 +495,8 @@ public class SearchTestBase extends SbTestBase {
         String xml = container.retrieve(containerId);
         String lastModDate = getLastModificationDate(xml);
         String url =
-            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + containerId;
+            getFrameworkUrl() + de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI + "/"
+                + containerId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }

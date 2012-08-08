@@ -12,6 +12,7 @@
   
 -create new subdirectory for version-artifacts on escidoc.org, directory /builds/stable-releases
 -copy artifacts to escidoc.org directory /builds/stable-releases/<version>
+-load installer.jar in artifactory (org.escidoc.core.installer)
 
 -set Property RELEASE_LABEL in File /build/escidoc-build.default.properties to required version
 -delete Subdirs below eSciDocCore/target
