@@ -707,9 +707,8 @@ public class ConnectionUtility {
 
         final HttpResponse httpResponse;
         try {
-            // TODO
-            // entitys für Body Posts
             final HttpPost httpPost = new HttpPost(url);
+            httpPost.setEntity(new StringEntity(body, Constants.DEFAULT_MIME_TYPE, XmlUtility.CHARACTER_ENCODING));
 
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(), CookiePolicy.BEST_MATCH);

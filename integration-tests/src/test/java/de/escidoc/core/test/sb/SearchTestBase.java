@@ -700,7 +700,7 @@ public class SearchTestBase extends SbTestBase {
             HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
                 de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
                 de.escidoc.core.test.common.client.servlet.Constants.ITEM_BASE_URI)
-                + itemId;
+                + "/" + itemId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
@@ -720,7 +720,7 @@ public class SearchTestBase extends SbTestBase {
             HttpHelper.createUrl(de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
                 de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
                 de.escidoc.core.test.common.client.servlet.Constants.CONTAINER_BASE_URI)
-                + containerId;
+                + "/" + containerId;
         String param = "<param last-modification-date=\"" + lastModDate + "\"><url>" + url + "</url></param>";
         return (param);
     }
