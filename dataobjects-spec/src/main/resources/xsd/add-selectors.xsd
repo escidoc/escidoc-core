@@ -4,7 +4,7 @@
            xmlns:add-selectors="http://www.escidoc.de/schemas/addselectors/0.7"
            targetNamespace="http://www.escidoc.de/schemas/addselectors/0.7"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
-
+  <!-- mih test -->
   <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
 
   <xs:element name="param" type="add-selectors:paramType"/>
