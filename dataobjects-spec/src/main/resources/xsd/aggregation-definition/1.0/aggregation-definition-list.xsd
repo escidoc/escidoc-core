@@ -1,0 +1,42 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition-list"
+           xmlns:aggregation-definition-list="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition-list"
+           xmlns:aggregation-definition="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition"
+           xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition"
+             schemaLocation="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition.xsd"/>
+
+  <xs:element name="aggregation-definition-list" type="aggregation-definition-list:aggregationDefinitionListType"/>
+
+  <xs:complexType name="aggregationDefinitionListType">
+    <xs:annotation>
+      <xs:documentation>
+        <para>
+          List of aggregation-definitions.
+        </para>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="aggregation-definition:aggregation-definition" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <para>
+              Aggregation-definition in aggregation-definition-schema.
+            </para>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute ref="xlink:title" use="required"/>
+    <xs:attribute ref="xlink:href" use="prohibited"/>
+    <xs:attribute ref="xlink:type" use="required"/>
+    <xs:attribute ref="xml:base" use="required"/>
+    <xs:attributeGroup ref="common:listAttributes"/>
+  </xs:complexType>
+</xs:schema>

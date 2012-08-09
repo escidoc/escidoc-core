@@ -1,0 +1,16 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context"
+           xmlns:requests="http://www.escidoc.org/schemas/aa/pdp/1.0/pdp-requests"
+           targetNamespace="http://www.escidoc.org/schemas/aa/pdp/1.0/pdp-requests"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:context" schemaLocation="http://www.escidoc.org/schemas/aa/pdp/1.0/cs-xacml-schema-context-01.xsd"/>
+
+  <xs:element name="requests" type="requests:requestsType"/>
+
+  <xs:complexType name="requestsType">
+    <xs:sequence>
+      <xs:element ref="xacml-context:Request" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
