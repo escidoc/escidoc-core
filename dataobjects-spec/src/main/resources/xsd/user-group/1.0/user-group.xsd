@@ -19,7 +19,7 @@
            targetNamespace="http://www.escidoc.org/schemas/user-group/1.0/user-group"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>

@@ -9,8 +9,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
-           xmlns:param="http://www.escidoc.org/schemas/user-group/1.0/remove-selectors"
-           targetNamespace="http://www.escidoc.org/schemas/user-group/1.0/remove-selectors"
+           xmlns:param="http://www.escidoc.org/schemas/task-param/1.0/remove-selectors"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/remove-selectors"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>

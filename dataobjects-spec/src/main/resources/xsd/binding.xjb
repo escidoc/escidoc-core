@@ -16,7 +16,7 @@
     </globalBindings>
   </bindings>
 
-  <bindings schemaLocation="common-types.xsd">
+  <bindings schemaLocation="common/1.0/common-types.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.common"/>
       <nameXmlTransform>
@@ -26,7 +26,7 @@
     </schemaBindings>
   </bindings>
 
-  <bindings schemaLocation="components.xsd">
+  <bindings schemaLocation="item/1.0/components.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.components"/>
       <nameXmlTransform>
@@ -37,17 +37,7 @@
   </bindings>
 
   <!-- Container -->
-  <bindings schemaLocation="container-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.container.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-
-  <bindings schemaLocation="container.xsd">
+  <bindings schemaLocation="container/1.0/container.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.container"/>
       <nameXmlTransform>
@@ -58,7 +48,7 @@
   </bindings>
 
   <!-- Content Model -->
-  <bindings schemaLocation="content-model.xsd">
+  <bindings schemaLocation="content-model/1.0/content-model.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.model"/>
       <nameXmlTransform>
@@ -69,7 +59,7 @@
   </bindings>
 
   <!-- Content Relation -->
-  <bindings schemaLocation="content-relation.xsd">
+  <bindings schemaLocation="content-relation/1.0/content-relation.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.relation"/>
       <nameXmlTransform>
@@ -82,7 +72,7 @@
     </bindings>
   </bindings>
 
-  <bindings schemaLocation="predicate-list.xsd">
+  <bindings schemaLocation="content-relation/1.0/predicate-list.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.predicate.list"/>
       <nameXmlTransform>
@@ -92,7 +82,7 @@
     </schemaBindings>
   </bindings>
 
-  <bindings schemaLocation="content-streams.xsd">
+  <bindings schemaLocation="common/1.0/content-streams.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.content.stream"/>
       <nameXmlTransform>
@@ -109,17 +99,7 @@
   </bindings>
 
   <!-- Context -->
-  <bindings schemaLocation="context-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.context.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-
-  <bindings schemaLocation="context.xsd">
+  <bindings schemaLocation="context/1.0/context.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.context"/>
       <nameXmlTransform>
@@ -136,17 +116,7 @@
   </bindings>
 
   <!-- Item -->
-  <bindings schemaLocation="item-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.item.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-
-  <bindings schemaLocation="item.xsd">
+  <bindings schemaLocation="item/1.0/item.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.item"/>
       <nameXmlTransform>
@@ -157,7 +127,7 @@
   </bindings>
 
   <!-- parents -->
-  <bindings schemaLocation="parents.xsd">
+  <bindings schemaLocation="common/1.0/parents.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.parents"/>
       <nameXmlTransform>
@@ -168,7 +138,7 @@
   </bindings>
 
   <!-- MdRecord(s) -->
-  <bindings schemaLocation="md-records.xsd">
+  <bindings schemaLocation="common/1.0/md-records.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.metadatarecords"/>
       <nameXmlTransform>
@@ -185,18 +155,9 @@
   </bindings>
 
   <!-- Organizational Unit -->
-  <bindings schemaLocation="organizational-unit.xsd">
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.ou"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="organizational-unit-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.ou.list"/>
       <nameXmlTransform>
         <typeName suffix="TO"/>
         <elementName suffix="TO"/>
@@ -212,7 +173,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="organizational-unit-path-list.xsd">
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit-path-list.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.ou.path.list"/>
       <nameXmlTransform>
@@ -221,7 +182,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="organizational-unit-ref.xsd">
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit-ref.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.ou.ref"/>
       <nameXmlTransform>
@@ -232,7 +193,7 @@
   </bindings>
 
   <!-- User Account -->
-  <bindings schemaLocation="user-account.xsd">
+  <bindings schemaLocation="user-account/1.0/user-account.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.useraccount"/>
       <nameXmlTransform>
@@ -241,16 +202,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="user-account-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.aa.useraccount.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="user-account-attributes.xsd">
+  <bindings schemaLocation="user-account/1.0/user-account-attributes.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.useraccount.attributes"/>
       <nameXmlTransform>
@@ -259,7 +211,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="user-account-preferences.xsd">
+  <bindings schemaLocation="user-account/1.0/user-account-preferences.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.useraccount.preferences"/>
       <nameXmlTransform>
@@ -268,7 +220,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="user-group.xsd">
+  <bindings schemaLocation="user-group/1.0/user-group.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.usergroup"/>
       <nameXmlTransform>
@@ -280,16 +232,7 @@
       <property name="selectorType"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="user-group-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.aa.usergroup.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="grants.xsd">
+  <bindings schemaLocation="grant/1.0/grants.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.grants"/>
       <nameXmlTransform>
@@ -301,7 +244,7 @@
       <class name="GrantPropertiesTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="pdp-requests.xsd">
+  <bindings schemaLocation="pdp/1.0/pdp-requests.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.pdp.request"/>
       <nameXmlTransform>
@@ -310,7 +253,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="pdp-results.xsd">
+  <bindings schemaLocation="pdp/1.0/pdp-results.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.pdp.result"/>
       <nameXmlTransform>
@@ -319,7 +262,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="cs-xacml-schema-context-01.xsd">
+  <bindings schemaLocation="pdp/1.0/cs-xacml-schema-context-01.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.xacml.context"/>
       <nameXmlTransform>
@@ -328,7 +271,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="cs-xacml-schema-policy-01.xsd">
+  <bindings schemaLocation="pdp/1.0/cs-xacml-schema-policy-01.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.xacml.policy"/>
       <nameXmlTransform>
@@ -337,7 +280,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="role.xsd">
+  <bindings schemaLocation="role/1.0/role.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.role"/>
       <nameXmlTransform>
@@ -346,16 +289,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="role-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.aa.role.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="permission-filter.xsd">
+  <bindings schemaLocation="user-account/1.0/permission-filter.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.aa.permission"/>
       <nameXmlTransform>
@@ -367,7 +301,7 @@
       <class name="PermissionFilterTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="aggregation-definition.xsd">
+  <bindings schemaLocation="aggregation-definition/1.0/aggregation-definition.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.ad"/>
       <nameXmlTransform>
@@ -379,16 +313,7 @@
       <!--<property name="InfoFieldType"/>-->
     <!--</bindings>-->
   </bindings>
-  <bindings schemaLocation="aggregation-definition-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.sm.ad.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="report-definition.xsd">
+  <bindings schemaLocation="report-definition/1.0/report-definition.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.rd"/>
       <nameXmlTransform>
@@ -397,16 +322,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="report-definition-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.sm.rd.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="scope.xsd">
+  <bindings schemaLocation="scope/1.0/scope.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.scope"/>
       <nameXmlTransform>
@@ -418,16 +334,7 @@
       <property name="ScopeType"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="scope-list.xsd">
-    <schemaBindings>
-      <package name="org.escidoc.core.domain.sm.scope.list"/>
-      <nameXmlTransform>
-        <typeName suffix="TO"/>
-        <elementName suffix="TO"/>
-      </nameXmlTransform>
-    </schemaBindings>
-  </bindings>
-  <bindings schemaLocation="statistic-data.xsd">
+  <bindings schemaLocation="statistic-data/1.0/statistic-data.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.sd"/>
       <nameXmlTransform>
@@ -436,7 +343,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="report.xsd">
+  <bindings schemaLocation="report/1.0/report.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.report"/>
       <nameXmlTransform>
@@ -445,7 +352,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="report-parameters.xsd">
+  <bindings schemaLocation="report/1.0/report-parameters.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.report.parameter"/>
       <nameXmlTransform>
@@ -454,7 +361,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="preprocessing-information.xsd">
+  <bindings schemaLocation="preprocessing-information/1.0/preprocessing-information.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sm.pi"/>
       <nameXmlTransform>
@@ -463,7 +370,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="properties.xsd">
+  <bindings schemaLocation="common/1.0/properties.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.properties"/>
       <nameXmlTransform>
@@ -481,7 +388,7 @@
       <property name="resourceType"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="relations.xsd">
+  <bindings schemaLocation="common/1.0/relations.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.relations"/>
       <nameXmlTransform>
@@ -490,7 +397,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="structural-relations.xsd">
+  <bindings schemaLocation="common/1.0/structural-relations.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.relations.structural"/>
       <nameXmlTransform>
@@ -499,7 +406,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="struct-map.xsd">
+  <bindings schemaLocation="container/1.0/struct-map.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.container.structmap"/>
       <nameXmlTransform>
@@ -508,7 +415,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="release.xsd">
+  <bindings schemaLocation="common/1.0/release.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.release"/>
       <nameXmlTransform>
@@ -517,7 +424,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="version.xsd">
+  <bindings schemaLocation="common/1.0/version.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.version"/>
       <nameXmlTransform>
@@ -526,7 +433,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="version-history.xsd">
+  <bindings schemaLocation="common/1.0/version-history.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.version.history"/>
       <nameXmlTransform>
@@ -538,7 +445,7 @@
       <property name="lastEventTimestamp"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="Event-v1-1.xsd">
+  <bindings schemaLocation="common/1.0/Event-v1-1.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.version.event"/>
       <nameXmlTransform>
@@ -547,7 +454,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="xcql.xsd">
+  <bindings schemaLocation="srw/1.0/xcql.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.xcql"/>
       <nameXmlTransform>
@@ -556,7 +463,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="srw-types.xsd">
+  <bindings schemaLocation="srw/1.0/srw-types.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sru"/>
       <nameXmlTransform>
@@ -609,7 +516,7 @@
                     adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="diagnostics.xsd">
+  <bindings schemaLocation="srw/1.0/diagnostics.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sru.diagnostics"/>
       <nameXmlTransform>
@@ -620,7 +527,7 @@
   </bindings>
 
   <!-- task param -->
-  <bindings schemaLocation="add-selectors.xsd">
+  <bindings schemaLocation="task-param/1.0/add-selectors.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.selectors.add"/>
       <nameXmlTransform>
@@ -632,7 +539,7 @@
       <class name="AddSelectorsTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="remove-selectors.xsd">
+  <bindings schemaLocation="task-param/1.0/remove-selectors.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.selectors.remove"/>
       <nameXmlTransform>
@@ -644,7 +551,7 @@
       <class name="RemoveSelectorsTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="assign-pid-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/assign-pid-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.assignpid"/>
       <nameXmlTransform>
@@ -656,7 +563,7 @@
       <class name="AssignPidTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="id-set-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/id-set-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.idset"/>
       <nameXmlTransform>
@@ -668,7 +575,7 @@
       <class name="IdSetTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="delete-objects-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/delete-objects-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.deleteobjects"/>
       <nameXmlTransform>
@@ -680,7 +587,7 @@
       <class name="DeleteObjectsTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="members-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/members-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.members"/>
       <nameXmlTransform>
@@ -692,7 +599,7 @@
       <class name="MembersTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="optimistic-locking-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/optimistic-locking-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.optimisticlocking"/>
       <nameXmlTransform>
@@ -704,7 +611,7 @@
       <class name="OptimisticLockingTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="reindex-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/reindex-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.reindex"/>
       <nameXmlTransform>
@@ -716,7 +623,7 @@
       <class name="ReindexTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="relation-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/relation-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.relation"/>
       <nameXmlTransform>
@@ -728,7 +635,7 @@
       <class name="RelationTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="revoke-grant-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/revoke-grant-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.revokegrant"/>
       <nameXmlTransform>
@@ -740,7 +647,7 @@
       <class name="RevokeGrantTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="revoke-grants-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/revoke-grants-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.revokegrants"/>
       <nameXmlTransform>
@@ -752,7 +659,7 @@
       <class name="RevokeGrantsTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="status-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/status-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.status"/>
       <nameXmlTransform>
@@ -764,7 +671,7 @@
       <class name="StatusTaskParamTO"/>
     </bindings>
   </bindings>
-  <bindings schemaLocation="update-password-task-param.xsd">
+  <bindings schemaLocation="task-param/1.0/update-password-task-param.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.taskparam.updatepassword"/>
       <nameXmlTransform>
@@ -778,7 +685,7 @@
   </bindings>
 
   <!-- result -->
-  <bindings schemaLocation="result.xsd">
+  <bindings schemaLocation="common/1.0/result.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.result"/>
       <nameXmlTransform>
@@ -789,7 +696,7 @@
   </bindings>
 
   <!-- OAI -->
-  <bindings schemaLocation="set-definition.xsd">
+  <bindings schemaLocation="set-definition/1.0/set-definition.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.oai"/>
       <nameXmlTransform>
@@ -800,7 +707,7 @@
   </bindings>
 
   <!-- Index Configuration -->
-  <bindings schemaLocation="index-configuration.xsd">
+  <bindings schemaLocation="indexing/1.0/index-configuration.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sb"/>
       <nameXmlTransform>
@@ -811,7 +718,7 @@
   </bindings>
 
   <!-- Staging Service -->
-  <bindings schemaLocation="staging-file.xsd">
+  <bindings schemaLocation="staging-file/1.0/staging-file.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.st"/>
       <nameXmlTransform>
@@ -822,7 +729,7 @@
   </bindings>
 
   <!-- TME -->
-  <bindings schemaLocation="tme-request.xsd">
+  <bindings schemaLocation="tme/1.0/tme-request.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.tme"/>
       <nameXmlTransform>
@@ -831,7 +738,7 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="jhove.xsd">
+  <bindings schemaLocation="tme/1.0/jhove.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.tme.jhove"/>
       <nameXmlTransform>
@@ -848,7 +755,7 @@
   </bindings>
 
   <!-- EXCEPTION -->
-  <bindings schemaLocation="exception.xsd">
+  <bindings schemaLocation="common/1.0/exception.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.exception"/>
       <nameXmlTransform>
@@ -859,7 +766,7 @@
   </bindings>
 
   <!-- SRW EXTRA DATA -->
-  <bindings schemaLocation="srw-extra-data.xsd">
+  <bindings schemaLocation="srw/1.0/srw-extra-data.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.sru.extradata"/>
       <nameXmlTransform>
