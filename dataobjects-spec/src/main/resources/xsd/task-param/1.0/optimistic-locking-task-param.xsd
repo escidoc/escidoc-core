@@ -1,3 +1,11 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ CDDL HEADER START
@@ -19,12 +27,12 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
-           xmlns:param="http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1"
-           targetNamespace="http://www.escidoc.org/schemas/optimistic-locking-task-param/0.1"
+           xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:param="http://www.escidoc.org/schemas/task-param/1.0/optimistic-locking-task-param"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/optimistic-locking-task-param"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
 
   <xs:element name="param" type="param:paramType"/>
 

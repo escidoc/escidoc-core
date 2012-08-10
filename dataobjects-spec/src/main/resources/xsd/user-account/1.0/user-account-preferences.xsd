@@ -2,11 +2,16 @@
 <!--
 	- December, 2008
 	- Version 0.1 created
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
-           xmlns:preferences="http://www.escidoc.org/schemas/aa/user-account/1.0/user-account-preferences"
-           targetNamespace="http://www.escidoc.org/schemas/aa/user-account/1.0/user-account-preferences">
+           xmlns:preferences="http://www.escidoc.org/schemas/user-account/1.0/user-account-preferences"
+           targetNamespace="http://www.escidoc.org/schemas/user-account/1.0/user-account-preferences">
 
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
 

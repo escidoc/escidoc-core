@@ -58,22 +58,27 @@
   - version changed to 0.9
   - changed namespace of refered md-records schema (0.4 to 0.5).
   -added an optional attribute "origin" to an element "component"
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.de/schemas/components/0.10"
+           targetNamespace="http://www.escidoc.org/schemas/item/1.0/components"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-           xmlns:components="http://www.escidoc.de/schemas/components/0.10"
-           xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+           xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
+           xmlns:components="http://www.escidoc.org/schemas/item/1.0/components"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            xmlns:xlink="http://www.w3.org/1999/xlink"
-           xmlns:prop="http://escidoc.de/core/01/properties/">
+           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
 
-  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd"/>
-  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/metadatarecords/0.5" schemaLocation="md-records.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="http://www.escidoc.org/schemas/common/1.0/md-records.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
 
   <xs:element name="components"   type="components:componentsType"/>
   <xs:element name="component"    type="components:componentType"/>

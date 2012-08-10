@@ -6,8 +6,8 @@
             xmlns:xcql="http://www.loc.gov/zing/cql/xcql/" xmlns="http://www.loc.gov/zing/srw/"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
             attributeFormDefault="unqualified">
-  <xsd:import namespace="http://www.loc.gov/zing/cql/xcql/" schemaLocation="xcql.xsd"/>
-  <xsd:import namespace="http://www.loc.gov/zing/srw/diagnostic/" schemaLocation="diagnostics.xsd"/>
+  <xsd:import namespace="http://www.loc.gov/zing/cql/xcql/" schemaLocation="http://www.escidoc.org/schemas/srw/1.0/xcql.xsd"/>
+  <xsd:import namespace="http://www.loc.gov/zing/srw/diagnostic/" schemaLocation="http://www.escidoc.org/schemas/srw/1.0/diagnostics.xsd"/>
   <xsd:complexType name="requestType">
     <xsd:sequence>
       <xsd:element ref="version"/>

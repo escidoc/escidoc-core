@@ -1,11 +1,19 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://www.escidoc.de/schemas/scope/0.4"
-           xmlns:scope="http://www.escidoc.de/schemas/scope/0.4"
-           xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+           targetNamespace="http://www.escidoc.org/schemas/scope/1.0/scope"
+           xmlns:scope="http://www.escidoc.org/schemas/scope/1.0/scope"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
 
   <xs:element name="scope" type="scope:scopeType"/>
   <xs:element name="name" type="xs:string"/>

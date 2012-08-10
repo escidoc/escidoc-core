@@ -2,6 +2,10 @@
 <!--
     Changes applied to this schema since Version 0.1:
       
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:index-configuration="http://www.escidoc.org/schemas/indexing/1.0/index-configuration"

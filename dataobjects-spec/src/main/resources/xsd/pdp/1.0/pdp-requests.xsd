@@ -1,10 +1,18 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context"
-           xmlns:requests="http://www.escidoc.org/schemas/aa/pdp/1.0/pdp-requests"
-           targetNamespace="http://www.escidoc.org/schemas/aa/pdp/1.0/pdp-requests"
+           xmlns:requests="http://www.escidoc.org/schemas/pdp/1.0/pdp-requests"
+           targetNamespace="http://www.escidoc.org/schemas/pdp/1.0/pdp-requests"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:context" schemaLocation="http://www.escidoc.org/schemas/aa/pdp/1.0/cs-xacml-schema-context-01.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:context" schemaLocation="http://www.escidoc.org/schemas/pdp/1.0/cs-xacml-schema-context-01.xsd"/>
 
   <xs:element name="requests" type="requests:requestsType"/>
 

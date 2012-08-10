@@ -1,3 +1,11 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ CDDL HEADER START
@@ -19,26 +27,20 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:param="http://www.escidoc.org/schemas/aa/grant/1.0/revoke-grants-task-param"
-           targetNamespace="http://www.escidoc.org/schemas/aa/grant/1.0/revoke-grants-task-param"
+           xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:param="http://www.escidoc.org/schemas/task-param/1.0/revoke-grant-task-param"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/revoke-grant-task-param"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+
   <xs:element name="param" type="param:paramType"/>
-  <xs:element name="filter" type="param:filterType"/>
   <xs:element name="revocation-remark" type="xs:string"/>
-  <xs:element name="id" type="xs:token"/>
 
   <xs:complexType name="paramType">
-    <xs:sequence>
-      <xs:element ref="param:filter" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:all>
       <xs:element ref="param:revocation-remark" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="filterType">
-    <xs:sequence>
-      <xs:element ref="param:id" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:anyURI" use="required"/>
+    </xs:all>
+    <xs:attributeGroup ref="common:lmdOptional"/>
   </xs:complexType>
 </xs:schema>

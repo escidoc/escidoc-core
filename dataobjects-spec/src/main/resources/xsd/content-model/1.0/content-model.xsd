@@ -7,6 +7,11 @@
 
   January, 2012
   - create version 0.2 (remove pid, lock, latest-released, and status change from schema) 
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
            targetNamespace="http://www.escidoc.org/schemas/content-model/1.0/content-model"

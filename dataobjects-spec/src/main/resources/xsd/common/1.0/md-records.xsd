@@ -41,6 +41,14 @@
 	- added the optional attribute "origin" to element "md-record" 
 	- changed a type of attribute md-records/md-record/@name 
 -->
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://www.escidoc.org/schemas/common/1.0/md-records"
            xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"

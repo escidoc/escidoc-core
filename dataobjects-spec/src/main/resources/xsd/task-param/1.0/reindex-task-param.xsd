@@ -1,3 +1,11 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ CDDL HEADER START
@@ -19,8 +27,8 @@
   ~ terms.
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:param="http://www.escidoc.org/schemas/reindex-task-param/0.1"
-           targetNamespace="http://www.escidoc.org/schemas/reindex-task-param/0.1"
+           xmlns:param="http://www.escidoc.org/schemas/task-param/1.0/reindex-task-param"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/reindex-task-param"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:element name="param" type="param:paramType"/>

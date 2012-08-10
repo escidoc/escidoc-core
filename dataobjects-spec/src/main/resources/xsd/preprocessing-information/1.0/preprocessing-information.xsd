@@ -1,6 +1,14 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://www.escidoc.de/schemas/preprocessinginformation/0.3"
-           xmlns:pi="http://www.escidoc.de/schemas/preprocessinginformation/0.3"
+           targetNamespace="http://www.escidoc.org/schemas/preprocessing-information/1.0/preprocessing-information"
+           xmlns:pi="http://www.escidoc.org/schemas/preprocessing-information/1.0/preprocessing-information"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:element name="preprocessing-information" type="pi:preprocessingInformationType"/>

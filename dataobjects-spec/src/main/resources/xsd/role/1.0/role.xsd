@@ -31,6 +31,10 @@
      have to be provided or none of both. relation-attribute-object-type is used 
      to check object-type of scope of grant for this role against "allowed" scope-object-types.
       
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
@@ -38,16 +42,16 @@
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            xmlns:xacml-policy="urn:oasis:names:tc:xacml:1.0:policy"
-           xmlns:role="http://www.escidoc.org/schemas/aa/role/1.0/role"
-           targetNamespace="http://www.escidoc.org/schemas/aa/role/1.0/role"
+           xmlns:role="http://www.escidoc.org/schemas/role/1.0/role"
+           targetNamespace="http://www.escidoc.org/schemas/role/1.0/role"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
-  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
-  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
-  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:policy" schemaLocation="http://www.escidoc.org/schemas/aa/pdp/1.0/cs-xacml-schema-policy-01.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:policy" schemaLocation="http://www.escidoc.org/schemas/pdp/1.0/cs-xacml-schema-policy-01.xsd"/>
 
   <xs:element name="role" type="role:roleType"/>
   <xs:element name="properties" type="role:rolePropertiesType"/>

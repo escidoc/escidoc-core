@@ -1,6 +1,14 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://www.escidoc.org/schemas/aa/user-account/1.0/permission-filter"
-           xmlns:filter="http://www.escidoc.org/schemas/aa/user-account/1.0/permission-filter"
+           targetNamespace="http://www.escidoc.org/schemas/user-account/1.0/permission-filter"
+           xmlns:filter="http://www.escidoc.org/schemas/user-account/1.0/permission-filter"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:element name="result" type="filter:resultType"/>

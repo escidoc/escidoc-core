@@ -23,6 +23,11 @@
   -refered new elements:
    {http://escidoc.de/core/01/structural-relations/}item
    {http://escidoc.de/core/01/structural-relations/}container
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"

@@ -9,6 +9,11 @@
 
 	February, 2012
 	- Added simple types enumerations.
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xlink="http://www.w3.org/1999/xlink"

@@ -51,6 +51,11 @@
 
     April, 2010
     - All child elements of 'resources' optional.
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"

@@ -1,10 +1,18 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
-           xmlns:add-selectors="http://www.escidoc.de/schemas/addselectors/0.7"
-           targetNamespace="http://www.escidoc.de/schemas/addselectors/0.7"
+           xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:add-selectors="http://www.escidoc.org/schemas/task-param/1.0/add-selectors"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/add-selectors"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
 
   <xs:element name="param" type="add-selectors:paramType"/>
   <xs:element name="selector" type="add-selectors:selectorType"/>

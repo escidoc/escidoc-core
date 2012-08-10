@@ -3,6 +3,11 @@
   Changes applied to this schema:
   - August, 2009
   - initial version
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"

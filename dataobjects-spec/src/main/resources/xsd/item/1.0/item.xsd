@@ -107,27 +107,31 @@
   - Item namespace from 0.9 to 0.10
   - Container namespace from 0.8 to 0.9
 
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.de/schemas/item/0.11"
+           targetNamespace="http://www.escidoc.org/schemas/item/1.0/item"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
-           xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-           xmlns:content-streams="http://www.escidoc.de/schemas/contentstreams/0.8"
-           xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
-           xmlns:item="http://www.escidoc.de/schemas/item/0.11"
-           xmlns:components="http://www.escidoc.de/schemas/components/0.10"
-           xmlns:prop="http://escidoc.de/core/01/properties/"
-           xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+           xmlns:relations="http://www.escidoc.org/schemas/common/1.0/relations"
+           xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
+           xmlns:content-streams="http://www.escidoc.org/schemas/common/1.0/content-streams"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:item="http://www.escidoc.org/schemas/item/1.0/item"
+           xmlns:components="http://www.escidoc.org/schemas/item/1.0/components"
+           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
 
-  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd"/>
-  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/metadatarecords/0.5" schemaLocation="md-records.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/contentstreams/0.8" schemaLocation="content-streams.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/relations/0.3" schemaLocation="relations.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/components/0.10" schemaLocation="components.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="http://www.escidoc.org/schemas/common/1.0/md-records.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/content-streams" schemaLocation="http://www.escidoc.org/schemas/common/1.0/content-streams.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/item/1.0/components" schemaLocation="http://www.escidoc.org/schemas/item/1.0/components.xsd"/>
 
   <xs:element name="item" type="item:itemType"/>
   <xs:element name="properties" type="item:itemPropertiesType"/>

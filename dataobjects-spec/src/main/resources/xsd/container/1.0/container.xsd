@@ -101,6 +101,10 @@
 	- Item namespace from 0.9 to 0.10
 	- Container namespace from 0.8 to 0.9
 	
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"

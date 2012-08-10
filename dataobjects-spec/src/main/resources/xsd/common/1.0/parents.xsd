@@ -22,6 +22,11 @@
 <!-- edited with XMLSpy v2005 sp1 U (http://www.xmlspy.com) by JKR (FIZ Karlsruhe) -->
 <!--
 	Changes applied to this schema (since Version 09, May, 2010):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
 -->
 <xs:schema targetNamespace="http://www.escidoc.org/schemas/common/1.0/parents"
   xmlns:parents="http://www.escidoc.org/schemas/common/1.0/parents"

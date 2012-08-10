@@ -9,6 +9,11 @@
 	July, 2010
 	- Added srel:scope and srel:report-definition
 	
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
  -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"

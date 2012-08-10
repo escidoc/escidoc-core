@@ -22,7 +22,7 @@
 <xs:schema xmlns:xacml="urn:oasis:names:tc:xacml:1.0:policy" xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context"
            xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:oasis:names:tc:xacml:1.0:context"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
-  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:policy" schemaLocation="www.escidoc.org/schemas/aa/pdp/1.0/cs-xacml-schema-policy-01.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:policy" schemaLocation="http://www.escidoc.org/schemas/pdp/1.0/cs-xacml-schema-policy-01.xsd"/>
   <!-- -->
   <xs:element name="Request" type="xacml-context:RequestType"/>
   <xs:complexType name="RequestType">
