@@ -856,8 +856,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 .getLastModificationDate());
         sp.addHandler(olh);
 
-        final ComponentMdRecordsUpdateHandler cmuh =
-            new ComponentMdRecordsUpdateHandler("/components/component/md-records", sp);
+        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/components/component", sp);
         sp.addHandler(cmuh);
         // extract datastreams from xmlData
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -1143,7 +1142,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
                 .getLastModificationDate());
         sp.addHandler(olh);
-        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component/md-records", sp);
+        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component", sp);
         sp.addHandler(cmuh);
         final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
         sp.addHandler(me);
