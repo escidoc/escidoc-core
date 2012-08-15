@@ -1,0 +1,9 @@
+<xs:schema targetNamespace="no-such-thing" jaxb:version="2.0" jaxb:extensionBindingPrefixes="xjc">
+  <xs:annotation>
+    <xs:appinfo>
+      <jaxb:globalBindings>
+        <xjc:simple/>
+      </jaxb:globalBindings>
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

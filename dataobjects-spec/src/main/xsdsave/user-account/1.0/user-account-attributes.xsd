@@ -1,0 +1,55 @@
+
+<!--
+	- March, 2009
+	- Version 0.1 created
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:attributes="http://www.escidoc.org/schemas/user-account/1.0/user-account-attributes"
+           targetNamespace="http://www.escidoc.org/schemas/user-account/1.0/user-account-attributes">
+
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+
+  <xs:element name="attributes" type="attributes:attributesType"/>
+  <xs:element name="attribute" type="attributes:attributeType"/>
+
+  <xs:complexType name="attributesType">
+    <xs:sequence>
+      <xs:element ref="attributes:attribute" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="user-objid" type="common-types:objid"/>
+    <xs:attributeGroup ref="common-types:eSciDocResourceLocationAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="attributeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>
+              <create>required</create>
+              <update>required</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="internal" use="optional" type="xs:boolean">
+          <xs:annotation>
+            <xs:documentation>
+              <create>discarded</create>
+              <update>discarded</update>
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="common-types:eSciDocResourceLocationAttributes"/>
+        <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

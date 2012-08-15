@@ -18,9 +18,18 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <!-- configuration>
-          <catalog>src/main/resources/catalog.cat</catalog>
-        </configuration -->
+        <configuration>
+          <catalog>src/main/resources/xsd/catalog.cat</catalog>
+          <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+          <schemaIncludes>
+            <include>common/1.0/common-types.xsd</include>
+            <!-- include>item/1.0/*.xsd</include -->
+          </schemaIncludes>  
+          <extensions>true</extensions>
+          <arguments>
+              -extension simpleBinding.schemalet
+          </arguments>   
+        </configuration>
         <executions>
           <execution>
             <goals>

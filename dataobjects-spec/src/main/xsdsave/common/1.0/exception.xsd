@@ -1,0 +1,37 @@
+
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:exception="http://www.escidoc.org/schemas/common/1.0/exception"
+           targetNamespace="http://www.escidoc.org/schemas/common/1.0/exception"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:element name="exception" type="exception:exceptionType"/>
+  <xs:element name="cause" type="exception:causeType"/>
+  <xs:element name="title" type="xs:string"/>
+  <xs:element name="message" type="xs:string"/>
+  <xs:element name="class" type="xs:string"/>
+  <xs:element name="stack-trace" type="xs:string"/>
+
+  <xs:complexType name="exceptionType">
+    <xs:sequence>
+      <xs:element ref="exception:title"/>
+      <xs:element ref="exception:message"/>
+      <xs:element ref="exception:class"/>
+      <xs:element ref="exception:stack-trace"/>
+      <xs:element ref="exception:cause"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="causeType">
+    <xs:sequence>
+      <xs:element ref="exception:exception" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

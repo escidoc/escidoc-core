@@ -1,112 +1,106 @@
 
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by XMLSPY 2005 Professional Ed. Release 3, Installed for 12 users (FIZ Karlsruhe) -->
 <!--
-  Changes applied to this schema (since Version 03, Februar, 2008):
-  - Februar, 2008
-  - version changed to 04.
+	Changes applied to this schema (since Version 03, Februar, 2008):
+	
+	- Februar, 2008
+	- version changed to 04.
+	
+	- changed namespace (both xmlns and targetNamespace)
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://www.escidoc.de/schemas/container/0.4.
+	-changed namespaces of refered schemas:
+	from http://www.escidoc.de/schemas/structmap/0.3
+	to http://www.escidoc.de/schemas/structmap/0.4
+	from http://www.escidoc.de/schemas/metadatarecords/0.3
+	to http://www.escidoc.de/schemas/metadatarecords/0.4
+	from http://www.escidoc.de/schemas/commontypes/0.3
+	to http://www.escidoc.de/schemas/commontypes/0.4
+	- refered new schemas with namespaces:
+	xmlns:prop="http://escidoc.de/core/01/properties/
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/
+	
+	-deleted a reference to the schema with a namespace:
+	http://www.escidoc.de/schemas/admindescriptor/0.3
+	
+	-deleted a reference to the element:
+	{http://www.escidoc.de/schemas/admindescriptor/0.3}admin-descriptor
+	
+	
+	- changed namespaces of direct child-elements of the element 
+	/container/properties:
+	
+	For elements creation-date, name, description, public-status, 
+	lock-status, lock-date, pid, version, latest-version, 
+	latest-release, content-domain-specific changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3
+	to http://escidoc.de/core/01/properties/ 
+	For elements created-by, context, content-domain, lock-owner
+	changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3
+	to http://escidoc.de/core/01/structural-relations/ 
+	
+	- Implicit the element-type of the element /container/properties/public-status
+	has been changed.
+	States of all escidoc resources are allowed values of the 'public-status' 
+	since version 0.4. In the version 0.3 the allowed values were restricted 
+	to the states of the resource container.
+	
+	-changed namespaces of child-elements of the element 
+	/container/properties/version:
+	For elements number, date, comment, pid changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/version/
+	For element modified-by changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/structural-relations/
+	
+	-changed a name and a namespace of the element /container/properties/version/version-status:
+	
+	from {http://www.escidoc.de/schemas/container/0.3}version-status
+	to {http://escidoc.de/core/01/properties/version/}status
+	
+	-Implicit deleted the element /container/properties/version/valid-status
+	
+	-changed namespaces of all child-elements of the element 
+	/container/properties/latest-version: 
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/version/
+	
+	-changed namespaces of all child-elements of the element 
+	/container/properties/latest-release: 
+	
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/release/
+	
+	
+	
+	- March, 2008
+	- version changed to 05.
+	
+	-deleted a reference to the schema with a namespace:
+	http://www.escidoc.de/schemas/toc/0.2
+	
+	-deleted a reference to the element:
+	{http://www.escidoc.de/schemas/toc/0.2}toc
+	
+	- April, 2008
+	- version changed to 0.6
+	
+	- May, 2008
+	- version changed to 0.7
+	- added properties/public-status-comment
+	
+	July, 2009
+	- version changed to 0.8
+	- Changed namespace of referred md-records schema (0.4 to 0.5).
 
-  - changed namespace (both xmlns and targetNamespace)
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://www.escidoc.de/schemas/item/0.4.
-  -changed namespaces of refered schemas:
-  from http://www.escidoc.de/schemas/components/0.3
-  to http://www.escidoc.de/schemas/components/0.4
-  from http://www.escidoc.de/schemas/metadatarecords/0.3
-  to http://www.escidoc.de/schemas/metadatarecords/0.4
-  from http://www.escidoc.de/schemas/commontypes/0.3
-  to http://www.escidoc.de/schemas/commontypes/0.4
-  - refered new schemas with namespaces:
-  xmlns:prop="http://escidoc.de/core/01/properties/
-  xmlns:srel="http://escidoc.de/core/01/structural-relations/
-
-  - changed namespaces of direct child-elements of the element
-  /item/properties:
-
-  For elements creation-date, public-status,
-  lock-status, lock-date, pid, version, latest-version,
-  latest-release, content-domain-specific changed a namespace
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/properties/
-  For elements created-by, context, content-domain, lock-owner
-  changed a namespace
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/structural-relations/
-
-  - Implicit the element-type of the element /item/properties/public-status
-  has been changed.
-  States of all escidoc resources are allowed values of the 'public-status'
-  since version 0.4. In the version 0.3 the allowed values were restricted
-  to the states of the resource item.
-
-  -changed namespaces of child-elements of the element
-  /item/properties/version:
-  For elements number, date, comment, pid changed a namespace
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/properties/version/
-  For element modified-by changed a namespace
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/structural-relations/
-
-  -changed a name and a namespace of the element /item/properties/version/version-status:
-
-  from {http://www.escidoc.de/schemas/item/0.3}version-status
-  to {http://escidoc.de/core/01/properties/version/}status
-
-  -Implicit deleted the element /item/properties/version/valid-status
-
-  -changed namespaces of all child-elements of the element
-  /item/properties/latest-version:
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/properties/version/
-
-  -changed namespaces of all child-elements of the element
-  /item/properties/latest-release:
-
-  from http://www.escidoc.de/schemas/item/0.3
-  to http://escidoc.de/core/01/properties/release/
-
-  - March, 2008
-  - version changed to 0.5.
-
-  -changed namespaces of refered schemas:
-  from http://www.escidoc.de/schemas/components/0.4
-  to http://www.escidoc.de/schemas/components/0.5
-
-  - April, 2008
-  - version changed to 0.6
-
-  -changed namespaces of refered schemas:
-  from http://www.escidoc.de/schemas/components/0.5
-  to http://www.escidoc.de/schemas/components/0.6
-
-  - Added first version of content-stream elements "content-streams".
-
-  - Mai, 2008
-  - version changed to 0.7
-
-  -changed namespaces of refered schemas:
-  from http://www.escidoc.de/schemas/components/0.6
-  to http://www.escidoc.de/schemas/components/0.7
-
-  - Added a new child element to /item/properties:
-  {http://escidoc.de/core/01/properties/}public-status-comment.
-
-  March, 2009
-  - version changed to 0.8
-  - Changed namespace of refered component schema (0.7 to 0.8).
-
-  July, 2009
-  - version changed to 0.9
-  - added the optional attribute "origin" to element "item"
-  - Changed namespace of refered component schema (0.8 to 0.9).
-  - Changed namespace of refered md-records schema (0.4 to 0.5).
-  - Changed namespace of refered  content-streams schema (0.6 to 0.7).
-
-  June, 2010
-  - version changed to 0.10
-  - namespaces of refered schemas changed:
-  - Item namespace from 0.9 to 0.10
-  - Container namespace from 0.8 to 0.9
-
+	June, 2010
+	- version changed to 0.10
+	- namespaces of refered schemas changed:
+	- Item namespace from 0.9 to 0.10
+	- Container namespace from 0.8 to 0.9
+	
   August 2012
   - version changed to 1.0
   - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
@@ -114,33 +108,32 @@
 -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.org/schemas/item/1.0/item"
+           targetNamespace="http://www.escidoc.org/schemas/container/1.0/container"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:struct-map="http://www.escidoc.org/schemas/container/1.0/struct-map"
            xmlns:relations="http://www.escidoc.org/schemas/common/1.0/relations"
            xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
-           xmlns:content-streams="http://www.escidoc.org/schemas/common/1.0/content-streams"
+           xmlns:container="http://www.escidoc.org/schemas/container/1.0/container"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
-           xmlns:item="http://www.escidoc.org/schemas/item/1.0/item"
-           xmlns:components="http://www.escidoc.org/schemas/item/1.0/components"
            xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
            xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
 
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="http://www.escidoc.org/schemas/common/1.0/properties.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="http://www.escidoc.org/schemas/common/1.0/md-records.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/content-streams" schemaLocation="http://www.escidoc.org/schemas/common/1.0/content-streams.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/item/1.0/components" schemaLocation="http://www.escidoc.org/schemas/item/1.0/components.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/container/1.0/struct-map" schemaLocation="http://www.escidoc.org/schemas/container/1.0/struct-map.xsd"/>
 
-  <xs:element name="item" type="item:itemType"/>
-  <xs:element name="properties" type="item:itemPropertiesType"/>
-  <xs:element name="resources" type="item:itemResourcesType"/>
+  <xs:element name="container" type="container:containerType"/>
+  <xs:element name="properties" type="container:containerPropertiesType"/>
+  <xs:element name="resources" type="container:containerResourcesType"/>
+  <xs:element name="members" type="common-types:readOnlyLink"/>
   <xs:element name="version-history" type="common-types:readOnlyLink"/>
   <xs:element name="parents" type="common-types:readOnlyLink"/>
   <xs:element name="relations" type="common-types:readOnlyLink"/>
 
-  <xs:complexType name="itemType">
+  <xs:complexType name="containerType">
     <xs:annotation>
       <xs:documentation>
         <para>
@@ -166,8 +159,7 @@
           not-allowed: this element or attribute is not allowed in delivery and will cause an exception
         </para>
         <para>
-          discarded: this element or attribute can be delivered but will not be used; the system will generate a value
-          which is delivered in this element or attribute when retrieved
+          discarded: this element or attribute can be delivered but will not be used
         </para>
       </xs:documentation>
       <xs:documentation>
@@ -176,7 +168,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element ref="item:properties">
+      <xs:element ref="container:properties">
         <xs:annotation>
           <xs:documentation>
             <create>required</create>
@@ -184,11 +176,10 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element ref="md-records:md-records" minOccurs="0"/>
-      <xs:element ref="content-streams:content-streams" minOccurs="0"/>
-      <xs:element ref="components:components" minOccurs="0"/>
+      <xs:element ref="md-records:md-records"/>
+      <xs:element ref="struct-map:struct-map" minOccurs="0"/>
       <xs:element ref="relations:relations" minOccurs="0"/>
-      <xs:element ref="item:resources" minOccurs="0">
+      <xs:element ref="container:resources" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             <create>discarded</create>
@@ -201,7 +192,7 @@
     <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
   </xs:complexType>
 
-  <xs:complexType name="itemPropertiesType">
+  <xs:complexType name="containerPropertiesType">
     <xs:complexContent>
       <xs:extension base="prop:commonPropertiesType">
         <xs:sequence>
@@ -221,6 +212,36 @@
               </xs:documentation>
             </xs:annotation>
           </xs:element>
+          <xs:element ref="prop:name" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>
+                  discarded (can be set via corresponding
+                  "escidoc" md-record element)
+                </create>
+                <update>
+                  discarded (can be updated via update of
+                  corresponding "escidoc" md-record
+                  element
+                </update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:description" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>
+                  discarded (can be set via corresponding
+                  "escidoc" md-record element)
+                </create>
+                <update>
+                  discarded (can be updated via update of
+                  corresponding "escidoc" md-record
+                  element
+                </update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
           <xs:element ref="srel:context" minOccurs="0">
             <xs:annotation>
               <xs:documentation>
@@ -235,14 +256,6 @@
                 <create>required</create>
                 <update>discarded</update>
                 <comment>not finalized yet</comment>
-              </xs:documentation>
-            </xs:annotation>
-          </xs:element>
-          <xs:element ref="srel:origin" minOccurs="0">
-            <xs:annotation>
-              <xs:documentation>
-                <create>required</create>
-                <update>discarded</update>
               </xs:documentation>
             </xs:annotation>
           </xs:element>
@@ -319,9 +332,9 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="itemResourcesType">
+  <xs:complexType name="containerResourcesType">
     <xs:sequence>
-      <xs:element ref="item:version-history" minOccurs="0">
+      <xs:element ref="container:members" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             <create>discarded</create>
@@ -329,7 +342,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element ref="item:parents" minOccurs="0">
+      <xs:element ref="container:version-history" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             <create>discarded</create>
@@ -337,7 +350,15 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element ref="item:relations" minOccurs="0">
+      <xs:element ref="container:parents" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="container:relations" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             <create>discarded</create>

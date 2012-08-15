@@ -1,0 +1,98 @@
+
+<!--
+	Changes applied to this schema (since Version 0.3, July 2009):
+	  
+	July, 2009
+	- refers to xml, xlink, common-types in version 0.4
+	
+-->
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.escidoc.org/schemas/common/1.0/relations"
+           xmlns:relations="http://www.escidoc.org/schemas/common/1.0/relations"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
+
+  <xs:element name="relations" type="relations:relationsType"/>
+  <xs:element name="relation" type="relations:relationType"/>
+
+  <xs:complexType name="relationsType">
+    <xs:annotation>
+      <xs:documentation>
+        <para>Following you will find information which elements and attributes are
+          "required", "optional", "not-allowed" or will be "discarded" in the input
+          XML-stream when creating or updating such an object.
+        </para>
+        <para>In "create" the rule for creating a new object is defined.</para>
+        <para>In "update" the rule for updating an object is defined.</para>
+        <para>Possible values are: required | optional | not-allowed | discarded</para>
+        <para>required: this element or attribute has to be delivered</para>
+        <para>optional: this element or attribute can be delivered and will be kept</para>
+        <para>not-allowed: this element or attribute is not allowed in delivery and will
+          cause an exception
+        </para>
+        <para>discarded: this element or attribute can be delivered but will not be used;
+          the system will generate a value which is delivered in this element or attribute
+          when retrieved
+        </para>
+      </xs:documentation>
+      <xs:documentation>
+        <create>optional</create>
+        <update>optional</update>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="relations:relation" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes">
+      <xs:annotation>
+        <xs:documentation>
+          <create>discarded</create>
+          <update>discarded</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attributeGroup>
+    <xs:attributeGroup ref="common-types:lmdOptional">
+      <xs:annotation>
+        <xs:documentation>
+          <create>discarded</create>
+          <update>discarded</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attributeGroup>
+    <xs:attribute ref="xml:base">
+      <xs:annotation>
+        <xs:documentation>
+          <create>discarded</create>
+          <update>discarded</update>
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="relationType">
+    <xs:complexContent>
+      <xs:extension base="common-types:linkRequired">
+        <xs:attribute name="predicate" type="xs:anyURI" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
