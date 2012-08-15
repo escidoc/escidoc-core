@@ -25,5 +25,14 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
+  <bindings schemaLocation="common/1.0/structural-relations.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.relations.structural"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
 
 </bindings>

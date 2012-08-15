@@ -1,0 +1,76 @@
+
+<!--
+	Changes applied to this schema (since Version 03, Februar, 2008):
+	- Februar, 2008
+	- version changed to 04.
+	
+	- made element /version-history/version/valid-status optional
+	
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:premis="http://www.loc.gov/standards/premis/v1"
+           xmlns:escidocVersions="http://www.escidoc.org/schemas/common/1.0/version-history"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           targetNamespace="http://www.escidoc.org/schemas/common/1.0/version-history"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
+  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="http://www.escidoc.org/schemas/common/1.0/Event-v1-1.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+
+  <xs:element name="version-history" type="escidocVersions:versionHistoryType"/>
+  <xs:element name="version" type="escidocVersions:versionType"/>
+  <xs:element name="pid" type="escidocVersions:pidType"/>
+  <xs:element name="version-number" type="xs:int"/>
+  <xs:element name="timestamp" type="xs:dateTime"/>
+  <xs:element name="version-status" type="common-types:status-type"/>
+  <xs:element name="valid-status" type="common-types:valid-status-type"/>
+  <xs:element name="comment" type="xs:string"/>
+  <xs:element name="events" type="escidocVersions:eventsType"/>
+
+  <xs:complexType name="versionHistoryType">
+    <xs:sequence>
+      <xs:element ref="escidocVersions:version" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute ref="xml:base" use="required"/>
+    <xs:attributeGroup ref="common-types:lmdRequired"/>
+  </xs:complexType>
+
+  <xs:complexType name="versionType">
+    <xs:sequence>
+      <xs:element ref="escidocVersions:pid" minOccurs="0"/>
+      <xs:element ref="escidocVersions:version-number"/>
+      <xs:element ref="escidocVersions:timestamp"/>
+      <xs:element ref="escidocVersions:version-status"/>
+      <xs:element ref="escidocVersions:valid-status" minOccurs="0"/>
+      <xs:element ref="escidocVersions:comment"/>
+      <xs:element ref="escidocVersions:events"/>
+    </xs:sequence>
+    <xs:attribute name="objid" type="common-types:objid" use="required"/>
+    <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
+    <xs:attribute ref="xlink:href" use="required"/>
+    <xs:attribute ref="xlink:title" use="required"/>
+    <xs:attribute ref="xlink:type" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="pidType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
+        <xs:attribute name="user" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="eventsType">
+    <xs:sequence>
+      <xs:element ref="premis:event" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

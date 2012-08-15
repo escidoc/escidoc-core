@@ -22,13 +22,8 @@
           <catalog>src/main/resources/xsd/catalog.cat</catalog>
           <schemaDirectory>src/main/resources/xsd</schemaDirectory>
           <schemaIncludes>
-            <include>common/1.0/common-types.xsd</include>
-            <!-- include>item/1.0/*.xsd</include -->
+            <include>**/*.xsd</include>
           </schemaIncludes>  
-          <extensions>true</extensions>
-          <arguments>
-              -extension simpleBinding.schemalet
-          </arguments>   
         </configuration>
         <executions>
           <execution>
