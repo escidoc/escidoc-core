@@ -497,6 +497,20 @@
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 
+	<servlet>
+		<servlet-name>ScapeIngestServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.ScapeIngestServlet
+        </servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/scape.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	
 	<!--
 		############################ # Servlet Mappings
 		############################
@@ -705,6 +719,11 @@
 	<servlet-mapping>
 		<servlet-name>FedoraRestDeviationServlet</servlet-name>
 		<url-pattern>/fedoradeviation/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	    <servlet-name>ScapeIngstServlet</servlet-name>
+	    <url-pattern>/scape/*</url-pattern>
 	</servlet-mapping>
 
 	<session-config>

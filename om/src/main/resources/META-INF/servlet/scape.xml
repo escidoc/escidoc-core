@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+	</define>
+	<resource name="Scape-Ingest" base-uri="/scape/ingest">
+		<descriptor uri="/scape/ingest">
+			<invoke http="POST" method="scape-ingest" param1="${BODY}">
+				<documentation visible="true">
+					<param>
+						<param1 name="resource"> The XML representation of the resource to be
+							ingested. The resource can be either of Item, Container,
+							Component or Organizational Unit.</param1>
+					</param>
+					<result type="String"> The XML representation of the object id that
+						the object is being assigned during ingest.</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>
