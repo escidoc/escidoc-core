@@ -4,9 +4,9 @@
 	attribute which could be left out.
 -->
 <prefix-organizational-unit:organizational-unit
-	xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+	xmlns:prefix-organizational-unit="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
-	xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5">
+	xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records">
 	
 	<md-records:md-records
 		xmlns:ou="http://www.escidoc.de/metadata/organizational-unit"

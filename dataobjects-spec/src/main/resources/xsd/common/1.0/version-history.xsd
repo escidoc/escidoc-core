@@ -19,10 +19,10 @@
            targetNamespace="http://www.escidoc.org/schemas/common/1.0/version-history"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
-  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="http://www.escidoc.org/schemas/common/1.0/Event-v1-1.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../common/1.0/xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../../common/1.0/xml.xsd"/>
+  <xs:import namespace="http://www.loc.gov/standards/premis/v1" schemaLocation="../../common/1.0/Event-v1-1.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
 
   <xs:element name="version-history" type="escidocVersions:versionHistoryType"/>
   <xs:element name="version" type="escidocVersions:versionType"/>

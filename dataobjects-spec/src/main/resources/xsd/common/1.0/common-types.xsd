@@ -21,8 +21,8 @@
            targetNamespace="http://www.escidoc.org/schemas/common/1.0/common-types"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xlink.xsd"/>
-  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.escidoc.org/schemas/common/1.0/xml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../common/1.0/xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../../common/1.0/xml.xsd"/>
 
   <xs:complexType name="linkRequired">
     <xs:attribute ref="xlink:type" fixed="simple">

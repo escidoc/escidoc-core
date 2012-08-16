@@ -1,0 +1,374 @@
+
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by XMLSPY 2005 Professional Ed. Release 3, Installed for 12 users (FIZ Karlsruhe) -->
+<!--
+	Changes applied to this schema (since Version 03, Februar, 2008):
+	
+	- Februar, 2008
+	- version changed to 04.
+	
+	- changed namespace (both xmlns and targetNamespace)
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://www.escidoc.de/schemas/container/0.4.
+	-changed namespaces of refered schemas:
+	from http://www.escidoc.de/schemas/structmap/0.3
+	to http://www.escidoc.de/schemas/structmap/0.4
+	from http://www.escidoc.de/schemas/metadatarecords/0.3
+	to http://www.escidoc.de/schemas/metadatarecords/0.4
+	from http://www.escidoc.de/schemas/commontypes/0.3
+	to http://www.escidoc.de/schemas/commontypes/0.4
+	- refered new schemas with namespaces:
+	xmlns:prop="http://escidoc.de/core/01/properties/
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/
+	
+	-deleted a reference to the schema with a namespace:
+	http://www.escidoc.de/schemas/admindescriptor/0.3
+	
+	-deleted a reference to the element:
+	{http://www.escidoc.de/schemas/admindescriptor/0.3}admin-descriptor
+	
+	
+	- changed namespaces of direct child-elements of the element 
+	/container/properties:
+	
+	For elements creation-date, name, description, public-status, 
+	lock-status, lock-date, pid, version, latest-version, 
+	latest-release, content-domain-specific changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3
+	to http://escidoc.de/core/01/properties/ 
+	For elements created-by, context, content-domain, lock-owner
+	changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3
+	to http://escidoc.de/core/01/structural-relations/ 
+	
+	- Implicit the element-type of the element /container/properties/public-status
+	has been changed.
+	States of all escidoc resources are allowed values of the 'public-status' 
+	since version 0.4. In the version 0.3 the allowed values were restricted 
+	to the states of the resource container.
+	
+	-changed namespaces of child-elements of the element 
+	/container/properties/version:
+	For elements number, date, comment, pid changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/version/
+	For element modified-by changed a namespace
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/structural-relations/
+	
+	-changed a name and a namespace of the element /container/properties/version/version-status:
+	
+	from {http://www.escidoc.de/schemas/container/0.3}version-status
+	to {http://escidoc.de/core/01/properties/version/}status
+	
+	-Implicit deleted the element /container/properties/version/valid-status
+	
+	-changed namespaces of all child-elements of the element 
+	/container/properties/latest-version: 
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/version/
+	
+	-changed namespaces of all child-elements of the element 
+	/container/properties/latest-release: 
+	
+	from http://www.escidoc.de/schemas/container/0.3 
+	to http://escidoc.de/core/01/properties/release/
+	
+	
+	
+	- March, 2008
+	- version changed to 05.
+	
+	-deleted a reference to the schema with a namespace:
+	http://www.escidoc.de/schemas/toc/0.2
+	
+	-deleted a reference to the element:
+	{http://www.escidoc.de/schemas/toc/0.2}toc
+	
+	- April, 2008
+	- version changed to 0.6
+	
+	- May, 2008
+	- version changed to 0.7
+	- added properties/public-status-comment
+	
+	July, 2009
+	- version changed to 0.8
+	- Changed namespace of referred md-records schema (0.4 to 0.5).
+
+	June, 2010
+	- version changed to 0.10
+	- namespaces of refered schemas changed:
+	- Item namespace from 0.9 to 0.10
+	- Container namespace from 0.8 to 0.9
+	
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.escidoc.org/schemas/container/1.0/container"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:struct-map="http://www.escidoc.org/schemas/container/1.0/struct-map"
+           xmlns:relations="http://www.escidoc.org/schemas/common/1.0/relations"
+           xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
+           xmlns:container="http://www.escidoc.org/schemas/container/1.0/container"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="../../common/1.0/properties.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="../../common/1.0/md-records.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/relations" schemaLocation="../../common/1.0/relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/container/1.0/struct-map" schemaLocation="../../container/1.0/struct-map.xsd"/>
+
+  <xs:element name="container" type="container:containerType"/>
+  <xs:element name="properties" type="container:containerPropertiesType"/>
+  <xs:element name="resources" type="container:containerResourcesType"/>
+  <xs:element name="members" type="common-types:readOnlyLink"/>
+  <xs:element name="version-history" type="common-types:readOnlyLink"/>
+  <xs:element name="parents" type="common-types:readOnlyLink"/>
+  <xs:element name="relations" type="common-types:readOnlyLink"/>
+
+  <xs:complexType name="containerType">
+    <xs:annotation>
+      <xs:documentation>
+        <para>
+          Following you will find information which elements and attributes are "required", "optional", "not-allowed"
+          or will be "discarded" in the input XML-stream when creating or updating such an object.
+        </para>
+        <para>
+          In "create" the rule for creating a new object is defined.
+        </para>
+        <para>
+          In "update" the rule for updating an object is defined.
+        </para>
+        <para>
+          Possible values are: required | optional | not-allowed | discarded
+        </para>
+        <para>
+          required: this element or attribute has to be delivered
+        </para>
+        <para>
+          optional: this element or attribute can be delivered and will be kept
+        </para>
+        <para>
+          not-allowed: this element or attribute is not allowed in delivery and will cause an exception
+        </para>
+        <para>
+          discarded: this element or attribute can be delivered but will not be used
+        </para>
+      </xs:documentation>
+      <xs:documentation>
+        <create>required</create>
+        <update>required</update>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="container:properties">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>required</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="md-records:md-records"/>
+      <xs:element ref="struct-map:struct-map" minOccurs="0"/>
+      <xs:element ref="relations:relations" minOccurs="0"/>
+      <xs:element ref="container:resources" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="containerPropertiesType">
+    <xs:complexContent>
+      <xs:extension base="prop:commonPropertiesType">
+        <xs:sequence>
+          <xs:element ref="prop:public-status" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:public-status-comment" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:name" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>
+                  discarded (can be set via corresponding
+                  "escidoc" md-record element)
+                </create>
+                <update>
+                  discarded (can be updated via update of
+                  corresponding "escidoc" md-record
+                  element
+                </update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:description" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>
+                  discarded (can be set via corresponding
+                  "escidoc" md-record element)
+                </create>
+                <update>
+                  discarded (can be updated via update of
+                  corresponding "escidoc" md-record
+                  element
+                </update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="srel:context" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>required</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="srel:content-model" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>required</create>
+                <update>discarded</update>
+                <comment>not finalized yet</comment>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:lock-status" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:lock-date" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="srel:lock-owner" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:pid" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>optional</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:version" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:latest-version" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:latest-release" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>discarded</create>
+                <update>discarded</update>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element ref="prop:content-model-specific" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                <create>optional</create>
+                <update>required</update>
+                <comment>Does not appear until once set. Then required. Deprecated; use md-record instead.
+                </comment>
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+        <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="containerResourcesType">
+    <xs:sequence>
+      <xs:element ref="container:members" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="container:version-history" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="container:parents" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="container:relations" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:readOnlyESciDocResourceLinkAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,202 @@
+
+<!--
+    Changes applied to this schema since Version 0.3:
+    - Version changed to 0.4.
+    
+    - Changed namespace (both xmlns and targetNamespace) to http://www.escidoc.de/schemas/grants/0.4.
+    
+    - Changed namespaces of referenced schema  http://www.escidoc.de/schemas/commontypes/0.4
+    
+    - Added namespace of referenced schemas
+      http://escidoc.de/core/01/properties/
+      http://escidoc.de/core/01/structural-relations/
+      
+    - Replaced rest attributes (xlink:type, xlink:title, xlink:href, xml:base)
+      with references to appropriate attribute groups in common-types.xsd.
+    
+    - Changed namespaces of contents of the element /grant/properties 
+      to http://escidoc.de/core/01/properties/ for following elements:
+      * creation-date,
+      * revocation-date,
+      * grant-remark
+      * revocation-remark
+      
+      to http://escidoc.de/core/01/structural-relations/ for following elements:
+      * created-by
+      * revoked-by
+      * role
+      
+    - Renamed element /grant/properties/object to /grant/properties/assigned-on 
+      with namespace http://escidoc.de/core/01/structural-relations/
+      
+    -Version changed to 0.5
+    
+    - Added root-element grant-list
+    
+    -element srel:granted-to added
+      
+    -Version changed to 1.0
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:grants="http://www.escidoc.org/schemas/grant/1.0/grants"
+           targetNamespace="http://www.escidoc.org/schemas/grant/1.0/grants"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="../../common/1.0/properties.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
+
+  <xs:element name="current-grants" type="grants:currentGrantsType"/>
+  <xs:element name="grant-list" type="grants:grantsListType"/>
+  <xs:element name="grant" type="grants:grantType"/>
+  <xs:element name="properties" type="grants:propertiesType"/>
+
+  <xs:complexType name="currentGrantsType">
+    <xs:annotation>
+      <xs:documentation>
+        <para>Following you will find information which elements and attributes are "required", "optional",
+          "not-allowed" or will be "discarded" in the input XML-stream when creating or updating such an object.
+        </para>
+        <para>In "create" the rule for creating a new object is defined.</para>
+        <para>In "update" the rule for updating an object is defined.</para>
+        <para>Possible values are: required | optional | not-allowed | discarded</para>
+        <para>required: this element or attribute has to be delivered</para>
+        <para>optional: this element or attribute can be delivered and will be kept</para>
+        <para>not-allowed: this element or attribute is not allowed in delivery and will cause an exception</para>
+        <para>discarded: this element or attribute can be delivered but will not be used</para>
+      </xs:documentation>
+      <xs:documentation>
+        <comment>This is a read-only resource representing a list of the current grants of the user account. Neither
+          create nor update is supported for this list.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="grants:grant" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="grantsListType">
+    <xs:annotation>
+      <xs:documentation>
+        <comment>A grant-list contains a list of grants for users or groups. It represents the result of the
+          filter-function userAccount.retrieveGrants.
+        </comment>
+        <comment>This is a read-only resource representing a list of grants. Neither create nor update is supported for
+          this list.
+        </comment>
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element ref="grants:grant" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+    <xs:attributeGroup ref="common-types:listAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="grantType">
+    <xs:sequence>
+      <xs:element ref="grants:properties">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="propertiesType">
+    <xs:sequence>
+      <xs:element ref="srel:granted-to" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:creation-date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:created-by" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:revocation-date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:revoked-by" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:grant-remark" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="prop:revocation-remark" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:role">
+        <xs:annotation>
+          <xs:documentation>
+            <create>required</create>
+            <update>not-allowed (see note 1.)</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element ref="srel:assigned-on" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            <create>optional (see note 2.)</create>
+            <update>not-allowed (see note 1.)</update>
+            <comment>2. The referenced resource must be of type container, content-model, context, item,
+              organizational unit, or scope. Granting roles on other resource types is not supported, yet.
+            </comment>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -19,7 +19,7 @@
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
         <configuration>
-          <catalog>src/main/resources/xsd/catalog.cat</catalog>
+          <!-- catalog>src/main/resources/xsd/catalog.cat</catalog -->
           <schemaDirectory>src/main/resources/xsd</schemaDirectory>
           <schemaIncludes>
             <include>**/*.xsd</include>

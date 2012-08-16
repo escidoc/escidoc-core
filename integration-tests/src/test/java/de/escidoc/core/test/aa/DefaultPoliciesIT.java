@@ -938,30 +938,6 @@ public class DefaultPoliciesIT extends GrantTestBase {
      */
 
     /**
-     * Test declining querying the semantic store.<br/>
-     *
-     * @throws Exception Thrown if anything fails.
-     */
-    @Ignore("SPO-Interface is deprecated")
-    @Test
-    public void testAaDef2() throws Exception {
-
-        final String param =
-            TaskParamFactory.getSemanticStoreQueryTaskParam("&lt;info:fedora/escidov:user1&gt;  * * ooo", "N-Triples");
-        try {
-            PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
-            spo(param);
-            EscidocAbstractTest.failMissingException(AuthorizationException.class);
-        }
-        catch (final Exception e) {
-            EscidocAbstractTest.assertExceptionType(AuthorizationException.class, e);
-        }
-        finally {
-            PWCallback.resetHandle();
-        }
-    }
-
-    /**
      * Tests declining retrieving a context in status created.
      *
      * @throws Exception If anything fails.

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocContentModel:content-model
-	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.3"
-	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:escidocContentModel="http://www.escidoc.org/schemas/content-model/1.0/content-model"
+	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	>
 
@@ -25,7 +25,7 @@
 	</escidocContentModel:resource-definitions>
 
 	<escidocContentStreams:content-streams
-		xmlns:escidocContentStreams="http://www.escidoc.de/schemas/contentstreams/0.8">
+		xmlns:escidocContentStreams="http://www.escidoc.org/schemas/common/1.0/content-streams">
 		<escidocContentStreams:content-stream
 			name="DC-MAPPING" xlink:href="http://localhost:8080/xsl/mapping-unknown2dc-onlyMD.xsl"
 			mime-type="text/xml" storage="external-managed" />

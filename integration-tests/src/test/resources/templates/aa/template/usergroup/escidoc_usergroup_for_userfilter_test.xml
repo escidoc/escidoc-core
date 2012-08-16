@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-user-group:user-group
-    xmlns:prefix-user-group="http://www.escidoc.de/schemas/usergroup/0.6"
-    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-user-group="http://www.escidoc.org/schemas/user-group/1.0/user-group"
+    xmlns:prefix-prop="http://www.escidoc.org/schemas/common/1.0/properties"
     xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
     <prefix-user-group:properties>
         <prefix-prop:email>bla@bla.de</prefix-prop:email>

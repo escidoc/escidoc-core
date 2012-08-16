@@ -22,10 +22,10 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/version" schemaLocation="http://www.escidoc.org/schemas/common/1.0/version.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/release" schemaLocation="http://www.escidoc.org/schemas/common/1.0/release.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="http://www.escidoc.org/schemas/common/1.0/structural-relations.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="http://www.escidoc.org/schemas/common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/version" schemaLocation="../../common/1.0/version.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/release" schemaLocation="../../common/1.0/release.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
 
   <xs:element name="locator-url" type="xs:string">
     <xs:annotation>

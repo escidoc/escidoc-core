@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
+	xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xml:base="http://localhost:8080"
 	prefix-xlink:title="the two ä mystic scans?"
 	prefix-xlink:type="simple">
 	<escidocItem:properties
-		xmlns:prop="http://escidoc.de/core/01/properties/" 
-		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
+		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
 		<srel:context prefix-xlink:type="simple"
 			prefix-xlink:href="/ir/context/escidoc:persistent3"/>
 		<srel:content-model prefix-xlink:type="simple"
@@ -15,9 +15,9 @@
 		<prop:content-model-specific><nix></nix></prop:content-model-specific>
 	</escidocItem:properties>
 	<escidocMetadataRecords:md-records
-		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
 		<escidocMetadataRecords:md-record
-			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 			 name="escidoc"
 			schema="http://www.escidoc-project.de/metadata/schema/0.1"
 			prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:type="simple">
@@ -138,11 +138,11 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10">
+		xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components">
 		<escidocComponents:component>
 			<escidocComponents:properties
-		xmlns:prop="http://escidoc.de/core/01/properties/" 
-		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
+		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
 				<prop:description>this is the first file PubMan Ein &lt;a href=&quot;http://www.escidoc.de/farbtest_wasserfarben.jpg&quot;&gt; Farbtest mit Wasserfarben.&lt;/a&gt;</prop:description>				
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>			
@@ -157,9 +157,9 @@
 				afasfsafasfasfasfa
 			</escidocComponents:content>
 			<escidocMetadataRecords:md-records
-				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+				xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc"
 					schema="http://www.escidoc-project.de/metadata/schema/0.1">
 					<publication type="book-item"
@@ -283,7 +283,7 @@
 			</publication>
 				</escidocMetadataRecords:md-record>
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="md2"
 					schema="http://www.escidoc-project.de/metadata/schema/0.1">
 					<md2-content/>
@@ -292,8 +292,8 @@
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties
-		xmlns:prop="http://escidoc.de/core/01/properties/" 
-		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
+		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
 				<prop:valid-status>valid</prop:valid-status>
 				<prop:visibility>public</prop:visibility>
 				<prop:content-category>image</prop:content-category>
@@ -304,9 +304,9 @@
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:href="http://localhost:8080/testdata/testDocuments/images/1.jpeg" storage="internal-managed"/>
 				<escidocMetadataRecords:md-records
-				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+				xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc"
 					schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					prefix-xlink:title="eSciDoc internal MD Record"
@@ -432,7 +432,7 @@
 			</publication>
 				</escidocMetadataRecords:md-record>
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="md2"
 					schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					prefix-xlink:title="eSciDoc internal MD Record"

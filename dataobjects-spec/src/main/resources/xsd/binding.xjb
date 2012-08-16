@@ -25,6 +25,378 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
+
+  <bindings schemaLocation="item/1.0/components.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.components"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- Container -->
+  <bindings schemaLocation="container/1.0/container.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.container"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- Content Model -->
+  <bindings schemaLocation="content-model/1.0/content-model.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.content.model"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- Content Relation -->
+  <bindings schemaLocation="content-relation/1.0/content-relation.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.content.relation"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='type']">
+      <property name="contentRelationType"/>
+    </bindings>
+  </bindings>
+
+  <bindings schemaLocation="content-relation/1.0/predicate-list.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.predicate.list"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <bindings schemaLocation="common/1.0/content-streams.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.content.stream"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:complexType[@name='contentStreamType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
+  </bindings>
+
+  <!-- Context -->
+  <bindings schemaLocation="context/1.0/context.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.context"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:complexType[@name='adminDescriptorType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
+  </bindings>
+
+  <!-- Item -->
+  <bindings schemaLocation="item/1.0/item.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.item"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- parents -->
+  <bindings schemaLocation="common/1.0/parents.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.parents"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- MdRecord(s) -->
+  <bindings schemaLocation="common/1.0/md-records.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.metadatarecords"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:complexType[@name='mdRecordType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
+  </bindings>
+
+  <!-- Organizational Unit -->
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit-successors.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou.successors"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit-path-list.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou.path.list"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="organizational-unit/1.0/organizational-unit-ref.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.ou.ref"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- User Account -->
+  <bindings schemaLocation="user-account/1.0/user-account.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.useraccount"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="user-account/1.0/user-account-attributes.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.useraccount.attributes"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="user-account/1.0/user-account-preferences.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.useraccount.preferences"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="user-group/1.0/user-group.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.usergroup"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:complexType[@name='selectorType']//xs:attribute[@name='type']">
+      <property name="selectorType"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="grant/1.0/grants.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.grants"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='properties']">
+      <class name="GrantPropertiesTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="pdp/1.0/pdp-requests.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.pdp.request"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="pdp/1.0/pdp-results.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.pdp.result"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="pdp/1.0/cs-xacml-schema-context-01.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.xacml.context"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="pdp/1.0/cs-xacml-schema-policy-01.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.xacml.policy"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="role/1.0/role.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.role"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="user-account/1.0/permission-filter.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.aa.permission"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='result']">
+      <class name="PermissionFilterTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="aggregation-definition/1.0/aggregation-definition.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.ad"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <!--<bindings node="/xs:schema//xs:complexType[@name='InfoFieldType']//xs:element[@name='type']">-->
+      <!--<property name="InfoFieldType"/>-->
+    <!--</bindings>-->
+  </bindings>
+  <bindings schemaLocation="report-definition/1.0/report-definition.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.rd"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="scope/1.0/scope.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.scope"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='type']">
+      <property name="ScopeType"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="statistic-data/1.0/statistic-data.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.sd"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="report/1.0/report.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.report"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="report/1.0/report-parameters.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.report.parameter"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="preprocessing-information/1.0/preprocessing-information.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sm.pi"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/properties.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.properties"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:complexType[@name='cmsType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='type']">
+      <property name="resourceType"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/relations.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.relations"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
   <bindings schemaLocation="common/1.0/structural-relations.xsd">
     <schemaBindings>
       <package name="org.escidoc.core.domain.relations.structural"/>
@@ -34,5 +406,373 @@
       </nameXmlTransform>
     </schemaBindings>
   </bindings>
+  <bindings schemaLocation="container/1.0/struct-map.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.container.structmap"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/release.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.release"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/version.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.version"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/version-history.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.version.history"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='timestamp']">
+      <property name="lastEventTimestamp"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="common/1.0/Event-v1-1.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.version.event"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="srw/1.0/xcql.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.xcql"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="srw/1.0/srw-types.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sru"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <!-- lax content -->
+    <bindings node="/xs:schema//xs:complexType[@name='extraDataType']">
+      <class/>
+      <wildcard:skip/>
+      <dh:domhandler handler-class="org.escidoc.core.utils.xml.StreamHandler"
+                     element-class="org.escidoc.core.utils.xml.StreamElement"/>
+    </bindings>
+    <!-- java types -->
+    <bindings node="/xs:schema//xs:element[@name='startRecord']">
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger"
+                    adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='maximumRecords']">
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger"
+                    adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='resultSetTTL']">
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger"
+                    adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='numberOfRecords']">
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger"
+                    adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='resultSetIdleTime']">
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger"
+                    adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='recordPosition']">
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger"
+                    adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='nextRecordPosition']">
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger"
+                    adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='responsePosition']">
+      <xjc:javaType name="org.apache.axis.types.NonNegativeInteger"
+                    adapter="org.escidoc.core.domain.sru.NonNegativeIntegerAdapter"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:element[@name='maximumTerms']">
+      <xjc:javaType name="org.apache.axis.types.PositiveInteger"
+                    adapter="org.escidoc.core.domain.sru.PositiveIntegerAdapter"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="srw/1.0/diagnostics.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sru.diagnostics"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
 
+  <!-- task param -->
+  <bindings schemaLocation="task-param/1.0/add-selectors.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.selectors.add"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="AddSelectorsTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/remove-selectors.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.selectors.remove"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="//xs:element[@name='param']">
+      <class name="RemoveSelectorsTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/assign-pid-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.assignpid"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="AssignPidTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/id-set-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.idset"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="IdSetTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/delete-objects-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.deleteobjects"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="DeleteObjectsTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/members-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.members"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="MembersTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/optimistic-locking-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.optimisticlocking"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="OptimisticLockingTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/reindex-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.reindex"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="ReindexTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/relation-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.relation"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="RelationTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/revoke-grant-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.revokegrant"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="RevokeGrantTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/revoke-grants-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.revokegrants"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="RevokeGrantsTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/status-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.status"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="StatusTaskParamTO"/>
+    </bindings>
+  </bindings>
+  <bindings schemaLocation="task-param/1.0/update-password-task-param.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.taskparam.updatepassword"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='param']">
+      <class name="UpdatePasswordTaskParamTO"/>
+    </bindings>
+  </bindings>
+
+  <!-- result -->
+  <bindings schemaLocation="common/1.0/result.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.result"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- OAI -->
+  <bindings schemaLocation="set-definition/1.0/set-definition.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.oai"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- Index Configuration -->
+  <bindings schemaLocation="indexing/1.0/index-configuration.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sb"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- Staging Service -->
+  <bindings schemaLocation="staging-file/1.0/staging-file.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.st"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- TME -->
+  <bindings schemaLocation="tme/1.0/tme-request.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.tme"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+  <bindings schemaLocation="tme/1.0/jhove.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.tme.jhove"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+    <bindings node="/xs:schema//xs:element[@name='jhove']//xs:element[@name='date']">
+      <property name="timestamp"/>
+    </bindings>
+    <bindings node="/xs:schema//xs:complexType[@name='agentType']//xs:attribute[@name='type']">
+      <property name="agentRole"/>
+    </bindings>
+  </bindings>
+
+  <!-- EXCEPTION -->
+  <bindings schemaLocation="common/1.0/exception.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.exception"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
+
+  <!-- SRW EXTRA DATA -->
+  <bindings schemaLocation="srw/1.0/srw-extra-data.xsd">
+    <schemaBindings>
+      <package name="org.escidoc.core.domain.sru.extradata"/>
+      <nameXmlTransform>
+        <typeName suffix="TO"/>
+        <elementName suffix="TO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
 </bindings>

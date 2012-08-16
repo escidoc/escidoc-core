@@ -1,0 +1,23 @@
+
+<!--
+	Newly created in version 0.4
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:ou-ref="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit-ref"
+           targetNamespace="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit-ref"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
+
+  <xs:element name="organizational-unit-ref" type="ou-ref:organizationalUnitRefType"/>
+
+  <xs:complexType name="organizationalUnitRefType">
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+  </xs:complexType>
+</xs:schema>

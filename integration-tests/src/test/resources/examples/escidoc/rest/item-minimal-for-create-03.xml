@@ -4,11 +4,11 @@
 	with 
 -->
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
-	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
-	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
-	xmlns:prop="http://escidoc.de/core/01/properties/"
-	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
+	xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
+	xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
+	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+	xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:xml="http://www.w3.org/XML/1998/namespace">
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocContentModel:content-model
-	xmlns:escidocContentModel="http://www.escidoc.de/schemas/contentmodel/0.3"
-	xmlns:prop="http://escidoc.de/core/01/properties/">
+	xmlns:escidocContentModel="http://www.escidoc.org/schemas/content-model/1.0/content-model"
+	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
 
 	<escidocContentModel:properties>
 		<prop:name>Test minimal for create CM</prop:name>

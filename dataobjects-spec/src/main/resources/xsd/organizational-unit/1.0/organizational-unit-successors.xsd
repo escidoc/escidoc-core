@@ -1,0 +1,39 @@
+
+<!--
+  - April 2009
+    - Version 0.7
+    initial version
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           xmlns:ou-successors="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit-successors"
+           targetNamespace="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit-successors"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+
+  <xs:element name="successors" type="ou-successors:successorsType"/>
+  <xs:element name="successor" type="srel:successorType"/>
+
+  <xs:complexType name="successorsType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="ou-successors:successor">
+        <xs:annotation>
+          <xs:documentation>
+            <create>discarded</create>
+            <update>discarded</update>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
+    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
+  </xs:complexType>
+</xs:schema>

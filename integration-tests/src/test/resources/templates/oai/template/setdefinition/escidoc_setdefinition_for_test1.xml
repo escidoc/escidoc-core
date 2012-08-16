@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-set-definition:set-definition
-    xmlns:prefix-set-definition="http://www.escidoc.de/schemas/setdefinition/0.2"
-    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-set-definition="http://www.escidoc.org/schemas/set-definition/1.0/set-definition"
+    xmlns:prefix-prop="http://www.escidoc.org/schemas/common/1.0/properties"
     xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
     <prefix-set-definition:properties>
         <prefix-prop:name>Test Set Definition1</prefix-prop:name>

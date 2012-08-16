@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <prefix-role:role
-    xmlns:prefix-role="http://www.escidoc.de/schemas/role/0.5"
-    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-role="http://www.escidoc.org/schemas/role/1.0/role"
+    xmlns:prefix-prop="http://www.escidoc.org/schemas/common/1.0/properties"
     xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
     xmlns:prefix-xacml-policy="urn:oasis:names:tc:xacml:1.0:policy">
     <prefix-role:properties>

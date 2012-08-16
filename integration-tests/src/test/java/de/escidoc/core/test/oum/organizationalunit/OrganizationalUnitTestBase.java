@@ -1387,39 +1387,4 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         return toBeAssertedDocument;
     }
 
-    /**
-     * Asserts that the provided document contains a valid Xml representation of an organizational unit ref list, and
-     * contains refernces to the expected organizational units.
-     *
-     * @param message         The assertion failed message.
-     * @param expectedBaseUri The expected base uri in the root element.
-     * @param expectedOus     The map from id to xml representation of the expected organizational units.
-     * @param toBeAssertedXml The xml data to be asserted.
-     * @return Returns the <code>Document</code> for the provided xml data.
-     * @throws Exception Thrown if anything fails.
-     */
-    public Document assertOrganizationalUnitRefList(
-        final String message, final String expectedBaseUri, final Map<String, String> expectedOus,
-        final String toBeAssertedXml) throws Exception {
-
-        final String msg = prepareAssertionFailedMessage(message);
-
-        assertXmlValidOrganizationalUnitsRefs(toBeAssertedXml);
-        Document toBeAssertedDocument = getDocument(toBeAssertedXml);
-
-        NodeList ouRefNodes =
-            selectNodeList(toBeAssertedDocument, XPATH_ORGANIZATIONAL_UNIT_REF_LIST_ORGANIZATIONAL_UNIT_REF);
-        assertEquals(msg + "Number of list entries mismatch.", expectedOus.size(), ouRefNodes.getLength());
-
-        for (int i = 0; i < ouRefNodes.getLength(); i++) {
-            final String toBeAssertedOuId =
-                getObjidValue(toBeAssertedDocument, XPATH_ORGANIZATIONAL_UNIT_REF_LIST_ORGANIZATIONAL_UNIT_REF + "["
-                    + (i + 1) + "]");
-            assertNotNull(msg + " Unexpected reference [" + i + ", " + toBeAssertedOuId + "]", expectedOus
-                .get(toBeAssertedOuId));
-            expectedOus.remove(toBeAssertedOuId);
-        }
-
-        return toBeAssertedDocument;
-    }
 }

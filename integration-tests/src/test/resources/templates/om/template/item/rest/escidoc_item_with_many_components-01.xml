@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<escidocItem:item xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
-	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
-	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
-	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+<escidocItem:item xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
+	xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
+	xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
+	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
 	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace">
 
 	<escidocItem:properties>
@@ -39,7 +39,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -175,7 +175,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -311,7 +311,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -447,7 +447,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -583,7 +583,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -719,7 +719,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -855,7 +855,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -991,7 +991,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -1127,7 +1127,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -1263,7 +1263,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"
@@ -1399,7 +1399,7 @@
 				</escidocMetadataRecords:md-record>
 
 				<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1"
 					xlink:title="eSciDoc internal MD Record" xlink:type="simple">
 					<publication type="book-item"

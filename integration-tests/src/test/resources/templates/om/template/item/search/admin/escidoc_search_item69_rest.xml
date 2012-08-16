@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
-                  xmlns:prop="http://escidoc.de/core/01/properties/"
-                  xmlns:metadata="http://www.escidoc.de/metadata/schema/0.1"
+<escidocItem:item xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+                  xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+                  
                   xmlns:xlink="http://www.w3.org/1999/xlink"
-                  xmlns:metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-                  xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
+                  xmlns:metadata-records="http://www.escidoc.org/schemas/common/1.0/md-records"
+                  xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
                   xlink:type="simple"
                   xml:base="http://localhost:8080"
                   xlink:title="Coextrudierter Kunststoffschlauch">
    <escidocItem:properties xlink:type="simple">
       <srel:context xlink:type="simple" xlink:href="/ir/context/escidoc:persistent3"/>
       <srel:content-model xlink:type="simple" xlink:href="/cmm/content-model/escidoc:persistent4"/>
-      <properties:content-model-specific xmlns:properties="http://escidoc.de/core/01/properties/">
+      <properties:content-model-specific xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties">
          <element1>cms-test1</element1>
          <element2>cms-test2</element2>
       </properties:content-model-specific>
    </escidocItem:properties>
-   <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+   <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
       <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
                                         xlink:title="eSciDoc internal MD Record"
                                         xlink:type="simple">
@@ -89,14 +89,14 @@
          </escidocMetadataProfile:publication>
       </escidocMetadataRecords:md-record>
    </escidocMetadataRecords:md-records>
-   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
+   <escidocComponents:components xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
                                  xlink:type="simple"
                                  xlink:href="/ir/item/escidoc:198/components"
                                  xlink:title="Components of Item"
                                  xml:base="http://localhost:8080">
       <escidocComponents:component>
-         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
-                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+         <escidocComponents:properties xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties"
+                                       xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
                                        xlink:type="simple">
             <properties:description>XML File</properties:description>
             <properties:valid-status>valid</properties:valid-status>
@@ -108,7 +108,7 @@
          <escidocComponents:content xlink:type="simple"
                                     xlink:href="http://localhost:8080/testdata/testDocuments/ir/xml/EPFull_1271034.xml"
                                     storage="internal-managed"/>
-         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
                                               xlink:title="eSciDoc internal MD Record"
                                               xlink:type="simple">
@@ -164,8 +164,8 @@
          </escidocMetadataRecords:md-records>
       </escidocComponents:component>
       <escidocComponents:component>
-         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
-                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
+         <escidocComponents:properties xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties"
+                                       xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
                                        xlink:type="simple">
             <properties:description>PDF File</properties:description>
             <properties:valid-status>valid</properties:valid-status>
@@ -177,7 +177,7 @@
          <escidocComponents:content xlink:type="simple"
                                     xlink:href="http://localhost:8080/testdata/testDocuments/ir/pdf/EPFull_1271034.pdf"
                                     storage="internal-managed"/>
-         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+         <escidocMetadataRecords:md-records xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
             <escidocMetadataRecords:md-record name="escidoc" schema="http://www.escidoc-project.de/metadata/schema/0.1/"
                                               xlink:title="eSciDoc internal MD Record"
                                               xlink:type="simple">

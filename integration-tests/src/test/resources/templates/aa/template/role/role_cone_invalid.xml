@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<role:role xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:role="http://www.escidoc.de/schemas/role/0.5" xmlns:xacml-policy="urn:oasis:names:tc:xacml:1.0:policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.escidoc.de/schemas/role/0.5 https://www.escidoc.org/schemas/rest/role/0.5/role.xsd">
+<role:role xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:role="http://www.escidoc.org/schemas/role/1.0/role" xmlns:xacml-policy="urn:oasis:names:tc:xacml:1.0:policy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.escidoc.org/schemas/role/1.0/role https://www.escidoc.org/schemas/role/1.0/role.xsd">
     <role:properties>
         <prop:name>escidoc:role-cone-test-role-2</prop:name>
         <prop:description>Testing role for CoNE</prop:description>

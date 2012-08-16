@@ -572,29 +572,6 @@ public class TaskParamFactory {
     }
 
     /**
-     * 
-     * @param query
-     * @param format
-     * @return
-     */
-    public static String getSemanticStoreQueryTaskParam(final String query, final String format) {
-        StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_SEMANTIC_STORE_QUERY);
-
-        if (query == null && format == null) {
-            return xml.append("/>").toString();
-        }
-
-        xml.append(">\n");
-        if (query != null) {
-            xml.append("<query>").append(query).append("</query>\n");
-        }
-        if (format != null) {
-            xml.append("<format>").append(format).append("</format>\n");
-        }
-        return xml.append("</param>").toString();
-    }
-
-    /**
      * @see TaskParamFactory#getAddSelectorsTaskParam(java.util.List, String) 
      */
     public static class Selector {
