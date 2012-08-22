@@ -18,12 +18,12 @@
 	- Changed namespace of referred md-records schema (0.4 to 0.5).
 	
 -->
-<xs:schema targetNamespace="http://www.escidoc.de/schemas/organizationalunit/0.8"
+<xs:schema targetNamespace="http://www.escidoc.de/schemas/organizationalunit/0.9"
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
            xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-           xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+           xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
            xmlns:prop="http://escidoc.de/core/01/properties/"
            xmlns:srel="http://escidoc.de/core/01/structural-relations/">
 

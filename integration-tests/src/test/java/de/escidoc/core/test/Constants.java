@@ -676,16 +676,16 @@ public class Constants {
 
     // OUM
     public static final String XSD_ACCESS_OUM_OU =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.8/" + XSD_OUM_OU;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.9/" + XSD_OUM_OU;
 
     public static final String XSD_ACCESS_OUM_OU_SUCCESSORS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.8/" + XSD_OUM_OU_SUCCESSORS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.9/" + XSD_OUM_OU_SUCCESSORS;
 
     public static final String XSD_ACCESS_OUM_OU_PATH_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.4/" + XSD_OUM_OU_PATH_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.5/" + XSD_OUM_OU_PATH_LIST;
 
     public static final String XSD_ACCESS_OUM_OU_REF_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.4/" + XSD_OUM_OU_REF_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.5/" + XSD_OUM_OU_REF_LIST;
 
     // SM
     public static final String XSD_ACCESS_SM_SCOPE =

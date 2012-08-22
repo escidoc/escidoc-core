@@ -36,8 +36,8 @@
 	<xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
 		schemaLocation="http://www.escidoc.org/schemas/rest/common/0.4/common-types.xsd" />	
 	<xs:import
-		namespace="http://www.escidoc.de/schemas/organizationalunit/0.8"
-		schemaLocation="http://www.escidoc.org/schemas/rest/organizational-unit/0.8/organizational-unit.xsd" />
+		namespace="http://www.escidoc.de/schemas/organizationalunit/0.9"
+		schemaLocation="http://www.escidoc.org/schemas/rest/organizational-unit/0.9/organizational-unit.xsd" />
 	<xs:element name="organizational-unit-list">
 		<xs:complexType>
 			<xs:sequence minOccurs="0" maxOccurs="unbounded">

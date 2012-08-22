@@ -18,7 +18,7 @@
 	- changed namespace of related organizational-unit schema
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+           xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
            xmlns:common="http://www.escidoc.de/schemas/commontypes/0.4"
            xmlns:organizational-unit-list="http://www.escidoc.de/schemas/organizationalunitlist/0.9"
            targetNamespace="http://www.escidoc.de/schemas/organizationalunitlist/0.9"
@@ -26,7 +26,7 @@
 
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
   <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
-  <xs:import namespace="http://www.escidoc.de/schemas/organizationalunit/0.8"
+  <xs:import namespace="http://www.escidoc.de/schemas/organizationalunit/0.9"
              schemaLocation="organizational-unit.xsd"/>
 
   <xs:element name="organizational-unit-list" type="organizational-unit-list:organizationalUnitListType"/>

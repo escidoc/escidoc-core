@@ -120,8 +120,9 @@
       <ref bean="compressGZIPFeature"/>
       <ref bean="loggingFeature"/>
     </jaxrs:features>
-    <jaxrs:inInterceptors>
+    <!-- NOTE: Does not (yet?) work with the Stream/InputStream class used in the method signatures! -->
+    <!--jaxrs:inInterceptors>
       <ref bean="depthInterceptor"/>
-    </jaxrs:inInterceptors>
+    </jaxrs:inInterceptors-->
   </jaxrs:server>
 </beans>

@@ -67,6 +67,10 @@
         <groupId>org.escidoc.core</groupId>
         <artifactId>utilities</artifactId>
       </dependency>
+      <dependency>
+        <groupId>net.sf.oval</groupId>
+        <artifactId>oval</artifactId>
+      </dependency>
     </dependencies>
 
 </project>

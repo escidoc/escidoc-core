@@ -450,7 +450,7 @@ public abstract class EscidocTestBase extends EscidocAssertions {
 
     public static final String TEMPLATE_LICENSE_TYPE_PATH = TEMPLATE_OM_PATH + "/licensetype";
 
-    public static final String TEMPLATE_ORGANIZATIONAL_UNIT_PATH = TEMPLATE_OUM_PATH + "/organizationalunit/0.8";
+    public static final String TEMPLATE_ORGANIZATIONAL_UNIT_PATH = TEMPLATE_OUM_PATH + "/organizationalunit/0.9";
 
     public static final String TEMPLATE_SB_PATH = TEMPLATE_BASE_PATH + "/sb/template";
 
