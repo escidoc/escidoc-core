@@ -115,17 +115,49 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+     	  	<groupId>org.eclipse.m2e</groupId>
+        	<artifactId>lifecycle-mapping</artifactId>
+        	<version>1.0.0</version>
+        	<configuration>
+        		<lifecycleMappingMetadata>
+        			<pluginExecutions>
+        				<pluginExecution>
+        					<pluginExecutionFilter>
+						        <groupId>org.codehaus.mojo</groupId>
+        						<artifactId>exec-maven-plugin</artifactId>
+        						<versionRange>[0.0,)</versionRange>
+					             <goals>
+					           		<goal>exec</goal>
+					            </goals>
+        					</pluginExecutionFilter>
+        					<action>
+        						<ignore />
+        					</action>
+        				</pluginExecution>
+        			</pluginExecutions>
+        			</lifecycleMappingMetadata>
+        			</configuration>
+        			</plugin>	      
+        			</plugins>
+    </pluginManagement>
     <plugins>
+    
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
+       
         <executions>
           <execution>
             <id>install-fedora</id>
             <phase>prepare-package</phase>
-            <goals>
-              <goal>exec</goal>
+            
+             <goals>
+           		<goal>exec</goal>
             </goals>
+           
             <configuration>
               <executable>java</executable>
               <arguments>
@@ -135,10 +167,12 @@
               </arguments>
               <outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
             </configuration>
+           
           </execution>
         </executions>
+     
       </plugin>
-
+     
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <dependencies>

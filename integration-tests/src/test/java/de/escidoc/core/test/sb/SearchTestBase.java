@@ -451,7 +451,7 @@ public class SearchTestBase extends SbTestBase {
     protected final String getItemPidParam(final String itemId, final DateTime lastModificationDate) throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.ITEM_BASE_URI + itemId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.ITEM_BASE_URI + "/" + itemId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
@@ -470,7 +470,7 @@ public class SearchTestBase extends SbTestBase {
         throws Exception {
 
         AssignParam assignPidParam = new AssignParam();
-        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.CONTAINER_BASE_URI + containerId));
+        assignPidParam.setUrl(new URL(getBaseUrl() + Constants.CONTAINER_BASE_URI + "/" + containerId));
 
         return TaskParamFactory.getAssignPidTaskParam(assignPidParam, lastModificationDate);
     }
