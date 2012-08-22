@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.DateTime;
+
+import de.escidoc.core.common.business.fedora.resources.Item;
+
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
@@ -16,15 +20,19 @@ public class ScapeIngestServlet extends HttpServlet {
         IntellectualEntity entity;
         try {
             entity = SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class, req.getInputStream());
+            Item i = new Item(entity.getIdentifier().getValue());
+            i.setCreationDate("now=!");
+            i.setLastModificationDate(new DateTime());
+            resp.setContentType("text/plain");
+            resp.getOutputStream().write(entity.getIdentifier().getValue().getBytes());
+            resp.getOutputStream().flush();
         }
         catch (Exception e) {
             throw new IOException("unable to deserialize intellectual entity");
+        } finally {
+        	resp.getOutputStream().close();
+        	resp.flushBuffer();
         }
-        resp.setContentType("text/plain");
-        resp.getOutputStream().write(entity.getIdentifier().getValue().getBytes());
-        resp.getOutputStream().flush();
-        resp.getOutputStream().close();
-        resp.flushBuffer();
     }
 
     @Override
