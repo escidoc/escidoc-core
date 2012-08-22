@@ -109,6 +109,11 @@ INSERT INTO aa.actions (id, name) VALUES
 
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-create-user-group-grant', 'info:escidoc/names:aa:1.0:action:create-user-group-grant');
+    /**
+    * SCAPE Actions.
+    */
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-ingest-scape','info:escidoc/names:scape:1.0:action:action-ingest-scape');
 
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-revoke-user-group-grant', 'info:escidoc/names:aa:1.0:action:revoke-user-group-grant');
@@ -459,5 +464,11 @@ INSERT INTO aa.actions (id, name) VALUES
 
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:mm-aa-retrieve-permission-filter-query', 'info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query');
+
+    /**
+    * SCAPE Actions.
+    */
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-ingest-scape','info:escidoc/names:scape:1.0:action:action-ingest-scape');
 
 

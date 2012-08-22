@@ -241,7 +241,9 @@
         <antcall target="execute-sql">
             <param name="script" value="aa.init.roles.user-account-administrator.sql" />
         </antcall>
-
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-account-administrator.sql" />
+        </antcall>
 		<!-- AA Grants -->
 
 		<antcall target="execute-sql">

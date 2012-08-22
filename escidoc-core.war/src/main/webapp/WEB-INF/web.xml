@@ -722,7 +722,7 @@
 	</servlet-mapping>
 	
 	<servlet-mapping>
-	    <servlet-name>ScapeIngstServlet</servlet-name>
+	    <servlet-name>ScapeIngestServlet</servlet-name>
 	    <url-pattern>/scape/*</url-pattern>
 	</servlet-mapping>
 
