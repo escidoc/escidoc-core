@@ -42,7 +42,7 @@
             <skip>${skipITs}</skip>
             <wait>${cargo.wait}</wait>
             <container>
-              <containerId>tomcat7x</containerId>
+              <containerId>tomcat6x</containerId>
               <!-- The installer is installing the container (usually a zipUrlInstaller goes here) -->
               <home>${project.build.directory}/escidoc/tomcat</home>
               <timeout>600000</timeout>

@@ -1848,7 +1848,7 @@
         <artifactId>cxf-rt-transports-http</artifactId>
         <version>${cxf.version}</version>
       </dependency>
-      <!--dependency>
+      <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
         <version>${cxf.version}</version>
@@ -1859,7 +1859,7 @@
             <artifactId>geronimo-servlet_2.5_spec</artifactId>
           </exclusion>
         </exclusions>
-      </dependency-->
+      </dependency>
       <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-jms</artifactId>

@@ -120,7 +120,7 @@
       <ref bean="compressGZIPFeature"/>
       <ref bean="loggingFeature"/>
     </jaxrs:features>
-    <!-- NOTE: Does not (yet?) work with the Stream/InputStream class used in the method signatures! -->
+    <!-- NOTE: Does not work with the Stream/InputStream class used in the method signatures! Will be fixed in an upcoming CXF release -->
     <!--jaxrs:inInterceptors>
       <ref bean="depthInterceptor"/>
     </jaxrs:inInterceptors-->
