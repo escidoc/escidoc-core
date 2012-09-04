@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.business;
 
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
@@ -237,9 +236,11 @@ public final class Constants {
     public static final String INDEX_CONFIGURATION_NS_URI =
         NS_URI_PREFIX + "indexing" + INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION + "index-configuration";
 
-    public static final String STAGING_FILE_NS_URI = NS_URI_PREFIX + "staging-file" + NS_URI_SCHEMA_VERSION_1_0 + "staging-file";
+    public static final String STAGING_FILE_NS_URI =
+        NS_URI_PREFIX + "staging-file" + NS_URI_SCHEMA_VERSION_1_0 + "staging-file";
 
-    public static final String STRUCTURAL_RELATIONS_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/structural-relations";
+    public static final String STRUCTURAL_RELATIONS_NS_URI =
+        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/structural-relations";
 
     public static final String PARAMETER_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/parameter";
 
@@ -247,7 +248,8 @@ public final class Constants {
 
     public static final String SEARCH_RESULT_NS_URI = NS_URI_PREFIX + "srw" + NS_URI_SCHEMA_VERSION_1_0 + "/";
 
-    public static final String USER_ACCOUNT_NS_URI = NS_URI_PREFIX + "user-account" + USER_ACCOUNT_NS_URI_SCHEMA_VERSION + "/user-account";
+    public static final String USER_ACCOUNT_NS_URI =
+        NS_URI_PREFIX + "user-account" + USER_ACCOUNT_NS_URI_SCHEMA_VERSION + "/user-account";
 
     public static final String USER_ACCOUNT_LIST_NS_URI =
         NS_URI_PREFIX + "useraccountlist" + USER_ACCOUNT_LIST_NS_URI_SCHEMA_VERSION;
@@ -258,12 +260,14 @@ public final class Constants {
     public static final String USER_ATTRIBUTES_NS_URI =
         NS_URI_PREFIX + "user-account" + USER_ATTRIBUTES_NS_URI_SCHEMA_VERSION + "/user-account-attributes";
 
-    public static final String USER_GROUP_NS_URI = NS_URI_PREFIX + "user-group" + USER_GROUP_NS_URI_SCHEMA_VERSION + "/user-group";
+    public static final String USER_GROUP_NS_URI =
+        NS_URI_PREFIX + "user-group" + USER_GROUP_NS_URI_SCHEMA_VERSION + "/user-group";
 
     public static final String USER_GROUP_LIST_NS_URI =
         NS_URI_PREFIX + "usergrouplist" + USER_GROUP_LIST_NS_URI_SCHEMA_VERSION;
 
-    public static final String SET_DEFINITION_NS_URI = NS_URI_PREFIX + "set-definition" + NS_URI_SCHEMA_VERSION_1_0 + "/set-definition";
+    public static final String SET_DEFINITION_NS_URI =
+        NS_URI_PREFIX + "set-definition" + NS_URI_SCHEMA_VERSION_1_0 + "/set-definition";
 
     public static final String SET_DEFINITION_LIST_NS_URI =
         NS_URI_PREFIX + "setdefinitionlist" + NS_URI_SCHEMA_VERSION_1_0;
@@ -313,7 +317,8 @@ public final class Constants {
     public static final String CONTENT_STREAMS_NAMESPACE_URI =
         NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "content-streams";
 
-    public static final String COMPONENTS_NAMESPACE_URI = NS_URI_PREFIX + "item" + NS_URI_SCHEMA_VERSION_1_0 + "/components";
+    public static final String COMPONENTS_NAMESPACE_URI =
+        NS_URI_PREFIX + "item" + NS_URI_SCHEMA_VERSION_1_0 + "/components";
 
     public static final String CONTENT_RELATIONS_NAMESPACE_URI =
         NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/relations";
@@ -321,18 +326,21 @@ public final class Constants {
     public static final String CONTENT_RELATION_NAMESPACE_URI =
         NS_URI_PREFIX + "content-relation" + NS_URI_SCHEMA_VERSION_1_0 + "/content-relation";
 
-    public static final String PARENTS_NAMESPACE_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/parents";
+    public static final String PARENTS_NAMESPACE_URI =
+        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/parents";
 
     public static final String CONTEXT_NAMESPACE_PREFIX = "context";
 
-    public static final String CONTEXT_NAMESPACE_URI = NS_URI_PREFIX + "context" + CONTEXT_NS_URI_SCHEMA_VERSION + "/context";
+    public static final String CONTEXT_NAMESPACE_URI =
+        NS_URI_PREFIX + "context" + CONTEXT_NS_URI_SCHEMA_VERSION + "/context";
 
     public static final String CONTEXT_PROPERTIES_NAMESPACE_URI = CONTEXT_NAMESPACE_URI;
 
     public static final String CONTEXT_LIST_NAMESPACE_URI =
         NS_URI_PREFIX + "contextlist" + CONTEXT_NS_URI_SCHEMA_VERSION;
 
-    public static final String CONTAINER_NAMESPACE_URI = NS_URI_PREFIX + "container" + CONTAINER_NS_URI_SCHEMA_VERSION + "/container";
+    public static final String CONTAINER_NAMESPACE_URI =
+        NS_URI_PREFIX + "container" + CONTAINER_NS_URI_SCHEMA_VERSION + "/container";
 
     public static final String CONTAINER_PROPERTIES_NAMESPACE_URI = CONTAINER_NAMESPACE_URI;
 
@@ -342,11 +350,13 @@ public final class Constants {
     public static final String CONTAINER_REF_LIST_NAMESPACE =
         NS_URI_PREFIX + "containerreflist" + NS_URI_SCHEMA_VERSION_1_0;
 
-    public static final String WOV_NAMESPACE_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/version-history";
+    public static final String WOV_NAMESPACE_URI =
+        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/version-history";
 
     public static final String XLINK_URI = XLINK_NS_URI;
 
-    public static final String STRUCT_MAP_NAMESPACE_URI = NS_URI_PREFIX + "container" + NS_URI_SCHEMA_VERSION_1_0 + "/struct-map";
+    public static final String STRUCT_MAP_NAMESPACE_URI =
+        NS_URI_PREFIX + "container" + NS_URI_SCHEMA_VERSION_1_0 + "/struct-map";
 
     public static final String MEMBER_LIST_NAMESPACE_URI =
         NS_URI_PREFIX + "memberlist" + MEMBER_LIST_NS_URI_SCHEMA_VERSION;
@@ -355,7 +365,8 @@ public final class Constants {
         NS_URI_PREFIX + "memberreflist" + NS_URI_SCHEMA_VERSION_1_0;
 
     public static final String AGGREGATION_DEFINITION_NS_URI =
-        NS_URI_PREFIX + "aggregation-definition" + AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION + "/aggregation-definition";
+        NS_URI_PREFIX + "aggregation-definition" + AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION
+            + "/aggregation-definition";
 
     public static final String REPORT_DEFINITION_NS_URI =
         NS_URI_PREFIX + "report-definition" + REPORT_DEFINITION_NS_URI_SCHEMA_VERSION + "/report-definition";
