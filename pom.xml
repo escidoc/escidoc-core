@@ -1287,7 +1287,7 @@
     <aspectj.version>1.6.12</aspectj.version>
     <spring.version>3.0.7.RELEASE</spring.version>
     <!-- TODO: Update to 2.6.2 when released for XML catalog support -->
-    <cxf.version>2.6.1</cxf.version>
+    <cxf.version>2.6.2</cxf.version>
     <oval.version>1.81</oval.version>
     <camel.version>2.9.0</camel.version>
     <activemq.version>5.5.0</activemq.version>

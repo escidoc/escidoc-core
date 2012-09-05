@@ -147,6 +147,7 @@
         (\S)+\.gif 
         (\S)+\.xsl 
         (\S)+\.xsd 
+        (\S)+\.css 
       </param-value>
     </init-param>
     <init-param>
@@ -164,7 +165,16 @@
   <servlet>
     <servlet-name>CXFServlet</servlet-name>
     <display-name>CXF Servlet</display-name>
-    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    <!-- servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class -->
+    <!--
+    use EscidocCxfServlet that fixes bug with static-welcome-file and static-resources-list
+    use CXFServlet when CXF 2.6.3 gets released
+    -->
+    <servlet-class>de.escidoc.core.common.servlet.EscidocCxfServlet</servlet-class>
+    <init-param>
+      <param-name>static-welcome-file</param-name>
+      <param-value>/index.html</param-value>
+    </init-param>
     <init-param>
       <param-name>static-resources-list</param-name>
       <param-value>
@@ -175,6 +185,7 @@
         (\S)+\.gif 
         (\S)+\.xsl 
         (\S)+\.xsd 
+        (\S)+\.css 
       </param-value>
     </init-param>
     <init-param>
@@ -182,6 +193,7 @@
       <param-value>
         /aa/logout(\S)* 
         /aa/login(\S)* 
+        (\S)+\.jsp
       </param-value>
     </init-param>
     <init-param>
