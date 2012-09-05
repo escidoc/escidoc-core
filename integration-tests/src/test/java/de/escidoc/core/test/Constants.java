@@ -618,6 +618,9 @@ public class Constants {
     public static final String XSD_ACCESS_COMMON_RELATIONS =
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.3/" + XSD_COMMON_RELATIONS;
 
+    public static final String XSD_ACCESS_COMMON_PARENTS =
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.9/" + XSD_COMMON_PARENTS;
+
     // AA
     public static final String XSD_ACCESS_AA_USER_ACCOUNT =
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.7/" + XSD_AA_USER_ACCOUNT;

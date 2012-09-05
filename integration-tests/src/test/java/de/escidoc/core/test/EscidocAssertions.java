@@ -469,6 +469,11 @@ public abstract class EscidocAssertions {
         assertXmlValidOrganizationalUnit(xmlData);
     }
 
+    public void assertXmlValidCommonParents(final String xmlData) throws Exception {
+        assertAllPlaceholderResolved(xmlData);
+        assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_COMMON_PARENTS));
+    }
+
     /**
      * Asserts that the provided xml data is a valid organizational unit pathlist.
      *
