@@ -46,8 +46,8 @@
       <artifactId>aspects</artifactId>
     </dependency>
     <dependency>
-        <groupId>org.escidoc.core</groupId>
-        <artifactId>dataobjects-spec</artifactId>
+      <groupId>org.escidoc.core</groupId>
+      <artifactId>dataobjects-spec</artifactId>
     </dependency>
     <!-- Specs -->
     <dependency>
@@ -80,14 +80,14 @@
       <groupId>com.sun.xml.fastinfoset</groupId>
       <artifactId>FastInfoset</artifactId>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
     </dependency>
-      <dependency>
-        <groupId>xml-resolver</groupId>
-        <artifactId>xml-resolver</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>xml-resolver</groupId>
+      <artifactId>xml-resolver</artifactId>
+    </dependency>-->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>

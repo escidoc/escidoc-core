@@ -1442,6 +1442,18 @@ public class ItemIT extends ItemTestBase {
         assertXmlValidItem(createdXml);
     }
 
+    @Test(expected = XmlSchemaValidationException.class)
+    public void testCreateInvalidItem() throws Exception {
+
+        Document xmlItem =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_198_for_create.xml");
+        deleteElement(xmlItem, "/item/components/component[1]");
+        String itemXml = toString(xmlItem, true);
+        itemXml = itemXml.replace("escidocItem:properties", "escidocItem:property");
+
+        create(itemXml);
+    }
+
     /**
      * Test successfully creatig of an item with 2 md-records.
      * 

@@ -25,12 +25,14 @@
            xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
            xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
            xmlns:prop="http://escidoc.de/core/01/properties/"
-           xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+           xmlns:common-parents="http://www.escidoc.de/schemas/parents/0.9">
 
   <xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4" schemaLocation="common-types.xsd"/>
   <xs:import namespace="http://www.escidoc.de/schemas/metadatarecords/0.5" schemaLocation="md-records.xsd"/>
   <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="properties.xsd"/>
   <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="structural-relations.xsd"/>
+  <xs:import namespace="http://www.escidoc.de/schemas/parents/0.9" schemaLocation="parents.xsd"/>
 
   <xs:element name="organizational-unit" type="organizational-unit:organizationalUnitType"/>
   <xs:element name="properties" type="organizational-unit:organizationalUnitPropertiesType"/>
@@ -40,7 +42,6 @@
   <xs:element name="path-list" type="common-types:readOnlyLink"/>
   <xs:element name="successor-objects" type="common-types:readOnlyLink"/>
   <xs:element name="relations" type="common-types:readOnlyLink"/>
-  <xs:element name="parents" type="organizational-unit:parentsType"/>
   <xs:element name="predecessors" type="organizational-unit:predecessorsType"/>
 
   <xs:complexType name="organizationalUnitType">
@@ -102,7 +103,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element ref="organizational-unit:parents" minOccurs="0">
+      <xs:element ref="common-parents:parents" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             <create>optional</create>
@@ -235,24 +236,6 @@
           <xs:documentation>
             <create>discarded</create>
             <update>discarded</update>
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-    <xs:attributeGroup ref="common-types:eSciDocResourceIdentityAttributes"/>
-    <xs:attributeGroup ref="common-types:eSciDocRootElementAttributes"/>
-  </xs:complexType>
-
-  <xs:complexType name="parentsType">
-    <xs:sequence>
-      <xs:element ref="srel:parent" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>
-            <create>optional</create>
-            <update>optional</update>
-            <comment>
-              The list of parents is updated with this list.
-            </comment>
           </xs:documentation>
         </xs:annotation>
       </xs:element>

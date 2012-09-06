@@ -53,7 +53,7 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
 
     private JAXBContextProvider jaxbContextProvider;
 
-    private SchemaHandler schemaHandler;
+//    private SchemaHandler schemaHandler;
 
     private Map<String, Object> maProperties;
 
@@ -78,78 +78,18 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         }
     }
 
-    @Override
-    public void setSchemaHandler(SchemaHandler schemaHandler) {
-        this.schemaHandler = schemaHandler;
-    }
+//    @Override
+//    public void setSchemaHandler(SchemaHandler schemaHandler) {
+//        this.schemaHandler = schemaHandler;
+//    }
 
     @Override
     public Schema getSchema() {
-        return schemaHandler.getSchema();
+        return super.getSchema();
     }
 
     public void setJaxbContextProvider(final JAXBContextProvider jaxbContextProvider) {
         this.jaxbContextProvider = jaxbContextProvider;
-    }
-
-    /**
-     * Hotfix for https://issues.apache.org/jira/browse/CXF-4380
-     *
-     * TODO: Remove after next CXF update.
-     */
-    public Object readFrom(Class<Object> type, Type genericType, Annotation[] anns, MediaType mt,
-        MultivaluedMap<String, String> headers, InputStream is)
-        throws IOException {
-
-        if (isPayloadEmpty()) {
-            if (AnnotationUtils.getAnnotation(anns, Nullable.class) != null) {
-                return null;
-            } else {
-                reportEmptyContentLength();
-            }
-        }
-
-        try {
-
-            boolean isCollection = InjectionUtils.isSupportedCollectionOrArray(type);
-            Class<?> theGenericType = isCollection ? InjectionUtils.getActualType(genericType) : type;
-            Class<?> theType = getActualType(theGenericType, genericType, anns);
-
-            Unmarshaller unmarshaller = createUnmarshaller(theType, genericType, isCollection);
-            addAttachmentUnmarshaller(unmarshaller);
-            Object response = null;
-            if (JAXBElement.class.isAssignableFrom(type)
-                || !isCollection && (unmarshalAsJaxbElement
-                                     || jaxbElementClassMap != null &&
-                                        jaxbElementClassMap.containsKey(theType.getName()))) {
-                XMLStreamReader reader = getStreamReader(is, type, mt);
-                response = unmarshaller.unmarshal(TransformUtils.createNewReaderIfNeeded(reader, is));
-            } else {
-                response = doUnmarshal(unmarshaller, type, is, mt);
-            }
-            if (response instanceof JAXBElement && !JAXBElement.class.isAssignableFrom(type)) {
-                response = ((JAXBElement<?>) response).getValue();
-            }
-            if (isCollection) {
-                response = ((CollectionWrapper) response).getCollectionOrArray(theType, type,
-                    org.apache.cxf.jaxrs.utils.JAXBUtils.getAdapter(theGenericType, anns));
-            } else {
-                response = checkAdapter(response, type, anns, false);
-            }
-            return type.cast(response);
-
-        } catch (JAXBException e) {
-            handleJAXBException(e, true);
-        } catch (DepthExceededStaxException e) {
-            throw new WebApplicationException(413);
-        } catch (WebApplicationException e) {
-            throw e;
-        } catch (Exception e) {
-            //LOG.warning(getStackTrace(e));
-            throw new WebApplicationException(e, Response.status(400).build());
-        }
-        // unreachable
-        return null;
     }
 
     public JAXBContext getJAXBContext(Class<?> type, Type genericType)
@@ -161,13 +101,13 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         }
     }
 
-    protected Unmarshaller createUnmarshaller(Class<?> cls, Type genericType, boolean isCollection)
-        throws JAXBException {
-        if (super.getSchema() == null) {
-            super.setSchema(getSchema());
-        }
-        return super.createUnmarshaller(cls, genericType, isCollection);
-    }
+//    protected Unmarshaller createUnmarshaller(Class<?> cls, Type genericType, boolean isCollection)
+//        throws JAXBException {
+//        if (super.getSchema() == null) {
+//            super.setSchema(getSchema());
+//        }
+//        return super.createUnmarshaller(cls, genericType, isCollection);
+//    }
 
     /**
      * set DOCTYPE-element in xml if xml has schema java.util.properties
@@ -191,13 +131,13 @@ public class EsciDocJAXBElementProvider extends JAXBElementProvider<Object> {
         }
     }
 
-    protected void validateObjectIfNeeded(Marshaller marshaller, Object obj)
-        throws JAXBException {
-        if (super.getSchema() == null) {
-            super.setSchema(getSchema());
-        }
-        super.validateObjectIfNeeded(marshaller, obj);
-    }
+//    protected void validateObjectIfNeeded(Marshaller marshaller, Object obj)
+//        throws JAXBException {
+//        if (super.getSchema() == null) {
+//            super.setSchema(getSchema());
+//        }
+//        super.validateObjectIfNeeded(marshaller, obj);
+//    }
 
     /**
      * eSciDoc maintains a configurable property escidoc-core.xslt.std that holds the name of an xml-header stylesheet.

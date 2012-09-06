@@ -52,24 +52,10 @@
   </util:map>
 
   <bean name="escidocJaxbProvider" class="org.escidoc.core.util.xml.internal.EsciDocJAXBElementProvider">
-    <property name="schemaHandler" ref="schemaHolder"/>
     <property name="marshallerProperties" ref="marshallerProperties"/>
     <property name="enableBuffering" value="true"/>
-    <!-- TODO: enable when CXF 2.6.2 got released -->
-    <!--property name="catalogLocation" value="classpath:/xsd/catalog.xml"/-->
+    <property name="catalogLocation" value="classpath:/xsd/catalog.xml"/>
   </bean>
-
-  <!-- TODO: delete when CXF 2.6.2 got released -->
-  <bean id="schemaHolder" class="org.escidoc.core.util.xml.internal.EscidocSchemaHandler">
-    <property name="resourceResolver" ref="resourceResolver"/>
-  </bean>
-  <!-- TODO: delete when CXF 2.6.2 got released -->
-  <bean id="resourceResolver" class="org.escidoc.core.util.xml.internal.SchemaBaseResourceResolver">
-     <constructor-arg ref="catalogResolver"/>
-     <constructor-arg value="${escidoc-core.xsd-path}/catalog.xml"/>
-  </bean>
-  <!-- TODO: delete when CXF 2.6.2 got released -->
-  <bean id="catalogResolver" class="org.apache.xerces.util.XMLCatalogResolver"/>
 
   <bean id="cachedOutputStreamMessageBodyReader"
         class="org.escidoc.core.util.xml.internal.DatastreamMessageBodyReader"/>

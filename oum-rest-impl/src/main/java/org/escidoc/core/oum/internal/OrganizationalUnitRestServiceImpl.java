@@ -31,9 +31,9 @@ import org.escidoc.core.domain.metadatarecords.MdRecordsTypeTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitPropertiesTypeTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitResourcesTypeTO;
 import org.escidoc.core.domain.ou.OrganizationalUnitTypeTO;
-import org.escidoc.core.domain.ou.ParentsTypeTO;
 import org.escidoc.core.domain.ou.path.list.OrganizationalUnitPathListTypeTO;
 import org.escidoc.core.domain.ou.successors.SuccessorsTypeTO;
+import org.escidoc.core.domain.parents.ParentsTypeTO;
 import org.escidoc.core.domain.result.ResultTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.sru.ResponseTypeTO;
@@ -150,7 +150,7 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         OptimisticLockingException, OrganizationalUnitHierarchyViolationException, OrganizationalUnitNotFoundException,
         MissingElementValueException, SystemException, InvalidStatusException {
 
-        return factoryProvider.getOuFactory().createParents(serviceUtility.fromXML(ParentsTypeTO.class,
+        return factoryProvider.getParentsFactory().createParents(serviceUtility.fromXML(ParentsTypeTO.class,
             this.organizationalUnitHandler.updateParents(id, serviceUtility.toXML(parentsTO))));
     }
 
@@ -212,7 +212,7 @@ public class OrganizationalUnitRestServiceImpl implements OrganizationalUnitRest
         throws AuthenticationException, AuthorizationException, MissingMethodParameterException,
         OrganizationalUnitNotFoundException, SystemException {
 
-        return factoryProvider.getOuFactory().createParents(
+        return factoryProvider.getParentsFactory().createParents(
             serviceUtility.fromXML(ParentsTypeTO.class, this.organizationalUnitHandler.retrieveParents(id)));
     }
 

@@ -66,10 +66,6 @@
   other endpoints. This will increase performance.
   -->
   <jaxrs:server id="RestServices" address="" staticSubresourceResolution="true">
-    <!-- TODO: enable when CXF 2.6.2 got released -->
-    <!--jaxrs:schemaLocations>
-      <jaxrs:schemaLocation>classpath*:/xsd/*.xsd</jaxrs:schemaLocation>
-    </jaxrs:schemaLocations-->
     <jaxrs:providers>
       <ref bean="escidocJaxbProvider"/>
       <ref bean="escidocExceptionMapper"/>
@@ -120,6 +116,88 @@
       <ref bean="compressGZIPFeature"/>
       <ref bean="loggingFeature"/>
     </jaxrs:features>
+    <!-- A next CXF update will allow the use of patterns, update to: /xsd/*.xsd after updating CXF -->
+    <!-- The schemaLocations have to be set AFTER setting the JAXBElementProvider, because of the catalogLocation set to
+         the JAXBElementProvider, which is needed when CXF is evaluating the schemaLocations element and loading the
+         schema files. Another CXF update may fix this issue.
+      -->
+    <jaxrs:schemaLocations>
+      <jaxrs:schemaLocation>classpath:/xsd/add-selectors.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/aggregation-definition.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/aggregation-definition-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/assign-pid-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/common-types.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/components.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/container.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/container-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/content-model.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/content-relation.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/content-streams.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/context-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/context.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/cs-xacml-schema-context-01.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/cs-xacml-schema-policy-01.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/delete-objects-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/diagnostics.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/Event-v1-1.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/exception.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/grants.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/id-set-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/index-configuration.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/item-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/item.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/jhove.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/md-records.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/members-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/optimistic-locking-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/organizational-unit-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/organizational-unit-path-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/organizational-unit-ref.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/organizational-unit-successors.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/organizational-unit.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/parents.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/pdp-requests.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/pdp-results.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/permission-filter.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/predicate-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/preprocessing-information.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/properties.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/reindex-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/relation-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/relations.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/release.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/remove-selectors.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/report-definition-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/report-definition.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/report-parameters.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/report.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/result.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/revoke-grant-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/revoke-grants-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/role-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/role.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/scope-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/scope.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/set-definition.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/srw-extra-data.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/srw-types.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/staging-file.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/status-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/struct-map.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/structural-relations.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/tme-request.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/update-password-task-param.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/user-account-attributes.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/user-account-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/user-account.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/user-group-list.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/user-group.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/version-history.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/version.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/xcql.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/xlink.xsd</jaxrs:schemaLocation>
+      <jaxrs:schemaLocation>classpath:/xsd/xml.xsd</jaxrs:schemaLocation>
+    </jaxrs:schemaLocations>
     <!-- NOTE: Does not work with the Stream/InputStream class used in the method signatures! Will be fixed in an upcoming CXF release -->
     <!--jaxrs:inInterceptors>
       <ref bean="depthInterceptor"/>
