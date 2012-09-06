@@ -22,7 +22,11 @@
     <script language ="JavaScript">
       function redirect()
       {
-        window.location.replace(window.location.protocol + "//" + window.location.host + "/index.jsp");
+        var contextUri = window.location.href.replace(/index.html/g, "");
+        if (contextUri.lastIndexOf("/") + 1 == contextUri.length) {
+          contextUri = contextUri.substring(0, contextUri.length - 1)
+        }
+        window.location.replace(contextUri + "/index.jsp");
       }
     </script>
   </head>
