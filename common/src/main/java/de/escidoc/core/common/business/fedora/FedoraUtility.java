@@ -25,6 +25,7 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -451,6 +452,8 @@ public class FedoraUtility implements InitializingBean {
      *            url
      * @param syncTripleStore
      *            whether the triples should be flushed
+     * @param noChecksumFound
+     *            whether no checksum was found and new one has to get generated
      * @return The timestamp of the modified datastream.
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
@@ -459,15 +462,30 @@ public class FedoraUtility implements InitializingBean {
      */
     public String modifyDatastream(
         final String pid, final String datastreamName, final String datastreamLabel, final String mimeType,
-        final String[] altIDs, final String url, final boolean syncTripleStore) throws FedoraSystemException,
-        WebserverSystemException {
+        final String[] altIDs, final String url, final boolean syncTripleStore, final boolean noChecksumFound)
+        throws FedoraSystemException, WebserverSystemException {
 
         String timestamp = null;
+        String checksumType = null;
+        if (noChecksumFound) {
+            try {
+                if (!EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED").equalsIgnoreCase(
+                    "DISABLED")) {
+                    checksumType =
+                        EscidocConfiguration.getInstance().get(
+                            EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED");
+                }
+            }
+            catch (IOException e) {
+                throw new WebserverSystemException("Failed to get checksum algorithm", e);
+            }
+        }
         final FedoraAPIM apim = borrowApim();
         try {
             timestamp =
                 apim.modifyDatastreamByReference(pid, datastreamName, altIDs, datastreamLabel, mimeType, null, url,
-                    null, null, "Modified by reference.", true);
+                    checksumType, null, "Modified by reference.", true);
         }
         catch (final Exception e) {
             throw new FedoraSystemException("Failed to modify Fedora datastream by reference: " + url, e);

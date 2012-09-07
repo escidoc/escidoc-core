@@ -898,8 +898,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 .getLastModificationDate());
         sp.addHandler(olh);
 
-        final ComponentMdRecordsUpdateHandler cmuh =
-            new ComponentMdRecordsUpdateHandler("/components/component", sp);
+        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/components/component", sp);
         sp.addHandler(cmuh);
         // extract datastreams from xmlData
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -1200,8 +1199,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         setComponent(getItem().getComponent(componentId), compMap, cmuh.getMetadataAttributes().get(componentId), cmuh
             .getNamespacesMap().get(componentId));
 
-        final String updatedXmlData = retrieveComponent(id, componentId);
-
         final String endTimestamp = getItem().getLastFedoraModificationDate();
         if (!startTimestamp.equals(endTimestamp)) {
             makeVersion("Item.updateComponent");
@@ -1210,6 +1207,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             fireItemModified(getItem().getId());
         }
 
+        final String updatedXmlData = retrieveComponent(id, componentId);
         return updatedXmlData;
     }
 

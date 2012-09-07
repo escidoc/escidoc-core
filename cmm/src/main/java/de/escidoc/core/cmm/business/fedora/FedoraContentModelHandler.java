@@ -576,7 +576,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve imple
                     // update xslt
                     fu.modifyDatastream(sdefId, "xslt", "Transformation instructions for operation '"
                         + resourceDefinition.getName() + "'.", Datastream.MIME_TYPE_TEXT_XML, new String[0],
-                        resourceDefinition.getXsltHref(), false);
+                        resourceDefinition.getXsltHref(), false, false);
                 }
             }
             else {
