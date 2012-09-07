@@ -396,9 +396,14 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
                 final String contentChecksum = component.getChecksum();
+                boolean noChecksumFound = false;
+                if (contentChecksum == null) {
+                    noChecksumFound = true;
+                }
 
                 try {
-                    getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true);
+                    getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true,
+                        noChecksumFound);
                 }
                 catch (final FedoraSystemException e) {
                     handleFedoraUploadError(url, e);
@@ -409,7 +414,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final String newContentChecksum =
                     getFedoraUtility().getDatastreamInformation(component.getId(), "content", null).getChecksum();
 
-                if (!contentChecksum.equals(newContentChecksum)) {
+                if (contentChecksum != null && !contentChecksum.equals(newContentChecksum)) {
                     if (component.hasObjectPid()) {
                         // remove Content PID
                         component.removeObjectPid();
@@ -427,7 +432,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             }
             final String url = uploadBase64EncodedContent(componentBinary.get("content"), fileName, mimeType);
             try {
-                getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true);
+                getFedoraUtility().modifyDatastream(component.getId(), "content", null, null, null, url, true, false);
             }
             catch (final FedoraSystemException e) {
                 handleFedoraUploadError(url, e);

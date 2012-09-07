@@ -372,7 +372,7 @@ public class Datastream {
             }
             try {
                 getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                    this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
+                    this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false, false);
             }
             catch (final FedoraSystemException e) {
                 if (LOGGER.isWarnEnabled()) {
@@ -384,7 +384,7 @@ public class Datastream {
                 getFedoraUtility().setDatastreamState(this.parentId, this.name, "A");
                 this.timestamp =
                     getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                        this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
+                        this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false, false);
             }
         }
         else if (this.getStream() != null) {
@@ -417,14 +417,14 @@ public class Datastream {
                     }
                     this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false, false);
                 }
                 catch (final FedoraSystemException e) {
                     LOGGER.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId, this.name, "A");
                     this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId, this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false);
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI, false, false);
                 }
 
             }

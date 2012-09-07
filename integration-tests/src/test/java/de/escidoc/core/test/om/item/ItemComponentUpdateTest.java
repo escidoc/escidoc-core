@@ -44,11 +44,11 @@ import de.escidoc.core.test.common.resources.PropertiesProvider;
 @RunWith(value = Parameterized.class)
 public class ItemComponentUpdateTest extends ItemTestBase {
 
-    private final String contentHref = PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
-        + "/testDocuments/downloadMe.txt";
+    private final String contentHref =
+        PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL) + "/testDocuments/downloadMe.txt";
 
-    private final String contentHref1 = PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL)
-        + "/testDocuments/UploadTest.zip";
+    private final String contentHref1 =
+        PropertiesProvider.getInstance().getProperty(PropertiesProvider.TESTDATA_URL) + "/testDocuments/UploadTest.zip";
 
     private final String itemContentXPath = "/item/components/component/content/@href";
 
