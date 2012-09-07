@@ -205,8 +205,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             setTitle(title);
         }
 
-        properties.put(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM, this.content.getChecksumMethod());
-        properties.put(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM, this.content.getChecksum());
+        if (this.content != null) {
+            properties.put(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM, this.content.getChecksumMethod());
+            properties.put(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM, this.content.getChecksum());
+        }
         addResourceProperties(properties);
     }
 

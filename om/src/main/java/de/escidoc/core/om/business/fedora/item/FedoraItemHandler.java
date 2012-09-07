@@ -1164,8 +1164,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         setComponent(getItem().getComponent(componentId), compMap, cmuh.getMetadataAttributes().get(componentId), cmuh
             .getNamespacesMap().get(componentId));
 
-        final String updatedXmlData = retrieveComponent(id, componentId);
-
         if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponent");
             getItem().persist();
@@ -1173,6 +1171,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
         }
 
+        final String updatedXmlData = retrieveComponent(id, componentId);
         return updatedXmlData;
     }
 

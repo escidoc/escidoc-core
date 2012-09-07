@@ -17,7 +17,7 @@ public final class AddDatastreamQueryParam {
     private Boolean versionable;
     private DatastreamState dsState;
     private String formatURI;
-    private ChecksumType checksumType;
+    private String checksumType;
     private String checksum;
     private String mimeType = MimeTypes.TEXT_XML;
     private String logMessage;
@@ -82,11 +82,11 @@ public final class AddDatastreamQueryParam {
         this.formatURI = formatURI;
     }
 
-    public ChecksumType getChecksumType() {
+    public String getChecksumType() {
         return checksumType;
     }
 
-    public void setChecksumType(final ChecksumType checksumType) {
+    public void setChecksumType(final String checksumType) {
         this.checksumType = checksumType;
     }
 

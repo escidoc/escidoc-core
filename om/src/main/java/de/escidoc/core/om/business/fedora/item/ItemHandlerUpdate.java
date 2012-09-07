@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
+import org.escidoc.core.services.fedora.ChecksumType;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
@@ -67,12 +67,14 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.item.ComponentPropertiesUpdateHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 
 /**
@@ -397,9 +399,26 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
                 final String contentChecksum = component.getChecksum();
+                final String contentChecksumAlgorithm =
+                    component.getProperty(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM_ALGORITHM);
+
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
+                boolean noChecksumFound = false;
+                if (contentChecksum == null || contentChecksumAlgorithm == null
+                    || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {
+                    if (!EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED").equalsIgnoreCase(
+                        "DISABLED")) {
+                        query.setChecksumType(ChecksumType
+                            .valueOf(
+                                EscidocConfiguration.getInstance().get(
+                                    EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"))
+                            .toString());
+                        noChecksumFound = true;
+                    }
+                }
                 try {
                     final DatastreamProfileTO dsProfile = this.fedoraServiceClient.modifyDatastream(path, query, null);
                     this.getFedoraServiceClient().sync();
@@ -409,7 +428,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     catch (TripleStoreSystemException e) {
                         throw new FedoraSystemException("Error on reinitializing triple store.", e);
                     }
-                    if (!contentChecksum.equals(dsProfile.getDsChecksum())) {
+                    if (contentChecksum != null && !contentChecksum.equals(dsProfile.getDsChecksum())
+                        && !noChecksumFound) {
                         if (component.hasObjectPid()) {
                             // remove Content PID
                             component.removeObjectPid();
