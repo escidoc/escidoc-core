@@ -176,7 +176,7 @@ public interface ItemRestService {
         MdRecordNotFoundException, MissingMethodParameterException, SystemException, RemoteException;
 
     @PUT
-    @Path("{id}/components/component")
+    @Path("{id}/components/component/{componentId}")
     @Consumes(MediaType.TEXT_XML)
     @Produces(MediaType.TEXT_XML)
     JAXBElement<ComponentTypeTO> updateComponent(@NotNull @PathParam("id") String id,

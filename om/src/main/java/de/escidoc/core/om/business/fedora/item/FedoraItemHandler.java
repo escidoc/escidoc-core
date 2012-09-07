@@ -847,8 +847,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 .getLastModificationDate());
         sp.addHandler(olh);
 
-        final ComponentMdRecordsUpdateHandler cmuh =
-            new ComponentMdRecordsUpdateHandler("/components/component/md-records", sp);
+        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/components/component", sp);
         sp.addHandler(cmuh);
         // extract datastreams from xmlData
         final HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -1133,7 +1132,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
                 .getLastModificationDate());
         sp.addHandler(olh);
-        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component/md-records", sp);
+        final ComponentMdRecordsUpdateHandler cmuh = new ComponentMdRecordsUpdateHandler("/component", sp);
         sp.addHandler(cmuh);
         final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
         sp.addHandler(me);
@@ -1155,8 +1154,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         setComponent(getItem().getComponent(componentId), compMap, cmuh.getMetadataAttributes().get(componentId), cmuh
             .getNamespacesMap().get(componentId));
 
-        final String updatedXmlData = retrieveComponent(id, componentId);
-
         if (!startTimestamp.isEqual(getItem().getLastFedoraModificationDate())) {
             makeVersion("Item.updateComponent");
             getItem().persist();
@@ -1164,6 +1161,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
         }
 
+        final String updatedXmlData = retrieveComponent(id, componentId);
         return updatedXmlData;
     }
 
