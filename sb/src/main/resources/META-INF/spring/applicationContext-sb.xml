@@ -44,7 +44,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="jobDetail">
             <ref bean="escidoc.core.sb.IndexOptimizerJob"/>
         </property>
-        <property name="cronExpression" value="0 0 2 * * ?"/>
+        <property name="cronExpression" value="${escidoc-core.om.indexer.optimize.interval}"/>
     </bean>
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
