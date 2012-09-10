@@ -72,7 +72,7 @@ public class IndexOptimizerService {
      * call optimize.
      */
     @ManagedOperation(description = "call optimize.")
-    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "${escidoc-core.om.indexer.optimize.interval}")
     public void execute() {
         final long lastExecutionTime = IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0L && System.currentTimeMillis() - lastExecutionTime < 1000L) {
