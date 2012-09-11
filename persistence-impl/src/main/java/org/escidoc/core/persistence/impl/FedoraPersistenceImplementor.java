@@ -7,6 +7,9 @@ import org.escidoc.core.business.domain.om.context.ContextDO;
 import org.escidoc.core.business.domain.om.item.ItemDO;
 import org.escidoc.core.business.util.aspect.ValidationProfile;
 import org.escidoc.core.persistence.PersistenceImplementor;
+import org.escidoc.core.services.fedora.DigitalObjectTO;
+import org.escidoc.core.services.fedora.FedoraServiceClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Realization of a PersistenceImplementor for Fedora storage
@@ -16,6 +19,9 @@ import org.escidoc.core.persistence.PersistenceImplementor;
  */
 public class FedoraPersistenceImplementor implements PersistenceImplementor {
 	
+    @Autowired
+    private FedoraServiceClient fedoraServiceClient;
+
 	public <T> void delete(ID id, Class<T> type) throws IOException {
 		if (type == ItemDO.class){
 			deleteItem(id);
@@ -53,6 +59,8 @@ public class FedoraPersistenceImplementor implements PersistenceImplementor {
 
 	private ItemDO loadItem(ID id) throws IOException {
 	    ItemDO.Builder b = new ItemDO.Builder(ValidationProfile.EXISTS);
+	    DigitalObjectTO fedoraObject = fedoraServiceClient.getObjectXML(id.getValue());
+	    String str = fedoraObject.toString();
 	    return b.id(new ID("1")).build();
 	}
 
