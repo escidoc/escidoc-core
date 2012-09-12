@@ -2,7 +2,7 @@
 <mapping>
 	<define>
 	</define>
-	<resource name="Scape-Ingest" base-uri="/scape/ingest">
+	<resource name="ScapeIngest" base-uri="/scape/ingest">
 		<descriptor uri="/scape/ingest">
 			<invoke http="POST" method="scape-ingest" param1="${BODY}">
 				<documentation visible="true">

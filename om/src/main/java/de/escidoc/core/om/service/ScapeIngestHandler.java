@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 
-@Service("service.scapeIngestHandler")
+@Service("service.ScapeIngestHandler")
 public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces.ScapeIngestHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScapeIngestHandler.class);
 
