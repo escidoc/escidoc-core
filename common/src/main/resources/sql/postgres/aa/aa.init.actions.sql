@@ -464,6 +464,6 @@ INSERT INTO aa.actions (id, name) VALUES
     * SCAPE Actions.
     */
 INSERT INTO aa.actions (id,name) VALUES
-	('escidoc:action-ingest-scape','info:escidoc/names:scape:1.0:action:action-ingest-scape');
+	('escidoc:action-ingest-scape','info:escidoc/names:aa:1.0:action:ingest-scape');
 
 

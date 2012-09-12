@@ -4,7 +4,7 @@
 	</define>
 	<resource name="ScapeIngest" base-uri="/scape/ingest">
 		<descriptor uri="/scape/ingest">
-			<invoke http="POST" method="scape-ingest" param1="${BODY}">
+			<invoke http="POST" method="ingestIntellectualEntity" param1="${BODY}">
 				<documentation visible="true">
 					<param>
 						<param1 name="resource"> The XML representation of the resource to be
