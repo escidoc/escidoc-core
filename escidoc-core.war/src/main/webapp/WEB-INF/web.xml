@@ -500,7 +500,7 @@
 	<servlet>
 		<servlet-name>ScapeIngestServlet</servlet-name>
 		<servlet-class>
-			de.escidoc.core.common.servlet.ScapeIngestServlet
+			de.escidoc.core.common.servlet.EscidocServlet
         </servlet-class>
 		<init-param>
 			<param-name>resource-descriptor</param-name>

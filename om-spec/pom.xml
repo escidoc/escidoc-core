@@ -43,6 +43,11 @@
         	<groupId>org.escidoc.core</groupId>
         	<artifactId>common-spec</artifactId>
     	</dependency>
+    	<dependency>
+			<groupId>eu.scapeproject.model</groupId>
+			<artifactId>scape-dto</artifactId>
+			<version>0.0.2-SNAPSHOT</version>    	    
+    	</dependency>
     </dependencies>
 
 </project>
