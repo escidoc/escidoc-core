@@ -140,6 +140,7 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:retrieve-item 
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
             info:escidoc/names:aa:1.0:action:retrieve-user-group 
+            info:escidoc/names:aa:1.0:action:ingest-scape
           </AttributeValue>
 
           <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
