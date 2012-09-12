@@ -77,7 +77,12 @@
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>aspects</artifactId>
 		</dependency>
-        <dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>escidoc-ijc</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
