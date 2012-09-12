@@ -64,7 +64,6 @@ public class IngestHandler implements IngestHandlerInterface {
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {
-
         return handler.ingest(xmlData);
     }
 
