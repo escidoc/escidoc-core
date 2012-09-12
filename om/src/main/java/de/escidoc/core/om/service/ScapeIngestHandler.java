@@ -19,6 +19,6 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
     @Override
     public String ingestIntellectualEntity(String xml) {
         LOGGER.debug("ingesting entity:\n" + xml + "\n");
-        return null;
+        return "<scape>doing ingest, i tell you</scape>\n";
     }
 }

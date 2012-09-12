@@ -167,6 +167,7 @@ INSERT INTO aa.escidoc_policies
 			  info:escidoc/names:aa:1.0:action:delete-set-definition
               info:escidoc/names:aa:1.0:action:fedora-deviation-get-datastream-dissimination 
               info:escidoc/names:aa:1.0:action:fedora-deviation-export 
+			  info:escidoc/names:aa:1.0:action:ingest-scape
           </AttributeValue>
           <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
         </ActionMatch>
