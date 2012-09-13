@@ -388,11 +388,11 @@ public class Constants {
     // COMMON
     public static final String NS_COMMON = "http://escidoc.de/core/01/";
 
-    public static final String NS_COMMON_SREL = NS_COMMON + "/structural-relations/";
+    public static final String NS_COMMON_SREL = NS_COMMON + "structural-relations/";
 
-    public static final String NS_COMMON_RESOURCES = NS_COMMON + "/resources/";
+    public static final String NS_COMMON_RESOURCES = NS_COMMON + "resources/";
 
-    public static final String NS_COMMON_PROPERTIES = NS_COMMON + "/properties/";
+    public static final String NS_COMMON_PROPERTIES = NS_COMMON + "properties/";
 
     // AA
     public static final String NS_AA_USER_ACCOUNT = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_USER_ACCOUNT;

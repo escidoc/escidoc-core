@@ -256,8 +256,10 @@ public final class FedoraServiceClientImpl implements FedoraServiceClient {
         }
         String contentType = null;
         List<Object> contentTypeList = response.getMetadata().get("Content-Type");
-        if (!contentTypeList.isEmpty()){
+        if (contentTypeList != null && !contentTypeList.isEmpty()){
             contentType =  contentTypeList.get(0).toString();
+        } else {
+            contentType = MediaType.WILDCARD;
         }
         MimeStream result;
         try {
