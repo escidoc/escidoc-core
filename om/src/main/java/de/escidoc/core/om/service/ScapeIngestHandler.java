@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
@@ -27,8 +30,6 @@ import eu.scapeproject.model.mets.SCAPEMarshaller;
 public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces.ScapeIngestHandlerInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScapeIngestHandler.class);
 
-    private static final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-
     @Autowired
     @Qualifier("service.ItemHandler")
     private ItemHandler itemHandler;
@@ -39,20 +40,29 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
             IntellectualEntity entity =
                 SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
                     new ByteArrayInputStream(xml.getBytes()));
+            DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
             Document doc = domFactory.newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes()));
             Item item = new Item();
             ItemProperties itemProps = new ItemProperties();
             MetadataRecords mds = new MetadataRecords();
             MetadataRecord dc = new MetadataRecord("dublin-core");
             dc.setMdType("DC");
-            Element dcElement = doc.getElementById(entity.getDescriptive().getId());
-            dc.setContent(dcElement);
-            mds.add(dc);
+            NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
+            for (int i = 0; i < nodes.getLength(); i++) {
+                Node n = nodes.item(i);
+                if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
+                    Element dcElement = (Element) n;
+                    dc.setContent(dcElement);
+                    mds.add(dc);
+                }
+            }
             item.setProperties(itemProps);
             item.setMetadataRecords(mds);
+            item.setLastModificationDate(new DateTime());
             Marshaller<Item> itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
-            itemHandler.create(itemMarshaller.marshalDocument(item));
-            return entity.getIdentifier().getValue() + "\n";
+            return itemMarshaller.marshalDocument(item) + "\n";
+            //			itemHandler.create(itemMarshaller.marshalDocument(item));
+            //			return entity.getIdentifier().getValue() + "\n";
         }
         catch (Exception e) {
             throw new ScapeException(e.getLocalizedMessage(), e);

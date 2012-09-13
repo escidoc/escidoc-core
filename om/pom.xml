@@ -79,11 +79,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc.core</groupId>
-			<artifactId>escidoc-ijc</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.escidoc.core</groupId>
 			<artifactId>om-spec</artifactId>
 		</dependency>
         <dependency>
@@ -102,6 +97,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
 		</dependency>
+        <dependency>
+        	<groupId>org.escidoc.core</groupId>
+        	<artifactId>escidoc-ijc</artifactId>
+        	<version>1.4.2</version>
+        	<scope>provided</scope>
+        </dependency>
 	</dependencies>
 
 </project>
