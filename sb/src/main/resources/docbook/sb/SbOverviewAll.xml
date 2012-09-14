@@ -1132,6 +1132,46 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                     <para><emphasis role="bold">fgsindex.analyzer:</emphasis> The Analyzer to use for indexing 
                     (normally please use de.escidoc.sb.common.lucene.analyzer.EscidocAnalyzer).</para>
                 </listitem>
+                <listitem>
+                  <para><emphasis role="bold">Try the following properties if you get OutOfMemoryExceptions while indexing.
+                  These Exceptions mostly occur when merging segments or optimizing the index.
+                  If setting these properties doesnt help, try setting "ulimit -v unlimited" on your machine.</emphasis></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.mergeFactor:</emphasis> The MergeFactor controls how many documents are stored within each segment 
+                    before a new one is started and how many are started before they are collected into a larger one. 
+                    So a Factor of 10 means, 10 documents before aggregating 
+                    and 10 aggregated indexes of a certain size before aggregating again. 
+                    Consequently MergeFactor controls the number of open files.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxBufferedDocs:</emphasis> controls the number of documents to buffer in memory 
+                    before flushing to disk. 
+                    For a batch index operation the higher this is the higher the index performance 
+                    but the more memory will be consumed.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.ramBufferSize:</emphasis> Define the maximum RAM Buffer size in MB.
+                    When this is set, the writer will flush whenever buffered documents and deletions use this much RAM. 
+                    Note that if flushing by document count is also enabled, 
+                    then the flush will be triggered by whichever comes first.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxMergeDocs:</emphasis> limits the maximum number of documents within a segment above which merging does not happen. 
+                    This is used to limit the files size to avoid to high memory consumption when merging big files to one.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxMergeMb:</emphasis> limits the size of a segment above which merging does not happen. 
+                    This is used to limit the files size to avoid to high memory consumption when merging big files to one.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxChunkSize:</emphasis> Sets the maximum chunk size (default is Integer.MAX_VALUE for 64 bit JVMs and 256 MiBytes for 32 bit JVMs) 
+                    used for memory mapping. Especially on 32 bit platform, the address space can be very fragmented, 
+                    so large index files cannot be mapped. 
+                    Using a lower chunk size makes the directory implementation a little bit slower 
+                    (as the correct chunk must be resolved on each seek) 
+                    but the chance is higher that mmap does not fail (used by merges of segments).</para>
+                </listitem>
             </itemizedlist>
         </listitem>
         <listitem>
