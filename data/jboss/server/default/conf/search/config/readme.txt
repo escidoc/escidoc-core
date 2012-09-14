@@ -48,6 +48,33 @@ Indexing:
              Specify absolute path.
             -fgsindex.analyzer: The Analyzer to use for indexing 
              (normally please use de.escidoc.sb.common.lucene.analyzer.EscidocAnalyzer)
+              
+            Try the following properties if you get OutOfMemoryExceptions while indexing.
+            These Exceptions mostly occur when merging segments or optimizing the index.
+            If setting these properties doesnt help, try setting "ulimit -v unlimited" on your machine.
+            -fgsindex.mergeFactor: 
+              The MergeFactor controls how many documents are stored within each segment 
+              before a new one is started and how many are started before they are collected into a larger one. 
+              So a Factor of 10 means, 10 documents before aggregating 
+              and 10 aggregated indexes of a certain size before aggregating again. 
+              Consequently MergeFactor controls the number of open files. 
+            -fgsindex.maxBufferedDocs: 
+              controls the number of documents to buffer in memory 
+              before flushing to disk. 
+              For a batch index operation the higher this is the higher the index performance 
+              but the more memory will be consumed.
+            -fgsindex.maxMergeDocs: 
+              limits the maximum number of documents within a segment above which merging does not happen. 
+              This is used to limit the files size to avoid to high memory consumption when merging big files to one. 
+            -fgsindex.maxMergeMb: limits the size of a segment above which merging does not happen. 
+              This is used to limit the files size to avoid to high memory consumption when merging big files to one.
+            -fgsindex.maxChunkSize: 
+              Sets the maximum chunk size (default is Integer.MAX_VALUE for 64 bit JVMs and 256 MiBytes for 32 bit JVMs) 
+              used for memory mapping. Especially on 32 bit platform, the address space can be very fragmented, 
+              so large index files cannot be mapped. 
+              Using a lower chunk size makes the directory implementation a little bit slower 
+              (as the correct chunk must be resolved on each seek) 
+              but the chance is higher that mmap does not fail (used by merges of segments).
     
     -index.object-types.properties:
         Holds properties to configure which types of eSciDoc-Objects should get indexed 
