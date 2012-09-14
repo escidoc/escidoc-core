@@ -101,7 +101,20 @@
         	<groupId>org.escidoc.core</groupId>
         	<artifactId>escidoc-ijc</artifactId>
         	<version>1.4.2</version>
-        	<scope>provided</scope>
+        	<exclusions>
+        		<exclusion>
+        			<artifactId>xpp3</artifactId>
+        			<groupId>xpp3</groupId>
+        		</exclusion>
+        		<exclusion>
+        			<artifactId>axis-jaxrpc</artifactId>
+        			<groupId>org.apache.axis</groupId>
+        		</exclusion>
+        		<exclusion>
+        			<artifactId>stax-api</artifactId>
+        			<groupId>stax</groupId>
+        		</exclusion>
+        	</exclusions>
         </dependency>
 	</dependencies>
 
