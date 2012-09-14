@@ -1132,9 +1132,11 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                     <para><emphasis role="bold">fgsindex.analyzer:</emphasis> The Analyzer to use for indexing 
                     (normally please use de.escidoc.sb.common.lucene.analyzer.EscidocAnalyzer).</para>
                 </listitem>
-                <para>Try the following properties if you get OutOfMemoryExceptions while indexing.
+                <listitem>
+                  <para><emphasis role="bold">Try the following properties if you get OutOfMemoryExceptions while indexing.
                   These Exceptions mostly occur when merging segments or optimizing the index.
-                  If setting these properties doesnt help, try setting "ulimit -v unlimited" on your machine.</para>
+                  If setting these properties doesnt help, try setting "ulimit -v unlimited" on your machine.</emphasis></para>
+                </listitem>
                 <listitem>
                     <para><emphasis role="bold">fgsindex.mergeFactor:</emphasis> The MergeFactor controls how many documents are stored within each segment 
                     before a new one is started and how many are started before they are collected into a larger one. 
