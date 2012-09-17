@@ -1,7 +1,6 @@
 package de.escidoc.core.om.service;
 
 import java.io.ByteArrayInputStream;
-import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -16,11 +15,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.client.interfaces.handler.OrganizationalUnitHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
+import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.resources.common.MetadataRecord;
 import de.escidoc.core.resources.common.MetadataRecords;
 import de.escidoc.core.resources.common.properties.PublicStatus;
@@ -28,6 +29,8 @@ import de.escidoc.core.resources.om.context.Context;
 import de.escidoc.core.resources.om.context.ContextProperties;
 import de.escidoc.core.resources.om.item.Item;
 import de.escidoc.core.resources.om.item.ItemProperties;
+import de.escidoc.core.resources.oum.OrganizationalUnit;
+import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
@@ -43,7 +46,13 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
     @Qualifier("service.ContextHandler")
     private ContextHandler contextHandler;
 
+    @Autowired
+    @Qualifier("service.OrganizationalUnitHandler")
+    private OrganizationalUnitHandlerInterface ouHandler;
+
     private Context scapeContext;
+
+    private OrganizationalUnit scapeOU;
 
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -104,20 +113,51 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
     }
 
     private void checkScapeContext() throws EscidocException {
+        checkScapeOU();
         try {
             if (scapeContext == null) {
                 Marshaller<Context> contextMarshaller = MarshallerFactory.getInstance().getMarshaller(Context.class);
-                scapeContext = contextMarshaller.unmarshalDocument(contextHandler.retrieve("scape-context"));
-                if (scapeContext == null) {
+                try {
+                    String xml = contextHandler.retrieve("scape-context");
+                    scapeContext = contextMarshaller.unmarshalDocument(xml);
+                }
+                catch (ContextNotFoundException ce) {
                     ContextProperties props = new ContextProperties();
                     props.setCreationDate(new DateTime());
                     props.setDescription("a context for SCAPE items");
                     props.setPublicStatus(PublicStatus.RELEASED);
                     props.setName("SCAPE context");
+                    props.setType("scape");
                     scapeContext = new Context();
                     scapeContext.setLastModificationDate(new DateTime());
                     scapeContext.setProperties(props);
                     contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
+                }
+            }
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void checkScapeOU() throws EscidocException {
+        try {
+            if (scapeOU == null) {
+                Marshaller<OrganizationalUnit> ouMarshaller =
+                    MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
+                try {
+                    String xml = ouHandler.retrieve("scape-ou");
+                    scapeOU = ouMarshaller.unmarshalDocument(xml);
+                }
+                catch (OrganizationalUnitNotFoundException e) {
+                    OrganizationalUnitProperties props = new OrganizationalUnitProperties();
+                    props.setCreationDate(new DateTime());
+                    props.setDescription("SCAPE organizational unit");
+                    props.setName("scape-ou");
+                    props.setPublicStatus(PublicStatus.RELEASED);
+                    scapeOU = new OrganizationalUnit();
+                    scapeOU.setProperties(props);
+                    scapeOU.setLastModificationDate(new DateTime());
                 }
             }
         }
