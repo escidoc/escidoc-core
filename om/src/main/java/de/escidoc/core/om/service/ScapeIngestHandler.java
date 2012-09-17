@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.hibernate.type.MetaType;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,9 +156,14 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     props.setDescription("SCAPE organizational unit");
                     props.setName("scape-ou");
                     props.setPublicStatus(PublicStatus.RELEASED);
+                    MetadataRecords mdRecords = new MetadataRecords();
+                    MetadataRecord md_1=new MetadataRecord("scape");
+                    md_1.setMdType("VOID");
+                    mdRecords.add(md_1);
                     scapeOU = new OrganizationalUnit();
                     scapeOU.setProperties(props);
                     scapeOU.setLastModificationDate(new DateTime());
+                    scapeOU.setMetadataRecords(mdRecords);
                     ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
                 }
             }
