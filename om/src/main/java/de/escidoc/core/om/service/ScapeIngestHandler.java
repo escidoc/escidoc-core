@@ -158,6 +158,7 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     scapeOU = new OrganizationalUnit();
                     scapeOU.setProperties(props);
                     scapeOU.setLastModificationDate(new DateTime());
+                    ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
                 }
             }
         }
