@@ -9,16 +9,11 @@
 	July, 2010
 	- Added srel:scope and srel:report-definition
 	
-    
-  August 2012
-  - version changed to 1.0
-  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
-
  -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.org/schemas/common/1.0/structural-relations"
-           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           targetNamespace="http://escidoc.de/core/01/structural-relations/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 

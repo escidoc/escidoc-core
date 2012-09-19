@@ -5,8 +5,8 @@
     prefix-xlink:title="the two ä mystic scans?"
     prefix-xlink:type="simple">
     <escidocItem:properties
-        xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
-        xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
+        xmlns:prop="http://escidoc.de/core/01/properties/" 
+        xmlns:srel="http://escidoc.de/core/01/structural-relations/">
         <srel:context prefix-xlink:type="simple"
             prefix-xlink:href="/ir/context/escidoc:persistent3"/>
         <srel:content-model prefix-xlink:type="simple"
@@ -132,7 +132,7 @@
     <escidocComponents:components
         xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components">
         <escidocComponents:component>
-            <escidocComponents:properties xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
+            <escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
                 <prop:description>this is the first file PubMan Ein &lt;a href=&quot;http://www.escidoc.de/farbtest_wasserfarben.jpg&quot;&gt; Farbtest mit Wasserfarben.&lt;/a&gt;</prop:description>              
                 <prop:valid-status>valid</prop:valid-status>
                 <prop:visibility>private</prop:visibility>           
@@ -287,7 +287,7 @@
             </escidocMetadataRecords:md-records>
         </escidocComponents:component>
         <escidocComponents:component>
-            <escidocComponents:properties xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
+            <escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
                 <prop:valid-status>valid</prop:valid-status>
                 <prop:visibility>public</prop:visibility>
                 <prop:content-category>image</prop:content-category>
@@ -435,7 +435,7 @@
             </escidocMetadataRecords:md-records>
         </escidocComponents:component>
         <escidocComponents:component>
-            <escidocComponents:properties xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
+            <escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
                 <prop:description>this is the third file PubMan </prop:description>              
                 <prop:valid-status>valid</prop:valid-status>
                 <prop:visibility>audience</prop:visibility>           

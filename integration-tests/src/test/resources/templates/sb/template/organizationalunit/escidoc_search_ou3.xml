@@ -5,7 +5,7 @@
 	xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" 
 	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:prefix-srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+	xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records">
 	<md-records:md-records>
 		<md-records:md-record name="escidoc">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <test:scope xmlns:test="http://www.escidoc.org/schemas/scope/1.0/scope"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xlink:href="/statistic/scope/0">
+    xmlns:prop="http://escidoc.de/core/01/properties/" xlink:href="/statistic/scope/0">
     <test:properties>
         <prop:name>updated test scope</prop:name>
         <test:type>normal</test:type>

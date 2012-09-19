@@ -18,8 +18,8 @@
 	prefix-xsi:schemaLocation="http://www.escidoc.de/schemas/item item/0.2/item.xsd"
 	last-modification-date="##LASTMODIFICATIONDATE##">
 	<escidocItem:properties
-		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
-		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 		prefix-xlink:href="/ir/item/##ITEMID##/properties"
 		prefix-xlink:title="Properties" prefix-xlink:type="simple">
 		<prop:creation-date>
@@ -40,7 +40,7 @@
 		<prop:lock-status>unlocked</prop:lock-status>
 
 		<prop:version prefix-xlink:type="simple"
-		 	xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
+		 	xmlns:version="http://escidoc.de/core/01/properties/version/"
 			prefix-xlink:title="current version"
 			prefix-xlink:href="/ir/item/##ITEMID##:1">
 			<version:number>1</version:number>
@@ -57,7 +57,7 @@
 			<version:comment>comment</version:comment>
 		</prop:version>
 		<prop:latest-version prefix-xlink:type="simple"
-		 	xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
+		 	xmlns:version="http://escidoc.de/core/01/properties/version/"
 			prefix-xlink:title="latest version"
 			prefix-xlink:href="/ir/item/##ITEMID##:1">
 			<version:number>1</version:number>

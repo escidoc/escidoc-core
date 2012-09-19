@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-context:context
 	xmlns:prefix-context="http://www.escidoc.org/schemas/context/1.0/context"
-	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-	xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xml:base="http://localhost:8080" objid=""

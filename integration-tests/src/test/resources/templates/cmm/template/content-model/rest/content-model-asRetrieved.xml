@@ -2,10 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
 <escidocContentModel:content-model
 	xmlns:escidocContentStreams="http://www.escidoc.org/schemas/common/1.0/content-streams"
-	xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
-	xmlns:release="http://www.escidoc.org/schemas/common/1.0/release"
+	xmlns:version="http://escidoc.de/core/01/properties/version/"
+	xmlns:release="http://escidoc.de/core/01/properties/release/"
 	xmlns:escidocContentModel="http://www.escidoc.org/schemas/content-model/1.0/content-model"
-	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:xlink="http://www.w3.org/1999/xlink" xml:base="http://localhost:8080"
 	xlink:type="simple" xlink:title="Test all for create CM" xlink:href="/cmm/content-model/escidoc:64002"
 	last-modification-date="2009-10-07T12:41:44.937Z">

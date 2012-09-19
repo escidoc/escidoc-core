@@ -1,17 +1,12 @@
 <!-- 
   Changes applied to this schema (since version 0.4, July 2009):
-    
-  August 2012
-  - version changed to 1.0
-  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
-
  -->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.org/schemas/common/1.0/properties"
-           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-           xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
-           xmlns:release="http://www.escidoc.org/schemas/common/1.0/release"
-           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           targetNamespace="http://escidoc.de/core/01/properties/"
+           xmlns:prop="http://escidoc.de/core/01/properties/"
+           xmlns:version="http://escidoc.de/core/01/properties/version/"
+           xmlns:release="http://escidoc.de/core/01/properties/release/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types">
 
@@ -22,9 +17,9 @@
     </xs:documentation>
   </xs:annotation>
 
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/version" schemaLocation="../../common/1.0/version.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/release" schemaLocation="../../common/1.0/release.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/version/" schemaLocation="../../common/1.0/version.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/release/" schemaLocation="../../common/1.0/release.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="../../common/1.0/structural-relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
 
   <xs:element name="locator-url" type="xs:string">

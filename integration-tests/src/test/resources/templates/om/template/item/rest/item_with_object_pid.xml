@@ -13,8 +13,8 @@
 	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
 	prefix-xlink:type="simple" prefix-xlink:title="Sample Item with Object PID">
 	<prefix-item:properties prefix-xlink:type="simple"
-		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
-		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
 		<srel:context
 			prefix-xlink:href="/ir/context/escidoc:persistent3" prefix-xlink:type="simple" />
 		<srel:content-model prefix-xlink:type="simple"
@@ -45,8 +45,8 @@
 		xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components">
 		<escidocComponents:component>
 			<escidocComponents:properties
-		xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" 
-		xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 				xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
 				<prop:description>The full text of the publication.</prop:description>

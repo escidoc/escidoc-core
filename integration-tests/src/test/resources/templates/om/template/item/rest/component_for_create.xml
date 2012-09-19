@@ -2,7 +2,7 @@
 <escidocComponents:component
 	xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
 	xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
-	xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 
 	<escidocComponents:properties>

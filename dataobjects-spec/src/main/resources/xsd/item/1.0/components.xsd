@@ -73,9 +73,9 @@
            xmlns:components="http://www.escidoc.org/schemas/item/1.0/components"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            xmlns:xlink="http://www.w3.org/1999/xlink"
-           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
+           xmlns:prop="http://escidoc.de/core/01/properties/">
 
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="../../common/1.0/properties.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="../../common/1.0/properties.xsd"/>
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../common/1.0/xlink.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="../../common/1.0/md-records.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>

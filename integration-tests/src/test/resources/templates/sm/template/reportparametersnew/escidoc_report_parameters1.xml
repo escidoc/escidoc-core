@@ -2,7 +2,7 @@
 <report-parameters 
     xmlns="http://www.escidoc.org/schemas/report/1.0/report-parameters"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+    xmlns:srel="http://escidoc.de/core/01/structural-relations/"
     xmlns:param="http://escidoc.de/core/01/parameter/">
 	<srel:report-definition xlink:href="/statistic/report-definition/escidoc:repdef3" />
 	<param:parameter name="string_placeholder">

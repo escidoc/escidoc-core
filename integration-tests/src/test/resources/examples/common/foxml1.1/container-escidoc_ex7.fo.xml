@@ -53,7 +53,7 @@
     <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.376Z" ID="content-model-specific.0" LABEL=""
       MIMETYPE="text/xml" SIZE="182">
       <foxml:xmlContent>
-        <prop:content-model-specific xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties">
+        <prop:content-model-specific xmlns:prop="http://escidoc.de/core/01/properties/">
           <xxx xmlns="http://www.escidoc.org/schemas/container/1.0/container"/>
         </prop:content-model-specific>
       </foxml:xmlContent>
@@ -85,9 +85,9 @@
     <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.543Z" ID="ESCIDOC_RELS_EXT.0"
       LABEL="ESCIDOC_RELS_EXT Datastream" MIMETYPE="text/xml">
       <foxml:xmlContent>
-      <rdf:RDF xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:release="http://www.escidoc.org/schemas/common/1.0/release"
-  xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations" xmlns:version="http://www.escidoc.org/schemas/common/1.0/version">
+      <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:release="http://escidoc.de/core/01/properties/release/"
+  xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:version="http://escidoc.de/core/01/properties/version/">
   <rdf:Description rdf:about="info:fedora/escidoc:ex7">
     <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
     <prop:public-status>pending</prop:public-status>
@@ -152,10 +152,10 @@
     <foxml:datastreamVersion CREATED="2010-04-26T09:50:54.873Z" ID="RELS-EXT.1" LABEL="RELS_EXT Datastream"
       MIMETYPE="text/xml" SIZE="1835">
       <foxml:xmlContent>
-        <rdf:RDF xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-          xmlns:release="http://www.escidoc.org/schemas/common/1.0/release"
-          xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations" xmlns:system="http://escidoc.de/core/01/system/" xmlns:version="http://www.escidoc.org/schemas/common/1.0/version">
+          xmlns:release="http://escidoc.de/core/01/properties/release/"
+          xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:system="http://escidoc.de/core/01/system/" xmlns:version="http://escidoc.de/core/01/properties/version/">
           <rdf:Description rdf:about="info:fedora/escidoc:ex7">
             <system:build>1.2-buildHEAD</system:build>
             <prop:public-status>pending</prop:public-status>

@@ -298,6 +298,8 @@ public class Constants {
     // BASE
     public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas";
 
+    public static final String PROPERTIES_NS_BASE = "http://escidoc.de/core/01";
+
     // IR
     public static final String NS_BASE_IR_ITEM = "/item/1.0/item";
 
@@ -379,11 +381,11 @@ public class Constants {
     // *****************************************************************************************************************
 
     // COMMON
-    public static final String NS_COMMON_SREL = SCHEMA_LOCATION_BASE + "/common/1.0/structural-relations";
+    public static final String NS_COMMON_SREL = PROPERTIES_NS_BASE + "/structural-relations/";
 
-    public static final String NS_COMMON_RESOURCES = SCHEMA_LOCATION_BASE + "/common/1.0/resources";
+    public static final String NS_COMMON_RESOURCES = PROPERTIES_NS_BASE + "/resources/";
 
-    public static final String NS_COMMON_PROPERTIES = SCHEMA_LOCATION_BASE + "/common/1.0/properties";
+    public static final String NS_COMMON_PROPERTIES = PROPERTIES_NS_BASE + "/properties/";
 
     // AA
     public static final String NS_AA_USER_ACCOUNT = SCHEMA_LOCATION_BASE + NS_BASE_AA_USER_ACCOUNT;

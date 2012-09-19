@@ -11,8 +11,8 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           xmlns:prop="http://escidoc.de/core/01/properties/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            xmlns:user-group="http://www.escidoc.org/schemas/user-group/1.0/user-group"
@@ -20,8 +20,8 @@
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="../../common/1.0/xml.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="../../common/1.0/properties.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="../../common/1.0/properties.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="../../common/1.0/structural-relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../common/1.0/xlink.xsd"/>
   

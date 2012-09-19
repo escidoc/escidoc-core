@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scope xmlns="http://www.escidoc.org/schemas/scope/1.0/scope"
-    xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+    xmlns:prop="http://escidoc.de/core/01/properties/"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <properties>
         <prop:name>test scope</prop:name>

@@ -1,15 +1,11 @@
 <!-- 
   Changes applied to this schema (since version 0.4, July 2009):
     
-  August 2012
-  - version changed to 1.0
-  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
-
  -->
 <xs:schema attributeFormDefault="unqualified"
            elementFormDefault="qualified"
-           targetNamespace="http://www.escidoc.org/schemas/common/1.0/version"
-           xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
+           targetNamespace="http://escidoc.de/core/01/properties/version/"
+           xmlns:version="http://escidoc.de/core/01/properties/version/"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="number" type="xs:int">

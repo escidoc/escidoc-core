@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<escidocItem:item xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
-                  xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+                  xmlns:prop="http://escidoc.de/core/01/properties/"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
                   xlink:type="simple"

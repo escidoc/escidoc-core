@@ -11,7 +11,7 @@
   <foxml:datastream CONTROL_GROUP="X" FEDORA_URI="info:fedora/escidoc:persistent10/RELS-EXT" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
     <foxml:datastreamVersion ID="RELS-EXT.0" LABEL="RELS-EXT" MIMETYPE="text/xml">
       <foxml:xmlContent>
-        <rdf:RDF xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
           xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:persistent10">

@@ -90,8 +90,8 @@
     <foxml:datastreamVersion CREATED="2008-02-22T09:31:59.625Z" ID="RELS-EXT.0" LABEL="" MIMETYPE="text/xml" SIZE="2182">
       <foxml:contentDigest DIGEST="none" TYPE="DISABLED"/>
       <foxml:xmlContent>
-        <rdf:RDF xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations">
+        <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/"
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:srel="http://escidoc.de/core/01/structural-relations/">
           <rdf:Description rdf:about="info:fedora/escidoc:ex1">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <prop:public-status>opened</prop:public-status>

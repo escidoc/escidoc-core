@@ -14,7 +14,7 @@
     <foxml:datastreamVersion CREATED="2007-03-22T08:23:35.562Z" ID="RELS-EXT.0" LABEL="" MIMETYPE="text/xml" SIZE="931">
       <foxml:xmlContent>
         <rdf:RDF xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
-         xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties" xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+         xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:persistent36">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>

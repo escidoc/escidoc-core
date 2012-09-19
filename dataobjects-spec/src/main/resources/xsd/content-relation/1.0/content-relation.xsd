@@ -15,13 +15,13 @@
            xmlns:content-relation="http://www.escidoc.org/schemas/content-relation/1.0/content-relation"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
-           xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-           xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
+           xmlns:prop="http://escidoc.de/core/01/properties/"
+           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
            xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records">
 
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/properties" schemaLocation="../../common/1.0/properties.xsd"/>
-  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/structural-relations" schemaLocation="../../common/1.0/structural-relations.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/properties/" schemaLocation="../../common/1.0/properties.xsd"/>
+  <xs:import namespace="http://escidoc.de/core/01/structural-relations/" schemaLocation="../../common/1.0/structural-relations.xsd"/>
   <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/md-records" schemaLocation="../../common/1.0/md-records.xsd"/>
 
   <xs:element name="content-relation" type="content-relation:contentRelationType"/>

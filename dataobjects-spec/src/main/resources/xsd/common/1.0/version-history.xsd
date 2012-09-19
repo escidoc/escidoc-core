@@ -14,9 +14,9 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xlink="http://www.w3.org/1999/xlink"
            xmlns:premis="http://www.loc.gov/standards/premis/v1"
-           xmlns:escidocVersions="http://www.escidoc.org/schemas/common/1.0/version-history"
+           xmlns:escidocVersions="http://escidoc.de/core/01/properties/version-history"
            xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
-           targetNamespace="http://www.escidoc.org/schemas/common/1.0/version-history"
+           targetNamespace="http://escidoc.de/core/01/properties/version-history"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
 
   <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="../../common/1.0/xlink.xsd"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<escidocItem:item xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations"
-                  xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
+<escidocItem:item xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+                  xmlns:prop="http://escidoc.de/core/01/properties/"
                   
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   xmlns:metadata-records="http://www.escidoc.org/schemas/common/1.0/md-records"
@@ -11,7 +11,7 @@
    <escidocItem:properties xlink:type="simple">
       <srel:context xlink:type="simple" xlink:href="/ir/context/escidoc:persistent3"/>
       <srel:content-model xlink:type="simple" xlink:href="/cmm/content-model/escidoc:persistent4"/>
-      <properties:content-model-specific xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties">
+      <properties:content-model-specific xmlns:properties="http://escidoc.de/core/01/properties/">
          <element1>cms-test1</element1>
          <element2>cms-test2</element2>
       </properties:content-model-specific>
@@ -92,8 +92,8 @@
                                  xlink:title="Components of Item"
                                  xml:base="http://localhost:8080">
       <escidocComponents:component>
-         <escidocComponents:properties xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties"
-                                       xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
                                        xlink:type="simple">
             <properties:description>XML File</properties:description>
             <properties:valid-status>valid</properties:valid-status>
@@ -158,8 +158,8 @@
          </escidocMetadataRecords:md-records>
       </escidocComponents:component>
       <escidocComponents:component>
-         <escidocComponents:properties xmlns:properties="http://www.escidoc.org/schemas/common/1.0/properties"
-                                       xmlns:version="http://www.escidoc.org/schemas/common/1.0/version"
+         <escidocComponents:properties xmlns:properties="http://escidoc.de/core/01/properties/"
+                                       xmlns:version="http://escidoc.de/core/01/properties/version/"
                                        xlink:type="simple">
             <properties:description>PDF File</properties:description>
             <properties:valid-status>valid</properties:valid-status>

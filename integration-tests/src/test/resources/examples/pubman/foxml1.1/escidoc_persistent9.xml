@@ -15,8 +15,8 @@
       <foxml:xmlContent>
         <rdf:RDF xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-          <rdf:Description rdf:about="info:fedora/escidoc:persistent9" xmlns:prop="http://www.escidoc.org/schemas/common/1.0/properties"
-            xmlns:srel="http://www.escidoc.org/schemas/common/1.0/structural-relations" xmlns:version="http://www.escidoc.org/schemas/common/1.0/version">
+          <rdf:Description rdf:about="info:fedora/escidoc:persistent9" xmlns:prop="http://escidoc.de/core/01/properties/"
+            xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:version="http://escidoc.de/core/01/properties/version/">
 		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <rdf:type rdf:resource="http://escidoc.de/core/01/resources/ContentModel"/>
             <hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0" xmlns="info:fedora/fedora-system:def/model#"/>
