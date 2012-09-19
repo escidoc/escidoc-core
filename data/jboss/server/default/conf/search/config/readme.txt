@@ -68,7 +68,40 @@ Indexing:
               This is used to limit the files size to avoid to high memory consumption when merging big files to one. 
             -fgsindex.maxMergeMb: limits the size of a segment above which merging does not happen. 
               This is used to limit the files size to avoid to high memory consumption when merging big files to one.
+            -fgsindex.lucene.directory.implementation:
+              Directory Implementation for lucene (used for merges + optimize)
+              can be:
+              
+              org.apache.lucene.store.SimpleFSDirectory:
+              is a straightforward implementation using java.io.RandomAccessFile. 
+              However, it has poor concurrent performance (multiple threads will bottleneck) 
+              as it synchronizes when multiple threads read from the same file.
+              
+              org.apache.lucene.store.NIOFSDirectory:
+              uses java.nio's FileChannel's positional io when reading to avoid synchronization when reading from the same file. 
+              Unfortunately, due to a Windows-only Sun JRE bug this is a poor choice for Windows, 
+              but on all other platforms this is the preferred choice. 
+              Applications using Thread.interrupt() or Future.cancel(boolean) should use SimpleFSDirectory instead. 
+              See NIOFSDirectory java doc for details. 
+              
+              org.apache.lucene.store.MMapDirectory:
+              uses memory-mapped IO when reading. This is a good choice if you have plenty of virtual memory relative to your index size, 
+              eg if you are running on a 64 bit JRE, or you are running on a 32 bit JRE but your index sizes are 
+              small enough to fit into the virtual memory space. Java has currently the limitation of not being able to unmap files from user code. 
+              The files are unmapped, when GC releases the byte buffers. Due to this bug in Sun's JRE, MMapDirectory's IndexInput.close() 
+              is unable to close the underlying OS file handle. Only when GC finally collects the underlying objects, 
+              which could be quite some time later, will the file handle be closed. 
+              This will consume additional transient disk usage: on Windows, attempts to delete or overwrite the files will result in 
+              an exception; on other platforms, which typically have a "delete on last close" semantics, 
+              while such operations will succeed, the bytes are still consuming space on disk. 
+              For many applications this limitation is not a problem (e.g. if you have plenty of disk space, 
+              and you don't rely on overwriting files on Windows) but it's still an important limitation to be aware of. 
+              This class supplies a (possibly dangerous) workaround mentioned in the bug report, which may fail on non-Sun JVMs. 
+              Applications using Thread.interrupt() or Future.cancel(boolean) should use SimpleFSDirectory instead. 
+              See MMapDirectory java doc for details.
+              By default Lucene detects the best implementation by itself.
             -fgsindex.maxChunkSize: 
+              used by MMapDirectory class (Lucene Directory Implementation)
               Sets the maximum chunk size (default is Integer.MAX_VALUE for 64 bit JVMs and 256 MiBytes for 32 bit JVMs) 
               used for memory mapping. Especially on 32 bit platform, the address space can be very fragmented, 
               so large index files cannot be mapped. 
