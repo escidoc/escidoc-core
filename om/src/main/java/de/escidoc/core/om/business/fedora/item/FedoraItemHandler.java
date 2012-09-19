@@ -1161,8 +1161,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             fireItemModified(getItem().getId(), retrieve(getItem().getId()));
         }
 
-        final String updatedXmlData = retrieveComponent(id, componentId);
-        return updatedXmlData;
+        return retrieveComponent(id, componentId);
     }
 
     @Override
