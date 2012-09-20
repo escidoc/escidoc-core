@@ -239,8 +239,7 @@ public final class Constants {
     public static final String STAGING_FILE_NS_URI =
         NS_URI_PREFIX + "staging-file" + NS_URI_SCHEMA_VERSION_1_0 + "staging-file";
 
-    public static final String STRUCTURAL_RELATIONS_NS_URI =
-        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/structural-relations";
+    public static final String STRUCTURAL_RELATIONS_NS_URI = "http://escidoc.de/core/01/structural-relations/";
 
     public static final String PARAMETER_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/parameter";
 
@@ -315,7 +314,7 @@ public final class Constants {
         NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/md-records";
 
     public static final String CONTENT_STREAMS_NAMESPACE_URI =
-        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "content-streams";
+        NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/content-streams";
 
     public static final String COMPONENTS_NAMESPACE_URI =
         NS_URI_PREFIX + "item" + NS_URI_SCHEMA_VERSION_1_0 + "/components";
