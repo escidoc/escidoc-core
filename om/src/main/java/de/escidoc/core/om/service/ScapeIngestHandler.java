@@ -55,6 +55,9 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
 
     private OrganizationalUnit scapeOU;
 
+    private static final String SCAPE_OU_ELEMENT =
+        "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
+
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         try {
@@ -157,8 +160,12 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     props.setName("scape-ou");
                     props.setPublicStatus(PublicStatus.RELEASED);
                     MetadataRecords mdRecords = new MetadataRecords();
-                    MetadataRecord md_1=new MetadataRecord("scape");
-                    md_1.setMdType("VOID");
+                    MetadataRecord md_1 = new MetadataRecord("scape");
+                    md_1.setName("escidoc");
+                    DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+                    Document doc =
+                        domFactory.newDocumentBuilder().parse(new ByteArrayInputStream(SCAPE_OU_ELEMENT.getBytes()));
+                    md_1.setContent(doc.getDocumentElement());
                     mdRecords.add(md_1);
                     scapeOU = new OrganizationalUnit();
                     scapeOU.setProperties(props);
