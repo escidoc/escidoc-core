@@ -23,11 +23,19 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.common.util.IOUtils;
@@ -67,9 +75,32 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
 
     private OrganizationalUnit scapeOU;
 
+    private String ouLastModDate;
+
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
         "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
+
+    private void openOU() throws ScapeException {
+        try {
+            ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toString(
+                Constants.TIMESTAMP_FORMAT)));
+        }
+        catch (Exception e) {
+            LOGGER.error("Error while opening ou", e);
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void closeOU() throws ScapeException {
+        try {
+            ouHandler.close(scapeOU.getObjid(), null);
+        }
+        catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
 
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -151,9 +182,10 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     scapeContext = new Context();
                     scapeContext.setLastModificationDate(new DateTime());
                     scapeContext.setProperties(props);
+                    openOU();
                     String xml = contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
                     scapeContext = contextMarshaller.unmarshalDocument(xml);
-                    contextHandler.open(scapeContext.getObjid(), createTaskParam(getLastModificationDate(xml, ResourceType.CONTEXT)));
+                    closeOU();
                 }
             }
         }
@@ -191,7 +223,6 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     scapeOU.setMetadataRecords(mdRecords);
                     String xml = ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
                     scapeOU = ouMarshaller.unmarshalDocument(xml);
-                    ouHandler.open(scapeOU.getObjid(), createTaskParam(getLastModificationDate(xml, ResourceType.OU)));
                 }
             }
         }
