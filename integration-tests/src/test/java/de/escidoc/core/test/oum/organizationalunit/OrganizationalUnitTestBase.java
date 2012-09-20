@@ -32,6 +32,7 @@ import de.escidoc.core.test.EscidocAbstractTest;
 import de.escidoc.core.test.Constants;
 import de.escidoc.core.test.oum.OumTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.xerces.dom.ElementImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -192,16 +193,19 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         String prefix = determineOrganizationalUnitNamespacePrefix(document);
         String xlinkPrefix = determineXlinkNamespacePrefix(document);
         String srelPrefix = determineSrelNamespacePrefix(document);
+        String parentsPrefix = lookupPrefixForNamespace(document, Constants.NS_COMMON_PARENTS);
+        boolean isFoo = document.isDefaultNamespace(Constants.NS_COMMON_PARENTS);
+
         Element parents = null;
         final int numberParents = parentValues.length / 2;
         if (numberParents > 0) {
             if (!withRestReadOnly) {
-                parents = createElementNode(document, Constants.NS_OUM_OU, prefix, NAME_PARENTS, null);
+                parents = createElementNode(document, Constants.NS_COMMON_PARENTS, parentsPrefix, NAME_PARENTS, null);
             }
             else {
                 parents =
-                    createReferencingElementNode(document, Constants.NS_OUM_OU, prefix, NAME_PARENTS, xlinkPrefix,
-                        "Some Title", "/some/href/some:id", true);
+                    createReferencingElementNode(document, Constants.NS_COMMON_PARENTS, parentsPrefix, NAME_PARENTS,
+                        xlinkPrefix, "Some Title", "/some/href/some:id", true);
             }
             addAfter(document, xpathBefore, parents);
             for (int i = numberParents - 1; i >= 0; i--) {
@@ -214,6 +218,38 @@ public class OrganizationalUnitTestBase extends OumTestBase {
             }
         }
         return parents;
+    }
+
+    private String lookupNamespacePrefix(String namespaceURI, Element el) {
+        // REVISIT: if no prefix is available is it null or empty string, or
+        //          could be both?
+        String prefix = null;
+
+        if (el.hasAttributes()) {
+            NamedNodeMap map = el.getAttributes();
+            int length = map.getLength();
+            for (int i = 0; i < length; i++) {
+                Node attr = map.item(i);
+                String attrPrefix = attr.getPrefix();
+                String value = attr.getNodeValue();
+                String namespace = attr.getNamespaceURI();
+                if (namespace != null && namespace.equals("http://www.w3.org/2000/xmlns/")) {
+                    // DOM Level 2 nodes
+                    if (((attr.getNodeName().equals("xmlns")) || (attrPrefix != null && attrPrefix.equals("xmlns"))
+                        && value.equals(namespaceURI))) {
+
+                        String localname = attr.getLocalName();
+                        String foundNamespace = el.lookupNamespaceURI(localname);
+                        if (foundNamespace != null && foundNamespace.equals(namespaceURI)) {
+                            return localname;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -66,6 +66,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <context:component-scan base-package="org.escidoc.core.business"/>
     <context:component-scan base-package="org.escidoc.core.persistence"/>
     <context:component-scan base-package="org.escidoc.core.domain"/>
+    <context:component-scan base-package="de.escidoc.core.common.util.stax.handler"/>
 
     <bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"
           factory-method="aspectOf" lazy-init="false">

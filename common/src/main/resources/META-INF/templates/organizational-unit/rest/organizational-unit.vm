@@ -1,4 +1,4 @@
-#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:organizational-unit #namespaceDecl(${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace}) #restCommonRootNsDecls("true" "true") #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace}) #set($unescapedName="#unesc(${organizationalUnitName})") #restRootAttributes("#escA($unescapedName)" ${organizationalUnitHref} ${LAST_MODIFICATION_DATE})>
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:organizational-unit #namespaceDecl(${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace}) #namespaceDecl(${parentsNamespacePrefix} ${parentsNamespace}) #restCommonRootNsDecls("true" "true") #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace}) #set($unescapedName="#unesc(${organizationalUnitName})") #restRootAttributes("#escA($unescapedName)" ${organizationalUnitHref} ${LAST_MODIFICATION_DATE})>
     #parse("organizational-unit/rest/properties.vm")
     #parse("organizational-unit/rest/resources.vm")
     #parse("common/rest/md-records.vm")

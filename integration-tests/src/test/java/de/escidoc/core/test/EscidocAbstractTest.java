@@ -34,17 +34,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -56,6 +46,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
@@ -68,6 +59,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
@@ -1904,6 +1896,36 @@ public abstract class EscidocAbstractTest extends EscidocTestBase {
         }
         result.getDocumentElement().normalize();
         return result;
+    }
+
+    protected static String lookupPrefixForNamespace(Document doc, String namespaceURI) throws Exception {
+
+        if (doc == null) {
+            throw new IllegalArgumentException("Document must not be null.");
+        }
+        if (namespaceURI == null || namespaceURI.isEmpty()) {
+            throw new IllegalArgumentException("Namespace URI must not be null or empty.");
+        }
+
+        String prefix = doc.lookupPrefix(namespaceURI);
+        if (prefix == null) {
+            // Document may got build using namespaceAware = false -> recreate
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            docBuilderFactory.setNamespaceAware(true);
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document newDoc = docBuilder.parse(new InputSource(new StringReader(toString(doc, false))));
+            prefix = newDoc.lookupPrefix(namespaceURI);
+        }
+        return prefix;
+    }
+
+    protected static String lookupPrefixForNamespace(Node node, String namespace) throws Exception {
+
+        if (node == null) {
+            throw new IllegalArgumentException("Node must not be null.");
+        }
+
+        return lookupPrefixForNamespace(node.getOwnerDocument(), namespace);
     }
 
     /**
