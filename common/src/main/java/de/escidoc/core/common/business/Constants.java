@@ -217,13 +217,13 @@ public final class Constants {
 
     public static final String GRANTS_NS_URI = NS_URI_PREFIX + "grants" + NS_URI_SCHEMA_VERSION_1_0;
 
-    public static final String PROPERTIES_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/properties";
+    public static final String PROPERTIES_NS_URI = "http://escidoc.de/core/01/properties/";
 
-    public static final String RESOURCES_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/resources";
+    public static final String RESOURCES_NS_URI = "http://escidoc.de/core/01/resources/";
 
-    public static final String VERSION_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/version";
+    public static final String VERSION_NS_URI = "http://escidoc.de/core/01/properties/version/";
 
-    public static final String RELEASE_NS_URI = NS_URI_PREFIX + "common" + NS_URI_SCHEMA_VERSION_1_0 + "/release";
+    public static final String RELEASE_NS_URI = "http://escidoc.de/core/01/properties/release/";
 
     public static final String REQUESTS_NS_URI = NS_URI_PREFIX + "pdp" + NS_URI_SCHEMA_VERSION_1_0 + "/pdp-requests";
 
