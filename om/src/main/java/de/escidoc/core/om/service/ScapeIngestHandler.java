@@ -2,6 +2,9 @@ package de.escidoc.core.om.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -201,6 +204,10 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                 Marshaller<OrganizationalUnit> ouMarshaller =
                     MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
                 try {
+                    Map<String, String[]> filters = new HashMap<String, String[]>(1);
+                    filters.put("name", new String[] { "scape-default-ou" });
+                    String ous = ouHandler.retrieveOrganizationalUnits(filters);
+                    System.out.println("xml:\n" + ous);
                     String xml = ouHandler.retrieve("scape-ou");
                     scapeOU = ouMarshaller.unmarshalDocument(xml);
                 }
@@ -208,7 +215,7 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     OrganizationalUnitProperties props = new OrganizationalUnitProperties();
                     props.setCreationDate(new DateTime());
                     props.setDescription("SCAPE organizational unit");
-                    props.setName("scape-ou");
+                    props.setName("scape-default-ou");
                     props.setPublicStatus(PublicStatus.OPENED);
                     MetadataRecords mdRecords = new MetadataRecords();
                     MetadataRecord md_1 = new MetadataRecord("scape");
