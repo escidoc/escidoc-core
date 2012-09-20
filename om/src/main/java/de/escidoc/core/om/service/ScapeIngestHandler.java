@@ -151,7 +151,9 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     scapeContext = new Context();
                     scapeContext.setLastModificationDate(new DateTime());
                     scapeContext.setProperties(props);
-                    contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
+                    String xml = contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
+                    scapeContext = contextMarshaller.unmarshalDocument(xml);
+                    contextHandler.open(scapeContext.getObjid(), createTaskParam(getLastModificationDate(xml, ResourceType.CONTEXT)));
                 }
             }
         }
