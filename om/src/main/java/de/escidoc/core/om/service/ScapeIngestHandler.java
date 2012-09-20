@@ -1,8 +1,14 @@
 package de.escidoc.core.om.service;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.hibernate.type.MetaType;
 import org.joda.time.DateTime;
@@ -15,19 +21,25 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.resources.common.MetadataRecord;
 import de.escidoc.core.resources.common.MetadataRecords;
 import de.escidoc.core.resources.common.properties.PublicStatus;
+import de.escidoc.core.resources.common.reference.OrganizationalUnitRef;
 import de.escidoc.core.resources.om.context.Context;
 import de.escidoc.core.resources.om.context.ContextProperties;
+import de.escidoc.core.resources.om.context.OrganizationalUnitRefs;
 import de.escidoc.core.resources.om.item.Item;
 import de.escidoc.core.resources.om.item.ItemProperties;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
@@ -55,6 +67,7 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
 
     private OrganizationalUnit scapeOU;
 
+    // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
         "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
 
@@ -132,6 +145,9 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     props.setPublicStatus(PublicStatus.RELEASED);
                     props.setName("SCAPE context");
                     props.setType("scape");
+                    OrganizationalUnitRefs ouRefs = new OrganizationalUnitRefs();
+                    ouRefs.add(new OrganizationalUnitRef(scapeOU.getObjid()));
+                    props.setOrganizationalUnitRefs(ouRefs);
                     scapeContext = new Context();
                     scapeContext.setLastModificationDate(new DateTime());
                     scapeContext.setProperties(props);
@@ -158,7 +174,7 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     props.setCreationDate(new DateTime());
                     props.setDescription("SCAPE organizational unit");
                     props.setName("scape-ou");
-                    props.setPublicStatus(PublicStatus.RELEASED);
+                    props.setPublicStatus(PublicStatus.OPENED);
                     MetadataRecords mdRecords = new MetadataRecords();
                     MetadataRecord md_1 = new MetadataRecord("scape");
                     md_1.setName("escidoc");
@@ -171,7 +187,9 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
                     scapeOU.setProperties(props);
                     scapeOU.setLastModificationDate(new DateTime());
                     scapeOU.setMetadataRecords(mdRecords);
-                    ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
+                    String xml = ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
+                    scapeOU = ouMarshaller.unmarshalDocument(xml);
+                    ouHandler.open(scapeOU.getObjid(), createTaskParam(getLastModificationDate(xml, ResourceType.OU)));
                 }
             }
         }
@@ -179,4 +197,29 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
             throw new ScapeException(e.getMessage(), e);
         }
     }
+
+    private static String createTaskParam(final String lastModificationDate) {
+        return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
+    }
+
+    private static String getLastModificationDate(final String xml, final ResourceType type)
+        throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
+        String result = null;
+
+        if (xml != null) {
+            ByteArrayInputStream input = null;
+            try {
+                input = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+                final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                final Document xmlDom = db.parse(input);
+                final XPath xpath = XPathFactory.newInstance().newXPath();
+                result = xpath.evaluate('/' + type.getLabel() + "/@last-modification-date", xmlDom);
+            }
+            finally {
+                IOUtils.closeStream(input);
+            }
+        }
+        return result;
+    }
+
 }
