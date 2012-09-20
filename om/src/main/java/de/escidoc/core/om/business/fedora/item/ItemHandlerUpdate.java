@@ -409,14 +409,17 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 boolean noChecksumFound = false;
                 if (contentChecksum == null || contentChecksumAlgorithm == null
                     || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {
+                    //component has no or disabled checksum
                     if (!EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED").equalsIgnoreCase(
                         "DISABLED")) {
+                        //checksum is configured for system
                         query.setChecksumType(ChecksumType
                             .valueOf(
                                 EscidocConfiguration.getInstance().get(
                                     EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM, "DISABLED"))
                             .toString());
+                        //no checksum found but was expected.
                         noChecksumFound = true;
                     }
                 }
@@ -431,6 +434,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     }
                     if (contentChecksum != null && !contentChecksum.equals(dsProfile.getDsChecksum())
                         && !noChecksumFound) {
+                        //only remove content pid if checksum was set before and changed.
+                        //if it was not set before reason ight be that component was created with escidoc version 1.1
                         if (component.hasObjectPid()) {
                             // remove Content PID
                             component.removeObjectPid();

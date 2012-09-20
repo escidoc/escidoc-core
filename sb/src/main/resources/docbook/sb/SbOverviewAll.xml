@@ -1132,6 +1132,79 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                     <para><emphasis role="bold">fgsindex.analyzer:</emphasis> The Analyzer to use for indexing 
                     (normally please use de.escidoc.sb.common.lucene.analyzer.EscidocAnalyzer).</para>
                 </listitem>
+                <listitem>
+                  <para><emphasis role="bold">Try the following properties if you get OutOfMemoryExceptions while indexing.
+                  These Exceptions mostly occur when merging segments or optimizing the index.
+                  If setting these properties doesnt help, try setting "ulimit -v unlimited" on your machine.</emphasis></para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.mergeFactor:</emphasis> The MergeFactor controls how many documents are stored within each segment 
+                    before a new one is started and how many are started before they are collected into a larger one. 
+                    So a Factor of 10 means, 10 documents before aggregating 
+                    and 10 aggregated indexes of a certain size before aggregating again. 
+                    Consequently MergeFactor controls the number of open files.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxBufferedDocs:</emphasis> controls the number of documents to buffer in memory 
+                    before flushing to disk. 
+                    For a batch index operation the higher this is the higher the index performance 
+                    but the more memory will be consumed.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.ramBufferSize:</emphasis> Define the maximum RAM Buffer size in MB.
+                    When this is set, the writer will flush whenever buffered documents and deletions use this much RAM. 
+                    Note that if flushing by document count is also enabled, 
+                    then the flush will be triggered by whichever comes first.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxMergeDocs:</emphasis> limits the maximum number of documents within a segment above which merging does not happen. 
+                    This is used to limit the files size to avoid to high memory consumption when merging big files to one.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxMergeMb:</emphasis> limits the size of a segment above which merging does not happen. 
+                    This is used to limit the files size to avoid to high memory consumption when merging big files to one.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.lucene.directory.implementation:</emphasis> Directory Implementation for lucene (used for merges + optimize)
+                    </para><para>can be:</para>
+                    
+                    <para>org.apache.lucene.store.SimpleFSDirectory:</para>
+                    <para>is a straightforward implementation using java.io.RandomAccessFile. 
+                    However, it has poor concurrent performance (multiple threads will bottleneck) 
+                    as it synchronizes when multiple threads read from the same file.</para>
+                    
+                    <para>org.apache.lucene.store.NIOFSDirectory:</para>
+                    <para>uses java.nio's FileChannel's positional io when reading to avoid synchronization when reading from the same file. 
+                    Unfortunately, due to a Windows-only Sun JRE bug this is a poor choice for Windows, 
+                    but on all other platforms this is the preferred choice. 
+                    Applications using Thread.interrupt() or Future.cancel(boolean) should use SimpleFSDirectory instead. 
+                    See NIOFSDirectory java doc for details. </para>
+                    
+                    <para>org.apache.lucene.store.MMapDirectory:</para>
+                    <para>uses memory-mapped IO when reading. This is a good choice if you have plenty of virtual memory relative to your index size, 
+                    eg if you are running on a 64 bit JRE, or you are running on a 32 bit JRE but your index sizes are 
+                    small enough to fit into the virtual memory space. Java has currently the limitation of not being able to unmap files from user code. 
+                    The files are unmapped, when GC releases the byte buffers. Due to this bug in Sun's JRE, MMapDirectory's IndexInput.close() 
+                    is unable to close the underlying OS file handle. Only when GC finally collects the underlying objects, 
+                    which could be quite some time later, will the file handle be closed. 
+                    This will consume additional transient disk usage: on Windows, attempts to delete or overwrite the files will result in 
+                    an exception; on other platforms, which typically have a "delete on last close" semantics, 
+                    while such operations will succeed, the bytes are still consuming space on disk. 
+                    For many applications this limitation is not a problem (e.g. if you have plenty of disk space, 
+                    and you don't rely on overwriting files on Windows) but it's still an important limitation to be aware of. 
+                    This class supplies a (possibly dangerous) workaround mentioned in the bug report, which may fail on non-Sun JVMs. 
+                    Applications using Thread.interrupt() or Future.cancel(boolean) should use SimpleFSDirectory instead. 
+                    See MMapDirectory java doc for details.</para>
+                    <para>By default Lucene detects the best implementation by itself.</para>
+                </listitem>
+                <listitem>
+                    <para><emphasis role="bold">fgsindex.maxChunkSize:</emphasis>used by MMapDirectory class (Lucene Directory Implementation).
+                    used for memory mapping. Especially on 32 bit platform, the address space can be very fragmented, 
+                    so large index files cannot be mapped. 
+                    Using a lower chunk size makes the directory implementation a little bit slower 
+                    (as the correct chunk must be resolved on each seek) 
+                    but the chance is higher that mmap does not fail (used by merges of segments).</para>
+                </listitem>
             </itemizedlist>
         </listitem>
         <listitem>
