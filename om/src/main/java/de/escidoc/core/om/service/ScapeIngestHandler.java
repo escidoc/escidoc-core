@@ -12,6 +12,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.hibernate.type.MetaType;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,8 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
 
     private void openOU() throws ScapeException {
         try {
-            ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toString(
-                Constants.TIMESTAMP_FORMAT)));
+            ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
+                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
         }
         catch (Exception e) {
             LOGGER.error("Error while opening ou", e);
