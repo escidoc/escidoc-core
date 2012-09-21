@@ -47,6 +47,7 @@ import java.util.List;
  *
  * @author Michael Schneider
  */
+@Deprecated
 public class OrganizationalUnitParentsHandler extends OrganizationalUnitHandlerBase {
 
     private final List<String> parents = new ArrayList<String>();

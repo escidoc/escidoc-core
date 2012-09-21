@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <prefix-organizational-unit:organizational-unit
 	xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
-	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" 
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
+  xmlns:prefix-parents="http://www.escidoc.de/schemas/parents/0.9"
 	last-modification-date="2008-01-07T16:46:23.656Z">
 	<md-records:md-records
 		xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
@@ -14,7 +15,7 @@
 			<ou:ou>
 				<dc:title>title: Some OU ®€ АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ¥£$¢ °^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></dc:title>
 				<dcterms:alternative>alternative: Some OU ®€ АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ¥£$¢ °^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></dcterms:alternative>
-				<dc:description>description: "°^^§$%/()=ß?\´`@€+*~#,;.:-_|> 
+				<dc:description>description: "°^^§$%/()=ß?\´`@€+*~#,;.:-_|>
 		&amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos;
 		<![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></dc:description>
 				<dc:identifier></dc:identifier>

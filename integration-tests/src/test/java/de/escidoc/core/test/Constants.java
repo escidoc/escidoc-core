@@ -300,6 +300,10 @@ public class Constants {
 
     public static final String SCHEMA_LOCATION_BASE1 = "http://www.escidoc.de/schemas";
 
+    // COMMON
+
+    public static final String NS_BASE_COMMON_PARENTS = "/parents/0.9";
+
     // ADM
     public static final String NS_BASE_ADM_ADMIN = "/admin/0.1";
 
@@ -393,6 +397,8 @@ public class Constants {
     public static final String NS_COMMON_RESOURCES = NS_COMMON + "resources/";
 
     public static final String NS_COMMON_PROPERTIES = NS_COMMON + "properties/";
+
+    public static final String NS_COMMON_PARENTS = SCHEMA_LOCATION_BASE1 + NS_BASE_COMMON_PARENTS;
 
     // AA
     public static final String NS_AA_USER_ACCOUNT = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_USER_ACCOUNT;

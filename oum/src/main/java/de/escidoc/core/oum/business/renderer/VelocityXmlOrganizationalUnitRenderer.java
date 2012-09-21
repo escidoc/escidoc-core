@@ -358,6 +358,8 @@ public class VelocityXmlOrganizationalUnitRenderer implements OrganizationalUnit
 
         values.put("organizationalUnitNamespacePrefix", Constants.ORGANIZATIONAL_UNIT_PREFIX);
         values.put("organizationalUnitNamespace", Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
+        values.put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
+        values.put("parentsNamespace", Constants.PARENTS_NAMESPACE_URI);
         values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS_PREFIX, Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProviderConstants.ESCIDOC_PROPERTIES_NS, Constants.PROPERTIES_NS_URI);
         values.put(XmlTemplateProviderConstants.ESCIDOC_SREL_NS_PREFIX, Constants.STRUCTURAL_RELATIONS_NS_PREFIX);

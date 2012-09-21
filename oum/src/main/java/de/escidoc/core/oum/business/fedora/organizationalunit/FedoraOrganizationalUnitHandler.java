@@ -31,6 +31,7 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
+import de.escidoc.core.common.util.stax.handler.ParentsHandler;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
@@ -72,7 +73,6 @@ import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitMetadataHandler;
-import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
@@ -86,6 +86,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.xml.namespace.QName;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -126,6 +127,10 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
     @Autowired
     @Qualifier("common.business.indexing.IndexingHandler")
     private ResourceListener indexingHandler;
+
+    private static final QName QNAME_OU = new QName(Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI, "organizational-unit");
+
+    private static final QName QNAME_PARENTS = new QName(Constants.PARENTS_NAMESPACE_URI, "parents");
 
     /**
      * Protected constructor to prevent instantiation outside of the Spring-context.
@@ -251,7 +256,8 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         OrganizationalUnitNotFoundException, XmlCorruptedException, MissingMdRecordException {
 
         final StaxParser sp = new StaxParser();
-        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
+        final ParentsHandler parentsHandler =
+            new ParentsHandler(sp, QNAME_OU, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
         sp.addHandler(parentsHandler);
 
         final OrganizationalUnitPredecessorsHandler predecessorsHandler = new OrganizationalUnitPredecessorsHandler(sp);
@@ -282,7 +288,7 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
             .getPredecessors(), null));
 
         // parents
-        final List<String> parents = parentsHandler.getParentOus();
+        final List<String> parents = parentsHandler.getParentsAsList();
         checkCreateParentsConditions(parents);
         checkName(metadataHandler.getDcTitle());
 
@@ -432,12 +438,13 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
         final OrganizationalUnitPredecessorsHandler predecessorsHandler = new OrganizationalUnitPredecessorsHandler(sp);
         sp.addHandler(predecessorsHandler);
 
-        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
+        final ParentsHandler parentsHandler =
+            new ParentsHandler(sp, QNAME_OU, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
         sp.addHandler(parentsHandler);
 
         parseIncomingXmlForUpdate(xml, sp);
 
-        final List<String> parents = parentsHandler.getParentOus();
+        final List<String> parents = parentsHandler.getParentsAsList();
         final OumUtility oumUtility = new OumUtility();
         oumUtility.detectCycles(id, parents);
         checkUpdateParentsConditions(parents);
@@ -623,13 +630,13 @@ public class FedoraOrganizationalUnitHandler extends OrganizationalUnitHandlerUp
             new OptimisticLockingHandler(getOrganizationalUnit().getId(), Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
                 startTimeStamp);
         sp.addHandler(optimisticLockingHandler);
-        final OrganizationalUnitParentsHandler parentsHandler = new OrganizationalUnitParentsHandler(sp);
-        parentsHandler.setRootElement(XmlUtility.NAME_PARENTS);
+        final ParentsHandler parentsHandler =
+            new ParentsHandler(sp, QNAME_PARENTS, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
         sp.addHandler(parentsHandler);
 
         parseIncomingXmlForUpdate(xml, sp);
 
-        final List<String> parents = parentsHandler.getParentOus();
+        final List<String> parents = parentsHandler.getParentsAsList();
         final OumUtility oumUtility = new OumUtility();
         oumUtility.detectCycles(id, parents);
         checkName(getOrganizationalUnit().getName());
