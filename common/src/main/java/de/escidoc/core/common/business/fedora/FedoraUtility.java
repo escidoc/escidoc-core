@@ -1198,7 +1198,7 @@ public class FedoraUtility implements InitializingBean {
                 throw new FedoraSystemException(message, e);
             }
 
-            throw new FedoraSystemException(e);
+            //            throw new FedoraSystemException(e);
         }
         finally {
             returnApia(apia);
