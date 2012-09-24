@@ -208,7 +208,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         try {
             setComponentContent(c, ((ByteArrayOutputStream) streams.get("content"))
-                .toString(XmlUtility.CHARACTER_ENCODING), mimeType, fileName);
+                .toString(XmlUtility.CHARACTER_ENCODING), fileName, mimeType);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -405,6 +405,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
+                query.setMimeType(mimeType);
                 boolean noChecksumFound = false;
                 if (contentChecksum == null || contentChecksumAlgorithm == null
                     || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {
