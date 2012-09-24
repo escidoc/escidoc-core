@@ -158,6 +158,54 @@ public class ItemCreateIT extends ItemTestBase {
     }
 
     /**
+     * Test if component without mimetype is set to default mimetype application/octet-stream.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
+     */
+    @Test
+    public void testCreateWithoutComponentMimeType() throws Exception {
+        String inputXml =
+            getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_without_mimetype.xml");
+        Document inputDoc = EscidocAbstractTest.getDocument(inputXml);
+
+        String outputXml = create(inputXml);
+        Document outputDoc = EscidocAbstractTest.getDocument(outputXml);
+        String itemId = getObjidValue(outputDoc);
+        String componentId = getComponentObjidValue(outputDoc, 1);
+
+        String mimeType = "/item/components/component/properties/mime-type";
+        Node mimeTypeNode = selectSingleNode(outputDoc, mimeType);
+
+        assertXmlEquals("mime-type not as expected", "application/octet-stream", mimeTypeNode.getNodeValue());
+        retrieveContentHeader(itemId, componentId, "");
+    }
+
+    /**
+     * Test if component without mimetype is set to default mimetype application/octet-stream.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
+     */
+    @Test
+    public void testCreateWithComponentMimeType() throws Exception {
+        String inputXml =
+            getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_with_mimetype.xml");
+        Document inputDoc = EscidocAbstractTest.getDocument(inputXml);
+
+        String outputXml = create(inputXml);
+        Document outputDoc = EscidocAbstractTest.getDocument(outputXml);
+        String itemId = getObjidValue(outputDoc);
+        String componentId = getComponentObjidValue(outputDoc, 1);
+
+        String mimeType = "/item/components/component/properties/mime-type";
+        Node mimeTypeNode = selectSingleNode(outputDoc, mimeType);
+
+        assertXmlEquals("mime-type not as expected", "image/jpeg", mimeTypeNode.getNodeValue());
+        retrieveContentHeader(itemId, componentId, "");
+    }
+
+    /**
      * Test unexpected parser exception instead of InvalidXmlException during create (see issue INFR-911).
      * 
      * @throws Exception

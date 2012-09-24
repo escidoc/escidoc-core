@@ -405,7 +405,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
-                query.setMimeType(mimeType);
+                if (mimeType != null && !mimeType.isEmpty()) {
+                    query.setMimeType(mimeType);
+                }
+                else {
+                    query.setMimeType(javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM);
+                }
                 boolean noChecksumFound = false;
                 if (contentChecksum == null || contentChecksumAlgorithm == null
                     || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {

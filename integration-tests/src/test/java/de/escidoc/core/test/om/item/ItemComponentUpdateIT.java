@@ -54,6 +54,10 @@ public class ItemComponentUpdateIT extends ItemTestBase {
 
     private final String componentContentXPath = "/component/content/@href";
 
+    private final String itemContentMimeTypeXPath = "/item/components/component/properties/mime-type";
+
+    private final String componentContentMimeTypeXPath = "/component/properties/mime-type";
+
     private final String itemContentStorageXPath = "/item/components/component/content/@storage";
 
     private final String componentMdTitleXPath = "/component/md-records/md-record[@name='escidoc']/publication/title";
@@ -113,6 +117,52 @@ public class ItemComponentUpdateIT extends ItemTestBase {
     }
 
     /**
+     * Test successfully updating the content of an existing item-component with updateComponent without mime-type.
+     */
+    @Test
+    public void testUpdateComponentContentWithoutMimeType() throws Exception {
+
+        Document xmlData =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content_with_mimetype.xml");
+
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+        String componentXml = retrieveComponent(itemId, componentId);
+
+        Document componentDoc = getDocument(componentXml);
+
+        Document newComponent = (Document) deleteElement(componentDoc, componentContentMimeTypeXPath);
+        componentXml = updateComponent(itemId, componentId, toString(newComponent, false));
+        assertXmlEquals("mime-type not as expected", componentXml, componentContentMimeTypeXPath, "application/octet-stream");
+        retrieveContentHeader(itemId, componentId, "");
+    }
+
+    /**
+     * Test successfully updating the content of an existing item-component with updateComponent without mime-type.
+     */
+    @Test
+    public void testUpdateComponentContentWithMimeType() throws Exception {
+
+        Document xmlData =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content_with_mimetype.xml");
+
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+        String componentXml = retrieveComponent(itemId, componentId);
+
+        Document componentDoc = getDocument(componentXml);
+
+        Document newComponent = (Document) substitute(componentDoc, componentContentMimeTypeXPath, "application/pdf");
+        componentXml = updateComponent(itemId, componentId, toString(newComponent, false));
+        assertXmlEquals("mime-type not as expected", componentXml, componentContentMimeTypeXPath, "application/pdf");
+        retrieveContentHeader(itemId, componentId, "");
+    }
+
+    /**
      * Test successfully updating the md-record of an existing item-component with updateItem.
      */
     @Test
@@ -148,6 +198,46 @@ public class ItemComponentUpdateIT extends ItemTestBase {
         Document newItem = (Document) substitute(itemDoc, itemContentXPath, contentHref1);
         itemXml = update(itemId, toString(newItem, false));
         assertXmlEquals("content-href not as expected", itemXml, itemContentXPath, contentHref1);
+    }
+
+    /**
+     * Test successfully updating the content of an existing item-component with updateComponent without mime-type.
+     */
+    @Test
+    public void testUpdateItemComponentContentWithoutMimeType() throws Exception {
+
+        Document xmlData =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content_with_mimetype.xml");
+
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+
+        Document newItem = (Document) deleteElement(itemDoc, itemContentMimeTypeXPath);
+        itemXml = update(itemId, toString(newItem, false));
+        assertXmlEquals("mime-type not as expected", itemXml, itemContentMimeTypeXPath, "application/octet-stream");
+        retrieveContentHeader(itemId, componentId, "");
+    }
+
+    /**
+     * Test successfully updating the content of an existing item-component with updateComponent without mime-type.
+     */
+    @Test
+    public void testUpdateItemComponentContentWithMimeType() throws Exception {
+
+        Document xmlData =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_create_content_with_mimetype.xml");
+
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+
+        Document newItem = (Document) substitute(itemDoc, itemContentMimeTypeXPath, "application/pdf");
+        itemXml = update(itemId, toString(newItem, false));
+        assertXmlEquals("mime-type not as expected", itemXml, itemContentMimeTypeXPath, "application/pdf");
+        retrieveContentHeader(itemId, componentId, "");
     }
 
 }
