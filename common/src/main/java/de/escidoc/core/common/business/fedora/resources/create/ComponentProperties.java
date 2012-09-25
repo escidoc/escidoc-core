@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import org.springframework.http.MediaType;
+
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
@@ -40,7 +42,7 @@ public class ComponentProperties {
 
     private String validStatus;
 
-    private String mimeType = "application/octet-stream";
+    private String mimeType = MediaType.APPLICATION_OCTET_STREAM.toString();
 
     /**
      * Component Properties POJO for create.

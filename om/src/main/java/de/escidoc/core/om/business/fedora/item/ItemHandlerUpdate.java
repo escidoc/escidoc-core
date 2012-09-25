@@ -201,7 +201,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
-            mimeType = FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            mimeType = MediaType.APPLICATION_OCTET_STREAM.toString();
         }
         String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
         if (fileName == null || fileName.length() == 0) {
@@ -209,7 +209,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         try {
             setComponentContent(c, ((ByteArrayOutputStream) streams.get("content"))
-                .toString(XmlUtility.CHARACTER_ENCODING), mimeType, fileName);
+                .toString(XmlUtility.CHARACTER_ENCODING), fileName, mimeType);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -406,6 +406,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
+                query.setMimeType(MediaType.APPLICATION_OCTET_STREAM.toString());
                 boolean noChecksumFound = false;
                 if (contentChecksum == null || contentChecksumAlgorithm == null
                     || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {

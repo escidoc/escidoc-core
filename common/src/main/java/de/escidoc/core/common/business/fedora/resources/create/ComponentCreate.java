@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -275,6 +276,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         valueMap.put(XmlTemplateProviderConstants.VALID_STATUS, this.properties.getValidStatus());
 
         valueMap.put(XmlTemplateProviderConstants.MIME_TYPE, this.properties.getMimeType());
+
+        valueMap.put(XmlTemplateProviderConstants.DEFAULT_MIME_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString());
 
         valueMap.put(XmlTemplateProviderConstants.VISIBILITY, this.properties.getVisibility());
 

@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import com.googlecode.ehcache.annotations.Cacheable;
@@ -53,7 +54,6 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 
 /**
  * @author Michael Hoppe
@@ -193,11 +193,10 @@ public class IndexerResourceRequester {
 
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
-                String mimeType =
-                    ctype != null ? ctype.getValue() : FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
+                String mimeType = ctype != null ? ctype.getValue() : MediaType.APPLICATION_OCTET_STREAM.toString();
 
                 // If mime-type is octet-stream, try guessing from file-extension
-                if (mimeType.equals(FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM)) {
+                if (mimeType.equals(MediaType.APPLICATION_OCTET_STREAM.toString())) {
                     if (identifier.endsWith(".docx")) {
                         mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
                     }

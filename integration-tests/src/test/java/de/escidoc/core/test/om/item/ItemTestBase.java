@@ -313,6 +313,29 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
+     * Retrieves the Content from an Items component.
+     *
+     * @param id          The ID of the item.
+     * @param componentId The ID of the component inside the item.
+     * @return The content representation.
+     * @throws Exception If an error occures.
+     */
+    public String retrieveContentHeader(final String id, final String componentId, final String headerName)
+        throws Exception {
+        Object result = getItemClient().retrieveContent(id, componentId);
+        String headerValue = null;
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            Header header = httpRes.getFirstHeader(headerName);
+            if (header != null) {
+                headerValue = httpRes.getFirstHeader(headerName).getValue();
+            }
+        }
+        return headerValue;
+    }
+
+    /**
      * Test retrieving the lost of Item IDs.
      *
      * @param filter TODO

@@ -61,6 +61,9 @@ public class OmTestBase extends EscidocAbstractTest {
 
     public static final String XPATH_COMPONENT = "/" + NAME_COMPONENT;
 
+    public static final String XPATH_ITEM_COMPONENT_MIME_TYPE =
+        XPATH_ITEM + "/" + NAME_COMPONENTS + "/" + NAME_COMPONENT + "/" + NAME_PROPERTIES + "/mime-type";
+
     public static final String XPATH_ITEM_COMPONENTS = XPATH_ITEM + "/" + NAME_COMPONENTS;
 
     public static final String XPATH_ITEM_COMPONENT =
@@ -129,6 +132,14 @@ public class OmTestBase extends EscidocAbstractTest {
     public static final String XPATH_PARAM_PID = XPATH_PARAM + "/" + NAME_PID;
 
     public static final String XPATH_RESULT_PID = XPATH_RESULT + "/" + NAME_PID;
+
+    public static final String MIME_TYPE_OCTET_STREAM = "application/octet-stream";
+
+    public static final String MIME_TYPE_PDF = "application/pdf";
+
+    public static final String MIME_TYPE_JPEG = "image/jpeg";
+
+    public static final String RESPONSE_HEADER_MIME_TYPE = "Content-Type";
 
     private SearchTestBase searchTestBase = null;
 

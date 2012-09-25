@@ -171,6 +171,8 @@ public final class XmlTemplateProviderConstants {
 
     public static final String MIME_TYPE = "MIME_TYPE";
 
+    public static final String DEFAULT_MIME_TYPE = "DEFAULT_MIME_TYPE";
+
     public static final String VISIBILITY = "VISIBILITY";
 
     public static final String CONTENT_CATEGORY = "CONTENT_CATEGORY";
