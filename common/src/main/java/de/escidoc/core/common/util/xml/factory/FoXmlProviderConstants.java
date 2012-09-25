@@ -35,8 +35,6 @@ public final class FoXmlProviderConstants {
 
     public static final String CONTROL_GROUP_R = "R";
 
-    public static final String MIME_TYPE_APPLICATION_OCTET_STREAM = "application/octet-stream";
-
     public static final String DATASTREAM_STORAGE_ATTRIBUTE = "storage";
 
     public static final String DATASTREAM_VERSION_HISTORY = "version-history";

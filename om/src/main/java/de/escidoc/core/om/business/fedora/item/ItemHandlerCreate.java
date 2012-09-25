@@ -65,6 +65,7 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentPropertiesHandl
 import de.escidoc.core.om.business.stax.handler.item.OneComponentTitleHandler;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
+import org.springframework.http.MediaType;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
@@ -532,7 +533,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
-            mimeType = FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            mimeType = MediaType.APPLICATION_OCTET_STREAM.toString();
         }
         datastreams.put(Datastream.RELS_EXT_DATASTREAM, getComponentRelsExtWithVelocity(componentId, properties, true));
         if (datastreams.get(FoXmlProviderConstants.DATASTREAM_MD_RECORDS) == null) {

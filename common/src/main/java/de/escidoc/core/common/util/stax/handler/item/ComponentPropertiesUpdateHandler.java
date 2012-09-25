@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.MediaType;
+
 /**
  * ComponentPropertiesUpdateHandler handles XML with properties section for eSciDoc Component.
  *
@@ -137,6 +139,10 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
             // delete properties not send
             for (final String anExpected : this.expected) {
                 properties.remove(anExpected);
+                if (anExpected.equals(TripleStoreUtility.PROP_MIME_TYPE)) {
+                    //set default mime-type
+                    properties.put(TripleStoreUtility.PROP_MIME_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString());
+                }
             }
         }
         return element;

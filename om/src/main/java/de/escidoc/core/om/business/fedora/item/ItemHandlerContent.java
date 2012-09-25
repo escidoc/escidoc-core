@@ -28,6 +28,19 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeStream;
+import org.escidoc.core.utils.io.Stream;
+import org.springframework.http.MediaType;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -51,21 +64,7 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.FoXmlProviderConstants;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
-
-import org.escidoc.core.utils.io.EscidocBinaryContent;
-import org.escidoc.core.utils.io.Stream;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import org.escidoc.core.utils.io.MimeStream;
 
 /**
  * Content relevant methods for Item.
@@ -165,14 +164,11 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 }
 
                 // set mime-type:
-                if (mimeStream.getMimeType() != null) {
-                    bin.setMimeType(mimeStream.getMimeType());
-                }
-                else if (component.getProperty(TripleStoreUtility.PROP_MIME_TYPE) != null) {
+                if (component.getProperty(TripleStoreUtility.PROP_MIME_TYPE) != null) {
                     bin.setMimeType(component.getProperty(TripleStoreUtility.PROP_MIME_TYPE));
                 }
                 else {
-                    bin.setMimeType(FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM);
+                    bin.setMimeType(MediaType.APPLICATION_OCTET_STREAM.toString());
                 }
             }
             catch (final Exception e) {
