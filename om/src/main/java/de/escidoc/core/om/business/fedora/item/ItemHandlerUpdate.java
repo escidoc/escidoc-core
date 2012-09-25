@@ -28,6 +28,19 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -59,18 +72,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Contains methods pertaining update of an item. Is extended at least by FedoraItemHandler.
@@ -207,7 +208,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         try {
             setComponentContent(c, ((ByteArrayOutputStream) streams.get("content"))
-                .toString(XmlUtility.CHARACTER_ENCODING), mimeType, fileName);
+                .toString(XmlUtility.CHARACTER_ENCODING), fileName, mimeType);
         }
         catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);

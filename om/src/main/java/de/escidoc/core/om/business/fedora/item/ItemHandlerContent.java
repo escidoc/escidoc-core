@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MimeInputStream;
@@ -54,20 +65,10 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Content relevant methods for Item.
@@ -174,8 +175,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 // 
                 MimeInputStream mimeInputStream = getFedoraUtility().requestMimeFedoraURL(fedoraLocalUrl);
                 bin.setContent(mimeInputStream.getInputStream());
-                if (mimeInputStream.getMimeType() != null) {
-                    bin.setMimeType(mimeInputStream.getMimeType());
+                // set mime-type:
+                if (component.getProperty(TripleStoreUtility.PROP_MIME_TYPE) != null) {
+                    bin.setMimeType(component.getProperty(TripleStoreUtility.PROP_MIME_TYPE));
+                }
+                else {
+                    bin.setMimeType(FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM);
                 }
             }
             catch (final Exception e) {

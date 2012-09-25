@@ -30,6 +30,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -137,6 +138,10 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
             // delete properties not send
             for (final String anExpected : this.expected) {
                 properties.remove(anExpected);
+                if (anExpected.equals(TripleStoreUtility.PROP_MIME_TYPE)) {
+                    //set default mime-type
+                    properties.put(TripleStoreUtility.PROP_MIME_TYPE, FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM);
+                }
             }
         }
         return element;

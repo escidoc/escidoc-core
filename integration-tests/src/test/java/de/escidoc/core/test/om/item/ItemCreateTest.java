@@ -28,10 +28,8 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -40,7 +38,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test creating Item objects.
@@ -148,6 +150,58 @@ public class ItemCreateTest extends ItemTestBase {
             "/item/properties/public-status[text() = 'pending']");
         assertXmlExists("Wrong version status for created Item.", xml2,
             "/item/properties/version/status[text() = 'pending']");
+    }
+
+    /**
+     * Test if component without mimetype is set to default mimetype application/octet-stream.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
+     */
+    @Test
+    public void testCreateWithoutComponentMimeType() throws Exception {
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            String inputXml =
+                getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_without_mimetype.xml");
+            EscidocRestSoapTestBase.getDocument(inputXml);
+
+            String outputXml = create(inputXml);
+            Document outputDoc = EscidocRestSoapTestBase.getDocument(outputXml);
+            String itemId = getObjidValue(outputDoc);
+            String componentId = getComponentObjidValue(outputDoc, 1);
+
+            Node mimeTypeNode = selectSingleNode(outputDoc, XPATH_ITEM_COMPONENT_MIME_TYPE);
+
+            assertEquals("mime-type not as expected", MIME_TYPE_OCTET_STREAM, mimeTypeNode.getTextContent());
+            assertEquals("mime-type not as expected", MIME_TYPE_OCTET_STREAM, retrieveContentHeader(itemId,
+                componentId, RESPONSE_HEADER_MIME_TYPE));
+        }
+    }
+
+    /**
+     * Test if component with mimetype is set correctly.
+     * 
+     * @throws Exception
+     *             Thrown if creation of example Item failed.
+     */
+    @Test
+    public void testCreateWithComponentMimeType() throws Exception {
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            String inputXml =
+                getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_with_mimetype.xml");
+            EscidocRestSoapTestBase.getDocument(inputXml);
+
+            String outputXml = create(inputXml);
+            Document outputDoc = EscidocRestSoapTestBase.getDocument(outputXml);
+            String itemId = getObjidValue(outputDoc);
+            String componentId = getComponentObjidValue(outputDoc, 1);
+
+            Node mimeTypeNode = selectSingleNode(outputDoc, XPATH_ITEM_COMPONENT_MIME_TYPE);
+
+            assertEquals("mime-type not as expected", MIME_TYPE_JPEG, mimeTypeNode.getTextContent());
+            assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, componentId,
+                RESPONSE_HEADER_MIME_TYPE));
+        }
     }
 
     /**

@@ -20,6 +20,17 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -31,18 +42,9 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Component for create method.
@@ -261,6 +263,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         valueMap.put(XmlTemplateProvider.VALID_STATUS, this.properties.getValidStatus());
 
         valueMap.put(XmlTemplateProvider.MIME_TYPE, this.properties.getMimeType());
+
+        valueMap.put(XmlTemplateProvider.DEFAULT_MIME_TYPE, FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM);
 
         valueMap.put(XmlTemplateProvider.VISIBILITY, this.properties.getVisibility());
 
