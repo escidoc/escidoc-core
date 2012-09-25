@@ -194,7 +194,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         String xlinkPrefix = determineXlinkNamespacePrefix(document);
         String srelPrefix = determineSrelNamespacePrefix(document);
         String parentsPrefix = lookupPrefixForNamespace(document, Constants.NS_COMMON_PARENTS);
-        boolean isFoo = document.isDefaultNamespace(Constants.NS_COMMON_PARENTS);
 
         Element parents = null;
         final int numberParents = parentValues.length / 2;
