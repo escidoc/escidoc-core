@@ -1,4 +1,4 @@
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

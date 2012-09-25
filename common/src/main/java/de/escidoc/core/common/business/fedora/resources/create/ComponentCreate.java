@@ -35,6 +35,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.IngestPathParam;
 import org.escidoc.core.services.fedora.IngestQueryParam;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -274,6 +275,8 @@ public class ComponentCreate extends GenericResourceCreate implements Callable<S
         valueMap.put(XmlTemplateProviderConstants.VALID_STATUS, this.properties.getValidStatus());
 
         valueMap.put(XmlTemplateProviderConstants.MIME_TYPE, this.properties.getMimeType());
+
+        valueMap.put(XmlTemplateProviderConstants.DEFAULT_MIME_TYPE, MimeTypes.ESCIDOC_DEFAULT);
 
         valueMap.put(XmlTemplateProviderConstants.VISIBILITY, this.properties.getVisibility());
 

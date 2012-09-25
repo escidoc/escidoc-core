@@ -1,7 +1,8 @@
 package org.escidoc.core.util.xml.internal;
 
 import net.sf.oval.guard.Guarded;
-import org.esidoc.core.utils.io.Stream;
+
+import org.escidoc.core.utils.io.Stream;
 
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.core.MediaType;
@@ -14,7 +15,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 /**
- * {@link MessageBodyWriter} for {@link org.esidoc.core.utils.io.Stream}.
+ * {@link MessageBodyWriter} for {@link org.escidoc.core.utils.io.Stream}.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */

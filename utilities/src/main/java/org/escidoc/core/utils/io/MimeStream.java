@@ -17,7 +17,7 @@
  * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
  * terms.
  */
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 /**
  * @author jhe

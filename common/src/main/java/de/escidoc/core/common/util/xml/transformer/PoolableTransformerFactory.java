@@ -27,7 +27,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

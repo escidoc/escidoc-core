@@ -46,7 +46,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
-import org.esidoc.core.utils.io.MimeTypes;
+
+import org.escidoc.core.utils.io.MimeTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;

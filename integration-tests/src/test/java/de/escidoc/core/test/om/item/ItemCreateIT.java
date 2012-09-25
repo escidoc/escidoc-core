@@ -28,10 +28,13 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocAbstractTest;
+
 import org.junit.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -167,22 +170,22 @@ public class ItemCreateIT extends ItemTestBase {
     public void testCreateWithoutComponentMimeType() throws Exception {
         String inputXml =
             getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_without_mimetype.xml");
-        Document inputDoc = EscidocAbstractTest.getDocument(inputXml);
+        EscidocAbstractTest.getDocument(inputXml);
 
         String outputXml = create(inputXml);
         Document outputDoc = EscidocAbstractTest.getDocument(outputXml);
         String itemId = getObjidValue(outputDoc);
         String componentId = getComponentObjidValue(outputDoc, 1);
 
-        String mimeType = "/item/components/component/properties/mime-type";
-        Node mimeTypeNode = selectSingleNode(outputDoc, mimeType);
+        Node mimeTypeNode = selectSingleNode(outputDoc, XPATH_ITEM_COMPONENT_MIME_TYPE);
 
-        assertXmlEquals("mime-type not as expected", "application/octet-stream", mimeTypeNode.getNodeValue());
-        retrieveContentHeader(itemId, componentId, "");
+        assertEquals("mime-type not as expected", MIME_TYPE_OCTET_STREAM, mimeTypeNode.getTextContent());
+        assertEquals("mime-type not as expected", MIME_TYPE_OCTET_STREAM, retrieveContentHeader(itemId, componentId,
+            RESPONSE_HEADER_MIME_TYPE));
     }
 
     /**
-     * Test if component without mimetype is set to default mimetype application/octet-stream.
+     * Test if component with mimetype is set correctly.
      * 
      * @throws Exception
      *             Thrown if creation of example Item failed.
@@ -191,18 +194,18 @@ public class ItemCreateIT extends ItemTestBase {
     public void testCreateWithComponentMimeType() throws Exception {
         String inputXml =
             getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "/escidoc_item_create_content_with_mimetype.xml");
-        Document inputDoc = EscidocAbstractTest.getDocument(inputXml);
+        EscidocAbstractTest.getDocument(inputXml);
 
         String outputXml = create(inputXml);
         Document outputDoc = EscidocAbstractTest.getDocument(outputXml);
         String itemId = getObjidValue(outputDoc);
         String componentId = getComponentObjidValue(outputDoc, 1);
 
-        String mimeType = "/item/components/component/properties/mime-type";
-        Node mimeTypeNode = selectSingleNode(outputDoc, mimeType);
+        Node mimeTypeNode = selectSingleNode(outputDoc, XPATH_ITEM_COMPONENT_MIME_TYPE);
 
-        assertXmlEquals("mime-type not as expected", "image/jpeg", mimeTypeNode.getNodeValue());
-        retrieveContentHeader(itemId, componentId, "");
+        assertEquals("mime-type not as expected", MIME_TYPE_JPEG, mimeTypeNode.getTextContent());
+        assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, componentId,
+            RESPONSE_HEADER_MIME_TYPE));
     }
 
     /**

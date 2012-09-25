@@ -23,7 +23,7 @@ package de.escidoc.core.common.business.indexing;
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

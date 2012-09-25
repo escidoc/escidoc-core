@@ -318,7 +318,8 @@ public class ItemTestBase extends OmTestBase {
      * @return The content representation.
      * @throws Exception If an error occures.
      */
-    public String retrieveContentHeader(final String id, final String componentId, final String headerName) throws Exception {
+    public String retrieveContentHeader(final String id, final String componentId, final String headerName)
+        throws Exception {
         Object result = getItemClient().retrieveContent(id, componentId);
         String headerValue = null;
         if (result instanceof HttpResponse) {

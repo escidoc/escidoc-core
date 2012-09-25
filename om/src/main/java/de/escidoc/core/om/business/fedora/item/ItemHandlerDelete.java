@@ -45,8 +45,8 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
 import org.escidoc.core.services.fedora.FedoraServiceClient;
-import org.esidoc.core.utils.io.IOUtils;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.IOUtils;
+import org.escidoc.core.utils.io.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 

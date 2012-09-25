@@ -1,4 +1,4 @@
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 /**
  * Class for constants with MIME types.
@@ -12,6 +12,7 @@ public final class MimeTypes {
     public static final String APPLICATION_XML = "application/xml";
     public static final String TEXT_PLAIN = "text/plain";
     public static final String APPLICATION_JSON = "application/json";
+    public static final String ESCIDOC_DEFAULT = "application/octet-stream";
 
 
     /**

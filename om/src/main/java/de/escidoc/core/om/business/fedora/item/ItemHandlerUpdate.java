@@ -43,7 +43,7 @@ import org.escidoc.core.services.fedora.FedoraServiceClient;
 import org.escidoc.core.services.fedora.ModifiyDatastreamPathParam;
 import org.escidoc.core.services.fedora.ModifyDatastreamQueryParam;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,7 +200,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if (mimeType == null || mimeType.length() == 0) {
-            mimeType = FoXmlProviderConstants.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            mimeType = MimeTypes.ESCIDOC_DEFAULT;
         }
         String fileName = properties.get(Constants.DC_NS_URI + Elements.ELEMENT_DC_TITLE);
         if (fileName == null || fileName.length() == 0) {
@@ -358,9 +358,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void setComponentContent(
-        final Component component, final String xml, final String fileName, final String mimeType)
-        throws MissingContentException, InvalidContentException, FileNotFoundException, TripleStoreSystemException,
-        FedoraSystemException, WebserverSystemException {
+        final Component component, final String xml, final String fileName, final String mimeType) throws MissingContentException, InvalidContentException, FileNotFoundException,
+        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
@@ -405,12 +404,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 final ModifiyDatastreamPathParam path = new ModifiyDatastreamPathParam(component.getId(), "content");
                 final ModifyDatastreamQueryParam query = new ModifyDatastreamQueryParam();
                 query.setDsLocation(url);
-                if (mimeType != null && !mimeType.isEmpty()) {
-                    query.setMimeType(mimeType);
-                }
-                else {
-                    query.setMimeType(javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM);
-                }
+                query.setMimeType(MimeTypes.ESCIDOC_DEFAULT);
                 boolean noChecksumFound = false;
                 if (contentChecksum == null || contentChecksumAlgorithm == null
                     || contentChecksumAlgorithm.equalsIgnoreCase("DISABLED")) {

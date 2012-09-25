@@ -20,14 +20,14 @@
 ## 
 ##parse("component/foxml/content.vm")
 <foxml:datastream CONTROL_GROUP="${CONTROL_GROUP}" ID="content">
-<foxml:datastreamVersion ID="content.0" MIMETYPE="${MIME_TYPE}" LABEL="">
+<foxml:datastreamVersion ID="content.0" MIMETYPE="${DEFAULT_MIME_TYPE}" LABEL="">
 <foxml:contentDigest TYPE="${CHECKSUM_ALGORITHM}"/>
 <foxml:contentLocation REF="#escA(${REF})" TYPE="${REF_TYPE}" />
 </foxml:datastreamVersion>
 </foxml:datastream>
 ## values from Component metadata are used in Content (MimeType, etc.) 
 ##<foxml:datastream CONTROL_GROUP="${CONTROL_GROUP}" ID="content" #if(${DS_VERSIONABLE})VERSIONABLE="${DS_VERSIONABLE}"#end>
-##<foxml:datastreamVersion #if(${stream.ALT_IDS})${stream.ALT_IDS}#end ID="content.0" MIMETYPE="${MIME_TYPE}" #if(${LABEL})LABEL="${LABEL}"#end>
+##<foxml:datastreamVersion #if(${stream.ALT_IDS})${stream.ALT_IDS}#end ID="content.0" MIMETYPE="${DEFAULT_MIME_TYPE}" #if(${LABEL})LABEL="${LABEL}"#end>
 ###if($CONTROL_GROUP == 'X' || (${INLINE_CONTENT}))<foxml:xmlContent>${INLINE_CONTENT}</foxml:xmlContent>
 ###else<foxml:contentLocation REF="#escA(${REF})" TYPE="${REF_TYPE}" />#end
 ##</foxml:datastreamVersion>

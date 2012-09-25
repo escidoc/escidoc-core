@@ -2,7 +2,7 @@ package org.escidoc.core.services.fedora;
 
 import net.sf.oval.guard.Guarded;
 
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 
 /**
  * 

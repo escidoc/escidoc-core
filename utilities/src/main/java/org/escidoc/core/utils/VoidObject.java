@@ -18,23 +18,25 @@
  * terms.
  */
 
-package org.esidoc.core.utils.io;
-
-import java.nio.charset.Charset;
+package org.escidoc.core.utils;
 
 /**
- * Class with constants for encodings.
+ * This object is a placeholder for return values in async void operations.
  *
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
-public final class Charsets {
+public final class VoidObject {
 
-    public static final Charset UTF8_CHARSET = Charset.forName(Encodings.UTF8);
+    private static final VoidObject INSTANCE = new VoidObject();
 
     /**
-     * Private contructor to avoid instantiation.
+     * Private constructor to avoid instantiation.
      */
-    private Charsets() {
+    private VoidObject() {
+    }
+
+    public static VoidObject getInstance() {
+        return INSTANCE;
     }
 
 }

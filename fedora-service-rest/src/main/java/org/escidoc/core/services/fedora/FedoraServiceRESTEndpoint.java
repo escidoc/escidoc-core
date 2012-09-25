@@ -17,8 +17,8 @@ import org.escidoc.core.services.fedora.access.ObjectProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamHistoryTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfileTO;
 import org.escidoc.core.services.fedora.management.DatastreamProfilesTO;
-import org.esidoc.core.utils.io.MimeTypes;
-import org.esidoc.core.utils.io.Stream;
+import org.escidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.Stream;
 
 /**
  * Service to access the Fedora repository.

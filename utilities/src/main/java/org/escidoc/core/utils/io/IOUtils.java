@@ -1,4 +1,4 @@
-package org.esidoc.core.utils.io;
+package org.escidoc.core.utils.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;

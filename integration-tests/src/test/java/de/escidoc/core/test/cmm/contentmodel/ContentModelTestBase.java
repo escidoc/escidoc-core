@@ -36,7 +36,7 @@ import de.escidoc.core.test.om.OmTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 

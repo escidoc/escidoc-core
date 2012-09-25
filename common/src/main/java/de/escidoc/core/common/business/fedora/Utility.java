@@ -43,8 +43,8 @@ import javax.xml.transform.TransformerException;
 
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
 import org.apache.xpath.XPathAPI;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.esidoc.core.utils.io.MimeTypes;
+import org.escidoc.core.utils.io.EscidocBinaryContent;
+import org.escidoc.core.utils.io.MimeTypes;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.beans.factory.annotation.Autowired;

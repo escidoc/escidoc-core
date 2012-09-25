@@ -26,7 +26,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProviderConstants;
-import org.esidoc.core.utils.io.MimeTypes;
+
+import org.escidoc.core.utils.io.MimeTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;

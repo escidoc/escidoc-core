@@ -37,7 +37,8 @@ import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionFactory;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
-import org.esidoc.core.utils.io.IOUtils;
+
+import org.escidoc.core.utils.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

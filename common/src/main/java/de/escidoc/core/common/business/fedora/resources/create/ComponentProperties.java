@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import org.escidoc.core.utils.io.MimeTypes;
+
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
@@ -40,7 +42,7 @@ public class ComponentProperties {
 
     private String validStatus;
 
-    private String mimeType = "application/octet-stream";
+    private String mimeType = MimeTypes.ESCIDOC_DEFAULT;
 
     /**
      * Component Properties POJO for create.
