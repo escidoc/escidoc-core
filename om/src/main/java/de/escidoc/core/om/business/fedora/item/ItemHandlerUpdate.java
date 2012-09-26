@@ -358,8 +358,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void setComponentContent(
-        final Component component, final String xml, final String fileName, final String mimeType) throws MissingContentException, InvalidContentException, FileNotFoundException,
-        TripleStoreSystemException, FedoraSystemException, WebserverSystemException {
+        final Component component, final String xml, final String fileName, final String mimeType)
+        throws MissingContentException, InvalidContentException, FileNotFoundException, TripleStoreSystemException,
+        FedoraSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
 
