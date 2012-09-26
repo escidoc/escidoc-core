@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <organizational-unit:organizational-unit
-	xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.8"
+	xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
 	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
 
 	<escidocMetadataRecords:md-records>

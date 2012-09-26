@@ -123,6 +123,7 @@
         <value>classpath:/xsd/tme-request.xsd</value>
         <value>classpath:/xsd/update-password-task-param.xsd</value>
         <value>classpath:/xsd/user-account-attributes.xsd</value>
+        <value>classpath:/xsd/user-account-preferences.xsd</value>
         <value>classpath:/xsd/user-account-list.xsd</value>
         <value>classpath:/xsd/user-account.xsd</value>
         <value>classpath:/xsd/user-group-list.xsd</value>
