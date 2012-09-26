@@ -109,7 +109,7 @@ public class UserAccountAttributeFinderModule extends AbstractAttributeFinderMod
      */
     private static final String USER_ACCOUNT_ATTRS =
         "(handle|login-name|name|" + "created-by|modified-by|"
-            + "organizational-unit|organizational-unit-with-children|" + "group-membership|role-grant)";
+            + "organizational-unit-with-children|organizational-unit|" + "group-membership|role-grant)";
 
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
