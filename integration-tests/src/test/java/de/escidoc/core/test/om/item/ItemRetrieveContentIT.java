@@ -97,15 +97,13 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
 
-        String contentType = "application/octet-stream";
-
-        File temp = retrieveContentFromFramework(itemId, componentId, contentType);
+        File temp = retrieveContentFromFramework(itemId, componentId, "image/png");
         String sha1 = computeHashSum(temp);
         // check file with checksum -----------------------------------------------------
         assertEquals("File checksum failed", contentSha1Checksum, sha1);
         removeSilent(temp);
 
-        temp = retrieveContentFromRepository(componentId, contentType);
+        temp = retrieveContentFromRepository(componentId, MIME_TYPE_OCTET_STREAM);
         sha1 = computeHashSum(temp);
 
         assertEquals("File checksum failed", contentSha1Checksum, sha1);
@@ -511,7 +509,7 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         }
 
         String mimeType = conn.getContentType();
-        assertEquals("image/png", mimeType);
+        assertEquals(MIME_TYPE_OCTET_STREAM, mimeType);
         InputStream ins = conn.getInputStream();
 
         // write out file
