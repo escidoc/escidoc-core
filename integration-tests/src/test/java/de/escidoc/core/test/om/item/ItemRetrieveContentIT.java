@@ -94,15 +94,16 @@ public class ItemRetrieveContentIT extends ContentTestBase {
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
 
-        String contentType = "application/octet-stream";
+        String fedoraContentType = "application/octet-stream";
+        String escidocContentType = "image/png";
 
-        File temp = retrieveContentFromFramework(itemId, componentId, contentType);
+        File temp = retrieveContentFromFramework(itemId, componentId, escidocContentType);
         String sha1 = computeHashSum(temp);
         // check file with checksum -----------------------------------------------------
         assertEquals("File checksum failed", contentSha1Checksum, sha1);
         removeSilent(temp);
 
-        temp = retrieveContentFromRepository(componentId, contentType);
+        temp = retrieveContentFromRepository(componentId, fedoraContentType);
         sha1 = computeHashSum(temp);
 
         assertEquals("File checksum failed", contentSha1Checksum, sha1);
