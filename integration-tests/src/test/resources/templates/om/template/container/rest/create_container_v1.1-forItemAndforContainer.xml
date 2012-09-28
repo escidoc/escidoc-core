@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- item: 12121 Version 0.6, updated: 21.11.2006-->
 <prefix-container:container xml:base="http://www.escidoc.de/"
-	xmlns="http://www.escidoc.de/schemas/container/0.10"
-	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.10"
+	xmlns="http://www.escidoc.org/schemas/container/1.0/container"
+	xmlns:prefix-container="http://www.escidoc.org/schemas/container/1.0/container"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:version="http://escidoc.de/core/01/properties/version/"
 	xmlns:release="http://escidoc.de/core/01/properties/release/"
-	xmlns:struct-map="http://www.escidoc.de/schemas/structmap/0.4"
-	xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-	
-	xmlns:prefix-member-ref-list2="http://www.escidoc.de/schemas/memberreflist/0.2"
+	xmlns:struct-map="http://www.escidoc.org/schemas/container/1.0/struct-map"
+	xmlns:prefix-metadata-records="http://www.escidoc.org/schemas/common/1.0/md-records"
 	xmlns:prefix-dc="http://purl.org/dc/elements/1.0/"
 	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink">

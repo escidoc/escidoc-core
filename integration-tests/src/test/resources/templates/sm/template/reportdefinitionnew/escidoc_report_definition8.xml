@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidoc:report-definition 
-    xmlns:escidoc="http://www.escidoc.de/schemas/reportdefinition/0.4"
+    xmlns:escidoc="http://www.escidoc.org/schemas/report-definition/1.0/report-definition"
     xmlns:prop="http://escidoc.de/core/01/properties/"
     xmlns:srel="http://escidoc.de/core/01/structural-relations/"
     xmlns:xlink="http://www.w3.org/1999/xlink">

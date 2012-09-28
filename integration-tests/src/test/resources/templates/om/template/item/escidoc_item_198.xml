@@ -94,7 +94,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
+		xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
 		prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:198/components"
 		prefix-xlink:title="Components of Item escidoc:198">
 		<escidocComponents:component objid="escidoc:199"
@@ -102,7 +102,7 @@
 			prefix-xlink:href="/ir/item/escidoc:198/components/component/escidoc:199"
 			prefix-xlink:title="the two mystic scans">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
+				xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:title="Properties"
 				prefix-xlink:type="simple">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>
@@ -128,7 +128,7 @@
 			prefix-xlink:href="/ir/item/escidoc:198/components/component/escidoc:200"
 			prefix-xlink:title="the two mystic scans">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.10"
+				xmlns:escidocComponents="http://www.escidoc.org/schemas/item/1.0/components"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:title="Properties"
 				prefix-xlink:type="simple">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>

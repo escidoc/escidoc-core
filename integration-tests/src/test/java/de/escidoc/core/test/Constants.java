@@ -298,161 +298,155 @@ public class Constants {
     // BASE
     public static final String SCHEMA_LOCATION_BASE = "http://www.escidoc.org/schemas";
 
-    public static final String SCHEMA_LOCATION_BASE1 = "http://www.escidoc.de/schemas";
-
     // COMMON
 
-    public static final String NS_BASE_COMMON_PARENTS = "/parents/0.9";
+    public static final String NS_BASE_COMMON_PARENTS = "/common/1.0/parents";
 
     // ADM
     public static final String NS_BASE_ADM_ADMIN = "/admin/0.1";
 
+    public static final String PROPERTIES_NS_BASE = "http://escidoc.de/core/01";
+
     // IR
-    public static final String NS_BASE_IR_ITEM = "/item/0.11";
+    public static final String NS_BASE_IR_ITEM = "/item/1.0/item";
 
-    public static final String NS_BASE_IR_CONTAINER = "/container/0.10";
+    public static final String NS_BASE_IR_CONTAINER = "/container/1.0/container";
 
-    public static final String NS_BASE_IR_CONTEXT = "/context/0.8";
+    public static final String NS_BASE_IR_CONTEXT = "/context/1.0/context";
 
-    public static final String NS_BASE_IR_CONTENT_RELATION = "/content-relation/0.2";
+    public static final String NS_BASE_IR_CONTENT_RELATION = "/content-relation/1.0/content-relation";
 
-    public static final String NS_BASE_IR_COMPONENTS = "/components/0.10";
+    public static final String NS_BASE_IR_COMPONENTS = "/item/1.0/item";
 
-    public static final String NS_BASE_IR_MD_RECORDS = "/metadatarecords/0.5";
+    public static final String NS_BASE_IR_MD_RECORDS = "/common/1.0/md-records";
 
     // OUM
-    public static final String NS_BASE_OUM_OU = "/organizationalunit/0.8";
+    public static final String NS_BASE_OUM_OU = "/organizational-unit/1.0/organizational-unit";
 
     // AA
-    public static final String NS_BASE_AA_USER_ACCOUNT = "/useraccount/0.7";
+    public static final String NS_BASE_AA_USER_ACCOUNT = "/user-account/1.0/user-account";
 
-    public static final String NS_BASE_AA_USER_GROUP = "/usergroup/0.6";
+    public static final String NS_BASE_AA_USER_GROUP = "/user-group/1.0/user-group";
 
-    public static final String NS_BASE_AA_GRANTS = "/grants/0.5";
+    public static final String NS_BASE_AA_GRANTS = "/grant/1.0/grants";
 
-    public static final String NS_BASE_AA_ROLE = "/role/0.5";
+    public static final String NS_BASE_AA_ROLE = "/role/1.0/role";
 
-    public static final String NS_BASE_AA_PDP = "/pdp/0.3";
+    public static final String NS_BASE_AA_PDP = "/pdp/1.0";
 
-    public static final String NS_BASE_AA_PREFERENCES = "/preferences/0.1";
+    public static final String NS_BASE_AA_PREFERENCES = "/user-account/1.0/user-account-preferences";
 
-    public static final String NS_BASE_AA_ATTRIBUTES = "/attributes/0.1";
+    public static final String NS_BASE_AA_ATTRIBUTES = "/user-account/1.0/user-account-attributes";
 
     // CMM
-    public static final String NS_BASE_CMM_CONTENT_MODEL = "/contentmodel/0.1";
+    public static final String NS_BASE_CMM_CONTENT_MODEL = "/content-model/1.0/content-model";
 
     // STATISTIC
-    public static final String NS_BASE_SM_SCOPE = "/scope/0.4";
+    public static final String NS_BASE_SM_SCOPE = "/scope/1.0/scope";
 
-    public static final String NS_BASE_SM_REPORT_DEFINITION = "/reportdefinition/0.4";
+    public static final String NS_BASE_SM_REPORT_DEFINITION = "/report-definition/1.0/report-definition";
 
-    public static final String NS_BASE_SM_AGGREGATION_DEFINITION = "/aggregationdefinition/0.5";
+    public static final String NS_BASE_SM_AGGREGATION_DEFINITION = "/aggregation-definition/1.0/aggregation-definition";
 
-    public static final String NS_BASE_SM_REPORT = "/report/0.4";
+    public static final String NS_BASE_SM_REPORT = "/report/1.0/report";
 
     // STAGING
-    public static final String NS_BASE_ST_FILE = "/stagingfile/0.3";
+    public static final String NS_BASE_ST_FILE = "/staging-file/1.0/staging-file";
 
     // OAI
-    public static final String NS_BASE_OAI_SET_DEFINITION = "/setdefinition/0.2";
+    public static final String NS_BASE_OAI_SET_DEFINITION = "/set-definition/1.0/set-definition";
 
     // TASK PARAM
-    private static final String NS_BASE_TP_OPTIMISTIC_LOCKING = "/optimistic-locking-task-param/0.1";
+    private static final String NS_BASE_TP_OPTIMISTIC_LOCKING = "/task-param/1.0/optimistic-locking-task-param";
 
-    private static final String NS_BASE_TP_UPDATE_PASSWORD = "/update-password-task-param/0.1";
+    private static final String NS_BASE_TP_UPDATE_PASSWORD = "/task-param/1.0/update-password-task-param";
 
-    private static final String NS_BASE_TP_REVOKE_GRANT = "/revoke-grant-task-param/0.1";
+    private static final String NS_BASE_TP_REVOKE_GRANT = "/task-param/1.0/revoke-grant-task-param";
 
-    private static final String NS_BASE_TP_REVOKE_GRANTS = "/revoke-grants-task-param/0.1";
+    private static final String NS_BASE_TP_REVOKE_GRANTS = "/task-param/1.0/revoke-grants-task-param";
 
-    private static final String NS_BASE_TP_SELECTOR_ADD = "/addselectors/0.7";
+    private static final String NS_BASE_TP_SELECTOR_ADD = "/task-param/1.0/add-selectors";
 
-    private static final String NS_BASE_TP_SELECTOR_REMOVE = "/removeselectors/0.6";
+    private static final String NS_BASE_TP_SELECTOR_REMOVE = "/task-param/1.0/remove-selectors";
 
-    private static final String NS_BASE_TP_REINDEX = "/reindex-task-param/0.1";
+    private static final String NS_BASE_TP_REINDEX = "/task-param/1.0/reindex-task-param";
 
-    private static final String NS_BASE_TP_MEMBERS = "/members-task-param/0.1";
+    private static final String NS_BASE_TP_MEMBERS = "/task-param/1.0/members-task-param";
 
-    private static final String NS_BASE_TP_ID_SET = "/id-set-task-param/0.1";
+    private static final String NS_BASE_TP_ID_SET = "/task-param/1.0/id-set-task-param";
 
-    private static final String NS_BASE_TP_DELETE_OBJECTS = "/delete-objects-task-param/0.1";
+    private static final String NS_BASE_TP_DELETE_OBJECTS = "/task-param/1.0/delete-objects-task-param";
 
-    private static final String NS_BASE_TP_ASSIGN_PID = "/assign-pid-task-param/0.1";
+    private static final String NS_BASE_TP_ASSIGN_PID = "/task-param/1.0/assign-pid-task-param";
 
-    private static final String NS_BASE_TP_STATUS = "/status-task-param/0.1";
+    private static final String NS_BASE_TP_STATUS = "/task-param/1.0/status-task-param";
 
-    private static final String NS_BASE_TP_RELATION = "/relation-task-param/0.1";
-
-    private static final String NS_BASE_TP_SEMANTIC_STORE_QUERY = "/semantic-store-query/0.4";
+    private static final String NS_BASE_TP_RELATION = "/task-param/1.0/relation-task-param";
 
     // *****************************************************************************************************************
     // * ESCIDOC NAMESPACES
     // *****************************************************************************************************************
 
     // COMMON
-    public static final String NS_COMMON = "http://escidoc.de/core/01/";
 
-    public static final String NS_COMMON_SREL = NS_COMMON + "structural-relations/";
+    public static final String NS_COMMON_PARENTS = SCHEMA_LOCATION_BASE + NS_BASE_COMMON_PARENTS;
 
-    public static final String NS_COMMON_RESOURCES = NS_COMMON + "resources/";
+    public static final String NS_COMMON_SREL = PROPERTIES_NS_BASE + "/structural-relations/";
 
-    public static final String NS_COMMON_PROPERTIES = NS_COMMON + "properties/";
+    public static final String NS_COMMON_RESOURCES = PROPERTIES_NS_BASE + "/resources/";
 
-    public static final String NS_COMMON_PARENTS = SCHEMA_LOCATION_BASE1 + NS_BASE_COMMON_PARENTS;
+    public static final String NS_COMMON_PROPERTIES = PROPERTIES_NS_BASE + "/properties/";
 
     // AA
-    public static final String NS_AA_USER_ACCOUNT = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_USER_ACCOUNT;
+    public static final String NS_AA_USER_ACCOUNT = SCHEMA_LOCATION_BASE + NS_BASE_AA_USER_ACCOUNT;
 
-    public static final String NS_AA_USER_GROUP = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_USER_GROUP;
+    public static final String NS_AA_USER_GROUP = SCHEMA_LOCATION_BASE + NS_BASE_AA_USER_GROUP;
 
-    public static final String NS_AA_GRANTS = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_GRANTS;
+    public static final String NS_AA_GRANTS = SCHEMA_LOCATION_BASE + NS_BASE_AA_GRANTS;
 
-    public static final String NS_AA_ROLE = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_ROLE;
+    public static final String NS_AA_ROLE = SCHEMA_LOCATION_BASE + NS_BASE_AA_ROLE;
 
-    public static final String NS_AA_PREFERENCES = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_PREFERENCES;
+    public static final String NS_AA_PREFERENCES = SCHEMA_LOCATION_BASE + NS_BASE_AA_PREFERENCES;
 
-    public static final String NS_AA_ATTRIBUTES = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_ATTRIBUTES;
+    public static final String NS_AA_ATTRIBUTES = SCHEMA_LOCATION_BASE + NS_BASE_AA_ATTRIBUTES;
 
-    public static final String NS_AA_PDP_REQUESTS = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_PDP + "/requests";
+    public static final String NS_AA_PDP_REQUESTS = SCHEMA_LOCATION_BASE + NS_BASE_AA_PDP + "/pdp-requests";
 
-    public static final String NS_AA_PDP_RESULTS = SCHEMA_LOCATION_BASE1 + NS_BASE_AA_PDP + "/results";
-
-    // AMD
-    public static final String NS_ADM_ADMIN = SCHEMA_LOCATION_BASE1 + NS_BASE_ADM_ADMIN;
+    public static final String NS_AA_PDP_RESULTS = SCHEMA_LOCATION_BASE + NS_BASE_AA_PDP + "/pdp-results";
 
     // CMM
-    public static final String NS_CMM_CONTENT_MODEL = SCHEMA_LOCATION_BASE1 + NS_BASE_CMM_CONTENT_MODEL;
+    public static final String NS_CMM_CONTENT_MODEL = SCHEMA_LOCATION_BASE + NS_BASE_CMM_CONTENT_MODEL;
 
     // IR
-    public static final String NS_IR_ITEM = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_ITEM;
+    public static final String NS_IR_ITEM = SCHEMA_LOCATION_BASE + NS_BASE_IR_ITEM;
 
-    public static final String NS_IR_CONTAINER = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_CONTAINER;
+    public static final String NS_IR_CONTAINER = SCHEMA_LOCATION_BASE + NS_BASE_IR_CONTAINER;
 
-    public static final String NS_IR_CONTEXT = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_CONTEXT;
+    public static final String NS_IR_CONTEXT = SCHEMA_LOCATION_BASE + NS_BASE_IR_CONTEXT;
 
-    public static final String NS_IR_CONTENT_RELATION = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_CONTENT_RELATION;
+    public static final String NS_IR_CONTENT_RELATION = SCHEMA_LOCATION_BASE + NS_BASE_IR_CONTENT_RELATION;
 
-    public static final String NS_IR_COMPONENTS = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_COMPONENTS;
+    public static final String NS_IR_COMPONENTS = SCHEMA_LOCATION_BASE + NS_BASE_IR_COMPONENTS;
 
-    public static final String NS_IR_MD_RECORDS = SCHEMA_LOCATION_BASE1 + NS_BASE_IR_MD_RECORDS;
+    public static final String NS_IR_MD_RECORDS = SCHEMA_LOCATION_BASE + NS_BASE_IR_MD_RECORDS;
 
     // OUM
-    public static final String NS_OUM_OU = SCHEMA_LOCATION_BASE1 + NS_BASE_OUM_OU;
+    public static final String NS_OUM_OU = SCHEMA_LOCATION_BASE + NS_BASE_OUM_OU;
 
     // STATISTIC
-    public static final String NS_SM_SCOPE = SCHEMA_LOCATION_BASE1 + NS_BASE_SM_SCOPE;
+    public static final String NS_SM_SCOPE = SCHEMA_LOCATION_BASE + NS_BASE_SM_SCOPE;
 
-    public static final String NS_SM_REPORT_DEFINITION = SCHEMA_LOCATION_BASE1 + NS_BASE_SM_REPORT_DEFINITION;
+    public static final String NS_SM_REPORT_DEFINITION = SCHEMA_LOCATION_BASE + NS_BASE_SM_REPORT_DEFINITION;
 
-    public static final String NS_SM_AGGREGATION_DEFINITION = SCHEMA_LOCATION_BASE1 + NS_BASE_SM_AGGREGATION_DEFINITION;
+    public static final String NS_SM_AGGREGATION_DEFINITION = SCHEMA_LOCATION_BASE + NS_BASE_SM_AGGREGATION_DEFINITION;
 
-    public static final String NS_SM_REPORT = SCHEMA_LOCATION_BASE1 + NS_BASE_SM_REPORT;
+    public static final String NS_SM_REPORT = SCHEMA_LOCATION_BASE + NS_BASE_SM_REPORT;
 
     // STAGING
-    public static final String NS_ST_FILE = SCHEMA_LOCATION_BASE1 + NS_BASE_ST_FILE;
+    public static final String NS_ST_FILE = SCHEMA_LOCATION_BASE + NS_BASE_ST_FILE;
 
     // OAI
-    public static final String NS_OAI_SET_DEFINITION = SCHEMA_LOCATION_BASE1 + NS_BASE_OAI_SET_DEFINITION;
+    public static final String NS_OAI_SET_DEFINITION = SCHEMA_LOCATION_BASE + NS_BASE_OAI_SET_DEFINITION;
 
     // TASK PARAM
     public static final String NS_TP_OPTIMISTIC_LOCKING = SCHEMA_LOCATION_BASE + NS_BASE_TP_OPTIMISTIC_LOCKING;
@@ -463,9 +457,9 @@ public class Constants {
 
     public static final String NS_TP_REVOKE_GRANTS = SCHEMA_LOCATION_BASE + NS_BASE_TP_REVOKE_GRANTS;
 
-    public static final String NS_TP_SELECTOR_ADD = SCHEMA_LOCATION_BASE1 + NS_BASE_TP_SELECTOR_ADD;
+    public static final String NS_TP_SELECTOR_ADD = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_ADD;
 
-    public static final String NS_TP_SELECTOR_REMOVE = SCHEMA_LOCATION_BASE1 + NS_BASE_TP_SELECTOR_REMOVE;
+    public static final String NS_TP_SELECTOR_REMOVE = SCHEMA_LOCATION_BASE + NS_BASE_TP_SELECTOR_REMOVE;
 
     public static final String NS_TP_REINDEX = SCHEMA_LOCATION_BASE + NS_BASE_TP_REINDEX;
 
@@ -480,8 +474,6 @@ public class Constants {
     public static final String NS_TP_STATUS = SCHEMA_LOCATION_BASE + NS_BASE_TP_STATUS;
 
     public static final String NS_TP_RELATION = SCHEMA_LOCATION_BASE + NS_BASE_TP_RELATION;
-
-    public static final String NS_TP_SEMANTIC_STORE_QUERY = SCHEMA_LOCATION_BASE + NS_BASE_TP_SEMANTIC_STORE_QUERY;
 
     // *****************************************************************************************************************
     // * EXTERNAL NAMESPACES
@@ -542,32 +534,22 @@ public class Constants {
     // AA
     public static final String XSD_AA_GRANTS = "grants.xsd";
 
-    public static final String XSD_AA_PREFERENCES = "preferences.xsd";
+    public static final String XSD_AA_PREFERENCES = "user-account-preferences.xsd";
 
-    public static final String XSD_AA_ATTRIBUTES = "attributes.xsd";
+    public static final String XSD_AA_ATTRIBUTES = "user-account-attributes.xsd";
 
     public static final String XSD_AA_ROLE = "role.xsd";
 
-    public static final String XSD_AA_ROLE_LIST = "role-list.xsd";
-
     public static final String XSD_AA_USER_ACCOUNT = "user-account.xsd";
-
-    public static final String XSD_AA_USER_ACCOUNT_LIST = "user-account-list.xsd";
 
     public static final String XSD_AA_USER_GROUP = "user-group.xsd";
 
-    public static final String XSD_AA_USER_GROUP_LIST = "user-group-list.xsd";
+    public static final String XSD_AA_PDP_REQUESTS = "pdp-requests.xsd";
 
-    public static final String XSD_AA_PDP_REQUESTS = "requests.xsd"; // TODO: rename to: pdp-requests.xsd
-
-    public static final String XSD_AA_PDP_RESULTS = "results.xsd"; // TODO: rename to: pdp-results.xsd
+    public static final String XSD_AA_PDP_RESULTS = "pdp-results.xsd";
 
     // OUM
     public static final String XSD_OUM_OU_SUCCESSORS = "organizational-unit-successors.xsd";
-
-    public static final String XSD_OUM_OU_REF_LIST = "organizational-unit-ref-list.xsd";
-
-    public static final String XSD_OUM_OU_LIST = "organizational-unit-list.xsd";
 
     public static final String XSD_OUM_OU_PATH_LIST = "organizational-unit-path-list.xsd";
 
@@ -609,114 +591,101 @@ public class Constants {
     public static final String XSD_ACCESS = "/xsd";
 
     // COMMON
-    public static final String XSD_ACCESS_COMMON_SRW =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/search-result/0.8/" + XSD_COMMON_SRW;
+    public static final String XSD_ACCESS_COMMON_SRW = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/srw/1.0/" + XSD_COMMON_SRW;
 
     public static final String XSD_ACCESS_COMMON_ZEEREX =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/search-result/0.4/" + XSD_COMMON_ZEEREX;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/srw/1.0/" + XSD_COMMON_ZEEREX;
 
     public static final String XSD_ACCESS_COMMON_RESULTS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.1/" + XSD_COMMON_RESULTS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/common/1.0/" + XSD_COMMON_RESULTS;
 
     public static final String XSD_ACCESS_COMMON_VERSION_HISTORY =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.4/" + XSD_COMMON_VERSION_HISTORY;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/common/1.0/" + XSD_COMMON_VERSION_HISTORY;
 
     public static final String XSD_ACCESS_COMMON_RELATIONS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.3/" + XSD_COMMON_RELATIONS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/common/1.0/" + XSD_COMMON_RELATIONS;
 
     public static final String XSD_ACCESS_COMMON_PARENTS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/common/0.9/" + XSD_COMMON_PARENTS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/common/1.0/" + XSD_COMMON_PARENTS;
 
     // AA
     public static final String XSD_ACCESS_AA_USER_ACCOUNT =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.7/" + XSD_AA_USER_ACCOUNT;
-
-    public static final String XSD_ACCESS_AA_USER_ACCOUNT_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.7/" + XSD_AA_USER_ACCOUNT_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/user-account/1.0/" + XSD_AA_USER_ACCOUNT;
 
     public static final String XSD_ACCESS_AA_PREFERENCES =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.1/" + XSD_AA_PREFERENCES;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/user-account/1.0/" + XSD_AA_PREFERENCES;
 
     public static final String XSD_ACCESS_AA_ATTRIBUTES =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.1/" + XSD_AA_ATTRIBUTES;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/user-account/1.0/" + XSD_AA_ATTRIBUTES;
 
     public static final String XSD_ACCESS_AA_USER_GROUP =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-group/0.6/" + XSD_AA_USER_GROUP;
-
-    public static final String XSD_ACCESS_AA_USER_GROUP_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-group/0.6/" + XSD_AA_USER_GROUP_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/user-group/1.0/" + XSD_AA_USER_GROUP;
 
     public static final String XSD_ACCESS_AA_PDP_REQUESTS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/pdp/0.3/" + XSD_AA_PDP_REQUESTS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/pdp/1.0/" + XSD_AA_PDP_REQUESTS;
 
     public static final String XSD_ACCESS_AA_PDP_RESULTS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/pdp/0.3/" + XSD_AA_PDP_RESULTS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/pdp/1.0/" + XSD_AA_PDP_RESULTS;
 
-    public static final String XSD_ACCESS_AA_ROLE = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/role/0.5/" + XSD_AA_ROLE;
+    public static final String XSD_ACCESS_AA_ROLE = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/role/1.0/" + XSD_AA_ROLE;
 
-    public static final String XSD_ACCESS_AA_GRANTS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/user-account/0.5/" + XSD_AA_GRANTS;
+    public static final String XSD_ACCESS_AA_GRANTS = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/grant/1.0/" + XSD_AA_GRANTS;
 
     // ADM
     public static final String XSD_ACCESS_ADM_INDEX_CONFIGURATION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/admin/0.1/" + XSD_ADM_INDEX_CONFIGURATION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/indexing/1.0/" + XSD_ADM_INDEX_CONFIGURATION;
 
     // IR
     public static final String XSD_ACCESS_IR_CONTEXT =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/context/0.8/" + XSD_IR_CONTEXT;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/context/1.0/" + XSD_IR_CONTEXT;
 
-    public static final String XSD_ACCESS_IR_ITEM = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/item/0.11/" + XSD_IR_ITEM;
+    public static final String XSD_ACCESS_IR_ITEM = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/item/1.0/" + XSD_IR_ITEM;
 
     public static final String XSD_ACCESS_IR_CONTAINER =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/container/0.10/" + XSD_IR_CONTAINER;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/container/1.0/" + XSD_IR_CONTAINER;
 
     public static final String XSD_ACCESS_IR_STRUCT_MAP =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/container/0.4/" + XSD_IR_STRUCT_MAP;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/container/1.0/" + XSD_IR_STRUCT_MAP;
 
     public static final String XSD_ACCESS_IR_CONTENT_RELATION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/content-relation/0.2/" + XSD_IR_CONTENT_RELATION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/content-relation/1.0/" + XSD_IR_CONTENT_RELATION;
 
     public static final String XSD_ACCESS_IR_PREDICATE_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/content-relation/0.2/" + XSD_IR_PREDICATE_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/content-relation/1.0/" + XSD_IR_PREDICATE_LIST;
 
     // CMM
     public static final String XSD_ACCESS_CMM_CONTENT_MODEL =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/content-model/0.1/" + XSD_CMM_CONTENT_MODEL;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/content-model/1.0/" + XSD_CMM_CONTENT_MODEL;
 
     // OUM
     public static final String XSD_ACCESS_OUM_OU =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.9/" + XSD_OUM_OU;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/organizational-unit/1.0/" + XSD_OUM_OU;
 
     public static final String XSD_ACCESS_OUM_OU_SUCCESSORS =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.9/" + XSD_OUM_OU_SUCCESSORS;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/organizational-unit/1.0/" + XSD_OUM_OU_SUCCESSORS;
 
     public static final String XSD_ACCESS_OUM_OU_PATH_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.5/" + XSD_OUM_OU_PATH_LIST;
-
-    public static final String XSD_ACCESS_OUM_OU_REF_LIST =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/organizational-unit/0.5/" + XSD_OUM_OU_REF_LIST;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/organizational-unit/1.0/" + XSD_OUM_OU_PATH_LIST;
 
     // SM
-    public static final String XSD_ACCESS_SM_SCOPE =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/scope/0.4/" + XSD_SM_SCOPE;
+    public static final String XSD_ACCESS_SM_SCOPE = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/scope/1.0/" + XSD_SM_SCOPE;
 
     public static final String XSD_ACCESS_SM_AGGREGATION_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/aggregation-definition/0.5/" + XSD_SM_AGGREGATION_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/aggregation-definition/1.0/" + XSD_SM_AGGREGATION_DEFINITION;
 
     public static final String XSD_ACCESS_SM_REPORT_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/report-definition/0.4/" + XSD_SM_REPORT_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/report-definition/1.0/" + XSD_SM_REPORT_DEFINITION;
 
-    public static final String XSD_ACCESS_SM_REPORT =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/report/0.4/" + XSD_SM_REPORT;
+    public static final String XSD_ACCESS_SM_REPORT = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/report/1.0/" + XSD_SM_REPORT;
 
     // TME
-    public static final String XSD_ACCESS_TME_JHOVE = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/tme/" + XSD_TME_JHOVE;
+    public static final String XSD_ACCESS_TME_JHOVE = WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/tme/1.0/" + XSD_TME_JHOVE;
 
     // OAI
     public static final String XSD_ACCESS_OAI_SET_DEFINITION =
-        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/rest/set-definition/0.2/" + XSD_OAI_SET_DEFINITION;
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/set-definition/1.0/" + XSD_OAI_SET_DEFINITION;
 
     // ST
-    public static final String XSD_ACCESS_ST_FILE = "/rest/staging-file/0.3/" + XSD_ST_FILE;
+    public static final String XSD_ACCESS_ST_FILE = "/staging-file/1.0/" + XSD_ST_FILE;
 
 }

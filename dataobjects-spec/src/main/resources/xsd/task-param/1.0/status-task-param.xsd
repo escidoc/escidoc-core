@@ -1,0 +1,45 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+  ~ the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:common="http://www.escidoc.org/schemas/common/1.0/common-types"
+           xmlns:param="http://www.escidoc.org/schemas/task-param/1.0/status-task-param"
+           targetNamespace="http://www.escidoc.org/schemas/task-param/1.0/status-task-param"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="http://www.escidoc.org/schemas/common/1.0/common-types" schemaLocation="../../common/1.0/common-types.xsd"/>
+
+  <xs:element name="param" type="param:paramType"/>
+  <xs:element name="comment" type="xs:string"/>
+
+  <xs:complexType name="paramType">
+    <xs:all>
+      <xs:element ref="param:comment" minOccurs="0"/>
+    </xs:all>
+    <xs:attributeGroup ref="common:lmdRequired"/>
+  </xs:complexType>
+</xs:schema>

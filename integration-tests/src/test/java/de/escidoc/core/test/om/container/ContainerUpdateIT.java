@@ -1661,9 +1661,9 @@ public class ContainerUpdateIT extends ContainerTestBase {
     @Ignore("was commented out, unknown wy")
     public void testRelationsAdd() throws Exception {
         String containerXml1 =
-            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml"));
         String containerXml2 =
-            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1.xml"));
+            create(getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest", "create_container_WithoutMembers_v1.1.xml"));
 
         String createdContainerId1 = null;
         String createdContainerId2 = null;
@@ -1681,7 +1681,8 @@ public class ContainerUpdateIT extends ContainerTestBase {
         String href1 = "/ir/container/" + createdContainerId1;
         String href2 = "/ir/container/" + createdContainerId2;
         String containerForCreateWithRelationsXml =
-            getTemplateAsString(TEMPLATE_CONTAINER_PATH, "create_container_WithoutMembers_v1.1_WithRelations.xml");
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
+                "create_container_WithoutMembers_v1.1_WithRelations.xml");
 
         containerForCreateWithRelationsXml =
             containerForCreateWithRelationsXml.replaceAll("##CONTAINER_ID1##", createdContainerId1);

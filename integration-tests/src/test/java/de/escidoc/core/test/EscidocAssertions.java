@@ -429,17 +429,6 @@ public abstract class EscidocAssertions {
     }
 
     /**
-     * Asserts that the provided xml data is a valid list of user accounts.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
-     */
-    public void assertXmlValidUserAccountList(final String xmlData) throws Exception {
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_AA_USER_ACCOUNT_LIST));
-    }
-
-    /**
      * Asserts that the provided xml data is a valid user group.
      *
      * @param xmlData The xml data to be asserted.
@@ -483,17 +472,6 @@ public abstract class EscidocAssertions {
     public void assertXmlValidOrganizationalUnitPathList(final String xmlData) throws Exception {
         assertAllPlaceholderResolved(xmlData);
         assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_OUM_OU_PATH_LIST));
-    }
-
-    /**
-     * Asserts that the provided xml data is a valid organizational unit.
-     *
-     * @param xmlData The xml data to be asserted.
-     * @throws Exception If anything fails.
-     */
-    public void assertXmlValidOrganizationalUnitsRefs(final String xmlData) throws Exception {
-        assertAllPlaceholderResolved(xmlData);
-        assertXmlValid(xmlData, new URL(Constants.XSD_ACCESS_OUM_OU_REF_LIST));
     }
 
     /**

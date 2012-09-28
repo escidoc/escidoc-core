@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
-	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.11"
+	xmlns:escidocItem="http://www.escidoc.org/schemas/item/1.0/item"
 	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
-	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:relations="http://www.escidoc.org/schemas/common/1.0/relations"
 	xml:base="http://localhost:8080"
 	prefix-xlink:title="the two ä mystic scans?"
 	prefix-xlink:type="simple">
@@ -16,9 +16,9 @@
 		<prop:content-model-specific><nix></nix></prop:content-model-specific>
 	</escidocItem:properties>
 	<escidocMetadataRecords:md-records
-		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records">
 		<escidocMetadataRecords:md-record
-			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 			 name="escidoc"
 			schema="http://www.escidoc-project.de/metadata/schema/0.1"
 			prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:type="simple">
@@ -128,7 +128,7 @@
 			</publication>
 		</escidocMetadataRecords:md-record>
 		<escidocMetadataRecords:md-record
-					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 					name="y"
 					schema="http://example.org/formatY/">
 					<md2-content xmlns="http://example.org/formatY/">

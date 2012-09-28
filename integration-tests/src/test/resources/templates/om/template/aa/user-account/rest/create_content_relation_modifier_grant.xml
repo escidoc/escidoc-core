@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grants:grant
-	xmlns:grants="http://www.escidoc.de/schemas/grants/0.5"
+	xmlns:grants="http://www.escidoc.org/schemas/grant/1.0/grants"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
     xmlns:srel="http://escidoc.de/core/01/structural-relations/"
     xmlns:xlink="http://www.w3.org/1999/xlink">

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ns0:context xmlns:ns0="http://www.escidoc.de/schemas/context/0.8"
+<ns0:context xmlns:ns0="http://www.escidoc.org/schemas/context/1.0/context"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:srel="http://escidoc.de/core/01/structural-relations/">
 

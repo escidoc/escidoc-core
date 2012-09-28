@@ -41,8 +41,6 @@ public class ObjectFactoryProvider {
     // CONTAINER
     private static final org.escidoc.core.domain.container.ObjectFactory CONTAINER_FACTORY =
         new org.escidoc.core.domain.container.ObjectFactory();
-    private static final org.escidoc.core.domain.container.list.ObjectFactory CONTAINER_LIST_FACTORY =
-        new org.escidoc.core.domain.container.list.ObjectFactory();
     // STRUCT-MAP
     private static final org.escidoc.core.domain.container.structmap.ObjectFactory STRUCT_MAP_FACTORY =
         new org.escidoc.core.domain.container.structmap.ObjectFactory();
@@ -67,8 +65,6 @@ public class ObjectFactoryProvider {
     // USER ACCOUNT
     private static final org.escidoc.core.domain.aa.useraccount.ObjectFactory USER_ACCOUNT_FACTORY =
         new org.escidoc.core.domain.aa.useraccount.ObjectFactory();
-    private static final org.escidoc.core.domain.aa.useraccount.list.ObjectFactory USER_ACCOUNT_LIST_FACTORY =
-        new org.escidoc.core.domain.aa.useraccount.list.ObjectFactory();
     private static final org.escidoc.core.domain.aa.useraccount.preferences.ObjectFactory
         USER_ACCOUNT_PREFERENCES_FACTORY = new org.escidoc.core.domain.aa.useraccount.preferences.ObjectFactory();
     private static final org.escidoc.core.domain.aa.useraccount.attributes.ObjectFactory
@@ -76,13 +72,9 @@ public class ObjectFactoryProvider {
     // USER GROUP
     private static final org.escidoc.core.domain.aa.usergroup.ObjectFactory USER_GROUP_FACTORY =
         new org.escidoc.core.domain.aa.usergroup.ObjectFactory();
-    private static final org.escidoc.core.domain.aa.usergroup.list.ObjectFactory USER_GROUP_LIST_FACTORY =
-            new org.escidoc.core.domain.aa.usergroup.list.ObjectFactory();
     // ROLE
     private static final org.escidoc.core.domain.aa.role.ObjectFactory ROLE_FACTORY =
         new org.escidoc.core.domain.aa.role.ObjectFactory();
-    private static final org.escidoc.core.domain.aa.role.list.ObjectFactory ROLE_LIST_FACTORY =
-        new org.escidoc.core.domain.aa.role.list.ObjectFactory();
     // GRANT
     private static final org.escidoc.core.domain.aa.grants.ObjectFactory GRANT_FACTORY =
         new org.escidoc.core.domain.aa.grants.ObjectFactory();
@@ -95,16 +87,12 @@ public class ObjectFactoryProvider {
     // SM
     private static final org.escidoc.core.domain.sm.scope.ObjectFactory SCOPE_FACTORY =
         new org.escidoc.core.domain.sm.scope.ObjectFactory();
-    private static final org.escidoc.core.domain.sm.scope.list.ObjectFactory SCOPE_LIST_FACTORY =
-        new org.escidoc.core.domain.sm.scope.list.ObjectFactory();
     private static final org.escidoc.core.domain.sm.ad.ObjectFactory AGGREGATION_DEFINITION_FACTORY =
         new org.escidoc.core.domain.sm.ad.ObjectFactory();
     private static final org.escidoc.core.domain.sm.pi.ObjectFactory PRE_PROCESSING_FACTORY =
         new org.escidoc.core.domain.sm.pi.ObjectFactory();
     private static final org.escidoc.core.domain.sm.rd.ObjectFactory REPORT_DEFINITION_FACTORY =
         new org.escidoc.core.domain.sm.rd.ObjectFactory();
-    private static final org.escidoc.core.domain.sm.rd.list.ObjectFactory REPORT_DEFINITION_LIST_FACTORY =
-        new org.escidoc.core.domain.sm.rd.list.ObjectFactory();
     private static final org.escidoc.core.domain.sm.report.ObjectFactory REPORT_FACTORY =
         new org.escidoc.core.domain.sm.report.ObjectFactory();
     private static final org.escidoc.core.domain.sm.report.parameter.ObjectFactory REPORT_PARAM_FACTORY =
@@ -114,8 +102,6 @@ public class ObjectFactoryProvider {
     // OU
     private static final org.escidoc.core.domain.ou.ObjectFactory OU_FACTORY =
         new org.escidoc.core.domain.ou.ObjectFactory();
-    private static final org.escidoc.core.domain.ou.list.ObjectFactory OU_LIST_FACTORY =
-        new org.escidoc.core.domain.ou.list.ObjectFactory();
     private static final org.escidoc.core.domain.ou.ref.ObjectFactory OU_REF_FACTORY =
         new org.escidoc.core.domain.ou.ref.ObjectFactory();
     private static final org.escidoc.core.domain.ou.path.list.ObjectFactory OU_PATH_LIST_FACTORY =
@@ -195,20 +181,8 @@ public class ObjectFactoryProvider {
         return CONTAINER_FACTORY;
     }
 
-    public org.escidoc.core.domain.container.list.ObjectFactory getContainerListFactory() {
-        return CONTAINER_LIST_FACTORY;
-    }
-
-    public org.escidoc.core.domain.aa.useraccount.list.ObjectFactory getUserAccountListFactory() {
-        return USER_ACCOUNT_LIST_FACTORY;
-    }
-
     public org.escidoc.core.domain.ou.ObjectFactory getOuFactory() {
         return OU_FACTORY;
-    }
-
-    public org.escidoc.core.domain.ou.list.ObjectFactory getOuListFactory() {
-        return OU_LIST_FACTORY;
     }
 
     public org.escidoc.core.domain.ou.ref.ObjectFactory getOuRefFactory() {
@@ -251,20 +225,12 @@ public class ObjectFactoryProvider {
         return ROLE_FACTORY;
     }
 
-    public org.escidoc.core.domain.aa.role.list.ObjectFactory getRoleListFactory() {
-        return ROLE_LIST_FACTORY;
-    }
-
     public org.escidoc.core.domain.aa.grants.ObjectFactory getGrantFactory() {
         return GRANT_FACTORY;
     }
 
     public org.escidoc.core.domain.aa.usergroup.ObjectFactory getUserGroupFactory() {
         return USER_GROUP_FACTORY;
-    }
-
-    public org.escidoc.core.domain.aa.usergroup.list.ObjectFactory getUserGroupListFactory() {
-        return USER_GROUP_LIST_FACTORY;
     }
 
     public org.escidoc.core.domain.properties.java.ObjectFactory getJavaPropertiesFactory() {
@@ -315,10 +281,6 @@ public class ObjectFactoryProvider {
         return SCOPE_FACTORY;
     }
 
-    public org.escidoc.core.domain.sm.scope.list.ObjectFactory getScopeListFactory() {
-        return SCOPE_LIST_FACTORY;
-    }
-
     public org.escidoc.core.domain.sm.ad.ObjectFactory getAggregationDefinitionFactory() {
         return AGGREGATION_DEFINITION_FACTORY;
     }
@@ -329,10 +291,6 @@ public class ObjectFactoryProvider {
 
     public org.escidoc.core.domain.sm.rd.ObjectFactory getReportDefinitionFactory() {
         return REPORT_DEFINITION_FACTORY;
-    }
-
-    public org.escidoc.core.domain.sm.rd.list.ObjectFactory getReportDefinitionListFactory() {
-        return REPORT_DEFINITION_LIST_FACTORY;
     }
 
     public org.escidoc.core.domain.sm.report.ObjectFactory getReportFactory() {

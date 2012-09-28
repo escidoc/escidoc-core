@@ -70,7 +70,7 @@
       <directory>${project.basedir}/..</directory>
       <outputDirectory>/xsd</outputDirectory>
       <includes>
-        <include>*/src/main/xsd/**/*.xsd</include>
+        <include>dataobjects-spec/src/main/resources/xsd/**/*.xsd</include>
       </includes>
     </fileSet>
 

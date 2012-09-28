@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocMetadataRecords:md-record name="escidoc"
 	md-type="http://www.escidoc-project.de/metadata/schema/0.1"
-	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
 	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xml="http://www.w3.org/XML/1998/namespace"
 	xml:base="http://localhost:8080" xlink:type="simple" xlink:title="escidoc"
 	xlink:href="/ir/item/escidoc:3006/md-records/md-record/escidoc"

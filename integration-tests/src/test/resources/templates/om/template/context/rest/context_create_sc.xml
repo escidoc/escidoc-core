@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<context xmlns="http://www.escidoc.de/schemas/context/0.8"
+<context xmlns="http://www.escidoc.org/schemas/context/1.0/context"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
-	xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+	xmlns:common-types="http://www.escidoc.org/schemas/common/1.0/common-types"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.escidoc.de/schemas/context/0.8 
-	http://localhost:8080/xsd/rest/context/0.8/context.xsd"
+	xsi:schemaLocation="http://www.escidoc.org/schemas/context/1.0/context 
+	http://www.escidoc.org/schemas/context/1.0/context.xsd"
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 
 	<properties>

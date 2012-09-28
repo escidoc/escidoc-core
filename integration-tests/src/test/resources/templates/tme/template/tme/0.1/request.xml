@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<request xmlns="http://www.escidoc.de/schemas/tme/request/0.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+<request xmlns="http://www.escidoc.org/schemas/tme/1.0/tme-request" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<file xlink:type="simple" xlink:title="" xlink:href="http://localhost:8080/escidoc/images/escidoc-logo.jpg" />
 	<file xlink:type="simple" xlink:title="" xlink:href="" />	
 </request>

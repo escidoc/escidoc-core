@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <organizational-unit:organizational-unit
-  xmlns:organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.9"
+  xmlns:organizational-unit="http://www.escidoc.org/schemas/organizational-unit/1.0/organizational-unit"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xml="http://www.w3.org/XML/1998/namespace"
-  xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+  xmlns:prefix-xlink="http://www.w3.org/1999/xlink" 
   xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
-  xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
-  xmlns:prefix-parents="http://www.escidoc.de/schemas/parents/0.9">
+  xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
+  xmlns:prefix-parents="http://www.escidoc.org/schemas/common/1.0/parents">
   <md-records:md-records>
     <md-records:md-record name="escidoc">
       <ou:ou

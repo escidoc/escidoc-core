@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <test:aggregation-definition 
-    xmlns:test="http://www.escidoc.de/schemas/aggregationdefinition/0.5"
+    xmlns:test="http://www.escidoc.org/schemas/aggregation-definition/1.0/aggregation-definition"
     xmlns:xlink="http://www.w3.org/1999/xlink">
 	<test:name>Page Statistics for PubMan</test:name>
 	<test:scope xlink:href="/statistic/scope/escidoc:scope2" />

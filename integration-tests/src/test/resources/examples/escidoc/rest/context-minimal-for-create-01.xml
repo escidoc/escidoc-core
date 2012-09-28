@@ -7,7 +7,7 @@
 	the object references to alter.     
 -->
 <context:context
-	xmlns:context="http://www.escidoc.de/schemas/context/0.8"
+	xmlns:context="http://www.escidoc.org/schemas/context/1.0/context"
 	xmlns:prop="http://escidoc.de/core/01/properties/"
 	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:xlink="http://www.w3.org/1999/xlink"

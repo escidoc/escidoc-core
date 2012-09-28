@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <requests:requests
-	xmlns:requests="http://www.escidoc.de/schemas/pdp/0.3/requests"
+	xmlns:requests="http://www.escidoc.org/schemas/pdp/1.0/pdp-requests"
 	xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context">
 	<xacml-context:Request>
 		<xacml-context:Subject

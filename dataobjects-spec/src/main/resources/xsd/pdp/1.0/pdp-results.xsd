@@ -1,0 +1,39 @@
+<!-- 
+  Changes applied to this schema (since version 0.4, July 2009):
+    
+  August 2012
+  - version changed to 1.0
+  - change namespace-identifiers to http://www.escidoc.org/schemas/<resource>/1.0/<xsd-name>
+
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xacml-context="urn:oasis:names:tc:xacml:1.0:context"
+           xmlns:results="http://www.escidoc.org/schemas/pdp/1.0/pdp-results"
+           targetNamespace="http://www.escidoc.org/schemas/pdp/1.0/pdp-results"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+  <xs:import namespace="urn:oasis:names:tc:xacml:1.0:context" schemaLocation="../../pdp/1.0/cs-xacml-schema-context-01.xsd"/>
+
+  <xs:element name="results" type="results:resultsType"/>
+  <xs:element name="result" type="results:resultType"/>
+
+  <xs:complexType name="resultsType">
+    <xs:sequence>
+      <xs:element ref="results:result" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="resultType">
+    <xs:sequence>
+      <xs:element ref="xacml-context:Response"/>
+    </xs:sequence>
+    <xs:attribute name="decision" type="results:decisionType"/>
+  </xs:complexType>
+
+  <xs:simpleType name="decisionType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="permit"/>
+      <xs:enumeration value="deny"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
