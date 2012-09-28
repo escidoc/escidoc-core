@@ -103,7 +103,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
 
-        String contentType = "application/octet-stream"; 
+        String contentType = "application/octet-stream";
 
         File temp = retrieveContentFromFramework(itemId, componentId, contentType);
         String sha1 = computeHashSum(temp);
