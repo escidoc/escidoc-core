@@ -7,7 +7,7 @@
   xmlns:prefix-parents="http://www.escidoc.org/schemas/common/1.0/parents"
 	last-modification-date="2008-01-07T16:46:23.656Z">
 	<md-records:md-records
-		xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+		xmlns:md-records="http://www.escidoc.org/schemas/common/1.0/md-records"
 		xmlns:ou="http://www.escidoc.de/metadata/organizational-unit"
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:dcterms="http://purl.org/dc/terms/">

@@ -57,82 +57,93 @@
     <property name="catalogLocation" value="classpath:/xsd/catalog.xml"/>
     <property name="schemaLocations">
       <list>
-        <value>classpath:/xsd/add-selectors.xsd</value>
-        <value>classpath:/xsd/aggregation-definition.xsd</value>
-        <value>classpath:/xsd/aggregation-definition-list.xsd</value>
-        <value>classpath:/xsd/assign-pid-task-param.xsd</value>
-        <value>classpath:/xsd/common-types.xsd</value>
-        <value>classpath:/xsd/components.xsd</value>
-        <value>classpath:/xsd/container.xsd</value>
-        <value>classpath:/xsd/container-list.xsd</value>
-        <value>classpath:/xsd/content-model.xsd</value>
-        <value>classpath:/xsd/content-relation.xsd</value>
-        <value>classpath:/xsd/content-streams.xsd</value>
-        <value>classpath:/xsd/context-list.xsd</value>
-        <value>classpath:/xsd/context.xsd</value>
-        <value>classpath:/xsd/cs-xacml-schema-context-01.xsd</value>
-        <value>classpath:/xsd/cs-xacml-schema-policy-01.xsd</value>
-        <value>classpath:/xsd/delete-objects-task-param.xsd</value>
-        <value>classpath:/xsd/diagnostics.xsd</value>
-        <value>classpath:/xsd/Event-v1-1.xsd</value>
-        <value>classpath:/xsd/exception.xsd</value>
-        <value>classpath:/xsd/grants.xsd</value>
-        <value>classpath:/xsd/id-set-task-param.xsd</value>
-        <value>classpath:/xsd/index-configuration.xsd</value>
-        <value>classpath:/xsd/item-list.xsd</value>
-        <value>classpath:/xsd/item.xsd</value>
-        <value>classpath:/xsd/jhove.xsd</value>
-        <value>classpath:/xsd/md-records.xsd</value>
-        <value>classpath:/xsd/members-task-param.xsd</value>
-        <value>classpath:/xsd/optimistic-locking-task-param.xsd</value>
-        <value>classpath:/xsd/organizational-unit-list.xsd</value>
-        <value>classpath:/xsd/organizational-unit-path-list.xsd</value>
-        <value>classpath:/xsd/organizational-unit-ref.xsd</value>
-        <value>classpath:/xsd/organizational-unit-successors.xsd</value>
-        <value>classpath:/xsd/organizational-unit.xsd</value>
-        <value>classpath:/xsd/parents.xsd</value>
-        <value>classpath:/xsd/pdp-requests.xsd</value>
-        <value>classpath:/xsd/pdp-results.xsd</value>
-        <value>classpath:/xsd/permission-filter.xsd</value>
-        <value>classpath:/xsd/predicate-list.xsd</value>
-        <value>classpath:/xsd/preprocessing-information.xsd</value>
-        <value>classpath:/xsd/properties.xsd</value>
-        <value>classpath:/xsd/reindex-task-param.xsd</value>
-        <value>classpath:/xsd/relation-task-param.xsd</value>
-        <value>classpath:/xsd/relations.xsd</value>
-        <value>classpath:/xsd/release.xsd</value>
-        <value>classpath:/xsd/remove-selectors.xsd</value>
-        <value>classpath:/xsd/report-definition-list.xsd</value>
-        <value>classpath:/xsd/report-definition.xsd</value>
-        <value>classpath:/xsd/report-parameters.xsd</value>
-        <value>classpath:/xsd/report.xsd</value>
-        <value>classpath:/xsd/result.xsd</value>
-        <value>classpath:/xsd/revoke-grant-task-param.xsd</value>
-        <value>classpath:/xsd/revoke-grants-task-param.xsd</value>
-        <value>classpath:/xsd/role-list.xsd</value>
-        <value>classpath:/xsd/role.xsd</value>
-        <value>classpath:/xsd/scope-list.xsd</value>
-        <value>classpath:/xsd/scope.xsd</value>
-        <value>classpath:/xsd/set-definition.xsd</value>
-        <value>classpath:/xsd/srw-extra-data.xsd</value>
-        <value>classpath:/xsd/srw-types.xsd</value>
-        <value>classpath:/xsd/staging-file.xsd</value>
-        <value>classpath:/xsd/status-task-param.xsd</value>
-        <value>classpath:/xsd/struct-map.xsd</value>
-        <value>classpath:/xsd/structural-relations.xsd</value>
-        <value>classpath:/xsd/tme-request.xsd</value>
-        <value>classpath:/xsd/update-password-task-param.xsd</value>
-        <value>classpath:/xsd/user-account-attributes.xsd</value>
-        <value>classpath:/xsd/user-account-preferences.xsd</value>
-        <value>classpath:/xsd/user-account-list.xsd</value>
-        <value>classpath:/xsd/user-account.xsd</value>
-        <value>classpath:/xsd/user-group-list.xsd</value>
-        <value>classpath:/xsd/user-group.xsd</value>
-        <value>classpath:/xsd/version-history.xsd</value>
-        <value>classpath:/xsd/version.xsd</value>
-        <value>classpath:/xsd/xcql.xsd</value>
-        <value>classpath:/xsd/xlink.xsd</value>
-        <value>classpath:/xsd/xml.xsd</value>
+        <value>classpath:/xsd/aggregation-definition/1.0/aggregation-definition.xsd</value>
+
+        <value>classpath:/xsd/common/1.0/common-types.xsd</value>
+        <value>classpath:/xsd/common/1.0/content-streams.xsd</value>
+        <value>classpath:/xsd/common/1.0/Event-v1-1.xsd</value>
+        <value>classpath:/xsd/common/1.0/exception.xsd</value>
+        <value>classpath:/xsd/common/1.0/md-records.xsd</value>
+        <value>classpath:/xsd/common/1.0/parents.xsd</value>
+        <value>classpath:/xsd/common/1.0/properties.xsd</value>
+        <value>classpath:/xsd/common/1.0/relations.xsd</value>
+        <value>classpath:/xsd/common/1.0/release.xsd</value>
+        <value>classpath:/xsd/common/1.0/result.xsd</value>
+        <value>classpath:/xsd/common/1.0/structural-relations.xsd</value>
+        <value>classpath:/xsd/common/1.0/version-history.xsd</value>
+        <value>classpath:/xsd/common/1.0/version.xsd</value>
+        <value>classpath:/xsd/common/1.0/xlink.xsd</value>
+
+        <value>classpath:/xsd/container/1.0/container.xsd</value>
+        <value>classpath:/xsd/container/1.0/struct-map.xsd</value>
+        <value>classpath:/xsd/content-model/1.0/content-model.xsd</value>
+        <value>classpath:/xsd/content-relation/1.0/content-relation.xsd</value>
+
+        <value>classpath:/xsd/context/1.0/context.xsd</value>
+
+        <value>classpath:/xsd/grant/1.0/grants.xsd</value>
+
+        <value>classpath:/xsd/indexing/1.0/index-configuration.xsd</value>
+
+        <value>classpath:/xsd/item/1.0/components.xsd</value>
+        <value>classpath:/xsd/item/1.0/item.xsd</value>
+
+        <value>classpath:/xsd/organizational-unit/1.0/organizational-unit-path-list.xsd</value>
+        <value>classpath:/xsd/organizational-unit/1.0/organizational-unit-ref.xsd</value>
+        <value>classpath:/xsd/organizational-unit/1.0/organizational-unit-successors.xsd</value>
+        <value>classpath:/xsd/organizational-unit/1.0/organizational-unit.xsd</value>
+
+        <value>classpath:/xsd/pdp/1.0/cs-xacml-schema-context-01.xsd</value>
+        <value>classpath:/xsd/pdp/1.0/cs-xacml-schema-policy-01.xsd</value>
+        <value>classpath:/xsd/pdp/1.0/pdp-requests.xsd</value>
+        <value>classpath:/xsd/pdp/1.0/pdp-results.xsd</value>
+
+        <value>classpath:/xsd/preprocessing-information/1.0/preprocessing-information.xsd</value>
+
+        <value>classpath:/xsd/report/1.0/report-parameters.xsd</value>
+        <value>classpath:/xsd/report/1.0/report.xsd</value>
+
+        <value>classpath:/xsd/report-definition/1.0/report-definition.xsd</value>
+
+        <value>classpath:/xsd/role/1.0/role.xsd</value>
+
+        <value>classpath:/xsd/scope/1.0/scope.xsd</value>
+
+        <value>classpath:/xsd/set-definition/1.0/set-definition.xsd</value>
+
+        <value>classpath:/xsd/srw/1.0/diagnostics.xsd</value>
+        <value>classpath:/xsd/srw/1.0/srw-extra-data.xsd</value>
+        <value>classpath:/xsd/srw/1.0/srw-types.xsd</value>
+        <value>classpath:/xsd/srw/1.0/xcql.xsd</value>
+        <value>classpath:/xsd/srw/1.0/zeerex-2.0.xsd</value>
+
+        <value>classpath:/xsd/staging-file/1.0/staging-file.xsd</value>
+
+        <value>classpath:/xsd/statistic-data/1.0/statistic-data.xsd</value>
+
+        <value>classpath:/xsd/task-param/1.0/add-selectors.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/assign-pid-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/delete-objects-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/id-set-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/members-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/optimistic-locking-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/reindex-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/relation-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/remove-selectors.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/revoke-grant-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/revoke-grants-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/status-task-param.xsd</value>
+        <value>classpath:/xsd/task-param/1.0/update-password-task-param.xsd</value>
+
+        <value>classpath:/xsd/tme/1.0/jhove.xsd</value>
+        <value>classpath:/xsd/tme/1.0/tme-request.xsd</value>
+
+        <value>classpath:/xsd/user-account/1.0/permission-filter.xsd</value>
+        <value>classpath:/xsd/user-account/1.0/user-account-attributes.xsd</value>
+        <value>classpath:/xsd/user-account/1.0/user-account-preferences.xsd</value>
+        <value>classpath:/xsd/user-account/1.0/user-account.xsd</value>
+
+        <value>classpath:/xsd/user-group/1.0/user-group.xsd</value>
       </list>
     </property>
   </bean>
