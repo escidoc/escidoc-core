@@ -98,7 +98,8 @@ public class ScapeIngestHandler implements de.escidoc.core.om.service.interfaces
 
     private void closeOU() throws ScapeException {
         try {
-            ouHandler.close(scapeOU.getObjid(), null);
+            ouHandler.close(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
+                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
         }
         catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
