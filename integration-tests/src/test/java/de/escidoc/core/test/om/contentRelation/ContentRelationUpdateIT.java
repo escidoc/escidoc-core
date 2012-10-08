@@ -113,7 +113,7 @@ public class ContentRelationUpdateIT extends ContentRelationTestBase {
 
         // add new md-record element
         String mdRecordNsPrefix =
-            updatedXml.replaceFirst("(?s).*xmlns:(.*?)=\"http://www.escidoc.de/schemas/metadatarecords.*", "$1");
+            updatedXml.replaceFirst("(?s).*xmlns:(.*?)=\"" + Constants.NS_IR_MD_RECORDS + ".*", "$1");
         Element mdRecordsNew =
             updatedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-records");
         Element mdRecord = updatedDocument.createElementNS(Constants.NS_IR_MD_RECORDS, mdRecordNsPrefix + ":md-record");

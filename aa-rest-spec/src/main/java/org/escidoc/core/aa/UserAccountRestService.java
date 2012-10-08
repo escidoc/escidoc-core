@@ -732,7 +732,7 @@ public interface UserAccountRestService {
     @GET
     @Path("/{id}/resources/preferences/preference/{name}")
     @Produces(MediaType.TEXT_XML)
-    JAXBElement<PreferencesTypeTO> retrievePreference(@NotNull @PathParam("id") String id,
+    JAXBElement<PreferenceTypeTO> retrievePreference(@NotNull @PathParam("id") String id,
         @NotNull @PathParam("name") String name)
         throws UserAccountNotFoundException, PreferenceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException;

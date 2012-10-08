@@ -280,12 +280,12 @@ public class UserAccountRestServiceImpl implements UserAccountRestService {
      * @see de.escidoc.core.aa.UserAccountRestService#retrievePreference(java.lang.String, java.lang.String)
      */
     @Override
-    public JAXBElement<PreferencesTypeTO> retrievePreference(final String id, final String name)
+    public JAXBElement<PreferenceTypeTO> retrievePreference(final String id, final String name)
         throws UserAccountNotFoundException,
         PreferenceNotFoundException, MissingMethodParameterException, AuthenticationException, AuthorizationException,
         SystemException {
-        return factoryProvider.getUserAccountPreferencesFactory().createPreferences(
-            serviceUtility.fromXML(PreferencesTypeTO.class, this.userAccountHandler.retrievePreference(id, name)));
+        return factoryProvider.getUserAccountPreferencesFactory().createPreference(
+            serviceUtility.fromXML(PreferenceTypeTO.class, this.userAccountHandler.retrievePreference(id, name)));
     }
 
     /* (non-Javadoc)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<container:container xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
-	xmlns:container="http://www.escidoc.de/schemas/container/0.9"
+<container:container xmlns:escidocMetadataRecords="http://www.escidoc.org/schemas/common/1.0/md-records"
+	xmlns:container="http://www.escidoc.org/schemas/container/1.0/container"
 	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
 	xmlns:xlink="http://www.w3.org/1999/xlink">
 
