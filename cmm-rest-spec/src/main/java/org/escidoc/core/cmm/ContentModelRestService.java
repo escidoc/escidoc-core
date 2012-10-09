@@ -50,6 +50,7 @@ import net.sf.oval.constraint.NotNull;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTypeTO;
 import org.escidoc.core.domain.content.model.ContentModelResourcesTypeTO;
 import org.escidoc.core.domain.content.model.ContentModelTypeTO;
+import org.escidoc.core.domain.content.stream.ContentStreamsTypeTO;
 import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 
 /**
@@ -97,6 +98,13 @@ public interface ContentModelRestService {
     @Path("/{id}/resources/version-history")
     @Produces(MediaType.TEXT_XML)
     JAXBElement<VersionHistoryTypeTO> retrieveVersionHistory(@NotNull @PathParam("id") String id)
+        throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
+        MissingMethodParameterException, SystemException;
+
+    @GET
+    @Path("/{id}/content-streams")
+    @Produces(MediaType.TEXT_XML)
+    JAXBElement<ContentStreamsTypeTO> retrieveContentStreams(@NotNull @PathParam("id") String id)
         throws AuthenticationException, AuthorizationException, ContentModelNotFoundException,
         MissingMethodParameterException, SystemException;
 

@@ -145,7 +145,7 @@ public class AdminToolTestBase extends EscidocAbstractTest {
             if (query.length() > 0) {
                 query.append(" or ");
             }
-            query.append("PID=").append(id);
+            query.append("PID=").append(id).append(" or distinction.rootPid=").append(id);
         }
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { query.toString() });

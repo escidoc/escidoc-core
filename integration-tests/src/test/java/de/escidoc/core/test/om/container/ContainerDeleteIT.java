@@ -344,7 +344,7 @@ public class ContainerDeleteIT extends ContainerTestBase {
         lmdpContainer = getLastModificationDateValue(getDocument(resultXml));
 
         // purge three members (with admin purge method)
-        Set<String> deletedMemberIDs = new HashSet<String>();
+        List<String> deletedMemberIDs = new ArrayList<String>();
         deletedMemberIDs.add(memberIDs.remove(2));
         deletedMemberIDs.add(memberIDs.remove(3));
         deletedMemberIDs.add(memberIDs.remove(5));

@@ -31,10 +31,10 @@ package de.escidoc.core.test.adm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     @Test(timeout = 30000)
     public void testDeleteOneObject() throws Exception {
 
-        Set<String> l = createItems(1);
+        List<String> l = createItems(1);
         deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
 
         // wait until process has finished
@@ -97,7 +97,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     public void testDeleteObjects() throws Exception {
 
         // create Items
-        Set<String> l = createItems(4);
+        List<String> l = createItems(4);
 
         // delete Items
         deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
@@ -126,7 +126,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
+        int numHits = retrieveItems(l);
         assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
@@ -140,7 +140,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     public void deleteObjectsWithAsyncOption() throws Exception {
 
         // create Items
-        Set<String> l = createItems(4);
+        List<String> l = createItems(4);
 
         // delete Items
         deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, false));
@@ -169,7 +169,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
+        int numHits = retrieveItems(l);
         assertEquals("Number of hits not as expected", l.size(), numHits);
     }
 
@@ -184,7 +184,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
     public void deleteObjectsWithSyncOption() throws Exception {
 
         // create Items
-        Set<String> l = createItems(4);
+        List<String> l = createItems(4);
 
         // delete Items
         deleteObjects(TaskParamFactory.getDeleteObjectsTaskParam(l, true));
@@ -213,7 +213,7 @@ public class DeleteObjectsIT extends AdminToolTestBase {
             }
         }
         // check if items still exist in search index
-        int numHits = retrieveItems(Arrays.asList((String[]) l.toArray()));
+        int numHits = retrieveItems(l);
         assertEquals("Number of hits not as expected", 0, numHits);
     }
 
@@ -227,11 +227,11 @@ public class DeleteObjectsIT extends AdminToolTestBase {
      * @throws Exception
      *             If something failed.
      */
-    private Set<String> createItems(final int number) throws Exception {
+    private List<String> createItems(final int number) throws Exception {
 
         String xml = EscidocAbstractTest.getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "create_item_minimal.xml");
 
-        Set<String> l = new HashSet<String>();
+        List<String> l = new ArrayList<String>();
 
         for (int i = 0; i < number; i++) {
             l.add(getObjidValue(createItem(xml)));

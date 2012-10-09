@@ -19,8 +19,14 @@
  */
 package org.escidoc.core.cmm.internal;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import net.sf.oval.constraint.NotNull;
 import net.sf.oval.guard.Guarded;
 
 import org.escidoc.core.cmm.ContentModelRestService;
@@ -28,6 +34,7 @@ import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.content.model.ContentModelPropertiesTypeTO;
 import org.escidoc.core.domain.content.model.ContentModelResourcesTypeTO;
 import org.escidoc.core.domain.content.model.ContentModelTypeTO;
+import org.escidoc.core.domain.content.stream.ContentStreamsTypeTO;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.version.history.VersionHistoryTypeTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +132,13 @@ public class ContentModelRestServiceImpl implements ContentModelRestService {
 
         return factoryProvider.getVersionHistoryFactory().createVersionHistory(
             serviceUtility.fromXML(VersionHistoryTypeTO.class, this.contentModelHandler.retrieveVersionHistory(id)));
+    }
+
+    public JAXBElement<ContentStreamsTypeTO> retrieveContentStreams(String id) throws AuthenticationException,
+        AuthorizationException, ContentModelNotFoundException, MissingMethodParameterException, SystemException {
+
+        return factoryProvider.getContentStreamFactory().createContentStreams(
+            serviceUtility.fromXML(ContentStreamsTypeTO.class, this.contentModelHandler.retrieveContentStreams(id)));
     }
 
     public JAXBElement<ContentModelTypeTO> update(String id, ContentModelTypeTO contentModelTO)

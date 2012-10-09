@@ -355,8 +355,11 @@ public class UpdateIT extends ContextTestBase {
         assertNull(description);
         Node type = selectSingleNode(resultDocument, "/context/properties/type");
         String propertiesNsPrefix = determinePropertiesNamespacePrefix(resultDocument);
+        if (!propertiesNsPrefix.isEmpty()) {
+            propertiesNsPrefix += ":";
+        }
         Element newDescription =
-            resultDocument.createElementNS(Constants.NS_IR_CONTEXT, propertiesNsPrefix + ":description");
+            resultDocument.createElementNS(Constants.NS_IR_CONTEXT, propertiesNsPrefix + "description");
         newDescription.setTextContent("new Description");
         selectSingleNode(resultDocument, "/context/properties").insertBefore(newDescription, type);
         String doubleModified = toString(resultDocument, false);

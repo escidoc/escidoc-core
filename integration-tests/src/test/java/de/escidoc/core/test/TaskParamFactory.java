@@ -330,7 +330,7 @@ public class TaskParamFactory {
      * @param sync
      * @return task param XML (assign-pid-task-param.xsd)
      */
-    public static String getDeleteObjectsTaskParam(final Set<String> ids, final Boolean sync) {
+    public static String getDeleteObjectsTaskParam(final List<String> ids, final Boolean sync) {
         StringBuilder xml = getOpenedTaskParamElement(Constants.NS_TP_DELETE_OBJECTS);
 
         if (ids == null && sync == null) {

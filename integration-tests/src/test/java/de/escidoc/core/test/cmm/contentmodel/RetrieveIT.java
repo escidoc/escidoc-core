@@ -154,19 +154,4 @@ public class RetrieveIT extends ContentModelTestBase {
         assertXmlValidContentModel(subResource);
     }
 
-    /**
-     * Test retrieve ContentModel content stream.
-     */
-    @Test
-    public void testRetrieveContentModelContentStream() throws Exception {
-        Document contentModel = getDocument(this.contentModelXml);
-        String name =
-            selectSingleNodeAsserted(contentModel, "/content-model/content-streams/content-stream[1]/@name")
-                .getNodeValue();
-
-        String subResource = retrieveContentStream(this.contentModelId, name);
-        selectSingleNodeAsserted(getDocument(subResource), "/content-stream");
-        assertXmlValidContentModel(subResource);
-    }
-
 }
