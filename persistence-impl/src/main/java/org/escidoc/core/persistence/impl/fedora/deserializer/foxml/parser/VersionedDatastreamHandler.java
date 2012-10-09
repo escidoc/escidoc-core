@@ -71,7 +71,7 @@ public class VersionedDatastreamHandler extends DefaultHandler {
                 writer.writeCharacters(s);
             }
             catch (XMLStreamException e) {
-                e.printStackTrace();
+                throw new XmlParserSystemException(e.getMessage(), e);
             }
         }
         return s;
@@ -98,7 +98,7 @@ public class VersionedDatastreamHandler extends DefaultHandler {
                     }
                 }
                 catch (XMLStreamException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
         }
@@ -195,7 +195,7 @@ public class VersionedDatastreamHandler extends DefaultHandler {
                 }
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;

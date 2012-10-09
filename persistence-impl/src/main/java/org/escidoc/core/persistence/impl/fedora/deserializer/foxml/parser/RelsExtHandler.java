@@ -94,7 +94,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                     values.addRelation(relation);
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else if ("rdf".equals(prefix)) {
@@ -107,7 +107,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                                 "resource").getValue());
                     }
                     catch (NoSuchAttributeException e) {
-                        e.printStackTrace();
+                        System.out.println(e);
                     }
                 }
                 else if (("object".equals(localName))
@@ -120,7 +120,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                                     "resource").getValue()));
                     }
                     catch (NoSuchAttributeException e) {
-                        e.printStackTrace();
+                        System.out.println(e);
                     }
                 }
             }
@@ -149,7 +149,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                                     "resource").getValue()));
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else {
@@ -193,7 +193,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                         element.getAttribute(null, "ID").getValue();
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else if (name.equals(datastreamName)
@@ -204,7 +204,7 @@ public class RelsExtHandler extends VersionedDatastreamHandler {
                     insideLevel++;
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else if (XML_CONTENT_PATH.equals(parser.getCurPath())) {

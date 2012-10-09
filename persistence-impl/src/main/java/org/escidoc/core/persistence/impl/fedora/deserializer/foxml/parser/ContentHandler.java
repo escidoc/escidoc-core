@@ -53,7 +53,7 @@ public class ContentHandler extends XmlContentHandler {
                 }
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;

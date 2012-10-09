@@ -134,7 +134,7 @@ public class ContentStreamHandler extends VersionedDatastreamHandler {
                 }
             }
             catch (NoSuchAttributeException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;

@@ -74,7 +74,7 @@ public class ObjectPropertiesHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
         }

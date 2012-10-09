@@ -90,7 +90,7 @@ public class DCHandler extends VersionedDatastreamHandler {
                         element.getAttribute(null, "ID").getValue();
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else if (DC_ID.equals(datastreamName)) {
@@ -107,7 +107,7 @@ public class DCHandler extends VersionedDatastreamHandler {
                         }
                     }
                     catch (NoSuchAttributeException e) {
-                        e.printStackTrace();
+                        System.out.println(e);
                     }
                 }
                 else if (DC_DESCRIPTION_PATH.equals(parser.getCurPath())) {

@@ -40,6 +40,7 @@ import org.escidoc.core.persistence.impl.fedora.util.HttpUtil;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -269,73 +270,76 @@ public class ItemFoxmlDeserializer extends AbstractFoxmlDeserializer {
         IOException {
         Component result = new Component();
         StaxParser sp = new StaxParser();
+        try {
+            // get content
+            ContentHandler contentHandler = new ContentHandler(sp, date);
 
-        // get content
-        ContentHandler contentHandler = new ContentHandler(sp, date);
+            // get DC
+            DCHandler dcHandler = new DCHandler(sp, date);
 
-        // get DC
-        DCHandler dcHandler = new DCHandler(sp, date);
+            // get MD records
+            MdRecordHandler mdRecordHandler = new MdRecordHandler(sp, date);
 
-        // get MD records
-        MdRecordHandler mdRecordHandler = new MdRecordHandler(sp, date);
+            // get object properties
+            ObjectPropertiesHandler propertiesHandler =
+                new ObjectPropertiesHandler(sp);
 
-        // get object properties
-        ObjectPropertiesHandler propertiesHandler =
-            new ObjectPropertiesHandler(sp);
+            // get RELS-EXT
+            RelsExtHandler relsExtHandler = new ItemRelsExtHandler(sp, date);
 
-        // get RELS-EXT
-        RelsExtHandler relsExtHandler = new ItemRelsExtHandler(sp, date);
+            sp.addHandler(contentHandler);
+            sp.addHandler(dcHandler);
+            sp.addHandler(mdRecordHandler);
+            sp.addHandler(propertiesHandler);
+            sp.addHandler(relsExtHandler);
+            sp.parse(getFoxmlAsStream(id));
 
-        sp.addHandler(contentHandler);
-        sp.addHandler(dcHandler);
-        sp.addHandler(mdRecordHandler);
-        sp.addHandler(propertiesHandler);
-        sp.addHandler(relsExtHandler);
-        sp.parse(getFoxmlAsStream(id));
+            RelsExtValues relsExtValues = relsExtHandler.getValues();
+            // System.out.println("relsExtValues: " + relsExtValues);
 
-        RelsExtValues relsExtValues = relsExtHandler.getValues();
+            MdRecords mdRecords = mdRecordHandler.getMdRecords();
 
-        // System.out.println("relsExtValues: " + relsExtValues);
+            if (mdRecords.size() > 0) {
+                result.setMdRecords(mdRecords);
+            }
+            result.setObjid(id);
 
-        MdRecords mdRecords = mdRecordHandler.getMdRecords();
+            ComponentProperties properties = new ComponentProperties();
 
-        if (mdRecords.size() > 0) {
-            result.setMdRecords(mdRecords);
+//            properties.setChecksum(contentHandler.getChecksum());
+//            properties.setChecksumAlgorithm(contentHandler.getChecksumAlgorithm());
+            properties.setContentCategory(relsExtValues
+                .getFirst("prop:content-category"));
+            properties.setCreatedBy(relsExtValues.getFirst("srel:created-by"));
+            properties.setCreatedByTitle(relsExtValues
+                .getFirst("prop:created-by-title"));
+            properties.setCreationDate(propertiesHandler.getCreationDate());
+            properties.setDescription(dcHandler.getDcDescription());
+            if (mdRecords.containsKey("escidoc")) {
+                properties.setFileName(dcHandler.getDcTitle());
+            }
+            properties.setMimeType(relsExtValues.getFirst("prop:mime-type"));
+            properties.setName(dcHandler.getDcTitle());
+            properties.setPid(relsExtValues.getFirst("prop:pid"));
+            properties.setValidStatus(relsExtValues.getFirst("prop:valid-status"));
+            properties.setVisibility(relsExtValues.getFirst("prop:visibility"));
+
+            result.setProperties(properties);
+
+            ComponentContent content = new ComponentContent();
+
+//            content.setLocation(contentHandler.getContentLocation().replace(
+//                INTERNAL_FEDORA_URL, fedoraUrl));
+            content.setName(dcHandler.getDcTitle());
+            content.setStorage(contentHandler.getStorage());
+
+            result.setContent(content);
+
+            // System.out.println(result);
         }
-        result.setObjid(id);
-
-        ComponentProperties properties = new ComponentProperties();
-
-        properties.setChecksum(contentHandler.getChecksum());
-        properties.setChecksumAlgorithm(contentHandler.getChecksumAlgorithm());
-        properties.setContentCategory(relsExtValues
-            .getFirst("prop:content-category"));
-        properties.setCreatedBy(relsExtValues.getFirst("srel:created-by"));
-        properties.setCreatedByTitle(relsExtValues
-            .getFirst("prop:created-by-title"));
-        properties.setCreationDate(propertiesHandler.getCreationDate());
-        properties.setDescription(dcHandler.getDcDescription());
-        if (mdRecords.containsKey("escidoc")) {
-            properties.setFileName(dcHandler.getDcTitle());
+        catch (XMLStreamException e) {
+            throw new SystemException(e);
         }
-        properties.setMimeType(relsExtValues.getFirst("prop:mime-type"));
-        properties.setName(dcHandler.getDcTitle());
-        properties.setPid(relsExtValues.getFirst("prop:pid"));
-        properties.setValidStatus(relsExtValues.getFirst("prop:valid-status"));
-        properties.setVisibility(relsExtValues.getFirst("prop:visibility"));
-
-        result.setProperties(properties);
-
-        ComponentContent content = new ComponentContent();
-
-        content.setLocation(contentHandler.getContentLocation().replace(
-            INTERNAL_FEDORA_URL, fedoraUrl));
-        content.setName(dcHandler.getDcTitle());
-        content.setStorage(contentHandler.getStorage());
-
-        result.setContent(content);
-
-        // System.out.println(result);
         return result;
     }
 

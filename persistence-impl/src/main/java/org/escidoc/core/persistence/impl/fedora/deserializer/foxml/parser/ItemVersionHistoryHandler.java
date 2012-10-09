@@ -74,7 +74,7 @@ public class ItemVersionHistoryHandler extends VersionHistoryHandler {
                         .getAttribute(null, "objid").getValue(), version);
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
         }

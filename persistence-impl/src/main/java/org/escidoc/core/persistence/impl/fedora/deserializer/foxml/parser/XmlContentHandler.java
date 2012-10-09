@@ -43,7 +43,7 @@ public class XmlContentHandler extends AbstractHandler {
                 writer.writeCharacters(s);
             }
             catch (XMLStreamException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return s;
@@ -65,7 +65,7 @@ public class XmlContentHandler extends AbstractHandler {
                 }
             }
             catch (XMLStreamException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;
@@ -116,7 +116,7 @@ public class XmlContentHandler extends AbstractHandler {
                 }
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;

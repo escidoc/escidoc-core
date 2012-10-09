@@ -41,10 +41,11 @@
           <artifactId>aspectj-maven-plugin</artifactId>
           <configuration>
             <aspectLibraries>
-              <aspectLibrary>
+            <!-- Uncommented because of compilation errors. Reintegrate and fix errors -->
+              <!-- aspectLibrary>
                 <groupId>org.escidoc.core</groupId>
                 <artifactId>policies</artifactId>
-              </aspectLibrary>
+              </aspectLibrary -->
               <aspectLibrary>
                 <groupId>org.escidoc.core</groupId>
                 <artifactId>aspects</artifactId>
@@ -67,6 +68,10 @@
       <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>utilities</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.escidoc.core</groupId>
+        <artifactId>common</artifactId>
       </dependency>
       <dependency>
         <groupId>org.escidoc.core</groupId>

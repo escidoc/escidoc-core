@@ -66,7 +66,7 @@ public class MdRecordHandler extends VersionedDatastreamHandler {
                 }
             }
             catch (XMLStreamException e) {
-                e.printStackTrace();
+                System.out.println(e);
             }
         }
         return element;
@@ -123,7 +123,7 @@ public class MdRecordHandler extends VersionedDatastreamHandler {
                         }
                     }
                     catch (XMLStreamException e) {
-                        e.printStackTrace();
+                        System.out.println(e);
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class MdRecordHandler extends VersionedDatastreamHandler {
                         element.getAttribute(null, "ID").getValue();
                 }
                 catch (NoSuchAttributeException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 }
             }
             else if (DATASTREAM_VERSION_PATH.equals(parser.getCurPath())) {
@@ -173,7 +173,7 @@ public class MdRecordHandler extends VersionedDatastreamHandler {
                                 }
                             }
                             catch (NoSuchAttributeException e) {
-                                e.printStackTrace();
+                                System.out.println(e);
                             }
                         }
                     }
