@@ -107,7 +107,7 @@
     <module>escidoc-core.war</module>
     <module>assembly</module>
     <module>installer</module>
-    <module>integration-tests</module>
+  <!--  <module>integration-tests</module> -->
   </modules>
 
   <build>

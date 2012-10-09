@@ -77,6 +77,11 @@
         <artifactId>domain-objects-impl</artifactId>
       </dependency>
       <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.2.1</version>
+	    </dependency>
+      <dependency>
         <groupId>org.escidoc.core</groupId>
         <artifactId>fedora-service-client</artifactId>
       </dependency>
