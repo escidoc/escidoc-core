@@ -1102,6 +1102,8 @@ public class ItemUpdateIT extends ItemTestBase {
         componentXml = retrieveComponent(theItemId, componentId);
         componentDoc = getDocument(componentXml);
         componentXml = toString(componentDoc, true).replaceAll(componentId, "escidoc:ex6");
+        componentXml = componentXml.replaceAll("(?s)<\\?xml.*?>", "");
+        componentXml = componentXml.replaceFirst("(?s)(<[^>]*?)xmlns.*?[^\\s>](>)", "$1$2");
         String updateItemXml = insertComponent(componentXml, newItem, theItemXml);
 
         try {
@@ -1118,6 +1120,8 @@ public class ItemUpdateIT extends ItemTestBase {
         componentDoc = getDocument(componentXml);
         componentDoc = (Document) substitute(componentDoc, "/component/@href", "");
         componentXml = toString(componentDoc, true);
+        componentXml = componentXml.replaceAll("(?s)<\\?xml.*?>", "");
+        componentXml = componentXml.replaceFirst("(?s)(<[^>]*?)xmlns.*?[^\\s>](>)", "$1$2");
 
         updateItemXml = insertComponent(componentXml, newItem, theItemXml);
         update(theItemId, updateItemXml);
@@ -1134,6 +1138,8 @@ public class ItemUpdateIT extends ItemTestBase {
         selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem(xlinkNsPrefix + ":type");
         selectSingleNode(componentDoc, "/component").getAttributes().removeNamedItem(xlinkNsPrefix + ":title");
         componentXml = toString(componentDoc, true);
+        componentXml = componentXml.replaceAll("(?s)<\\?xml.*?>", "");
+        componentXml = componentXml.replaceFirst("(?s)(<[^>]*?)xmlns.*?[^\\s>](>)", "$1$2");
 
         updateItemXml = insertComponent(componentXml, getDocument(theItemXml, true), theItemXml);
         update(theItemId, updateItemXml);
@@ -2330,19 +2336,22 @@ public class ItemUpdateIT extends ItemTestBase {
         String mdRecordsNsPrefix = determineMdRecordNamespacePrefix(itemDoc);
         String itemNsPrefix = determineItemNamespacePrefix(itemDoc);
         String xlinkNsPrefix = determineXlinkNamespacePrefix(itemDoc);
-        String componentComponentsNsPrefix = determineComponentsNamespacePrefix(getDocument(componentXml));
-        String componentMdRecordsNsPrefix = determineMdRecordNamespacePrefix(getDocument(componentXml));
-        String componentPropertiesNsPrefix = determinePropertiesNamespacePrefix(getDocument(componentXml));
-        String componentXlinkNsPrefix = determineXlinkNamespacePrefix(getDocument(componentXml));
+        Document componentDoc = getDocument(componentXml);
+        String componentComponentsNsPrefix = determineComponentsNamespacePrefix(componentDoc);
+        String componentMdRecordsNsPrefix = determineMdRecordNamespacePrefix(componentDoc);
+        String componentPropertiesNsPrefix = determinePropertiesNamespacePrefix(componentDoc);
+        String componentXlinkNsPrefix = determineXlinkNamespacePrefix(componentDoc);
         internalComponent = internalComponent.replaceAll(componentComponentsNsPrefix + ":", componentsNsPrefix + ":");
         internalComponent =
             internalComponent.replaceAll("xmlns:" + componentComponentsNsPrefix, "xmlns:" + componentsNsPrefix);
         internalComponent = internalComponent.replaceAll(componentMdRecordsNsPrefix + ":", mdRecordsNsPrefix + ":");
         internalComponent =
             internalComponent.replaceAll("xmlns:" + componentMdRecordsNsPrefix, "xmlns:" + mdRecordsNsPrefix);
-        internalComponent = internalComponent.replaceAll(componentPropertiesNsPrefix + ":", itemNsPrefix + ":");
-        internalComponent =
-            internalComponent.replaceAll("xmlns:" + componentPropertiesNsPrefix, "xmlns:" + itemNsPrefix);
+        if (!componentPropertiesNsPrefix.isEmpty()) {
+            internalComponent = internalComponent.replaceAll(componentPropertiesNsPrefix + ":", itemNsPrefix + ":");
+            internalComponent =
+                internalComponent.replaceAll("xmlns:" + componentPropertiesNsPrefix, "xmlns:" + itemNsPrefix);
+        }
         internalComponent = internalComponent.replaceAll(componentXlinkNsPrefix + ":", xlinkNsPrefix + ":");
         internalComponent = internalComponent.replaceAll("xmlns:" + componentXlinkNsPrefix, "xmlns:" + xlinkNsPrefix);
         returnItem =
