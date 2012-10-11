@@ -109,7 +109,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="business.FedoraContainerHandler"/>
         </property>
     </bean>
-    <bean id="service.ContextHandler" class="de.escidoc.core.om.service.ContextHandler">
+    <bean id="service.ContextHandler" class="de.escidoc.core.om.service.ContextHandler" scope="prototype">
         <property name="contextHandler">
             <ref bean="business.FedoraContextHandler"/>
         </property>
