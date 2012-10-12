@@ -686,6 +686,7 @@ public class Constants {
         WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/set-definition/1.0/" + XSD_OAI_SET_DEFINITION;
 
     // ST
-    public static final String XSD_ACCESS_ST_FILE = "/staging-file/1.0/" + XSD_ST_FILE;
+    public static final String XSD_ACCESS_ST_FILE =
+        WEB_APP_URI_ESCIDOC + XSD_ACCESS + "/staging-file/1.0/" + XSD_ST_FILE;
 
 }

@@ -19,25 +19,27 @@
  */
 package org.escidoc.core.st;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import net.sf.oval.constraint.NotNull;
 
+import org.escidoc.core.domain.st.StagingFileTypeTO;
+import org.escidoc.core.utils.io.Stream;
+
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.escidoc.core.domain.st.StagingFileTypeTO;
-import org.escidoc.core.utils.io.Stream;
 
 /**
  * @author SWA
@@ -67,7 +69,7 @@ public interface StagingRestService {
      */
     @PUT
     @Produces(MediaType.TEXT_XML)
-    JAXBElement<StagingFileTypeTO> create(@NotNull Stream stream)
+    JAXBElement<StagingFileTypeTO> create(@Context HttpHeaders headers, @NotNull Stream stream)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException;
 
     /**

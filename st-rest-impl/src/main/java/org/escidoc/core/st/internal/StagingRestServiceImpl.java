@@ -21,18 +21,18 @@ package org.escidoc.core.st.internal;
 
 import java.io.IOException;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBElement;
 
 import net.sf.oval.guard.Guarded;
+
 import org.escidoc.core.domain.ObjectFactoryProvider;
 import org.escidoc.core.domain.service.ServiceUtility;
 import org.escidoc.core.domain.st.StagingFileTypeTO;
 import org.escidoc.core.st.StagingRestService;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.escidoc.core.utils.io.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -72,10 +72,14 @@ public class StagingRestServiceImpl implements StagingRestService {
      * {@inheritDoc}
      */
     @Override
-    public JAXBElement<StagingFileTypeTO> create(final Stream stream)
+    public JAXBElement<StagingFileTypeTO> create(final HttpHeaders headers, final Stream stream)
         throws MissingMethodParameterException, AuthenticationException, AuthorizationException, SystemException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
+        if (headers.getMediaType() != null && headers.getMediaType().getType() != null
+            && !headers.getMediaType().getType().isEmpty()) {
+            content.setMimeType(headers.getMediaType().getType());
+        }
         try {
             content.setContent(stream.getInputStream());
         } catch (IOException e) {

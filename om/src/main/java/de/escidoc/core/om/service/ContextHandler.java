@@ -57,6 +57,8 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import org.escidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -67,6 +69,7 @@ import java.util.Map;
  * @author Torsten Tetteroo
  */
 @Service("service.ContextHandler")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class ContextHandler implements ContextHandlerInterface {
 
     @Autowired
