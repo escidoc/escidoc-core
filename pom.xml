@@ -1306,7 +1306,7 @@
     <srw.version>1.5.10</srw.version>
     <escidoc-analyzers.version>1.5.0</escidoc-analyzers.version>
     <migration-tool.version>1.5.3</migration-tool.version>
-    <escidoc.oaiprovider.version>1.5.3</escidoc.oaiprovider.version>
+    <escidoc.oaiprovider.version>1.5.4</escidoc.oaiprovider.version>
 
     <fcrepo.version>3.4.2</fcrepo.version>
     <java.source.version>1.6</java.source.version>
