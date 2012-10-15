@@ -197,7 +197,6 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                         info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description 
                         info:escidoc/names:aa:1.0:action:retrieve-current-user-account 
                         info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
-	              		info:escidoc/names:scape:1.0:action:action-ingest-scape
                         </AttributeValue>
                         <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </ActionMatch>

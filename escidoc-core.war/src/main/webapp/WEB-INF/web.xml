@@ -498,7 +498,7 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>ScapeIngestServlet</servlet-name>
+		<servlet-name>ScapeServlet</servlet-name>
 		<servlet-class>
 			de.escidoc.core.common.servlet.EscidocServlet
         </servlet-class>

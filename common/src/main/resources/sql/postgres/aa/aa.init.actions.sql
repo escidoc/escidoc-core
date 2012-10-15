@@ -464,6 +464,42 @@ INSERT INTO aa.actions (id, name) VALUES
     * SCAPE Actions.
     */
 INSERT INTO aa.actions (id,name) VALUES
-	('escidoc:action-ingest-scape','info:escidoc/names:aa:1.0:action:ingest-scape');
+	('escidoc:action-retrieve-intellectualentity','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-intellectualentity-set','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-set');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-post-intellectualentity','info:escidoc/names:aa:1.0:action:post-intellectualentity');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-put-intellectual-entity','info:escidoc/names:aa:1.0:action:put-intellectual-entity');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-intellectualentity-version-set','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-version-set');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-intellectualentity-lifecycle','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-file','info:escidoc/names:aa:1.0:action:retrieve-file');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-bitstream','info:escidoc/names:aa:1.0:action:retrieve-bitstream');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-retrieve-representation','info:escidoc/names:aa:1.0:action:retrieve-representation');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-put-representation','info:escidoc/names:aa:1.0:action:put-representation');
+
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-search-intellectualentity','info:escidoc/names:aa:1.0:action:search-intellectualentity');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-search-representation','info:escidoc/names:aa:1.0:action:search-representation');
+	
+INSERT INTO aa.actions (id,name) VALUES
+	('escidoc:action-search-file','info:escidoc/names:aa:1.0:action:search-file');
 
 

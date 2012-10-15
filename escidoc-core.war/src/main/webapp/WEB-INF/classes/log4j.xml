@@ -115,6 +115,11 @@
         <level value="ERROR"/>
         <appender-ref ref="TRACE"/>
     </logger>
+    
+    <logger name="de.escidoc.core.om.service.ScapeIngestHandler" additivity="false">
+    	<level value="DEBUG"/>
+    	<appender-ref ref="ESCIDOCCONSOLE"/>
+    </logger>
 
 	<root>
         <priority value="WARN" />

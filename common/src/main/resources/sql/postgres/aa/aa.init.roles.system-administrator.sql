@@ -167,7 +167,19 @@ INSERT INTO aa.escidoc_policies
 			  info:escidoc/names:aa:1.0:action:delete-set-definition
               info:escidoc/names:aa:1.0:action:fedora-deviation-get-datastream-dissimination 
               info:escidoc/names:aa:1.0:action:fedora-deviation-export 
-			  info:escidoc/names:aa:1.0:action:ingest-scape
+              info:escidoc/names:scape:1.0:action:retrieve-intellectualentity
+			  info:escidoc/names:scape:1.0:action:retrieve-intellectualentity-set
+			  info:escidoc/names:scape:1.0:action:retrieve-intellectualentity-version-set
+			  info:escidoc/names:scape:1.0:action:post-intellectualentity
+			  info:escidoc/names:scape:1.0:action:put-intellectualentity
+			  info:escidoc/names:scape:1.0:action:retrieve-intellectualentity-lifecycle
+			  info:escidoc/names:scape:1.0:action:retrieve-file
+			  info:escidoc/names:scape:1.0:action:retrieve-bitstream
+			  info:escidoc/names:scape:1.0:action:retrieve-representation
+			  info:escidoc/names:scape:1.0:action:put-representation
+			  info:escidoc/names:scape:1.0:action:search-intellectualentity
+			  info:escidoc/names:scape:1.0:action:search-representation
+			  info:escidoc/names:scape:1.0:action:search-file
           </AttributeValue>
           <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
         </ActionMatch>

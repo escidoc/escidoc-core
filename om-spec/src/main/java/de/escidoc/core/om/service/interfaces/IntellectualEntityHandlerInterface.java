@@ -1,5 +1,7 @@
 package de.escidoc.core.om.service.interfaces;
 
+import java.util.List;
+
 import de.escidoc.core.common.exceptions.EscidocException;
 
 public interface IntellectualEntityHandlerInterface {
@@ -11,4 +13,8 @@ public interface IntellectualEntityHandlerInterface {
 	String updateIntellectualEntity(String xml) throws EscidocException;
 
 	String getLifeCyclestatus(String id) throws EscidocException;
+	
+	String getIntellectuakEntitySet(List<String> ids) throws EscidocException;
+	
+	String getIntellectualEntityVersionSet(String id) throws EscidocException;
 }

@@ -3,6 +3,7 @@ package de.escidoc.core.om.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -93,6 +94,18 @@ public class IntellectualEntityHandler implements de.escidoc.core.om.service.int
 			LOGGER.error(e.getMessage(), e);
 			throw new ScapeException(e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public String getIntellectuakEntitySet(List<String> ids) throws EscidocException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getIntellectualEntityVersionSet(String id) throws EscidocException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
