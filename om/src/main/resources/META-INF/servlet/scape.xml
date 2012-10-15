@@ -2,72 +2,52 @@
 <mapping>
 	<define>
 	</define>
-	<resource name="ingest-intellectualentity" base-uri="/scape/entity">
+	<resource name="IntellectualEntity" base-uri="/scape/entity">
 		<descriptor uri="/scape/entity">
 			<invoke http="POST" method="ingestIntellectualEntity" param1="${BODY}" />
-		</descriptor>
-	</resource>
-	<resource name="retrieve-intellectualentity" base-uri="/scape/entity">
-		<descriptor uri="/scape/entity">
 			<invoke http="GET" method="getIntellectualEntity" param1="${PARAMETERS}" />
-		</descriptor>
-	</resource>
-	<resource name="update-intellectualentity" base-uri="/scape/entity">
-		<descriptor uri="/scape/entity">
 			<invoke http="PUT" method="updateIntellectualEntity" param1="${PARAMETERS}" param2="${BODY}" />
 		</descriptor>
-	</resource>
-	<resource name="retrieve-intellectualentity-set" base-uri="/scape/entity-list">
 		<descriptor uri="/scape/entity-list">
 			<invoke http="GET" method="getIntellectualEntitySet" param1="${BODY}" />
 		</descriptor>
-	</resource>
-	<resource name="retrieve-intellectualentity-version-set" base-uri="/scape/entity-version-list">
 		<descriptor uri="/scape/entity">
 			<invoke http="PUT" method="getIntellectualEntityVersionSet" param1="${BODY}" />
 		</descriptor>
-	</resource>
-	<resource name="retrieve-intellectualentity-lifecycle" base-uri="/scape/lifecycle/">
 		<descriptor uri="/scape/lifecycle">
 			<invoke http="GET" method="getIntellectualEntityVersionSet" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
-	<resource name="retrieve-file" base-uri="/scape/file">
+
+
+	<resource name="Representation" base-uri="/scape/representation">
+		<descriptor uri="/scape/representation">
+			<invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" />
+			<invoke http="PUT" method="getRepresentation" param1="${BODY}" />
+		</descriptor>
+	</resource>
+
+	<resource name="File" base-uri="/scape/file">
 		<descriptor uri="/scape/file">
 			<invoke http="GET" method="getFile" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
-	<resource name="retrieve-representation" base-uri="/scape/representation">
-		<descriptor uri="/scape/representation">
-			<invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" />
-		</descriptor>
-	</resource>
-	<resource name="put-representation" base-uri="/scape/representation">
-		<descriptor uri="/scape/representation">
-			<invoke http="PUT" method="getRepresentation" param1="${BODY}" />
-		</descriptor>
-	</resource>
-	<resource name="retrieve-bitstream" base-uri="/scape/bitstream">
+
+	<resource name="BitStream" base-uri="/scape/bitstream">
 		<descriptor uri="/scape/bitstream">
 			<invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
-	<resource name="search-intellectualentity" base-uri="/scape/sru/entities">
+
+	<resource name="SRU" base-uri="/scape/sru">
 		<descriptor uri="/scape/sru/entities">
 			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}" />
 		</descriptor>
-	</resource>
-	<resource name="search-file" base-uri="/scape/sru/entities">
-		<descriptor uri="/scape/sru/entities">
-			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}" />
+		<descriptor uri="/scape/sru/file">
+			<invoke http="GET" method="searchFile" param1="${PARAMETERS}" />
 		</descriptor>
-	</resource>
-	<resource name="search-representation" base-uri="/scape/sru/representations">
 		<descriptor uri="/scape/sru/representations">
 			<invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
-
-
-
 </mapping>
