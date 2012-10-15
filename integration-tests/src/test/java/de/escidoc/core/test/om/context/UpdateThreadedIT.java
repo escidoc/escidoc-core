@@ -41,7 +41,7 @@ import de.escidoc.core.test.EscidocAbstractTest;
  *
  * @author Michael Hoppe
  */
-public class UpdateThreadedTest extends ContextTestBase {
+public class UpdateThreadedIT extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
 
