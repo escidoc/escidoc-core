@@ -169,6 +169,22 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
               		info:escidoc/names:aa:1.0:action:evaluate 
               		info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+					info:escidoc/names:aa:1.0:action:create-intellectualentity
+					info:escidoc/names:aa:1.0:action:create-intellectualentity-async
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search
+					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle
+					info:escidoc/names:aa:1.0:action:retrieve-representation
+					info:escidoc/names:aa:1.0:action:retrieve-representation-search
+					info:escidoc/names:aa:1.0:action:retrieve-file
+					info:escidoc/names:aa:1.0:action:retrieve-file-search
+					info:escidoc/names:aa:1.0:action:retrieve-bitstream
+					info:escidoc/names:aa:1.0:action:update-intellectualentity
+					info:escidoc/names:aa:1.0:action:update-intellectualentity-metadata
+					info:escidoc/names:aa:1.0:action:update-representation
                     </AttributeValue>
                     <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </ActionMatch>
@@ -199,6 +215,22 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                         info:escidoc/names:aa:1.0:action:retrieve-current-user-account 
                         info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
 						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+						info:escidoc/names:aa:1.0:action:create-intellectualentity
+						info:escidoc/names:aa:1.0:action:create-intellectualentity-async
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search
+						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle
+						info:escidoc/names:aa:1.0:action:retrieve-representation
+						info:escidoc/names:aa:1.0:action:retrieve-representation-search
+						info:escidoc/names:aa:1.0:action:retrieve-file
+						info:escidoc/names:aa:1.0:action:retrieve-file-search
+						info:escidoc/names:aa:1.0:action:retrieve-bitstream
+						info:escidoc/names:aa:1.0:action:update-intellectualentity
+						info:escidoc/names:aa:1.0:action:update-intellectualentity-metadata
+						info:escidoc/names:aa:1.0:action:update-representation
                         </AttributeValue>
                         <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </ActionMatch>

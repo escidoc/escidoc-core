@@ -463,4 +463,24 @@ INSERT INTO aa.actions (id, name) VALUES
     /**
     * SCAPE Actions.
     */
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-create-intellectualentity','info:escidoc/names:aa:1.0:action:create-intellectualentity');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-create-intellectualentity-async','info:escidoc/names:aa:1.0:action:create-intellectualentity-async');
+
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-metadata','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-list','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-versions','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-search','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-lifecycle','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-representation','info:escidoc/names:aa:1.0:action:retrieve-representation');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-representation-search','info:escidoc/names:aa:1.0:action:retrieve-representation-search');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-file','info:escidoc/names:aa:1.0:action:retrieve-file');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-file-search','info:escidoc/names:aa:1.0:action:retrieve-file-search');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-bitstream','info:escidoc/names:aa:1.0:action:retrieve-bitstream');
+
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-update-intellectualentity','info:escidoc/names:aa:1.0:action:update-intellectualentity');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-update-intellectualentity-metadata','info:escidoc/names:aa:1.0:action:update-intellectualentity-metadata');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-update-representation','info:escidoc/names:aa:1.0:action:update-representation');
+
+
+
