@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mapping>
 	<define>
+		<var name="ENTITY_ID" regexp="/([^/?]*)" />
 	</define>
 	<resource name="IntellectualEntity" base-uri="/scape/entity">
-		<descriptor uri="/scape/entity">
-			<invoke http="POST" method="ingestIntellectualEntity" param1="${BODY}" />
-			<invoke http="GET" method="getIntellectualEntity" param1="${PARAMETERS}" />
-			<invoke http="PUT" method="updateIntellectualEntity" param1="${PARAMETERS}" param2="${BODY}" />
+		<descriptor uri="/scape/entity/${ENTITY_ID}">
+			<invoke http="GET" method="getIntellectualEntity" param1="${ENTITY_ID}" />
 		</descriptor>
-		<descriptor uri="/scape/entity-list">
-			<invoke http="GET" method="getIntellectualEntitySet" param1="${BODY}" />
-		</descriptor>
-		<descriptor uri="/scape/entity">
-			<invoke http="PUT" method="getIntellectualEntityVersionSet" param1="${BODY}" />
-		</descriptor>
-		<descriptor uri="/scape/lifecycle">
-			<invoke http="GET" method="getIntellectualEntityVersionSet" param1="${PARAMETERS}" />
-		</descriptor>
+		<!-- <descriptor uri="/scape/entity-list"> -->
+		<!-- <invoke http="GET" method="getIntellectualEntitySet" param1="${BODY}" 
+			/> -->
+		<!-- </descriptor> -->
+		<!-- <descriptor uri="/scape/entity"> -->
+		<!-- <invoke http="PUT" method="getIntellectualEntityVersionSet" param1="${BODY}" 
+			/> -->
+		<!-- </descriptor> -->
+		<!-- <descriptor uri="/scape/lifecycle"> -->
+		<!-- <invoke http="GET" method="getIntellectualEntityVersionSet" param1="${PARAMETERS}" 
+			/> -->
+		<!-- </descriptor> -->
 	</resource>
 
 
-	<resource name="Representation" base-uri="/scape/representation">
-		<descriptor uri="/scape/representation">
-			<invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" />
-			<invoke http="PUT" method="getRepresentation" param1="${BODY}" />
-		</descriptor>
-	</resource>
+	<!-- <resource name="Representation" base-uri="/scape/representation"> -->
+	<!-- <descriptor uri="/scape/representation"> -->
+	<!-- <invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" 
+		/> -->
+	<!-- <invoke http="PUT" method="getRepresentation" param1="${BODY}" /> -->
+	<!-- </descriptor> -->
+	<!-- </resource> -->
 
-	<resource name="File" base-uri="/scape/file">
-		<descriptor uri="/scape/file">
-			<invoke http="GET" method="getFile" param1="${PARAMETERS}" />
-		</descriptor>
-	</resource>
+	<!-- <resource name="File" base-uri="/scape/file"> -->
+	<!-- <descriptor uri="/scape/file"> -->
+	<!-- <invoke http="GET" method="getFile" param1="${PARAMETERS}" /> -->
+	<!-- </descriptor> -->
+	<!-- </resource> -->
 
-	<resource name="BitStream" base-uri="/scape/bitstream">
-		<descriptor uri="/scape/bitstream">
-			<invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" />
-		</descriptor>
-	</resource>
+	<!-- <resource name="BitStream" base-uri="/scape/bitstream"> -->
+	<!-- <descriptor uri="/scape/bitstream"> -->
+	<!-- <invoke http="GET" method="getRepresentation" param1="${PARAMETERS}" 
+		/> -->
+	<!-- </descriptor> -->
+	<!-- </resource> -->
 
-	<resource name="SRU" base-uri="/scape/sru">
-		<descriptor uri="/scape/sru/entities">
-			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}" />
-		</descriptor>
-		<descriptor uri="/scape/sru/file">
-			<invoke http="GET" method="searchFile" param1="${PARAMETERS}" />
-		</descriptor>
-		<descriptor uri="/scape/sru/representations">
-			<invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" />
-		</descriptor>
-	</resource>
+	<!-- <resource name="SRU" base-uri="/scape/sru"> -->
+	<!-- <descriptor uri="/scape/sru/entities"> -->
+	<!-- <invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}" 
+		/> -->
+	<!-- </descriptor> -->
+	<!-- <descriptor uri="/scape/sru/file"> -->
+	<!-- <invoke http="GET" method="searchFile" param1="${PARAMETERS}" /> -->
+	<!-- </descriptor> -->
+	<!-- <descriptor uri="/scape/sru/representations"> -->
+	<!-- <invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" 
+		/> -->
+	<!-- </descriptor> -->
+	<!-- </resource> -->
 </mapping>

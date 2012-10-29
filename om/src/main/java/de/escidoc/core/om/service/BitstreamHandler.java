@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.om.service.interfaces.BitstreamHandlerInterface;
 
-@Service("service.scape.BitstreamHandler")
+@Service("service.BitstreamHandler")
 public class BitstreamHandler implements BitstreamHandlerInterface {
 
     @Override

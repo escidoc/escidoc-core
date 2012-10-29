@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.om.service.interfaces.RepresentationHandlerInterface;
 
-@Service("service.scape.RepresentationHandler")
+@Service("service.RepresentationHandler")
 public class RepresentationHandler implements RepresentationHandlerInterface {
 
     @Override

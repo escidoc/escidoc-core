@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.om.service.interfaces.FileHandlerInterface;
 
-@Service("service.scape.FileHandler")
+@Service("service.FileHandler")
 public class FileHandler implements FileHandlerInterface {
     @Override
     public String getFile(String id) {

@@ -168,6 +168,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:retrieve-user-group 
                     info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
               		info:escidoc/names:aa:1.0:action:evaluate 
+              		info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
                     </AttributeValue>
                     <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </ActionMatch>

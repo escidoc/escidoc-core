@@ -14,7 +14,7 @@ public interface IntellectualEntityHandlerInterface {
 
 	String getLifeCyclestatus(String id) throws EscidocException;
 	
-	String getIntellectuakEntitySet(List<String> ids) throws EscidocException;
+	String getIntellectualEntitySet(List<String> ids) throws EscidocException;
 	
 	String getIntellectualEntityVersionSet(String id) throws EscidocException;
 }
