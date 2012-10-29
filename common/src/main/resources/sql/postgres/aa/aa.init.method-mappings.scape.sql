@@ -4,7 +4,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:create-intellectualentity', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-intellectualentity-create-async', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'ingestIntellectualEntity', 
+  VALUES ('escidoc:mm-intellectualentity-async-create', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'ingestIntellectualEntity', 
   'info:escidoc/names:aa:1.0:action:create-intellectualentity-async', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
   INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
@@ -44,7 +44,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:retrieve-file', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-file-search', 'de.escidoc.core.om.service.interfaces.FileHandlerInterface', 'searchFile', 
+  VALUES ('escidoc:mm-file-search-retrieve', 'de.escidoc.core.om.service.interfaces.FileHandlerInterface', 'searchFile', 
   'info:escidoc/names:aa:1.0:action:retrieve-file-search', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
