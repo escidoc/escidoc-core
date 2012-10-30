@@ -35,8 +35,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
+import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
+import de.escidoc.core.common.business.fedora.resources.create.ContentModelProperties;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
@@ -52,6 +55,8 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 import de.escidoc.core.resources.common.MetadataRecord;
 import de.escidoc.core.resources.common.MetadataRecords;
 import de.escidoc.core.resources.common.properties.PublicStatus;
+import de.escidoc.core.resources.common.reference.ContentModelRef;
+import de.escidoc.core.resources.common.reference.ContextRef;
 import de.escidoc.core.resources.common.reference.OrganizationalUnitRef;
 import de.escidoc.core.resources.om.context.Context;
 import de.escidoc.core.resources.om.context.ContextProperties;
@@ -78,7 +83,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private OrganizationalUnit scapeOU;
 
-    private String ouLastModDate;
+    private ContentModel scapeContentModel;
 
     public IntellectualEntityHandler() throws InternalClientException {
         ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
@@ -96,9 +101,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Qualifier("service.ContextHandler")
     private ContextHandlerInterface contextHandler;;
 
+    @Autowired
+    @Qualifier("service.ContentModelHandler")
+    private ContentModelHandlerInterface contentModelHandler;
+
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
         "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
+
+    private static final String SCAPE_CM_ELEMENT =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><escidocContentModel:content-model xmlns:escidocContentModel=\"http://www.escidoc.de/schemas/contentmodel/0.1\" xmlns:prop=\"http://escidoc.de/core/01/properties/\"><escidocContentModel:properties><prop:name>scape-contentmodel</prop:name><prop:description>for test purpose</prop:description></escidocContentModel:properties></escidocContentModel:content-model>";
 
     private void openOU() throws ScapeException {
         try {
@@ -127,6 +139,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         try {
             checkScapeContext();
+            checkContentModel();
 
             IntellectualEntity entity =
                 SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
@@ -166,6 +179,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // set the properties of the item using the intellectual entities
             // data
             ItemProperties itemProps = new ItemProperties();
+            itemProps.setContext(new ContextRef(scapeContext.getObjid()));
+            itemProps.setContentModel(new ContentModelRef(scapeContentModel.getId()));
             item.setProperties(itemProps);
             item.setMetadataRecords(mds);
             item.setLastModificationDate(new DateTime());
@@ -175,13 +190,44 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             // and finally use escidoc's item handler to save the generated xml
             // data
-            System.out.println(itemMarshaller.marshalDocument(item));
             itemHandler.create(itemMarshaller.marshalDocument(item));
             return itemMarshaller.marshalDocument(item) + "\n";
             // return entity.getIdentifier().getValue() + "\n";
         }
         catch (Exception e) {
-            throw new ScapeException(e.getLocalizedMessage(), e);
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void checkContentModel() throws EscidocException {
+        try {
+            if (scapeContentModel == null) {
+                Marshaller<ContentModel> contentModelMarshaller =
+                    MarshallerFactory.getInstance().getMarshaller(ContentModel.class);
+                Map<String, String[]> filter = new HashMap<String, String[]>();
+                filter.put("name", new String[] { "scape-contentmodel" });
+                String xml = contentModelHandler.retrieveContentModels(filter);
+                XPath xp = xfac.newXPath();
+                XPathExpression xpe =
+                    xp
+                        .compile("//*[local-name()='numberOfRecords' and namespace-uri()='http://www.loc.gov/zing/srw/']");
+                int numResult = Integer.parseInt(xpe.evaluate(new InputSource(new StringReader(xml))));
+                if (numResult == 0) {
+                    scapeContentModel =
+                        contentModelMarshaller.unmarshalDocument(contentModelHandler.create(SCAPE_CM_ELEMENT));
+                }
+                else {
+                    System.out.println(xml);
+                    int posOuStart = xml.indexOf("<escidocContentModel:content-model ");
+                    int posOuEnd = xml.indexOf("</escidocContentModel:content-model>");
+                    String cmXML = xml.substring(posOuStart, posOuEnd + 35);
+                    scapeContentModel = contentModelMarshaller.unmarshalDocument(cmXML);
+
+                }
+            }
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
         }
     }
 
