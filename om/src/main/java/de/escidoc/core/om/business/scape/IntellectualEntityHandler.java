@@ -83,7 +83,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private OrganizationalUnit scapeOU;
 
-    private ContentModel scapeContentModel;
+    private String scapeContentModelId;
 
     public IntellectualEntityHandler() throws InternalClientException {
         ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
@@ -126,6 +126,23 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
         catch (Exception e) {
             LOG.error("Error while opening ou", e);
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void openContext() throws ScapeException {
+        try {
+            String xml =
+                contextHandler.open(scapeContext.getObjid(), createTaskParam(scapeContext
+                    .getLastModificationDate().toDateTime(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
+            XPath xp = xfac.newXPath();
+            XPathExpression xpe =
+                xp
+                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
+            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
+            scapeContext.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
+        }
+        catch (Exception e) {
             throw new ScapeException(e.getMessage(), e);
         }
     }
@@ -180,7 +197,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // data
             ItemProperties itemProps = new ItemProperties();
             itemProps.setContext(new ContextRef(scapeContext.getObjid()));
-            itemProps.setContentModel(new ContentModelRef(scapeContentModel.getId()));
+            itemProps.setContentModel(new ContentModelRef(scapeContentModelId));
             item.setProperties(itemProps);
             item.setMetadataRecords(mds);
             item.setLastModificationDate(new DateTime());
@@ -201,7 +218,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private void checkContentModel() throws EscidocException {
         try {
-            if (scapeContentModel == null) {
+            if (scapeContentModelId == null) {
                 Marshaller<ContentModel> contentModelMarshaller =
                     MarshallerFactory.getInstance().getMarshaller(ContentModel.class);
                 Map<String, String[]> filter = new HashMap<String, String[]>();
@@ -213,16 +230,19 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                         .compile("//*[local-name()='numberOfRecords' and namespace-uri()='http://www.loc.gov/zing/srw/']");
                 int numResult = Integer.parseInt(xpe.evaluate(new InputSource(new StringReader(xml))));
                 if (numResult == 0) {
-                    scapeContentModel =
-                        contentModelMarshaller.unmarshalDocument(contentModelHandler.create(SCAPE_CM_ELEMENT));
+                    String cmXML = contentModelHandler.create(SCAPE_CM_ELEMENT);
+                    int pos = cmXML.indexOf("xlink:href=\"/cmm/content-model/");
+                    int end = cmXML.indexOf("\"", pos + 31);
+                    scapeContentModelId = cmXML.substring(pos + 31, end);
                 }
                 else {
                     System.out.println(xml);
                     int posOuStart = xml.indexOf("<escidocContentModel:content-model ");
                     int posOuEnd = xml.indexOf("</escidocContentModel:content-model>");
                     String cmXML = xml.substring(posOuStart, posOuEnd + 35);
-                    scapeContentModel = contentModelMarshaller.unmarshalDocument(cmXML);
-
+                    int pos = cmXML.indexOf("xlink:href=\"/cmm/content-model/");
+                    int end = cmXML.indexOf("\"", pos + 31);
+                    scapeContentModelId = cmXML.substring(pos + 31, end);
                 }
             }
         }
@@ -259,6 +279,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     scapeContext.setProperties(props);
                     String contextXml = contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
                     scapeContext = contextMarshaller.unmarshalDocument(contextXml);
+                    openContext();
                 }
                 else {
                     int posOuStart = xml.indexOf("<context:context ");
