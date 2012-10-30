@@ -2,6 +2,8 @@ package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +12,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +31,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -59,11 +68,21 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private static final Logger LOG = LoggerFactory.getLogger(IntellectualEntityHandler.class);
 
+    private final Marshaller<OrganizationalUnit> ouMarshaller;
+
+    private final XPathFactory xfac = XPathFactory.newInstance();
+
+    private final DateTimeFormatter dateformatter = ISODateTimeFormat.dateTime();
+
     private Context scapeContext;
 
     private OrganizationalUnit scapeOU;
 
     private String ouLastModDate;
+
+    public IntellectualEntityHandler() throws InternalClientException {
+        ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
+    }
 
     @Autowired
     @Qualifier("service.OrganizationalUnitHandler")
@@ -83,22 +102,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private void openOU() throws ScapeException {
         try {
-            ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
-                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
+            String xml =
+                ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
+                    DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
+            XPath xp = xfac.newXPath();
+            XPathExpression xpe =
+                xp
+                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
+            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
+            scapeOU.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
         }
         catch (Exception e) {
             LOG.error("Error while opening ou", e);
-            throw new ScapeException(e.getMessage(), e);
-        }
-    }
-
-    private void closeOU() throws ScapeException {
-        try {
-            ouHandler.close(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
-                DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
-        }
-        catch (Exception e) {
-            LOG.error(e.getMessage(), e);
             throw new ScapeException(e.getMessage(), e);
         }
     }
@@ -136,6 +151,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     Document dcDoc = domFactory.newDocumentBuilder().newDocument();
                     Element dcElement = dcDoc.createElement("dublin-core");
                     dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+                    dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
                     NodeList origDCElements =
                         (NodeList) n
                             .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
@@ -159,6 +175,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             // and finally use escidoc's item handler to save the generated xml
             // data
+            System.out.println(itemMarshaller.marshalDocument(item));
             itemHandler.create(itemMarshaller.marshalDocument(item));
             return itemMarshaller.marshalDocument(item) + "\n";
             // return entity.getIdentifier().getValue() + "\n";
@@ -173,11 +190,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         try {
             if (scapeContext == null) {
                 Marshaller<Context> contextMarshaller = MarshallerFactory.getInstance().getMarshaller(Context.class);
-                try {
-                    String xml = contextHandler.retrieve("scape-context");
-                    scapeContext = contextMarshaller.unmarshalDocument(xml);
-                }
-                catch (ContextNotFoundException ce) {
+                Map<String, String[]> filter = new HashMap<String, String[]>();
+                filter.put("name", new String[] { "scape-context" });
+                String xml = contextHandler.retrieveContexts(filter);
+                XPath xp = xfac.newXPath();
+                XPathExpression xpe =
+                    xp
+                        .compile("//*[local-name()='numberOfRecords' and namespace-uri()='http://www.loc.gov/zing/srw/']");
+                int numResult = Integer.parseInt(xpe.evaluate(new InputSource(new StringReader(xml))));
+                if (numResult == 0) {
                     ContextProperties props = new ContextProperties();
                     props.setCreationDate(new DateTime());
                     props.setDescription("a context for SCAPE items");
@@ -190,10 +211,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     scapeContext = new Context();
                     scapeContext.setLastModificationDate(new DateTime());
                     scapeContext.setProperties(props);
-                    openOU();
-                    String xml = contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
-                    scapeContext = contextMarshaller.unmarshalDocument(xml);
-                    closeOU();
+                    String contextXml = contextHandler.create(contextMarshaller.marshalDocument(scapeContext));
+                    scapeContext = contextMarshaller.unmarshalDocument(contextXml);
+                }
+                else {
+                    int posOuStart = xml.indexOf("<context:context ");
+                    int posOuEnd = xml.indexOf("</context:context>");
+                    String ouXML = xml.substring(posOuStart, posOuEnd + 18);
+                    scapeContext = contextMarshaller.unmarshalDocument(ouXML);
                 }
             }
         }
@@ -205,17 +230,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private void checkScapeOU() throws EscidocException {
         try {
             if (scapeOU == null) {
-                Marshaller<OrganizationalUnit> ouMarshaller =
-                    MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
-                try {
-                    Map<String, String[]> filters = new HashMap<String, String[]>(1);
-                    filters.put("name", new String[] { "scape-default-ou" });
-                    String ous = ouHandler.retrieveOrganizationalUnits(filters);
-                    System.out.println("xml:\n" + ous);
-                    String xml = ouHandler.retrieve("scape-ou");
-                    scapeOU = ouMarshaller.unmarshalDocument(xml);
-                }
-                catch (OrganizationalUnitNotFoundException e) {
+                Map<String, String[]> filters = new HashMap<String, String[]>(1);
+                filters.put("name", new String[] { "scape-default-ou" });
+                String result = ouHandler.retrieveOrganizationalUnits(filters);
+                XPath xp = xfac.newXPath();
+                XPathExpression xpe =
+                    xp
+                        .compile("//*[local-name()='numberOfRecords' and namespace-uri()='http://www.loc.gov/zing/srw/']");
+                int numResult = Integer.parseInt(xpe.evaluate(new InputSource(new StringReader(result))));
+                if (numResult == 0) {
+                    // create new SCAPE OU
                     OrganizationalUnitProperties props = new OrganizationalUnitProperties();
                     props.setCreationDate(new DateTime());
                     props.setDescription("SCAPE organizational unit");
@@ -235,6 +259,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     scapeOU.setMetadataRecords(mdRecords);
                     String xml = ouHandler.create(ouMarshaller.marshalDocument(scapeOU));
                     scapeOU = ouMarshaller.unmarshalDocument(xml);
+                    openOU();
+                }
+                else {
+                    int posOuStart = result.indexOf("<organizational-unit:organizational-unit ");
+                    int posOuEnd = result.indexOf("</organizational-unit:organizational-unit>");
+                    String ouXML = result.substring(posOuStart, posOuEnd + 42);
+                    scapeOU = ouMarshaller.unmarshalDocument(ouXML);
                 }
             }
         }
