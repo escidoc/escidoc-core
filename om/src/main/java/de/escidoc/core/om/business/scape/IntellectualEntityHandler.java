@@ -172,6 +172,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // prepare the dublin core metadata
             MetadataRecords mds = new MetadataRecords();
             mds.setLastModificationDate(new DateTime());
+            MetadataRecord escidoc = new MetadataRecord("escidoc");
+            mds.add(escidoc);
             MetadataRecord dc = new MetadataRecord("dublin-core");
             dc.setMdType("DC");
             NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
