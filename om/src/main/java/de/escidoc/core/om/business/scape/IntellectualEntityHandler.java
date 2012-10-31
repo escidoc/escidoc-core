@@ -1,6 +1,8 @@
 package de.escidoc.core.om.business.scape;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.DateFormat;
@@ -150,7 +152,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
+     * ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -172,9 +175,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // prepare the dublin core metadata
             MetadataRecords mds = new MetadataRecords();
             mds.setLastModificationDate(new DateTime());
-            MetadataRecord escidoc = new MetadataRecord("escidoc");
-            mds.add(escidoc);
-            MetadataRecord dc = new MetadataRecord("dublin-core");
+            MetadataRecord dc = new MetadataRecord("escidoc");
             dc.setMdType("DC");
             NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
             for (int i = 0; i < nodes.getLength(); i++) {
@@ -209,8 +210,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             // and finally use escidoc's item handler to save the generated xml
             // data
-            itemHandler.create(itemMarshaller.marshalDocument(item));
-            return itemMarshaller.marshalDocument(item) + "\n";
+
+            final BufferedWriter writer = new BufferedWriter(new FileWriter("escidoc.xml"));
+            String itemXML = itemMarshaller.marshalDocument(item);
+            writer.write(itemXML);
+            writer.flush();
+            IOUtils.closeWriter(writer);
+            itemHandler.create(itemXML);
+            return itemXML + "\n";
             // return entity.getIdentifier().getValue() + "\n";
         }
         catch (Exception e) {
