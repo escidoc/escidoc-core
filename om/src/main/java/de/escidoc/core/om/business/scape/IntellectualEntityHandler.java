@@ -1,11 +1,8 @@
 package de.escidoc.core.om.business.scape;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +11,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
@@ -41,37 +36,44 @@ import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
-import de.escidoc.core.common.business.fedora.resources.create.ContentModelProperties;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
+import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
+import de.escidoc.core.resources.XLinkType;
 import de.escidoc.core.resources.common.MetadataRecord;
 import de.escidoc.core.resources.common.MetadataRecords;
 import de.escidoc.core.resources.common.properties.PublicStatus;
 import de.escidoc.core.resources.common.reference.ContentModelRef;
 import de.escidoc.core.resources.common.reference.ContextRef;
 import de.escidoc.core.resources.common.reference.OrganizationalUnitRef;
+import de.escidoc.core.resources.common.structmap.ItemMemberRef;
+import de.escidoc.core.resources.common.structmap.MemberRef;
+import de.escidoc.core.resources.common.structmap.StructMap;
+import de.escidoc.core.resources.om.container.Container;
+import de.escidoc.core.resources.om.container.ContainerProperties;
 import de.escidoc.core.resources.om.context.Context;
 import de.escidoc.core.resources.om.context.ContextProperties;
 import de.escidoc.core.resources.om.context.OrganizationalUnitRefs;
 import de.escidoc.core.resources.om.item.Item;
 import de.escidoc.core.resources.om.item.ItemProperties;
+import de.escidoc.core.resources.om.item.StorageType;
 import de.escidoc.core.resources.om.item.component.Component;
 import de.escidoc.core.resources.om.item.component.ComponentContent;
 import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
+import eu.scapeproject.model.File;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.Representation;
+import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -79,24 +81,27 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private static final Logger LOG = LoggerFactory.getLogger(IntellectualEntityHandler.class);
 
+    private static String createTaskParam(final String lastModificationDate) {
+        return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
+    }
+
     private final Marshaller<OrganizationalUnit> ouMarshaller;
 
     private final Marshaller<Component> componentMarshaller;
 
+    private final Marshaller<Container> containerMarshaller;
+
+    private final Marshaller<Item> itemMarshaller;
+
     private final XPathFactory xfac = XPathFactory.newInstance();
 
-    private final DateTimeFormatter dateformatter = ISODateTimeFormat.dateTime();
+    private static final DateTimeFormatter dateformatter = ISODateTimeFormat.dateTime();
 
     private Context scapeContext;
 
     private OrganizationalUnit scapeOU;
 
     private String scapeContentModelId;
-
-    public IntellectualEntityHandler() throws InternalClientException {
-        ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
-        componentMarshaller = MarshallerFactory.getInstance().getMarshaller(Component.class);
-    }
 
     @Autowired
     @Qualifier("service.OrganizationalUnitHandler")
@@ -114,6 +119,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Qualifier("service.ContentModelHandler")
     private ContentModelHandlerInterface contentModelHandler;
 
+    @Autowired
+    @Qualifier("service.ContainerHandler")
+    private ContainerHandlerInterface containerHandler;
+
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
         "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
@@ -121,150 +130,17 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private static final String SCAPE_CM_ELEMENT =
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?><escidocContentModel:content-model xmlns:escidocContentModel=\"http://www.escidoc.de/schemas/contentmodel/0.1\" xmlns:prop=\"http://escidoc.de/core/01/properties/\"><escidocContentModel:properties><prop:name>scape-contentmodel</prop:name><prop:description>for test purpose</prop:description></escidocContentModel:properties></escidocContentModel:content-model>";
 
-    private void openOU() throws ScapeException {
-        try {
-            String xml =
-                ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
-                    DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
-            XPath xp = xfac.newXPath();
-            XPathExpression xpe =
-                xp
-                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
-            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
-            scapeOU.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
-        }
-        catch (Exception e) {
-            LOG.error("Error while opening ou", e);
-            throw new ScapeException(e.getMessage(), e);
-        }
+    private static DateTime getLastModificationDateTime(final String xml) throws Exception {
+        int start = xml.indexOf("last-modification-date=\"") + 24;
+        int end = xml.indexOf("\"", start);
+        return dateformatter.parseDateTime(xml.substring(start, end));
     }
 
-    private void openContext() throws ScapeException {
-        try {
-            String xml =
-                contextHandler.open(scapeContext.getObjid(), createTaskParam(scapeContext
-                    .getLastModificationDate().toDateTime(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
-            XPath xp = xfac.newXPath();
-            XPathExpression xpe =
-                xp
-                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
-            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
-            scapeContext.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
-        }
-        catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
-        }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
-     * ingestIntellectualEntity(java.lang.String)
-     */
-    @Override
-    public String ingestIntellectualEntity(String xml) throws EscidocException {
-        try {
-            checkScapeContext();
-            checkScapeContentModel();
-            
-
-            IntellectualEntity entity =
-                SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
-                    new ByteArrayInputStream(xml.getBytes()));
-
-            // create a new escidoc item using the ijc library
-            Item item = new Item();
-
-            // prepare the dublin core metadata
-            MetadataRecords mds = this.getEntityMetadataRecords(entity);
-
-            // set the properties of the item using the intellectual entities
-            // data
-            ItemProperties itemProps = new ItemProperties();
-            itemProps.setContext(new ContextRef(scapeContext.getObjid()));
-            itemProps.setContentModel(new ContentModelRef(scapeContentModelId));
-            item.setProperties(itemProps);
-            item.setMetadataRecords(mds);
-            item.setLastModificationDate(new DateTime());
-
-            // and use ijc's marshaller to create escidoc xml
-            Marshaller<Item> itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
-
-            // and finally use escidoc's item handler to save the generated xml
-            // data
-
-            String itemXml = itemHandler.create(itemMarshaller.marshalDocument(item));
-            String itemId = getItemId(itemXml);
-            
-            // add all the representations to the item
-            this.addRepresentatations(entity,itemId);
-
-            return itemXml + "\n";
-        }
-        catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
-        }
-    }
-
-    private void addRepresentatations(IntellectualEntity entity,String itemId) throws Exception {
-        // iterate over the representations and create the corresponding components
-        for (Representation r : entity.getRepresentations()) {
-            Component comp = new Component();
-            ComponentProperties compProps = new ComponentProperties();
-            compProps.setDescription(r.getTitle());
-            compProps.setMimeType("application/xml");
-            ComponentContent compCont = new ComponentContent();
-            Element node =
-                DocumentBuilderFactory
-                    .newInstance().newDocumentBuilder().parse(
-                        new ByteArrayInputStream(SCAPEMarshaller.getInstance().serialize(r).getBytes()))
-                    .getDocumentElement();
-            compCont.setContent(node);
-            comp.setProperties(compProps);
-            comp.setContent(compCont);
-            comp.setLastModificationDate(new DateTime());
-            itemHandler.createComponent(itemId, componentMarshaller.marshalDocument(comp));
-        }
-	}
-
-	private MetadataRecords getEntityMetadataRecords(final IntellectualEntity entity) throws ParserConfigurationException{
-    	final MetadataRecords mds = new MetadataRecords();
-    	final Document doc = DocumentBuilderFactory
-    			.newInstance()
-    			.newDocumentBuilder()
-    			.newDocument();
-        mds.setLastModificationDate(new DateTime());
-        MetadataRecord dc = new MetadataRecord("escidoc");
-        dc.setMdType("DC");
-        NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node n = nodes.item(i);
-            if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
-                Document dcDoc = DocumentBuilderFactory
-                		.newInstance()
-                		.newDocumentBuilder()
-                		.newDocument();
-                Element dcElement = dcDoc.createElement("dublin-core");
-                dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
-                dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
-                NodeList origDCElements =
-                    (NodeList) n
-                        .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
-                for (int j = 1; j < origDCElements.getLength(); j++) {
-                    dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
-                }
-                dc.setContent(dcElement);
-                mds.add(dc);
-            }
-        }
-        return mds;
-    }
-
-	private String getItemId(String itemXml) {
-        final int start = itemXml.indexOf("xlink:href=\"/ir/item/") + 21;
-        final int end = itemXml.indexOf("\"", start);
-        return new String(itemXml.substring(start, end));
+    public IntellectualEntityHandler() throws InternalClientException {
+        ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
+        componentMarshaller = MarshallerFactory.getInstance().getMarshaller(Component.class);
+        containerMarshaller = MarshallerFactory.getInstance().getMarshaller(Container.class);
+        itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
     }
 
     private void checkScapeContentModel() throws EscidocException {
@@ -287,7 +163,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     scapeContentModelId = cmXML.substring(pos + 31, end);
                 }
                 else {
-                    System.out.println(xml);
                     int posOuStart = xml.indexOf("<escidocContentModel:content-model ");
                     int posOuEnd = xml.indexOf("</escidocContentModel:content-model>");
                     String cmXML = xml.substring(posOuStart, posOuEnd + 35);
@@ -392,46 +267,113 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
     }
 
-    private static String createTaskParam(final String lastModificationDate) {
-        return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
+    private Container createContainer(IntellectualEntity entity, Document entityDoc) throws Exception {
+        Container container = new Container();
+        ContainerProperties props = new ContainerProperties();
+        props.setContentModel(new ContentModelRef(scapeContentModelId));
+        props.setContext(new ContextRef(scapeContext.getObjid()));
+        props.setName(((DCMetadata) entity.getDescriptive()).getTitle().get(0));
+        props.setDescription(((DCMetadata) entity.getDescriptive()).getDescription().get(0));
+        container.setProperties(props);
+        container.setMetadataRecords(createEntityMetadataRecords(entity, entityDoc));
+        container.setLastModificationDate(new DateTime());
+        return container;
     }
 
-    private static String getLastModificationDate(final String xml, final ResourceType type)
-        throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
-        String result = null;
-
-        if (xml != null) {
-            ByteArrayInputStream input = null;
-            try {
-                input = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-                final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                final Document xmlDom = db.parse(input);
-                final XPath xpath = XPathFactory.newInstance().newXPath();
-                result = xpath.evaluate('/' + type.getLabel() + "/@last-modification-date", xmlDom);
-            }
-            finally {
-                IOUtils.closeStream(input);
+    private MetadataRecords createEntityMetadataRecords(final IntellectualEntity entity, final Document entityDoc)
+        throws Exception {
+        final MetadataRecords mds = new MetadataRecords();
+        mds.setLastModificationDate(new DateTime());
+        MetadataRecord dc = new MetadataRecord("escidoc");
+        dc.setMdType("DC");
+        NodeList nodes = entityDoc.getElementsByTagName("mets:dmdSec");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node n = nodes.item(i);
+            if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
+                Document dcDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+                Element dcElement = dcDoc.createElement("dublin-core");
+                dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+                dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
+                NodeList origDCElements =
+                    (NodeList) n
+                        .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
+                for (int j = 1; j < origDCElements.getLength(); j++) {
+                    dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
+                }
+                dc.setContent(dcElement);
+                mds.add(dc);
             }
         }
-        return result;
+        return mds;
     }
 
-    @Override
-    public String getIntellectualEntity(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    private String createItem(Representation r, Document doc) throws Exception {
+        Item i = new Item();
+        ItemProperties props = new ItemProperties();
+        props.setContentModel(new ContentModelRef(scapeContentModelId));
+        props.setContext(new ContextRef(scapeContext.getObjid()));
+        i.setMetadataRecords(createRepresentationMetadataRecords(r));
+        i.setProperties(props);
+        String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
+        String itemId = getItemId(itemXml);
+        DateTime lastModDate = getLastModificationDateTime(itemXml);
+        // iterate over all the files and create the according components
+        for (File f : r.getFiles()) {
+            Component c = createComponent(f, itemId, lastModDate, doc);
+            System.out.println(c.getLastModificationDate());
+            itemHandler.createComponent(itemId, componentMarshaller.marshalDocument(c));
+            // refetch the item so we get the current last mod date from escidoc
+            itemXml = itemHandler.retrieve(itemId);
+            System.out.println(itemXml);
+            lastModDate = getLastModificationDateTime(itemXml);
+        }
+        return itemId;
     }
 
-    @Override
-    public String updateIntellectualEntity(String xml) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    private Component createComponent(File f, String itemId, DateTime itemModeDate, Document doc) throws Exception {
+        Component c = new Component();
+        ComponentProperties props = new ComponentProperties();
+        props.setCreationDate(new DateTime());
+        props.setVisibility("visible");
+        props.setValidStatus("valid");
+        props.setDescription("SCAPE File");
+        props.setPid(f.getIdentifier().getValue());
+        props.setContentCategory("Files");
+        ComponentContent data = new ComponentContent();
+        data.setStorageType(StorageType.INTERNAL_MANAGED);
+        data.setXLinkHref(f.getUri().toASCIIString());
+        c.setProperties(props);
+        c.setContent(data);
+        c.setLastModificationDate(itemModeDate);
+        return c;
     }
 
-    @Override
-    public String getLifeCyclestatus(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    private String getComponentId(String componentXml, String itemId) {
+        String hrefPrefix = "xlink:href=\"/ir/item/" + itemId + "/component/";
+        final int start = componentXml.indexOf(hrefPrefix) + hrefPrefix.length();
+        final int stop = componentXml.indexOf("\"", start);
+        return new String(componentXml.substring(start, stop));
+    }
+
+    private MetadataRecords createRepresentationMetadataRecords(Representation r) throws Exception {
+        MetadataRecords mds = new MetadataRecords();
+        MetadataRecord rec = new MetadataRecord("escidoc");
+        rec.setMdType("DC");
+        rec.setSchema("http://purl.org/dc/elements/1.1/");
+        String dc =
+            "<dublin-core xmlns:dc=\"http://purl.org/dc/elements/1.1/\"><dc:title>" + r.getTitle()
+                + "</dc:title></dublin-core>";
+        Document doc =
+            DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(dc.getBytes()));
+        rec.setContent(doc.getDocumentElement());
+        mds.add(rec);
+        return mds;
+    }
+
+    private String getContainerId(String containerXml) {
+        final int start = containerXml.indexOf("xlink:href=\"/ir/container/") + 26;
+        final int stop = containerXml.indexOf("\"", start);
+        return new String(containerXml.substring(start, stop));
     }
 
     @Override
@@ -441,7 +383,104 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
+    public String getIntellectualEntity(String id) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public String getIntellectualEntityVersionSet(String id) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    private String getItemId(String itemXml) {
+        final int start = itemXml.indexOf("xlink:href=\"/ir/item/") + 21;
+        final int end = itemXml.indexOf("\"", start);
+        return new String(itemXml.substring(start, end));
+    }
+
+    @Override
+    public String getLifeCyclestatus(String id) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
+     */
+    @Override
+    public String ingestIntellectualEntity(String xml) throws EscidocException {
+        try {
+            checkScapeContext();
+            checkScapeContentModel();
+
+            // deserialize the entity and create a org.w3c.Document for reuse by various later calls
+            IntellectualEntity entity =
+                SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
+                    new ByteArrayInputStream(xml.getBytes()));
+            final Document doc =
+                DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                    new ByteArrayInputStream(xml.getBytes()));
+            StructMap map = new StructMap();
+
+            // add the representations as single items to the container
+            for (Representation r : entity.getRepresentations()) {
+                String itemId = this.createItem(r, doc);
+                map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
+            }
+
+            // create the entities container and add the various representations
+            Container entityContainer = this.createContainer(entity, doc);
+            entityContainer.setStructMap(map);
+            String containerXml = containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
+            String containerId = getContainerId(containerXml);
+            return containerId;
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void openContext() throws ScapeException {
+        try {
+            String xml =
+                contextHandler.open(scapeContext.getObjid(), createTaskParam(scapeContext
+                    .getLastModificationDate().toDateTime(DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
+            XPath xp = xfac.newXPath();
+            XPathExpression xpe =
+                xp
+                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
+            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
+            scapeContext.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private void openOU() throws ScapeException {
+        try {
+            String xml =
+                ouHandler.open(scapeOU.getObjid(), createTaskParam(scapeOU.getLastModificationDate().toDateTime(
+                    DateTimeZone.UTC).toString(Constants.TIMESTAMP_FORMAT)));
+            XPath xp = xfac.newXPath();
+            XPathExpression xpe =
+                xp
+                    .compile("/*[local-name()='result' and namespace-uri()='http://www.escidoc.de/schemas/result/0.1']/@last-modification-date");
+            String lastModDate = xpe.evaluate(new InputSource(new StringReader(xml)));
+            scapeOU.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
+        }
+        catch (Exception e) {
+            LOG.error("Error while opening ou", e);
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public String updateIntellectualEntity(String xml) throws EscidocException {
         // TODO Auto-generated method stub
         return null;
     }
