@@ -65,9 +65,13 @@ import de.escidoc.core.resources.om.context.ContextProperties;
 import de.escidoc.core.resources.om.context.OrganizationalUnitRefs;
 import de.escidoc.core.resources.om.item.Item;
 import de.escidoc.core.resources.om.item.ItemProperties;
+import de.escidoc.core.resources.om.item.component.Component;
+import de.escidoc.core.resources.om.item.component.ComponentContent;
+import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import eu.scapeproject.model.IntellectualEntity;
+import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -76,6 +80,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private static final Logger LOG = LoggerFactory.getLogger(IntellectualEntityHandler.class);
 
     private final Marshaller<OrganizationalUnit> ouMarshaller;
+
+    private final Marshaller<Component> componentMarshaller;
 
     private final XPathFactory xfac = XPathFactory.newInstance();
 
@@ -89,6 +95,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     public IntellectualEntityHandler() throws InternalClientException {
         ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
+        componentMarshaller = MarshallerFactory.getInstance().getMarshaller(Component.class);
     }
 
     @Autowired
@@ -159,42 +166,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         try {
             checkScapeContext();
-            checkContentModel();
+            checkScapeContentModel();
+            
 
             IntellectualEntity entity =
                 SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
                     new ByteArrayInputStream(xml.getBytes()));
-            // parse the METS xml dom
-            // since we need metadata as org.w3c.Element
-            DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-            Document doc = domFactory.newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes()));
 
             // create a new escidoc item using the ijc library
             Item item = new Item();
 
             // prepare the dublin core metadata
-            MetadataRecords mds = new MetadataRecords();
-            mds.setLastModificationDate(new DateTime());
-            MetadataRecord dc = new MetadataRecord("escidoc");
-            dc.setMdType("DC");
-            NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
-            for (int i = 0; i < nodes.getLength(); i++) {
-                Node n = nodes.item(i);
-                if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
-                    Document dcDoc = domFactory.newDocumentBuilder().newDocument();
-                    Element dcElement = dcDoc.createElement("dublin-core");
-                    dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
-                    dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
-                    NodeList origDCElements =
-                        (NodeList) n
-                            .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
-                    for (int j = 1; j < origDCElements.getLength(); j++) {
-                        dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
-                    }
-                    dc.setContent(dcElement);
-                    mds.add(dc);
-                }
-            }
+            MetadataRecords mds = this.getEntityMetadataRecords(entity);
 
             // set the properties of the item using the intellectual entities
             // data
@@ -211,21 +194,80 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // and finally use escidoc's item handler to save the generated xml
             // data
 
-            final BufferedWriter writer = new BufferedWriter(new FileWriter("escidoc.xml"));
-            String itemXML = itemMarshaller.marshalDocument(item);
-            writer.write(itemXML);
-            writer.flush();
-            IOUtils.closeWriter(writer);
-            itemHandler.create(itemXML);
-            return itemXML + "\n";
-            // return entity.getIdentifier().getValue() + "\n";
+            String itemXml = itemHandler.create(itemMarshaller.marshalDocument(item));
+            String itemId = getItemId(itemXml);
+            
+            // add all the representations to the item
+            this.addRepresentatations(entity,itemId);
+
+            return itemXml + "\n";
         }
         catch (Exception e) {
             throw new ScapeException(e.getMessage(), e);
         }
     }
 
-    private void checkContentModel() throws EscidocException {
+    private void addRepresentatations(IntellectualEntity entity,String itemId) throws Exception {
+        // iterate over the representations and create the corresponding components
+        for (Representation r : entity.getRepresentations()) {
+            Component comp = new Component();
+            ComponentProperties compProps = new ComponentProperties();
+            compProps.setDescription(r.getTitle());
+            compProps.setMimeType("application/xml");
+            ComponentContent compCont = new ComponentContent();
+            Element node =
+                DocumentBuilderFactory
+                    .newInstance().newDocumentBuilder().parse(
+                        new ByteArrayInputStream(SCAPEMarshaller.getInstance().serialize(r).getBytes()))
+                    .getDocumentElement();
+            compCont.setContent(node);
+            comp.setProperties(compProps);
+            comp.setContent(compCont);
+            comp.setLastModificationDate(new DateTime());
+            itemHandler.createComponent(itemId, componentMarshaller.marshalDocument(comp));
+        }
+	}
+
+	private MetadataRecords getEntityMetadataRecords(final IntellectualEntity entity) throws ParserConfigurationException{
+    	final MetadataRecords mds = new MetadataRecords();
+    	final Document doc = DocumentBuilderFactory
+    			.newInstance()
+    			.newDocumentBuilder()
+    			.newDocument();
+        mds.setLastModificationDate(new DateTime());
+        MetadataRecord dc = new MetadataRecord("escidoc");
+        dc.setMdType("DC");
+        NodeList nodes = doc.getElementsByTagName("mets:dmdSec");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node n = nodes.item(i);
+            if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
+                Document dcDoc = DocumentBuilderFactory
+                		.newInstance()
+                		.newDocumentBuilder()
+                		.newDocument();
+                Element dcElement = dcDoc.createElement("dublin-core");
+                dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+                dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
+                NodeList origDCElements =
+                    (NodeList) n
+                        .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
+                for (int j = 1; j < origDCElements.getLength(); j++) {
+                    dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
+                }
+                dc.setContent(dcElement);
+                mds.add(dc);
+            }
+        }
+        return mds;
+    }
+
+	private String getItemId(String itemXml) {
+        final int start = itemXml.indexOf("xlink:href=\"/ir/item/") + 21;
+        final int end = itemXml.indexOf("\"", start);
+        return new String(itemXml.substring(start, end));
+    }
+
+    private void checkScapeContentModel() throws EscidocException {
         try {
             if (scapeContentModelId == null) {
                 Marshaller<ContentModel> contentModelMarshaller =
