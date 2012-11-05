@@ -17,6 +17,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
@@ -70,6 +71,7 @@ import de.escidoc.core.resources.om.item.component.ComponentContent;
 import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
+import eu.scapeproject.model.Agent;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
@@ -412,7 +414,83 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         for (int i = 0; i < nodes.getLength(); i++) {
             dc.coverage(nodes.item(i).getTextContent());
         }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.format(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "language");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.language(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "publisher");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.publisher(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "relation");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.relations(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "rights");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.rights(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "sources");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.sources(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "subject");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.subject(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "type");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.type(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "contributor");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Agent ag = getAgent(nodes.item(i));
+            if (ag != null) {
+                dc.contributor(ag);
+            }
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "creator");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Agent ag = getAgent(nodes.item(i));
+            if (ag != null) {
+                dc.creator(ag);
+            }
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "date");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            dc.date(formatter.parseDateTime(nodes.item(i).getTextContent()).toDate());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "identifier");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            String type = node.getAttributes().getNamedItem("type").getNodeValue();
+            String value = node.getTextContent();
+            dc.identifier(new Identifier(type, value));
+        }
         return dc.build();
+    }
+
+    private Agent getAgent(Node item) {
+        NodeList nodes = item.getChildNodes();
+        Agent.Builder c = new Agent.Builder();
+        for (int j = 0; j < nodes.getLength(); j++) {
+            Node node = nodes.item(j);
+            if (node.getLocalName() == null) {
+                return null;
+            }
+            if (node.getLocalName().equals("name")) {
+                c.name(node.getTextContent());
+            }
+            else if (node.getLocalName().equals("note")) {
+                c.note(node.getTextContent());
+            }
+        }
+        return c.build();
     }
 
     @Override
