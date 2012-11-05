@@ -71,9 +71,12 @@ import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import eu.scapeproject.model.File;
+import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.Representation;
+import eu.scapeproject.model.metadata.DescriptiveMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
+import eu.scapeproject.model.metadata.dc.DCMetadata.Builder;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -320,11 +323,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         // iterate over all the files and create the according components
         for (File f : r.getFiles()) {
             Component c = createComponent(f, itemId, lastModDate, doc);
-            System.out.println(c.getLastModificationDate());
             itemHandler.createComponent(itemId, componentMarshaller.marshalDocument(c));
             // refetch the item so we get the current last mod date from escidoc
             itemXml = itemHandler.retrieve(itemId);
-            System.out.println(itemXml);
             lastModDate = getLastModificationDateTime(itemXml);
         }
         return itemId;
@@ -384,8 +385,34 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String getIntellectualEntity(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
+            MetadataRecord record = c.getMetadataRecords().get("escidoc");
+            IntellectualEntity entity =
+                new IntellectualEntity.Builder().identifier(new Identifier(c.getObjid())).descriptive(
+                    getDcMetadata(record)).build();
+            return SCAPEMarshaller.getInstance().serialize(entity);
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
+    }
+
+    private DescriptiveMetadata getDcMetadata(MetadataRecord record) {
+        DCMetadata.Builder dc = new DCMetadata.Builder();
+        NodeList nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.title(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "description");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.description(nodes.item(i).getTextContent());
+        }
+        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "coverage");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            dc.coverage(nodes.item(i).getTextContent());
+        }
+        return dc.build();
     }
 
     @Override
