@@ -313,21 +313,19 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         props.setContext(new ContextRef(scapeContext.getObjid()));
         i.setMetadataRecords(createRepresentationMetadataRecords(r));
         i.setProperties(props);
-        String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
-        String itemId = getItemId(itemXml);
-        DateTime lastModDate = getLastModificationDateTime(itemXml);
+        Components components = new Components();
         // iterate over all the files and create the according components
         for (File f : r.getFiles()) {
-            Component c = createComponent(f, itemId, lastModDate, doc);
-            itemHandler.createComponent(itemId, componentMarshaller.marshalDocument(c));
-            // refetch the item so we get the current last mod date from escidoc
-            itemXml = itemHandler.retrieve(itemId);
-            lastModDate = getLastModificationDateTime(itemXml);
+            Component c = createComponent(f, doc);
+            components.add(c);
         }
+        String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
+        String itemId = getItemId(itemXml);
         return itemId;
     }
 
-    private Component createComponent(File f, String itemId, DateTime itemModeDate, Document doc) throws Exception {
+    @SuppressWarnings("deprecation")
+    private Component createComponent(File f, Document doc) throws Exception {
         Component c = new Component();
         ComponentProperties props = new ComponentProperties();
         props.setCreationDate(new DateTime());
@@ -338,10 +336,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         props.setContentCategory("Files");
         ComponentContent data = new ComponentContent();
         data.setStorageType(StorageType.INTERNAL_MANAGED);
-        data.setXLinkHref(f.getUri().toASCIIString());
+        data.setContent(DocumentBuilderFactory
+            .newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(("<content>" + f.getUri().toASCIIString() + "</content>").getBytes()))
+            .getDocumentElement());
         c.setProperties(props);
         c.setContent(data);
-        c.setLastModificationDate(itemModeDate);
         return c;
     }
 
