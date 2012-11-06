@@ -1,18 +1,17 @@
 package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.StringReader;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.joda.time.DateTime;
@@ -30,19 +29,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
@@ -56,7 +51,6 @@ import de.escidoc.core.resources.common.reference.ContentModelRef;
 import de.escidoc.core.resources.common.reference.ContextRef;
 import de.escidoc.core.resources.common.reference.OrganizationalUnitRef;
 import de.escidoc.core.resources.common.structmap.ItemMemberRef;
-import de.escidoc.core.resources.common.structmap.MemberRef;
 import de.escidoc.core.resources.common.structmap.StructMap;
 import de.escidoc.core.resources.om.container.Container;
 import de.escidoc.core.resources.om.container.ContainerProperties;
@@ -69,6 +63,7 @@ import de.escidoc.core.resources.om.item.StorageType;
 import de.escidoc.core.resources.om.item.component.Component;
 import de.escidoc.core.resources.om.item.component.ComponentContent;
 import de.escidoc.core.resources.om.item.component.ComponentProperties;
+import de.escidoc.core.resources.om.item.component.Components;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import eu.scapeproject.model.Agent;
@@ -78,7 +73,6 @@ import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.metadata.DescriptiveMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
-import eu.scapeproject.model.metadata.dc.DCMetadata.Builder;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -388,16 +382,42 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntity(String id) throws EscidocException {
         try {
+            IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
             Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
             MetadataRecord record = c.getMetadataRecords().get("escidoc");
-            IntellectualEntity entity =
-                new IntellectualEntity.Builder().identifier(new Identifier(c.getObjid())).descriptive(
-                    getDcMetadata(record)).build();
-            return SCAPEMarshaller.getInstance().serialize(entity);
+            entity.identifier(new Identifier(c.getObjid())).descriptive(getDcMetadata(record)).representations(
+                getRepresentations(c));
+            return SCAPEMarshaller.getInstance().serialize(entity.build());
         }
         catch (Exception e) {
             throw new ScapeException(e.getMessage(), e);
         }
+    }
+
+    private List<Representation> getRepresentations(Container c) throws Exception {
+        List<Representation> reps = new ArrayList<Representation>();
+        for (ItemMemberRef ref : c.getStructMap().getItems()) {
+            Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(ref.getObjid()));
+            Representation.Builder rep = new Representation.Builder();
+            rep.files(getFiles(i));
+            rep.identifier(new Identifier(i.getObjid()));
+            reps.add(rep.build());
+        }
+        return reps;
+    }
+
+    private List<File> getFiles(Item i) {
+        List<File> files = new ArrayList<File>();
+        Components comps = i.getComponents();
+        Iterator<Component> it = comps.iterator();
+        while (it.hasNext()) {
+            Component c = it.next();
+            File.Builder f = new File.Builder();
+            f.identifier(new Identifier(c.getObjid()));
+            f.uri(URI.create(c.getXLinkHref()));
+            files.add(f.build());
+        }
+        return files;
     }
 
     private DescriptiveMetadata getDcMetadata(MetadataRecord record) {
@@ -514,7 +534,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
+     * ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -522,7 +543,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             checkScapeContext();
             checkScapeContentModel();
 
-            // deserialize the entity and create a org.w3c.Document for reuse by various later calls
+            // deserialize the entity and create a org.w3c.Document for reuse by
+            // various later calls
             IntellectualEntity entity =
                 SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
                     new ByteArrayInputStream(xml.getBytes()));
