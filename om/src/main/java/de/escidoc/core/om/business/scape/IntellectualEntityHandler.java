@@ -412,7 +412,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         mds.add(prov);
 
         // rights metadata
-        final MetadataRecord rights = new MetadataRecord("rights");
+        final MetadataRecord rights = new MetadataRecord("rightsMD");
         rights.setLastModificationDate(new DateTime());
         rights.setMdType(r.getRights().getType().name());
         rights.setContent(dbf
@@ -422,7 +422,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         mds.add(rights);
 
         //source DC metadata
-        final MetadataRecord source = new MetadataRecord("source");
+        final MetadataRecord source = new MetadataRecord("sourceMD");
         source.setLastModificationDate(new DateTime());
         source.setMdType("DC");
         source.setContent(dbf
@@ -475,7 +475,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 (TechnicalMetadata) SCAPEMarshaller.getInstance().deserialize(
                     i.getMetadataRecords().get("techMD").getContent());
             rep.technical(techMd);
-            DescriptiveMetadata source = (DescriptiveMetadata) SCAPEMarshaller.getInstance().deserialize(i.getMetadataRecords().get("sourceMD").getContent());
+            DescriptiveMetadata source =
+                (DescriptiveMetadata) SCAPEMarshaller.getInstance().deserialize(
+                    i.getMetadataRecords().get("sourceMD").getContent());
             reps.add(rep.build());
         }
         return reps;
