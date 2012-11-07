@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:scape="http://scapeproject.eu/model" xmlns:ns3="http::/scapeproject.eu/model"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:premis="http://www.loc.gov/standards/premis"
+	xmlns:textmd="info:lc/xmlns/textmd-v3" xmlns:mix="http://www.loc.gov/mix/v10" xmlns:fits="http://hul.harvard.edu/ois/xml/ns/fits/fits_output"
+	xmlns:amd="http://www.loc.gov/AMD/" xmlns:vmd="http://www.loc.gov/videoMD/" xmlns:ns13="info:lc/xmlns/premis-v2"
+	ID="DMD-c27be21d-f33d-46d6-aa6f-5cf78d051569" OBJID="IE-62649202-43e1-4e1a-ac34-1c0827d88e6c" LABEL="dCjFgmSeLQOjPJeZ">
+	<mets:metsHdr ID="HDR-67fe9552-4165-4357-acef-d1ca5bf9ec8b" VERSION="0">
+		<mets:agent ID="AGENT-1" ROLE="OTHER" TYPE="INDIVIDUAL">
+			<mets:name>Test Agent 1</mets:name>
+			<mets:note>An Agent for testing purposes</mets:note>
+		</mets:agent>
+		<mets:altRecordID TYPE="String">SCAPE-ID-1</mets:altRecordID>
+	</mets:metsHdr>
+	<mets:dmdSec ID="DC-1" CREATED="0796-07-20T00:00:00+01:00">
+		<mets:mdWrap MDTYPE="DC" SIZE="0">
+			<mets:xmlData>
+				<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
+					scape:identifier="DC-a8e7f65a-3ebe-409d-99bd-69bfb6060a91">
+					<dc:date>0796-07-20 00:00:00.000</dc:date>
+					<dc:title>A Simple test entity</dc:title>
+					<dc:creator premis:role="OTHER" premis:type="INDIVIDUAL">
+						<premis:name>PREMIS-AGENT-2</premis:name>
+						<premis:note>agent for premis</premis:note>
+					</dc:creator>
+					<dc:coverage>xDjogJBNmeijvPxL</dc:coverage>
+					<dc:description>NgFYXdWtXvGiVEHn</dc:description>
+					<dc:format>LZqTQtpdSRfYxkeZ</dc:format>
+					<dc:language>AGaVqFhDdWhvxJTd</dc:language>
+					<dc:publisher>ywxtqXScaFNKYnIh</dc:publisher>
+					<dc:subject>hmnULjcqAQSEjrRn</dc:subject>
+					<dc:type>JkxTECpIFibkBVbV</dc:type>
+					<dc:source>dpHDZeCcKJXLZBpU</dc:source>
+					<dc:relation>HyfHRwTsmpnuockH</dc:relation>
+					<dc:contributor premis:role="OTHER" premis:type="INDIVIDUAL">
+						<premis:name>CONTRIBUTOR-1</premis:name>
+						<premis:note>a test contributor</premis:note>
+					</dc:contributor>
+					<dc:rights>MihsGpVCXRzDdrty</dc:rights>
+				</metadata>
+			</mets:xmlData>
+		</mets:mdWrap>
+	</mets:dmdSec>
+	<mets:amdSec ID="AMD-REP-1">
+		<mets:techMD ID="TECH-MD-1">
+			<mets:mdWrap MDTYPE="TEXTMD" SIZE="0">
+				<mets:xmlData>
+					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textMDMetadata">
+						<textmd:encoding>
+							<textmd:encoding_platform>
+								<textmd:line_break>CR_LF</textmd:line_break>
+							</textmd:encoding_platform>
+							<textmd:encoding_software>gWsqaxKleGgcisfg</textmd:encoding_software>
+							<textmd:encoding_software>keSShqamhuPoCDpl</textmd:encoding_software>
+							<textmd:encoding_agent>
+								<textmd:role>EDITOR</textmd:role>
+							</textmd:encoding_agent>
+						</textmd:encoding>
+						<textmd:encoding>
+							<textmd:encoding_platform>
+								<textmd:line_break>CR_LF</textmd:line_break>
+							</textmd:encoding_platform>
+							<textmd:encoding_software>dFofVgaLIpTaVMVk</textmd:encoding_software>
+							<textmd:encoding_agent>
+								<textmd:role>EDITOR</textmd:role>
+							</textmd:encoding_agent>
+						</textmd:encoding>
+						<textmd:character_info>
+							<textmd:charset>UTF_8</textmd:charset>
+							<textmd:byte_order>BIG_ENDIAN</textmd:byte_order>
+							<textmd:byte_size>-1289951060</textmd:byte_size>
+							<textmd:character_size>0</textmd:character_size>
+							<textmd:line_break>CR_LF</textmd:line_break>
+						</textmd:character_info>
+						<textmd:character_info>
+							<textmd:charset>UTF_8</textmd:charset>
+							<textmd:byte_order>BIG_ENDIAN</textmd:byte_order>
+							<textmd:byte_size>1739474862</textmd:byte_size>
+							<textmd:character_size>4</textmd:character_size>
+							<textmd:line_break>CR_LF</textmd:line_break>
+						</textmd:character_info>
+						<textmd:language>CV</textmd:language>
+						<textmd:alt_language>ig</textmd:alt_language>
+						<textmd:font_script>qBMpoPymQRmXCbAU</textmd:font_script>
+						<textmd:markup_basis>YhSIMDeGInCPvFTQ</textmd:markup_basis>
+						<textmd:markup_language>ax</textmd:markup_language>
+						<textmd:processingNote>OahCsuIAozORDKtb</textmd:processingNote>
+						<textmd:processingNote>WAwOQFlhcEmEZSkS</textmd:processingNote>
+						<textmd:printRequirements>FGSSWzoeDKRCCxoS</textmd:printRequirements>
+						<textmd:printRequirements>dFKjmsmJaKIcEhGn</textmd:printRequirements>
+						<textmd:viewingRequirements>ECKbgqylTJBYkSem</textmd:viewingRequirements>
+						<textmd:textNote>GcogObznWwTPmsfA</textmd:textNote>
+					</metadata>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:techMD>
+		<mets:rightsMD ID="RIGHTS-MD-1">
+			<mets:mdWrap MDTYPE="PREMIS:RIGHTS" SIZE="0">
+				<mets:xmlData>
+					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisRightsMetadata">
+						<premis:rightsStatements>
+							<premis:rightsStatementIdentifier>
+								<premis:rightsStatementIdentifierType>String</premis:rightsStatementIdentifierType>
+								<premis:rightsStatementIdentifierValue>SCAPE-RIGHTS-1</premis:rightsStatementIdentifierValue>
+							</premis:rightsStatementIdentifier>
+							<premis:rightsBasis>Copyright</premis:rightsBasis>
+							<premis:copyrightInformation>
+								<premis:copyrightJurisdiction>eu</premis:copyrightJurisdiction>
+								<premis:copyrightStatusDeterminationDate>2012-10-31T09:45:59.099+01:00</premis:copyrightStatusDeterminationDate>
+								<premis:copyrightNote>Copyright expires 1001 BCE</premis:copyrightNote>
+								<premis:copyrightStatus>Not under copyright</premis:copyrightStatus>
+							</premis:copyrightInformation>
+							<premis:licenseInformation>
+								<premis:licenseIdentifier>
+									<premis:licenseIdentifierType>String</premis:licenseIdentifierType>
+									<premis:licenseIdentifierValue>PUBLIC DOMAIN</premis:licenseIdentifierValue>
+								</premis:licenseIdentifier>
+								<premis:licenseTerms>free for all</premis:licenseTerms>
+								<premis:licenseNotes>in the public domain</premis:licenseNotes>
+							</premis:licenseInformation>
+						</premis:rightsStatements>
+					</metadata>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:rightsMD>
+		<mets:sourceMD ID="SOURCE-MD-1">
+			<mets:mdWrap MDTYPE="DC" SIZE="0">
+				<mets:xmlData>
+					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
+						scape:identifier="DC-dc0c72ab-7f90-4893-b320-4b91f795d31c">
+						<dc:date>0968-08-15 00:00:00.000</dc:date>
+						<dc:title>The test Source</dc:title>
+						<dc:creator premis:role="OTHER" premis:type="INDIVIDUAL">
+							<premis:name>SCAPE-AGENT-1</premis:name>
+							<premis:note>no notes</premis:note>
+						</dc:creator>
+						<dc:coverage>bPZrhutzCsMTmhMk</dc:coverage>
+						<dc:description>CQxvarjmsNPKhHea</dc:description>
+						<dc:format>fGgdzCXSDeNlGSuA</dc:format>
+						<dc:language>NngJXXAmFDdITEhA</dc:language>
+						<dc:publisher>NvlIUETWoTmOpRJj</dc:publisher>
+						<dc:subject>GtLFrdQLUqKpmxWt</dc:subject>
+						<dc:type>PQUmxLjpHSYsNdWy</dc:type>
+						<dc:source>IuxkkGpyUvUDWFED</dc:source>
+						<dc:relation>YjrJRuzNHeNbpfvJ</dc:relation>
+						<dc:contributor premis:role="OTHER" premis:type="INDIVIDUAL">
+							<premis:name>SCAPE-AGENT-1</premis:name>
+							<premis:note>no notes</premis:note>
+						</dc:contributor>
+						<dc:rights>public domain</dc:rights>
+					</metadata>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:sourceMD>
+		<mets:digiprovMD ID="DIGIPROV-MD-1">
+			<mets:mdWrap MDTYPE="PREMIS:EVENT" SIZE="0">
+				<mets:xmlData>
+					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
+						<premis:event>
+							<premis:eventIdentifier>
+								<premis:eventIdentifierType>String</premis:eventIdentifierType>
+								<premis:eventIdentifierValue>EVENT-892e6fbc-371b-4bb3-a4f5-400c66f54776</premis:eventIdentifierValue>
+							</premis:eventIdentifier>
+							<premis:linkingAgent premis:role="OTHER" premis:type="INDIVIDUAL">
+								<premis:name>Agent-JTTOuukNvUUWRyaZ</premis:name>
+								<premis:note>no notes</premis:note>
+							</premis:linkingAgent>
+						</premis:event>
+					</metadata>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:digiprovMD>
+	</mets:amdSec>
+	<mets:amdSec ID="AMD-FILE-1">
+		<mets:digiprovMD ID="DIGIPROV-MD-2">
+			<mets:mdWrap MDTYPE="PREMIS:EVENT" SIZE="0">
+				<mets:xmlData>
+					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
+						<premis:event>
+							<premis:eventIdentifier>
+								<premis:eventIdentifierType>String</premis:eventIdentifierType>
+								<premis:eventIdentifierValue>EVENT-892e6fbc-371b-4bb3-a4f5-400c66f54776</premis:eventIdentifierValue>
+							</premis:eventIdentifier>
+							<premis:linkingAgent premis:role="OTHER" premis:type="INDIVIDUAL">
+								<premis:name>AGENT-2</premis:name>
+								<premis:note>no notes</premis:note>
+							</premis:linkingAgent>
+						</premis:event>
+					</metadata>
+				</mets:xmlData>
+			</mets:mdWrap>
+		</mets:digiprovMD>
+	</mets:amdSec>
+	<mets:fileSec ID="FILESEC-1">
+		<mets:fileGrp ID="GRP-1" ADMID="ADM-REP-1">
+			<mets:file ID="FILE-1" SEQ="0" SIZE="0"
+				ADMID="AMD-FILE-1">
+				<mets:FLocat ID="FLOC-1" LOCTYPE="URL"
+					xlink:href="http://example.com/cTUUskRQKIxNsbRx" />
+			</mets:file>
+		</mets:fileGrp>
+	</mets:fileSec>
+	<mets:structMap>
+		<mets:div TYPE="Intellectual entity" ORDER="0">
+			<mets:div ID="DIV-1" TYPE="Representation" ADMID="AMD-REP-1"
+				ORDER="0">
+				<mets:fptr FILEID="FILE-1" />
+			</mets:div>
+		</mets:div>
+	</mets:structMap>
+</mets:mets>
