@@ -70,8 +70,11 @@ import eu.scapeproject.model.Agent;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
+import eu.scapeproject.model.IntellectualEntity.Builder;
+import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.metadata.DescriptiveMetadata;
+import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
@@ -283,6 +286,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         throws Exception {
         final MetadataRecords mds = new MetadataRecords();
         mds.setLastModificationDate(new DateTime());
+        // Dublin Core metadata record
         MetadataRecord dc = new MetadataRecord("escidoc");
         dc.setMdType("DC");
         NodeList nodes = entityDoc.getElementsByTagName("mets:dmdSec");
@@ -303,6 +307,25 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 mds.add(dc);
             }
         }
+        // lifecycle metadata record
+        String state =
+            entity.getLifecycleState() != null ? entity.getLifecycleState().getState().name() : LifecycleState.State.INGESTED
+                .name();
+        MetadataRecord lc = new MetadataRecord("lifecycle");
+        lc.setLastModificationDate(new DateTime());
+        lc.setMdType("LIFECYCLE-XML");
+        lc.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+            new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
+        mds.add(lc);
+
+        // version metadata record
+        MetadataRecord v = new MetadataRecord("versions");
+        v.setLastModificationDate(new DateTime());
+        v.setMdType("VERSION-XML");
+        v.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+            new InputSource(new StringReader("<version number=\"" + entity.getVersionNumber() + "\" date=\""
+                + new DateTime() + "\" />"))).getDocumentElement());
+        mds.add(v);
         return mds;
     }
 
@@ -352,18 +375,62 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return new String(componentXml.substring(start, stop));
     }
 
-    private MetadataRecords createRepresentationMetadataRecords(Representation r) throws Exception {
-        MetadataRecords mds = new MetadataRecords();
-        MetadataRecord rec = new MetadataRecord("escidoc");
-        rec.setMdType("DC");
-        rec.setSchema("http://purl.org/dc/elements/1.1/");
-        String dc =
+    private MetadataRecords createRepresentationMetadataRecords(final Representation r) throws Exception {
+        final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+        final MetadataRecords mds = new MetadataRecords();
+        // escidoc internal dc metadata
+        final MetadataRecord dc = new MetadataRecord("escidoc");
+        dc.setMdType("DC");
+        dc.setSchema("http://purl.org/dc/elements/1.1/");
+        String dcData =
             "<dublin-core xmlns:dc=\"http://purl.org/dc/elements/1.1/\"><dc:title>" + r.getTitle()
                 + "</dc:title></dublin-core>";
-        Document doc =
-            DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(dc.getBytes()));
-        rec.setContent(doc.getDocumentElement());
-        mds.add(rec);
+        Document doc = dbf.newDocumentBuilder().parse(new ByteArrayInputStream(dcData.getBytes()));
+        dc.setContent(doc.getDocumentElement());
+        mds.add(dc);
+
+        // Technical Metadata
+        final MetadataRecord tec = new MetadataRecord("techMD");
+        tec.setLastModificationDate(new DateTime());
+        tec.setMdType(r.getTechnical().getMetadataType().name());
+
+        tec.setContent(dbf
+            .newDocumentBuilder().parse(
+                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getTechnical()))))
+            .getDocumentElement());
+        mds.add(tec);
+
+        // provenance metadata
+        final MetadataRecord prov = new MetadataRecord("digiprovMD");
+        prov.setLastModificationDate(new DateTime());
+        prov.setMdType(r.getProvenance().getType());
+        prov.setContent(dbf
+            .newDocumentBuilder().parse(
+                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getProvenance()))))
+            .getDocumentElement());
+        mds.add(prov);
+
+        // rights metadata
+        final MetadataRecord rights = new MetadataRecord("rights");
+        rights.setLastModificationDate(new DateTime());
+        rights.setMdType(r.getRights().getType().name());
+        rights.setContent(dbf
+            .newDocumentBuilder().parse(
+                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getRights()))))
+            .getDocumentElement());
+        mds.add(rights);
+
+        //source DC metadata
+        final MetadataRecord source = new MetadataRecord("source");
+        source.setLastModificationDate(new DateTime());
+        source.setMdType("DC");
+        source.setContent(dbf
+            .newDocumentBuilder().parse(
+                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getSource()))))
+            .getDocumentElement());
+        mds.add(source);
+
         return mds;
     }
 
@@ -385,8 +452,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
             Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
             MetadataRecord record = c.getMetadataRecords().get("escidoc");
-            entity.identifier(new Identifier(c.getObjid())).descriptive(getDcMetadata(record)).representations(
-                getRepresentations(c));
+            entity
+                .identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record))
+                .representations(getRepresentations(c)).lifecycleState(
+                    ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("lifecycle"))).versionNumber(
+                    ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("versions")));
             return SCAPEMarshaller.getInstance().serialize(entity.build());
         }
         catch (Exception e) {
@@ -401,6 +471,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             Representation.Builder rep = new Representation.Builder();
             rep.files(getFiles(i));
             rep.identifier(new Identifier(i.getObjid()));
+            TechnicalMetadata techMd =
+                (TechnicalMetadata) SCAPEMarshaller.getInstance().deserialize(
+                    i.getMetadataRecords().get("techMD").getContent());
+            rep.technical(techMd);
             reps.add(rep.build());
         }
         return reps;
@@ -418,99 +492,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             files.add(f.build());
         }
         return files;
-    }
-
-    private DescriptiveMetadata getDcMetadata(MetadataRecord record) {
-        DCMetadata.Builder dc = new DCMetadata.Builder();
-        NodeList nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.title(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "description");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.description(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "coverage");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.coverage(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.format(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "language");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.language(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "publisher");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.publisher(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "relation");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.relations(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "rights");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.rights(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "sources");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.sources(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "subject");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.subject(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "type");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.type(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "contributor");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Agent ag = getAgent(nodes.item(i));
-            if (ag != null) {
-                dc.contributor(ag);
-            }
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "creator");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Agent ag = getAgent(nodes.item(i));
-            if (ag != null) {
-                dc.creator(ag);
-            }
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "date");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
-            dc.date(formatter.parseDateTime(nodes.item(i).getTextContent()).toDate());
-        }
-        nodes = record.getContent().getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "identifier");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            String type = node.getAttributes().getNamedItem("type").getNodeValue();
-            String value = node.getTextContent();
-            dc.identifier(new Identifier(type, value));
-        }
-        return dc.build();
-    }
-
-    private Agent getAgent(Node item) {
-        NodeList nodes = item.getChildNodes();
-        Agent.Builder c = new Agent.Builder();
-        for (int j = 0; j < nodes.getLength(); j++) {
-            Node node = nodes.item(j);
-            if (node.getLocalName() == null) {
-                return null;
-            }
-            if (node.getLocalName().equals("name")) {
-                c.name(node.getTextContent());
-            }
-            else if (node.getLocalName().equals("note")) {
-                c.note(node.getTextContent());
-            }
-        }
-        return c.build();
     }
 
     @Override
