@@ -475,6 +475,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 (TechnicalMetadata) SCAPEMarshaller.getInstance().deserialize(
                     i.getMetadataRecords().get("techMD").getContent());
             rep.technical(techMd);
+            DescriptiveMetadata source = (DescriptiveMetadata) SCAPEMarshaller.getInstance().deserialize(i.getMetadataRecords().get("sourceMD").getContent());
             reps.add(rep.build());
         }
         return reps;
