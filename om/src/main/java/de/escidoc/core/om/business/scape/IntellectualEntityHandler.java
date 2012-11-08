@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
@@ -28,6 +30,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
@@ -471,13 +474,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             Representation.Builder rep = new Representation.Builder();
             rep.files(getFiles(i));
             rep.identifier(new Identifier(i.getObjid()));
-            TechnicalMetadata techMd =
-                (TechnicalMetadata) SCAPEMarshaller.getInstance().deserialize(
-                    i.getMetadataRecords().get("techMD").getContent());
+            Node n = i.getMetadataRecords().get("techMD").getContent();
+            Document doc = n.getOwnerDocument();
+            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+            String xml = implLs.createLSSerializer().writeToString(n);
+            System.out.println(xml);
+            TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
             rep.technical(techMd);
-            DescriptiveMetadata source =
-                (DescriptiveMetadata) SCAPEMarshaller.getInstance().deserialize(
-                    i.getMetadataRecords().get("sourceMD").getContent());
             reps.add(rep.build());
         }
         return reps;
