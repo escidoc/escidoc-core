@@ -194,4 +194,15 @@ public abstract class ScapeUtil {
         }
     }
 
+    public static String getVersionXml(MetadataRecord md) {
+        StringBuilder versionXml = new StringBuilder("<versions>");
+        NodeList nodes = md.getContent().getElementsByTagName("version");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node n = nodes.item(i);
+            versionXml.append("<version date=\"" + n.getAttributes().getNamedItem("date").getNodeValue()
+                + "\" number=\"" + n.getAttributes().getNamedItem("number").getNodeValue() + "\" />");
+        }
+        return versionXml.append("</versions>").toString();
+    }
+
 }

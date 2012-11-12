@@ -320,8 +320,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         v.setLastModificationDate(new DateTime());
         v.setMdType("VERSION-XML");
         v.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-            new InputSource(new StringReader("<version number=\"" + entity.getVersionNumber() + "\" date=\""
-                + new DateTime() + "\" />"))).getDocumentElement());
+            new InputSource(new StringReader("<versions><version number=\"" + entity.getVersionNumber() + "\" date=\""
+                + new DateTime() + "\" /></versions>"))).getDocumentElement());
         mds.add(v);
         return mds;
     }
@@ -503,8 +503,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String getIntellectualEntityVersionSet(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+        Container c;
+        try {
+            c =
+                containerMarshaller
+                    .unmarshalDocument(new ByteArrayInputStream(containerHandler.retrieve(id).getBytes()));
+            return ScapeUtil.getVersionXml(c.getMetadataRecords().get("VERSION-XML"));
+        }
+        catch (InternalClientException e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
     }
 
     private String getItemId(String itemXml) {
