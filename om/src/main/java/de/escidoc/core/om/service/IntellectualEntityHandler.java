@@ -14,7 +14,6 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
 
 @Service("service.IntellectualEntityHandler")
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class IntellectualEntityHandler
     implements de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface {
     private static final Logger LOGGER = LoggerFactory.getLogger(IntellectualEntityHandler.class);

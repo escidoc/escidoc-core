@@ -308,7 +308,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         String state =
             entity.getLifecycleState() != null ? entity.getLifecycleState().getState().name() : LifecycleState.State.INGESTED
                 .name();
-        MetadataRecord lc = new MetadataRecord("lifecycle");
+        MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
         lc.setLastModificationDate(new DateTime());
         lc.setMdType("LIFECYCLE-XML");
         lc.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
@@ -316,7 +316,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         mds.add(lc);
 
         // version metadata record
-        MetadataRecord v = new MetadataRecord("versions");
+        MetadataRecord v = new MetadataRecord("VERSION-XML");
         v.setLastModificationDate(new DateTime());
         v.setMdType("VERSION-XML");
         v.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
