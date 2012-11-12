@@ -9,8 +9,6 @@ public interface IntellectualEntityHandlerInterface {
 
     String updateIntellectualEntity(String xml) throws EscidocException;
 
-    String getLifeCyclestatus(String id) throws EscidocException;
-
     String getIntellectuakEntitySet(List<String> ids) throws EscidocException;
 
     String getIntellectualEntityVersionSet(String id) throws EscidocException;

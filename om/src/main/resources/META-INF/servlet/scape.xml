@@ -27,11 +27,14 @@
 		<descriptor uri="/scape/entity-version-list/${PATH_ID}">
 			<invoke http="GET" method="getIntellectualEntity" param1="${PATH_ID}" />
 		</descriptor>
-		<descriptor uri="/scape/lifecycle/${PATH_ID}">
-			<invoke http="GET" method="getLifecycle" param1="${PATH_ID}" />
-		</descriptor>
 		<descriptor uri="/scape/sru/entities">
 			<invoke http="GET" method="getLifecycle" />
+		</descriptor>
+	</resource>
+	
+	<resource name="LifeCycle" base-uri="/scape/lifecycle">
+		<descriptor uri="/scape/lifecycle/${PATH_ID}">
+			<invoke http="GET" method="getLifecycleStatus" param1="${PATH_ID}" />
 		</descriptor>
 	</resource>
 

@@ -28,7 +28,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-intellectualentity-lifecycle-retrieve', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'getLifecycle', 
+  VALUES ('escidoc:mm-intellectualentity-lifecycle-retrieve', 'de.escidoc.core.om.service.interfaces.LifeCycleHandlerInterface', 'getLifecycleStatus', 
   'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)

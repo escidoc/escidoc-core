@@ -510,18 +510,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return new String(itemXml.substring(start, end));
     }
 
-    @Override
-    public String getLifeCyclestatus(String id) throws EscidocException {
-        Container c;
-        try {
-            c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
-            return ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML")).getState().name();
-        }
-        catch (InternalClientException e1) {
-            throw new ScapeException(e1.getMessage(), e1);
-        }
-    }
-
     /*
      * (non-Javadoc)
      * 
