@@ -442,9 +442,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
-    public String getIntellectuakEntitySet(List<String> ids) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    public String getIntellectualEntitySet(List<String> ids) throws EscidocException {
+        StringBuilder respBuilder = new StringBuilder("<entity-list>\n");
+        for (String id : ids) {
+            respBuilder.append(getIntellectualEntity(id));
+        }
+        return respBuilder.append("</entity-list>").toString();
     }
 
     @Override
@@ -513,8 +516,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
-     * ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {

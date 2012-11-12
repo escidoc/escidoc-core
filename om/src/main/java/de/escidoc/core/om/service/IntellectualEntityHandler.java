@@ -1,5 +1,9 @@
 package de.escidoc.core.om.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
 
 @Service("service.IntellectualEntityHandler")
@@ -33,8 +38,25 @@ public class IntellectualEntityHandler
     }
 
     @Override
-    public String getIntellectualEntitySet(List<String> ids) throws EscidocException {
-        return handler.getIntellectuakEntitySet(ids);
+    public String getIntellectualEntitySet(String idData) throws EscidocException {
+        System.out.println(idData);
+        BufferedReader r = new BufferedReader(new StringReader(idData));
+        String uri;
+        List<String> ids = new ArrayList<String>();
+        try {
+            while ((uri = r.readLine()) != null) {
+                int posStart = uri.indexOf("/scape/entity/") + 14;
+                ids.add(new String(uri.substring(posStart).trim()));
+                System.out.println("ID: " + ids.get(ids.size() - 1));
+            }
+            if (ids.size() == 0) {
+                return "<entity-list />";
+            }
+            return handler.getIntellectualEntitySet(ids);
+        }
+        catch (IOException e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
     }
 
     @Override

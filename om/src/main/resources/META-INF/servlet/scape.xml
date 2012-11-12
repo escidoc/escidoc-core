@@ -17,7 +17,7 @@
 				param1="${BODY}" />
 		</descriptor>
 		<descriptor uri="/scape/entity-list">
-			<invoke http="POST" method="getIntellectualEntity" param1="${BODY}" />
+			<invoke http="POST" method="getIntellectualEntitySet" param1="${BODY}" />
 		</descriptor>
 		<descriptor uri="/scape/metadata/${PATH_ID}">
 			<invoke http="GET" method="getMetadata" param1="${PATH_ID}" />

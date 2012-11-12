@@ -12,7 +12,7 @@ public interface IntellectualEntityHandlerInterface {
 
 	String updateIntellectualEntity(String xml) throws EscidocException;
 
-	String getIntellectualEntitySet(List<String> ids) throws EscidocException;
+	String getIntellectualEntitySet(String idData) throws EscidocException;
 	
 	String getIntellectualEntityVersionSet(String id) throws EscidocException;
 }

@@ -147,6 +147,13 @@ public abstract class ScapeUtil {
         if (xml == null) {
             return null;
         }
+        // strip <?xml..?> declaration
+        int pos = xml.indexOf("?>");
+        if (pos > 0) {
+            xml = xml.substring(pos + 2);
+        }
+
+        // decide what to do based on the namespace of the document
         Matcher m = PATTERN_NS.matcher(xml);
         if (!m.find()) {
             return null;

@@ -65,9 +65,6 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   
 
   /* invocation mappings for scape */
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc:im-intellectualentity-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-intellectualentity-retrieve');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc:im-intellectualentity-list-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
@@ -129,3 +126,6 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
   VALUES ('escidoc:im-representation-update', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, false, '', 'escidoc:mm-representation-update');
           
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc:im-intellectualentity-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, false, '', 'escidoc:mm-intellectualentity-retrieve');
