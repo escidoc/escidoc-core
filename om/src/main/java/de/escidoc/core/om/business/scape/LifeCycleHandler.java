@@ -1,5 +1,7 @@
 package de.escidoc.core.om.business.scape;
 
+import java.io.ByteArrayOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.LifeCycleHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.resources.om.container.Container;
+import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.LifeCycleHandler")
 public class LifeCycleHandler implements LifeCycleHandlerInterface {
@@ -30,7 +33,10 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
         Container c;
         try {
             c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
-            return ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML")).getState().name();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            SCAPEMarshaller.getInstance().getJaxbMarshaller().marshal(
+                ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML")), bos);
+            return bos.toString();
         }
         catch (Exception e) {
             throw new ScapeException(e.getMessage(), e);
