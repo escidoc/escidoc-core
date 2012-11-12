@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
@@ -18,7 +16,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
@@ -69,14 +66,11 @@ import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.om.item.component.Components;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
-import eu.scapeproject.model.Agent;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
-import eu.scapeproject.model.IntellectualEntity.Builder;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.Representation;
-import eu.scapeproject.model.metadata.DescriptiveMetadata;
 import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
@@ -342,8 +336,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         Components components = new Components();
         // iterate over all the files and create the according components
         for (File f : r.getFiles()) {
-            Component c = createComponent(f, doc);
-            components.add(c);
+            if (f != null) {
+                Component c = createComponent(f, doc);
+                components.add(c);
+            }
         }
         String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
         String itemId = getItemId(itemXml);
@@ -358,7 +354,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         props.setVisibility("visible");
         props.setValidStatus("valid");
         props.setDescription("SCAPE File");
-        props.setPid(f.getIdentifier().getValue());
+        if (f.getIdentifier() != null) {
+            props.setPid(f.getIdentifier().getValue());
+        }
         props.setContentCategory("Files");
         ComponentContent data = new ComponentContent();
         data.setStorageType(StorageType.INTERNAL_MANAGED);
@@ -424,7 +422,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             .getDocumentElement());
         mds.add(rights);
 
-        //source DC metadata
+        // source DC metadata
         final MetadataRecord source = new MetadataRecord("sourceMD");
         source.setLastModificationDate(new DateTime());
         source.setMdType("DC");
@@ -458,8 +456,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             entity
                 .identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record))
                 .representations(getRepresentations(c)).lifecycleState(
-                    ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("lifecycle"))).versionNumber(
-                    ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("versions")));
+                    ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
+                    ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
             return SCAPEMarshaller.getInstance().serialize(entity.build());
         }
         catch (Exception e) {
@@ -514,8 +512,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String getLifeCyclestatus(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+        Container c;
+        try {
+            c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
+            return ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML")).getState().name();
+        }
+        catch (InternalClientException e1) {
+            throw new ScapeException(e1.getMessage(), e1);
+        }
     }
 
     /*
