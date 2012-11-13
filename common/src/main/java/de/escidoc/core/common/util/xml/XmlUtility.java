@@ -2055,7 +2055,7 @@ public final class XmlUtility {
      * @throws XMLStreamException Thrown in case of an error during creating the writer.
      */
     public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
-        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
+        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out, CHARACTER_ENCODING);
     }
 
     /**
@@ -2068,7 +2068,7 @@ public final class XmlUtility {
     public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(final OutputStream out)
         throws XMLStreamException {
 
-        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
+        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out, CHARACTER_ENCODING);
     }
 
     /**
