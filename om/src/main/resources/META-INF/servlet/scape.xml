@@ -2,6 +2,7 @@
 <mapping>
 	<define>
 		<var name="PATH_ID" regexp="/([^/?]*)" />
+		<var name="MD_NAME" regexp="/([^/?]*)" />
 	</define>
 	<resource name="IntellectualEntity" base-uri="/scape/entity">
 		<descriptor uri="/scape/entity/${PATH_ID}">
@@ -19,13 +20,16 @@
 		<descriptor uri="/scape/entity-list">
 			<invoke http="POST" method="getIntellectualEntitySet" param1="${BODY}" />
 		</descriptor>
-		<descriptor uri="/scape/metadata/${PATH_ID}">
-			<invoke http="GET" method="getMetadata" param1="${PATH_ID}" />
-			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}"
-				param2="${BODY}" />
-		</descriptor>
 		<descriptor uri="/scape/entity-version-list/${PATH_ID}">
 			<invoke http="GET" method="getIntellectualEntityVersionSet" param1="${PATH_ID}" />
+		</descriptor>
+	</resource>
+
+	<resource name="IntellectualEntity" base-uri="/scape/metadata">
+		<descriptor uri="/scape/metadata/${PATH_ID}/${MD_NAME}">
+			<invoke http="GET" method="getMetadata" param1="${PATH_ID}" param2="${MD_NAME}" />
+			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}" param2="${MD_NAME}"
+				param3="${BODY}" />
 		</descriptor>
 	</resource>
 

@@ -4,7 +4,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:create-intellectualentity', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-intellectualentity-async-create', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'ingestIntellectualEntity', 
+  VALUES ('escidoc:mm-intellectualentity-async-create', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'ingestIntellectualEntityAsync', 
   'info:escidoc/names:aa:1.0:action:create-intellectualentity-async', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
   INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)

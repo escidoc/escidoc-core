@@ -596,9 +596,53 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
+    public String getMetadata(String id, String mdName) throws EscidocException {
+        return containerHandler.retrieveMdRecordContent(id, mdName);
+    }
+
+    @Override
     public String updateIntellectualEntity(String xml) throws EscidocException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+        try {
+            checkScapeContext();
+            checkScapeContentModel();
+
+            // deserialize the entity and create a org.w3c.Document for reuse by
+            // various later calls
+            IntellectualEntity entity =
+                SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
+                    new ByteArrayInputStream(xml.getBytes()));
+            final Document doc =
+                DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                    new ByteArrayInputStream(xml.getBytes()));
+            StructMap map = new StructMap();
+
+            // add the representations as single items to the container
+            for (Representation r : entity.getRepresentations()) {
+                String itemId = this.createItem(r, doc);
+                map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
+            }
+
+            // create the entities container and add the various representations
+            Container entityContainer = this.createContainer(entity, doc);
+            entityContainer.setStructMap(map);
+            containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
+            return "<ingest/>";
+        }
+        catch (Exception e) {
+            throw new ScapeException(e.getMessage(), e);
+        }
     }
 
 }
