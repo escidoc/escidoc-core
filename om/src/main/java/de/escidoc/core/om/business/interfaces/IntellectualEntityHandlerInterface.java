@@ -18,4 +18,6 @@ public interface IntellectualEntityHandlerInterface {
     String getMetadata(String id, String mdName) throws EscidocException;
 
     String updateMetadata(String id, String mdName, String xmlData) throws EscidocException;
+
+    String ingestIntellectualEntityAsync(String xml) throws EscidocException;
 }

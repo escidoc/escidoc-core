@@ -76,4 +76,9 @@ public class IntellectualEntityHandler
         return handler.updateMetadata(id, mdName, xmlData);
     }
 
+    @Override
+    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+        return handler.ingestIntellectualEntityAsync(xml);
+    }
+
 }
