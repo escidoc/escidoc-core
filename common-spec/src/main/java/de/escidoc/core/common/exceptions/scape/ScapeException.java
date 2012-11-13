@@ -7,7 +7,7 @@ public class ScapeException extends EscidocException {
 		super(msg);
 	}
 
-	public ScapeException(String msg, Throwable e) {
-		super(msg, e);
+	public ScapeException(Throwable e) {
+		super(e);
 	}
 }

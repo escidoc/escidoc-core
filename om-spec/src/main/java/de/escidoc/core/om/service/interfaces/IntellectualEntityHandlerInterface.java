@@ -10,7 +10,7 @@ public interface IntellectualEntityHandlerInterface {
 
 	String getIntellectualEntity(String id) throws EscidocException;
 
-	String updateIntellectualEntity(String xml) throws EscidocException;
+	String updateIntellectualEntity(String id, String xml) throws EscidocException;
 
 	String getIntellectualEntitySet(String idData) throws EscidocException;
 	
@@ -18,5 +18,5 @@ public interface IntellectualEntityHandlerInterface {
 	
 	String getMetadata(String id, String mdNanme) throws EscidocException;
 	
-	String updateMetadata(String id, String mdName,String xmlData) throws EscidocException;
+	String updateMetadata(String id,String xmlData) throws EscidocException;
 }

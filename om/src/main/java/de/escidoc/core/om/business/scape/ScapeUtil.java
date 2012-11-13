@@ -1,8 +1,11 @@
 package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.JAXBException;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -15,11 +18,15 @@ import eu.scapeproject.model.Agent;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.metadata.DescriptiveMetadata;
+import eu.scapeproject.model.metadata.ProvenanceMetadata;
+import eu.scapeproject.model.metadata.RightsMetadata;
 import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.audiomd.AudioMDMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.metadata.fits.FitsMetadata;
 import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
+import eu.scapeproject.model.metadata.premis.PremisProvenanceMetadata;
+import eu.scapeproject.model.metadata.premis.PremisRightsMetadata;
 import eu.scapeproject.model.metadata.textmd.TextMDMetadata;
 import eu.scapeproject.model.metadata.videomd.VideoMDMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
@@ -207,6 +214,20 @@ public abstract class ScapeUtil {
                 + "\" number=\"" + n.getAttributes().getNamedItem("number").getNodeValue() + "\" />");
         }
         return versionXml.append("</versions>").toString();
+    }
+
+    public static DescriptiveMetadata getSourceMd(String xml) throws JAXBException {
+        return (DCMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(new StringReader(xml));
+    }
+
+    public static RightsMetadata getRightsMd(String xml) throws JAXBException {
+        return (PremisRightsMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(
+            new StringReader(xml));
+    }
+
+    public static ProvenanceMetadata getProvenanceMd(String xml) throws JAXBException {
+        return (PremisProvenanceMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(
+            new StringReader(xml));
     }
 
 }

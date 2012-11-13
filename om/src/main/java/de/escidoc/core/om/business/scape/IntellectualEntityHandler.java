@@ -35,12 +35,19 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import sun.tools.javac.SourceMember;
+
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
@@ -483,19 +490,22 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntity(String id) throws EscidocException {
         try {
-            IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
-            Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
-            MetadataRecord record = c.getMetadataRecords().get("escidoc");
-            entity
-                .identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record))
-                .representations(getRepresentations(c)).lifecycleState(
-                    ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
-                    ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
-            return SCAPEMarshaller.getInstance().serialize(entity.build());
+            return SCAPEMarshaller.getInstance().serialize(retrieveEntity(id));
         }
         catch (Exception e) {
             throw new ScapeException(e);
         }
+    }
+
+    private IntellectualEntity retrieveEntity(String id) throws Exception {
+        IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
+        Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
+        MetadataRecord record = c.getMetadataRecords().get("escidoc");
+        entity.identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record)).representations(
+            getRepresentations(c)).lifecycleState(
+            ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
+            ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
+        return entity.build();
     }
 
     private List<Representation> getRepresentations(Container c) throws Exception {
@@ -512,6 +522,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             System.out.println(xml);
             TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
             rep.technical(techMd);
+            DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
+            rep.source(sourceMD);
+            RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
+            rep.rights(rightsMD);
+            ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
+            rep.provenance(prov);
             reps.add(rep.build());
         }
         return reps;
@@ -662,9 +678,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
-    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    public String updateMetadata(String id, String xmlData) throws EscidocException {
+        try {
+            IntellectualEntity e = retrieveEntity(id);
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
+        return "";
     }
 
     @Override

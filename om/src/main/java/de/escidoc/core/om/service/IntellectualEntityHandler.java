@@ -72,8 +72,8 @@ public class IntellectualEntityHandler
     }
 
     @Override
-    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
-        return handler.updateMetadata(id, mdName, xmlData);
+    public String updateMetadata(String id, String xmlData) throws EscidocException {
+        return handler.updateMetadata(id, xmlData);
     }
 
     @Override
