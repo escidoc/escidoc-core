@@ -72,16 +72,17 @@ public class ItemUmlautTest extends ItemTestBase {
         getContextClient().open(contextId, getTaskParam(lastModified));
         String itemXml =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+                "escidoc_item_2_components.xml");
         Document item = getDocument(itemXml);
         item = (Document) substituteId(item, "/item/properties/context", contextId);
         itemXml = create(toString(item, false));
         String itemId = getObjidValue(itemXml);
         item = (Document) deleteElement(getDocument(itemXml), "/item/components/component");
         itemXml = update(itemId, toString(item, false));
+        item = (Document) deleteElement(getDocument(itemXml), "/item/components/component");
+        itemXml = update(itemId, toString(item, false));
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertXmlEquals("Umlauts not correctly handled", itemXml, "/item/properties/context/@title",
-                title);
+            assertXmlEquals("Umlauts not correctly handled", itemXml, "/item/properties/context/@title", title);
         }
     }
 

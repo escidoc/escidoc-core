@@ -1007,8 +1007,7 @@ public class Item extends GenericVersionableResourcePid implements ItemInterface
         try {
             sp.parse(getRelsExt().getStream());
 
-            final String newRelsExt = rh.getOutputStream().toString();
-            setRelsExt(newRelsExt);
+            setRelsExt(rh.getOutputStream());
             // FIXME: sync() is not needed, ItemHandlerCretae().setComponents
             // does not queri a Triple Store
             // FedoraUtility.getInstance().sync();

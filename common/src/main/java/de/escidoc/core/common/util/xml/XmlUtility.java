@@ -2447,7 +2447,7 @@ public final class XmlUtility {
      */
     public static XMLStreamWriter createXmlStreamWriter(final OutputStream out) throws XMLStreamException {
 
-        return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(out);
+        return getInitilizedXmlOutputFactory(false).createXMLStreamWriter(out, CHARACTER_ENCODING);
     }
 
     /**
@@ -2460,7 +2460,7 @@ public final class XmlUtility {
     public static XMLStreamWriter createXmlStreamWriterNamespaceRepairing(final OutputStream out)
         throws XMLStreamException {
 
-        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out);
+        return getInitilizedXmlOutputFactory(true).createXMLStreamWriter(out, CHARACTER_ENCODING);
     }
 
     /**

@@ -31,7 +31,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,7 +43,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     private final XMLStreamWriter writer;
 
-    private final OutputStream outputStream;
+    private final ByteArrayOutputStream outputStream;
 
     private final Map nsuris;
 
@@ -126,7 +125,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return element;
     }
 
-    public OutputStream getOutputStream() throws XMLStreamException {
+    public ByteArrayOutputStream getOutputStream() throws XMLStreamException {
         writer.flush();
         writer.close();
         return this.outputStream;
