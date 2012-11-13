@@ -1,6 +1,8 @@
 package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOError;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
@@ -9,7 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
@@ -29,6 +33,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
@@ -71,6 +76,9 @@ import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.Representation;
+import eu.scapeproject.model.metadata.DescriptiveMetadata;
+import eu.scapeproject.model.metadata.ProvenanceMetadata;
+import eu.scapeproject.model.metadata.RightsMetadata;
 import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
@@ -172,7 +180,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -215,7 +223,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -262,7 +270,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -335,10 +343,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         i.setProperties(props);
         Components components = new Components();
         // iterate over all the files and create the according components
-        for (File f : r.getFiles()) {
-            if (f != null) {
-                Component c = createComponent(f, doc);
-                components.add(c);
+        if (r.getFiles() != null) {
+            for (File f : r.getFiles()) {
+                if (f != null) {
+                    Component c = createComponent(f, doc);
+                    components.add(c);
+                }
             }
         }
         String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
@@ -391,48 +401,68 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         dc.setContent(doc.getDocumentElement());
         mds.add(dc);
 
-        // Technical Metadata
-        final MetadataRecord tec = new MetadataRecord("techMD");
-        tec.setLastModificationDate(new DateTime());
-        tec.setMdType(r.getTechnical().getMetadataType().name());
-
-        tec.setContent(dbf
-            .newDocumentBuilder().parse(
-                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getTechnical()))))
-            .getDocumentElement());
-        mds.add(tec);
-
-        // provenance metadata
-        final MetadataRecord prov = new MetadataRecord("digiprovMD");
-        prov.setLastModificationDate(new DateTime());
-        prov.setMdType(r.getProvenance().getType());
-        prov.setContent(dbf
-            .newDocumentBuilder().parse(
-                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getProvenance()))))
-            .getDocumentElement());
-        mds.add(prov);
-
-        // rights metadata
-        final MetadataRecord rights = new MetadataRecord("rightsMD");
-        rights.setLastModificationDate(new DateTime());
-        rights.setMdType(r.getRights().getType().name());
-        rights.setContent(dbf
-            .newDocumentBuilder().parse(
-                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getRights()))))
-            .getDocumentElement());
-        mds.add(rights);
-
-        // source DC metadata
-        final MetadataRecord source = new MetadataRecord("sourceMD");
-        source.setLastModificationDate(new DateTime());
-        source.setMdType("DC");
-        source.setContent(dbf
-            .newDocumentBuilder().parse(
-                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(r.getSource()))))
-            .getDocumentElement());
-        mds.add(source);
-
+        // Metadata Records
+        mds.add(createTechMDRecord(r.getTechnical()));
+        mds.add(createProvMDRecord(r.getProvenance()));
+        mds.add(createRightsMDRecord(r.getRights()));
+        mds.add(createSourceMDRecord(r.getSource()));
         return mds;
+    }
+
+    private MetadataRecord createSourceMDRecord(DescriptiveMetadata source) throws SAXException, IOException,
+        ParserConfigurationException, JAXBException {
+        MetadataRecord s = new MetadataRecord("sourceMD");
+        if (source != null) {
+            s.setLastModificationDate(new DateTime());
+            s.setMdType("DC");
+            s.setContent(DocumentBuilderFactory
+                .newInstance().newDocumentBuilder().parse(
+                    new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(source))))
+                .getDocumentElement());
+        }
+        return s;
+    }
+
+    private MetadataRecord createRightsMDRecord(RightsMetadata rights) throws SAXException, IOException,
+        ParserConfigurationException, JAXBException {
+        MetadataRecord r = new MetadataRecord("rightsMD");
+        if (rights != null) {
+            r.setLastModificationDate(new DateTime());
+            r.setMdType(rights.getType().name());
+            r.setContent(DocumentBuilderFactory
+                .newInstance().newDocumentBuilder().parse(
+                    new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(rights))))
+                .getDocumentElement());
+        }
+        return r;
+    }
+
+    private MetadataRecord createProvMDRecord(ProvenanceMetadata provenance) throws SAXException, IOException,
+        ParserConfigurationException, JAXBException {
+        MetadataRecord prov = new MetadataRecord("digiprovMD");
+        if (provenance != null) {
+            prov.setLastModificationDate(new DateTime());
+            prov.setMdType(provenance.getType());
+            prov.setContent(DocumentBuilderFactory
+                .newInstance().newDocumentBuilder().parse(
+                    new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(provenance))))
+                .getDocumentElement());
+        }
+        return prov;
+    }
+
+    private MetadataRecord createTechMDRecord(TechnicalMetadata technical) throws SAXException, IOException,
+        ParserConfigurationException, JAXBException {
+        MetadataRecord tec = new MetadataRecord("techMD");
+        if (technical != null) {
+            tec.setLastModificationDate(new DateTime());
+            tec.setMdType(technical.getMetadataType().name());
+            tec.setContent(DocumentBuilderFactory
+                .newInstance().newDocumentBuilder().parse(
+                    new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(technical))))
+                .getDocumentElement());
+        }
+        return tec;
     }
 
     private String getContainerId(String containerXml) {
@@ -464,7 +494,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             return SCAPEMarshaller.getInstance().serialize(entity.build());
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -511,7 +541,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             return ScapeUtil.getVersionXml(c.getMetadataRecords().get("VERSION-XML"));
         }
         catch (InternalClientException e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -524,7 +554,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
+     * ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -556,7 +587,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             return containerId;
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -573,7 +604,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             scapeContext.setLastModificationDate(dateformatter.parseDateTime(lastModDate));
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -591,7 +622,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
         catch (Exception e) {
             LOG.error("Error while opening ou", e);
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
@@ -601,28 +632,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
-    public String updateIntellectualEntity(String xml) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+    public String updateIntellectualEntity(String id, String xml) throws EscidocException {
         try {
             checkScapeContext();
             checkScapeContentModel();
+            IntellectualEntity entity = SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class, xml);
 
-            // deserialize the entity and create a org.w3c.Document for reuse by
-            // various later calls
-            IntellectualEntity entity =
-                SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
-                    new ByteArrayInputStream(xml.getBytes()));
             final Document doc =
                 DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                     new ByteArrayInputStream(xml.getBytes()));
@@ -637,12 +652,67 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // create the entities container and add the various representations
             Container entityContainer = this.createContainer(entity, doc);
             entityContainer.setStructMap(map);
-            containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
-            return "<ingest/>";
+            String containerXml = containerHandler.update(id, containerMarshaller.marshalDocument(entityContainer));
+            String containerId = getContainerId(containerXml);
+            return containerId;
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 
+    @Override
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+        IngestProcess p = new IngestProcess(xml);
+        new Thread(p).start();
+        return "<ingesting/>";
+    }
+
+    private class IngestProcess implements Runnable {
+        private final String xml;
+
+        public IngestProcess(String xml) {
+            this.xml = xml;
+        }
+
+        @Override
+        public void run() {
+            try {
+                IntellectualEntityHandler.this.checkScapeContext();
+                IntellectualEntityHandler.this.checkScapeContentModel();
+
+                // deserialize the entity and create a org.w3c.Document for
+                // reuse by
+                // various later calls
+                IntellectualEntity entity =
+                    SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
+                        new ByteArrayInputStream(xml.getBytes()));
+                final Document doc =
+                    DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                        new ByteArrayInputStream(xml.getBytes()));
+                StructMap map = new StructMap();
+
+                // add the representations as single items to the container
+                for (Representation r : entity.getRepresentations()) {
+                    String itemId = IntellectualEntityHandler.this.createItem(r, doc);
+                    map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
+                }
+
+                // create the entities container and add the various
+                // representations
+                Container entityContainer = IntellectualEntityHandler.this.createContainer(entity, doc);
+                entityContainer.setStructMap(map);
+                containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
+            }
+            catch (Exception e) {
+                LOG.error("Unable to asynchronously ingest data");
+            }
+        }
+    }
 }

@@ -7,7 +7,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
 public interface IntellectualEntityHandlerInterface {
     String getIntellectualEntity(String id) throws EscidocException;
 
-    String updateIntellectualEntity(String xml) throws EscidocException;
+    String updateIntellectualEntity(String id, String xml) throws EscidocException;
 
     String getIntellectualEntitySet(List<String> ids) throws EscidocException;
 

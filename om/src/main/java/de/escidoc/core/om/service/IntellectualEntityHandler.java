@@ -31,8 +31,8 @@ public class IntellectualEntityHandler
     }
 
     @Override
-    public String updateIntellectualEntity(String xml) throws EscidocException {
-        return handler.updateIntellectualEntity(xml);
+    public String updateIntellectualEntity(String id, String xml) throws EscidocException {
+        return handler.updateIntellectualEntity(id, xml);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class IntellectualEntityHandler
             return handler.getIntellectualEntitySet(ids);
         }
         catch (IOException e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 

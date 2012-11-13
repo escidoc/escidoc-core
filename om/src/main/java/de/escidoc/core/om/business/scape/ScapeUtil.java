@@ -140,7 +140,11 @@ public abstract class ScapeUtil {
     }
 
     public static int parseVersionNumber(MetadataRecord rec) {
-        return Integer.parseInt(rec.getContent().getAttribute("number"));
+        String num = rec.getContent().getAttribute("number").trim();
+        if (num.length() == 0) {
+            return 0;
+        }
+        return Integer.parseInt(num);
     }
 
     public static TechnicalMetadata getTechMd(String xml) throws ScapeException {
@@ -190,7 +194,7 @@ public abstract class ScapeUtil {
             }
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 

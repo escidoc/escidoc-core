@@ -39,7 +39,7 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
             return bos.toString();
         }
         catch (Exception e) {
-            throw new ScapeException(e.getMessage(), e);
+            throw new ScapeException(e);
         }
     }
 }
