@@ -1,4 +1,6 @@
 target/
+bin/
+attachments/
 .classpath
 .checkstyle
 .project
