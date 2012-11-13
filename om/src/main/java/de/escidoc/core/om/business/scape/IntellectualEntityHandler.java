@@ -596,7 +596,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
+    public String getMetadata(String id, String mdName) throws EscidocException {
+        return containerHandler.retrieveMdRecordContent(id, mdName);
+    }
+
+    @Override
     public String updateIntellectualEntity(String xml) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
         // TODO Auto-generated method stub
         return null;
     }

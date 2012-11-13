@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -39,7 +37,6 @@ public class IntellectualEntityHandler
 
     @Override
     public String getIntellectualEntitySet(String idData) throws EscidocException {
-        System.out.println(idData);
         BufferedReader r = new BufferedReader(new StringReader(idData));
         String uri;
         List<String> ids = new ArrayList<String>();
@@ -67,6 +64,16 @@ public class IntellectualEntityHandler
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         return handler.ingestIntellectualEntity(xml);
+    }
+
+    @Override
+    public String getMetadata(String id, String mdName) throws EscidocException {
+        return handler.getMetadata(id, mdName);
+    }
+
+    @Override
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
+        return handler.updateMetadata(id, mdName, xmlData);
     }
 
 }
