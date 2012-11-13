@@ -515,19 +515,39 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             Representation.Builder rep = new Representation.Builder();
             rep.files(getFiles(i));
             rep.identifier(new Identifier(i.getObjid()));
+            
+            // tech md
             Node n = i.getMetadataRecords().get("techMD").getContent();
             Document doc = n.getOwnerDocument();
             DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
             String xml = implLs.createLSSerializer().writeToString(n);
-            System.out.println(xml);
             TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
             rep.technical(techMd);
+            
+            // source md
+            n = i.getMetadataRecords().get("sourceMD").getContent();
+            doc = n.getOwnerDocument();
+            implLs = (DOMImplementationLS) doc.getImplementation();
+            xml = implLs.createLSSerializer().writeToString(n);
             DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
             rep.source(sourceMD);
+            
+            // rights md
+            n = i.getMetadataRecords().get("rightsMD").getContent();
+            doc = n.getOwnerDocument();
+            implLs = (DOMImplementationLS) doc.getImplementation();
+            xml = implLs.createLSSerializer().writeToString(n);
             RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
             rep.rights(rightsMD);
+            
+            // provenance md
+            n = i.getMetadataRecords().get("digiProvMD").getContent();
+            doc = n.getOwnerDocument();
+            implLs = (DOMImplementationLS) doc.getImplementation();
+            xml = implLs.createLSSerializer().writeToString(n);
             ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
             rep.provenance(prov);
+            
             reps.add(rep.build());
         }
         return reps;
