@@ -1,4 +1,4 @@
-package de.escidoc.core.om.service.interfaces;
+package de.escidoc.core.om.business.interfaces;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 

@@ -20,33 +20,17 @@ import eu.scapeproject.model.mets.SCAPEMarshaller;
 @Service("service.RepresentationHandler")
 public class RepresentationHandler implements RepresentationHandlerInterface {
 
-    @Autowired
-    @Qualifier("service.ItemHandler")
-    private ItemHandlerInterface itemHandler;
+	@Autowired
+	@Qualifier("business.RepresentationHandler")
+	private de.escidoc.core.om.business.interfaces.RepresentationHandlerInterface handler;
+	
+	@Override
+	public String getRepresentation(String id) throws EscidocException {
+		return handler.getRepresentation(id);
+	}
 
-    private final Marshaller<Item> itemMarshaller;
-
-    public RepresentationHandler() throws InternalClientException {
-        itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
-    }
-
-    @Override
-    public String getRepresentation(String id) throws EscidocException {
-        try {
-            String itemXml = itemHandler.retrieve(id);
-            Item i = itemMarshaller.unmarshalDocument(itemXml);
-            Representation rep = ScapeUtil.getRepresentation(i);
-            return SCAPEMarshaller.getInstance().serialize(rep);
-        }
-        catch (Exception e) {
-            throw new ScapeException(e);
-        }
-    }
-
-    @Override
-    public String putRepresentation(String xml) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+	@Override
+	public String updateRepresentation(String xml) throws EscidocException{
+		return handler.updateRepresentation(xml);
+	}
 }
