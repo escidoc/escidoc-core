@@ -133,6 +133,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Qualifier("service.ContainerHandler")
     private ContainerHandlerInterface containerHandler;
 
+    @Autowired
+    @Qualifier("business.ScapePIDService")
+    private ScapePIDService pidService;
+
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
         "<mdou:organizational-unit xmlns:mdou=\"http://purl.org/escidoc/metadata/profiles/0.1/organizationalunit\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\"><dc:title>SCAPE Organizational Unit</dc:title></mdou:organizational-unit>";
@@ -277,13 +281,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
     }
 
-    private Container createContainer(IntellectualEntity entity, Document entityDoc) throws Exception {
+    private Container createContainer(String pid, IntellectualEntity entity, Document entityDoc) throws Exception {
         Container container = new Container();
         ContainerProperties props = new ContainerProperties();
         props.setContentModel(new ContentModelRef(scapeContentModelId));
         props.setContext(new ContextRef(scapeContext.getObjid()));
         props.setName(((DCMetadata) entity.getDescriptive()).getTitle().get(0));
         props.setDescription(((DCMetadata) entity.getDescriptive()).getDescription().get(0));
+        props.setPid(pid);
         container.setProperties(props);
         container.setMetadataRecords(createEntityMetadataRecords(entity, entityDoc));
         container.setLastModificationDate(new DateTime());
@@ -342,6 +347,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         ItemProperties props = new ItemProperties();
         props.setContentModel(new ContentModelRef(scapeContentModelId));
         props.setContext(new ContextRef(scapeContext.getObjid()));
+        props.setPid(pidService.generatePID());
         i.setMetadataRecords(createRepresentationMetadataRecords(r));
         i.setProperties(props);
         List<Item> fileItems = new ArrayList<Item>();
@@ -513,6 +519,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntity(String id) throws EscidocException {
         try {
+            IntellectualEntity e = retrieveEntity(id);
+            if (e == null) {
+                return null;
+            }
             return SCAPEMarshaller.getInstance().serialize(retrieveEntity(id));
         }
         catch (Exception e) {
@@ -522,7 +532,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private IntellectualEntity retrieveEntity(String id) throws Exception {
         IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
-        Container c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
+        Map<String, String[]> filters = new HashMap<String, String[]>();
+        filters.put("pid", new String[] { id });
+        String resultXml = containerHandler.retrieveContainers(filters);
+        int posStart = resultXml.indexOf("<container:container");
+        if (posStart > 0) {
+            int posEnd = resultXml.indexOf("</container:container>") + 22;
+            resultXml = resultXml.substring(posStart, posEnd);
+        }
+        else {
+            return null;
+        }
+        Container c = containerMarshaller.unmarshalDocument(resultXml);
         MetadataRecord record = c.getMetadataRecords().get("escidoc");
         entity.identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record)).representations(
             getRepresentations(c)).lifecycleState(
@@ -573,7 +594,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             checkScapeContext();
             checkScapeContentModel();
 
-            //strip the <?xml version...?> part from the data to please the serializer
+            // strip the <?xml version...?> part from the data to please the
+            // serializer
             int posStart;
             if ((posStart = xml.indexOf("<?xml")) > 0) {
                 int posEnd = xml.indexOf("?>", posStart) + 2;
@@ -597,11 +619,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
 
             // create the entities container and add the various representations
-            Container entityContainer = this.createContainer(entity, doc);
+            Container entityContainer = this.createContainer(pidService.generatePID(), entity, doc);
             entityContainer.setStructMap(map);
             String containerXml = containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
-            String containerId = getContainerId(containerXml);
-            return containerId;
+            return entityContainer.getProperties().getPid();
         }
         catch (Exception e) {
             throw new ScapeException(e);
@@ -667,7 +688,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
 
             // create the entities container and add the various representations
-            Container entityContainer = this.createContainer(entity, doc);
+            Container entityContainer = this.createContainer(id, entity, doc);
             entityContainer.setStructMap(map);
             String containerXml = containerHandler.update(id, containerMarshaller.marshalDocument(entityContainer));
             String containerId = getContainerId(containerXml);
@@ -691,20 +712,20 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
-        IngestProcess p = new IngestProcess(xml);
+        String pid = pidService.generatePID();
+        IngestProcess p = new IngestProcess(pid, xml);
         new Thread(p).start();
-        return "<ingesting/>";
+        return pid;
     }
 
     private class IngestProcess implements Runnable {
         private final String xml;
 
-        public IngestProcess(String xml) {
-            this.xml = xml;
-        }
+        private final String pid;
 
-        public IngestProcess() {
-            this.xml = null;
+        public IngestProcess(String pid, String xml) {
+            this.xml = xml;
+            this.pid = pid;
         }
 
         @Override
@@ -732,7 +753,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
                 // create the entities container and add the various
                 // representations
-                Container entityContainer = IntellectualEntityHandler.this.createContainer(entity, doc);
+                Container entityContainer = IntellectualEntityHandler.this.createContainer(this.pid, entity, doc);
                 entityContainer.setStructMap(map);
                 containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
             }
