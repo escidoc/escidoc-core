@@ -9,14 +9,13 @@ import de.escidoc.core.om.service.interfaces.FileHandlerInterface;
 
 @Service("service.FileHandler")
 public class FileHandler implements FileHandlerInterface {
-	
-	
-	@Autowired
-	@Qualifier("business.FileHandler")
-	private de.escidoc.core.om.business.interfaces.FileHandlerInterface handler;
-	
+
+    @Autowired
+    @Qualifier("business.FileHandler")
+    private de.escidoc.core.om.business.interfaces.FileHandlerInterface handler;
+
     @Override
     public String getFile(String id) throws EscidocException {
-    	return handler.getFile(id);
+        return handler.getFile(id);
     };
 }

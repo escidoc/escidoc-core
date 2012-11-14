@@ -16,33 +16,34 @@ import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.RepresentationHandler")
-public class RepresentationHandler implements RepresentationHandlerInterface{
-	@Autowired
-	@Qualifier("service.ItemHandler")
-	private ItemHandlerInterface itemHandler;
+public class RepresentationHandler implements RepresentationHandlerInterface {
+    @Autowired
+    @Qualifier("service.ItemHandler")
+    private ItemHandlerInterface itemHandler;
 
-	private final Marshaller<Item> itemMarshaller;
+    private final Marshaller<Item> itemMarshaller;
 
-	public RepresentationHandler() throws InternalClientException {
-		itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
-	}
+    public RepresentationHandler() throws InternalClientException {
+        itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
+    }
 
-	@Override
-	public String getRepresentation(String id) throws EscidocException {
-		try {
-			String itemXml = itemHandler.retrieve(id);
-			Item i = itemMarshaller.unmarshalDocument(itemXml);
-			Representation rep = ScapeUtil.getRepresentation(i);
-			return SCAPEMarshaller.getInstance().serialize(rep);
-		} catch (Exception e) {
-			throw new ScapeException(e);
-		}
-	}
+    @Override
+    public String getRepresentation(String id) throws EscidocException {
+        try {
+            String itemXml = itemHandler.retrieve(id);
+            Item i = itemMarshaller.unmarshalDocument(itemXml);
+            Representation rep = ScapeUtil.getRepresentation(i);
+            return SCAPEMarshaller.getInstance().serialize(rep);
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
+    }
 
-	@Override
-	public String updateRepresentation(String xml) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String updateRepresentation(String xml) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

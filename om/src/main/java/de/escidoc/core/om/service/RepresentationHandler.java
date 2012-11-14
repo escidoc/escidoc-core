@@ -20,17 +20,17 @@ import eu.scapeproject.model.mets.SCAPEMarshaller;
 @Service("service.RepresentationHandler")
 public class RepresentationHandler implements RepresentationHandlerInterface {
 
-	@Autowired
-	@Qualifier("business.RepresentationHandler")
-	private de.escidoc.core.om.business.interfaces.RepresentationHandlerInterface handler;
-	
-	@Override
-	public String getRepresentation(String id) throws EscidocException {
-		return handler.getRepresentation(id);
-	}
+    @Autowired
+    @Qualifier("business.RepresentationHandler")
+    private de.escidoc.core.om.business.interfaces.RepresentationHandlerInterface handler;
 
-	@Override
-	public String updateRepresentation(String xml) throws EscidocException{
-		return handler.updateRepresentation(xml);
-	}
+    @Override
+    public String getRepresentation(String id) throws EscidocException {
+        return handler.getRepresentation(id);
+    }
+
+    @Override
+    public String updateRepresentation(String xml) throws EscidocException {
+        return handler.updateRepresentation(xml);
+    }
 }
