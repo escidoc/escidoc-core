@@ -7,15 +7,13 @@
 	<resource name="IntellectualEntity" base-uri="/scape/entity">
 		<descriptor uri="/scape/entity/${PATH_ID}">
 			<invoke http="GET" method="getIntellectualEntity" param1="${PATH_ID}" />
-			<invoke http="PUT" method="updateIntellectualEntity" param1="${PATH_ID}"
-				param2="${BODY}" />
+			<invoke http="PUT" method="updateIntellectualEntity" param1="${PATH_ID}" param2="${BODY}" />
 		</descriptor>
 		<descriptor uri="/scape/entity">
 			<invoke http="POST" method="ingestIntellectualEntity" param1="${BODY}" />
 		</descriptor>
 		<descriptor uri="/scape/entity-async">
-			<invoke http="POST" method="ingestIntellectualEntityAsync"
-				param1="${BODY}" />
+			<invoke http="POST" method="ingestIntellectualEntityAsync" param1="${BODY}" />
 		</descriptor>
 		<descriptor uri="/scape/entity-list">
 			<invoke http="POST" method="getIntellectualEntitySet" param1="${BODY}" />
@@ -28,8 +26,7 @@
 	<resource name="IntellectualEntity" base-uri="/scape/metadata">
 		<descriptor uri="/scape/metadata/${PATH_ID}/${MD_NAME}">
 			<invoke http="GET" method="getMetadata" param1="${PATH_ID}" param2="${MD_NAME}" />
-			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}" param2="${MD_NAME}"
-				param3="${BODY}" />
+			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}" param2="${MD_NAME}" param3="${BODY}" />
 		</descriptor>
 	</resource>
 
@@ -42,10 +39,10 @@
 	<resource name="Representation" base-uri="/scape/representation">
 		<descriptor uri="/scape/representation/${PATH_ID}">
 			<invoke http="GET" method="getRepresentation" param1="${PATH_ID}" />
-			<invoke http="PUT" method="getRepresentation" param1="${BODY}" />
-			<descriptor uri="/scape/sru/representations">
-				<invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" />
-			</descriptor>
+			<invoke http="PUT" method="updateRepresentation" param1="${PATH_ID}" param2="${BODY}" />
+		</descriptor>
+		<descriptor uri="/scape/sru/representations">
+			<invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
 

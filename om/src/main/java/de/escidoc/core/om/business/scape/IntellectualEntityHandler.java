@@ -1,7 +1,6 @@
 package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
@@ -35,19 +34,12 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import sun.tools.javac.SourceMember;
-
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
@@ -512,59 +504,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         List<Representation> reps = new ArrayList<Representation>();
         for (ItemMemberRef ref : c.getStructMap().getItems()) {
             Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(ref.getObjid()));
-            Representation.Builder rep = new Representation.Builder();
-            rep.files(getFiles(i));
-            rep.identifier(new Identifier(i.getObjid()));
-
-            // tech md
-            Node n = i.getMetadataRecords().get("techMD").getContent();
-            Document doc = n.getOwnerDocument();
-            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
-            String xml = implLs.createLSSerializer().writeToString(n);
-            TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
-            rep.technical(techMd);
-
-            // source md
-            n = i.getMetadataRecords().get("sourceMD").getContent();
-            doc = n.getOwnerDocument();
-            implLs = (DOMImplementationLS) doc.getImplementation();
-            xml = implLs.createLSSerializer().writeToString(n);
-            DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
-            rep.source(sourceMD);
-
-            // rights md
-            n = i.getMetadataRecords().get("rightsMD").getContent();
-            doc = n.getOwnerDocument();
-            implLs = (DOMImplementationLS) doc.getImplementation();
-            xml = implLs.createLSSerializer().writeToString(n);
-            RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
-            rep.rights(rightsMD);
-
-            // provenance md
-            n = i.getMetadataRecords().get("digiprovMD").getContent();
-            doc = n.getOwnerDocument();
-            implLs = (DOMImplementationLS) doc.getImplementation();
-            xml = implLs.createLSSerializer().writeToString(n);
-            ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
-            rep.provenance(prov);
-
-            reps.add(rep.build());
+            Representation rep = ScapeUtil.getRepresentation(i);
+            reps.add(rep);
         }
         return reps;
-    }
-
-    private List<File> getFiles(Item i) {
-        List<File> files = new ArrayList<File>();
-        Components comps = i.getComponents();
-        Iterator<Component> it = comps.iterator();
-        while (it.hasNext()) {
-            Component c = it.next();
-            File.Builder f = new File.Builder();
-            f.identifier(new Identifier(c.getObjid()));
-            f.uri(URI.create(c.getXLinkHref()));
-            files.add(f.build());
-        }
-        return files;
     }
 
     @Override
@@ -720,6 +663,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
         public IngestProcess(String xml) {
             this.xml = xml;
+        }
+
+        public IngestProcess() {
+            this.xml = null;
         }
 
         @Override

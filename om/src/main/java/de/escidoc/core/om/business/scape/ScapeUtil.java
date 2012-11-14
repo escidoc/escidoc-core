@@ -2,6 +2,10 @@ package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,14 +13,22 @@ import javax.xml.bind.JAXBException;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
 
+import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.resources.common.MetadataRecord;
+import de.escidoc.core.resources.om.item.Item;
+import de.escidoc.core.resources.om.item.component.Component;
+import de.escidoc.core.resources.om.item.component.Components;
 import eu.scapeproject.model.Agent;
+import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.LifecycleState;
+import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.metadata.DescriptiveMetadata;
 import eu.scapeproject.model.metadata.ProvenanceMetadata;
 import eu.scapeproject.model.metadata.RightsMetadata;
@@ -228,6 +240,60 @@ public abstract class ScapeUtil {
     public static ProvenanceMetadata getProvenanceMd(String xml) throws JAXBException {
         return (PremisProvenanceMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(
             new StringReader(xml));
+    }
+
+    private static List<File> getFiles(Item i) {
+        List<File> files = new ArrayList<File>();
+        Components comps = i.getComponents();
+        Iterator<Component> it = comps.iterator();
+        while (it.hasNext()) {
+            Component c = it.next();
+            File.Builder f = new File.Builder();
+            f.identifier(new Identifier(c.getObjid()));
+            f.uri(URI.create(c.getXLinkHref()));
+            files.add(f.build());
+        }
+        return files;
+    }
+
+    public static Representation getRepresentation(Item i) throws Exception {
+        Representation.Builder rep = new Representation.Builder();
+        rep.files(getFiles(i));
+        rep.identifier(new Identifier(i.getObjid()));
+
+        // tech md
+        Node n = i.getMetadataRecords().get("techMD").getContent();
+        Document doc = n.getOwnerDocument();
+        DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+        String xml = implLs.createLSSerializer().writeToString(n);
+        TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
+        rep.technical(techMd);
+
+        // source md
+        n = i.getMetadataRecords().get("sourceMD").getContent();
+        doc = n.getOwnerDocument();
+        implLs = (DOMImplementationLS) doc.getImplementation();
+        xml = implLs.createLSSerializer().writeToString(n);
+        DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
+        rep.source(sourceMD);
+
+        // rights md
+        n = i.getMetadataRecords().get("rightsMD").getContent();
+        doc = n.getOwnerDocument();
+        implLs = (DOMImplementationLS) doc.getImplementation();
+        xml = implLs.createLSSerializer().writeToString(n);
+        RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
+        rep.rights(rightsMD);
+
+        // provenance md
+        n = i.getMetadataRecords().get("digiprovMD").getContent();
+        doc = n.getOwnerDocument();
+        implLs = (DOMImplementationLS) doc.getImplementation();
+        xml = implLs.createLSSerializer().writeToString(n);
+        ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
+        rep.provenance(prov);
+
+        return rep.build();
     }
 
 }
