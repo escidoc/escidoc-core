@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +17,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;
 
-import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
+import de.escidoc.core.resources.ResourceType;
 import de.escidoc.core.resources.common.MetadataRecord;
+import de.escidoc.core.resources.common.Relation;
 import de.escidoc.core.resources.om.item.Item;
-import de.escidoc.core.resources.om.item.component.Component;
-import de.escidoc.core.resources.om.item.component.Components;
 import eu.scapeproject.model.Agent;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
@@ -244,14 +242,17 @@ public abstract class ScapeUtil {
 
     private static List<File> getFiles(Item i) {
         List<File> files = new ArrayList<File>();
-        Components comps = i.getComponents();
-        Iterator<Component> it = comps.iterator();
-        while (it.hasNext()) {
-            Component c = it.next();
-            File.Builder f = new File.Builder();
-            f.identifier(new Identifier(c.getObjid()));
-            f.uri(URI.create(c.getXLinkHref()));
-            files.add(f.build());
+        File.Builder f = new File.Builder();
+        for (Relation rel : i.getRelations()) {
+            // get file items from escidoc
+            if (rel.getResourceType() == ResourceType.ITEM) {
+                int posStart = rel.getXLinkHref().indexOf("/ir/items/") + 10;
+                int posEnd = rel.getXLinkHref().indexOf('\"', posStart);
+                String id = rel.getXLinkHref().substring(posStart, posEnd);
+                f.identifier(new Identifier(id));
+                f.uri(URI.create(rel.getXLinkHref()));
+                files.add(f.build());
+            }
         }
         return files;
     }

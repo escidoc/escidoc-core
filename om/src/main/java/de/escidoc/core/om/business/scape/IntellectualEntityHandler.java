@@ -573,6 +573,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             checkScapeContext();
             checkScapeContentModel();
 
+            //strip the <?xml version...?> part from the data to please the serializer
+            int posStart;
+            if ((posStart = xml.indexOf("<?xml")) > 0) {
+                int posEnd = xml.indexOf("?>", posStart) + 2;
+                xml = xml.substring(posStart, posEnd);
+            }
+
             // deserialize the entity and create a org.w3c.Document for reuse by
             // various later calls
             IntellectualEntity entity =
