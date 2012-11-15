@@ -362,7 +362,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
         Relations rels = new Relations();
         for (Item fileItem : fileItems) {
-            rels.add(new Relation(new ItemRef(fileItem.getObjid())));
+            Relation rel = new Relation(new ItemRef(fileItem.getObjid()));
+            rel.setPredicate("consistsOf");
+            rels.add(rel);
         }
         i.setRelations(rels);
         String itemXml = itemHandler.create(itemMarshaller.marshalDocument(i));
@@ -381,9 +383,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             i.setComponents(comps);
             MetadataRecords recs = new MetadataRecords();
             String techXml = SCAPEMarshaller.getInstance().serialize(f.getTechnical());
+            MetadataRecord escidoc = new MetadataRecord("escidoc");
+            DCMetadata dc = new DCMetadata.Builder().title("Scape File Item").build();
+            String dcXml = SCAPEMarshaller.getInstance().serialize(dc);
+            escidoc.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(dcXml.getBytes())).getDocumentElement());
+            recs.add(escidoc);
             MetadataRecord techMD = new MetadataRecord("techMD");
             techMD.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
                 new ByteArrayInputStream(techXml.getBytes())).getDocumentElement());
+            recs.add(techMD);
             i.setMetadataRecords(recs);
             return itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(i)));
         }
