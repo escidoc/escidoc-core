@@ -363,7 +363,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         Relations rels = new Relations();
         for (Item fileItem : fileItems) {
             Relation rel = new Relation(new ItemRef(fileItem.getObjid()));
-            rel.setPredicate("consistsOf");
+            rel.setPredicate("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#hasPart");
             rels.add(rel);
         }
         i.setRelations(rels);
