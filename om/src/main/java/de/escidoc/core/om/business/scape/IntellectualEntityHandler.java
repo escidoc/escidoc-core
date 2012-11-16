@@ -504,10 +504,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         if (technical != null) {
             tec.setLastModificationDate(new DateTime());
             tec.setMdType(technical.getMetadataType().name());
-            tec.setContent(DocumentBuilderFactory
-                .newInstance().newDocumentBuilder().parse(
-                    new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(technical))))
-                .getDocumentElement());
+            String techXml = SCAPEMarshaller.getInstance().serialize(technical);
+            tec.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new InputSource(new StringReader(techXml))).getDocumentElement());
         }
         return tec;
     }

@@ -168,6 +168,7 @@ INSERT INTO aa.escidoc_policies
               info:escidoc/names:aa:1.0:action:fedora-deviation-get-datastream-dissimination 
               info:escidoc/names:aa:1.0:action:fedora-deviation-export 
               info:escidoc/names:scape:1.0:action:retrieve-intellectualentity
+              info:escidoc/names:scape:1.0:action:retrieve-metadata
 			  info:escidoc/names:scape:1.0:action:retrieve-intellectualentity-set
 			  info:escidoc/names:scape:1.0:action:retrieve-intellectualentity-version-set
 			  info:escidoc/names:scape:1.0:action:post-intellectualentity

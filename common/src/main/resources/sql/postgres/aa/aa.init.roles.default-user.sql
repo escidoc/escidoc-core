@@ -172,7 +172,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
 					info:escidoc/names:aa:1.0:action:create-intellectualentity
 					info:escidoc/names:aa:1.0:action:create-intellectualentity-async
 					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
-					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata
+					info:escidoc/names:aa:1.0:action:retrieve-metadata
 					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list
 					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions
 					info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search
@@ -218,7 +218,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
 						info:escidoc/names:aa:1.0:action:create-intellectualentity
 						info:escidoc/names:aa:1.0:action:create-intellectualentity-async
 						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
-						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata
+						info:escidoc/names:aa:1.0:action:retrieve-metadata
 						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list
 						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions
 						info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search

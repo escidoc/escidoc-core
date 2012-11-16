@@ -467,7 +467,7 @@ INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-create-intellectualenti
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-create-intellectualentity-async','info:escidoc/names:aa:1.0:action:create-intellectualentity-async');
 
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity');
-INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-metadata','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-metadata');
+INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-metadata','info:escidoc/names:aa:1.0:action:retrieve-metadata');
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-list','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list');
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-versions','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions');
 INSERT INTO aa.actions (id,name) VALUES	('escidoc:action-retrieve-intellectualentity-search','info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search');
