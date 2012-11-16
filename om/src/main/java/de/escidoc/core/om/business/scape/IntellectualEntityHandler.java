@@ -730,9 +730,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
-        for (Map.Entry<String, String[]> e : params.entrySet()) {
-            System.out.println(e.getKey() + ": " + e.getValue()[0]);
-        }
         return containerHandler.retrieveContainers(params);
     }
 
