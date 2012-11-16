@@ -23,8 +23,8 @@
 		</descriptor>
 	</resource>
 	
-	<resource name="IntellectualEntity" base-uri="/scape/sru/entities/">
-		<descriptor uri="/scape/sru/entitites">
+	<resource name="IntellectualEntity" base-uri="/scape/sru/entities">
+		<descriptor uri="/scape/sru/entities">
 			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}"/>
 		</descriptor>
 	</resource>
