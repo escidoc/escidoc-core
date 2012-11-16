@@ -83,8 +83,8 @@ public class IntellectualEntityHandler
     }
 
     @Override
-    public String searchIntellectualEntity(Map<String, String[]> params) throws EscidocException {
-        return handler.searchIntellectualEntity(params);
+    public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
+        return handler.searchIntellectualEntities(params);
     }
 
 }

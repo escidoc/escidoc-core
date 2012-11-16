@@ -24,7 +24,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
   
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-intellectualentity-search-retrieve', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'searchIntellectualEntity', 
+  VALUES ('escidoc:mm-intellectualentity-search-retrieve', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'searchIntellectualEntities', 
   'info:escidoc/names:aa:1.0:action:retrieve-objects-filtered', false, true);
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
@@ -35,17 +35,17 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   VALUES ('escidoc:mm-representation-retrieve', 'de.escidoc.core.om.service.interfaces.RepresentationHandlerInterface', 'getRepresentation', 
   'info:escidoc/names:aa:1.0:action:retrieve-representation', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-representation-search-retrieve', 'de.escidoc.core.om.service.interfaces.RepresentationHandlerInterface', 'searchRepresentation', 
-  'info:escidoc/names:aa:1.0:action:retrieve-representation-search', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
+INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
+  VALUES ('escidoc:mm-representation-search-retrieve', 'de.escidoc.core.om.service.interfaces.RepresentationHandlerInterface', 'searchRepresentations', 
+  'info:escidoc/names:aa:1.0:action:retrieve-objects-filtered', false, true);
   
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-file-retrieve', 'de.escidoc.core.om.service.interfaces.FileHandlerInterface', 'getFile', 
   'info:escidoc/names:aa:1.0:action:retrieve-file', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-file-search-retrieve', 'de.escidoc.core.om.service.interfaces.FileHandlerInterface', 'searchFile', 
-  'info:escidoc/names:aa:1.0:action:retrieve-file-search', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
+INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
+  VALUES ('escidoc:mm-file-search-retrieve', 'de.escidoc.core.om.service.interfaces.FileHandlerInterface', 'searchFiles', 
+  'info:escidoc/names:aa:1.0:action:retrieve-objects-filtered', false, true);
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-bitstream-retrieve', 'de.escidoc.core.om.service.interfaces.BitstreamInterface', 'getBitstream', 
@@ -83,16 +83,8 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-intellectualentity-lifecycle-retrieve');
           
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc:im-representation-search-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-representation-search-retrieve');
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc:im-file-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-file-retrieve');
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc:im-file-search-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-file-search-retrieve');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc:im-bitstream-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 

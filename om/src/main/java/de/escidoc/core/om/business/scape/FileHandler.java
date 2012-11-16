@@ -1,5 +1,7 @@
 package de.escidoc.core.om.business.scape;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,11 @@ public class FileHandler implements FileHandlerInterface {
     @Override
     public String getFile(String id) throws EscidocException {
         return null;
+    }
+
+    @Override
+    public String searchFiles(Map<String, String[]> params) throws EscidocException {
+        return itemHandler.retrieveItems(params);
     }
 
 }

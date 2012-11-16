@@ -25,7 +25,7 @@
 	
 	<resource name="IntellectualEntity" base-uri="/scape/sru/entities">
 		<descriptor uri="/scape/sru/entities">
-			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}"/>
+			<invoke http="GET" method="searchIntellectualEntities" param1="${PARAMETERS}"/>
 		</descriptor>
 	</resource>
 
@@ -47,6 +47,9 @@
 			<invoke http="GET" method="getRepresentation" param1="${PATH_ID}" />
 			<invoke http="PUT" method="updateRepresentation" param1="${PATH_ID}" param2="${BODY}" />
 		</descriptor>
+	</resource>
+	
+	<resource name="Representation" base-uri="/scape/sru/representations">
 		<descriptor uri="/scape/sru/representations">
 			<invoke http="GET" method="searchRepresentations" param1="${PARAMETERS}" />
 		</descriptor>
@@ -56,14 +59,17 @@
 		<descriptor uri="/scape/file/${PATH_ID}">
 			<invoke http="GET" method="getFile" param1="${PARTH_ID}" />
 		</descriptor>
-		<descriptor uri="/scape/sru/file">
-			<invoke http="GET" method="searchFile" param1="${PARAMETERS}" />
+	</resource>
+	
+	<resource name="File" base-uri="/scape/sru/files">
+		<descriptor uri="/scape/sru/files">
+			<invoke http="GET" method="searchFiles" param1="${PARAMETERS}" />
 		</descriptor>
 	</resource>
 
 	<resource name="BitStream" base-uri="/scape/bitstream">
 		<descriptor uri="/scape/bitstream/${PATH_ID}">
-			<invoke http="GET" method="getRepresentation" param1="${PATH_ID}" />
+			<invoke http="GET" method="getRepresentations" param1="${PATH_ID}" />
 		</descriptor>
 	</resource>
 </mapping>

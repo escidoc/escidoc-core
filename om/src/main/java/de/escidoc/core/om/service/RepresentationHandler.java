@@ -1,5 +1,7 @@
 package de.escidoc.core.om.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,10 @@ public class RepresentationHandler implements RepresentationHandlerInterface {
     @Override
     public String updateRepresentation(String xml) throws EscidocException {
         return handler.updateRepresentation(xml);
+    }
+
+    @Override
+    public String searchRepresentations(Map<String, String[]> params) throws EscidocException {
+        return handler.searchRepresentations(params);
     }
 }

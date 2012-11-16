@@ -35,6 +35,8 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.sun.tools.xjc.reader.internalizer.DOMForest.Handler;
+
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
@@ -594,8 +596,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
-     * ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -728,11 +729,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
-    public String searchIntellectualEntity(Map<String, String[]> params) throws EscidocException {
+    public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
         for (Map.Entry<String, String[]> e : params.entrySet()) {
             System.out.println(e.getKey() + ": " + e.getValue()[0]);
         }
-        return "blah";
+        return containerHandler.retrieveContainers(params);
     }
 
     private class IngestProcess implements Runnable {
