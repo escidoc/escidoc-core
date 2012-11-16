@@ -1,5 +1,7 @@
 package de.escidoc.core.om.service.interfaces;
 
+import java.util.Map;
+
 import de.escidoc.core.common.exceptions.EscidocException;
 
 public interface IntellectualEntityHandlerInterface {
@@ -20,5 +22,5 @@ public interface IntellectualEntityHandlerInterface {
 	
 	String updateMetadata(String id,String xmlData) throws EscidocException;
 	
-	String searchIntellectualEntity(String query) throws EscidocException;
+	String searchIntellectualEntity(Map<String, String[]> params) throws EscidocException;
 }

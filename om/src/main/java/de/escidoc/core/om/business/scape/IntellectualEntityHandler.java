@@ -728,9 +728,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     @Override
-    public String searchIntellectualEntity(String query) throws EscidocException {
-        System.out.println(query);
-        return query;
+    public String searchIntellectualEntity(Map<String, String[]> params) throws EscidocException {
+        for (Map.Entry<String, String[]> e : params.entrySet()) {
+            System.out.println(e.getKey() + ": " + e.getValue()[0]);
+        }
+        return "blah";
     }
 
     private class IngestProcess implements Runnable {
