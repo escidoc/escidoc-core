@@ -23,9 +23,9 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   VALUES ('escidoc:mm-intellectualentity-versions-retrieve', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'getIntellectualEntityVersionSet', 
   'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
   
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
+INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
   VALUES ('escidoc:mm-intellectualentity-search-retrieve', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'searchIntellectualEntity', 
-  'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
+  'info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search', false, true);
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
   VALUES ('escidoc:mm-intellectualentity-lifecycle-retrieve', 'de.escidoc.core.om.service.interfaces.LifeCycleHandlerInterface', 'getLifecycleStatus', 
@@ -77,10 +77,6 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc:im-intellectualentity-versions-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-intellectualentity-versions-retrieve');
-          
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc:im-intellectualentity-search-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-intellectualentity-search-retrieve');
           
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc:im-intellectualentity-lifecycle-retrieve', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0, 

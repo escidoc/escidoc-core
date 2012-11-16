@@ -727,6 +727,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return pid;
     }
 
+    @Override
+    public String searchIntellectualEntity(String query) throws EscidocException {
+        System.out.println(query);
+        return query;
+    }
+
     private class IngestProcess implements Runnable {
         private final String xml;
 

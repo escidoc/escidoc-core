@@ -22,6 +22,12 @@
 			<invoke http="GET" method="getIntellectualEntityVersionSet" param1="${PATH_ID}" />
 		</descriptor>
 	</resource>
+	
+	<resource name="IntellectualEntity" base-uri="/scape/sru/entities/">
+		<descriptor uri="/scape/sru/entitites">
+			<invoke http="GET" method="searchIntellectualEntity" param1="${PARAMETERS}"/>
+		</descriptor>
+	</resource>
 
 	<resource name="IntellectualEntity" base-uri="/scape/metadata">
 		<descriptor uri="/scape/metadata/${PATH_ID}/${MD_NAME}">

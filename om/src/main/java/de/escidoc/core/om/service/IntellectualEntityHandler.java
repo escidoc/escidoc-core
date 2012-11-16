@@ -81,4 +81,9 @@ public class IntellectualEntityHandler
         return handler.ingestIntellectualEntityAsync(xml);
     }
 
+    @Override
+    public String searchIntellectualEntity(String query) throws EscidocException {
+        return handler.searchIntellectualEntity(query);
+    }
+
 }
