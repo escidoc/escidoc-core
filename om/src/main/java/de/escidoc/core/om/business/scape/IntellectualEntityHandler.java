@@ -238,6 +238,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private void checkScapeOU() throws EscidocException {
         try {
+            if (scapeOU != null && scapeOU.getObjid() == null) {
+                System.out.println("OU is not null and id is null");
+            }
             if (scapeOU == null) {
                 Map<String, String[]> filters = new HashMap<String, String[]>(1);
                 filters.put("name", new String[] { "scape-default-ou" });
@@ -349,7 +352,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         ItemProperties props = new ItemProperties();
         props.setContentModel(new ContentModelRef(scapeContentModelId));
         props.setContext(new ContextRef(scapeContext.getObjid()));
-        props.setPid(pidService.generatePID());
+        props.setPid(r.getIdentifier().getValue());
         i.setMetadataRecords(createRepresentationMetadataRecords(r));
         i.setProperties(props);
         List<Item> fileItems = new ArrayList<Item>();
@@ -691,7 +694,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             StructMap map = new StructMap();
 
             // add the representations as single items to the container
+            Map<String, String[]> searchFilter = new HashMap<String, String[]>();
             for (Representation r : entity.getRepresentations()) {
+                searchFilter.put("pid", new String[] { r.getIdentifier().getValue() });
+                itemHandler.retrieveItems(searchFilter);
                 String itemId = this.createItem(r, doc);
                 map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
             }
