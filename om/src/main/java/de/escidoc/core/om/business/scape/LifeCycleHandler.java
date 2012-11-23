@@ -1,6 +1,7 @@
 package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.LifeCycleHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.resources.om.container.Container;
+import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.LifeCycleHandler")
@@ -29,13 +31,32 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
     }
 
     @Override
-    public String getLifecycleStatus(String id) throws EscidocException {
+    public String getLifecycleStatus(final String id) throws EscidocException {
         Container c;
         try {
-            c = containerMarshaller.unmarshalDocument(containerHandler.retrieve(id));
+            String searchResponse = containerHandler.retrieveContainers(new HashMap<String, String[]>() {
+                {
+                    put("pid", new String[] { id });
+                }
+            });
+            String lifeCycle = null;
+            int pos;
+            LifecycleState.State state;
+            String details = null;
+            if ((pos = searchResponse.indexOf("<lifecycle state=\"")) > 0) {
+                lifeCycle = searchResponse.substring(pos + 18);
+                pos = lifeCycle.indexOf('\"');
+                if (pos == -1) {
+                    throw new ScapeException("Unable to parse lifecycle from search response");
+                }
+                lifeCycle = lifeCycle.substring(0, pos);
+                state = LifecycleState.State.valueOf(lifeCycle);
+            }
+            else {
+                throw new ScapeException("Unable to parse lifecycle from search reposnse");
+            }
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            SCAPEMarshaller.getInstance().getJaxbMarshaller().marshal(
-                ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML")), bos);
+            SCAPEMarshaller.getInstance().getJaxbMarshaller().marshal(new LifecycleState(details, state), bos);
             return bos.toString();
         }
         catch (Exception e) {
