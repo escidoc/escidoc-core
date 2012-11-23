@@ -634,7 +634,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             Container entityContainer = this.createContainer(pidService.generatePID(), entity, doc);
             entityContainer.setStructMap(map);
             String containerXml = containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
-            return entityContainer.getProperties().getPid();
+            return "<scape:value>" + entityContainer.getProperties().getPid() + "</scape:value>";
         }
         catch (Exception e) {
             throw new ScapeException(e);
