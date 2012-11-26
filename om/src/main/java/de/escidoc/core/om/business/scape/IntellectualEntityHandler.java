@@ -730,7 +730,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         String pid = pidService.generatePID();
         IngestProcess p = new IngestProcess(pid, xml);
         new Thread(p).start();
-        return pid;
+        return "<scape:value>" + pid + "</scape:value>";
     }
 
     @Override
