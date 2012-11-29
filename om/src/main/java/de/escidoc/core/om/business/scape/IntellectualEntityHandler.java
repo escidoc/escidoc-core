@@ -537,7 +537,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             if (e == null) {
                 return null;
             }
-            return SCAPEMarshaller.getInstance().serialize(retrieveEntity(id));
+            return SCAPEMarshaller.getInstance().serialize(e);
         }
         catch (Exception e) {
             throw new ScapeException(e);
@@ -547,11 +547,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private IntellectualEntity retrieveEntity(String id) throws Exception {
         IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("pid", new String[] { id });
+        filters.put("PID", new String[] { id });
         String resultXml = containerHandler.retrieveContainers(filters);
+
         int posStart = resultXml.indexOf("<container:container");
         if (posStart > 0) {
             int posEnd = resultXml.indexOf("</container:container>") + 22;
+            if (resultXml.indexOf("<container:container ", posEnd) > 0) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
             resultXml = resultXml.substring(posStart, posEnd);
         }
         else {
@@ -559,10 +563,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
         Container c = containerMarshaller.unmarshalDocument(resultXml);
         MetadataRecord record = c.getMetadataRecords().get("escidoc");
-        entity.identifier(new Identifier(c.getObjid())).descriptive(ScapeUtil.parseDcMetadata(record)).representations(
-            getRepresentations(c)).lifecycleState(
-            ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
-            ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
+        entity
+            .identifier(new Identifier(c.getProperties().getPid())).descriptive(ScapeUtil.parseDcMetadata(record))
+            .representations(getRepresentations(c)).lifecycleState(
+                ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
+                ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
         return entity.build();
     }
 
@@ -579,7 +584,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntityVersionSet(String id) throws EscidocException {
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("pid", new String[] { id });
+        filters.put("PID", new String[] { id });
         String resultXml = containerHandler.retrieveContainers(filters);
         int posStart = resultXml.indexOf("<container:container");
         if (posStart > 0) {
