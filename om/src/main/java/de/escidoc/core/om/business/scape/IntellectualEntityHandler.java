@@ -554,13 +554,21 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             filters.put("query", new String[] { "\"/id\"=" + id });
         }
         String resultXml = containerHandler.retrieveContainers(filters);
+        int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+        String tmp = new String(resultXml.substring(pos));
+        tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+        int numRecs = Integer.parseInt(tmp);
+        if (numRecs == 0) {
+            //TODO: this should return a 404
+            throw new ScapeException("Unable to find object " + id);
+        }
+        else if (numRecs > 1) {
+            throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+        }
 
         int posStart = resultXml.indexOf("<container:container");
         if (posStart > 0) {
             int posEnd = resultXml.indexOf("</container:container>") + 22;
-            if (resultXml.indexOf("<container:container ", posEnd) > 0) {
-                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
-            }
             resultXml = resultXml.substring(posStart, posEnd);
         }
         else {
