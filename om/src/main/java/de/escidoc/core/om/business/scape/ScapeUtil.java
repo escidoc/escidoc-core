@@ -246,9 +246,10 @@ public abstract class ScapeUtil {
         for (Relation rel : i.getRelations()) {
             // get file items from escidoc
             if (rel.getResourceType() == ResourceType.ITEM) {
+                System.out.println(rel.getXLinkTitle() + " " + rel.getXLinkHref() + " " + rel.getPredicate() + " "
+                    + rel.getObjid());
                 int posStart = rel.getXLinkHref().indexOf("/ir/items/") + 10;
-                int posEnd = rel.getXLinkHref().indexOf('\"', posStart);
-                String id = rel.getXLinkHref().substring(posStart, posEnd);
+                String id = rel.getXLinkHref().substring(posStart);
                 f.identifier(new Identifier(id));
                 f.uri(URI.create(rel.getXLinkHref()));
                 files.add(f.build());
