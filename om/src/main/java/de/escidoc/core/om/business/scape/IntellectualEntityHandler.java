@@ -547,7 +547,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private IntellectualEntity retrieveEntity(String id) throws Exception {
         IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("PID", new String[] { id });
+        if (id.contains("scape")) {
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+        }
+        else {
+            filters.put("query", new String[] { "\"/id\"=" + id });
+        }
         String resultXml = containerHandler.retrieveContainers(filters);
 
         int posStart = resultXml.indexOf("<container:container");
@@ -584,7 +589,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntityVersionSet(String id) throws EscidocException {
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("PID", new String[] { id });
+        filters.put("query", new String[] { "\"/properties/pid\"=" + id });
         String resultXml = containerHandler.retrieveContainers(filters);
         int posStart = resultXml.indexOf("<container:container");
         if (posStart > 0) {
@@ -711,7 +716,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // add the representations as single items to the container
             Map<String, String[]> searchFilter = new HashMap<String, String[]>();
             for (Representation r : entity.getRepresentations()) {
-                searchFilter.put("pid", new String[] { r.getIdentifier().getValue() });
+                searchFilter.put("query", new String[] { "\"/properties/pid\"=" + r.getIdentifier().getValue() });
                 itemHandler.retrieveItems(searchFilter);
                 String itemId = this.createItem(r, doc);
                 map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
