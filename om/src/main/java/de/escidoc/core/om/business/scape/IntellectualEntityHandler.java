@@ -548,10 +548,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
         Map<String, String[]> filters = new HashMap<String, String[]>();
         if (id.contains("scape")) {
-            filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
         }
         else {
-            filters.put("query", new String[] { "\"/id\"=" + id });
+            filters.put("query", new String[] { "\"/id\"=" + id + " AND \"type\"=container" });
         }
         String resultXml = containerHandler.retrieveContainers(filters);
         int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
@@ -597,7 +597,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String getIntellectualEntityVersionSet(String id) throws EscidocException {
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+        filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
         String resultXml = containerHandler.retrieveContainers(filters);
         int posStart = resultXml.indexOf("<container:container");
         if (posStart > 0) {
@@ -724,6 +724,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // add the representations as single items to the container
             Map<String, String[]> searchFilter = new HashMap<String, String[]>();
             for (Representation r : entity.getRepresentations()) {
+            	// query maybe not complete " AND \"type\"=item" missing?
                 searchFilter.put("query", new String[] { "\"/properties/pid\"=" + r.getIdentifier().getValue() });
                 itemHandler.retrieveItems(searchFilter);
                 String itemId = this.createItem(r, doc);
