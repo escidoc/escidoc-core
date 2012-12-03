@@ -17,6 +17,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;
 
+import de.escidoc.core.client.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.resources.ResourceType;
 import de.escidoc.core.resources.common.MetadataRecord;

@@ -17,6 +17,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.hibernate.type.MetaType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -76,6 +77,7 @@ import de.escidoc.core.resources.om.item.component.ComponentProperties;
 import de.escidoc.core.resources.om.item.component.Components;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
+import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
@@ -138,6 +140,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Autowired
     @Qualifier("business.ScapePIDService")
     private ScapePIDService pidService;
+    
+    @Autowired
+    @Qualifier("service.StagingFileHandler")
+    private StagingFileHandlerInterface stagingFileHandler;
 
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
@@ -399,6 +405,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 new ByteArrayInputStream(techXml.getBytes())).getDocumentElement());
             recs.add(techMD);
             i.setMetadataRecords(recs);
+            EscidocBinaryContent content = new EscidocBinaryContent();
+            content.setFileName(f.getIdentifier().getValue());
+            content.setMimeType("application/binary");
+            content.setContent(f.getUri().toURL().openStream());
+            
+            String fileXml = stagingFileHandler.create(content);
             return itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(i)));
         }
         catch (Exception e) {
@@ -724,7 +736,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             // add the representations as single items to the container
             Map<String, String[]> searchFilter = new HashMap<String, String[]>();
             for (Representation r : entity.getRepresentations()) {
-            	// query maybe not complete " AND \"type\"=item" missing?
+                // query maybe not complete " AND \"type\"=item" missing?
                 searchFilter.put("query", new String[] { "\"/properties/pid\"=" + r.getIdentifier().getValue() });
                 itemHandler.retrieveItems(searchFilter);
                 String itemId = this.createItem(r, doc);
