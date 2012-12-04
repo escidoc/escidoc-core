@@ -418,7 +418,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             ContentStreams streams = new ContentStreams();
             ContentStream cs =
                 new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, "application/binary");
-            cs.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes())).getDocumentElement());
+            cs.setContent(DocumentBuilderFactory
+                .newInstance().newDocumentBuilder().parse(
+                    new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes()))
+                .getDocumentElement());
             streams.add(cs);
             i.setContentStreams(streams);
             return itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(i)));
