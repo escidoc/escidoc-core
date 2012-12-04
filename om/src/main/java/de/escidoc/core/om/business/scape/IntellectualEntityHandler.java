@@ -52,6 +52,8 @@ import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.resources.XLinkType;
+import de.escidoc.core.resources.common.ContentStream;
+import de.escidoc.core.resources.common.ContentStreams;
 import de.escidoc.core.resources.common.MetadataRecord;
 import de.escidoc.core.resources.common.MetadataRecords;
 import de.escidoc.core.resources.common.Relation;
@@ -140,7 +142,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Autowired
     @Qualifier("business.ScapePIDService")
     private ScapePIDService pidService;
-    
+
     @Autowired
     @Qualifier("service.StagingFileHandler")
     private StagingFileHandlerInterface stagingFileHandler;
@@ -405,17 +407,31 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 new ByteArrayInputStream(techXml.getBytes())).getDocumentElement());
             recs.add(techMD);
             i.setMetadataRecords(recs);
+
+            // let escidoc fetch and add the binary files from the URIs
             EscidocBinaryContent content = new EscidocBinaryContent();
             content.setFileName(f.getIdentifier().getValue());
             content.setMimeType("application/binary");
             content.setContent(f.getUri().toURL().openStream());
-            
             String fileXml = stagingFileHandler.create(content);
+            String href = getStagedFileLink(fileXml);
+            ContentStreams streams = new ContentStreams();
+            ContentStream cs =
+                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, "application/binary");
+            cs.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes())).getDocumentElement());
+            streams.add(cs);
+            i.setContentStreams(streams);
             return itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(i)));
         }
         catch (Exception e) {
             throw new ScapeException(e);
         }
+    }
+
+    private static String getStagedFileLink(String fileXml) {
+        int posStart = fileXml.indexOf("xlink:href=\"") + 12;
+        int posEnd = fileXml.indexOf("\"", posStart);
+        return fileXml.substring(posStart, posEnd);
     }
 
     @SuppressWarnings("deprecation")
