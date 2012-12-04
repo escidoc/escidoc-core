@@ -3,10 +3,8 @@ package de.escidoc.core.om.business.scape;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.esidoc.core.utils.io.EscidocBinaryContent;
-import org.hibernate.type.MetaType;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -32,11 +29,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.DOMImplementationLS;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.sun.tools.xjc.reader.internalizer.DOMForest.Handler;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
@@ -89,7 +83,12 @@ import eu.scapeproject.model.metadata.DescriptiveMetadata;
 import eu.scapeproject.model.metadata.ProvenanceMetadata;
 import eu.scapeproject.model.metadata.RightsMetadata;
 import eu.scapeproject.model.metadata.TechnicalMetadata;
+import eu.scapeproject.model.metadata.audiomd.AudioMDMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
+import eu.scapeproject.model.metadata.fits.FitsMetadata;
+import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
+import eu.scapeproject.model.metadata.textmd.TextMDMetadata;
+import eu.scapeproject.model.metadata.videomd.VideoMDMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -417,7 +416,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             String href = getStagedFileLink(fileXml);
             ContentStreams streams = new ContentStreams();
             ContentStream cs =
-                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, "application/binary");
+                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, getMimeType(f.getTechnical()));
             cs.setContent(DocumentBuilderFactory
                 .newInstance().newDocumentBuilder().parse(
                     new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes()))
@@ -431,7 +430,29 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
     }
 
-    private static String getStagedFileLink(String fileXml) {
+    private static String getMimeType(TechnicalMetadata technical) throws EscidocException {
+    	if (technical instanceof FitsMetadata){
+    		FitsMetadata tmp = (FitsMetadata) technical;
+    		return tmp.getIdentification().getIdentities().get(0).getMimeType();
+    	}else if(technical instanceof NisoMixMetadata){
+    		// TODO: add mimetype to NisoMix scape model
+    		NisoMixMetadata tmp= (NisoMixMetadata) technical;
+    		throw new ScapeException("Not yet implemented for Niso MIX");
+    	}else if(technical instanceof VideoMDMetadata){
+    		VideoMDMetadata tmp = (VideoMDMetadata) technical;
+    		return tmp.getVideoMD().getFiledata().get(0).getFormats().get(0).getMimeType();
+    	}else if(technical instanceof AudioMDMetadata){
+    		AudioMDMetadata tmp = (AudioMDMetadata) technical;
+    		return "audio/" + tmp.getAudioMD().getFileData().get(0).getFormatNames().get(0);
+    	}else if(technical instanceof TextMDMetadata){
+    		TextMDMetadata tmp = (TextMDMetadata) technical;
+    		return "text/plain";
+    	}else{
+    		throw new ScapeException("Unable to extract mimetype from an object of type " + technical.getClass().getName());
+    	}
+    }
+
+	private static String getStagedFileLink(String fileXml) {
         int posStart = fileXml.indexOf("xlink:href=\"") + 12;
         int posEnd = fileXml.indexOf("\"", posStart);
         return fileXml.substring(posStart, posEnd);
