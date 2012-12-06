@@ -36,7 +36,7 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
         try {
             String searchResponse = containerHandler.retrieveContainers(new HashMap<String, String[]>() {
                 {
-                    put("pid", new String[] { id });
+                    put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
                 }
             });
             String lifeCycle = null;
