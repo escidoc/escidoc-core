@@ -63,7 +63,7 @@
 
 	<resource name="File" base-uri="/scape/file">
 		<descriptor uri="/scape/file/${PATH_ID}">
-			<invoke http="GET" method="getFile" param1="${PARTH_ID}" />
+			<invoke http="GET" method="getFile" param1="${PATH_ID}" />
 		</descriptor>
 	</resource>
 
