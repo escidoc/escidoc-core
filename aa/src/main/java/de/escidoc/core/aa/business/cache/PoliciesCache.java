@@ -46,6 +46,7 @@ import org.springframework.security.userdetails.UserDetails;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -264,7 +265,11 @@ public final class PoliciesCache {
             return;
         }
 
-        final Element element = roleIsGrantedCache.get(userOrGroupId);
+        Element element = roleIsGrantedCache.get(userOrGroupId);
+        if (element == null) {
+            roleIsGrantedCache.put(new Element(userOrGroupId, new HashMap<String, Map<String, EvaluationResult>>()));
+            element = roleIsGrantedCache.get(userOrGroupId);
+        }
         if (element != null) {
             final Map<String, Map<String, EvaluationResult>> roleMap =
                 (Map<String, Map<String, EvaluationResult>>) element.getObjectValue();
