@@ -155,6 +155,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         values.put(XmlTemplateProvider.OBJID, id);
         values.put(XmlTemplateProvider.TITLE, "Component " + id);
+        values.put(XmlTemplateProvider.DEFAULT_MIME_TYPE, FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM);
 
         if (dataStreams.get(Datastream.RELS_EXT_DATASTREAM) != null) {
             values.put(XmlTemplateProvider.RELS_EXT, dataStreams.get(Datastream.RELS_EXT_DATASTREAM));
