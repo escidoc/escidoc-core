@@ -6,3 +6,4 @@ target/
 .settings/
 attachments/
 activemq-data/
+/bin
