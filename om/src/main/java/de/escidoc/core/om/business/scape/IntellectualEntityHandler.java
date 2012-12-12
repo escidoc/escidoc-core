@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,6 +41,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
+import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
@@ -416,7 +418,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             String href = getStagedFileLink(fileXml);
             ContentStreams streams = new ContentStreams();
             ContentStream cs =
-                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, getMimeType(f.getTechnical()));
+                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, getMimeType(f
+                    .getTechnical()));
             cs.setContent(DocumentBuilderFactory
                 .newInstance().newDocumentBuilder().parse(
                     new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes()))
@@ -431,28 +434,34 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     private static String getMimeType(TechnicalMetadata technical) throws EscidocException {
-    	if (technical instanceof FitsMetadata){
-    		FitsMetadata tmp = (FitsMetadata) technical;
-    		return tmp.getIdentification().getIdentities().get(0).getMimeType();
-    	}else if(technical instanceof NisoMixMetadata){
-    		// TODO: add mimetype to NisoMix scape model
-    		NisoMixMetadata tmp= (NisoMixMetadata) technical;
-    		throw new ScapeException("Not yet implemented for Niso MIX");
-    	}else if(technical instanceof VideoMDMetadata){
-    		VideoMDMetadata tmp = (VideoMDMetadata) technical;
-    		return tmp.getVideoMD().getFiledata().get(0).getFormats().get(0).getMimeType();
-    	}else if(technical instanceof AudioMDMetadata){
-    		AudioMDMetadata tmp = (AudioMDMetadata) technical;
-    		return "audio/" + tmp.getAudioMD().getFileData().get(0).getFormatNames().get(0);
-    	}else if(technical instanceof TextMDMetadata){
-    		TextMDMetadata tmp = (TextMDMetadata) technical;
-    		return "text/plain";
-    	}else{
-    		throw new ScapeException("Unable to extract mimetype from an object of type " + technical.getClass().getName());
-    	}
+        if (technical instanceof FitsMetadata) {
+            FitsMetadata tmp = (FitsMetadata) technical;
+            return tmp.getIdentification().getIdentities().get(0).getMimeType();
+        }
+        else if (technical instanceof NisoMixMetadata) {
+            // TODO: add mimetype to NisoMix scape model
+            NisoMixMetadata tmp = (NisoMixMetadata) technical;
+            throw new ScapeException("Not yet implemented for Niso MIX");
+        }
+        else if (technical instanceof VideoMDMetadata) {
+            VideoMDMetadata tmp = (VideoMDMetadata) technical;
+            return tmp.getVideoMD().getFiledata().get(0).getFormats().get(0).getMimeType();
+        }
+        else if (technical instanceof AudioMDMetadata) {
+            AudioMDMetadata tmp = (AudioMDMetadata) technical;
+            return "audio/" + tmp.getAudioMD().getFileData().get(0).getFormatNames().get(0);
+        }
+        else if (technical instanceof TextMDMetadata) {
+            TextMDMetadata tmp = (TextMDMetadata) technical;
+            return "text/plain";
+        }
+        else {
+            throw new ScapeException("Unable to extract mimetype from an object of type "
+                + technical.getClass().getName());
+        }
     }
 
-	private static String getStagedFileLink(String fileXml) {
+    private static String getStagedFileLink(String fileXml) {
         int posStart = fileXml.indexOf("xlink:href=\"") + 12;
         int posEnd = fileXml.indexOf("\"", posStart);
         return fileXml.substring(posStart, posEnd);
@@ -682,6 +691,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
+        String pid = pidService.generatePID();
+        return ingestIntellectualEntity(pid, xml);
+
+    }
+
+    public String ingestIntellectualEntity(String pid, String xml) throws EscidocException {
         try {
             checkScapeContext();
             checkScapeContentModel();
@@ -711,7 +726,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             }
 
             // create the entities container and add the various representations
-            Container entityContainer = this.createContainer(pidService.generatePID(), entity, doc);
+            Container entityContainer = this.createContainer(pid, entity, doc);
             entityContainer.setStructMap(map);
             String containerXml = containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
             return "<scape:value>" + entityContainer.getProperties().getPid() + "</scape:value>";
@@ -809,8 +824,21 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
         String pid = pidService.generatePID();
-        IngestProcess p = new IngestProcess(pid, xml);
-        new Thread(p).start();
+        // need some more thinking ... just a simple implementation for now
+        IngestProcess p = new IngestProcess(pid, xml, UserContext.getHandle());
+        // wait 1s before you start another thread.
+        Thread t = new Thread(p, "AsyncIngestThread");
+        t.start();
+        while (t.isAlive()) {
+            try {
+                t.join(800L);
+            }
+            catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         return "<scape:value>" + pid + "</scape:value>";
     }
 
@@ -822,41 +850,24 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private class IngestProcess implements Runnable {
         private final String xml;
 
+        private final String handle;
+
         private final String pid;
 
-        public IngestProcess(String pid, String xml) {
+        public IngestProcess(String pid, String xml, String handle) throws EscidocException {
             this.xml = xml;
             this.pid = pid;
+            this.handle = handle;
         }
 
         @Override
         public void run() {
             try {
-                IntellectualEntityHandler.this.checkScapeContext();
-                IntellectualEntityHandler.this.checkScapeContentModel();
-
-                // deserialize the entity and create a org.w3c.Document for
-                // reuse by
-                // various later calls
-                IntellectualEntity entity =
-                    SCAPEMarshaller.getInstance().deserialize(IntellectualEntity.class,
-                        new ByteArrayInputStream(xml.getBytes()));
-                final Document doc =
-                    DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-                        new ByteArrayInputStream(xml.getBytes()));
-                StructMap map = new StructMap();
-
-                // add the representations as single items to the container
-                for (Representation r : entity.getRepresentations()) {
-                    String itemId = IntellectualEntityHandler.this.createItem(r, doc);
-                    map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
-                }
-
-                // create the entities container and add the various
-                // representations
-                Container entityContainer = IntellectualEntityHandler.this.createContainer(this.pid, entity, doc);
-                entityContainer.setStructMap(map);
-                containerHandler.create(containerMarshaller.marshalDocument(entityContainer));
+                // set to sleep for a sec not to overwhelm escidoc
+                Thread.sleep(1000L);
+                //need to add user handle in threads like this - it's lost otherwise
+                UserContext.setUserContext(handle);
+                IntellectualEntityHandler.this.ingestIntellectualEntity(this.pid, this.xml);
             }
             catch (Exception e) {
                 LOG.error("Unable to asynchronously ingest data");
