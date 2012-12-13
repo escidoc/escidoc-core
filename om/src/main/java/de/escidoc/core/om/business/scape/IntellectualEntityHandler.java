@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -119,6 +125,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private OrganizationalUnit scapeOU;
 
     private String scapeContentModelId;
+
+    private final BlockingQueue<IngestItem> entitylist = new LinkedBlockingQueue<IngestItem>();
+
+    private long _delay = 0l;
 
     @Autowired
     @Qualifier("service.OrganizationalUnitHandler")
@@ -823,22 +833,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+        checkScapeContext();
+        checkScapeContentModel();
         String pid = pidService.generatePID();
-        // need some more thinking ... just a simple implementation for now
-        IngestProcess p = new IngestProcess(pid, xml, UserContext.getHandle());
-        // wait 1s before you start another thread.
-        Thread t = new Thread(p, "AsyncIngestThread");
-        t.start();
-        while (t.isAlive()) {
-            try {
-                t.join(800L);
-            }
-            catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
+        IngestItem p = new IngestItem(pid, xml);
+        entitylist.add(p);
+        // starte single thread, der die liste abarbeitet.
+        _delay++;
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        service.execute(new IngestWorker(UserContext.getHandle()));
         return "<scape:value>" + pid + "</scape:value>";
     }
 
@@ -847,31 +850,74 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return containerHandler.retrieveContainers(params);
     }
 
-    private class IngestProcess implements Runnable {
+    private class IngestItem {
         private final String xml;
-
-        private final String handle;
 
         private final String pid;
 
-        public IngestProcess(String pid, String xml, String handle) throws EscidocException {
+        public IngestItem(String pid, String xml) throws EscidocException {
             this.xml = xml;
             this.pid = pid;
+        }
+    }
+
+    private class IngestWorker implements Runnable {
+
+        private final String handle;
+
+        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+        public IngestWorker(String handle) {
             this.handle = handle;
         }
 
         @Override
         public void run() {
+            UserContext.setUserContext(handle);
+
             try {
-                // set to sleep for a sec not to overwhelm escidoc
-                Thread.sleep(1000L);
-                //need to add user handle in threads like this - it's lost otherwise
-                UserContext.setUserContext(handle);
-                IntellectualEntityHandler.this.ingestIntellectualEntity(this.pid, this.xml);
+                IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
+                long delay = _delay * 1000l;
+                ScheduledFuture<?> future =
+                    executor.schedule(new IngestEntity(ingestitem, handle), delay, TimeUnit.MILLISECONDS);
+
+                //}
             }
-            catch (Exception e) {
-                LOG.error("Unable to asynchronously ingest data");
+            catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                executor.shutdownNow();
             }
+
         }
     }
+
+    private class IngestEntity implements Runnable {
+
+        private String handle;
+
+        private IngestItem ingestitem;
+
+        public IngestEntity(IngestItem ingestitem, String handle) {
+            this.handle = handle;
+            this.ingestitem = ingestitem;
+        }
+
+        @Override
+        public void run() {
+            UserContext.setUserContext(handle);
+            try {
+
+                IntellectualEntityHandler.this.ingestIntellectualEntity(ingestitem.pid, ingestitem.xml);
+                System.out.println("Time: " + System.currentTimeMillis() + " Current thread id: "
+                    + Thread.currentThread().getId() + " SIP ID: " + ingestitem.pid);
+            }
+            catch (EscidocException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+        }
+    }
+
 }
