@@ -877,11 +877,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             try {
                 IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
-                long delay = _delay * 1000l;
+                long delay = _delay * 2000l;
+                System.out.println("DELAY: " + delay);
                 ScheduledFuture<?> future =
                     executor.schedule(new IngestEntity(ingestitem, handle), delay, TimeUnit.MILLISECONDS);
-
-                //}
             }
             catch (InterruptedException e) {
                 // TODO Auto-generated catch block
@@ -907,7 +906,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         public void run() {
             UserContext.setUserContext(handle);
             try {
-
                 IntellectualEntityHandler.this.ingestIntellectualEntity(ingestitem.pid, ingestitem.xml);
                 System.out.println("Time: " + System.currentTimeMillis() + " Current thread id: "
                     + Thread.currentThread().getId() + " SIP ID: " + ingestitem.pid);
