@@ -128,7 +128,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private final BlockingQueue<IngestItem> entitylist = new LinkedBlockingQueue<IngestItem>();
 
-    private long _delay = 0l;
+    private boolean threadstarted = false;
 
     @Autowired
     @Qualifier("service.OrganizationalUnitHandler")
@@ -838,10 +838,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         String pid = pidService.generatePID();
         IngestItem p = new IngestItem(pid, xml);
         entitylist.add(p);
-        // starte single thread, der die liste abarbeitet.
-        _delay++;
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        service.execute(new IngestWorker(UserContext.getHandle()));
+        // start single thread, to read the queue.
+        // start the thread only once
+        if (!threadstarted) {
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.execute(new IngestWorker(UserContext.getHandle()));
+            threadstarted = true;
+        }
         return "<scape:value>" + pid + "</scape:value>";
     }
 
@@ -874,20 +877,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         @Override
         public void run() {
             UserContext.setUserContext(handle);
-
-            try {
-                IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
-                long delay = _delay * 2000l;
-                System.out.println("DELAY: " + delay);
-                ScheduledFuture<?> future =
-                    executor.schedule(new IngestEntity(ingestitem, handle), delay, TimeUnit.MILLISECONDS);
+            while (true) {
+                try {
+                    IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
+                    ScheduledFuture<?> future =
+                        executor.schedule(new IngestEntity(ingestitem, handle), 500, TimeUnit.MILLISECONDS);
+                }
+                catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    executor.shutdownNow();
+                }
             }
-            catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                executor.shutdownNow();
-            }
-
         }
     }
 
