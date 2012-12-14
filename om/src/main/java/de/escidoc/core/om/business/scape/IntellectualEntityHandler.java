@@ -788,6 +788,19 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String updateIntellectualEntity(String id, String xml) throws EscidocException {
+
+        // the id currently must be escidoc:id and not scape:uuid - so this is just a hack to replace an incoming scape:uuid with the escidoc:id
+        if (id.contains("scape")) {
+        	Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+            String resultXml = containerHandler.retrieveContainers(filters);
+            int posStart = resultXml.indexOf("xlink:href=\"/ir/container/");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("\" last-modification-date");
+                id = resultXml.substring(posStart + 26, posEnd);
+            }
+        }
+
         try {
             checkScapeContext();
             checkScapeContentModel();
