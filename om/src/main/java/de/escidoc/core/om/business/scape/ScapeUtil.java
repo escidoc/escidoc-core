@@ -13,6 +13,7 @@ import javax.xml.bind.JAXBException;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ls.DOMImplementationLS;
@@ -143,15 +144,28 @@ public abstract class ScapeUtil {
         NodeList nodes = item.getChildNodes();
         Agent.Builder c = new Agent.Builder();
         for (int j = 0; j < nodes.getLength(); j++) {
-            Node node = nodes.item(j);
-            if (node.getLocalName() == null) {
-                return null;
+            Node rootnode = nodes.item(j).getParentNode();
+            if (rootnode.hasAttributes()) {
+                NamedNodeMap namednodemap = rootnode.getAttributes();
+                if (namednodemap.getNamedItem("premis:role") != null) {
+                    c.role(namednodemap.getNamedItem("premis:role").getNodeValue());
+                }
+                if (namednodemap.getNamedItem("premis:type") != null) {
+                    c.type(namednodemap.getNamedItem("premis:type").getNodeValue());
+                }
             }
-            if (node.getLocalName().equals("name")) {
-                c.name(node.getTextContent());
-            }
-            else if (node.getLocalName().equals("note")) {
-                c.note(node.getTextContent());
+
+            Node node = nodes.item(j).getNextSibling();
+            if (node != null) {
+                if (node.getLocalName() != null) {
+
+                    if (node.getLocalName().equals("name")) {
+                        c.name(node.getTextContent());
+                    }
+                    if (node.getLocalName().equals("note")) {
+                        c.note(node.getTextContent());
+                    }
+                }
             }
         }
         return c.build();
