@@ -98,7 +98,7 @@ public abstract class ScapeUtil {
         for (int i = 0; i < nodes.getLength(); i++) {
             dc.rights(nodes.item(i).getTextContent());
         }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "sources");
+        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "source");
         for (int i = 0; i < nodes.getLength(); i++) {
             dc.sources(nodes.item(i).getTextContent());
         }
