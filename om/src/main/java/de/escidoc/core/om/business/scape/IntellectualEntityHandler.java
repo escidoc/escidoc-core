@@ -323,6 +323,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         throws Exception {
         final MetadataRecords mds = new MetadataRecords();
         mds.setLastModificationDate(new DateTime());
+
         // Dublin Core metadata record
         MetadataRecord dc = new MetadataRecord("escidoc");
         dc.setMdType("DC");
@@ -344,6 +345,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 mds.add(dc);
             }
         }
+
         // lifecycle metadata record
         String state =
             entity.getLifecycleState() != null ? entity.getLifecycleState().getState().name() : LifecycleState.State.INGESTED
