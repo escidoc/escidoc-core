@@ -897,7 +897,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 try {
                     IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
                     ScheduledFuture<?> future =
-                        executor.schedule(new IngestEntity(ingestitem, handle), 500, TimeUnit.MILLISECONDS);
+                        executor.schedule(new IngestEntity(ingestitem, handle), 200, TimeUnit.MILLISECONDS);
                 }
                 catch (InterruptedException e) {
                     // TODO Auto-generated catch block
