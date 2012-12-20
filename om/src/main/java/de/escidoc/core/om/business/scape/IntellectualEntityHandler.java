@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -884,7 +885,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
         private final String handle;
 
-        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
 
         public IngestWorker(String handle) {
             this.handle = handle;
@@ -898,11 +899,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
                     ScheduledFuture<?> future =
                         executor.schedule(new IngestEntity(ingestitem, handle), 200, TimeUnit.MILLISECONDS);
+                    future.get();
                 }
                 catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                     executor.shutdownNow();
+                }
+                catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
         }
