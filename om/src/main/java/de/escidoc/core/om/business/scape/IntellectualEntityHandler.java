@@ -929,9 +929,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         public void run() {
             UserContext.setUserContext(handle);
             try {
+                long start = System.currentTimeMillis();
                 IntellectualEntityHandler.this.ingestIntellectualEntity(ingestitem.pid, ingestitem.xml);
-                System.out.println("Time: " + System.currentTimeMillis() + " Current thread id: "
-                    + Thread.currentThread().getId() + " SIP ID: " + ingestitem.pid);
+                long diff = System.currentTimeMillis() - start;
+                System.out.println("Time (ms): " + diff + " thread-id: " + Thread.currentThread().getId() + " SIP-ID: "
+                    + ingestitem.pid);
             }
             catch (EscidocException e1) {
                 // TODO Auto-generated catch block
