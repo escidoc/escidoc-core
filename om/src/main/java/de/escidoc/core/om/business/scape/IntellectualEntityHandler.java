@@ -858,9 +858,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         // start single thread, to read the queue.
         // start the thread only once
         if (!threadstarted) {
+            threadstarted = true;
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.execute(new IngestWorker(UserContext.getHandle()));
-            threadstarted = true;
         }
         return "<scape:value>" + pid + "</scape:value>";
     }
@@ -885,7 +885,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
         private final String handle;
 
-        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
 
         public IngestWorker(String handle) {
             this.handle = handle;
@@ -898,7 +898,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 try {
                     IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
                     ScheduledFuture<?> future =
-                        executor.schedule(new IngestEntity(ingestitem, handle), 200, TimeUnit.MILLISECONDS);
+                        executor.schedule(new IngestEntity(ingestitem, handle), 500, TimeUnit.MILLISECONDS);
                     future.get();
                 }
                 catch (InterruptedException e) {
