@@ -56,7 +56,7 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:update-intellectualentity', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
   
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)
-  VALUES ('escidoc:mm-intellectualentity-metadata-update', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'updateIntellectualEntityMetadata', 
+  VALUES ('escidoc:mm-intellectualentity-metadata-update', 'de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface', 'updateMetadata', 
   'info:escidoc/names:aa:1.0:action:update-intellectualentity-metadata', true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource, resource_not_found_exception)

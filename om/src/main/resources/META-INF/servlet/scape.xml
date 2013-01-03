@@ -24,6 +24,10 @@
 			<invoke http="GET" method="getIntellectualEntityVersionSet"
 				param1="${PATH_ID}" />
 		</descriptor>
+		<descriptor uri="/scape/entity/${PATH_ID}/metadata">
+			<invoke http="GET" method="getMetadata" />
+			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}" param2="${BODY}" />
+		</descriptor>
 	</resource>
 
 	<resource name="IntellectualEntity" base-uri="/scape/sru/entities">
@@ -32,14 +36,6 @@
 		</descriptor>
 	</resource>
 
-	<resource name="IntellectualEntity" base-uri="/scape/metadata">
-		<descriptor uri="/scape/metadata/${PATH_ID}/${MD_NAME}">
-			<invoke http="GET" method="getMetadata" param1="${PATH_ID}"
-				param2="${MD_NAME}" />
-			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}"
-				param2="${MD_NAME}" param3="${BODY}" />
-		</descriptor>
-	</resource>
 
 	<resource name="LifeCycle" base-uri="/scape/lifecycle">
 		<descriptor uri="/scape/lifecycle/${PATH_ID}">

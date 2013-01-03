@@ -83,6 +83,7 @@ import de.escidoc.core.resources.om.item.component.Components;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
+import eu.scapeproject.dto.mets.MetsMetadata;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
@@ -840,7 +841,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String updateMetadata(String id, String xmlData) throws EscidocException {
         try {
+            System.out.println("updating metadata of " + id);
             IntellectualEntity e = retrieveEntity(id);
+            MetsMetadata md =
+                SCAPEMarshaller.getInstance().deserialize(MetsMetadata.class,
+                    new ByteArrayInputStream(xmlData.getBytes()));
+            System.out.println(md.getClass().getName());
         }
         catch (Exception e) {
             throw new ScapeException(e);
