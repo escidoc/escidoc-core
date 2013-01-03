@@ -787,6 +787,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String getMetadata(String id, String mdName) throws EscidocException {
+        System.out.println("fetching metadata of object " + id);
         return containerHandler.retrieveMdRecordContent(id, mdName);
     }
 

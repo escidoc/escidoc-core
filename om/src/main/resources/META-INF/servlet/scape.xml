@@ -24,8 +24,10 @@
 			<invoke http="GET" method="getIntellectualEntityVersionSet"
 				param1="${PATH_ID}" />
 		</descriptor>
+		<descriptor uri="/scape/entity/${PATH_ID}/metadata/${MD_NAME}">
+			<invoke http="GET" method="getMetadata" param1="${PATH_ID}" param2="${MD_NAME}"/>
+		</descriptor>
 		<descriptor uri="/scape/entity/${PATH_ID}/metadata">
-			<invoke http="GET" method="getMetadata" />
 			<invoke http="PUT" method="updateMetadata" param1="${PATH_ID}" param2="${BODY}" />
 		</descriptor>
 	</resource>
