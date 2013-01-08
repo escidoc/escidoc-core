@@ -67,6 +67,7 @@ public abstract class ScapeUtil {
 
     public static DescriptiveMetadata parseDcMetadata(MetadataRecord record) {
         DCMetadata.Builder dc = new DCMetadata.Builder();
+        dc.id(record.getName());
         NodeList nodes = record.getContent().getElementsByTagNameNS(NS_DC, "title");
         for (int i = 0; i < nodes.getLength(); i++) {
             dc.title(nodes.item(i).getTextContent());
