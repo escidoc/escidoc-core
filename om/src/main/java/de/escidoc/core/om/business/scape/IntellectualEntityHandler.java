@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -37,6 +38,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -327,24 +330,45 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         mds.setLastModificationDate(new DateTime());
 
         // Dublin Core metadata record
-        MetadataRecord dc = new MetadataRecord("escidoc");
-        dc.setMdType("DC");
-        NodeList nodes = entityDoc.getElementsByTagName("mets:dmdSec");
+        // this one is required by escidoc
+        MetadataRecord escidoc = new MetadataRecord("escidoc");
+        Element escidocElement =
+            DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().createElement("dublin-core");
+        escidocElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+        escidocElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
+        escidoc.setContent(escidocElement);
+        escidoc.setMdType("DC");
+        mds.add(escidoc);
+
+        // the following are the actual metadata records from the METS representation
+        NodeList nodes = entityDoc.getElementsByTagName("metadata");
         for (int i = 0; i < nodes.getLength(); i++) {
             Node n = nodes.item(i);
-            if (entity.getDescriptive().getId().equals(n.getAttributes().getNamedItem("ID").getNodeValue())) {
-                Document dcDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-                Element dcElement = dcDoc.createElement("dublin-core");
-                dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
-                dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
-                NodeList origDCElements =
-                    (NodeList) n
-                        .getChildNodes().item(1).getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
-                for (int j = 1; j < origDCElements.getLength(); j++) {
-                    dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
+            Element e = (Element) n;
+            Node dmdParent = n.getParentNode().getParentNode().getParentNode();
+            if (dmdParent != null) {
+                String name = dmdParent.getNodeName();
+                int pos;
+                if ((pos = name.indexOf(':')) != -1) {
+                    name = name.substring(pos + 1);
                 }
-                dc.setContent(dcElement);
-                mds.add(dc);
+                if (name.equals("dmdSec")) {
+                    String dcId = e.getAttribute("scape:identifier");
+                    if (dcId != null && dcId.length() > 0) {
+                        MetadataRecord dc = new MetadataRecord(dcId);
+                        dc.setMdType("DC");
+                        Document dcDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+                        Element dcElement = dcDoc.createElement("dublin-core");
+                        dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
+                        dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
+                        NodeList origDCElements = (NodeList) n.getChildNodes();
+                        for (int j = 1; j < origDCElements.getLength(); j++) {
+                            dcElement.appendChild(dcDoc.adoptNode(origDCElements.item(j).cloneNode(true)));
+                        }
+                        dc.setContent(dcElement);
+                        mds.add(dc);
+                    }
+                }
             }
         }
 
@@ -429,15 +453,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             content.setMimeType("application/binary");
             content.setContent(f.getUri().toURL().openStream());
             String fileXml = stagingFileHandler.create(content);
-            String href = getStagedFileLink(fileXml);
+            String hrefXml = getStagedFileLink(fileXml);
+            System.out.println("HREF for file: " + hrefXml);
             ContentStreams streams = new ContentStreams();
             ContentStream cs =
-                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, getMimeType(f
-                    .getTechnical()));
-            cs.setContent(DocumentBuilderFactory
-                .newInstance().newDocumentBuilder().parse(
-                    new ByteArrayInputStream(new String("<content>" + href + "</content>").getBytes()))
-                .getDocumentElement());
+                new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, "application/binary");
+            cs.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new ByteArrayInputStream(hrefXml.getBytes())).getDocumentElement());
             streams.add(cs);
             i.setContentStreams(streams);
             return itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(i)));
@@ -478,7 +500,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private static String getStagedFileLink(String fileXml) {
         int posStart = fileXml.indexOf("xlink:href=\"") + 12;
         int posEnd = fileXml.indexOf("\"", posStart);
-        return fileXml.substring(posStart, posEnd);
+        return "<content>" + fileXml.substring(posStart, posEnd) + "</content>";
     }
 
     @SuppressWarnings("deprecation")
@@ -650,11 +672,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             return null;
         }
         Container c = containerMarshaller.unmarshalDocument(resultXml);
-        MetadataRecord record = c.getMetadataRecords().get("escidoc");
+        Iterator<MetadataRecord> records = c.getMetadataRecords().iterator();
+        while (records.hasNext()) {
+            MetadataRecord record = records.next();
+            if (record.getMdType().equals("DC") && record.getName().startsWith("DC-")) {
+                entity.descriptive(ScapeUtil.parseDcMetadata(record));
+            }
+        }
         entity
-            .identifier(new Identifier(c.getProperties().getPid())).descriptive(ScapeUtil.parseDcMetadata(record))
-            .representations(getRepresentations(c)).lifecycleState(
-                ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
+            .identifier(new Identifier(c.getProperties().getPid())).representations(getRepresentations(c))
+            .lifecycleState(ScapeUtil.parseLifeCycleState(c.getMetadataRecords().get("LIFECYCLE-XML"))).versionNumber(
                 ScapeUtil.parseVersionNumber(c.getMetadataRecords().get("VERSION-XML")));
         return entity.build();
     }
