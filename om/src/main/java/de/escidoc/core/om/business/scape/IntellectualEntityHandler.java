@@ -857,8 +857,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
-        checkScapeContext();
-        checkScapeContentModel();
         String pid = pidService.generatePID();
         IngestItem p = new IngestItem(pid, xml);
         entitylist.add(p);
@@ -892,7 +890,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
         private final String handle;
 
-        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
+        private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(25);
 
         public IngestWorker(String handle) {
             this.handle = handle;
@@ -905,7 +903,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 try {
                     IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
                     ScheduledFuture<?> future =
-                        executor.schedule(new IngestEntity(ingestitem, handle), 500, TimeUnit.MILLISECONDS);
+                        executor.schedule(new IngestEntity(ingestitem, handle), 10, TimeUnit.MILLISECONDS);
                     future.get();
                 }
                 catch (InterruptedException e) {
@@ -918,14 +916,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     e.printStackTrace();
                 }
             }
+
         }
     }
 
     private class IngestEntity implements Runnable {
 
-        private String handle;
+        private final String handle;
 
-        private IngestItem ingestitem;
+        private final IngestItem ingestitem;
 
         public IngestEntity(IngestItem ingestitem, String handle) {
             this.handle = handle;
