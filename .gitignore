@@ -8,3 +8,5 @@ target/
 /attachments
 *.iml
 .idea/
+/bin
+/proai
