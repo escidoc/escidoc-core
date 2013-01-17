@@ -59,25 +59,20 @@ public class ItemUmlautIT extends ItemTestBase {
      */
     @Test
     public void testContextWithUmlaut() throws Exception {
-        Document context =
-            getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest",
-                "context_create.xml");
+        Document context = getTemplateAsDocument(TEMPLATE_CONTEXT_PATH + "/rest", "context_create.xml");
         String title = "Test Context äöü " + System.currentTimeMillis();
         substitute(context, "/context/properties/name", title);
-        String contextXml =
-            handleXmlResult(getContextClient().create(
-                toString(context, false)));
+        String contextXml = handleXmlResult(getContextClient().create(toString(context, false)));
         String contextId = getObjidValue(contextXml);
         String lastModified = getLastModificationDateValue(getDocument(contextXml));
-        getContextClient().open(contextId, TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
-        String itemXml =
-            getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest",
-                "escidoc_item_1_component.xml");
+        getContextClient().open(contextId,
+            TaskParamFactory.getStatusTaskParam(new DateTime(lastModified, DateTimeZone.UTC), null));
+        String itemXml = getTemplateAsString(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component.xml");
         Document item = getDocument(itemXml);
         item = (Document) substituteId(item, "/item/properties/context", contextId);
         itemXml = create(toString(item, false));
         String itemId = getObjidValue(itemXml);
-        item = (Document)deleteElement(getDocument(itemXml), "/item/components/component");
+        item = (Document) deleteElement(getDocument(itemXml), "/item/components/component");
         itemXml = update(itemId, toString(item, false));
         assertXmlEquals("Umlauts not correctly handled", itemXml, "/item/properties/context/@title", title);
     }

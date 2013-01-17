@@ -259,36 +259,34 @@ public class ItemComponentUpdateIT extends ItemTestBase {
     @Test
     public void testAddComponentUpdateItem() throws Exception {
         Document xmlData =
-                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_1_component_1_1.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component_1_1.xml");
 
-            String itemXml = create(toString(xmlData, false));
-            Document itemDoc = getDocument(itemXml);
-            String itemId = getObjidValue(itemDoc);
-            String componentId = getComponentObjidValue(itemDoc, 1);
-            assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, componentId,
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+        assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, componentId,
+            RESPONSE_HEADER_MIME_TYPE));
+
+        Document component =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create_1.xml");
+        itemXml = addComponent(itemXml, component);
+        String updatedItemXml = update(itemId, itemXml);
+        itemDoc = getDocument(updatedItemXml);
+        String newComponentId = getComponentObjidValue(itemDoc, 1);
+        String newComponentId1 = getComponentObjidValue(itemDoc, 2);
+        if (newComponentId.equals(componentId)) {
+            assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId1,
                 RESPONSE_HEADER_MIME_TYPE));
-
-            Document component =
-                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "component_for_create_1.xml");
-            itemXml = addComponent(itemXml, component);
-            String updatedItemXml = update(itemId, itemXml);
-            itemDoc = getDocument(updatedItemXml);
-            String newComponentId = getComponentObjidValue(itemDoc, 1);
-            String newComponentId1 = getComponentObjidValue(itemDoc, 2);
-            if (newComponentId.equals(componentId)) {
-                assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId1,
-                        RESPONSE_HEADER_MIME_TYPE));
-                assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, newComponentId,
-                        RESPONSE_HEADER_MIME_TYPE));
-            }
-            else {
-                assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId,
-                        RESPONSE_HEADER_MIME_TYPE));
-                assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, newComponentId1,
-                        RESPONSE_HEADER_MIME_TYPE));
-            }
+            assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, newComponentId,
+                RESPONSE_HEADER_MIME_TYPE));
+        }
+        else {
+            assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId,
+                RESPONSE_HEADER_MIME_TYPE));
+            assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, newComponentId1,
+                RESPONSE_HEADER_MIME_TYPE));
+        }
     }
 
     /**
@@ -297,32 +295,30 @@ public class ItemComponentUpdateIT extends ItemTestBase {
     @Test
     public void testAddComponentCreateComponent() throws Exception {
         Document xmlData =
-                EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "escidoc_item_1_component_1_1.xml");
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "escidoc_item_1_component_1_1.xml");
 
-            String itemXml = create(toString(xmlData, false));
-            Document itemDoc = getDocument(itemXml);
-            String itemId = getObjidValue(itemDoc);
-            String componentId = getComponentObjidValue(itemDoc, 1);
-            String lmd = getLastModificationDateValue(itemDoc);
-            assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, componentId,
-                RESPONSE_HEADER_MIME_TYPE));
+        String itemXml = create(toString(xmlData, false));
+        Document itemDoc = getDocument(itemXml);
+        String itemId = getObjidValue(itemDoc);
+        String componentId = getComponentObjidValue(itemDoc, 1);
+        String lmd = getLastModificationDateValue(itemDoc);
+        assertEquals("mime-type not as expected", MIME_TYPE_PDF, retrieveContentHeader(itemId, componentId,
+            RESPONSE_HEADER_MIME_TYPE));
 
-            // prepare a component
-            Document componentDoc =
-                    EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest",
-                    "component_for_create_1.xml");
+        // prepare a component
+        Document componentDoc =
+            EscidocAbstractTest.getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/rest", "component_for_create_1.xml");
 
-            // add last-modification-date
-            NamedNodeMap atts = componentDoc.getDocumentElement().getAttributes();
-            Attr newAtt = componentDoc.createAttribute("last-modification-date");
-            newAtt.setNodeValue(lmd);
-            atts.setNamedItem(newAtt);
+        // add last-modification-date
+        NamedNodeMap atts = componentDoc.getDocumentElement().getAttributes();
+        Attr newAtt = componentDoc.createAttribute("last-modification-date");
+        newAtt.setNodeValue(lmd);
+        atts.setNamedItem(newAtt);
 
-            String componentXml = createComponent(itemId, toString(componentDoc, false));
-            String newComponentId = getObjidValue(componentXml);
-            assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId,
-                RESPONSE_HEADER_MIME_TYPE));
+        String componentXml = createComponent(itemId, toString(componentDoc, false));
+        String newComponentId = getObjidValue(componentXml);
+        assertEquals("mime-type not as expected", MIME_TYPE_JPEG, retrieveContentHeader(itemId, newComponentId,
+            RESPONSE_HEADER_MIME_TYPE));
     }
 
 }
