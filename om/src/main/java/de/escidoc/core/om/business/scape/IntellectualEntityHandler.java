@@ -38,8 +38,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -103,6 +101,7 @@ import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
 import eu.scapeproject.model.metadata.textmd.TextMDMetadata;
 import eu.scapeproject.model.metadata.videomd.VideoMDMetadata;
 import eu.scapeproject.model.mets.SCAPEMarshaller;
+import eu.scapeproject.model.util.MetsUtil;
 
 @Service("business.IntellectualEntityHandler")
 public class IntellectualEntityHandler implements IntellectualEntityHandlerInterface {
@@ -315,8 +314,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         ContainerProperties props = new ContainerProperties();
         props.setContentModel(new ContentModelRef(scapeContentModelId));
         props.setContext(new ContextRef(scapeContext.getObjid()));
-        props.setName(((DCMetadata) entity.getDescriptive()).getTitle().get(0));
-        props.setDescription(((DCMetadata) entity.getDescriptive()).getDescription().get(0));
+        props.setName(MetsUtil.getTitle(entity.getDescriptive()));
+        props.setDescription(MetsUtil.getDescription(entity.getDescriptive()));
         props.setPid(pid);
         container.setProperties(props);
         container.setMetadataRecords(createEntityMetadataRecords(entity, entityDoc));
@@ -761,9 +760,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             StructMap map = new StructMap();
 
             // add the representations as single items to the container
-            for (Representation r : entity.getRepresentations()) {
-                String itemId = this.createItem(r, doc);
-                map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
+            if (entity.getRepresentations() != null) {
+                for (Representation r : entity.getRepresentations()) {
+                    String itemId = this.createItem(r, doc);
+                    map.add(new ItemMemberRef("/ir/item/" + itemId, r.getTitle(), XLinkType.simple));
+                }
             }
 
             // create the entities container and add the various representations

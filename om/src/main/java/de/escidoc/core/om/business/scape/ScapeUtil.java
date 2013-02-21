@@ -36,6 +36,7 @@ import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.audiomd.AudioMDMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.metadata.fits.FitsMetadata;
+import eu.scapeproject.model.metadata.marc.Marc21Metadata;
 import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
 import eu.scapeproject.model.metadata.premis.PremisProvenanceMetadata;
 import eu.scapeproject.model.metadata.premis.PremisRightsMetadata;
@@ -110,7 +111,7 @@ public abstract class ScapeUtil {
         }
         nodes = record.getContent().getElementsByTagNameNS(NS_DC, "type");
         for (int i = 0; i < nodes.getLength(); i++) {
-            dc.type(nodes.item(i).getTextContent());
+            dc.types(nodes.item(i).getTextContent());
         }
         nodes = record.getContent().getElementsByTagNameNS(NS_DC, "contributor");
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -275,9 +276,8 @@ public abstract class ScapeUtil {
     }
 
     public static Representation getRepresentation(Item i) throws Exception {
-        Representation.Builder rep = new Representation.Builder();
+        Representation.Builder rep = new Representation.Builder(new Identifier(i.getObjid()));
         rep.files(getFiles(i));
-        rep.identifier(new Identifier(i.getObjid()));
 
         // tech md
         Node n = i.getMetadataRecords().get("techMD").getContent();
