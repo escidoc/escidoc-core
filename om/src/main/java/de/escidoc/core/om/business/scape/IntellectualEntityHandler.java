@@ -18,6 +18,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -328,12 +329,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         throws Exception {
         final MetadataRecords mds = new MetadataRecords();
         mds.setLastModificationDate(new DateTime());
+        DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
         // Dublin Core metadata record
         // this one is required by escidoc
         MetadataRecord escidoc = new MetadataRecord("escidoc");
-        Element escidocElement =
-            DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument().createElement("dublin-core");
+        Element escidocElement = docBuilder.newDocument().createElement("dublin-core");
         escidocElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
         escidocElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
         escidoc.setContent(escidocElement);
@@ -357,7 +358,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     if (dcId != null && dcId.length() > 0) {
                         MetadataRecord dc = new MetadataRecord(dcId);
                         dc.setMdType("DC");
-                        Document dcDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+                        Document dcDoc = docBuilder.newDocument();
                         Element dcElement = dcDoc.createElement("dublin-core");
                         dcElement.setAttribute("xmlns:dc", "http://purl.org/dc/elements/1.1/");
                         dcElement.setAttribute("xmlns:premis", "http://www.loc.gov/standards/premis");
@@ -374,10 +375,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         // descriptive metadata record
         MetadataRecord descRec = new MetadataRecord("DESCRIPTIVE");
         descRec.setLastModificationDate(new DateTime());
-        descRec.setMdType(entity.getDescriptive().getType().toString());
-        descRec.setContent(DocumentBuilderFactory
-            .newInstance().newDocumentBuilder().parse(
-                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(entity.getDescriptive()))))
+        if (entity.getDescriptive() instanceof DCMetadata) {
+            descRec.setMdType("DC");
+        }
+        else if (entity.getDescriptive() instanceof Marc21Metadata) {
+            descRec.setMdType("MARC21");
+        }
+        descRec.setContent(docBuilder
+            .parse(new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(entity.getDescriptive()))))
             .getDocumentElement());
         mds.add(descRec);
 
@@ -388,15 +393,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
         lc.setLastModificationDate(new DateTime());
         lc.setMdType("LIFECYCLE-XML");
-        lc.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-            new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
+        lc.setContent(docBuilder
+            .parse(new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
         mds.add(lc);
 
         // version metadata record
         MetadataRecord v = new MetadataRecord("VERSION-XML");
         v.setLastModificationDate(new DateTime());
         v.setMdType("VERSION-XML");
-        v.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+        v.setContent(docBuilder.parse(
             new InputSource(new StringReader("<versions><version number=\"" + entity.getVersionNumber() + "\" date=\""
                 + new DateTime() + "\" /></versions>"))).getDocumentElement());
         mds.add(v);

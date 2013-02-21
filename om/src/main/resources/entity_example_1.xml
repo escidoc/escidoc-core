@@ -14,7 +14,7 @@
 	<mets:dmdSec ID="DC-1" CREATED="0796-07-20T00:00:00+01:00">
 		<mets:mdWrap MDTYPE="DC" SIZE="0">
 			<mets:xmlData>
-				<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
+				<dc:dublin-core xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
 					scape:identifier="DC-a8e7f65a-3ebe-409d-99bd-69bfb6060a91">
 					<dc:date>0796-07-20 00:00:00.000</dc:date>
 					<dc:title>A Simple test entity</dc:title>
@@ -36,7 +36,7 @@
 						<premis:note>a test contributor</premis:note>
 					</dc:contributor>
 					<dc:rights>MihsGpVCXRzDdrty</dc:rights>
-				</metadata>
+				</dc:dublin-core>
 			</mets:xmlData>
 		</mets:mdWrap>
 	</mets:dmdSec>
@@ -125,7 +125,7 @@
 		<mets:sourceMD ID="SOURCE-MD-1">
 			<mets:mdWrap MDTYPE="DC" SIZE="0">
 				<mets:xmlData>
-					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
+					<dc:dublin-core xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="dcMetadata"
 						scape:identifier="DC-dc0c72ab-7f90-4893-b320-4b91f795d31c">
 						<dc:date>0968-08-15 00:00:00.000</dc:date>
 						<dc:title>The test Source</dc:title>
@@ -147,7 +147,7 @@
 							<premis:note>no notes</premis:note>
 						</dc:contributor>
 						<dc:rights>public domain</dc:rights>
-					</metadata>
+					</dc:dublin-core>
 				</mets:xmlData>
 			</mets:mdWrap>
 		</mets:sourceMD>
