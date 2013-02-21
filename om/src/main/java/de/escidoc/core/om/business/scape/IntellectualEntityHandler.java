@@ -563,10 +563,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         mds.add(dc);
 
         // Metadata Records
-        mds.add(createTechMDRecord(r.getTechnical()));
-        mds.add(createProvMDRecord(r.getProvenance()));
-        mds.add(createRightsMDRecord(r.getRights()));
-        mds.add(createSourceMDRecord(r.getSource()));
+        if (r.getTechnical() != null) {
+            mds.add(createTechMDRecord(r.getTechnical()));
+        }
+        if (r.getProvenance() != null) {
+            mds.add(createProvMDRecord(r.getProvenance()));
+        }
+        if (r.getSource() != null) {
+            mds.add(createSourceMDRecord(r.getSource()));
+        }
+        if (r.getRights() != null) {
+            mds.add(createRightsMDRecord(r.getRights()));
+        }
         return mds;
     }
 
