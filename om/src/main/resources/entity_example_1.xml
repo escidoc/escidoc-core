@@ -44,7 +44,7 @@
 		<mets:techMD ID="TECH-MD-1">
 			<mets:mdWrap MDTYPE="TEXTMD" SIZE="0">
 				<mets:xmlData>
-					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textMDMetadata">
+					<textmd:textmd xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="textMDMetadata">
 						<textmd:encoding>
 							<textmd:encoding_platform>
 								<textmd:line_break>CR_LF</textmd:line_break>
@@ -89,14 +89,14 @@
 						<textmd:printRequirements>dFKjmsmJaKIcEhGn</textmd:printRequirements>
 						<textmd:viewingRequirements>ECKbgqylTJBYkSem</textmd:viewingRequirements>
 						<textmd:textNote>GcogObznWwTPmsfA</textmd:textNote>
-					</metadata>
+					</textmd:textmd>
 				</mets:xmlData>
 			</mets:mdWrap>
 		</mets:techMD>
 		<mets:rightsMD ID="RIGHTS-MD-1">
 			<mets:mdWrap MDTYPE="PREMIS:RIGHTS" SIZE="0">
 				<mets:xmlData>
-					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisRightsMetadata">
+					<premis:rights xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisRightsMetadata">
 						<premis:rightsStatements>
 							<premis:rightsStatementIdentifier>
 								<premis:rightsStatementIdentifierType>String</premis:rightsStatementIdentifierType>
@@ -118,7 +118,7 @@
 								<premis:licenseNotes>in the public domain</premis:licenseNotes>
 							</premis:licenseInformation>
 						</premis:rightsStatements>
-					</metadata>
+					</premis:rights>
 				</mets:xmlData>
 			</mets:mdWrap>
 		</mets:rightsMD>
@@ -154,7 +154,7 @@
 		<mets:digiprovMD ID="DIGIPROV-MD-1">
 			<mets:mdWrap MDTYPE="PREMIS:EVENT" SIZE="0">
 				<mets:xmlData>
-					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
+					<premis:provenance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
 						<premis:event>
 							<premis:eventIdentifier>
 								<premis:eventIdentifierType>String</premis:eventIdentifierType>
@@ -165,7 +165,7 @@
 								<premis:note>no notes</premis:note>
 							</premis:linkingAgent>
 						</premis:event>
-					</metadata>
+					</premis:provenance>
 				</mets:xmlData>
 			</mets:mdWrap>
 		</mets:digiprovMD>
@@ -174,7 +174,7 @@
 		<mets:digiprovMD ID="DIGIPROV-MD-2">
 			<mets:mdWrap MDTYPE="PREMIS:EVENT" SIZE="0">
 				<mets:xmlData>
-					<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
+					<premis:provenance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="premisProvenanceMetadata">
 						<premis:event>
 							<premis:eventIdentifier>
 								<premis:eventIdentifierType>String</premis:eventIdentifierType>
@@ -185,7 +185,7 @@
 								<premis:note>no notes</premis:note>
 							</premis:linkingAgent>
 						</premis:event>
-					</metadata>
+					</premis:provenance>
 				</mets:xmlData>
 			</mets:mdWrap>
 		</mets:digiprovMD>
