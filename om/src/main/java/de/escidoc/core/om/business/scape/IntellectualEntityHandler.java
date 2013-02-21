@@ -97,6 +97,7 @@ import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.audiomd.AudioMDMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.metadata.fits.FitsMetadata;
+import eu.scapeproject.model.metadata.marc.Marc21Metadata;
 import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
 import eu.scapeproject.model.metadata.textmd.TextMDMetadata;
 import eu.scapeproject.model.metadata.videomd.VideoMDMetadata;
@@ -370,6 +371,15 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 }
             }
         }
+        // descriptive metadata record
+        MetadataRecord descRec = new MetadataRecord("DESCRIPTIVE");
+        descRec.setLastModificationDate(new DateTime());
+        descRec.setMdType(entity.getDescriptive().getType().toString());
+        descRec.setContent(DocumentBuilderFactory
+            .newInstance().newDocumentBuilder().parse(
+                new InputSource(new StringReader(SCAPEMarshaller.getInstance().serialize(entity.getDescriptive()))))
+            .getDocumentElement());
+        mds.add(descRec);
 
         // lifecycle metadata record
         String state =
@@ -655,7 +665,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
         int numRecs = Integer.parseInt(tmp);
         if (numRecs == 0) {
-            //TODO: this should return a 404
+            // TODO: this should return a 404
             throw new ScapeException("Unable to find object " + id);
         }
         else if (numRecs > 1) {
@@ -726,8 +736,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     /*
      * (non-Javadoc)
      * 
-     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface#
-     * ingestIntellectualEntity(java.lang.String)
+     * @see de.escidoc.core.om.service.IntellectualEntityHandlerInterface# ingestIntellectualEntity(java.lang.String)
      */
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
@@ -822,17 +831,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String updateIntellectualEntity(String id, String xml) throws EscidocException {
 
-        // the id currently must be escidoc:id and not scape:uuid - so this is just a hack to replace an incoming scape:uuid with the escidoc:id
+        // the id currently must be escidoc:id and not scape:uuid - so this is just a hack to replace an incoming
+        // scape:uuid with the escidoc:id
         if (id.contains("scape")) {
             Map<String, String[]> filters = new HashMap<String, String[]>();
             filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
             String resultXml = containerHandler.retrieveContainers(filters);
             id = getContainerId(resultXml);
-            //            int posStart = resultXml.indexOf("xlink:href=\"/ir/container/");
-            //            if (posStart > 0) {
-            //                int posEnd = resultXml.indexOf("\" last-modification-date");
-            //                id = resultXml.substring(posStart + 26, posEnd);
-            //            }
+            // int posStart = resultXml.indexOf("xlink:href=\"/ir/container/");
+            // if (posStart > 0) {
+            // int posEnd = resultXml.indexOf("\" last-modification-date");
+            // id = resultXml.substring(posStart + 26, posEnd);
+            // }
         }
 
         try {
