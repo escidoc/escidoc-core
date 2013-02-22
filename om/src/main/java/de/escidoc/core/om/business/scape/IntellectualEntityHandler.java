@@ -697,8 +697,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         Iterator<MetadataRecord> records = c.getMetadataRecords().iterator();
         while (records.hasNext()) {
             MetadataRecord record = records.next();
-            if (record.getMdType().equals("DC") && record.getName().startsWith("DC-")) {
-                entity.descriptive(ScapeUtil.parseDcMetadata(record));
+            if (record.getName().equals("DESCRIPTIVE")) {
+                entity.descriptive(ScapeUtil.parseDescriptiveMetadata(record));
             }
         }
         entity

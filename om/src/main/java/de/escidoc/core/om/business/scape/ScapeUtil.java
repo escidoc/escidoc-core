@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.camel.converter.jaxp.StringSource;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.w3c.dom.Document;
@@ -71,80 +72,14 @@ public abstract class ScapeUtil {
         return new LifecycleState(details, state);
     }
 
-    public static DescriptiveMetadata parseDcMetadata(MetadataRecord record) {
-        DCMetadata.Builder dc = new DCMetadata.Builder();
-        dc.id(record.getName());
-        NodeList nodes = record.getContent().getElementsByTagNameNS(NS_DC, "title");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.title(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "description");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.description(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "coverage");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.coverage(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "format");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.format(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "language");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.language(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "publisher");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.publisher(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "relation");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.relations(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "rights");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.rights(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "source");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.sources(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "subject");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.subject(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "type");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            dc.types(nodes.item(i).getTextContent());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "contributor");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Agent ag = parseAgent(nodes.item(i));
-            if (ag != null) {
-                dc.contributor(ag);
-            }
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "creator");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Agent ag = parseAgent(nodes.item(i));
-            if (ag != null) {
-                dc.creator(ag);
-            }
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "date");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss.SSS");
-            dc.date(formatter.parseDateTime(nodes.item(i).getTextContent()).toDate());
-        }
-        nodes = record.getContent().getElementsByTagNameNS(NS_DC, "identifier");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            String type = node.getAttributes().getNamedItem("type").getNodeValue();
-            String value = node.getTextContent();
-            dc.identifier(new Identifier(type, value));
-        }
-        return dc.build();
+    public static DescriptiveMetadata parseDescriptiveMetadata(MetadataRecord record) throws JAXBException {
+        Node n = record.getContent();
+        Document doc = n.getOwnerDocument();
+        DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+        String xml = implLs.createLSSerializer().writeToString(n);
+        DescriptiveMetadata md =
+            (DescriptiveMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(new StringSource(xml));
+        return md;
     }
 
     public static Agent parseAgent(Node item) {
