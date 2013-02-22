@@ -36,6 +36,7 @@ import eu.scapeproject.model.metadata.TechnicalMetadata;
 import eu.scapeproject.model.metadata.audiomd.AudioMDMetadata;
 import eu.scapeproject.model.metadata.dc.DCMetadata;
 import eu.scapeproject.model.metadata.fits.FitsMetadata;
+import eu.scapeproject.model.metadata.gbs.ProductionNotes;
 import eu.scapeproject.model.metadata.marc.Marc21Metadata;
 import eu.scapeproject.model.metadata.mix.NisoMixMetadata;
 import eu.scapeproject.model.metadata.premis.PremisProvenanceMetadata;
@@ -59,6 +60,10 @@ public abstract class ScapeUtil {
     public static final String NS_FITS = "http://hul.harvard.edu/ois/xml/ns/fits/fits_output";
 
     public static final String NS_NISOMIX = "http://www.loc.gov/mix/v10";
+
+    public static final String NS_MARC21 = "http://www.loc.gov/MARC21/slim";
+
+    public static final String NS_GOOGLE_BOOK_SCAN = "http://books.google.com/gbs";
 
     public static LifecycleState parseLifeCycleState(MetadataRecord rec) {
         LifecycleState.State state = LifecycleState.State.valueOf(rec.getContent().getAttribute("state"));
@@ -223,6 +228,10 @@ public abstract class ScapeUtil {
                 return (NisoMixMetadata) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(
                     new ByteArrayInputStream(xml.getBytes()));
             }
+            else if (ns.equalsIgnoreCase(NS_GOOGLE_BOOK_SCAN)) {
+                return (ProductionNotes) SCAPEMarshaller.getInstance().getJaxbUnmarshaller().unmarshal(
+                    new ByteArrayInputStream(xml.getBytes()));
+            }
             else {
                 throw new ScapeException("Unable to deserialize technical metadata with Namesapce URI " + ns);
             }
@@ -280,37 +289,45 @@ public abstract class ScapeUtil {
         rep.files(getFiles(i));
 
         // tech md
-        Node n = i.getMetadataRecords().get("techMD").getContent();
-        Document doc = n.getOwnerDocument();
-        DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
-        String xml = implLs.createLSSerializer().writeToString(n);
-        TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
-        rep.technical(techMd);
-
+        MetadataRecord rec = i.getMetadataRecords().get("techMD");
+        if (rec != null) {
+            Node n = i.getMetadataRecords().get("techMD").getContent();
+            Document doc = n.getOwnerDocument();
+            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+            String xml = implLs.createLSSerializer().writeToString(n);
+            TechnicalMetadata techMd = ScapeUtil.getTechMd(xml);
+            rep.technical(techMd);
+        }
         // source md
-        n = i.getMetadataRecords().get("sourceMD").getContent();
-        doc = n.getOwnerDocument();
-        implLs = (DOMImplementationLS) doc.getImplementation();
-        xml = implLs.createLSSerializer().writeToString(n);
-        DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
-        rep.source(sourceMD);
-
+        rec = i.getMetadataRecords().get("sourceMD");
+        if (rec != null) {
+            Node n = i.getMetadataRecords().get("sourceMD").getContent();
+            Document doc = n.getOwnerDocument();
+            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+            String xml = implLs.createLSSerializer().writeToString(n);
+            DescriptiveMetadata sourceMD = ScapeUtil.getSourceMd(xml);
+            rep.source(sourceMD);
+        }
         // rights md
-        n = i.getMetadataRecords().get("rightsMD").getContent();
-        doc = n.getOwnerDocument();
-        implLs = (DOMImplementationLS) doc.getImplementation();
-        xml = implLs.createLSSerializer().writeToString(n);
-        RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
-        rep.rights(rightsMD);
-
+        rec = i.getMetadataRecords().get("rightsMD");
+        if (rec != null) {
+            Node n = i.getMetadataRecords().get("rightsMD").getContent();
+            Document doc = n.getOwnerDocument();
+            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+            String xml = implLs.createLSSerializer().writeToString(n);
+            RightsMetadata rightsMD = ScapeUtil.getRightsMd(xml);
+            rep.rights(rightsMD);
+        }
         // provenance md
-        n = i.getMetadataRecords().get("digiprovMD").getContent();
-        doc = n.getOwnerDocument();
-        implLs = (DOMImplementationLS) doc.getImplementation();
-        xml = implLs.createLSSerializer().writeToString(n);
-        ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
-        rep.provenance(prov);
-
+        rec = i.getMetadataRecords().get("digiprovMD");
+        if (rec != null) {
+            Node n = i.getMetadataRecords().get("digiprovMD").getContent();
+            Document doc = n.getOwnerDocument();
+            DOMImplementationLS implLs = (DOMImplementationLS) doc.getImplementation();
+            String xml = implLs.createLSSerializer().writeToString(n);
+            ProvenanceMetadata prov = ScapeUtil.getProvenanceMd(xml);
+            rep.provenance(prov);
+        }
         return rep.build();
     }
 
