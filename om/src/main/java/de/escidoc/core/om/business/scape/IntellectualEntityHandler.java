@@ -7,15 +7,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.util.JAXBSource;
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.dom.DOMResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.dom4j.io.DocumentResult;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
+import org.purl.dc.elements._1.ElementContainer;
+import org.purl.dc.elements._1.ObjectFactory;
+import org.purl.dc.elements._1.SimpleLiteral;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -332,6 +340,38 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
             String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
 
+            /* create the metadata records for the entity container */
+            MetadataRecords records = new MetadataRecords();
+            MetadataRecord escidocRecord = new MetadataRecord("escidoc");
+            ObjectFactory dcFac = new ObjectFactory();
+            ElementContainer dcContainer = dcFac.createElementContainer();
+            SimpleLiteral titleLit = new SimpleLiteral();
+            titleLit.getContent().add("Scape Intellectual Entity " + pid);
+            dcContainer.getAny().add(dcFac.createTitle(titleLit));
+            SimpleLiteral identLit = new SimpleLiteral();
+            identLit.getContent().add(pid);
+            dcContainer.getAny().add(dcFac.createIdentifier(identLit));
+            DOMResult res = new DOMResult();
+            JAXBElement<ElementContainer> jb =
+                new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
+                    ElementContainer.class, e.getDescriptive());
+            marshaller.getJaxbMarshaller().marshal(jb, res);
+            escidocRecord.setContent(((Document) res.getNode()).getDocumentElement());
+            MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
+            DOMResult result = new DOMResult();
+            if (e.getDescriptive() instanceof ElementContainer) {
+                JAXBElement<ElementContainer> jaxb =
+                    new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
+                        ElementContainer.class, e.getDescriptive());
+                marshaller.getJaxbMarshaller().marshal(jaxb, result);
+            }
+            else {
+                marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
+            }
+            descmd.setContent(((Document) result.getNode()).getDocumentElement());
+            records.add(descmd);
+            records.add(escidocRecord);
+
             /* create the entity container */
             Container container = new Container();
             ContainerProperties props = new ContainerProperties();
@@ -339,11 +379,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             props.setContext(new ContextRef(scapeContext.getObjid()));
             props.setPid(pid);
             container.setProperties(props);
-            //TODO: cnt.setMetadataRecords(createEntityMetadataRecords(entity, entityDoc));
             container.setLastModificationDate(new DateTime());
+            container.setMetadataRecords(records);
 
             /* persist the container/entity in escidoc */
-            containerHandler.createContainer(pid, containerMarshaller.marshalDocument(container));
+            containerHandler.create(containerMarshaller.marshalDocument(container));
 
             /* return the pid wrapped in a scape xml answer */
             return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
