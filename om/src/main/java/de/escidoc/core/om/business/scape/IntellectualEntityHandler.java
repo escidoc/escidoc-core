@@ -421,6 +421,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 bitstreams.add(fetchBitStream(rel.getObjid()));
             }
         }
+        file.bitStreams(bitstreams);
         return file.build();
     }
 
