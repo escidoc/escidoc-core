@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMResult;
@@ -16,6 +17,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.dom4j.io.DocumentResult;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -36,26 +38,7 @@ import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
-import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.IntellectualEntityHandlerInterface;
@@ -118,6 +101,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
 	private String scapeContentModelId;
 
+	private ScapeMarshaller marshaller;
+
 	private boolean threadstarted = false;
 
 	@Autowired
@@ -161,11 +146,12 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 		return dateformatter.parseDateTime(xml.substring(start, end));
 	}
 
-	public IntellectualEntityHandler() throws InternalClientException {
+	public IntellectualEntityHandler() throws InternalClientException, JAXBException {
 		ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
 		componentMarshaller = MarshallerFactory.getInstance().getMarshaller(Component.class);
 		containerMarshaller = MarshallerFactory.getInstance().getMarshaller(Container.class);
 		itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
+		marshaller = ScapeMarshaller.newInstance();
 	}
 
 	private void checkScapeContentModel() throws EscidocException {
@@ -357,7 +343,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 			checkScapeContext();
 			checkScapeContentModel();
 
-			ScapeMarshaller marshaller = ScapeMarshaller.newInstance();
 			IntellectualEntity e =
 					marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
 			String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
@@ -431,52 +416,127 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 			props.setContext(new ContextRef(scapeContext.getObjid()));
 			props.setPid(r.getIdentifier().getValue());
 			item.setProperties(props);
+			item.setMetadataRecords(createMdRecords(r));
 			Relations rels = new Relations();
-			for (ItemMemberRef ref: createFiles(r)){
+			for (ItemMemberRef ref : createFiles(r)) {
 				Relation rel = new Relation(ref);
 				rel.setPredicate("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#hasPart");
 				rels.add(rel);
 			}
 			item.setRelations(rels);
-			String repId=itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
-			refs.add(new ItemMemberRef(repId,r.getIdentifier().getValue(),XLinkType.simple));
+			String repId = itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
+			refs.add(new ItemMemberRef(repId, r.getIdentifier().getValue(), XLinkType.simple));
 		}
 		return refs;
 	}
 
+	private MetadataRecords createMdRecords(Representation r) throws JAXBException {
+		MetadataRecords records = new MetadataRecords();
+
+		/* technical metadata */
+		MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+		Object md = r.getTechnical();
+		DocumentResult res = new DocumentResult();
+		marshaller.getJaxbMarshaller().marshal(md, res);
+		techmd.setMdType(md.getClass().getName());
+		techmd.setContent(((Document) res).getDocumentElement());
+		records.add(techmd);
+
+		/* rights metadata */
+		MetadataRecord rightsmd = new MetadataRecord("RIGHTS");
+		md = r.getRights();
+		res = new DocumentResult();
+		marshaller.getJaxbMarshaller().marshal(md, res);
+		rightsmd.setMdType(md.getClass().getName());
+		rightsmd.setContent(((Document) res).getDocumentElement());
+		records.add(rightsmd);
+
+		/* provenance metadata */
+		MetadataRecord digiprovmd = new MetadataRecord("PROVENANCE");
+		md = r.getRights();
+		res = new DocumentResult();
+		marshaller.getJaxbMarshaller().marshal(md, res);
+		digiprovmd.setMdType(md.getClass().getName());
+		digiprovmd.setContent(((Document) res).getDocumentElement());
+		records.add(digiprovmd);
+
+		/* source metadata */
+		MetadataRecord sourcemd = new MetadataRecord("SOURCE");
+		md = r.getRights();
+		res = new DocumentResult();
+		if (md instanceof ElementContainer){
+			JAXBElement<ElementContainer> jb = new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"), ElementContainer.class, md);
+			marshaller.getJaxbMarshaller().marshal(jb, res);
+			sourcemd.setMdType("DC");
+		}else{
+			marshaller.getJaxbMarshaller().marshal(md, res);
+			sourcemd.setMdType(md.getClass().getName());
+		}
+		sourcemd.setContent(((Document) res).getDocumentElement());
+		records.add(sourcemd);
+
+		return records;
+	}
+
+	private MetadataRecords createMetadataRecords(File f) throws JAXBException {
+		MetadataRecords records = new MetadataRecords();
+		MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+		Object md = f.getTechnical();
+		DocumentResult res = new DocumentResult();
+		marshaller.getJaxbMarshaller().marshal(md, res);
+		techmd.setMdType(md.getClass().getName());
+		techmd.setContent(((Document) res).getDocumentElement());
+		records.add(techmd);
+		return records;
+	}
+
+	private MetadataRecords createMetadataRecords(BitStream bs) throws JAXBException {
+		MetadataRecords records = new MetadataRecords();
+		MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+		Object md = bs.getTechnical();
+		DocumentResult res = new DocumentResult();
+		marshaller.getJaxbMarshaller().marshal(md, res);
+		techmd.setMdType(md.getClass().getName());
+		techmd.setContent(((Document) res).getDocumentElement());
+		records.add(techmd);
+		return records;
+	}
+
 	private List<ItemMemberRef> createFiles(Representation r) throws Exception {
 		List<ItemMemberRef> refs = new ArrayList<ItemMemberRef>();
-		for (File f: r.getFiles()){
+		for (File f : r.getFiles()) {
 			Item item = new Item();
 			ItemProperties props = new ItemProperties();
 			props.setContentModel(new ContentModelRef(scapeContentModelId));
 			props.setContext(new ContextRef(scapeContext.getObjid()));
 			props.setPid(f.getIdentifier().getValue());
 			item.setProperties(props);
+			item.setMetadataRecords(createMetadataRecords(f));
 			Relations rels = new Relations();
-			for (ItemMemberRef ref : createBitStreams(f)){
+			for (ItemMemberRef ref : createBitStreams(f)) {
 				Relation rel = new Relation(ref);
 				rel.setPredicate("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#hasPart");
 				rels.add(rel);
 			}
 			item.setRelations(rels);
-			String fileId=itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
-			refs.add(new ItemMemberRef(fileId,f.getIdentifier().getValue(),XLinkType.simple));
+			String fileId = itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
+			refs.add(new ItemMemberRef(fileId, f.getIdentifier().getValue(), XLinkType.simple));
 		}
 		return refs;
 	}
 
 	private List<ItemMemberRef> createBitStreams(File f) throws Exception {
 		List<ItemMemberRef> refs = new ArrayList<ItemMemberRef>();
-		for (BitStream bs : f.getBitStreams()){
+		for (BitStream bs : f.getBitStreams()) {
 			Item item = new Item();
 			ItemProperties props = new ItemProperties();
 			props.setContentModel(new ContentModelRef(scapeContentModelId));
 			props.setContext(new ContextRef(scapeContext.getObjid()));
 			props.setPid(bs.getIdentifier().getValue());
 			item.setProperties(props);
-			String bsId=itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
-			refs.add(new ItemMemberRef(bsId,bs.getIdentifier().getValue(),XLinkType.simple));
+			item.setMetadataRecords(createMetadataRecords(bs));
+			String bsId = itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
+			refs.add(new ItemMemberRef(bsId, bs.getIdentifier().getValue(), XLinkType.simple));
 		}
 		return refs;
 	}
