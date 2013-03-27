@@ -4,9 +4,11 @@ import info.lc.xmlns.premis_v2.PremisComplexType;
 import info.lc.xmlns.premis_v2.RightsComplexType;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,7 +22,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
-import org.dom4j.io.DocumentResult;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -73,6 +74,7 @@ import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 import eu.scapeproject.model.BitStream;
 import eu.scapeproject.model.File;
+import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.Representation;
 import eu.scapeproject.util.ScapeMarshaller;
@@ -321,8 +323,46 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String getIntellectualEntity(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
+            Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+            String resultXml = containerHandler.retrieveContainers(filters);
+            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+            String tmp = new String(resultXml.substring(pos));
+            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+            int numRecs = Integer.parseInt(tmp);
+            if (numRecs == 0) {
+                throw new ScapeException("Unable to find object with pid " + id);
+            }
+            else if (numRecs > 1) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
+            int posStart = resultXml.indexOf("<container:container");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("</container:container>") + 22;
+                resultXml = resultXml.substring(posStart, posEnd);
+            }
+            else {
+                return null;
+            }
+            Container c = containerMarshaller.unmarshalDocument(resultXml);
+            Iterator<MetadataRecord> records = c.getMetadataRecords().iterator();
+            while (records.hasNext()) {
+                MetadataRecord record = records.next();
+                if (record.getName().equals("DESCRIPTIVE")) {
+                    entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(),
+                        ElementContainer.class));
+                }
+            }
+            entity.identifier(new Identifier(c.getObjid()));
+            ByteArrayOutputStream sink = new ByteArrayOutputStream();
+            marshaller.serialize(entity.build(), sink);
+            return sink.toString();
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
     }
 
     @Override
