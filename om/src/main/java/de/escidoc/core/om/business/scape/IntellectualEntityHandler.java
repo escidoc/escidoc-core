@@ -1,5 +1,6 @@
 package de.escidoc.core.om.business.scape;
 
+import info.lc.xmlns.premis_v2.Bitstream;
 import info.lc.xmlns.premis_v2.PremisComplexType;
 import info.lc.xmlns.premis_v2.RightsComplexType;
 
@@ -347,15 +348,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 return null;
             }
             Container c = containerMarshaller.unmarshalDocument(resultXml);
-            Iterator<MetadataRecord> records = c.getMetadataRecords().iterator();
-            while (records.hasNext()) {
-                MetadataRecord record = records.next();
-                if (record.getName().equals("DESCRIPTIVE")) {
-                    entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(),
-                        ElementContainer.class));
-                }
-            }
+            MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
+            entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class));
             entity.identifier(new Identifier(c.getObjid()));
+            entity.representations(fetchRepresentations(c));
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
             marshaller.serialize(entity.build(), sink);
             return sink.toString();
@@ -363,6 +359,81 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         catch (Exception e) {
             throw new ScapeException(e);
         }
+    }
+
+    private List<Representation> fetchRepresentations(Container c) throws Exception {
+        List<Representation> reps = new ArrayList<Representation>();
+        for (ItemMemberRef ref : c.getStructMap().getItems()) {
+            Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(ref.getObjid()));
+            Representation rep = fetchRepresentation(i);
+            reps.add(rep);
+        }
+        return reps;
+
+    }
+
+    private Representation fetchRepresentation(Item i) throws Exception {
+        Representation.Builder rep = new Representation.Builder(new Identifier(i.getProperties().getPid()));
+
+        MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
+        Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        rep.technical(md);
+
+        record = i.getMetadataRecords().get("PROVENANCE");
+        md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        rep.provenance(md);
+
+        record = i.getMetadataRecords().get("SOURCE");
+        if (record.getMdType().equals("DC")) {
+            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class);
+        }
+        else {
+            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        }
+        rep.source(md);
+
+        record = i.getMetadataRecords().get("RIGHTS");
+        md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        rep.rights(md);
+
+        List<File> files = new ArrayList<File>();
+        for (Relation rel : i.getRelations()) {
+            if (rel.getPredicate().equals("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#hasPart")) {
+                files.add(fetchFile(rel.getObjid()));
+            }
+        }
+        rep.files(files);
+        return rep.build();
+    }
+
+    private File fetchFile(String objid) throws Exception {
+        File.Builder file = new File.Builder();
+        Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
+        file.identifier(new Identifier(objid));
+        MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
+        if (record != null) {
+            Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+            file.technical(md);
+        }
+        List<BitStream> bitstreams = new ArrayList<BitStream>();
+        for (Relation rel : i.getRelations()) {
+            if (rel.getPredicate().equals("http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#hasPart")) {
+                bitstreams.add(fetchBitStream(rel.getObjid()));
+            }
+        }
+        return file.build();
+    }
+
+    private BitStream fetchBitStream(String objid) throws Exception {
+        BitStream.Builder bs = new BitStream.Builder();
+        Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
+        bs.identifier(new Identifier(objid));
+        MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
+        if (record != null) {
+            Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+            bs.technical(md);
+        }
+        return bs.build();
     }
 
     @Override
