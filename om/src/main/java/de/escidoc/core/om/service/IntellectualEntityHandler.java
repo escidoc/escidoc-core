@@ -42,6 +42,7 @@ public class IntellectualEntityHandler
         String uri;
         List<String> ids = new ArrayList<String>();
         try {
+            // TODO: this is a weak point, this should be checking for error conditions and sanitize user input
             while ((uri = r.readLine()) != null) {
                 int posStart = uri.indexOf("/scape/entity/") + 14;
                 ids.add(new String(uri.substring(posStart).trim()));
@@ -65,16 +66,6 @@ public class IntellectualEntityHandler
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         return handler.ingestIntellectualEntity(xml);
-    }
-
-    @Override
-    public String getMetadata(String id, String mdName) throws EscidocException {
-        return handler.getMetadata(id, mdName);
-    }
-
-    @Override
-    public String updateMetadata(String id, String xmlData) throws EscidocException {
-        return handler.updateMetadata(id, xmlData);
     }
 
     @Override

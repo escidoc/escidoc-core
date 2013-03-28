@@ -36,6 +36,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
@@ -43,6 +45,7 @@ import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
@@ -87,6 +90,17 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private static String createTaskParam(final String lastModificationDate) {
         return "<param last-modification-date=\"" + lastModificationDate + "\"/>";
+    }
+
+    private static String getVersionXml(MetadataRecord md) {
+        StringBuilder versionXml = new StringBuilder("<versions>");
+        NodeList nodes = md.getContent().getElementsByTagName("version");
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node n = nodes.item(i);
+            versionXml.append("<version date=\"" + n.getAttributes().getNamedItem("date").getNodeValue()
+                + "\" number=\"" + n.getAttributes().getNamedItem("number").getNodeValue() + "\" />");
+        }
+        return versionXml.append("</versions>").toString();
     }
 
     private final Marshaller<OrganizationalUnit> ouMarshaller;
@@ -146,18 +160,171 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private static final String SCAPE_CM_ELEMENT =
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?><escidocContentModel:content-model xmlns:escidocContentModel=\"http://www.escidoc.de/schemas/contentmodel/0.1\" xmlns:prop=\"http://escidoc.de/core/01/properties/\"><escidocContentModel:properties><prop:name>scape-contentmodel</prop:name><prop:description>for test purpose</prop:description></escidocContentModel:properties></escidocContentModel:content-model>";
 
-    private static DateTime getLastModificationDateTime(final String xml) throws Exception {
-        int start = xml.indexOf("last-modification-date=\"") + 24;
-        int end = xml.indexOf("\"", start);
-        return dateformatter.parseDateTime(xml.substring(start, end));
-    }
-
     public IntellectualEntityHandler() throws InternalClientException, JAXBException {
         ouMarshaller = MarshallerFactory.getInstance().getMarshaller(OrganizationalUnit.class);
         componentMarshaller = MarshallerFactory.getInstance().getMarshaller(Component.class);
         containerMarshaller = MarshallerFactory.getInstance().getMarshaller(Container.class);
         itemMarshaller = MarshallerFactory.getInstance().getMarshaller(Item.class);
         marshaller = ScapeMarshaller.newInstance();
+    }
+
+    @Override
+    public String getIntellectualEntity(String id) throws EscidocException {
+        try {
+            IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
+            Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+            String resultXml = containerHandler.retrieveContainers(filters);
+            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+            String tmp = new String(resultXml.substring(pos));
+            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+            int numRecs = Integer.parseInt(tmp);
+            if (numRecs == 0) {
+                throw new ScapeException("Unable to find object with pid " + id);
+            }
+            else if (numRecs > 1) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
+            int posStart = resultXml.indexOf("<container:container");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("</container:container>") + 22;
+                resultXml = resultXml.substring(posStart, posEnd);
+            }
+            else {
+                return null;
+            }
+            Container c = containerMarshaller.unmarshalDocument(resultXml);
+            MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
+            entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class));
+            entity.identifier(new Identifier(c.getObjid()));
+            entity.representations(fetchRepresentations(c));
+            ByteArrayOutputStream sink = new ByteArrayOutputStream();
+            marshaller.serialize(entity.build(), sink);
+            return sink.toString();
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
+    }
+
+    @Override
+    public String getIntellectualEntitySet(List<String> ids) throws EscidocException {
+        StringBuilder respBuilder = new StringBuilder("<entity-list>\n");
+        for (String id : ids) {
+            respBuilder.append(getIntellectualEntity(id));
+        }
+        return respBuilder.append("</entity-list>").toString();
+    }
+
+    @Override
+    public String getIntellectualEntityVersionSet(String id) throws EscidocException {
+        Map<String, String[]> filters = new HashMap<String, String[]>();
+        filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+        String resultXml = containerHandler.retrieveContainers(filters);
+        int posStart = resultXml.indexOf("<container:container");
+        if (posStart > 0) {
+            int posEnd = resultXml.indexOf("</container:container>") + 22;
+            resultXml = resultXml.substring(posStart, posEnd);
+        }
+        else {
+            return null;
+        }
+        try {
+            Container c = containerMarshaller.unmarshalDocument(resultXml);
+            return getVersionXml(c.getMetadataRecords().get("VERSION-XML"));
+        }
+        catch (InternalClientException e) {
+            throw new ScapeException(e);
+        }
+    }
+
+    @Override
+    public String ingestIntellectualEntity(String xml) throws EscidocException {
+        logger.debug("ingesting intellectual entity");
+        try {
+            /* ensure that the context, content model and the OU are properly initialized */
+            checkScapeContext();
+            checkScapeContentModel();
+
+            IntellectualEntity e =
+                marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
+            String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
+
+            /* create the metadata records for the entity container */
+            MetadataRecords records = new MetadataRecords();
+            MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
+            DOMResult result = new DOMResult();
+            if (e.getDescriptive() instanceof ElementContainer) {
+                JAXBElement<ElementContainer> jaxb =
+                    new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
+                        ElementContainer.class, e.getDescriptive());
+                marshaller.getJaxbMarshaller().marshal(jaxb, result);
+            }
+            else {
+                marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
+            }
+            descmd.setContent(((Document) result.getNode()).getDocumentElement());
+            records.add(descmd);
+            records.add(createEscidocRecord(e.getIdentifier().getValue()));
+
+            // version metadata record
+            MetadataRecord v = new MetadataRecord("VERSION-XML");
+            v.setLastModificationDate(new DateTime());
+            v.setMdType("VERSION-XML");
+            v.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
+                new InputSource(new StringReader("<versions><version number=\"" + e.getVersionNumber() + "\" date=\""
+                    + new DateTime() + "\" /></versions>"))).getDocumentElement());
+            records.add(v);
+
+            /* create the entity container */
+            Container container = new Container();
+            ContainerProperties props = new ContainerProperties();
+            props.setContentModel(new ContentModelRef(scapeContentModelId));
+            props.setContext(new ContextRef(scapeContext.getObjid()));
+            props.setPid(pid);
+            container.setProperties(props);
+            container.setLastModificationDate(new DateTime());
+            container.setMetadataRecords(records);
+
+            StructMap struct = new StructMap();
+
+            /* create the items for representations */
+            for (ItemMemberRef ref : createRepresentationItems(e)) {
+                struct.add(ref);
+            }
+            container.setStructMap(struct);
+
+            /* persist the container/entity in escidoc */
+            containerHandler.create(containerMarshaller.marshalDocument(container));
+
+            /* return the pid wrapped in a scape xml answer */
+            return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
+    }
+
+    @Override
+    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
+        return null;
+    }
+
+    @Override
+    public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
+        return containerHandler.retrieveContainers(params);
+    }
+
+    @Override
+    public String updateIntellectualEntity(String id, String xml) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String updateMetadata(String id, String xmlData) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     private void checkScapeContentModel() throws EscidocException {
@@ -322,45 +489,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
     }
 
-    @Override
-    public String getIntellectualEntity(String id) throws EscidocException {
-        try {
-            IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
-            Map<String, String[]> filters = new HashMap<String, String[]>();
-            filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
-            String resultXml = containerHandler.retrieveContainers(filters);
-            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
-            String tmp = new String(resultXml.substring(pos));
-            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
-            int numRecs = Integer.parseInt(tmp);
-            if (numRecs == 0) {
-                throw new ScapeException("Unable to find object with pid " + id);
-            }
-            else if (numRecs > 1) {
-                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
-            }
-            int posStart = resultXml.indexOf("<container:container");
-            if (posStart > 0) {
-                int posEnd = resultXml.indexOf("</container:container>") + 22;
-                resultXml = resultXml.substring(posStart, posEnd);
-            }
-            else {
-                return null;
-            }
-            Container c = containerMarshaller.unmarshalDocument(resultXml);
-            MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
-            entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class));
-            entity.identifier(new Identifier(c.getObjid()));
-            entity.representations(fetchRepresentations(c));
-            ByteArrayOutputStream sink = new ByteArrayOutputStream();
-            marshaller.serialize(entity.build(), sink);
-            return sink.toString();
-        }
-        catch (Exception e) {
-            throw new ScapeException(e);
-        }
-    }
-
     private List<Representation> fetchRepresentations(Container c) throws Exception {
         List<Representation> reps = new ArrayList<Representation>();
         for (ItemMemberRef ref : c.getStructMap().getItems()) {
@@ -435,82 +563,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             bs.technical(md);
         }
         return bs.build();
-    }
-
-    @Override
-    public String getIntellectualEntitySet(List<String> ids) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getIntellectualEntityVersionSet(String id) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getMetadata(String id, String mdName) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String ingestIntellectualEntity(String xml) throws EscidocException {
-        logger.debug("ingesting intellectual entity");
-        try {
-            /* ensure that the context, content model and the OU are properly initialized */
-            checkScapeContext();
-            checkScapeContentModel();
-
-            IntellectualEntity e =
-                marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
-            String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
-
-            /* create the metadata records for the entity container */
-            MetadataRecords records = new MetadataRecords();
-            MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
-            DOMResult result = new DOMResult();
-            if (e.getDescriptive() instanceof ElementContainer) {
-                JAXBElement<ElementContainer> jaxb =
-                    new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
-                        ElementContainer.class, e.getDescriptive());
-                marshaller.getJaxbMarshaller().marshal(jaxb, result);
-            }
-            else {
-                marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
-            }
-            descmd.setContent(((Document) result.getNode()).getDocumentElement());
-            records.add(descmd);
-            records.add(createEscidocRecord(e.getIdentifier().getValue()));
-
-            /* create the entity container */
-            Container container = new Container();
-            ContainerProperties props = new ContainerProperties();
-            props.setContentModel(new ContentModelRef(scapeContentModelId));
-            props.setContext(new ContextRef(scapeContext.getObjid()));
-            props.setPid(pid);
-            container.setProperties(props);
-            container.setLastModificationDate(new DateTime());
-            container.setMetadataRecords(records);
-
-            StructMap struct = new StructMap();
-
-            /* create the items for representations */
-            for (ItemMemberRef ref : createRepresentationItems(e)) {
-                struct.add(ref);
-            }
-            container.setStructMap(struct);
-
-            /* persist the container/entity in escidoc */
-            containerHandler.create(containerMarshaller.marshalDocument(container));
-
-            /* return the pid wrapped in a scape xml answer */
-            return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
-        }
-        catch (Exception e) {
-            throw new ScapeException(e);
-        }
     }
 
     private MetadataRecord createEscidocRecord(String pid) throws JAXBException {
@@ -698,26 +750,4 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return refs;
     }
 
-    @Override
-    public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
-        return null;
-    }
-
-    @Override
-    public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String updateIntellectualEntity(String id, String xml) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String updateMetadata(String id, String xmlData) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

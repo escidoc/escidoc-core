@@ -16,8 +16,8 @@ public class MetadataHandler implements MetadataHandlerInterface {
     private de.escidoc.core.om.business.interfaces.MetadataHandlerInterface handler;
 
     @Override
-    public String getMetadata(String id, String versionId) throws EscidocException {
-        return handler.getMetadata(id, versionId);
+    public String getMetadata(String id, String mdName, String version) throws EscidocException {
+        return handler.getMetadata(id, mdName, version);
     }
 
 }
