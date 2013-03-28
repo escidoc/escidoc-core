@@ -260,60 +260,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 			String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
 			ensurePids(e);
 
-			/* create the metadata records for the entity container */
-			MetadataRecords records = new MetadataRecords();
-			MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
-			DOMResult result = new DOMResult();
-			if (e.getDescriptive() instanceof ElementContainer) {
-				JAXBElement<ElementContainer> jaxb =
-						new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
-								ElementContainer.class, e.getDescriptive());
-				marshaller.getJaxbMarshaller().marshal(jaxb, result);
-			}
-			else {
-				marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
-			}
-			descmd.setContent(((Document) result.getNode()).getDocumentElement());
-			records.add(descmd);
-			records.add(createEscidocRecord(e.getIdentifier().getValue()));
-
-			DocumentBuilder docbuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			// version metadata record
-			MetadataRecord v = new MetadataRecord("VERSION-XML");
-			v.setLastModificationDate(new DateTime());
-			v.setMdType("VERSION-XML");
-			v.setContent(docbuilder.parse(
-					new InputSource(new StringReader("<versions><version number=\"" + e.getVersionNumber() + "\" date=\""
-							+ new DateTime() + "\" /></versions>"))).getDocumentElement());
-			records.add(v);
-
-			// lifecycle metadata record
-			String state =
-					e.getLifecycleState() != null ? e.getLifecycleState().getState().name() : LifecycleState.State.INGESTED.name();
-			MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
-			lc.setLastModificationDate(new DateTime());
-			lc.setMdType("LIFECYCLE-XML");
-			lc.setContent(docbuilder.parse(new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
-			records.add(lc);
-
-			/* create the entity container */
-			Container container = new Container();
-			ContainerProperties props = new ContainerProperties();
-			props.setContentModel(new ContentModelRef(scapeContentModelId));
-			props.setContext(new ContextRef(scapeContext.getObjid()));
-			props.setPid(pid);
-			container.setProperties(props);
-			container.setLastModificationDate(new DateTime());
-			container.setMetadataRecords(records);
-
-			StructMap struct = new StructMap();
-
-			/* create the items for representations */
-			for (ItemMemberRef ref : createRepresentationItems(e)) {
-				struct.add(ref);
-			}
-			container.setStructMap(struct);
-
+			Container container = createContainer(pid, e);
 			/* persist the container/entity in escidoc */
 			containerHandler.create(containerMarshaller.marshalDocument(container));
 
@@ -350,8 +297,36 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
 	@Override
 	public String updateIntellectualEntity(String id, String xml) throws EscidocException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Map<String, String[]> filters = new HashMap<String, String[]>();
+			filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+			String resultXml = containerHandler.retrieveContainers(filters);
+			int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+			String tmp = new String(resultXml.substring(pos));
+			tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+			int numRecs = Integer.parseInt(tmp);
+			if (numRecs == 0) {
+				throw new ScapeException("Unable to find object with pid " + id);
+			}
+			else if (numRecs > 1) {
+				throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+			}
+			int posStart = resultXml.indexOf("<container:container");
+			if (posStart > 0) {
+				int posEnd = resultXml.indexOf("</container:container>") + 22;
+				resultXml = resultXml.substring(posStart, posEnd);
+			}
+			else {
+				return null;
+			}
+			Container orig = containerMarshaller.unmarshalDocument(resultXml);
+			IntellectualEntity e = marshaller.deserialize(IntellectualEntity.class,new ByteArrayInputStream(xml.getBytes()));
+			Container updated = createContainer(e.getIdentifier().getValue(), e);
+			containerHandler.update(orig.getObjid(),containerMarshaller.marshalDocument(updated));
+			return "<scape:value>" + updated.getProperties().getPid() + "</scape:value>";
+		} catch (Exception e) {
+			throw new ScapeException(e);
+		}
 	}
 
 	public void ingestIntellectualEntity(IntellectualEntity entity) throws EscidocException {
@@ -629,6 +604,67 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 			bs.technical(md);
 		}
 		return bs.build();
+	}
+
+	private Container createContainer(String pid, IntellectualEntity e) throws EscidocException {
+		try {
+			/* create the metadata records for the entity container */
+			MetadataRecords records = new MetadataRecords();
+			MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
+			DOMResult result = new DOMResult();
+			if (e.getDescriptive() instanceof ElementContainer) {
+				JAXBElement<ElementContainer> jaxb =
+						new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
+								ElementContainer.class, e.getDescriptive());
+				marshaller.getJaxbMarshaller().marshal(jaxb, result);
+			}
+			else {
+				marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
+			}
+			descmd.setContent(((Document) result.getNode()).getDocumentElement());
+			records.add(descmd);
+			records.add(createEscidocRecord(e.getIdentifier().getValue()));
+
+			DocumentBuilder docbuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			// version metadata record
+			MetadataRecord v = new MetadataRecord("VERSION-XML");
+			v.setLastModificationDate(new DateTime());
+			v.setMdType("VERSION-XML");
+			v.setContent(docbuilder.parse(
+					new InputSource(new StringReader("<versions><version number=\"" + e.getVersionNumber() + "\" date=\""
+							+ new DateTime() + "\" /></versions>"))).getDocumentElement());
+			records.add(v);
+
+			// lifecycle metadata record
+			String state =
+					e.getLifecycleState() != null ? e.getLifecycleState().getState().name() : LifecycleState.State.INGESTED.name();
+			MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
+			lc.setLastModificationDate(new DateTime());
+			lc.setMdType("LIFECYCLE-XML");
+			lc.setContent(docbuilder.parse(new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
+			records.add(lc);
+
+			/* create the entity container */
+			Container container = new Container();
+			ContainerProperties props = new ContainerProperties();
+			props.setContentModel(new ContentModelRef(scapeContentModelId));
+			props.setContext(new ContextRef(scapeContext.getObjid()));
+			props.setPid(pid);
+			container.setProperties(props);
+			container.setLastModificationDate(new DateTime());
+			container.setMetadataRecords(records);
+
+			StructMap struct = new StructMap();
+
+			/* create the items for representations */
+			for (ItemMemberRef ref : createRepresentationItems(e)) {
+				struct.add(ref);
+			}
+			container.setStructMap(struct);
+			return container;
+		} catch (Exception ex) {
+			throw new ScapeException(ex);
+		}
 	}
 
 	private MetadataRecord createEscidocRecord(String pid) throws JAXBException {
