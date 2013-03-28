@@ -248,7 +248,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             IntellectualEntity e =
                 marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
+            /* ensure that the PIDs are not used already */
             String pid = (e.getIdentifier() == null) ? "OBJ-" + UUID.randomUUID() : e.getIdentifier().getValue();
+            ensurePids(e);
 
             /* create the metadata records for the entity container */
             MetadataRecords records = new MetadataRecords();
@@ -303,6 +305,40 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         catch (Exception e) {
             throw new ScapeException(e);
         }
+    }
+
+    private void ensurePids(IntellectualEntity e) throws Exception {
+        Map<String, String[]> filters = new HashMap<String, String[]>();
+        filters.put("query", new String[] { "\"/properties/pid\"=" + e.getIdentifier().getValue()
+            + " AND \"type\"=container" });
+        String resultXml = containerHandler.retrieveContainers(filters);
+        int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+        String tmp = new String(resultXml.substring(pos));
+        tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+        int numRecs = Integer.parseInt(tmp);
+        if (numRecs != 0) {
+            throw new ScapeException("An entity with the id " + e.getIdentifier().getValue() + " already exists");
+        }
+        StringBuilder query = new StringBuilder();
+        for (Representation r : e.getRepresentations()) {
+            query.append(" OR \"/properties/pid\"=" + r.getIdentifier().getValue());
+            for (File f : r.getFiles()) {
+                query.append(" OR \"/properties/pid\"=" + f.getIdentifier().getValue());
+                for (BitStream bs : f.getBitStreams()) {
+                    query.append(" OR \"/properties/pid\"=" + bs.getIdentifier().getValue());
+                }
+            }
+        }
+        filters.put("query", new String[] { query.toString().substring(3) });
+        resultXml = itemHandler.retrieveItems(filters);
+        pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+        tmp = new String(resultXml.substring(pos));
+        tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+        numRecs = Integer.parseInt(tmp);
+        if (numRecs != 0) {
+            throw new ScapeException("An item with the id already exists");
+        }
+
     }
 
     @Override
