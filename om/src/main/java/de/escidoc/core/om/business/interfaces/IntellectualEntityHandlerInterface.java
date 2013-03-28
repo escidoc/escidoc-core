@@ -18,7 +18,5 @@ public interface IntellectualEntityHandlerInterface {
 
     String ingestIntellectualEntityAsync(String xml) throws EscidocException;
 
-    String updateMetadata(String id, String xmlData) throws EscidocException;
-
     String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException;
 }
