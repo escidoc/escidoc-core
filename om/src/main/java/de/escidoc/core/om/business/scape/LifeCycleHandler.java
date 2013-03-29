@@ -25,7 +25,7 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
     private ContainerHandlerInterface containerHandler;
 
     private final Marshaller<Container> containerMarshaller;
-    
+
     private final ScapeMarshaller marshaller;
 
     public LifeCycleHandler() throws Exception {

@@ -49,10 +49,10 @@ public class MetadataHandler implements MetadataHandlerInterface {
     }
 
     @Override
-	public String updateMetadata(String id, String xmlData) throws EscidocException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String updateMetadata(String id, String xmlData) throws EscidocException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     public String getMetadata(String id, String mdname, String version) throws EscidocException {
