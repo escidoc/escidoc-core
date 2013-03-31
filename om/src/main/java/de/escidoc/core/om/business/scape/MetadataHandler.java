@@ -79,7 +79,7 @@ public class MetadataHandler implements MetadataHandlerInterface {
 
     private MetadataRecord getContainerMetadata(String id, String mdname, String version) throws Exception {
         Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+        filters.put("query", new String[] { "\"/properties/pid\"=" + id });
         String resultXml = containerHandler.retrieveContainers(filters);
 
         int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
