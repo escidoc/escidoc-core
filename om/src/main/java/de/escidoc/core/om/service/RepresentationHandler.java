@@ -22,8 +22,8 @@ public class RepresentationHandler implements RepresentationHandlerInterface {
     }
 
     @Override
-    public String updateRepresentation(String xml) throws EscidocException {
-        return handler.updateRepresentation(xml);
+    public String updateRepresentation(String id, String xml) throws EscidocException {
+        return handler.updateRepresentation(id, xml);
     }
 
     @Override

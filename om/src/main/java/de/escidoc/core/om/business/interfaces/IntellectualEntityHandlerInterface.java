@@ -19,4 +19,6 @@ public interface IntellectualEntityHandlerInterface {
     String ingestIntellectualEntityAsync(String xml) throws EscidocException;
 
     String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException;
+
+    boolean isEntityQueued(String id);
 }

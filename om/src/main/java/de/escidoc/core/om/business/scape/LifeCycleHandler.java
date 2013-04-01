@@ -14,6 +14,7 @@ import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.LifeCycleHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
+import de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface;
 import de.escidoc.core.resources.om.container.Container;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.util.ScapeMarshaller;
@@ -28,6 +29,10 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
 
     private final ScapeMarshaller marshaller;
 
+    @Autowired
+    @Qualifier("service.IntellectualEntityHandler")
+    private IntellectualEntityHandlerInterface entityHandler;
+
     public LifeCycleHandler() throws Exception {
         containerMarshaller = MarshallerFactory.getInstance().getMarshaller(Container.class);
         marshaller = ScapeMarshaller.newInstance();
@@ -37,9 +42,12 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
     public String getLifecycleStatus(final String id) throws EscidocException {
         Container c;
         try {
+            if (entityHandler.isEntityQueued(id)) {
+                return "<lifecycle state=\"" + LifecycleState.State.INGESTING.toString() + "\"/>";
+            }
             String searchResponse = containerHandler.retrieveContainers(new HashMap<String, String[]>() {
                 {
-                    put("query", new String[] { "\"/properties/pid\"=" + id + " AND \"type\"=container" });
+                    put("query", new String[] { "\"/properties/pid\"=" + id });
                 }
             });
             String lifeCycle = null;

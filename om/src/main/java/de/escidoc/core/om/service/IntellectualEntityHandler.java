@@ -37,6 +37,11 @@ public class IntellectualEntityHandler
     }
 
     @Override
+    public boolean isEntityQueued(String id) {
+        return handler.isEntityQueued(id);
+    }
+
+    @Override
     public String getIntellectualEntitySet(String idData) throws EscidocException {
         BufferedReader r = new BufferedReader(new StringReader(idData));
         String uri;

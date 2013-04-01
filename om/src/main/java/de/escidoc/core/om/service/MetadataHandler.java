@@ -21,8 +21,8 @@ public class MetadataHandler implements MetadataHandlerInterface {
     }
 
     @Override
-    public String updateMetadata(String id, String xmlData) throws EscidocException {
-        return handler.updateMetadata(id, xmlData);
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
+        return handler.updateMetadata(id, mdName, xmlData);
     }
 
 }

@@ -83,5 +83,8 @@
 			<invoke http="GET" method="getMetadata" param1="${PATH_ID}"
 				param2="${MD_NAME}" param3="${VERSION_ID}"/>
 		</descriptor>
+		<descriptor uri="/scape/metadata/${PATH_ID}/${MD_NAME}">
+			<invoke http="POST" method="updateMetadata" param1="${PATH_ID}" param2="${MD_NAME}" param3="${BODY}"/>
+		</descriptor>
 	</resource>
 </mapping>

@@ -19,4 +19,6 @@ public interface IntellectualEntityHandlerInterface {
 	String getIntellectualEntityVersionSet(String id) throws EscidocException;
 	
 	String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException;
+
+	boolean isEntityQueued(String id);
 }

@@ -6,5 +6,5 @@ public interface MetadataHandlerInterface {
 
     String getMetadata(String id, String mdname, String version) throws EscidocException;
 
-    String updateMetadata(String id, String xmlData) throws EscidocException;
+    String updateMetadata(String id, String mdName, String xmlData) throws EscidocException;
 }

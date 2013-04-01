@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import de.escidoc.core.client.exceptions.InternalClientException;
 import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.scape.ScapeException;
 import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.FileHandlerInterface;
@@ -29,7 +30,12 @@ public class FileHandler implements FileHandlerInterface {
 
     @Override
     public String getFile(String id) throws EscidocException {
-        return null;
+        throw new ScapeException("Not yet implemented");
+        //		try {
+        //			Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(id));
+        //		} catch (Exception e) {
+        //			throw new ScapeException(e);
+        //		}
     }
 
     @Override

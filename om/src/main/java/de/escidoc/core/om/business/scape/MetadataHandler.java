@@ -49,22 +49,43 @@ public class MetadataHandler implements MetadataHandlerInterface {
     }
 
     @Override
-    public String updateMetadata(String id, String xmlData) throws EscidocException {
-        // TODO Auto-generated method stub
-        return null;
+    public String updateMetadata(String id, String mdName, String xmlData) throws EscidocException {
+        Item i = getItem(id, null);
+        MetadataRecord md;
+        if (i != null) {
+            md = i.getMetadataRecords().get(mdName);
+            if (md == null) {
+                throw new ScapeException("The metadata record " + mdName + " does not yet exist for object " + id);
+            }
+            itemHandler.updateMdRecord(id, mdName, xmlData);
+            return "";
+        }
+        Container c = getContainer(id, null);
+        if (c != null) {
+            md = c.getMetadataRecords().get(mdName);
+            if (md == null) {
+                throw new ScapeException("The metadata record " + mdName + " does not yet exist for object " + id);
+            }
+            containerHandler.updateMetadataRecord(id, mdName, xmlData);
+            return "";
+        }
+        throw new ItemNotFoundException("Unable to locate object with id " + id + " while updating metadata");
     }
 
     @Override
     public String getMetadata(String id, String mdname, String version) throws EscidocException {
         try {
-
-            MetadataRecord md = getItemMetadata(id, mdname, version);
-            if (md == null) {
-                /* might be a container */
-                md = getContainerMetadata(id, mdname, version);
-                if (md == null) {
+            MetadataRecord md;
+            Item i = getItem(id, version);
+            if (i != null) {
+                md = i.getMetadataRecords().get(mdname);
+            }
+            else {
+                Container c = getContainer(id, version);
+                if (c == null) {
                     throw new ItemNotFoundException("Unable to find resource with pid: " + id);
                 }
+                md = c.getMetadataRecords().get(mdname);
             }
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
             Element e = md.getContent();
@@ -77,59 +98,70 @@ public class MetadataHandler implements MetadataHandlerInterface {
         }
     }
 
-    private MetadataRecord getContainerMetadata(String id, String mdname, String version) throws Exception {
-        Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("query", new String[] { "\"/properties/pid\"=" + id });
-        String resultXml = containerHandler.retrieveContainers(filters);
+    private Container getContainer(String id, String version) throws EscidocException {
+        try {
+            Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+            String resultXml = containerHandler.retrieveContainers(filters);
 
-        int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
-        String tmp = new String(resultXml.substring(pos));
-        tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
-        int numRecs = Integer.parseInt(tmp);
-        if (numRecs == 0) {
-            return null;
-        }
-        else if (numRecs > 1) {
-            throw new ScapeException("More than one hit for PID " + id + ". This is not good");
-        }
-        int posStart = resultXml.indexOf("<container:container");
-        if (posStart > 0) {
-            int posEnd = resultXml.indexOf("</container:container>") + 22;
-            resultXml = resultXml.substring(posStart, posEnd);
-        }
-        else {
-            return null;
-        }
+            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+            String tmp = new String(resultXml.substring(pos));
+            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+            int numRecs = Integer.parseInt(tmp);
+            if (numRecs == 0) {
+                return null;
+            }
+            else if (numRecs > 1) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
+            int posStart = resultXml.indexOf("<container:container");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("</container:container>") + 22;
+                resultXml = resultXml.substring(posStart, posEnd);
+            }
+            else {
+                return null;
+            }
 
-        Container c = containerMarshaller.unmarshalDocument(resultXml);
-        return c.getMetadataRecords().get(mdname);
+            Container c = containerMarshaller.unmarshalDocument(resultXml);
+            return c;
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
     }
 
-    private MetadataRecord getItemMetadata(String id, String mdname, String version) throws Exception {
-        Map<String, String[]> filters = new HashMap<String, String[]>();
-        filters.put("query", new String[] { "\"/properties/pid\"=" + id });
-        String resultXml = itemHandler.retrieveItems(filters);
+    private Item getItem(String id, String version) throws EscidocException {
+        try {
+            Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+            String resultXml = itemHandler.retrieveItems(filters);
 
-        /* PARSE THE RESULT FROM ESCIDOC */
-        int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
-        String tmp = new String(resultXml.substring(pos));
-        tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
-        int numRecs = Integer.parseInt(tmp);
-        if (numRecs == 0) {
-            return null;
+            /* PARSE THE RESULT FROM ESCIDOC */
+            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+            String tmp = new String(resultXml.substring(pos));
+            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+            int numRecs = Integer.parseInt(tmp);
+            if (numRecs == 0) {
+                return null;
+            }
+            else if (numRecs > 1) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
+            int posStart = resultXml.indexOf("<escidocItem:item");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("</escidocItem:item>") + 19;
+                resultXml = resultXml.substring(posStart, posEnd);
+            }
+            else {
+                return null;
+            }
+            Item i = itemMarshaller.unmarshalDocument(resultXml);
+            return i;
         }
-        else if (numRecs > 1) {
-            throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+        catch (Exception e) {
+            throw new ScapeException(e);
         }
-        int posStart = resultXml.indexOf("<escidocItem:item");
-        if (posStart > 0) {
-            int posEnd = resultXml.indexOf("</escidocItem:item>") + 19;
-            resultXml = resultXml.substring(posStart, posEnd);
-        }
-        else {
-            return null;
-        }
-        Item i = itemMarshaller.unmarshalDocument(resultXml);
-        return i.getMetadataRecords().get(mdname);
     }
+
 }

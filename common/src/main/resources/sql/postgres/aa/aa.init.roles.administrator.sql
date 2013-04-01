@@ -140,6 +140,23 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:retrieve-item 
             info:escidoc/names:aa:1.0:action:retrieve-user-account 
             info:escidoc/names:aa:1.0:action:retrieve-user-group 
+       		info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+			info:escidoc/names:aa:1.0:action:create-intellectualentity
+			info:escidoc/names:aa:1.0:action:create-intellectualentity-async
+			info:escidoc/names:aa:1.0:action:retrieve-intellectualentity
+			info:escidoc/names:aa:1.0:action:retrieve-metadata
+			info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-list
+			info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-versions
+			info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-search
+			info:escidoc/names:aa:1.0:action:retrieve-intellectualentity-lifecycle
+			info:escidoc/names:aa:1.0:action:retrieve-representation
+			info:escidoc/names:aa:1.0:action:retrieve-representation-search
+			info:escidoc/names:aa:1.0:action:retrieve-file
+			info:escidoc/names:aa:1.0:action:retrieve-file-search
+			info:escidoc/names:aa:1.0:action:retrieve-bitstream
+			info:escidoc/names:aa:1.0:action:update-intellectualentity
+			info:escidoc/names:aa:1.0:action:update-intellectualentity-metadata
+			info:escidoc/names:aa:1.0:action:update-representation
           </AttributeValue>
 
           <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
