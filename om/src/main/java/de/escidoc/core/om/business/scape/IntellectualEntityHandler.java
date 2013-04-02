@@ -94,6 +94,7 @@ import eu.scapeproject.model.Identifier;
 import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.IntellectualEntityCollection;
 import eu.scapeproject.model.LifecycleState;
+import eu.scapeproject.model.LifecycleState.State;
 import eu.scapeproject.model.Representation;
 import eu.scapeproject.model.IntellectualEntity.Builder;
 import eu.scapeproject.util.ScapeMarshaller;
@@ -689,11 +690,14 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             String state =
                 e.getLifecycleState() != null ? e.getLifecycleState().getState().name() : LifecycleState.State.INGESTED
                     .name();
+            LifecycleState lfs = new LifecycleState("", State.valueOf(state));
             MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
             lc.setLastModificationDate(new DateTime());
             lc.setMdType("LIFECYCLE-XML");
+            ByteArrayOutputStream sink = new ByteArrayOutputStream();
+            marshaller.serialize(lfs, sink);
             lc.setContent(docbuilder
-                .parse(new InputSource(new StringReader("<lifecycle state=\"" + state + "\"/>"))).getDocumentElement());
+                .parse(new InputSource(new StringReader(new String(sink.toByteArray())))).getDocumentElement());
             records.add(lc);
 
             /* create the entity container */
@@ -958,10 +962,16 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             UserContext.setUserContext(handle);
             while (true) {
                 try {
-                    IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.take();
+                    IngestItem ingestitem = IntellectualEntityHandler.this.entitylist.peek();
+                    if (ingestitem == null) {
+                        // Nothing to do so let's go to sleep
+                        Thread.sleep(100);
+                        continue;
+                    }
                     ScheduledFuture<?> future =
                         executor.schedule(new IngestEntity(ingestitem, handle), 10, TimeUnit.MILLISECONDS);
                     future.get();
+                    IntellectualEntityHandler.this.entitylist.remove();
                 }
                 catch (InterruptedException e) {
                     // TODO Auto-generated catch block
