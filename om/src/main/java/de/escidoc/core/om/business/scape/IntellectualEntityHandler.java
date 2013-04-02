@@ -289,7 +289,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         logger.debug("ingesting intellectual entity");
         try {
-            /* ensure that the context, content model and the OU are properly initialized */
+            /*
+             * ensure that the context, content model and the OU are properly
+             * initialized
+             */
             checkScapeContext();
             checkScapeContentModel();
 
@@ -338,7 +341,35 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     @Override
     public String searchIntellectualEntities(Map<String, String[]> params) throws EscidocException {
-        return containerHandler.retrieveContainers(params);
+        try {
+            List<IntellectualEntity> entities = new ArrayList<IntellectualEntity>();
+            String xml = containerHandler.retrieveContainers(params);
+            int pos;
+            while ((pos = xml.indexOf("<container:container")) != -1) {
+                int endPos = xml.indexOf("</container:container>" + 22);
+                String containerXml = xml.substring(pos, endPos);
+                xml = xml.substring(endPos);
+                IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
+                Container c = containerMarshaller.unmarshalDocument(containerXml);
+                MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
+                entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(),
+                    ElementContainer.class));
+                entity.identifier(new Identifier(c.getObjid()));
+                entity.representations(fetchRepresentations(c));
+
+                LifecycleState lfs =
+                    (LifecycleState) marshaller.getJaxbUnmarshaller().unmarshal(
+                        c.getMetadataRecords().get("LIFECYCLE-XML").getContent());
+                entity.lifecycleState(lfs);
+                entities.add(entity.build());
+            }
+            ByteArrayOutputStream sink = new ByteArrayOutputStream();
+            marshaller.serialize(IntellectualEntityCollection.class, sink);
+            return sink.toString();
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
     }
 
     @Override
