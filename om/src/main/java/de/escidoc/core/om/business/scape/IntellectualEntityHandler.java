@@ -210,7 +210,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return false;
     }
 
-    private IntellectualEntity getIntellectualEntityObject(String id) throws Exception {
+    public IntellectualEntity getIntellectualEntityObject(String id) throws Exception {
         IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
         Map<String, String[]> filters = new HashMap<String, String[]>();
         filters.put("query", new String[] { "\"/properties/pid\"=" + id });
@@ -238,6 +238,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class));
         entity.identifier(new Identifier(c.getObjid()));
         entity.representations(fetchRepresentations(c));
+
+        LifecycleState lfs =
+            (LifecycleState) marshaller.getJaxbUnmarshaller().unmarshal(
+                c.getMetadataRecords().get("LIFECYCLE-XML").getContent());
+        entity.lifecycleState(lfs);
         return entity.build();
     }
 

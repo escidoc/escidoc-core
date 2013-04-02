@@ -2,6 +2,7 @@ package de.escidoc.core.om.business.scape;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
@@ -15,8 +16,8 @@ import de.escidoc.core.common.jibx.Marshaller;
 import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.LifeCycleHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
-import de.escidoc.core.om.service.interfaces.IntellectualEntityHandlerInterface;
 import de.escidoc.core.resources.om.container.Container;
+import eu.scapeproject.model.IntellectualEntity;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.LifecycleState.State;
 import eu.scapeproject.util.ScapeMarshaller;
@@ -32,8 +33,8 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
     private final ScapeMarshaller marshaller;
 
     @Autowired
-    @Qualifier("service.IntellectualEntityHandler")
-    private IntellectualEntityHandlerInterface entityHandler;
+    @Qualifier("business.IntellectualEntityHandler")
+    private IntellectualEntityHandler entityHandler;
 
     public LifeCycleHandler() throws Exception {
         containerMarshaller = MarshallerFactory.getInstance().getMarshaller(Container.class);
@@ -49,10 +50,13 @@ public class LifeCycleHandler implements LifeCycleHandlerInterface {
                 marshaller.serialize(state, sink);
                 return sink.toString();
             }
-            String xml = containerHandler.retrieveMdRecordContent(id, "LIFECYCLE-XML");
-            return xml;
+            IntellectualEntity e = entityHandler.getIntellectualEntityObject(id);
+            ByteArrayOutputStream sink = new ByteArrayOutputStream();
+            marshaller.serialize(e.getLifecycleState(), sink);
+            return sink.toString();
+
         }
-        catch (JAXBException e) {
+        catch (Exception e) {
             throw new ScapeException(e);
         }
     }
