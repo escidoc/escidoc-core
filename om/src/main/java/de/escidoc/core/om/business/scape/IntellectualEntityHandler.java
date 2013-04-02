@@ -668,15 +668,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             MetadataRecords records = new MetadataRecords();
             MetadataRecord descmd = new MetadataRecord("DESCRIPTIVE");
             DOMResult result = new DOMResult();
-            if (e.getDescriptive() instanceof ElementContainer) {
-                JAXBElement<ElementContainer> jaxb =
-                    new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
-                        ElementContainer.class, e.getDescriptive());
-                marshaller.getJaxbMarshaller().marshal(jaxb, result);
+            if (e.getDescriptive() == null) {
+                throw new ScapeException("Descriptive metadata can not be empty");
             }
-            else {
-                marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
-            }
+            marshaller.getJaxbMarshaller().marshal(e.getDescriptive(), result);
             descmd.setContent(((Document) result.getNode()).getDocumentElement());
             records.add(descmd);
             records.add(createEscidocRecord(e.getIdentifier().getValue()));
