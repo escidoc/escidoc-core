@@ -397,6 +397,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             IntellectualEntity e =
                 marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
             Container updated = createContainer(e.getIdentifier().getValue(), e);
+            updated.setLastModificationDate(orig.getLastModificationDate());
             containerHandler.update(orig.getObjid(), containerMarshaller.marshalDocument(updated));
             return "<scape:value>" + updated.getProperties().getPid() + "</scape:value>";
         }
@@ -930,7 +931,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private ContentStreams createFileStreams(File f) throws Exception {
         ContentStreams streams = new ContentStreams();
-        ContentStream stream = new ContentStream((f.getFilename() != null ? f.getFilename() : "file"), StorageType.INTERNAL_MANAGED, f.getMimetype());
+        ContentStream stream =
+            new ContentStream((f.getFilename() != null ? f.getFilename() : "file"), StorageType.INTERNAL_MANAGED, f
+                .getMimetype());
         stream.setXLinkHref(f.getUri().toASCIIString());
         streams.add(stream);
         return streams;
