@@ -346,14 +346,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             String xml = containerHandler.retrieveContainers(params);
             int pos;
             while ((pos = xml.indexOf("<container:container")) != -1) {
-                int endPos = xml.indexOf("</container:container>" + 22);
+                int endPos = xml.indexOf("</container:container>") + 22;
                 String containerXml = xml.substring(pos, endPos);
                 xml = xml.substring(endPos);
                 IntellectualEntity.Builder entity = new IntellectualEntity.Builder();
                 Container c = containerMarshaller.unmarshalDocument(containerXml);
                 MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
-                entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(),
-                    ElementContainer.class));
+                entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent()));
                 entity.identifier(new Identifier(c.getObjid()));
                 entity.representations(fetchRepresentations(c));
 
@@ -363,8 +362,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 entity.lifecycleState(lfs);
                 entities.add(entity.build());
             }
+            IntellectualEntityCollection coll = new IntellectualEntityCollection(entities);
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
-            marshaller.serialize(IntellectualEntityCollection.class, sink);
+            marshaller.serialize(coll, sink);
             return sink.toString();
         }
         catch (Exception e) {
