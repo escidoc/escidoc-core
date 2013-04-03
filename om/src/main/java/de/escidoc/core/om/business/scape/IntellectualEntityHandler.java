@@ -189,7 +189,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             IntellectualEntity e = getIntellectualEntityObject(id);
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
             marshaller.serialize(e, sink);
-            return sink.toString();
+            String xml = sink.toString();
+            int insertpos = xml.indexOf("?>") + 2;
+            xml =
+                xml.substring(0, insertpos)
+                    + "<?xml-stylesheet type=\"text/xsl\" href=\"/xsl/scape_intellectual_entity.xsl\"?>"
+                    + xml.substring(insertpos);
+            return xml;
         }
         catch (Exception e) {
             throw new ScapeException(e);
@@ -233,7 +239,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         Container c = containerMarshaller.unmarshalDocument(resultXml);
         MetadataRecord record = c.getMetadataRecords().get("DESCRIPTIVE");
         entity.descriptive(marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class));
-        entity.identifier(new Identifier(c.getObjid()));
+        entity.identifier(new Identifier(c.getProperties().getPid()));
         entity.representations(fetchRepresentations(c));
 
         LifecycleState lfs =
@@ -662,7 +668,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private File fetchFile(String objid) throws Exception {
         File.Builder file = new File.Builder();
         Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
-        file.identifier(new Identifier(objid));
+        file.identifier(new Identifier(i.getProperties().getPid()));
         ContentStream stream = i.getContentStreams().get(0);
         file.mimetype(stream.getMimeType());
         file.uri(URI.create(stream.getXLinkHref()));
@@ -684,7 +690,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private BitStream fetchBitStream(String objid) throws Exception {
         BitStream.Builder bs = new BitStream.Builder();
         Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
-        bs.identifier(new Identifier(objid));
+        bs.identifier(new Identifier(i.getProperties().getPid()));
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
         if (record != null) {
             Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());

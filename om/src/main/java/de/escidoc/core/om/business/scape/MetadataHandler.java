@@ -87,11 +87,20 @@ public class MetadataHandler implements MetadataHandlerInterface {
                 }
                 md = c.getMetadataRecords().get(mdname);
             }
+            if (md == null || md.getContent() == null) {
+                return "";
+            }
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
             Element e = md.getContent();
             DOMImplementationLS domImplementation = (DOMImplementationLS) e.getOwnerDocument().getImplementation();
             LSSerializer lsSerializer = domImplementation.createLSSerializer();
-            return lsSerializer.writeToString(e);
+            String xml = lsSerializer.writeToString(e);
+            int insertpos = xml.indexOf("?>") + 2;
+            xml =
+                xml.substring(0, insertpos) + "<?xml-stylesheet type=\"text/xsl\" href=\"/xsl/scape_metadata.xsl\"?>"
+                    + xml.substring(insertpos);
+            return xml;
+
         }
         catch (Exception ie) {
             throw new ScapeException(ie);

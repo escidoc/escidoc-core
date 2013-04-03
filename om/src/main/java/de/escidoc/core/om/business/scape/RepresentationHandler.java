@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+
 import org.purl.dc.elements._1.ElementContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,10 +47,32 @@ public class RepresentationHandler implements RepresentationHandlerInterface {
     @Override
     public String getRepresentation(String id) throws EscidocException {
         try {
-            Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(id));
+            Map<String, String[]> filters = new HashMap<String, String[]>();
+            filters.put("query", new String[] { "\"/properties/pid\"=" + id });
+            String resultXml = itemHandler.retrieveItems(filters);
+            int pos = resultXml.indexOf("<sru-zr:numberOfRecords>") + 24;
+            String tmp = new String(resultXml.substring(pos));
+            tmp = tmp.substring(0, tmp.indexOf("</sru-zr:numberOfRecords>"));
+            int numRecs = Integer.parseInt(tmp);
+            if (numRecs == 0) {
+                throw new ScapeException("Unable to find object with pid " + id);
+            }
+            else if (numRecs > 1) {
+                throw new ScapeException("More than one hit for PID " + id + ". This is not good");
+            }
+            int posStart = resultXml.indexOf("<escidocItem:item");
+            if (posStart > 0) {
+                int posEnd = resultXml.indexOf("</escidocItem:item>") + 19;
+                resultXml = resultXml.substring(posStart, posEnd);
+            }
+            else {
+                return null;
+            }
+
+            Item i = itemMarshaller.unmarshalDocument(resultXml);
             Representation r = fetchRepresentation(i);
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
-            marshaller.serialize(Representation.class, sink);
+            marshaller.serialize(r, sink);
             return sink.toString();
         }
         catch (Exception e) {
@@ -77,23 +101,30 @@ public class RepresentationHandler implements RepresentationHandlerInterface {
 
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
         Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        if (md instanceof JAXBElement<?>){
+        	md = ((JAXBElement) md).getValue();
+        }
         rep.technical(md);
 
         record = i.getMetadataRecords().get("PROVENANCE");
         md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        if (md instanceof JAXBElement<?>){
+        	md = ((JAXBElement) md).getValue();
+        }
         rep.provenance(md);
 
         record = i.getMetadataRecords().get("SOURCE");
-        if (record.getMdType().equals("DC")) {
-            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class);
-        }
-        else {
-            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        if (md instanceof JAXBElement<?>){
+        	md = ((JAXBElement) md).getValue();
         }
         rep.source(md);
 
         record = i.getMetadataRecords().get("RIGHTS");
         md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+        if (md instanceof JAXBElement<?>){
+        	md = ((JAXBElement) md).getValue();
+        }
         rep.rights(md);
 
         List<File> files = new ArrayList<File>();
