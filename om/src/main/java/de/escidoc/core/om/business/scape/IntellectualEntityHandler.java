@@ -6,6 +6,7 @@ import info.lc.xmlns.premis_v2.RightsComplexType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -166,10 +167,6 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Autowired
     @Qualifier("business.ScapePIDService")
     private ScapePIDService pidService;
-
-    @Autowired
-    @Qualifier("service.StagingFileHandler")
-    private StagingFileHandlerInterface stagingFileHandler;
 
     // TODO SCAPE:didn't get the semantics yet, but this has to be externalized
     private static final String SCAPE_OU_ELEMENT =
@@ -665,7 +662,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         File.Builder file = new File.Builder();
         Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
         file.identifier(new Identifier(objid));
-        file.mimetype(i.getContentStreams().get(0).getMimeType());
+        ContentStream stream = i.getContentStreams().get(0);
+        file.mimetype(stream.getMimeType());
+        file.uri(URI.create(stream.getXLinkHref()));
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
         if (record != null) {
             Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
@@ -930,26 +929,11 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     private ContentStreams createFileStreams(File f) throws Exception {
-        EscidocBinaryContent content = new EscidocBinaryContent();
-        content.setFileName(f.getFilename());
-        content.setMimeType((f.getMimetype() == null) ? "application/binary" : f.getMimetype());
-        content.setContent(f.getUri().toURL().openStream());
-        String fileXml = stagingFileHandler.create(content);
-        String hrefXml = getStagedFileLink(fileXml);
-        System.out.println("HREF for file: " + hrefXml);
         ContentStreams streams = new ContentStreams();
-        ContentStream cs =
-            new ContentStream(f.getIdentifier().getValue(), StorageType.INTERNAL_MANAGED, f.getMimetype());
-        cs.setContent(DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-            new ByteArrayInputStream(hrefXml.getBytes())).getDocumentElement());
-        streams.add(cs);
+        ContentStream stream = new ContentStream(f.getFilename(), StorageType.INTERNAL_MANAGED, f.getMimetype());
+        stream.setXLinkHref(f.getUri().toASCIIString());
+        streams.add(stream);
         return streams;
-    }
-
-    private static String getStagedFileLink(String fileXml) {
-        int posStart = fileXml.indexOf("xlink:href=\"") + 12;
-        int posEnd = fileXml.indexOf("\"", posStart);
-        return "<content>" + fileXml.substring(posStart, posEnd) + "</content>";
     }
 
     private List<ItemMemberRef> createBitStreamsItems(File f) throws Exception {

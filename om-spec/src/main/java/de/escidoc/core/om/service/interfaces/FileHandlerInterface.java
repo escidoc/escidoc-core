@@ -2,10 +2,12 @@ package de.escidoc.core.om.service.interfaces;
 
 import java.util.Map;
 
+import org.esidoc.core.utils.io.EscidocBinaryContent;
+
 import de.escidoc.core.common.exceptions.EscidocException;
 
 public interface FileHandlerInterface {
-	String getFile(String id) throws EscidocException;
+	EscidocBinaryContent getFile(String id) throws EscidocException;
 
 	String searchFiles(Map<String, String[]> params) throws EscidocException;
 }

@@ -2,6 +2,7 @@ package de.escidoc.core.om.business.scape;
 
 import java.util.Map;
 
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import de.escidoc.core.common.jibx.MarshallerFactory;
 import de.escidoc.core.om.business.interfaces.FileHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.resources.om.item.Item;
+import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 
 @Service("business.FileHandler")
 public class FileHandler implements FileHandlerInterface {
@@ -22,6 +24,10 @@ public class FileHandler implements FileHandlerInterface {
     @Qualifier("service.ItemHandler")
     private ItemHandlerInterface itemHandler;
 
+    @Autowired
+    @Qualifier("service.StagingFileHandler")
+    private StagingFileHandlerInterface stagingFileHandler;
+
     private final Marshaller<Item> itemMarshaller;
 
     public FileHandler() throws InternalClientException {
@@ -29,13 +35,13 @@ public class FileHandler implements FileHandlerInterface {
     }
 
     @Override
-    public String getFile(String id) throws EscidocException {
-        throw new ScapeException("Not yet implemented");
-        //		try {
-        //			Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(id));
-        //		} catch (Exception e) {
-        //			throw new ScapeException(e);
-        //		}
+    public EscidocBinaryContent getFile(String id) throws EscidocException {
+        try {
+            return stagingFileHandler.retrieve(id);
+        }
+        catch (Exception e) {
+            throw new ScapeException(e);
+        }
     }
 
     @Override

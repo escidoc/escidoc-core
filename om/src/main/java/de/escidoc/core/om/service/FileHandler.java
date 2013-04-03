@@ -2,6 +2,7 @@ package de.escidoc.core.om.service;
 
 import java.util.Map;
 
+import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class FileHandler implements FileHandlerInterface {
     private de.escidoc.core.om.business.interfaces.FileHandlerInterface handler;
 
     @Override
-    public String getFile(String id) throws EscidocException {
+    public EscidocBinaryContent getFile(String id) throws EscidocException {
         return handler.getFile(id);
     };
 
