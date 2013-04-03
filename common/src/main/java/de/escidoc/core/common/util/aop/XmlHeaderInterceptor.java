@@ -62,9 +62,6 @@ public class XmlHeaderInterceptor implements Ordered {
      * @return Returns the changed result.
      * @throws Throwable Thrown in case of an error.
      */
-    @Around("execution(public java.lang.String de.escidoc.core.*.service.*.*(..))"
-        + " && !execution(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !execution(* de.escidoc.core.common..*.*(..))")
     public Object processResult(final ProceedingJoinPoint joinPoint) throws Throwable {
         return post(joinPoint.proceed());
     }
@@ -77,20 +74,20 @@ public class XmlHeaderInterceptor implements Ordered {
      *         sheet definition
      */
     private static Object post(final Object result) {
-        if (result == null) {
-            return null;
-        }
-        final CharSequence res = (CharSequence) result;
-        if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
-            final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
-            ret.append(XmlUtility.getStylesheetDefinition());
-            ret.append(result);
-            return ret.toString();
-        }
-        else if (!XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
-            return PATTERN_XML_HEADER.matcher(res).replaceFirst(
-                XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
-        }
+        //        if (result == null) {
+        //            return null;
+        //        }
+        //        final CharSequence res = (CharSequence) result;
+        //        if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
+        //            final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
+        //            ret.append(XmlUtility.getStylesheetDefinition());
+        //            ret.append(result);
+        //            return ret.toString();
+        //        }
+        //        else if (!XML_DOCUMENT_START_XSLT_PATTERN.matcher(res).find()) {
+        //            return PATTERN_XML_HEADER.matcher(res).replaceFirst(
+        //                XmlUtility.DOCUMENT_START + XmlUtility.getStylesheetDefinition());
+        //        }
         return result;
     }
 }
