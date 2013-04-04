@@ -101,29 +101,29 @@ public class RepresentationHandler implements RepresentationHandlerInterface {
 
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
         Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        if (md instanceof JAXBElement<?>){
-        	md = ((JAXBElement) md).getValue();
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
         rep.technical(md);
 
         record = i.getMetadataRecords().get("PROVENANCE");
         md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        if (md instanceof JAXBElement<?>){
-        	md = ((JAXBElement) md).getValue();
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
         rep.provenance(md);
 
         record = i.getMetadataRecords().get("SOURCE");
         md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        if (md instanceof JAXBElement<?>){
-        	md = ((JAXBElement) md).getValue();
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
         rep.source(md);
 
         record = i.getMetadataRecords().get("RIGHTS");
         md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        if (md instanceof JAXBElement<?>){
-        	md = ((JAXBElement) md).getValue();
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
         rep.rights(md);
 

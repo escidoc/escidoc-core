@@ -32,6 +32,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.xerces.dom.ElementNSImpl;
 import org.esidoc.core.utils.io.EscidocBinaryContent;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -293,8 +294,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         logger.debug("ingesting intellectual entity");
         try {
             /*
-             * ensure that the context, content model and the OU are properly
-             * initialized
+             * ensure that the context, content model and the OU are properly initialized
              */
             checkScapeContext();
             checkScapeContentModel();
@@ -787,63 +787,84 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         /* technical metadata */
         MetadataRecord techmd = new MetadataRecord("TECHNICAL");
         Object md = r.getTechnical();
-        DOMResult res = new DOMResult();
-        marshaller.getJaxbMarshaller().marshal(md, res);
-        techmd.setMdType(md.getClass().getName());
-        techmd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(techmd);
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
+        }
+        if (md != null) {
+            DOMResult res = new DOMResult();
+            marshaller.getJaxbMarshaller().marshal(md, res);
+            techmd.setMdType(md.getClass().getName());
+            techmd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(techmd);
+        }
 
         /* rights metadata */
         MetadataRecord rightsmd = new MetadataRecord("RIGHTS");
         md = r.getRights();
-        res = new DOMResult();
-        if (md instanceof RightsComplexType) {
-            JAXBElement<ElementContainer> jb =
-                new JAXBElement(new QName("info:lc/xmlns/premis-v2", "rights", "premis"), RightsComplexType.class, md);
-            marshaller.getJaxbMarshaller().marshal(jb, res);
-            rightsmd.setMdType("PREMIS/Rights");
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
-        else {
-            marshaller.getJaxbMarshaller().marshal(md, res);
-            rightsmd.setMdType(md.getClass().getName());
+        if (md != null) {
+            DOMResult res = new DOMResult();
+            if (md instanceof RightsComplexType) {
+                JAXBElement<ElementContainer> jb =
+                    new JAXBElement(new QName("info:lc/xmlns/premis-v2", "rights", "premis"), RightsComplexType.class,
+                        md);
+                marshaller.getJaxbMarshaller().marshal(jb, res);
+                rightsmd.setMdType("PREMIS/Rights");
+            }
+            else {
+                marshaller.getJaxbMarshaller().marshal(md, res);
+                rightsmd.setMdType(md.getClass().getName());
+            }
+            rightsmd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(rightsmd);
         }
-        rightsmd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(rightsmd);
-
         /* provenance metadata */
         MetadataRecord digiprovmd = new MetadataRecord("PROVENANCE");
         md = r.getProvenance();
-        res = new DOMResult();
-        if (md instanceof PremisComplexType) {
-            JAXBElement<ElementContainer> jb =
-                new JAXBElement(new QName("info:lc/xmlns/premis-v2", "premis", "premis"), PremisComplexType.class, md);
-            marshaller.getJaxbMarshaller().marshal(jb, res);
-            rightsmd.setMdType("PREMIS/Provenance");
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
-        else {
-            marshaller.getJaxbMarshaller().marshal(md, res);
-            rightsmd.setMdType(md.getClass().getName());
+        if (md != null) {
+            DOMResult res = new DOMResult();
+            if (md instanceof PremisComplexType) {
+                JAXBElement<ElementContainer> jb =
+                    new JAXBElement(new QName("info:lc/xmlns/premis-v2", "premis", "premis"), PremisComplexType.class,
+                        md);
+                marshaller.getJaxbMarshaller().marshal(jb, res);
+                rightsmd.setMdType("PREMIS/Provenance");
+            }
+            else {
+                marshaller.getJaxbMarshaller().marshal(md, res);
+                rightsmd.setMdType(md.getClass().getName());
+            }
+            digiprovmd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(digiprovmd);
         }
-        digiprovmd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(digiprovmd);
-
         /* source metadata */
         MetadataRecord sourcemd = new MetadataRecord("SOURCE");
         md = r.getSource();
-        res = new DOMResult();
-        if (md instanceof ElementContainer) {
-            JAXBElement<ElementContainer> jb =
-                new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
-                    ElementContainer.class, md);
-            marshaller.getJaxbMarshaller().marshal(jb, res);
-            sourcemd.setMdType("DC");
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
         }
-        else {
-            marshaller.getJaxbMarshaller().marshal(md, res);
-            sourcemd.setMdType(md.getClass().getName());
+        if (md != null) {
+            DOMResult res = new DOMResult();
+            if (md instanceof ElementContainer) {
+                JAXBElement<ElementContainer> jb =
+                    new JAXBElement(new QName("http://purl.org/dc/elements/1.1/", "dublin-core", "dc"),
+                        ElementContainer.class, md);
+                marshaller.getJaxbMarshaller().marshal(jb, res);
+                sourcemd.setMdType("DC");
+            }
+            else {
+                marshaller.getJaxbMarshaller().marshal(md, res);
+                sourcemd.setMdType(md.getClass().getName());
+            }
+            sourcemd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(sourcemd);
         }
-        sourcemd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(sourcemd);
+
         records.add(createEscidocRecord(r.getIdentifier().getValue()));
 
         return records;
@@ -856,12 +877,23 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         if (md == null) {
             return records;
         }
-        MetadataRecord techmd = new MetadataRecord("TECHNICAL");
-        DOMResult res = new DOMResult();
-        marshaller.getJaxbMarshaller().marshal(md, res);
-        techmd.setMdType(md.getClass().getName());
-        techmd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(techmd);
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
+        }
+        if (md instanceof ElementNSImpl) {
+            MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+            techmd.setMdType(md.getClass().getName());
+            techmd.setContent((ElementNSImpl) md);
+            records.add(techmd);
+        }
+        else {
+            MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+            DOMResult res = new DOMResult();
+            marshaller.getJaxbMarshaller().marshal(md, res);
+            techmd.setMdType(md.getClass().getName());
+            techmd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(techmd);
+        }
         return records;
     }
 
@@ -872,12 +904,23 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         if (md == null) {
             return records;
         }
-        MetadataRecord techmd = new MetadataRecord("TECHNICAL");
-        DOMResult res = new DOMResult();
-        marshaller.getJaxbMarshaller().marshal(md, res);
-        techmd.setMdType(md.getClass().getName());
-        techmd.setContent(((Document) res.getNode()).getDocumentElement());
-        records.add(techmd);
+        if (md instanceof JAXBElement<?>) {
+            md = ((JAXBElement) md).getValue();
+        }
+        if (md instanceof ElementNSImpl) {
+            MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+            techmd.setMdType(md.getClass().getName());
+            techmd.setContent((ElementNSImpl) md);
+            records.add(techmd);
+        }
+        else {
+            MetadataRecord techmd = new MetadataRecord("TECHNICAL");
+            DOMResult res = new DOMResult();
+            marshaller.getJaxbMarshaller().marshal(md, res);
+            techmd.setMdType(md.getClass().getName());
+            techmd.setContent(((Document) res.getNode()).getDocumentElement());
+            records.add(techmd);
+        }
         return records;
     }
 
@@ -917,9 +960,17 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             props.setPid(fileId);
             item.setProperties(props);
             item.setMetadataRecords(createMetadataRecords(f));
-            if (f.getUri() != null) {
-                /* fetch the content and add it to the item */
-                item.setContentStreams(createFileStreams(f));
+            if (f.getUri() != null && (f.getUri().getScheme() != null)) {
+                if (f.getUri().getScheme().equals("file")) {
+                    java.io.File local = new java.io.File(f.getUri());
+                    if (local.exists()) {
+                        item.setContentStreams(createFileStreams(f));
+                    }
+                }
+                else {
+                    /* fetch the content and add it to the item */
+                    item.setContentStreams(createFileStreams(f));
+                }
             }
             Relations rels = new Relations();
             for (ItemMemberRef ref : createBitStreamsItems(f)) {
@@ -938,8 +989,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private ContentStreams createFileStreams(File f) throws Exception {
         ContentStreams streams = new ContentStreams();
         ContentStream stream =
-            new ContentStream((f.getFilename() != null ? f.getFilename() : "file"), StorageType.INTERNAL_MANAGED, f
-                .getMimetype());
+            new ContentStream((f.getFilename() != null ? f.getFilename() : "file"), StorageType.INTERNAL_MANAGED, (f
+                .getMimetype() != null) ? f.getMimetype() : "application/octet-stream");
         stream.setXLinkHref(f.getUri().toASCIIString());
         streams.add(stream);
         return streams;
@@ -947,18 +998,21 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
     private List<ItemMemberRef> createBitStreamsItems(File f) throws Exception {
         List<ItemMemberRef> refs = new ArrayList<ItemMemberRef>();
-        for (BitStream bs : f.getBitStreams()) {
-            Item item = new Item();
-            ItemProperties props = new ItemProperties();
-            props.setContentModel(new ContentModelRef(scapeContentModelId));
-            props.setContext(new ContextRef(scapeContext.getObjid()));
-            String bsId = "BITSTREAM-" + UUID.randomUUID().toString();
-            props.setPid(bs.getIdentifier().getValue());
-            item.setProperties(props);
-            item.setMetadataRecords(createMetadataRecords(bs));
-            String escidocId =
-                itemMarshaller.unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
-            refs.add(new ItemMemberRef("/ir/item/" + escidocId, bsId, XLinkType.simple));
+        if (f.getBitStreams() != null) {
+            for (BitStream bs : f.getBitStreams()) {
+                Item item = new Item();
+                ItemProperties props = new ItemProperties();
+                props.setContentModel(new ContentModelRef(scapeContentModelId));
+                props.setContext(new ContextRef(scapeContext.getObjid()));
+                String bsId = "BITSTREAM-" + UUID.randomUUID().toString();
+                props.setPid(bs.getIdentifier().getValue());
+                item.setProperties(props);
+                item.setMetadataRecords(createMetadataRecords(bs));
+                String escidocId =
+                    itemMarshaller
+                        .unmarshalDocument(itemHandler.create(itemMarshaller.marshalDocument(item))).getObjid();
+                refs.add(new ItemMemberRef("/ir/item/" + escidocId, bsId, XLinkType.simple));
+            }
         }
         return refs;
     }
