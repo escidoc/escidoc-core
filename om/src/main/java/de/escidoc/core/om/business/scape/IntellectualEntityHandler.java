@@ -306,7 +306,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
 
             /* persist the container/entity in escidoc */
             Container container = createContainer(pid, e);
-            containerHandler.create(containerMarshaller.marshalDocument(container));
+            String data = containerHandler.create(containerMarshaller.marshalDocument(container));
 
             /* return the pid wrapped in a scape xml answer */
             return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
@@ -965,6 +965,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     java.io.File local = new java.io.File(f.getUri());
                     if (local.exists()) {
                         item.setContentStreams(createFileStreams(f));
+                    }
+                    else {
+                        continue;
                     }
                 }
                 else {
