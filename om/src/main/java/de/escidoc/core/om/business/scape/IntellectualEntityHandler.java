@@ -207,7 +207,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     public boolean isEntityQueued(String id) {
         Iterator<IngestItem> ingests = entitylist.iterator();
         while (ingests.hasNext()) {
-            if (ingests.next().entity.getIdentifier().getValue().equals(id)) {
+            if (ingests.next().pid.equals(id)) {
                 return true;
             }
         }
@@ -292,42 +292,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     @Override
     public String ingestIntellectualEntity(String xml) throws EscidocException {
         logger.debug("ingesting intellectual entity");
-        try {
-            /*
-             * ensure that the context, content model and the OU are properly
-             * initialized
-             */
-            checkScapeContext();
-            checkScapeContentModel();
-
-            IntellectualEntity e =
-                marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
-            /* create a PID for the entity */
-            String pid = "ENTITY-" + UUID.randomUUID().toString();
-
-            /* persist the container/entity in escidoc */
-            Container container = createContainer(pid, e);
-            String data = containerHandler.create(containerMarshaller.marshalDocument(container));
-
-            /* return the pid wrapped in a scape xml answer */
-            return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
-        }
-        catch (Exception e) {
-            throw new ScapeException(e);
-        }
+        return ingestIntellectualEntity(xml, null);
     }
 
     @Override
     public String ingestIntellectualEntityAsync(String xml) throws EscidocException {
         try {
-            IntellectualEntity e =
-                marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
-            if (e.getIdentifier() == null || e.getIdentifier().getValue() == null) {
-                IntellectualEntity.Builder b = new IntellectualEntity.Builder(e);
-                b.identifier(new Identifier("ENTITY-" + UUID.randomUUID()));
-                e = b.build();
-            }
-            IngestItem p = new IngestItem(e);
+            IngestItem p = new IngestItem(xml, "ENTITY-" + UUID.randomUUID());
             entitylist.add(p);
             // start single thread, to read the queue.
             // start the thread only once
@@ -336,7 +307,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 ExecutorService service = Executors.newSingleThreadExecutor();
                 service.execute(new IngestWorker(UserContext.getHandle()));
             }
-            return "<scape:value>" + e.getIdentifier().getValue() + "</scape:value>";
+            return "<scape:value>" + p.pid + "</scape:value>";
         }
         catch (Exception e) {
             throw new ScapeException(e);
@@ -413,13 +384,28 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         }
     }
 
-    public void ingestIntellectualEntity(IntellectualEntity entity) throws EscidocException {
+    private String ingestIntellectualEntity(String xml, String pid) throws EscidocException {
         try {
-            ByteArrayOutputStream sink = new ByteArrayOutputStream();
-            marshaller.serialize(entity, sink);
-            ingestIntellectualEntity(sink.toString());
+            /*
+             * ensure that the context, content model and the OU are properly
+             * initialized
+             */
+            checkScapeContext();
+            checkScapeContentModel();
+            if (pid == null) {
+                pid = "ENTITY-" + UUID.randomUUID().toString();
+            }
+            IntellectualEntity e =
+                marshaller.deserialize(IntellectualEntity.class, new ByteArrayInputStream(xml.getBytes()));
+
+            /* persist the container/entity in escidoc */
+            Container container = createContainer(pid, e);
+            containerHandler.create(containerMarshaller.marshalDocument(container));
+
+            /* return the pid wrapped in a scape xml answer */
+            return "<scape:value>" + container.getProperties().getPid() + "</scape:value>";
         }
-        catch (JAXBException e) {
+        catch (Exception e) {
             throw new ScapeException(e);
         }
     }
@@ -1033,10 +1019,13 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     }
 
     private class IngestItem {
-        private final IntellectualEntity entity;
+        private final String xml;
 
-        public IngestItem(IntellectualEntity e) throws EscidocException {
-            this.entity = e;
+        private final String pid;
+
+        public IngestItem(String xml, String pid) throws EscidocException {
+            this.xml = xml;
+            this.pid = pid;
         }
     }
 
@@ -1096,10 +1085,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             UserContext.setUserContext(handle);
             try {
                 long start = System.currentTimeMillis();
-                IntellectualEntityHandler.this.ingestIntellectualEntity(ingestitem.entity);
+                IntellectualEntityHandler.this.ingestIntellectualEntity(ingestitem.xml, ingestitem.pid);
                 long diff = System.currentTimeMillis() - start;
                 System.out.println("Time (ms): " + diff + " thread-id: " + Thread.currentThread().getId() + " SIP-ID: "
-                    + ingestitem.entity.getIdentifier().getValue());
+                    + ingestitem.pid);
             }
             catch (EscidocException e1) {
                 // TODO Auto-generated catch block

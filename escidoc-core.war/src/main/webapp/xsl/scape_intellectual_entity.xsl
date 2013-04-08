@@ -38,7 +38,7 @@
 		<body>
 			<xsl:variable name="entity_id" select="//@OBJID" />
 			<h1><xsl:value-of select="$entity_id" /></h1>
-			<p><b><a href="/scape/metadata/{$entity_id}/DESCRIPTIVE/1">Descriptive metadata (Dublin core metadata)</a></b></p>
+			<p><b><a href="/scape/metadata/{$entity_id}/DESCRIPTIVE/1">Descriptive metadata</a></b></p>
 			<xsl:if test="/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/dc:dublin-core/dc:title != ''">
 				<p style="padding-left:10px">Title: <xsl:value-of select="/mets:mets/mets:dmdSec/mets:mdWrap/mets:xmlData/dc:dublin-core/dc:title" /></p>
 			</xsl:if>
