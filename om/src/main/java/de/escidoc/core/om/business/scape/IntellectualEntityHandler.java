@@ -961,11 +961,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     if (local.exists()) {
                         item.setContentStreams(createFileStreams(f));
                     }
-                    else {
-                        continue;
-                    }
-                }
-                else {
+                }else {
                     /* fetch the content and add it to the item */
                     item.setContentStreams(createFileStreams(f));
                 }
