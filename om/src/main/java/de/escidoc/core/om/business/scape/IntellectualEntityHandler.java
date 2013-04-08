@@ -725,7 +725,7 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             String state =
                 e.getLifecycleState() != null ? e.getLifecycleState().getState().name() : LifecycleState.State.INGESTED
                     .name();
-            LifecycleState lfs = new LifecycleState("", State.valueOf(state));
+            LifecycleState lfs = new LifecycleState("", State.INGESTED);
             MetadataRecord lc = new MetadataRecord("LIFECYCLE-XML");
             lc.setLastModificationDate(new DateTime());
             lc.setMdType("LIFECYCLE-XML");
