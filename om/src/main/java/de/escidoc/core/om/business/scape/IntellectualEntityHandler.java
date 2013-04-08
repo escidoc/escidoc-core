@@ -294,7 +294,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         logger.debug("ingesting intellectual entity");
         try {
             /*
-             * ensure that the context, content model and the OU are properly initialized
+             * ensure that the context, content model and the OU are properly
+             * initialized
              */
             checkScapeContext();
             checkScapeContentModel();
@@ -634,26 +635,37 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
     private Representation fetchRepresentation(Item i) throws Exception {
         Representation.Builder rep = new Representation.Builder(new Identifier(i.getProperties().getPid()));
 
-        MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
-        Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        rep.technical(md);
+        if (i.getMetadataRecords() != null) {
+            MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
+            if (record != null) {
+                Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+                rep.technical(md);
+            }
 
-        record = i.getMetadataRecords().get("PROVENANCE");
-        md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        rep.provenance(md);
+            record = i.getMetadataRecords().get("PROVENANCE");
+            if (record != null) {
+                Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+                rep.provenance(md);
+            }
 
-        record = i.getMetadataRecords().get("SOURCE");
-        if (record.getMdType().equals("DC")) {
-            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class);
+            record = i.getMetadataRecords().get("SOURCE");
+            if (record != null) {
+                Object md;
+                if (record.getMdType().equals("DC")) {
+                    md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent(), ElementContainer.class);
+                }
+                else {
+                    md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+                }
+                rep.source(md);
+            }
+
+            record = i.getMetadataRecords().get("RIGHTS");
+            if (record != null) {
+                Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+                rep.rights(md);
+            }
         }
-        else {
-            md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        }
-        rep.source(md);
-
-        record = i.getMetadataRecords().get("RIGHTS");
-        md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-        rep.rights(md);
 
         List<File> files = new ArrayList<File>();
         for (Relation rel : i.getRelations()) {
