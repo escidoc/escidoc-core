@@ -33,7 +33,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.xerces.dom.ElementNSImpl;
-import org.esidoc.core.utils.io.EscidocBinaryContent;
+import org.jdom.input.DOMBuilder;
+import org.jdom.output.DOMOutputter;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormatter;
@@ -47,6 +48,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -89,7 +91,6 @@ import de.escidoc.core.resources.om.item.StorageType;
 import de.escidoc.core.resources.om.item.component.Component;
 import de.escidoc.core.resources.oum.OrganizationalUnit;
 import de.escidoc.core.resources.oum.OrganizationalUnitProperties;
-import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 import eu.scapeproject.model.BitStream;
 import eu.scapeproject.model.File;
 import eu.scapeproject.model.Identifier;
@@ -98,7 +99,6 @@ import eu.scapeproject.model.IntellectualEntityCollection;
 import eu.scapeproject.model.LifecycleState;
 import eu.scapeproject.model.LifecycleState.State;
 import eu.scapeproject.model.Representation;
-import eu.scapeproject.model.IntellectualEntity.Builder;
 import eu.scapeproject.util.ScapeMarshaller;
 
 @Service("business.IntellectualEntityHandler")
@@ -191,7 +191,10 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             ByteArrayOutputStream sink = new ByteArrayOutputStream();
             marshaller.serialize(e, sink);
             String xml = sink.toString();
-            int insertpos = xml.indexOf("?>") + 2;
+            int insertpos = 0;
+            if (xml.indexOf("?>") != -1) {
+                insertpos = xml.indexOf("?>") + 2;
+            }
             xml =
                 xml.substring(0, insertpos)
                     + "<?xml-stylesheet type=\"text/xsl\" href=\"/xsl/scape_intellectual_entity.xsl\"?>"
@@ -667,13 +670,30 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         File.Builder file = new File.Builder();
         Item i = itemMarshaller.unmarshalDocument(itemHandler.retrieve(objid));
         file.identifier(new Identifier(i.getProperties().getPid()));
-        ContentStream stream = i.getContentStreams().get(0);
-        file.mimetype(stream.getMimeType());
-        file.uri(URI.create(stream.getXLinkHref()));
+        if (i.getContentStreams() != null) {
+            ContentStream stream = i.getContentStreams().get(0);
+            if (stream != null) {
+                file.mimetype(stream.getMimeType());
+                file.uri(URI.create(stream.getXLinkHref()));
+            }
+        }
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
         if (record != null) {
-            Object md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
-            file.technical(md);
+            Object md;
+            try {
+                md = marshaller.getJaxbUnmarshaller().unmarshal(record.getContent());
+                file.technical(md);
+            }
+            catch (JAXBException e) {
+                Element el = record.getContent();
+                if (el.getNamespaceURI().equals("http://books.google.com/gbs")) {
+                    // wrap it all in a xml root element and deserialize to ProductionNotes type
+                    org.jdom.Element root = new org.jdom.Element("gbs", "http://books.google.com/gbs");
+                    org.jdom.Document doc = new org.jdom.Document(root);
+                    DOMOutputter out = new DOMOutputter();
+                    md = marshaller.getJaxbUnmarshaller().unmarshal(out.output(doc));
+                }
+            }
         }
         List<BitStream> bitstreams = new ArrayList<BitStream>();
         for (Relation rel : i.getRelations()) {
@@ -961,7 +981,8 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                     if (local.exists()) {
                         item.setContentStreams(createFileStreams(f));
                     }
-                }else {
+                }
+                else {
                     /* fetch the content and add it to the item */
                     item.setContentStreams(createFileStreams(f));
                 }
