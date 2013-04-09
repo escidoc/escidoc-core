@@ -10,6 +10,7 @@
    xmlns:mix="http://www.loc.gov/mix/v20" 
    xmlns:vmd="http://www.loc.gov/videoMD/" 
    xmlns:premis="info:lc/xmlns/premis-v2" 
+   xmlns:gbs="http://books.google.com/gbs"
    version="1.0">
 	<xsl:template match="/">
 		<html>
@@ -106,6 +107,13 @@
 			<xsl:if test="/premis:rights">
 				<p><b>PREMIS rights metadata record</b>(<a href="http://www.loc.gov/standards/premis/">Documentation</a>)</p>
 				<xsl:variable name="nodes" select="/premis:rights" />
+				<textarea>
+	   				<xsl:copy-of select="$nodes"/>
+	   			</textarea>
+			</xsl:if>
+			<xsl:if test="/gbs:gbs">
+				<p><b>Google books scan metadata</b></p>
+				<xsl:variable name="nodes" select="/gbs:gbs" />
 				<textarea>
 	   				<xsl:copy-of select="$nodes"/>
 	   			</textarea>
