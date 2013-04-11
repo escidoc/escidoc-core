@@ -674,7 +674,9 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
             ContentStream stream = i.getContentStreams().get(0);
             if (stream != null) {
                 file.mimetype(stream.getMimeType());
-                file.uri(URI.create(stream.getXLinkHref()));
+                file.uri(URI.create("file:///"
+                    + System.getProperty("scape.binaries.directory", System.getProperty("java.io.tmp")) + "/"
+                    + stream.getXLinkTitle()));
             }
         }
         MetadataRecord record = i.getMetadataRecords().get("TECHNICAL");
@@ -979,14 +981,27 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
                 if (f.getUri().getScheme().equals("file")) {
                     java.io.File local = new java.io.File(f.getUri());
                     if (local.exists()) {
-                        item.setContentStreams(createFileStreams(f));
+                        item.setContentStreams(createFileStreams(f, null));
+                    }
+                    else {
+                        /* fetch the content and add it to the item */
+                        item.setContentStreams(createFileStreams(f, null));
                     }
                 }
+            }
+            else if (f.getUri() != null && f.getUri().getScheme() == null) {
+                /* try to read the  file from the import directory */
+                System.out.println("ingesting binary " + f.getUri().toASCIIString());
+                String path = System.getProperty("scape.binaries.directory", System.getProperty("java.io.tmp"));
+                java.io.File local = new java.io.File(path, f.getUri().getPath());
+                if (local.exists()) {
+                    item.setContentStreams(createFileStreams(f, path));
+                }
                 else {
-                    /* fetch the content and add it to the item */
-                    item.setContentStreams(createFileStreams(f));
+                    logger.warn("Unable to ingest binary file " + f.getUri() + " from " + path);
                 }
             }
+
             Relations rels = new Relations();
             for (ItemMemberRef ref : createBitStreamsItems(f)) {
                 Relation rel = new Relation(ref);
@@ -1001,12 +1016,18 @@ public class IntellectualEntityHandler implements IntellectualEntityHandlerInter
         return refs;
     }
 
-    private ContentStreams createFileStreams(File f) throws Exception {
+    private ContentStreams createFileStreams(File f, String importPath) throws Exception {
         ContentStreams streams = new ContentStreams();
         ContentStream stream =
-            new ContentStream((f.getFilename() != null ? f.getFilename() : "file"), StorageType.INTERNAL_MANAGED, (f
-                .getMimetype() != null) ? f.getMimetype() : "application/octet-stream");
-        stream.setXLinkHref(f.getUri().toASCIIString());
+            new ContentStream((f.getIdentifier().getValue() != null ? f.getIdentifier().getValue() : "Unknown"),
+                StorageType.EXTERNAL_MANAGED, (f.getMimetype() != null) ? f.getMimetype() : "application/octet-stream");
+        if (importPath == null) {
+            stream.setXLinkHref(f.getUri().toASCIIString());
+        }
+        else {
+            stream.setXLinkTitle(f.getUri().toASCIIString());
+            stream.setXLinkHref("file:///" + importPath + "/" + f.getFilename());
+        }
         streams.add(stream);
         return streams;
     }
