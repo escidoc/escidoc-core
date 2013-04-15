@@ -1021,7 +1021,7 @@
 
   <distributionManagement>
     <repository>
-      <id>org.escidoc.core</id>
+      <id>org.escidoc.core</id>  
       <name>org.escidoc.core-releases</name>
       <url>https://www.escidoc.org/artifactory/libs-release-local</url>
     </repository>
