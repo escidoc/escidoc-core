@@ -72,6 +72,11 @@ Indexing:
               This is used to limit the files size to avoid to high memory consumption when merging big files to one. 
             -fgsindex.maxMergeMb: limits the size of a segment above which merging does not happen. 
               This is used to limit the files size to avoid to high memory consumption when merging big files to one.
+            -fgsindex.ramBufferSizeMb
+              Determines the amount of RAM that may be used for buffering added documents and deletions before they 
+              are flushed to the Directory. Generally for faster indexing performance it's best to flush 
+              by RAM usage instead of document count and use as large a RAM buffer as you can.               
+              
             -fgsindex.lucene.directory.implementation:
               Directory Implementation for lucene (used for merges + optimize)
               can be:
