@@ -28,7 +28,13 @@
  */
 package de.escidoc.core.st.business;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
 
 /**
@@ -37,6 +43,8 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  * @author Michael Schneider
  */
 public final class StagingUtil {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagingUtil.class);
 
     private static final String STAGING_AREA_BASE_PATH = "catalina.home";
 
@@ -54,7 +62,7 @@ public final class StagingUtil {
      * The duration during which a token is valid, i.e. uploading/downloading data is possible.<br> The value is 1000
      * seconds.
      */
-    public static final int TOKEN_VALID_DURATION = 1000000;
+    public static int TOKEN_VALID_DURATION = 1000000;
 
     /**
      * Private constructor to avoid instantiation.
@@ -138,6 +146,14 @@ public final class StagingUtil {
 
         final StagingFile stagingFile = new StagingFile();
         stagingFile.setReference(null);
+        try {
+            TOKEN_VALID_DURATION =
+                EscidocConfiguration.getInstance().getAsInt(EscidocConfiguration.ESCIDOC_CORE_STAGING_DURATION,
+                    TOKEN_VALID_DURATION);
+        }
+        catch (IOException e) {
+            LOGGER.warn("Error when setting TOKEN_VALID_DURATION" + e);
+        }
         stagingFile.setExpiryTs(timestamp + (long) TOKEN_VALID_DURATION);
         stagingFile.setUpload(isUpload);
         stagingFileDao.save(stagingFile);

@@ -117,6 +117,8 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_CORE_PID_SEPARATOR = "escidoc-core.PidSystem.separator";
 
+    public static final String ESCIDOC_CORE_STAGING_DURATION = "escidoc-core.st.staging_file.valid_time";
+
     public static final String DE_FIZ_ESCIDOC_OM_SERVICE_PROVIDER_URL = "de.escidoc.core.om.service.provider.url";
 
     public static final String DE_FIZ_ESCIDOC_SM_SERVICE_PROVIDER_URL = "de.escidoc.core.sm.service.provider.url";
