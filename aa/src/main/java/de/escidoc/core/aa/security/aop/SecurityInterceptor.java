@@ -401,7 +401,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
     private static AuthorizationException createAuthorizationException(final String className, final String methodName, final Object[] arguments)
-        throws WebserverSystemException {
+        throws WebserverSystemException { 
 
         return new AuthorizationException(StringUtility.format("Access denied", className, methodName, UserContext
             .getHandle(), UserContext.getId(), arguments != null && arguments.length > 0 ? arguments[0] : ""));
