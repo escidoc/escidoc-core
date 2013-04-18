@@ -1274,7 +1274,7 @@
     <snapshotRepository>
       <id>org.escidoc.core</id>
       <name>org.escidoc.core-snapshots</name>
-      <url>https://www.escidoc.org/artifactory/libs-snapshot-local</url>
+      <url>https://www.escidoc.org/artifactory/libs-snapshot-local</url> 
     </snapshotRepository>
   </distributionManagement>
 
