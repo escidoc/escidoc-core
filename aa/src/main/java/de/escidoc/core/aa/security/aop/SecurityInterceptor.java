@@ -212,7 +212,7 @@ public class SecurityInterceptor implements Ordered {
             // ResourceNotFoundException must be caught and a
             // AuthorizationException has to be thrown, instead
             if (UserContext.isRetrieveRestrictedToReleased() && ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
-                throw createAuthorizationException(target, methodName);
+                throw createAuthorizationException(target, methodName, arguments);
             }
             else {
                 throw e;
@@ -318,11 +318,11 @@ public class SecurityInterceptor implements Ordered {
                 // throws an AuthorizationException if not authorized
                 final boolean[] accessAllowedArray = this.pdp.evaluateRequestList(requests);
                 if (accessAllowedArray == null || accessAllowedArray.length == 0) {
-                    throw createAuthorizationException(className, methodName);
+                    throw createAuthorizationException(className, methodName, arguments);
                 }
                 for (final boolean anAccessAllowedArray : accessAllowedArray) {
                     if (!anAccessAllowedArray) {
-                        throw createAuthorizationException(className, methodName);
+                        throw createAuthorizationException(className, methodName, arguments);
                     }
                 }
             }
@@ -405,11 +405,11 @@ public class SecurityInterceptor implements Ordered {
      * @return Returns the {@link AuthorizationException}.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static AuthorizationException createAuthorizationException(final String className, final String methodName)
+    private static AuthorizationException createAuthorizationException(final String className, final String methodName, final Object[] arguments)
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility.format("Access denied", className, methodName, UserContext
-            .getHandle(), UserContext.getId()));
+            .getHandle(), UserContext.getId(), arguments != null && arguments.length > 0 ? arguments[0] : ""));
     }
 
     /**
