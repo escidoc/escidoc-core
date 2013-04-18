@@ -1269,12 +1269,12 @@
     <repository>
       <id>org.escidoc.core</id>
       <name>org.escidoc.core-releases</name>
-      <url>https://www.escidoc.org/artifactory/libs-releases-local</url>
+      <url>https://www.escidoc.org/artifactory/libs-release-local</url>
     </repository>
     <snapshotRepository>
       <id>org.escidoc.core</id>
       <name>org.escidoc.core-snapshots</name>
-      <url>https://www.escidoc.org/artifactory/libs-snapshots-local</url>
+      <url>https://www.escidoc.org/artifactory/libs-snapshot-local</url> 
     </snapshotRepository>
   </distributionManagement>
 
@@ -1301,7 +1301,7 @@
     <ostermillerutils.version>1.0.0</ostermillerutils.version>
     <wss4j.version>1.5.11</wss4j.version>
     <saxon.version>1.0.8</saxon.version>
-    <escidoc.fedoragsearch.version>1.5.30</escidoc.fedoragsearch.version>
+    <escidoc.fedoragsearch.version>1.5.31</escidoc.fedoragsearch.version>
     <escidoc.srw.version>1.5.16</escidoc.srw.version>
     <srw.version>1.5.10</srw.version>
     <escidoc-analyzers.version>1.5.0</escidoc-analyzers.version>
