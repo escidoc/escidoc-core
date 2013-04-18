@@ -621,7 +621,7 @@ Notes:
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="UN_TOKENIZED">
+            <element index="TOKENIZED">
                 <xsl:if test="string($href) and $href != ''">
                 	<xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                 		concat($href, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
