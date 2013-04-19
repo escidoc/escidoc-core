@@ -217,7 +217,7 @@ public class SecurityInterceptor implements Ordered {
             // ResourceNotFoundException must be caught and a
             // AuthorizationException has to be thrown, instead
             if (UserContext.isRetrieveRestrictedToReleased() && ERR_MSG_LATEST_RELEASE_NOT_FOUND.equals(e.getMessage())) {
-                throw createAuthorizationException(target, methodName,arguments);
+                throw createAuthorizationException(target, methodName, arguments);
             }
             else {
                 throw e;
@@ -400,8 +400,8 @@ public class SecurityInterceptor implements Ordered {
      * @return Returns the {@link AuthorizationException}.
      * @throws WebserverSystemException Thrown in case of an internal error.
      */
-    private static AuthorizationException createAuthorizationException(final String className, final String methodName, final Object[] arguments)
-        throws WebserverSystemException { 
+    private static AuthorizationException createAuthorizationException(
+        final String className, final String methodName, final Object[] arguments) throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility.format("Access denied", className, methodName, UserContext
             .getHandle(), UserContext.getId(), arguments != null && arguments.length > 0 ? arguments[0] : ""));
