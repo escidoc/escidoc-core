@@ -304,6 +304,38 @@ public class CreateTest extends OrganizationalUnitTestBase {
     }
 
     /**
+     * Test successfully creating an organizational unit with long description.
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testOumLongDescription() throws Exception {
+
+        Document toBeCreatedDocument =
+            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH, "escidoc_ou_create.xml");
+        StringBuilder value = new StringBuilder();
+        for (int i = 0; i < 500; i++) {
+            value.append("a");
+        }
+        toBeCreatedDocument =
+            (Document) substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_ESCIDOC_MD_RECORD + "/description",
+                value.toString());
+
+        String toBeCreatedXml = toString(toBeCreatedDocument, false);
+
+        String createdXml = null;
+        try {
+            createdXml = create(toBeCreatedXml);
+        }
+        catch (final Exception e) {
+            failException("creating of ou failed. ", e);
+        }
+        assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp, startTimestamp);
+        assertXmlEquals("description not correct", createdXml, XPATH_ORGANIZATIONAL_UNIT_ESCIDOC_MD_RECORD
+            + "/description", value.toString());
+    }
+
+    /**
      * Test successfully creating an organizational unit with parents in state opened.
      *
      * @throws Exception If anything fails.
