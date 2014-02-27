@@ -1690,7 +1690,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         result = result.substring(1, result.lastIndexOf('\"'));
                     }
                     else {
-                        // if no further " character is occuring, String may be truncated                 	
+                        // if no further " character is available, String may be truncated                 	
                         result = result.substring(1, result.length());
                         logger.warn("String may got truncated: " + result);
                     }
