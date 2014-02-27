@@ -45,6 +45,8 @@ import org.nsdl.mptstore.core.DDLGenerator;
 import org.nsdl.mptstore.core.TableManager;
 import org.nsdl.mptstore.rdf.URIReference;
 import org.nsdl.mptstore.util.NTriplesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 
 import de.escidoc.core.common.business.Constants;
@@ -76,6 +78,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     private TableManager tableManager;
 
     private DatabaseType databaseType;
+
+    private static final Logger logger = LoggerFactory.getLogger(MPTTripleStoreUtility.class);
 
     /**
      * Injects the data source.
@@ -1682,7 +1686,14 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     result = result.substring(1, result.length() - 1);
                 }
                 else if (result.startsWith("\"")) {
-                    result = result.substring(1, result.lastIndexOf('\"'));
+                    if (result.lastIndexOf('\"') > 0) {
+                        result = result.substring(1, result.lastIndexOf('\"'));
+                    }
+                    else {
+                        // if no further " character is occuring, String may be truncated                 	
+                        result = result.substring(1, result.length());
+                        logger.warn("String may got truncated: " + result);
+                    }
                 }
                 result = XmlUtility.escapeForbiddenXmlCharacters(result);
             }
