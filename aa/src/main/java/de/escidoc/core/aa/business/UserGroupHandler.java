@@ -1581,7 +1581,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (groupProperties != null) {
             final String description = groupProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (description != null
-                && (userGroup.getDescription() != null && description.equals(userGroup.getDescription()) || userGroup
+                && (userGroup.getDescription() != null && !description.equals(userGroup.getDescription()) || userGroup
                     .getDescription() == null)) {
                 userGroup.setDescription(description);
                 changed = true;
@@ -1608,14 +1608,14 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             final String email = groupProperties.get("email");
             if (email != null
-                && (userGroup.getEmail() != null && email.equals(userGroup.getEmail()) || userGroup.getEmail() == null)) {
+                && (userGroup.getEmail() != null && !email.equals(userGroup.getEmail()) || userGroup.getEmail() == null)) {
                 userGroup.setEmail(email);
                 changed = true;
             }
 
             final String type = groupProperties.get(Elements.ELEMENT_TYPE);
             if (type != null
-                && (userGroup.getType() != null && type.equals(userGroup.getType()) || userGroup.getType() == null)) {
+                && (userGroup.getType() != null && !type.equals(userGroup.getType()) || userGroup.getType() == null)) {
                 userGroup.setType(type);
                 changed = true;
             }
