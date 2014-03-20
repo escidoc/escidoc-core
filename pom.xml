@@ -35,13 +35,23 @@
     <url>https://www.escidoc.org/jira/browse/INFR</url>
   </issueManagement>
   <ciManagement>
-    <system>Hudson</system>
-    <url>http://escidev2.fiz-karlsruhe.de:8484/job/eSciDoc%20Trunk/</url>
+    <system>Continuum</system>
+    <url>http://continuum.mpdl.mpg.de/continuum</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<configuration>
+					<address>escidoc-code@gwdg.de</address>
+				</configuration>
+			</notifier>
+		</notifiers>
   </ciManagement>
   <scm>
-    <developerConnection>scm:svn:http://escidev5.fiz-karlsruhe.de:8888/prototype/eSciDocCore</developerConnection>
-    <url>http://escidev5.fiz-karlsruhe.de:8888/prototype/eSciDocCore/</url>
-  </scm>
+		<connection>scm:git:https://github.com/siedersleben/escidoc-core.git</connection>
+		<developerConnection>scm:git:https://github.com/siedersleben/escidoc-core.git</developerConnection>
+		<url>https://github.com/siedersleben/escidoc-core/tree/1.3</url>
+		<!--tag>1.3</tag-->
+	</scm>
   <organization>
     <name>FIZ Karlsruhe</name>
     <url>http://www.fiz-karlsruhe.de</url>
