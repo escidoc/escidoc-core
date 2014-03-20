@@ -14,8 +14,8 @@
 	<packaging>ejb</packaging>
 	
 	<scm>
-		<connection>scm:git:https://github.com/siedersleben/aa</connection>
-		<developerConnection>scm:git:https://github.com/siedersleben/aa</developerConnection>
+		<connection>scm:git:https://github.com/siedersleben/escidoc-core/aa.git</connection>
+		<developerConnection>scm:git:https://github.com/siedersleben/escidoc-core/aa.git</developerConnection>
 		<url>https://github.com/siedersleben/escidoc-core/tree/1.3/aa</url>
 	</scm>
 
