@@ -910,6 +910,7 @@
   </distributionManagement>
 
   <properties>
+  	<jdk.version>1.6</jdk.version>
     <environment>development</environment>
     <springDefaultLazyInit>true</springDefaultLazyInit>
     <slf4j.version>1.6.1</slf4j.version>
