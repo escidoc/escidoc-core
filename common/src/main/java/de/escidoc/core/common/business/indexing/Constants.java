@@ -81,6 +81,9 @@ public final class Constants {
         "?operation=updateIndex&action=optimize&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY
             + "&indexName=${INDEX_NAME}";
 
+    public static final String GSEARCH_COMMIT_INDEX_PARAMS =
+        "?operation=updateIndex&action=commit&repositoryName=" + ESCIDOC_FEDORA_REPOSITORY + "&indexName=${INDEX_NAME}";
+
     /**
      * common srw Constants.
      */

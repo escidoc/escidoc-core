@@ -383,6 +383,24 @@ public class IndexingHandler implements ResourceListener {
             return;
         }
 
+        if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_OPTIMIZE_INDEX_VALUE)) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("request optimize " + indexName);
+            }
+            gsearchHandler.requestOptimize(indexName);
+            return;
+        } //
+
+        if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_INDEX_VALUE)) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("request commit " + indexName);
+            }
+            gsearchHandler.requestCommit(indexName);
+            return;
+        }
+
         // get Index-Parameters for resourceName
         final Map<String, Map<String, Object>> resourceParameters = getObjectTypeParameters().get(objectType);
         if (resourceParameters == null) {

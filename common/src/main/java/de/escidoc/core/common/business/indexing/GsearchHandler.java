@@ -28,6 +28,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
 import de.escidoc.core.common.util.stax.handler.GsearchRepositoryInfoHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -301,6 +302,59 @@ public class GsearchHandler {
                 }
                 // Catch Exceptions
                 handleGsearchException(indexName, optimizeIndexParams, response, 0);
+
+                responses.append(response).append("\n");
+            }
+            catch (final Exception e) {
+                exceptions.append(e.getMessage()).append("\n");
+            }
+        }
+        if (exceptions.length() > 0) {
+            throw new ApplicationServerSystemException(exceptions.toString());
+        }
+        return responses.toString();
+    }
+
+    /**
+     * requests commit of indexWriter of the given index by calling fedoragsearch-servlet.
+     * <p/>
+     * <pre>
+     *        execute get-request with hardcoded index
+     *        to fedoragsearch.
+     * </pre>
+     *
+     * @param index String name of the index.
+     * @return String response
+     * @throws ApplicationServerSystemException
+     *          e
+     */
+    public String requestCommit(String index) throws ApplicationServerSystemException {
+        Set<String> indexNames = new HashSet<String>();
+        StringBuffer responses = new StringBuffer();
+        StringBuffer exceptions = new StringBuffer();
+        if (index == null || index.equals("")) {
+            indexNames.addAll(getIndexConfigurations().keySet());
+        }
+        else {
+            indexNames.add(index);
+        }
+        for (String indexName : indexNames) {
+            final String commitIndexParams =
+                Constants.INDEX_NAME_MATCHER.reset(Constants.GSEARCH_COMMIT_INDEX_PARAMS).replaceFirst(indexName);
+            try {
+                final String gsearchUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.GSEARCH_URL);
+                connectionUtility.setTimeout(EscidocConfiguration.getInstance().getAsInt(
+                    EscidocConfiguration.INDEXER_REQUEST_TIMEOUT, Constants.REQUEST_TIMEOUT));
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("requesting " + commitIndexParams + " from " + gsearchUrl);
+                }
+                final String response =
+                    connectionUtility.getRequestURLAsString(new URL(gsearchUrl + commitIndexParams));
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("response: " + response);
+                }
+                // Catch Exceptions
+                handleGsearchException(indexName, commitIndexParams, response, 0);
 
                 responses.append(response).append("\n");
             }

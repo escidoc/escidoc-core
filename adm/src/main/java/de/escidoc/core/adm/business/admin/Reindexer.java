@@ -51,6 +51,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Provides Methods used for Re-indexing.
  *
@@ -108,6 +111,8 @@ public class Reindexer {
 
     // Indexer configuration
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
+
+    private final Logger logger = LoggerFactory.getLogger(Reindexer.class);
 
     /**
      * Check if the given index contains objects with the given resource type.
@@ -250,6 +255,8 @@ public class Reindexer {
                 for (final String orgUnitHref : orgUnitHrefs) {
                     sendUpdateIndexMessage(orgUnitHref, ResourceType.OU, indexName);
                 }
+
+                sendCommitIndexMessage(indexName);
             }
             finally {
                 if (idListEmpty) {
@@ -329,6 +336,40 @@ public class Reindexer {
     }
 
     /**
+     * @param indexName  name of the index (may be null for "all indexes")
+     * @throws ApplicationServerSystemException
+     *          e
+     */
+    private void sendOptimizeIndexMessage(final String indexName) throws ApplicationServerSystemException {
+        try {
+            final IndexRequest indexRequest =
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_OPTIMIZE_INDEX_VALUE).withIndexName(indexName).build();
+            this.indexService.index(indexRequest);
+        }
+        catch (final Exception e) {
+            throw new ApplicationServerSystemException(e);
+        }
+    }
+
+    /**
+     * @param indexName  name of the index (may be null for "all indexes")
+     * @throws ApplicationServerSystemException
+     *          e
+     */
+    private void sendCommitIndexMessage(final String indexName) throws ApplicationServerSystemException {
+        try {
+            final IndexRequest indexRequest =
+                IndexRequestBuilder.createIndexRequest().withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_INDEX_VALUE).withIndexName(indexName).build();
+            this.indexService.index(indexRequest);
+        }
+        catch (final Exception e) {
+            throw new ApplicationServerSystemException(e);
+        }
+    }
+
+    /**
      * @param resource   String resource.
      * @param objectType type of the resource.
      * @param indexName  name of the index (may be null for "all indexes")
@@ -397,6 +438,7 @@ public class Reindexer {
                 IOUtils.closeStream(input);
             }
         }
+        logger.info(result.size() + " objects found for reindexing in " + indexName);
         return result;
     }
 
