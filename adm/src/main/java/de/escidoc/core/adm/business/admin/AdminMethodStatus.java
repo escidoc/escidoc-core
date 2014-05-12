@@ -44,6 +44,8 @@ import java.util.concurrent.Semaphore;
  */
 public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
 
+    private Date startDate = new Date();
+
     private Date completionDate = new Date();
 
     private boolean fillingComplete;
@@ -65,6 +67,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      */
     public void finishMethod() {
         this.completionDate = new Date();
+
         semaphore.release();
     }
 
@@ -75,6 +78,15 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      */
     public Date getCompletionDate() {
         return this.completionDate;
+    }
+
+    /**
+     * Get the start date of this process.
+     *
+     * @return start date
+     */
+    public Date getStartDate() {
+        return this.startDate;
     }
 
     /**
