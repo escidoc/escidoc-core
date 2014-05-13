@@ -1,5 +1,8 @@
 package de.escidoc.core.index.internal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -13,7 +16,14 @@ public class IndexServiceImpl {
 
     private AdminHandlerInterface adminHandler;
 
+    private final Logger logger = LoggerFactory.getLogger(IndexServiceImpl.class);
+
     public void onNewIndexRequest(final IndexRequest indexRequest) throws IndexServiceException {
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("indexRequest: " + indexRequest.toString());
+        }
+
         final String indexName = indexRequest.getIndexName();
         final boolean allIndexes =
             indexName == null || indexName.trim().length() == 0 || "all".equalsIgnoreCase(indexName); // NON-NLS
