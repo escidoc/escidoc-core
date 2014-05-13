@@ -261,7 +261,8 @@ public class IndexingHandler implements ResourceListener {
         throws SystemException, WebserverSystemException, ApplicationServerSystemException, TripleStoreSystemException {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Do indexing for resource " + resource + ", objectType: " + objectType);
+            LOGGER
+                .debug("Do indexing for resource " + resource + ", objectType: " + objectType + ", action: " + action);
         }
 
         // check if there exist indexing-parameters for given resource.
@@ -347,6 +348,14 @@ public class IndexingHandler implements ResourceListener {
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
             gsearchHandler.requestCreateEmpty(null);
+        }
+        else if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_OPTIMIZE_INDEX_VALUE)) {
+            gsearchHandler.requestOptimize(null);
+        }
+        else if (action
+            .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_INDEX_VALUE)) {
+            gsearchHandler.requestCommit(null);
         }
     }
 
