@@ -72,7 +72,7 @@
 		<module>escidoc-core.ear</module>
 		<module>assembly</module>
 		<module>installer</module>
-		<module>integration-tests</module>
+		<!-- module>integration-tests</module-->
 		<module>jms-server</module>
 		<module>index-service-impl</module>
 		<module>statistic-service-impl</module>
