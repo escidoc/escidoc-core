@@ -801,6 +801,13 @@
 
 	<repositories>
 		<repository>
+			<id>nexus-snapshots</id>
+			<url>http://rd.mpdl.mpg.de/nexus/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>org.escidoc.core</id>
 			<url>https://www.escidoc.org/artifactory/anonymous-repo</url>
 			<snapshots>
@@ -821,13 +828,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<repository>
-			<id>nexus-snapshots</id>
-			<url>http://rd.mpdl.mpg.de/nexus/content/repositories/snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
+		
 		<!-- - - <repository> - <id>duraspace-released</id> - <name>DuraSpace Repository</name> 
 			- <url>https://m2.duraspace.org/content/repositories/releases</url> - <releases> 
 			- <enabled>true</enabled> - </releases> - <snapshots> - <enabled>false</enabled> 
