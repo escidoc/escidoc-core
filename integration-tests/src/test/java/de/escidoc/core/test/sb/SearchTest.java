@@ -496,6 +496,23 @@ public class SearchTest extends SearchTestBase {
         assertEquals("1", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
     }
+    
+    /**
+     * Test searching for a single term with a dot following (end of sentence).
+     *
+     * @throws Exception If anything fails.
+     */
+    @Test
+    public void testSBSR1_2() throws Exception {
+
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=sensor");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(true, checkHighlighting(response));
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals("1", getFirstRecord(response));
+    }
 
     /**
      * Database not existing.
