@@ -116,10 +116,13 @@ public final class ReindexStatus extends AdminMethodStatus {
 
         if (getCompletionDate() != null) {
             long s = (getCompletionDate().getTime() - getStartDate().getTime()) / 1000;
-            result.append("<message>reindexing finished at ").append(
-                getCompletionDate() + "   time used: "
-                    + String.format("%d h : %02d min : %02d s", s / 3600, (s % 3600) / 60, (s % 60))).append(
-                "</message>\n");
+
+            result.append("<message>");
+            result.append("reindexing finished at ").append(getCompletionDate());
+
+            result.append(" ---- time used: "
+                + String.format("%d h : %02d m : %02d s", s / 3600, (s % 3600) / 60, (s % 60)));
+            result.append("</message>\n");
         }
         else {
             result.append("<message>reindexing currently running</message>\n");

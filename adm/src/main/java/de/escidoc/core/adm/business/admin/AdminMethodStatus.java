@@ -99,6 +99,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         boolean result = false;
 
         if (semaphore.tryAcquire()) {
+            this.startDate = new Date();
             this.completionDate = null;
             this.fillingComplete = false;
             result = true;
