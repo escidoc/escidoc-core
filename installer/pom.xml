@@ -247,6 +247,7 @@
                   <version>${escidoc.fedoragsearch.version}</version>
                   <overWrite>false</overWrite>
                   <outputDirectory>${staging.dir}/packages/fedoragsearch</outputDirectory>
+                  <destFileName>fedoragsearch-${escidoc.fedoragsearch.version}.war</destFileName>
                 </artifactItem>
                 
                 <artifactItem>
@@ -256,6 +257,7 @@
                   <version>${escidoc.srw.version}</version>
                   <overWrite>false</overWrite>
                   <outputDirectory>${staging.dir}/packages/srw</outputDirectory>
+                  <destFileName>srw-${escidoc.srw.version}.war</destFileName>
                 </artifactItem>
                 
                 <artifactItem>
