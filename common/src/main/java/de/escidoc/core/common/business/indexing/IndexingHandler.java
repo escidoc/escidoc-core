@@ -323,6 +323,7 @@ public class IndexingHandler implements ResourceListener {
             LOGGER.debug("calling do Indexing with resource: " + resource + ", objectType: " + objectType
                 + ", action: " + action + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
+        long start = System.currentTimeMillis();
         if (action == null
             || action
                 .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
@@ -357,6 +358,9 @@ public class IndexingHandler implements ResourceListener {
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_COMMIT_INDEX_VALUE)) {
             gsearchHandler.requestCommit(null);
         }
+        long end = System.currentTimeMillis();
+
+        LOGGER.info("	IndexingHandler.doIndexing of <" + resource + "> needed <" + (end - start) + "> msec");
     }
 
     /**

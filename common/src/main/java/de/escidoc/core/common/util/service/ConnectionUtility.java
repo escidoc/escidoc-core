@@ -63,8 +63,11 @@ import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -96,6 +99,8 @@ public class ConnectionUtility {
 
     private boolean proxyConfigured;
 
+    private final Logger logger = LoggerFactory.getLogger(ConnectionUtility.class);
+
     /**
      * Get a response-string for the URL. If the URL contains an Authentication part then is this used and stored for
      * this connection. Be aware to reset the authentication if the user name and password should not be reused for
@@ -107,7 +112,13 @@ public class ConnectionUtility {
      */
     public String getRequestURLAsString(final URL url) throws WebserverSystemException {
 
+        long start = System.currentTimeMillis();
+
         final HttpResponse httpResponse = getRequestURL(url);
+
+        long end = System.currentTimeMillis();
+        logger.info("getRequestURLAsString <" + url.toString() + "> needed " + (end - start) + " msec");
+
         return readResponse(httpResponse);
     }
 
@@ -125,7 +136,14 @@ public class ConnectionUtility {
     public String getRequestURLAsString(final URL url, final String username, final String password)
         throws WebserverSystemException {
 
+        long start = System.currentTimeMillis();
+
         final HttpResponse httpResponse = getRequestURL(url, username, password);
+
+        long end = System.currentTimeMillis();
+        logger
+            .info("getRequestURLAsString <" + url.toString() + " " + username + "> needed " + (end - start) + " msec");
+
         return readResponse(httpResponse);
     }
 
@@ -141,7 +159,14 @@ public class ConnectionUtility {
      */
     public String getRequestURLAsString(final URL url, final Cookie cookie) throws WebserverSystemException {
 
+        long start = System.currentTimeMillis();
+
         final HttpResponse httpResponse = getRequestURL(url, cookie);
+
+        long end = System.currentTimeMillis();
+        logger.info("getRequestURLAsString <" + url.toString() + " " + cookie.toString() + "> needed " + (end - start)
+            + " msec");
+
         return readResponse(httpResponse);
     }
 
