@@ -54,8 +54,11 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -66,6 +69,8 @@ import java.util.Collection;
  * @author Steffen Wagner
  */
 public class ItemHandlerPid extends ItemHandlerContent {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerPid.class);
 
     private PIDSystemFactory pidGenFactory;
 
@@ -103,6 +108,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         ReadonlyVersionException, EncodingSystemException, FedoraSystemException, TripleStoreSystemException,
         XmlParserSystemException, PidSystemException, WebserverSystemException, IntegritySystemException {
 
+        long start = System.currentTimeMillis();
+
         setItem(id);
 
         // we can only update the latest version
@@ -133,7 +140,12 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         getItem().persist();
 
-        return prepareResponse(pid);
+        String ret = prepareResponse(pid);
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("assignContentPid of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
+        return ret;
     }
 
     /**
@@ -166,6 +178,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         IntegritySystemException, FedoraSystemException, TripleStoreSystemException, PidSystemException,
         WebserverSystemException, XmlParserSystemException {
 
+        long start = System.currentTimeMillis();
+
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked();
@@ -187,10 +201,16 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
+            LOGGER.info("	trigger reindex from assignObjectPid of <" + getItem().getId());
             fireItemModified(getItem().getId());
         }
 
-        return prepareResponse(pid);
+        String ret = prepareResponse(pid);
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("assignObjectPid of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
+        return ret;
     }
 
     /**
@@ -225,6 +245,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         PidSystemException, WebserverSystemException, XmlParserSystemException {
 
+        long start = System.currentTimeMillis();
+
         setItem(id);
 
         // we can only update the latest version
@@ -254,10 +276,16 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
+            LOGGER.info("	trigger reindex from assignVPid of <" + getItem().getId());
             fireItemModified(getItem().getId());
         }
 
-        return prepareResponse(pid);
+        String ret = prepareResponse(pid);
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("assignVersionPid of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
+        return ret;
     }
 
     /**

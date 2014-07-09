@@ -28,6 +28,25 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.stream.XMLStreamException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -94,7 +113,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
@@ -118,24 +136,6 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * The retrieve, update, create and delete methods implement the {@link ItemHandlerInterface ItemHandlerInterface}.
@@ -221,6 +221,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ReadonlyAttributeViolationException, FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException, EncodingSystemException, IntegritySystemException, XmlParserSystemException,
         XmlSchemaValidationException, XmlCorruptedException {
+
+        long start = System.currentTimeMillis();
 
         setItem(id);
         final String startTimestamp = getItem().getLastFedoraModificationDate();
@@ -392,6 +394,9 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 updatedXmlData = render();
             }
 
+            long end = System.currentTimeMillis();
+            LOGGER.info("update of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
             return updatedXmlData;
         }
         catch (final MissingContentException e) {
@@ -414,6 +419,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         AuthorizationException, EncodingSystemException, IntegritySystemException, TripleStoreSystemException,
         XmlParserSystemException, WebserverSystemException, FedoraSystemException {
 
+        long start = System.currentTimeMillis();
+
         final ItemCreate item = parseItem(xml);
 
         // check that the objid was not obtained from the representation
@@ -431,7 +438,12 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             throw new IntegritySystemException("The Item with id '" + objid + "', which was just created, "
                 + "could not be found for retrieve.", e);
         }
+        LOGGER.info("trigger reindex from create of <" + getItem().getId());
         fireItemCreated(objid, resultItem);
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("create of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
         return resultItem;
     }
 
@@ -1109,6 +1121,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ReadonlyElementViolationException, ReadonlyAttributeViolationException, EncodingSystemException,
         IntegritySystemException, TripleStoreSystemException {
 
+        long start = System.currentTimeMillis();
+
         setItem(id);
         final StaxParser sp = new StaxParser();
         sp.addHandler(new OptimisticLockingHandler(getItem().getId(), Constants.ITEM_OBJECT_TYPE, getItem()
@@ -1134,7 +1148,11 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         makeVersion("Component added.");
         getItem().persist();
 
+        LOGGER.info("trigger reindex from createComponent of <" + getItem().getId());
         fireItemModified(getItem().getId());
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("createComponent of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
 
         return addedComponent;
     }
@@ -1217,6 +1235,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException, XmlParserSystemException, ApplicationServerSystemException {
 
+        long start = System.currentTimeMillis();
+
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
@@ -1244,6 +1264,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // notify indexer
             // getUtility().notifyIndexerAddPublication(getItem().getHref());
+            LOGGER.info("trigger reindex from release of <" + getItem().getId());
             fireItemModified(getItem().getId());
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
@@ -1259,10 +1280,16 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 }
             }
             // run item recaching/reindexing asynchronously
+            LOGGER.info("trigger reindex from release of surrogateItemIds <" + referencedSurrogateItemIds.toString());
             queueItemsModified(referencedSurrogateItemIds);
         }
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
+        String ret = getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("release of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
+        return ret;
     }
 
     @Override
@@ -1271,6 +1298,8 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
         ReadonlyViolationException, ReadonlyVersionException, ComponentNotFoundException, XmlCorruptedException,
         EncodingSystemException, IntegritySystemException, FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException, XmlParserSystemException {
+
+        long start = System.currentTimeMillis();
 
         setItem(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
@@ -1295,10 +1324,16 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getItem().persist();
 
+            LOGGER.info("trigger reindex from submit of <" + getItem().getId());
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
+        String ret = getUtility().prepareReturnXmlFromLastModificationDate(getItem().getLastModificationDate());
+
+        long end = System.currentTimeMillis();
+        LOGGER.info("submit of <" + getItem().getId() + "> needed <" + (end - start) + "> msec");
+
+        return ret;
     }
 
     @Override
