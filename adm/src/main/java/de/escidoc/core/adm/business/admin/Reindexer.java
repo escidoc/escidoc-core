@@ -438,7 +438,7 @@ public class Reindexer {
                 IOUtils.closeStream(input);
             }
         }
-        logger.info(result.size() + " objects found for reindexing in " + indexName);
+        logger.info(result.size() + " objects of type " + type.toString() + " found for reindexing in " + indexName);
         return result;
     }
 
