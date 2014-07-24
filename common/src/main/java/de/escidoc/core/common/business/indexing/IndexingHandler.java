@@ -20,20 +20,26 @@
 
 package de.escidoc.core.common.business.indexing;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -54,24 +60,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -191,6 +193,43 @@ public class IndexingHandler implements ResourceListener {
         if (!this.notifyIndexerEnabled) {
             return;
         }
+        addResourceToIndexCache(id, restXml);
+        final String objectType = tripleStoreUtility.getObjectType(id);
+        addResource(id, objectType, restXml);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
+        }
+    }
+
+    /**
+     * Replace a resource in the indexes if not be called from the exception list.
+     *
+     * @param id      resource id
+     * @param restXml complete resource as REST XML
+     * @param soapXml complete resource as SOAP XML
+     * @param calledFrom	operations where indexing is suppressed
+     * @throws SystemException The resource could not be deleted and newly created.
+     */
+    @Override
+    public void resourceModified(String id, String restXml, String soapXml, CalledFrom from) throws SystemException,
+        TripleStoreSystemException, WebserverSystemException, ApplicationServerSystemException {
+        if (!this.notifyIndexerEnabled) {
+            return;
+        }
+        addResourceToIndexCache(id, restXml);
+
+        if (from.equals(CalledFrom.ASSIGN_VERSION_PID) || from.equals(CalledFrom.ASSIGN_OBJECT_PID)) {
+            LOGGER.info("leaving without indexing - triggered by " + from.toString());
+            return;
+        }
+        final String objectType = tripleStoreUtility.getObjectType(id);
+        addResource(id, objectType, restXml);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
+        }
+    }
+
+    private void addResourceToIndexCache(final String id, final String restXml) throws SystemException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("gsearchindexing STARTING, xml is " + restXml);
         }
@@ -202,11 +241,6 @@ public class IndexingHandler implements ResourceListener {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("gsearchindexing caching xml via deviation handler " + " finished");
             }
-        }
-        final String objectType = tripleStoreUtility.getObjectType(id);
-        addResource(id, objectType, restXml);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("gsearchindexing whole indexing of resource " + id + " of type " + objectType + " finished");
         }
     }
 
@@ -956,4 +990,5 @@ public class IndexingHandler implements ResourceListener {
     public void setTripleStoreUtility(final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
     }
+
 }

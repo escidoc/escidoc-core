@@ -29,6 +29,10 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public interface ResourceListener {
 
+    public enum CalledFrom {
+        ASSIGN_VERSION_PID, ASSIGN_OBJECT_PID
+    }
+
     /**
      * A resource was created.
      *
@@ -56,4 +60,15 @@ public interface ResourceListener {
      * @throws SystemException The listener object threw an exception.
      */
     void resourceModified(String id, String restXml, String soapXml) throws SystemException;
+
+    /**
+     * A resource was modified.
+     *
+     * @param id      resource id
+     * @param restXml complete resource as REST XML
+     * @param soapXml complete resource as SOAP XML
+     * @param from	  method triggered the call
+     * @throws SystemException The listener object threw an exception.
+     */
+    void resourceModified(String id, String restXml, String soapXml, CalledFrom from) throws SystemException;
 }
