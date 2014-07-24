@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener.CalledFrom;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -201,8 +202,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
-            LOGGER.info("	trigger reindex from assignObjectPid of <" + getItem().getId());
-            fireItemModified(getItem().getId());
+            fireItemModified(getItem().getId(), CalledFrom.ASSIGN_OBJECT_PID);
         }
 
         String ret = prepareResponse(pid);
@@ -276,8 +276,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         getItem().persist();
 
         if (getItem().isLatestVersion()) {
-            LOGGER.info("	trigger reindex from assignVPid of <" + getItem().getId());
-            fireItemModified(getItem().getId());
+            fireItemModified(getItem().getId(), CalledFrom.ASSIGN_VERSION_PID);
         }
 
         String ret = prepareResponse(pid);

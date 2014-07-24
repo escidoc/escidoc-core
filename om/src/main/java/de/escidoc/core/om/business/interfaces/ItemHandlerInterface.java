@@ -889,7 +889,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * Assign a Persistent Identifier to a definied object version.
      *
      * @param id        The id of the item.
-     * @param taskParam Taskparameter XML containing the URL the should be assigned to:
+     * @param taskParam Taskparameter XML containing the URL the should be assigned to.
      * @return last-modification-date within XML (result.xsd) including <pid>new pid</pid>
      * @throws ItemNotFoundException      Thrown if an item with the specified id could not be found.
      * @throws ComponentNotFoundException Thrown if a component with the specified id could not be found.

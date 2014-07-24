@@ -1264,7 +1264,7 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
 
             // notify indexer
             // getUtility().notifyIndexerAddPublication(getItem().getHref());
-            LOGGER.info("trigger reindex from release of <" + getItem().getId());
+
             fireItemModified(getItem().getId());
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
@@ -1280,7 +1280,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
                 }
             }
             // run item recaching/reindexing asynchronously
-            LOGGER.info("trigger reindex from release of surrogateItemIds <" + referencedSurrogateItemIds.toString());
             queueItemsModified(referencedSurrogateItemIds);
         }
 
@@ -1324,7 +1323,6 @@ public class FedoraItemHandler extends ItemHandlerPid implements ItemHandlerInte
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getItem().persist();
 
-            LOGGER.info("trigger reindex from submit of <" + getItem().getId());
             fireItemModified(getItem().getId());
         }
 
