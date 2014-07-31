@@ -96,6 +96,9 @@ public class IndexingHandler implements ResourceListener {
 
     private boolean notifyIndexerEnabled = true;
 
+    // List of comma separated method names where indexer notify is skipped
+    private String skipNotifyIndexerMethods = "";
+
     private Collection<String> indexNames;
 
     private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
@@ -117,6 +120,9 @@ public class IndexingHandler implements ResourceListener {
             this.notifyIndexerEnabled =
                 EscidocConfiguration.getInstance().getAsBoolean(
                     EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
+            this.skipNotifyIndexerMethods =
+                (EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SKIP_NOTIFY_INDEXER_METHODS) != null ? EscidocConfiguration
+                    .getInstance().get(EscidocConfiguration.ESCIDOC_CORE_SKIP_NOTIFY_INDEXER_METHODS) : "");
         }
         catch (final IOException e) {
             throw new SystemException(e.getMessage(), e);
@@ -202,7 +208,7 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * Replace a resource in the indexes if not be called from the exception list.
+     * Replace a resource in the indexes if not be called from the skip indexer exception list.
      *
      * @param id      resource id
      * @param restXml complete resource as REST XML
@@ -218,7 +224,7 @@ public class IndexingHandler implements ResourceListener {
         }
         addResourceToIndexCache(id, restXml);
 
-        if (from.equals(CalledFrom.ASSIGN_VERSION_PID) || from.equals(CalledFrom.ASSIGN_OBJECT_PID)) {
+        if (this.skipNotifyIndexerMethods.length() > 0 && this.skipNotifyIndexerMethods.contains(from.toString())) {
             LOGGER.info("leaving without indexing - triggered by " + from.toString());
             return;
         }
@@ -394,7 +400,8 @@ public class IndexingHandler implements ResourceListener {
         }
         long end = System.currentTimeMillis();
 
-        LOGGER.info("IndexingHandler.doIndexing of <" + resource + "> and action <" + action + "> needed <" + (end - start) + "> msec");
+        LOGGER.info("IndexingHandler.doIndexing of <" + resource + "> and action <" + action + "> needed <"
+            + (end - start) + "> msec");
     }
 
     /**
@@ -767,6 +774,9 @@ public class IndexingHandler implements ResourceListener {
     private static Set<String> getPids(final String indexName) throws SystemException {
         try {
 
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("getIds for <" + indexName + ">");
+            }
             final HttpParams params = new BasicHttpParams();
             final Scheme http = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
             final SchemeRegistry sr = new SchemeRegistry();
@@ -787,6 +797,11 @@ public class IndexingHandler implements ResourceListener {
             boolean running = true;
             while (running) {
                 handler.resetNoOfDocumentTerms();
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("getIds scan query <"
+                        + EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/" + indexName
+                        + Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm) + ">");
+                }
                 final HttpGet httpGet =
                     new HttpGet(EscidocConfiguration.getInstance().get(EscidocConfiguration.SRW_URL) + "/search/"
                         + indexName + Constants.SRW_TERM_MATCHER.reset(query).replaceFirst(lastTerm));

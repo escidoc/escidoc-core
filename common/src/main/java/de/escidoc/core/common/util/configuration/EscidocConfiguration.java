@@ -68,6 +68,8 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED = "escidoc-core.notify.indexer.enabled";
 
+    public static final String ESCIDOC_CORE_SKIP_NOTIFY_INDEXER_METHODS = "escidoc-core.skip.notify.indexer.methods";
+
     public static final String ESCIDOC_CORE_BASEURL = "escidoc-core.baseurl";
 
     public static final String ESCIDOC_CORE_SELFURL = "escidoc-core.selfurl";
