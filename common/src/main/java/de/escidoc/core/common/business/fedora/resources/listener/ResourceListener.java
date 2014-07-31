@@ -30,7 +30,18 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface ResourceListener {
 
     public enum CalledFrom {
-        ASSIGN_VERSION_PID, ASSIGN_OBJECT_PID
+        ASSIGN_VERSION_PID, ASSIGN_OBJECT_PID;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case ASSIGN_VERSION_PID:
+                    return "assignVersionPid";
+                case ASSIGN_OBJECT_PID:
+                    return "assignObjectPid";
+            }
+            return super.toString();
+        }
     }
 
     /**
