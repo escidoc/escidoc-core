@@ -141,9 +141,8 @@ public class ConnectionUtility {
         final HttpResponse httpResponse = getRequestURL(url, username, password);
 
         long end = System.currentTimeMillis();
-        logger
-            .info("getRequestURLAsString <" + url.toString() + " " + username + "> needed " + (end - start) + " msec");
-
+        logger.debug("getRequestURLAsString <" + url.toString() + " " + username + "> needed " + (end - start) + " msec");
+            
         return readResponse(httpResponse);
     }
 

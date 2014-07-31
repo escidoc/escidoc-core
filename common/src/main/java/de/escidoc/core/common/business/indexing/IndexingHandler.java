@@ -394,7 +394,7 @@ public class IndexingHandler implements ResourceListener {
         }
         long end = System.currentTimeMillis();
 
-        LOGGER.info("	IndexingHandler.doIndexing of <" + resource + "> needed <" + (end - start) + "> msec");
+        LOGGER.info("IndexingHandler.doIndexing of <" + resource + "> and action <" + action + "> needed <" + (end - start) + "> msec");
     }
 
     /**
