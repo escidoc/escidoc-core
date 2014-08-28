@@ -165,34 +165,40 @@ public class Reindexer {
                     getIds(indexName, ResourceType.CONTAINER, CONTAINER_LIST_QUERY, clearIndex);
 
                 idListEmpty &= containerHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(containerHrefs.size(), ResourceType.CONTAINER);
 
                 // Get all Content Models
                 final Collection<String> contentModelHrefs =
                     getIds(indexName, ResourceType.CONTENT_MODEL, CONTENT_MODEL_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentModelHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(contentModelHrefs.size(), ResourceType.CONTENT_MODEL);
 
                 // Get all Content Relations
                 final Collection<String> contentRelationHrefs =
                     getIds(indexName, ResourceType.CONTENT_RELATION, CONTENT_RELATION_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentRelationHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(contentRelationHrefs.size(), ResourceType.CONTENT_RELATION);
 
                 // Get all Contexts
                 final Collection<String> contextHrefs =
                     getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contextHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(contextHrefs.size(), ResourceType.CONTEXT);
 
                 // Get all Items
                 final Collection<String> itemHrefs = getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY, clearIndex);
 
                 idListEmpty &= itemHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(itemHrefs.size(), ResourceType.ITEM);
 
                 // Get all Organizational Units
                 final Collection<String> orgUnitHrefs = getIds(indexName, ResourceType.OU, OU_LIST_QUERY, clearIndex);
 
                 idListEmpty &= orgUnitHrefs.isEmpty();
+                reindexStatus.setTotalNumberOfObjects(orgUnitHrefs.size(), ResourceType.OU);
 
                 if (clearIndex) {
                     // Delete indexes
@@ -415,6 +421,8 @@ public class Reindexer {
                 Set<String> indexedPids = new HashSet<String>();
                 if (!clearIndex) {
                     indexedPids = indexingHandler.getPids(objectType, indexName);
+                    logger.debug(indexedPids.size() + " indexed objects of type " + type.toString() + " found in "
+                        + indexName + " index");
                 }
 
                 String line;

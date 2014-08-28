@@ -53,6 +53,8 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     private final Semaphore semaphore = new Semaphore(1);
 
     protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
+    
+    protected final Map<ResourceType, Integer> startMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     protected boolean isFillingComplete() {
         return this.fillingComplete;
@@ -123,6 +125,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     @Override
     public void clear() {
         treeMap.clear();
+        startMap.clear();
     }
 
     @Override
