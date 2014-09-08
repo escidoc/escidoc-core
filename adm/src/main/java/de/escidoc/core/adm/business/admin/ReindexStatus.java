@@ -76,8 +76,11 @@ public final class ReindexStatus extends AdminMethodStatus {
      *
      * @return ReindexStatus singleton
      */
-    public static ReindexStatus getInstance() {
-        return instance;
+    public synchronized static ReindexStatus getInstance() {
+        if (instance == null)
+            return new ReindexStatus();
+        else
+            return instance;
     }
 
     /**
@@ -120,18 +123,18 @@ public final class ReindexStatus extends AdminMethodStatus {
     public long getStartNumberOfObjects(ResourceType type) {
         return this.startMap.get(type).longValue();
     }
-    
+
     /**
      * Get the total number of objects to reindex for the specified ResourceType
      */
     public long getTotalNumberOfObjects() {
         long l = 0;
-        
+
         for (final Entry<ResourceType, Integer> e : entrySet()) {
 
-			l = l + e.getValue();
-		}
-        
+            l = l + e.getValue();
+        }
+
         return l;
     }
 
@@ -152,13 +155,13 @@ public final class ReindexStatus extends AdminMethodStatus {
 
             result.append(" ---- time used: "
                 + String.format("%d h : %02d m : %02d s", timeUsed / 3600, (timeUsed % 3600) / 60, (timeUsed % 60)));
-            
-            if (entrySet().size() == 1) {
-				for (final Entry<ResourceType, Integer> e : entrySet()) {
-					result.append(" ---- average: "
-							+ getStartNumberOfObjects(e.getKey()) / timeUsed * 3600 + " objects / h");					
-				}
-            }
+
+            /*if (entrySet().size() == 1) {
+                for (final Entry<ResourceType, Integer> e : entrySet()) {
+                    result.append(" ---- average: " + getStartNumberOfObjects(e.getKey()) / timeUsed * 3600
+                        + " objects / h");
+                }
+            }*/
             result.append("</message>\n");
         }
         else {
@@ -170,17 +173,16 @@ public final class ReindexStatus extends AdminMethodStatus {
                 result.append(' ');
                 result.append(e.getKey().getLabel());
                 result.append("(s) still to be reindexed\n");
-                
-                if (entrySet().size() == 1) {
-					result.append(" --- running with "
-							+ ((getStartNumberOfObjects(e.getKey()) - e.getValue().longValue()) * 60 * 60 / timeUsed)									
-								+ " objects / h ");
-					result.append(" --- expected end at "
-							+ (new Date(System.currentTimeMillis()
-									+ timeUsed * 1000 * e.getValue().longValue()									
-									/ (getStartNumberOfObjects(e.getKey()) - e.getValue().longValue() + 1))).toString());					
-									
-        }               
+
+                /*if (entrySet().size() == 1) {
+                    result.append(" --- running with "
+                        + ((getStartNumberOfObjects(e.getKey()) - e.getValue().longValue()) * 60 * 60 / timeUsed)
+                        + " objects / h ");
+                    result.append(" --- expected end at "
+                        + (new Date(System.currentTimeMillis() + timeUsed * 1000 * e.getValue().longValue()
+                            / (getStartNumberOfObjects(e.getKey()) - e.getValue().longValue() + 1))).toString());
+
+                }*/
                 result.append("</message>\n");
             }
         }
