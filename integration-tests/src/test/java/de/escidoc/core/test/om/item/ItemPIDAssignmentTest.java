@@ -36,8 +36,10 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVer
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.Client;
 import de.escidoc.core.test.security.client.PWCallback;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -92,6 +94,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      * @throws Exception In case of operation error.
      */
     @Test
+    @Ignore
     public final void testAssignObjectPid1() throws Exception {
         // validate assignObjectPid() with the behavior of MPDL
         // no release without objectPID and versionPID
@@ -141,6 +144,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      * @throws Exception In case of operation error.
      */
     @Test
+    @Ignore
     public final void testAssignObjectPid2() throws Exception {
 
         String itemXml = createItem();
@@ -159,6 +163,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      * @throws Exception Thrown if anything fails.
      */
     @Test
+    @Ignore
     public void testAssignObjectPid3() throws Exception {
 
         String itemXml = createItem();
@@ -175,6 +180,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      * @throws Exception In case of operation error.
      */
     @Test
+    @Ignore
     public final void testReAssignObjectPid() throws Exception {
 
         String itemXml = createItem();
@@ -203,6 +209,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      * @throws Exception In case of operation error.
      */
     @Test
+    @Ignore
     public void testReAssignObjectPid2() throws Exception {
 
         String itemXml = createItem();

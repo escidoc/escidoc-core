@@ -36,10 +36,12 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.xml.rpc.ServiceException;
+
 import java.util.Map;
 
 /**
@@ -462,6 +464,20 @@ public class ItemClient extends ClientBase
     }
 
     /**
+     * Assigns a persistent identifier (pid) to a version of an item.
+     *
+     * @param itemId The id of the item.
+     * @param param  The parameter structur with resolver entries as XML snippet.
+     * @return The HttpMethod after the service call (REST) or the result object (SOAP).
+     * @throws Exception If the service call fails.
+     */
+    public Object assignVersionPid(final String itemId, final String param, final String indexing) throws Exception {
+
+        return callEsciDoc("Item.assignVersionPid", METHOD_ASSIGN_VERSION_PID, Constants.HTTP_METHOD_POST,
+            Constants.ITEM_BASE_URI, new String[] { itemId, Constants.SUB_ASSIGN_VERSION_PID, indexing }, param);
+    }
+
+    /**
      * Assigns a persistent identifier (pid) to the item. The pid represents the whole item identifier.
      *
      * @param itemId The id of the item.
@@ -676,5 +692,4 @@ public class ItemClient extends ClientBase
         }
         return soapClient;
     }
-
 }
