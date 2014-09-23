@@ -496,7 +496,7 @@ public class SearchTest extends SearchTestBase {
         assertEquals("1", getNumberOfHits(response));
         assertEquals("1", getFirstRecord(response));
     }
-    
+
     /**
      * Test searching for a single term with a dot following (end of sentence).
      *
@@ -791,22 +791,31 @@ public class SearchTest extends SearchTestBase {
         String[] valuesToCheck;
         if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
             valuesToCheck =
-                new String[] { "", "ÄDriving device consisting of a motor and a gear",
-                    "äProcess for controlling a long-stroke positioning", "aMethod of retreiving documents",
-                    "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
-                    "ÖMethod and device for calibrating the penetration", "öMETHOD FOR PRODUCING A BIOACTIVE",
-                    "Process of thermal oxidation of an implanted semiconductor",
-                    "üMETHOD FOR DIRECT METHANE PYROLYSIS", "ÜMethod of measuring a borehole" };
+                new String[] { "", 
+            		"adriving device consisting of a motor and a gear",
+                    "aprocess for controlling a long-stroke positioning", 
+                    "amethod of retreiving documents",
+                    "anti-nipping device for power operated parts", 
+                    "electrochemical gas sensor",
+                    "omethod and device for calibrating the penetration", 
+                    "omethod for producing a bioactive",
+                    "process of thermal oxidation of an implanted semiconductor",
+                    "umethod for direct methane pyrolysis", 
+                    "umethod of measuring a borehole" };
         }
         else {
             valuesToCheck =
-                new String[] { "", "&#xC4;Driving device consisting of a motor and a gear",
-                    "&#xE4;Process for controlling a long-stroke positioning", "aMethod of retreiving documents",
-                    "Anti-nipping device for power operated parts", "Electrochemical gas sensor",
-                    "&#xD6;Method and device for calibrating the penetration",
-                    "&#xF6;METHOD FOR PRODUCING A BIOACTIVE",
-                    "Process of thermal oxidation of an implanted semiconductor",
-                    "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS", "&#xDC;Method of measuring a borehole" };
+            		new String[] { "", // 0
+            		"&#xC4;Driving device consisting of a motor and a gear",	//1
+            		"aMethod of retreiving documents",	//2
+            		"Anti-nipping device for power operated parts",	//3        		
+                    "&#xE4;Process for controlling a long-stroke positioning", // 4                                      
+                    "Electrochemical gas sensor", // 5
+                    "&#xD6;Method and device for calibrating the penetration", // 6
+                    "&#xF6;METHOD FOR PRODUCING A BIOACTIVE", // 7
+                    "Process of thermal oxidation of an implanted semiconductor", // 8
+                    "&#xFC;METHOD FOR DIRECT METHANE PYROLYSIS", // 9
+                    "&#xDC;Method of measuring a borehole" }; // 10
         }
         assertEquals(records.length, valuesToCheck.length);
 
