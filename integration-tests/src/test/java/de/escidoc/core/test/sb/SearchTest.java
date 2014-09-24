@@ -790,8 +790,7 @@ public class SearchTest extends SearchTestBase {
         String[] records = response.split("<[^\\/>]*?:record>");
         String[] valuesToCheck;
         if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
-            valuesToCheck = new String[] { "", 
-            	"ÄDriving device consisting of a motor and a gear", // 1
+            valuesToCheck = new String[] { "", "ÄDriving device consisting of a motor and a gear", // 1
                 "aMethod of retreiving documents", //2
                 "Anti-nipping device for power operated parts", // 3
                 "äProcess for controlling a long-stroke positioning", // 4                       
@@ -800,7 +799,7 @@ public class SearchTest extends SearchTestBase {
                 "öMETHOD FOR PRODUCING A BIOACTIVE", // 7
                 "Process of thermal oxidation of an implanted semiconductor", // 8
                 "üMETHOD FOR DIRECT METHANE PYROLYSIS", // 9
-                "ÜMethod of measuring a borehole"}; // 10
+                "ÜMethod of measuring a borehole" }; // 10
         }
         else {
             valuesToCheck = new String[] { "", // 0
