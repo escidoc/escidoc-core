@@ -1291,7 +1291,7 @@
     <camel.version>2.9.0</camel.version>
     <activemq.version>5.5.0</activemq.version>
     <hibernate.version>3.6.9.Final</hibernate.version>
-    <junit.version>4.10</junit.version>
+    <junit.version>4.13.1</junit.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <mptstore.oracle.version>0.9.4</mptstore.oracle.version>
     <geronimo.jaxrpc.version>2.1</geronimo.jaxrpc.version>
