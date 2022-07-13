@@ -1289,7 +1289,7 @@
     <cxf.version>2.6.2</cxf.version>
     <oval.version>1.81</oval.version>
     <camel.version>2.9.0</camel.version>
-    <activemq.version>5.5.0</activemq.version>
+    <activemq.version>5.6.0</activemq.version>
     <hibernate.version>3.6.9.Final</hibernate.version>
     <junit.version>4.10</junit.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
