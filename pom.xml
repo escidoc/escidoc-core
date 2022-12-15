@@ -1285,7 +1285,7 @@
     <!-- do not update jaxb.version to 2.2.4 because this will not work on JBoss 6(+) -->
     <jaxb.version>2.2.5</jaxb.version>
     <aspectj.version>1.6.12</aspectj.version>
-    <spring.version>3.0.7.RELEASE</spring.version>
+    <spring.version>5.2.20.RELEASE</spring.version>
     <cxf.version>2.6.2</cxf.version>
     <oval.version>1.81</oval.version>
     <camel.version>2.9.0</camel.version>
